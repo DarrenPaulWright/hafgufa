@@ -1,0 +1,54 @@
+/* Primary Definitions */
+
+@smallShadowColor: fade(@shadowColor, 60%);
+@largeShadowColor: fade(@shadowColor, 60%);
+@chromeReflectionColor: fade(@reflectionColor, 5%);
+
+@separatorReflectionColor: fade(@reflectionColor, 7%);
+@separatorShadowColor: fade(@shadowColor, 40%);
+
+@textShadow: 0 0.0625rem 0 fade(@shadowColor, 75%);
+@iconShadow: 0 0.0625rem 0.0625rem fade(@reflectionColor, 15%);
+
+@fontColor: #ccc;
+@secondaryFontColor: fade(@fontColor, 40%);
+@disabledFontColor: fade(@fontColor, 30%);
+@backgroundColor: #000;
+
+@chromeFontColor: #bbb;
+@chromeSubFontColor: fade(@chromeFontColor, 50%);
+@chromeInverseFontColor: @backgroundColor;
+@chromeInverseSubFontColor: fade(@chromeInverseFontColor, 50%);
+
+@groupBorderColor: rgba(255, 255, 255, 0.2);
+@groupBackgroundColor: rgba(255, 255, 255, 0.05);
+
+@bodyBackgroundRadialColor: #333;
+
+/* Header */
+@headerButtonHoverBackground: fade(@shadowColor, 8%);
+@headerButtonActiveBackground: fade(@shadowColor, 16%);
+
+/* Buttons */
+@formButtonBorderColor: #222;
+@formButtonBackground: rgba(255, 255, 255, 0.1);
+@formButtonHoverBackground: rgba(255, 255, 255, 0.2);
+
+/* Toolbar */
+@toolbarColor: #444;
+
+/* Text Input */
+@inputBackground: fade(@shadowColor, 20%);
+@inputShadow: inset 0 0.05rem 0.1rem fade(@shadowColor, 30%), 0 0.05rem 0 @chromeReflectionColor;
+
+/* popups */
+@tooltipFontColor: @chromeFontColor;
+
+/* LightBox */
+@lightboxIconColor: @chromeFontColor;
+
+/* toast */
+@toastFontColor: @chromeFontColor;
+@toastSubFontColor: @chromeSubFontColor;
+@toastInfoIconColor: @chromeSubFontColor;
+@toastErrorIconColor: @chromeFontColor;
