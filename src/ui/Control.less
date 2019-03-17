@@ -1,0 +1,30 @@
+@keyframes nodeInserted {
+	from {
+		outline-color: #fff;
+	}
+	to {
+		outline-color: #000;
+	}
+}
+
+.element-inserted {
+	animation-duration: 0.01s;
+	animation-name: nodeInserted;
+}
+
+.disabled {
+	opacity: 0.25 !important;
+	cursor: auto;
+	pointer-events: none;
+	user-select: none;
+	outline: none;
+}
+
+.fade-initial {
+	opacity: 0.01;
+	transition: opacity @animationDuration @easing;
+}
+
+.fade-in {
+	opacity: 1;
+}

@@ -1,0 +1,12 @@
+\.idea/
+coverage/
+docs/
+tests/
+*.hbs
+.browserslistrc
+.eslintrc.json
+.travis.yml
+karma.conf.js
+testRunner.config.js
+wallaby.conf.js
+.git
