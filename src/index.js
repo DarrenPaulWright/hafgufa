@@ -13,6 +13,8 @@ export { default as Resizer } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 
+export { default as IsWorking } from './ui/IsWorking';
+
 export { default as FocusMixin } from './ui/mixins/FocusMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';

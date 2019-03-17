@@ -1,0 +1,111 @@
+import { CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { ABSOLUTE_CLASS } from '../utility/domConstants';
+import objectHelper from '../utility/objectHelper';
+import Control from './Control';
+import controlTypes from './controlTypes';
+import Div from './elements/Div';
+import Label from './elements/Label';
+import './IsWorking.less';
+import DelayedRenderAddon from './mixins/DelayedRenderAddon';
+
+const IS_WORKING_CLASS = ABSOLUTE_CLASS + 'is-working';
+const MEDIUM_CLASS = 'medium';
+const SMALL_CLASS = 'small';
+
+const SMALL_CIRCLE_THRESHOLD = new CssSize('8rem');
+const MEDIUM_CIRCLE_THRESHOLD = new CssSize('16rem');
+
+const setSize = function() {
+	const self = this;
+	const height = self.borderHeight();
+	const minSize = Math.min(height, self.borderWidth());
+	let newSize = 3;
+
+	if (minSize < SMALL_CIRCLE_THRESHOLD.toPixels(true)) {
+		newSize = 1;
+	}
+	else if (minSize < MEDIUM_CIRCLE_THRESHOLD.toPixels(true)) {
+		newSize = 2;
+	}
+	if (newSize !== self[CURRENT_SIZE]) {
+		self[CURRENT_SIZE] = newSize;
+		self
+			.classes(SMALL_CLASS, newSize === 1)
+			.classes(MEDIUM_CLASS, newSize === 2);
+	}
+};
+
+const ANIMATION_DIV = Symbol();
+const LABEL = Symbol();
+const CURRENT_SIZE = Symbol();
+
+/**
+ * <p>Displays an animation while isWorking is true.</p>
+ * @class IsWorking
+ * @extends Control
+ * @constructor
+ *
+ * @param {Object}        settings            - Accepts all controlBase settings plus:
+ * @param {String}        settings.label
+ * @param {Boolean}       settings.isWorking
+ */
+export default class IsWorking extends Control {
+	constructor(settings = {}) {
+		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.fade = enforce.boolean(settings.fade, true);
+
+		super(controlTypes.IS_WORKING, settings);
+
+		const self = this;
+		self[CURRENT_SIZE] = 3;
+		DelayedRenderAddon.call(self, () => {
+			self[ANIMATION_DIV] = new Div({
+				container: self
+			});
+
+			self.onResize(setSize);
+			self.resize(true)
+				.onRemove(() => {
+					self[ANIMATION_DIV].remove();
+				});
+		});
+
+		objectHelper.applySettings(self, settings, false, ['height', 'width']);
+
+		self
+			.addClass(IS_WORKING_CLASS)
+			.onRemove(() => {
+				self.label('');
+			});
+	}
+}
+
+Object.assign(IsWorking.prototype, {
+	/**
+	 * Set or Get the label of this control.
+	 * @method label
+	 * @member module:IsWorking
+	 * @instance
+	 * @param {String} newLabel
+	 * @returns {String|this}
+	 */
+	label: method.string({
+		set: function(label) {
+			if (label) {
+				if (!this[LABEL]) {
+					this[LABEL] = new Label({
+						container: this.element()
+					});
+				}
+				this[LABEL].content(label);
+			}
+			else {
+				if (this[LABEL]) {
+					this[LABEL].remove();
+					this[LABEL] = null;
+				}
+			}
+		}
+	})
+});

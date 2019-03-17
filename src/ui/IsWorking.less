@@ -1,0 +1,32 @@
+
+.is-working {
+	background: @isWorkingBackground;
+
+	> * {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	> div {
+		width: 8rem;
+		height: 8rem;
+	}
+
+	&.medium {
+		> div {
+			width: 4rem;
+			height: 4rem;
+		}
+	}
+
+	&.small {
+		> div {
+			width: 2rem;
+			height: 2rem;
+		}
+	}
+
+	.isWorkingEx();
+}
