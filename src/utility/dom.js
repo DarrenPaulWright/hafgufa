@@ -348,6 +348,50 @@ const dom = {
 		return /<[a-z][\s\S]*>|\&|null/i.test(input);
 	},
 	/**
+	 * Adds string content to an element. If the string has HTML in it, then innerHTML is used.
+	 *
+	 * @method content
+	 * @member module:dom
+	 * @static
+	 *
+	 * @param {element} element
+	 * @param {String} content
+	 * @param {String} [doPrepend] - false will append, true will prepend, undefined will replace all
+	 *
+	 * @returns {dom}
+	 */
+	content: function(element, content, doPrepend) {
+		element = dom.getElement(element, true);
+
+		if (element) {
+			if (doPrepend === undefined) {
+				dom.empty(element);
+			}
+			if (content === undefined) {
+				content = '';
+			}
+
+			if (isElement(content) || (content && content.element)) {
+				if (doPrepend === true) {
+					dom.prependTo(element, content);
+				}
+				else {
+					dom.appendTo(element, content);
+				}
+			}
+			else {
+				if (doPrepend === true) {
+					element.insertAdjacentHTML(INSERT_HTML_BEGIN, content);
+				}
+				else {
+					element.insertAdjacentHTML(INSERT_HTML_END, content);
+				}
+			}
+		}
+
+		return dom;
+	},
+	/**
 	 * Remove the content of an element
 	 *
 	 * @method empty

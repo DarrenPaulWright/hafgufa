@@ -6,7 +6,7 @@ import Control from './../Control';
 /**
  * <p>Display a span element.</p>
  *
- * @module Span
+ * @class Div
  * @extends Control
  * @constructor
  *

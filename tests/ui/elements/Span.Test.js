@@ -1,4 +1,4 @@
-import Span from '../../../src/ui/elements/Span';
+import { Span } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlBaseTests from '../ControlBaseTests';
 

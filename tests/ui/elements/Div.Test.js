@@ -1,4 +1,4 @@
-import Div from '../../../src/ui/elements/Div';
+import { Div } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlBaseTests from '../ControlBaseTests';
 

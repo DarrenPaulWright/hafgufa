@@ -13,7 +13,7 @@ const REMOVE_DELAY = Symbol();
 
 /**
  * <p>Adds remove methods to a module.</p>
- * @module Removable
+ * @class Removable
  * @constructor
  */
 export default class Removable {

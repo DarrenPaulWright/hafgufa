@@ -1,0 +1,188 @@
+@import (reference) '../mixins.less';
+
+button {
+	cursor: pointer;
+	margin: 0;
+	transition: border-color @animationDuration @easing, box-shadow @animationDuration @easing;
+	.overflowEllipsis();
+
+	color: @buttonFontColor;
+	font: @buttonFont;
+	text-decoration: none;
+	border: none;
+
+	&::-moz-focus-inner {
+		padding: 0;
+		border: 0
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	span {
+		margin: 0 @buttonItemSpacing / 2;
+	}
+
+	> .icon {
+		width: @buttonIconWidth;
+		margin: 0 @buttonItemSpacing / 2;
+	}
+
+	img {
+		display: inline-block;
+		width: @buttonIconWidth;
+		height: @buttonIconWidth;
+		margin: 0 @buttonItemSpacing / 2;
+		vertical-align: middle;
+	}
+
+	&.icon-top-bottom {
+		text-align: center;
+
+		> .icon, img {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	.buttonEx();
+}
+
+.empty-button {
+	border: none;
+	background: none;
+	padding: 0;
+
+	> .icon {
+		text-shadow: none;
+		color: @chromeFontColor;
+	}
+
+	&:hover, &:active, &:focus {
+		background: none;
+		box-shadow: none;
+		outline: none;
+	}
+}
+
+.form-button, .action-button {
+	display: inline-block;
+	margin-right: @formButtonMarginRight;
+	padding: @formButtonPadding;
+
+	background: @formButtonBackground;
+	border-radius: @formButtonCornerRadius;
+	border: @formButtonBorder;
+	box-shadow: @formButtonShadow;
+
+	&:hover, &:focus {
+		background: @formButtonHoverBackground;
+	}
+
+	&:active {
+		background: @formButtonActiveBackground;
+		box-shadow: @formButtonActiveShadow;
+	}
+
+	&.selected {
+		padding: @formButtonSelectedPadding;
+		color: @formButtonSelectedFontColor;
+		box-shadow: @formButtonSelectedShadow;
+		text-shadow: @formButtonSelectedTextShadow;
+		background: @formButtonSelectedBackground;
+
+		border: @formButtonSelectedBorder;
+		border-image: @formButtonSelectedBorderImage;
+
+		.icon {
+			color: @formButtonSelectedFontColor;
+			text-shadow: @formButtonSelectedTextShadow;
+		}
+
+		&:hover, &:focus {
+			background: @formButtonSelectedHoverBackground;
+		}
+	}
+}
+
+.form-button {
+	text-shadow: @formButtonTextShadow;
+
+	.icon {
+		color: @formButtonIconColor;
+		text-shadow: @formButtonIconShadow;
+	}
+}
+
+.action-button {
+	color: @actionButtonFontColor;
+	background: @actionButtonBackground;
+
+	.icon {
+		> .inverse {
+			color: @actionButtonInverseIconColor;
+		}
+	}
+
+	&:hover, &:focus {
+		background: @actionButtonHoverBackground;
+	}
+}
+
+.popup-button {
+	padding-right: @popupButtonCaretWidth - (@buttonItemSpacing / 2) !important;
+	position: relative;
+	text-align: left;
+
+	&.icon-top-bottom {
+		text-align: left;
+
+		> .icon, img {
+			margin: 0;
+		}
+	}
+
+	&:after {
+		content: @caretDownIcon;
+		position: absolute;
+		top: 50%;
+		right: 0;
+		transform: translateY(-50%);
+		width: @popupButtonCaretWidth;
+		text-align: center;
+		opacity: @popupButtonCaretOpacity;
+	}
+
+	&.selected:after {
+		content: @caretUpIcon;
+	}
+}
+
+.icon-button {
+	padding: @iconButtonPadding;
+	vertical-align: middle;
+	opacity: @iconButtonOpacity;
+	background: transparent;
+	transition: opacity @animationDuration @easing;
+
+	&:hover, &:focus, &.hovered {
+		opacity: @iconButtonHoverOpacity;
+	}
+
+	&:active {
+		opacity: @iconButtonActiveOpacity;
+	}
+
+	&.fade-initial {
+		opacity: 0.01;
+	}
+
+	&.fade-in {
+		opacity: @iconButtonOpacity;
+
+		&:hover, &:focus, &.hovered {
+			opacity: @iconButtonHoverOpacity;
+		}
+	}
+}

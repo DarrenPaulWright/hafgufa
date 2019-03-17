@@ -1,0 +1,28 @@
+
+.resizer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: transparent;
+
+	&.vertical {
+		cursor: col-resize;
+		width: 0.4rem;
+		margin-left: -0.2rem;
+		padding: 0 0.15rem;
+	}
+
+	&.horizontal {
+		cursor: row-resize;
+		height: 0.4rem;
+		margin-top: -0.2rem;
+		padding: 0.15rem 0;
+	}
+
+	&:after {
+		content: '';
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+}

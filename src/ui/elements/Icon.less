@@ -1,0 +1,94 @@
+
+.icon {
+	position: relative;
+	display: inline-block;
+	width: @iconWidth;
+	height: 1em;
+	font: @iconFont;
+	font-size: inherit;
+	color: @iconColor;
+	text-align: center;
+	vertical-align: middle;
+
+	> .icon {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		text-align: center;
+	}
+
+	> .icon:nth-of-type(2) {
+		font-size: @iconStackedSize;
+		line-height: round(1 / @iconStackedSize, 2);
+	}
+
+	> .inverse {
+		color: @iconInverseColor;
+	}
+
+	&.text {
+		font: @iconTextFont;
+		margin: @iconTextMargin;
+	}
+
+	.sub-icon {
+		font-size: @subIconSize;
+		margin: @subIconMargin;
+		color: @subIconColor;
+		line-height: inherit;
+
+		.icon {
+			color: @subIconStackedFirstColor;
+		}
+
+		.inverse {
+			color: @subIconStackedSecondColor;
+		}
+	}
+
+	&.icon-1x {
+		font-size: @icon1xSize;
+	}
+
+	&.icon-lg {
+		font-size: @iconLgSize;
+	}
+
+	&.icon-2x {
+		font-size: @icon2xSize;
+	}
+
+	&.icon-3x {
+		font-size: @icon3xSize;
+	}
+
+	&.icon-4x {
+		font-size: @icon4xSize;
+	}
+
+	&.icon-5x {
+		font-size: @icon5xSize;
+	}
+}
+
+.inverse {
+	.icon {
+		color: @iconInverseColor;
+
+		> .inverse {
+			color: @iconInverseInverseColor;
+		}
+
+		.sub-icon {
+			color: @subIconInverseColor;
+
+			.icon {
+				color: @iconInverseInverseColor;
+			}
+
+			.inverse {
+				color: @subIconInverseColor;
+			}
+		}
+	}
+}

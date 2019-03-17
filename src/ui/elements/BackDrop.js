@@ -1,0 +1,31 @@
+import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../../utility/domConstants';
+import objectHelper from '../../utility/objectHelper';
+import controlTypes from '../controlTypes';
+import Control from './../Control';
+import './BackDrop.less';
+
+const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
+
+/**
+ * <p>Display a backdrop that removes itself when clicked.</p>
+ *
+ * @class BackDrop
+ * @extends Control
+ * @constructor
+ *
+ * @param {Object} settings
+ */
+export default class BackDrop extends Control {
+	constructor(settings = {}) {
+		settings.container = settings.container || BODY;
+		settings.fade = true;
+
+		super(controlTypes.BACK_DROP, settings);
+
+		this.addClass(BACKDROP_CLASS);
+
+		objectHelper.applySettings(this, settings);
+
+		this.on(CLICK_EVENT, this.remove);
+	}
+}

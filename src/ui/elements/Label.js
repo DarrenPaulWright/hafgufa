@@ -1,44 +1,44 @@
 import dom from '../../utility/dom';
-import { SPAN } from '../../utility/domConstants';
+import { LABEL } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 import { method } from 'type-enforcer';
 
 /**
- * <p>Display a span element.</p>
+ * <p>Display a label element.</p>
  *
- * @class Span
+ * @class Label
  * @extends Control
  * @constructor
  *
  * @param {Object} settings
  * @param {String} [settings.text]
  */
-export default class Span extends Control {
+export default class Label extends Control {
 	constructor(settings = {}) {
-		settings.element = dom.buildNew('', SPAN);
+		settings.element = dom.buildNew('', LABEL);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.SPAN, settings);
+		super(controlTypes.LABEL, settings);
 
 		objectHelper.applySettings(this, settings);
 	}
 }
 
-Object.assign(Span.prototype, {
+Object.assign(Label.prototype, {
 	/**
-	 * Set or get the span text.
+	 * Set or get the label content.
 	 *
-	 * @method text
-	 * @member module:Span
+	 * @method content
+	 * @member module:Label
 	 * @instance
 	 *
 	 * @param {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */
-	text: method.string({
+	content: method.string({
 		set: function(text) {
 			dom.content(this, text);
 		}

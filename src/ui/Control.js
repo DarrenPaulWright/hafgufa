@@ -128,7 +128,8 @@ const setResizeEvent = function() {
 /**
  * The base class for a control
  *
- * @module Control
+ * @class Control
+ * @extends Removable
  * @constructor
  *
  * @param {string}        type
