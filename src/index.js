@@ -2,6 +2,7 @@ export { default as theme } from './ui/themes/theme';
 
 export { default as controlTypes } from './ui/controlTypes';
 export { default as Control } from './ui/Control';
+export { default as ControlManager } from './utility/ControlManager';
 export { default as ControlRecycler } from './ui/ControlRecycler';
 
 export { default as BackDrop } from './ui/elements/BackDrop';
