@@ -9,7 +9,6 @@ const files = testRunnerConfig.getWallabyFiles(config, {
 	specs: (file) => ({pattern: file, instrument: false, load: false})
 });
 
-
 module.exports = function(wallaby) {
 	const webpackPostprocessor = wallabyWebpack({
 		optimization: {
@@ -50,7 +49,7 @@ module.exports = function(wallaby) {
 		setup: function() {
 			window.__moduleBundler.loadTests();
 		},
-		lowCoverageThreshold: 99,
-		debug: true
+		// debug: true,
+		lowCoverageThreshold: 99
 	};
 };
