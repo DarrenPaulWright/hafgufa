@@ -8,6 +8,7 @@ export { default as ControlRecycler } from './ui/ControlRecycler';
 export { default as BackDrop } from './ui/elements/BackDrop';
 export { default as Button } from './ui/elements/Button';
 export { default as Div } from './ui/elements/Div';
+export { default as HyperLink } from './ui/elements/HyperLink';
 export { default as Icon, ICON_SIZES } from './ui/elements/Icon';
 export { FIT, default as Image } from './ui/elements/Image';
 export { default as Input } from './ui/elements/Input';

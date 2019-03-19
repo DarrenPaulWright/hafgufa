@@ -270,24 +270,14 @@ export default function ControlBaseTests(Control, testUtil, settings = {}) {
 					width: TEST_WIDTH
 				}));
 
-				if (window.control.borderWidth) {
-					assert.equal(window.control.borderWidth(), parseInt(TEST_WIDTH, 10));
-				}
-				else {
-					assert.equal(window.control.width(), parseInt(TEST_WIDTH, 10));
-				}
+				assert.equal(window.control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 
 			it('should have a width value if the width method was set', () => {
 				window.control = new Control(buildSettings())
 					.width(TEST_WIDTH);
 
-				if (window.control.borderWidth) {
-					assert.equal(window.control.borderWidth(), parseInt(TEST_WIDTH, 10));
-				}
-				else {
-					assert.equal(window.control.width(), parseInt(TEST_WIDTH, 10));
-				}
+				assert.equal(window.control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 		});
 	};
@@ -361,24 +351,14 @@ export default function ControlBaseTests(Control, testUtil, settings = {}) {
 					height: TEST_HEIGHT
 				}));
 
-				if (window.control.borderHeight) {
-					assert.equal(window.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
-				}
-				else {
-					assert.equal(window.control.height(), parseInt(TEST_HEIGHT, 10));
-				}
+				assert.equal(window.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 
 			it('should have a height value if the height method was set', () => {
 				window.control = new Control(buildSettings())
 					.height(TEST_HEIGHT);
 
-				if (window.control.borderHeight) {
-					assert.equal(window.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
-				}
-				else {
-					assert.equal(window.control.height(), parseInt(TEST_HEIGHT, 10));
-				}
+				assert.equal(window.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 		});
 	};

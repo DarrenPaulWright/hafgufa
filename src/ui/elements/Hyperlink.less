@@ -1,0 +1,15 @@
+
+a {
+	cursor: pointer;
+
+	&, &:link, &:visited, &:active {
+		font: @hyperlinkFont;
+		color: @hyperlinkColor;
+		text-decoration: @hyperlinkTextDecoration;
+	}
+
+	&:hover {
+		color: @hyperlinkHoverColor;
+		text-decoration: @hyperlinkHoverTextDecoration;
+	}
+}
