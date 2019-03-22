@@ -1,16 +1,16 @@
+import { enforce, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ALT, BUTTON, INPUT_TYPE, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, TITLE } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
-import controlTypes from '../controlTypes';
-import Icon, { ICON_SIZES } from './Icon';
-import Span from './Span';
-import ControlManager from '../../utility/ControlManager';
-import Image from './Image';
-import './Button.less';
-import { enforce, Enum, method } from 'type-enforcer';
 import Control from '../Control';
-import OnClickMixin from '../mixins/OnClickMixin';
+import ControlManager from '../ControlManager';
+import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
+import OnClickMixin from '../mixins/OnClickMixin';
+import './Button.less';
+import Icon, { ICON_SIZES } from './Icon';
+import Image from './Image';
+import Span from './Span';
 
 const CONTROLS = Symbol();
 
