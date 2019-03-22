@@ -1,6 +1,6 @@
+import { method } from 'type-enforcer';
 import { CLICK_EVENT } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
-import { method } from 'type-enforcer';
 
 const HAS_CLICK_EVENT = Symbol();
 
@@ -92,7 +92,7 @@ const OnClickMixin = (Base) => {
 		 * @member module:OnClickAddon
 		 * @instance
 		 *
-		 * @param {string|element} content
+		 * @arg {string|element} content
 		 *
 		 * @returns {string|element|this}
 		 */
@@ -118,7 +118,7 @@ const OnClickMixin = (Base) => {
 		 * @method onClick
 		 * @member module:OnClickAddon
 		 * @instance
-		 * @param {Function} [callback]
+		 * @arg {Function} [callback]
 		 * @returns {Function|this}
 		 */
 		onClick: method.function({

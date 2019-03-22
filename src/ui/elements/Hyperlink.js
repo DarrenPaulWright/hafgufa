@@ -14,8 +14,8 @@ import './Hyperlink.less';
  * @extends ControlBase
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.text]
+ * @arg {Object} settings
+ * @arg {String} [settings.text]
  */
 export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {
@@ -35,7 +35,7 @@ Object.assign(Hyperlink.prototype, {
 	 * @member module:Hyperlink
 	 * @instance
 	 *
-	 * @param {string|element} content
+	 * @arg {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */

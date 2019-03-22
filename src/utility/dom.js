@@ -12,10 +12,8 @@ import {
 	DOCUMENT,
 	EMPTY_STRING,
 	HEIGHT,
-	IMAGE,
 	LEFT,
 	LINE_HEIGHT,
-	LOAD_EVENT,
 	MARGIN,
 	MARGIN_BOTTOM,
 	MARGIN_LEFT,
@@ -31,7 +29,6 @@ import {
 	PADDING_RIGHT,
 	PADDING_TOP,
 	RIGHT,
-	SOURCE,
 	SPACE,
 	TOP,
 	WIDTH,
@@ -69,7 +66,8 @@ const cssPropertiesToParseAsInt = [
 	PADDING_LEFT
 ];
 
-const parseStyle = (element, styleName) => parseInt(WINDOW.getComputedStyle(element).getPropertyValue(styleName) || 0, 10);
+const parseStyle = (element, styleName) => parseInt(WINDOW.getComputedStyle(element)
+	.getPropertyValue(styleName) || 0, 10);
 
 const INSERT_HTML_BEGIN = 'afterbegin';
 const INSERT_HTML_END = 'beforeend';
@@ -105,8 +103,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {String}  [className] - A css class to apply to the new element.
-	 * @param {String}  [element=div] - The name of an HTML element.
+	 * @arg {String}  [className] - A css class to apply to the new element.
+	 * @arg {String}  [element=div] - The name of an HTML element.
 	 *
 	 * @returns {Object} - Reference to an element NOT attached to the DOM.
 	 */
@@ -133,9 +131,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object} container - DOM element to prepend the new element to.
-	 * @param {String} [className] - A css class to apply to the new element.
-	 * @param {String} [element=div] - The name of an HTML element.
+	 * @arg {Object} container - DOM element to prepend the new element to.
+	 * @arg {String} [className] - A css class to apply to the new element.
+	 * @arg {String} [element=div] - The name of an HTML element.
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
@@ -149,9 +147,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object} container - DOM element to append to the new element to.
-	 * @param {String} [className] - A css class to apply to the new element.
-	 * @param {String} [element=div] - The name of an HTML element.
+	 * @arg {Object} container - DOM element to append to the new element to.
+	 * @arg {String} [className] - A css class to apply to the new element.
+	 * @arg {String} [element=div] - The name of an HTML element.
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
@@ -165,9 +163,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object} container - DOM element to append to the new element to.
-	 * @param {String} [className] - A css class to apply to the new element.
-	 * @param {String} [element=div] - The name of an HTML element.
+	 * @arg {Object} container - DOM element to append to the new element to.
+	 * @arg {String} [className] - A css class to apply to the new element.
+	 * @arg {String} [element=div] - The name of an HTML element.
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
@@ -181,9 +179,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object} container - DOM element to append to the new element to.
-	 * @param {String} [className] - A css class to apply to the new element.
-	 * @param {String} [element=div] - The name of an HTML element.
+	 * @arg {Object} container - DOM element to append to the new element to.
+	 * @arg {String} [className] - A css class to apply to the new element.
+	 * @arg {String} [element=div] - The name of an HTML element.
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
@@ -197,8 +195,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {object} container - The parent element
-	 * @param {element} element   - The element to be prepended
+	 * @arg {object} container - The parent element
+	 * @arg {element} element   - The element to be prepended
 	 */
 	prependTo: function(container, element) {
 		container = dom.getElement(container, true);
@@ -216,8 +214,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {object} container - The parent element
-	 * @param {element} element   - The element to be prepended
+	 * @arg {object} container - The parent element
+	 * @arg {element} element   - The element to be prepended
 	 */
 	appendTo: function(container, element) {
 		container = dom.getElement(container, true);
@@ -235,8 +233,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {object} container - The parent element
-	 * @param {element} element   - The element to be prepended
+	 * @arg {object} container - The parent element
+	 * @arg {element} element   - The element to be prepended
 	 */
 	appendBefore: function(container, element) {
 		container = dom.getElement(container, true);
@@ -254,8 +252,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {object} container - The parent element
-	 * @param {element} element   - The element to be prepended
+	 * @arg {object} container - The parent element
+	 * @arg {element} element   - The element to be prepended
 	 */
 	appendAfter: function(container, element) {
 		container = dom.getElement(container, true);
@@ -273,7 +271,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {string} query
+	 * @arg {string} query
 	 *
 	 * @returns {element}
 	 */
@@ -287,7 +285,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
+	 * @arg {element} element
 	 *
 	 * @returns {boolean}
 	 */
@@ -301,7 +299,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
+	 * @arg {element} element
 	 *
 	 * @returns {boolean}
 	 */
@@ -325,7 +323,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {String} input
+	 * @arg {String} input
 	 *
 	 * @returns {string}
 	 */
@@ -340,7 +338,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {String} input
+	 * @arg {String} input
 	 *
 	 * @returns {boolean}
 	 */
@@ -354,9 +352,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
-	 * @param {String} content
-	 * @param {String} [doPrepend] - false will append, true will prepend, undefined will replace all
+	 * @arg {element} element
+	 * @arg {String} content
+	 * @arg {String} [doPrepend] - false will append, true will prepend, undefined will replace all
 	 *
 	 * @returns {dom}
 	 */
@@ -398,7 +396,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
+	 * @arg {element} element
 	 *
 	 * @returns {dom}
 	 */
@@ -418,8 +416,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {String} link
-	 * @param {String} [text] - Visible text, if not provided then link is used.
+	 * @arg {String} link
+	 * @arg {String} [text] - Visible text, if not provided then link is used.
 	 *
 	 * @returns {element}
 	 */
@@ -441,7 +439,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {String} email
+	 * @arg {String} email
 	 *
 	 * @returns {element}
 	 */
@@ -458,8 +456,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
-	 * @param {String} className
+	 * @arg {element} element
+	 * @arg {String} className
 	 *
 	 * @returns {dom}
 	 */
@@ -493,8 +491,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
-	 * @param {String} className
+	 * @arg {element} element
+	 * @arg {String} className
 	 *
 	 * @returns {dom}
 	 */
@@ -534,9 +532,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object}  element
-	 * @param {String}  className
-	 * @param {Boolean} [performAdd=true] - True will add the provided classes to the element, false will remove the
+	 * @arg {Object}  element
+	 * @arg {String}  className
+	 * @arg {Boolean} [performAdd=true] - True will add the provided classes to the element, false will remove the
 	 *     classes.
 	 */
 	classes: function(element, className, performAdd) {
@@ -562,9 +560,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
-	 * @param {String} property - The style property to get or set
-	 * @param {String} [value]  - If provided then set this as the value of the property, if not provided then return
+	 * @arg {element} element
+	 * @arg {String} property - The style property to get or set
+	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
 	 *     the computed style.
 	 *
 	 * @returns {dom}
@@ -608,9 +606,9 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element
-	 * @param {string|object} attributeName - The attribute to get or set. Can be an object with multiple values
-	 * @param {string} [attributeValue]  - If provided then set this as the value of the attribute, if not provided
+	 * @arg {element} element
+	 * @arg {string|object} attributeName - The attribute to get or set. Can be an object with multiple values
+	 * @arg {string} [attributeValue]  - If provided then set this as the value of the attribute, if not provided
 	 *     then return the current value.
 	 *
 	 * @returns {dom}
@@ -641,8 +639,8 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object}   element   - Must be a reference to the actual element
-	 * @param {Function} callback
+	 * @arg {Object}   element   - Must be a reference to the actual element
+	 * @arg {Function} callback
 	 */
 	addDomInsertionCallback: function(element, callback) {
 		element = dom.getElement(element);
@@ -674,7 +672,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {Object}   element   - Must be a reference to the actual element
+	 * @arg {Object}   element   - Must be a reference to the actual element
 	 */
 	removeDomInsertionCallback: function(element) {
 		element = dom.getElement(element);
@@ -688,7 +686,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 *
-	 * @param {element} element  - DOM element
+	 * @arg {element} element  - DOM element
 	 */
 	remove: function(element) {
 		element = dom.getElement(element);
@@ -743,7 +741,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -768,7 +766,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -793,8 +791,8 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {Object}  element
-		 * @param {boolean} [toBody=false] - if true then calculates offset from the body
+		 * @arg {Object}  element
+		 * @arg {boolean} [toBody=false] - if true then calculates offset from the body
 		 *
 		 * @returns {Number}
 		 */
@@ -810,8 +808,8 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {Object}  element
-		 * @param {boolean} [toBody=false] - if true then calculates offset from the body
+		 * @arg {Object}  element
+		 * @arg {boolean} [toBody=false] - if true then calculates offset from the body
 		 *
 		 * @returns {Number}
 		 */
@@ -827,7 +825,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -841,7 +839,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -865,7 +863,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -886,7 +884,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -907,7 +905,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -928,7 +926,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */
@@ -943,7 +941,7 @@ const dom = {
 		 * @member module:dom.get
 		 * @static
 		 *
-		 * @param {element} element
+		 * @arg {element} element
 		 *
 		 * @returns {Number}
 		 */

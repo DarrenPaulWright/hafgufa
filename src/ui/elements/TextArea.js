@@ -12,8 +12,8 @@ import { method } from 'type-enforcer';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.rows]
+ * @arg {Object} settings
+ * @arg {String} [settings.rows]
  */
 export default class TextArea extends Control {
 	constructor(settings = {}) {
@@ -34,7 +34,7 @@ Object.assign(TextArea.prototype, {
 	 * @member module:TextArea
 	 * @instance
 	 *
-	 * @param {int} rows
+	 * @arg {int} rows
 	 *
 	 * @returns {int|this}
 	 */

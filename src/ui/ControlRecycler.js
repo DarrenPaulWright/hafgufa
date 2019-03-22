@@ -1,6 +1,6 @@
 import { clone } from 'object-agent';
-import objectHelper from '../utility/objectHelper';
 import { method } from 'type-enforcer';
+import objectHelper from '../utility/objectHelper';
 
 const VISIBLE_CONTROLS = Symbol();
 const DISCARDED_CONTROLS = Symbol();
@@ -8,9 +8,9 @@ const DISCARDED_CONTROLS = Symbol();
 /**
  * Discard a control at a specific index of visibleControls.
  * @function discardControl
- * @param {Number} index
- * @param {array} visibleControls
- * @param {array} discardedControls
+ * @arg {Number} index
+ * @arg {array} visibleControls
+ * @arg {array} discardedControls
  */
 const discardControl = function(index) {
 	const control = this[VISIBLE_CONTROLS][index];
@@ -39,7 +39,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method control
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {constructor} [newControl]
+	 * @arg {constructor} [newControl]
 	 * @returns {constructor|this}
 	 */
 	control: method.function(),
@@ -48,7 +48,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method defaultSettings
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {Object} [newDefaultSettings]
+	 * @arg {Object} [newDefaultSettings]
 	 * @returns {Object|this}
 	 */
 	defaultSettings: method.object({
@@ -60,7 +60,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getRecycledControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param   {Boolean} [doPrepend=false]
+	 * @arg   {Boolean} [doPrepend=false]
 	 * @returns {Object}
 	 */
 	getRecycledControl: function(doPrepend) {
@@ -85,7 +85,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {String} [ID]
+	 * @arg {String} [ID]
 	 * @returns {Object}
 	 */
 	getControl: function(ID) {
@@ -117,7 +117,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method each
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {Function} [callback] - provides a reference to the control and the index
+	 * @arg {Function} [callback] - provides a reference to the control and the index
 	 * @returns {Object[]}
 	 */
 	each: function(callback) {
@@ -131,7 +131,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 *
-	 * @param {Function} [callback] - provides a reference to the control and the index
+	 * @arg {Function} [callback] - provides a reference to the control and the index
 	 *
 	 * @returns {Object[]}
 	 */
@@ -144,7 +144,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method discardControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {String} [ID]
+	 * @arg {String} [ID]
 	 */
 	discardControl: function(ID) {
 		if (ID) {
@@ -174,7 +174,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getControlAtOffset
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {Number} [controlOffset]
+	 * @arg {Number} [controlOffset]
 	 * @returns {Object}
 	 */
 	getControlAtOffset: function(controlOffset) {

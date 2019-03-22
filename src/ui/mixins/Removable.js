@@ -44,7 +44,7 @@ Object.assign(Removable.prototype, {
 	 * @method onPreRemove
 	 * @member module:Removable
 	 * @instance
-	 * @param {Function} callback
+	 * @arg {Function} callback
 	 * @returns {this}
 	 */
 	onPreRemove: function(callback) {
@@ -65,7 +65,7 @@ Object.assign(Removable.prototype, {
 	 * @method onRemove
 	 * @member module:Removable
 	 * @instance
-	 * @param {Function} callback
+	 * @arg {Function} callback
 	 * @returns {this}
 	 */
 	onRemove: function(callback) {

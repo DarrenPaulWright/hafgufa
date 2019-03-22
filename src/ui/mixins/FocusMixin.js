@@ -1,7 +1,7 @@
 import { defer } from 'async-agent';
+import { event } from 'd3';
 import { method } from 'type-enforcer';
 import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../../utility/domConstants';
-import { event } from 'd3';
 
 const MAIN_CONTROL = Symbol();
 const SUB_CONTROL = Symbol();
@@ -71,7 +71,7 @@ const setCallback = function(control, eventName, callback) {
  * @module FocusMixin
  * @constructor
  *
- * @param {class} [Base]
+ * @arg {class} [Base]
  */
 const FocusMixin = (Base) => {
 	class Focus extends Base {
@@ -93,7 +93,7 @@ const FocusMixin = (Base) => {
 		/**
 		 * Set focus on the text input element.
 		 * @method focus
-		 * @member module:FocusAddon
+		 * @member module:FocusMixin
 		 * @instance
 		 */
 		focus() {
@@ -103,7 +103,7 @@ const FocusMixin = (Base) => {
 		/**
 		 * Remove focus from this control if it is focused.
 		 * @method blur
-		 * @member module:FocusAddon
+		 * @member module:FocusMixin
 		 * @instance
 		 * @returns {this}
 		 */
@@ -114,7 +114,7 @@ const FocusMixin = (Base) => {
 		/**
 		 * See if this control has focus.
 		 * @method isFocused
-		 * @member module:FocusAddon
+		 * @member module:FocusMixin
 		 * @instance
 		 * @returns {Boolean}
 		 */
@@ -144,7 +144,8 @@ const FocusMixin = (Base) => {
 				return this[GET_FOCUS](DOCUMENT.activeElement);
 			}
 
-			return this.element() ? (this.element() === DOCUMENT.activeElement || this.element().contains(DOCUMENT.activeElement)) : false;
+			return this.element() ? (this.element() === DOCUMENT.activeElement || this.element()
+				.contains(DOCUMENT.activeElement)) : false;
 		}
 	}
 
@@ -153,9 +154,9 @@ const FocusMixin = (Base) => {
 		/**
 		 * Adds a callback that is triggered when the control gets focus
 		 * @method onFocus
-		 * @member module:FocusAddon
+		 * @member module:FocusMixin
 		 * @instance
-		 * @param {Function} callback
+		 * @arg {Function} callback
 		 * @returns {queue}
 		 */
 		onFocus: method.queue({
@@ -172,9 +173,9 @@ const FocusMixin = (Base) => {
 		/**
 		 * Adds a callback that is triggered when the control loses focus
 		 * @method onBlur
-		 * @member module:FocusAddon
+		 * @member module:FocusMixin
 		 * @instance
-		 * @param {Function} callback
+		 * @arg {Function} callback
 		 * @returns {queue}
 		 */
 		onBlur: method.queue({

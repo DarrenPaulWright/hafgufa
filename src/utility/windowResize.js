@@ -1,5 +1,5 @@
-import { select } from 'd3';
 import { debounce, throttle } from 'async-agent';
+import { select } from 'd3';
 import { Queue } from 'type-enforcer';
 import dom from './dom';
 import { RESIZE_EVENT, WINDOW } from './domConstants';
@@ -42,9 +42,9 @@ export default {
 	 * @member module:windowResize
 	 * @instance
 	 *
-	 * @param {Function} callback - Callback function.
-	 * @param {Element} element - If provided then a resize event will be triggered when the element is added to the DOM
-	 * @param {string} type
+	 * @arg {Function} callback - Callback function.
+	 * @arg {Element} element - If provided then a resize event will be triggered when the element is added to the DOM
+	 * @arg {string} type
 	 *
 	 * @returns {Number} - An unique ID for this callback.
 	 */
@@ -68,7 +68,7 @@ export default {
 	 * @member module:windowResize
 	 * @instance
 	 *
-	 * @param {Number} ID - The ID returned by windowResize.add().
+	 * @arg {Number} ID - The ID returned by windowResize.add().
 	 */
 	discard: (ID) => {
 		dom.removeDomInsertionCallback(queue.discard(ID).element);
@@ -88,7 +88,7 @@ export default {
 	 * @method trigger
 	 * @member module:windowResize
 	 * @instance
-	 * @param {Number} [ID] - To trigger only a specific callback, provide the ID returned by windowResize.add().
+	 * @arg {Number} [ID] - To trigger only a specific callback, provide the ID returned by windowResize.add().
 	 *     Otherwise all callbacks are called.
 	 */
 	trigger: (ID) => {

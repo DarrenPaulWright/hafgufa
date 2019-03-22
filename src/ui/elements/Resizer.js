@@ -93,7 +93,7 @@ const measure = function() {
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @arg {Object} settings
  */
 export default class Resizer extends Control {
 	constructor(settings = {}) {
@@ -139,7 +139,7 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {string} orientation
+	 * @arg {string} orientation
 	 *
 	 * @returns {string|this}
 	 */
@@ -162,7 +162,7 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [splitOffset]
+	 * @arg {String} [splitOffset]
 	 *
 	 * @returns {String|Object}
 	 */
@@ -177,7 +177,7 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [newMinOffset]
+	 * @arg {String} [newMinOffset]
 	 *
 	 * @returns {String|Object}
 	 */
@@ -193,7 +193,7 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [maxOffset]
+	 * @arg {String} [maxOffset]
 	 *
 	 * @returns {String|Object}
 	 */

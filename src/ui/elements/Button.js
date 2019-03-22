@@ -42,18 +42,18 @@ const mouseLeaveHandler = function() {
  * @extends Control
  * @constructor
  *
- * @param {Object}        settings                    - Accepts all controlBase and formControlBase settings plus:
- * @param {function}      [settings.onClick]          - Function to be called when the button is clicked
- * @param {function}      [settings.onMouseEnter]     - Function to be called when the mouse cursor enters the button
- * @param {function}      [settings.onMouseLeave]     - Function to be called when the mouse cursor leaves the button
- * @param {String}        [settings.label]            - The button label
- * @param {String}        [settings.icon]             - The button icon
- * @param {String}        [settings.iconSize=ICON_SIZES.LARGE] - The button icon size, see Button.ICON_SIZES
- * @param {String}        [settings.image]            - The button image
- * @param {String}        [settings.isSelectable=false]
- * @param {String}        [settings.isSelected=false]
- * @param {Function}      [settings.onFocus]          - Triggered whenever the control recieves focus
- * @param {Function}      [settings.onBlur]           - Triggered whenever the control loses focus
+ * @arg {Object}        settings                    - Accepts all controlBase and formControlBase settings plus:
+ * @arg {function}      [settings.onClick]          - Function to be called when the button is clicked
+ * @arg {function}      [settings.onMouseEnter]     - Function to be called when the mouse cursor enters the button
+ * @arg {function}      [settings.onMouseLeave]     - Function to be called when the mouse cursor leaves the button
+ * @arg {String}        [settings.label]            - The button label
+ * @arg {String}        [settings.icon]             - The button icon
+ * @arg {String}        [settings.iconSize=ICON_SIZES.LARGE] - The button icon size, see Button.ICON_SIZES
+ * @arg {String}        [settings.image]            - The button image
+ * @arg {String}        [settings.isSelectable=false]
+ * @arg {String}        [settings.isSelected=false]
+ * @arg {Function}      [settings.onFocus]          - Triggered whenever the control recieves focus
+ * @arg {Function}      [settings.onBlur]           - Triggered whenever the control loses focus
  */
 export default class Button extends FocusMixin(OnClickMixin(Control)) {
 	constructor(settings = {}) {
@@ -89,7 +89,7 @@ Object.assign(Button.prototype, {
 	 * @method value
 	 * @member module:Button
 	 * @instance
-	 * @param {anything} [value]
+	 * @arg {anything} [value]
 	 * @returns {anything|this}
 	 */
 	value: method.any(),
@@ -99,7 +99,7 @@ Object.assign(Button.prototype, {
 	 * @method label
 	 * @member module:Button
 	 * @instance
-	 * @param {String} newLabel - A none-HTML string
+	 * @arg {String} newLabel - A none-HTML string
 	 * @returns {String|this}
 	 */
 	label: method.string({
@@ -129,7 +129,7 @@ Object.assign(Button.prototype, {
 	 * @method alt
 	 * @member module:Button
 	 * @instance
-	 * @param {String} newTitle - A none-HTML string
+	 * @arg {String} newTitle - A none-HTML string
 	 * @returns {this}
 	 */
 	alt: method.string({
@@ -147,7 +147,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {String} newSrc - URL for an image.
+	 * @arg {String} newSrc - URL for an image.
 	 *
 	 * @returns {String|this}
 	 */
@@ -187,7 +187,7 @@ Object.assign(Button.prototype, {
 	 * @method iconSize
 	 * @member module:Button
 	 * @instance
-	 * @param {String} [iconSize]
+	 * @arg {String} [iconSize]
 	 * @returns {String|this}
 	 */
 	iconSize: method.enum({
@@ -204,7 +204,7 @@ Object.assign(Button.prototype, {
 	 * @method iconPosition
 	 * @member module:Button
 	 * @instance
-	 * @param {String} [iconPosition]
+	 * @arg {String} [iconPosition]
 	 * @returns {String|this}
 	 */
 	iconPosition: method.enum({
@@ -227,7 +227,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {String} newSrc - URL for an image.
+	 * @arg {String} newSrc - URL for an image.
 	 *
 	 * @returns {String|this}
 	 */
@@ -265,7 +265,7 @@ Object.assign(Button.prototype, {
 	 * @method isSelectable
 	 * @member module:Button
 	 * @instance
-	 * @param {Boolean} [newisSelectable]
+	 * @arg {Boolean} [newisSelectable]
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: method.boolean({
@@ -284,7 +284,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {Boolean} [newisSelected]
+	 * @arg {Boolean} [newisSelected]
 	 *
 	 * @returns {Boolean|this}
 	 */
@@ -304,7 +304,7 @@ Object.assign(Button.prototype, {
 	 * @method onMouseEnter
 	 * @member module:Button
 	 * @instance
-	 * @param {Function} [callback]
+	 * @arg {Function} [callback]
 	 * @returns {Function|this}
 	 */
 	onMouseEnter: method.function({
@@ -319,7 +319,7 @@ Object.assign(Button.prototype, {
 	 * @method onMouseLeave
 	 * @member module:Button
 	 * @instance
-	 * @param {Function} [callback]
+	 * @arg {Function} [callback]
 	 * @returns {Function|this}
 	 */
 	onMouseLeave: method.function({

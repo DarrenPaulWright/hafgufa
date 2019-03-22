@@ -12,8 +12,8 @@ import { method } from 'type-enforcer';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.text]
+ * @arg {Object} settings
+ * @arg {String} [settings.text]
  */
 export default class Span extends Control {
 	constructor(settings = {}) {
@@ -34,7 +34,7 @@ Object.assign(Span.prototype, {
 	 * @member module:Span
 	 * @instance
 	 *
-	 * @param {string|element} content
+	 * @arg {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */

@@ -38,7 +38,7 @@ export default function DelayedRenderAddon(onRender) {
 	 * @method delay
 	 * @member module:DelayedRenderAddon
 	 * @instance
-	 * @param {number} delay
+	 * @arg {number} delay
 	 * @returns {number|this}
 	 */
 	self.delay = method.number({

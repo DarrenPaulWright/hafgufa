@@ -45,9 +45,9 @@ const CURRENT_SIZE = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object}        settings            - Accepts all controlBase settings plus:
- * @param {String}        settings.label
- * @param {Boolean}       settings.isWorking
+ * @arg {Object}        settings            - Accepts all controlBase settings plus:
+ * @arg {String}        settings.label
+ * @arg {Boolean}       settings.isWorking
  */
 export default class IsWorking extends Control {
 	constructor(settings = {}) {
@@ -87,7 +87,7 @@ Object.assign(IsWorking.prototype, {
 	 * @method label
 	 * @member module:IsWorking
 	 * @instance
-	 * @param {String} newLabel
+	 * @arg {String} newLabel
 	 * @returns {String|this}
 	 */
 	label: method.string({

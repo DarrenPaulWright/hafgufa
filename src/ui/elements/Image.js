@@ -27,9 +27,9 @@ export const FIT = new Enum({
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.source]
- * @param {String} [settings.fit]
+ * @arg {Object} settings
+ * @arg {String} [settings.source]
+ * @arg {String} [settings.fit]
  */
 export default class Image extends Control {
 	constructor(settings = {}) {
@@ -53,7 +53,7 @@ Object.assign(Image.prototype, {
 	 * @member module:Image
 	 * @instance
 	 *
-	 * @param {string} content
+	 * @arg {string} content
 	 *
 	 * @returns {string|this}
 	 */
@@ -71,7 +71,7 @@ Object.assign(Image.prototype, {
 	 * @member module:Image
 	 * @instance
 	 *
-	 * @param {string|element} content
+	 * @arg {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */

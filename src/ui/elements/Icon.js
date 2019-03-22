@@ -1,9 +1,9 @@
+import { Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import objectHelper from '../../utility/objectHelper';
+import Control from '../Control';
 import controlTypes from '../controlTypes';
 import './Icon.less';
-import { Enum, method } from 'type-enforcer';
-import Control from '../Control';
 
 const ELEMENT = 'i';
 const CORE_CLASSES = 'icon';
@@ -64,7 +64,7 @@ const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @arg {Object} settings
  */
 export default class Icon extends Control {
 	constructor(settings = {}) {
@@ -93,7 +93,7 @@ Object.assign(Icon.prototype, {
 	 * @method icon
 	 * @member module:Icon
 	 * @instance
-	 * @param {String} newIcon
+	 * @arg {String} newIcon
 	 * @returns {String|this}
 	 */
 	icon: method.string({
@@ -123,7 +123,7 @@ Object.assign(Icon.prototype, {
 	 * @method size
 	 * @member module:Icon
 	 * @instance
-	 * @param {String} newSize - Use Icon ICON_SIZES
+	 * @arg {String} newSize - Use Icon ICON_SIZES
 	 * @returns {String|this}
 	 */
 	size: method.enum({

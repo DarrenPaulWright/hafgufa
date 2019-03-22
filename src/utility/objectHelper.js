@@ -18,10 +18,10 @@ const objectHelper = {
 	 * @member module:objectHelper
 	 * @static
 	 *
-	 * @param {Object} [control] - The control to apply the settings to; Usually "self".
-	 * @param {Object} [settings]
-	 * @param {boolean} [forceSave=false]
-	 * @param {Array}  [priorityList=[]] - Array of method names to apply first, if the are actually in the settings.
+	 * @arg {Object} [control] - The control to apply the settings to; Usually "self".
+	 * @arg {Object} [settings]
+	 * @arg {boolean} [forceSave=false]
+	 * @arg {Array}  [priorityList=[]] - Array of method names to apply first, if the are actually in the settings.
 	 */
 	applySettings: function(control, settings, forceSave, priorityList = []) {
 		priorityList.forEach((method) => {
@@ -46,8 +46,8 @@ const objectHelper = {
 	 * @member module:objectHelper
 	 * @static
 	 *
-	 * @param {Object} [controlTo]
-	 * @param {Object} [controlFrom]
+	 * @arg {Object} [controlTo]
+	 * @arg {Object} [controlFrom]
 	 */
 	applyMethods: function(controlTo, controlFrom) {
 		forOwn(controlFrom, (value, key) => {
@@ -62,8 +62,8 @@ const objectHelper = {
 	 * @method resetMethods
 	 * @member module:objectHelper
 	 * @static
-	 * @param {Object} [control] - The control to apply the options to; Usually "self".
-	 * @param {Object} [methods]
+	 * @arg {Object} [control] - The control to apply the options to; Usually "self".
+	 * @arg {Object} [methods]
 	 */
 	resetMethods: function(control, methods) {
 		methods.forEach((method) => {
@@ -78,10 +78,10 @@ const objectHelper = {
 	 * @method callIfExists
 	 * @member module:objectHelper
 	 * @static
-	 * @param {Function} [func] - The control to apply the options to; Usually "self".
-	 * @param {*} [argument1]
-	 * @param {*} [argument2]
-	 * @param {*} [argument3]
+	 * @arg {Function} [func] - The control to apply the options to; Usually "self".
+	 * @arg {*} [argument1]
+	 * @arg {*} [argument2]
+	 * @arg {*} [argument3]
 	 */
 	callIfExists: callIfExists
 };

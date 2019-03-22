@@ -1,15 +1,15 @@
-import { assert } from 'chai';
 import { defer, delay } from 'async-agent';
-import { isArray } from 'type-enforcer';
-import simulant from 'simulant';
-import { CLICK_EVENT, KEY_UP_EVENT, WINDOW } from '../src/utility/domConstants';
+import { assert } from 'chai';
 import keyCodes from 'keyCodes';
+import simulant from 'simulant';
+import { isArray } from 'type-enforcer';
+import { CLICK_EVENT, KEY_UP_EVENT, WINDOW } from '../src/utility/domConstants';
 import windowResize from '../src/utility/windowResize';
 
 /**
  * basic tests for a getter/setter method on controls.
  * @function testMethod
- * @param {Object} Control
+ * @arg {Object} Control
  */
 export default function TestUtil(Control) {
 	const self = this;

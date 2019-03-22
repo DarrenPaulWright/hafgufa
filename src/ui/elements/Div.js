@@ -10,8 +10,8 @@ import Control from './../Control';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.text]
+ * @arg {Object} settings
+ * @arg {String} [settings.text]
  */
 export default class Div extends Control {
 	constructor(settings = {}) {
