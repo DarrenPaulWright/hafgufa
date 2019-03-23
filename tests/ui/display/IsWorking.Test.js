@@ -1,8 +1,8 @@
 import { assert } from 'chai';
-import { IsWorking } from '../../src';
-import query from '../query';
-import TestUtil from '../TestUtil';
-import ControlBaseTests from './ControlBaseTests';
+import { IsWorking } from '../../../src';
+import query from '../../query';
+import TestUtil from '../../TestUtil';
+import ControlBaseTests from '../ControlBaseTests';
 
 const testUtil = new TestUtil(IsWorking);
 const controlBaseTests = new ControlBaseTests(IsWorking, testUtil, {
