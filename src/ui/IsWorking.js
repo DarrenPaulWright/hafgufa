@@ -6,7 +6,7 @@ import controlTypes from './controlTypes';
 import Div from './elements/Div';
 import Label from './elements/Label';
 import './IsWorking.less';
-import DelayedRenderAddon from './mixins/DelayedRenderAddon';
+import DelayedRenderMixin from './mixins/DelayedRenderMixin';
 
 const IS_WORKING_CLASS = ABSOLUTE_CLASS + 'is-working';
 const MEDIUM_CLASS = 'medium';
@@ -49,18 +49,13 @@ const CURRENT_SIZE = Symbol();
  * @arg {String}        settings.label
  * @arg {Boolean}       settings.isWorking
  */
-export default class IsWorking extends Control {
+export default class IsWorking extends DelayedRenderMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.IS_WORKING;
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
 		settings.fade = enforce.boolean(settings.fade, true);
-
-		super(settings);
-
-		const self = this;
-		self[CURRENT_SIZE] = 3;
-		DelayedRenderAddon.call(self, () => {
+		settings.onRender = () => {
 			self[ANIMATION_DIV] = new Div({
 				container: self
 			});
@@ -70,7 +65,12 @@ export default class IsWorking extends Control {
 				.onRemove(() => {
 					self[ANIMATION_DIV].remove();
 				});
-		});
+		};
+
+		super(settings);
+
+		const self = this;
+		self[CURRENT_SIZE] = 3;
 
 		objectHelper.applySettings(self, settings, false, ['height', 'width']);
 

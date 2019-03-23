@@ -77,8 +77,8 @@ const setCallback = function(control, eventName, callback) {
  *
  * @arg {class} [Base]
  */
-const FocusMixin = (Base) => {
-	class Focus extends Base {
+export default (Base) => {
+	class FocusMixin extends Base {
 		constructor(settings = {}) {
 			super(settings);
 
@@ -155,7 +155,7 @@ const FocusMixin = (Base) => {
 		}
 	}
 
-	Object.assign(Focus.prototype, {
+	Object.assign(FocusMixin.prototype, {
 
 		/**
 		 * Adds a callback that is triggered when the control gets focus
@@ -196,7 +196,5 @@ const FocusMixin = (Base) => {
 		})
 	});
 
-	return Focus;
+	return FocusMixin;
 };
-
-export default FocusMixin;

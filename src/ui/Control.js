@@ -147,13 +147,9 @@ export default class Control extends Removable {
 		}, 10);
 
 		self.type(settings.type);
-
 		self.element(settings.element || dom.buildNew());
-		delete settings.element;
 		self.container(settings.container);
-		delete settings.container;
 		self.skipWindowResize(settings.skipWindowResize);
-		delete settings.skipWindowResize;
 
 		setResizeEvent.call(self);
 

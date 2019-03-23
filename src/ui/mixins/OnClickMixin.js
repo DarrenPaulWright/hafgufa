@@ -63,8 +63,8 @@ const addClickEvent = function() {
  * @module OnClickMixin
  * @constructor
  */
-const OnClickMixin = (Base) => {
-	class OnClick extends Base {
+export default (Base) => {
+	class OnClickMixin extends Base {
 
 		/**
 		 * Issue a click event on this control.
@@ -82,7 +82,7 @@ const OnClickMixin = (Base) => {
 		}
 	}
 
-	Object.assign(OnClick.prototype, {
+	Object.assign(OnClickMixin.prototype, {
 
 		/**
 		 * The url to navigate to.
@@ -129,7 +129,5 @@ const OnClickMixin = (Base) => {
 		})
 	});
 
-	return OnClick;
+	return OnClickMixin;
 };
-
-export default OnClickMixin;
