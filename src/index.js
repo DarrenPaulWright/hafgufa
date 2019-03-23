@@ -18,6 +18,7 @@ export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 
 export { default as Container } from './ui/layout/Container';
+export { default as Popup } from './ui/layout/Popup';
 
 export { default as IsWorking } from './ui/IsWorking';
 

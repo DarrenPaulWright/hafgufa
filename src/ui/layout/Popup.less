@@ -1,0 +1,85 @@
+
+.popup {
+	background: @popupBackground;
+	box-shadow: @popupShadow;
+	border-radius: @popupCornerRadius;
+	overflow: visible;
+
+	&.fixed-top {
+		transform: translate(0, -50%) scale(0.01);
+	}
+
+	&.fixed-top-right {
+		transform: translate(50%, -50%) scale(0.01);
+	}
+
+	&.fixed-right {
+		transform: translate(50%, 0) scale(0.01);
+	}
+
+	&.fixed-bottom-right {
+		transform: translate(50%, 50%) scale(0.01);
+	}
+
+	&.fixed-bottom {
+		transform: translate(0, 50%) scale(0.01);
+	}
+
+	&.fixed-bottom-left {
+		transform: translate(-50%, 50%) scale(0.01);
+	}
+
+	&.fixed-left {
+		transform: translate(-50%, 0) scale(0.01);
+	}
+
+	&.fixed-top-left {
+		transform: translate(-50%, -50%) scale(0.01);
+	}
+
+	&.popup-zoom-initial {
+		transition: all @animationDuration @easing;
+
+		&.popup-zoom-in {
+			transform: translate(0) scale(1);
+		}
+	}
+
+	.popup-arrow-wrapper {
+		position: absolute;
+		pointer-events: none;
+		top: 0;
+		left: 0;
+		height: @popupArrowSize * 4;
+		width: @popupArrowSize * 4;
+		margin: (-@popupArrowSize * 2);
+	}
+
+	.popup-arrow {
+		@arrowBlockSize: sqrt(2) * @popupArrowSize;
+
+		height: @arrowBlockSize;
+		width: @arrowBlockSize;
+		position: absolute;
+		top: @popupArrowSize * 2;
+		left: @popupArrowSize * 2;
+		margin: -(@arrowBlockSize / 2);
+		background: @popupBackground;
+		transform: rotate(45deg);
+		box-shadow: @popupShadow;
+	}
+
+	.popup-header {
+		padding: @popupHeaderPadding;
+		background: @popupHeaderBackground;
+		border-bottom: @popupHeaderBorderBottom;
+		width: 100%;
+	}
+
+	.popup-footer {
+		padding: @popupFooterPadding;
+		background: @popupFooterBackground;
+		border-top: @popupFooterBorderTop;
+		width: 100%;
+	}
+}
