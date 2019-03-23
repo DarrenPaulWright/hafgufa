@@ -19,6 +19,7 @@ export { default as TextArea } from './ui/elements/TextArea';
 
 export { default as Container } from './ui/layout/Container';
 export { default as Popup } from './ui/layout/Popup';
+export { default as Tooltip } from './ui/layout/Tooltip';
 
 export { default as IsWorking } from './ui/IsWorking';
 
