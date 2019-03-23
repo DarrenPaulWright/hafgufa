@@ -3,7 +3,7 @@ import { IS_DESKTOP, IS_TABLET } from '../../utility/browser';
 import dom from '../../utility/dom';
 import { BODY, FONT_SIZE, HEAD } from '../../utility/domConstants';
 import windowResize from '../../utility/windowResize';
-import IsWorking from '../IsWorking';
+import IsWorking from '../display/IsWorking';
 
 const NAME_TAG = '[name]';
 const ENV_TAG = '[env]';

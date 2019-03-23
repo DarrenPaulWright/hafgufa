@@ -1,12 +1,12 @@
 import { CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
-import { ABSOLUTE_CLASS } from '../utility/domConstants';
-import objectHelper from '../utility/objectHelper';
-import Control from './Control';
-import controlTypes from './controlTypes';
-import Div from './elements/Div';
-import Label from './elements/Label';
+import { ABSOLUTE_CLASS } from '../../utility/domConstants';
+import objectHelper from '../../utility/objectHelper';
+import Control from '../Control';
+import controlTypes from '../controlTypes';
+import Div from '../elements/Div';
+import Label from '../elements/Label';
+import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
 import './IsWorking.less';
-import DelayedRenderMixin from './mixins/DelayedRenderMixin';
 
 const IS_WORKING_CLASS = ABSOLUTE_CLASS + 'is-working';
 const MEDIUM_CLASS = 'medium';

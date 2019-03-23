@@ -21,7 +21,7 @@ export { default as Container } from './ui/layout/Container';
 export { default as Popup } from './ui/layout/Popup';
 export { default as Tooltip } from './ui/layout/Tooltip';
 
-export { default as IsWorking } from './ui/IsWorking';
+export { default as IsWorking } from './ui/display/IsWorking';
 
 export { default as FocusMixin } from './ui/mixins/FocusMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';

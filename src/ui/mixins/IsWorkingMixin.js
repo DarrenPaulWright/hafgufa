@@ -1,5 +1,5 @@
 import { method } from 'type-enforcer';
-import IsWorking from '../IsWorking';
+import IsWorking from '../display/IsWorking';
 
 const IS_WORKING = Symbol();
 
