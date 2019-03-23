@@ -83,13 +83,19 @@ const CONTROLS = Symbol();
  */
 export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	constructor(settings = {}) {
-		super(settings.type || controlTypes.CONTAINER, settings);
+		settings.type = settings.type || controlTypes.CONTAINER;
+		settings.FocusMixin = settings.FocusMixin || {};
+		settings.FocusMixin.hasChildren = true;
+
+		super(settings);
 
 		this[CONTROLS] = new ControlManager();
 		this.addClass(CONTAINER_CLASS)
 			.contentContainer(this.element());
 
-		objectHelper.applySettings(this, settings);
+		if (settings.type === controlTypes.CONTAINER) {
+			objectHelper.applySettings(this, settings);
+		}
 
 		this.onRemove(() => {
 			this[CONTROLS].remove();

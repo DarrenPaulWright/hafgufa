@@ -136,7 +136,7 @@ const setResizeEvent = function() {
  * @arg {Object}        settings - An object where keys are methods and values are arguments.
  */
 export default class Control extends Removable {
-	constructor(type, settings = {}) {
+	constructor(settings = {}) {
 		super();
 		const self = this;
 
@@ -146,10 +146,7 @@ export default class Control extends Removable {
 			self.resize(true);
 		}, 10);
 
-		if (!type) {
-			throw new Error('"type" is required on all controls');
-		}
-		self.type(type);
+		self.type(settings.type);
 
 		self.element(settings.element || dom.buildNew());
 		delete settings.element;

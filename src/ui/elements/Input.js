@@ -1,3 +1,4 @@
+import { Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	INPUT,
@@ -11,7 +12,6 @@ import {
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
-import { Enum, method } from 'type-enforcer';
 
 const AVAILABLE_TYPES = new Enum({
 	INPUT_TYPE_FILE,
@@ -33,10 +33,11 @@ const AVAILABLE_TYPES = new Enum({
  */
 export default class Input extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.INPUT;
 		settings.element = dom.buildNew('', INPUT);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.INPUT, settings);
+		super(settings);
 
 		objectHelper.applySettings(this, settings);
 	}

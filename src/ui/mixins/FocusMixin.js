@@ -18,25 +18,29 @@ const triggerCallback = function(queue) {
 };
 
 /**
- * Callback that is called when the text control gets focus
+ * Callback that is called when the control gets focus
+ *
  * @function onFocusCallback
  */
 const onFocusCallback = function() {
+	console.log('this[HAS_CHILDREN]: ', this[HAS_CHILDREN]);
 	if (this[SUB_CONTROL] || this[HAS_CHILDREN]) {
 		this[IS_FOCUSED] = true;
 
+		console.log('this[IS_ALL_BLURRED]: ', this[IS_ALL_BLURRED]);
 		if (this[IS_ALL_BLURRED]) {
 			this[IS_ALL_BLURRED] = false;
-			triggerCallback(this.onFocus());
+			triggerCallback.call(this, this.onFocus());
 		}
 	}
 	else {
-		triggerCallback(this.onFocus());
+		triggerCallback.call(this, this.onFocus());
 	}
 };
 
 /**
- * Callback that is called when the text control loses focus
+ * Callback that is called when the control loses focus
+ *
  * @function onBlurCallback
  */
 const onBlurCallback = function() {
@@ -46,12 +50,12 @@ const onBlurCallback = function() {
 		defer(() => {
 			if (!this[IS_FOCUSED]) {
 				this[IS_ALL_BLURRED] = true;
-				triggerCallback(this.onBlur());
+				triggerCallback.call(this, this.onBlur());
 			}
 		});
 	}
 	else {
-		triggerCallback(this.onBlur());
+		triggerCallback.call(this, this.onBlur());
 	}
 };
 
@@ -75,19 +79,18 @@ const setCallback = function(control, eventName, callback) {
  */
 const FocusMixin = (Base) => {
 	class Focus extends Base {
-		constructor(type, settings = {}) {
-			super(type, settings);
+		constructor(settings = {}) {
+			super(settings);
 
-			if (settings.FocusMixin) {
-				this[MAIN_CONTROL] = settings.FocusMixin.mainControl || this;
-				this[SUB_CONTROL] = settings.FocusMixin.subControl;
-				this[SET_FOCUS] = settings.FocusMixin.setFocus;
-				this[GET_FOCUS] = settings.FocusMixin.getFocus;
-				this[HAS_CHILDREN] = settings.FocusMixin.hasChildren;
-			}
-			else {
-				this[MAIN_CONTROL] = this;
-			}
+			this[IS_ALL_BLURRED] = true;
+
+			settings = settings.FocusMixin || {};
+
+			this[MAIN_CONTROL] = settings.mainControl || this;
+			this[SUB_CONTROL] = settings.subControl;
+			this[SET_FOCUS] = settings.setFocus;
+			this[GET_FOCUS] = settings.getFocus;
+			this[HAS_CHILDREN] = settings.hasChildren;
 		}
 
 		/**
@@ -119,6 +122,8 @@ const FocusMixin = (Base) => {
 		 * @returns {Boolean}
 		 */
 		isFocused(doFocus) {
+			const activeElement = DOCUMENT.activeElement;
+
 			if (doFocus !== undefined) {
 				if (doFocus) {
 					if (!this.isFocused()) {
@@ -134,18 +139,19 @@ const FocusMixin = (Base) => {
 					}
 				}
 				else if (this.isFocused()) {
-					DOCUMENT.activeElement.blur();
+					activeElement.blur();
 				}
 
 				return this;
 			}
 
 			if (this[GET_FOCUS]) {
-				return this[GET_FOCUS](DOCUMENT.activeElement);
+				return this[GET_FOCUS](activeElement);
 			}
 
-			return this.element() ? (this.element() === DOCUMENT.activeElement || this.element()
-				.contains(DOCUMENT.activeElement)) : false;
+			const element = this.element();
+
+			return !element ? false : (element === activeElement || element.contains(activeElement));
 		}
 	}
 

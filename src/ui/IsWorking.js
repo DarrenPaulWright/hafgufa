@@ -51,11 +51,12 @@ const CURRENT_SIZE = Symbol();
  */
 export default class IsWorking extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.IS_WORKING;
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
 		settings.fade = enforce.boolean(settings.fade, true);
 
-		super(controlTypes.IS_WORKING, settings);
+		super(settings);
 
 		const self = this;
 		self[CURRENT_SIZE] = 3;

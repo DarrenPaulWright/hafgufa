@@ -6,5 +6,5 @@ const testUtil = new TestUtil(Container);
 const controlBaseTests = new ControlBaseTests(Container, testUtil);
 
 describe('Container', () => {
-	controlBaseTests.run();
+	controlBaseTests.run([], ['focus']);
 });

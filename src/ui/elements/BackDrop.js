@@ -17,10 +17,11 @@ const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
  */
 export default class BackDrop extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.BACK_DROP;
 		settings.container = settings.container || BODY;
 		settings.fade = true;
 
-		super(controlTypes.BACK_DROP, settings);
+		super(settings);
 
 		this.addClass(BACKDROP_CLASS);
 

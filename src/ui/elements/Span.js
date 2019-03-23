@@ -1,9 +1,9 @@
+import { method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { SPAN } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
-import { method } from 'type-enforcer';
 
 /**
  * <p>Display a span element.</p>
@@ -17,10 +17,11 @@ import { method } from 'type-enforcer';
  */
 export default class Span extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.SPAN;
 		settings.element = dom.buildNew('', SPAN);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.SPAN, settings);
+		super(settings);
 
 		objectHelper.applySettings(this, settings);
 	}

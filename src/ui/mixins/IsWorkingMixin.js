@@ -9,8 +9,8 @@ const IS_WORKING = Symbol();
  */
 export default (Base) => {
 	class IsWorkingMixin extends Base {
-		constructor(type, settings) {
-			super(type, settings);
+		constructor(settings) {
+			super(settings);
 
 			const self = this;
 			self.onRemove(() => {

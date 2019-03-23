@@ -1,9 +1,9 @@
+import { method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ROWS, TEXT_AREA } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
-import { method } from 'type-enforcer';
 
 /**
  * <p>Display a textarea element.</p>
@@ -17,10 +17,11 @@ import { method } from 'type-enforcer';
  */
 export default class TextArea extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.TEXT_AREA;
 		settings.element = dom.buildNew('', TEXT_AREA);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.TEXT_AREA, settings);
+		super(settings);
 
 		objectHelper.applySettings(this, settings);
 	}

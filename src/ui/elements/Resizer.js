@@ -1,13 +1,13 @@
 import { drag, event } from 'd3';
+import { CssSize, enforce, method, PERCENT, PIXELS, ZERO_PIXELS } from 'type-enforcer';
 import { DRAG_END_EVENT, DRAG_MOVE_EVENT } from '../../utility/d3Helper';
+import dom from '../../utility/dom';
+import { HEIGHT, LEFT, TOP, WIDTH } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
-import Control from './../Control';
 import { ORIENTATION } from '../uiConstants';
-import { CssSize, enforce, method, PERCENT, PIXELS, ZERO_PIXELS } from 'type-enforcer';
+import Control from './../Control';
 import './Resizer.less';
-import { HEIGHT, LEFT, TOP, WIDTH } from '../../utility/domConstants';
-import dom from '../../utility/dom';
 
 const RESIZER_CLASS = 'resizer';
 const HORIZONTAL_CLASS = 'horizontal';
@@ -97,11 +97,12 @@ const measure = function() {
  */
 export default class Resizer extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.RESIZER;
 		settings.skipWindowResize = true;
 		settings.orientation = enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL);
 		settings.splitOffset = enforce.cssSize(settings.splitOffset, new CssSize('50%'), true);
 
-		super(controlTypes.RESIZER, settings);
+		super(settings);
 
 		this.addClass(RESIZER_CLASS);
 		objectHelper.applySettings(this, settings);

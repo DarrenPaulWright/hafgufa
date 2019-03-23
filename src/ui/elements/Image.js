@@ -33,10 +33,11 @@ export const FIT = new Enum({
  */
 export default class Image extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.IMAGE;
 		settings.element = dom.buildNew('', IMAGE);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.IMAGE, settings);
+		super(settings);
 
 		this.fit(this.fit(), true)
 			.source(DEFAULT_IMAGE_SOURCE);

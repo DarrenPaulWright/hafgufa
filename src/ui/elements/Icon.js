@@ -68,10 +68,11 @@ const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
  */
 export default class Icon extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.ICON;
 		settings.element = dom.buildNew(CORE_CLASSES + ' icon-lg', ELEMENT);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.ICON, settings);
+		super(settings);
 
 		const self = this;
 

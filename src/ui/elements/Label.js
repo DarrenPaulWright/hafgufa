@@ -1,9 +1,9 @@
+import { method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { LABEL } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
-import { method } from 'type-enforcer';
 
 /**
  * <p>Display a label element.</p>
@@ -17,10 +17,11 @@ import { method } from 'type-enforcer';
  */
 export default class Label extends Control {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.LABEL;
 		settings.element = dom.buildNew('', LABEL);
 		settings.skipWindowResize = true;
 
-		super(controlTypes.LABEL, settings);
+		super(settings);
 
 		objectHelper.applySettings(this, settings);
 	}

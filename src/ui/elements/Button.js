@@ -57,10 +57,11 @@ const mouseLeaveHandler = function() {
  */
 export default class Button extends FocusMixin(OnClickMixin(Control)) {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.BUTTON;
 		settings.label = enforce.string(settings.label, '');
 		settings.element = dom.buildNew(settings.classes || DEFAULT_CLASS, BUTTON);
 
-		super(controlTypes.BUTTON, settings);
+		super(settings);
 
 		const self = this;
 

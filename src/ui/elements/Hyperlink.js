@@ -19,9 +19,10 @@ import './Hyperlink.less';
  */
 export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.HYPERLINK;
 		settings.element = dom.buildNew('', ANCHOR);
 
-		super(controlTypes.HYPERLINK, settings);
+		super(settings);
 
 		objectHelper.applySettings(this, settings);
 	}
