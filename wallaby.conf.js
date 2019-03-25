@@ -31,7 +31,8 @@ module.exports = function(wallaby) {
 				exclude: /node_modules/,
 				loader: 'babel-loader'
 			}]
-		}
+		},
+		devtool: 'source-map'
 	});
 
 	return {
