@@ -89,16 +89,17 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 
 		super(settings);
 
-		this[CONTROLS] = new ControlManager();
-		this.addClass(CONTAINER_CLASS)
-			.contentContainer(this.element());
+		const self = this;
+		self[CONTROLS] = new ControlManager();
+		self.addClass(CONTAINER_CLASS)
+			.contentContainer(self.element());
 
 		if (settings.type === controlTypes.CONTAINER) {
-			objectHelper.applySettings(this, settings);
+			objectHelper.applySettings(self, settings);
 		}
 
-		this.onRemove(() => {
-			this[CONTROLS].remove();
+		self.onRemove(() => {
+			self[CONTROLS].remove();
 		});
 	}
 

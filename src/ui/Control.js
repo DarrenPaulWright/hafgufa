@@ -191,7 +191,8 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	ID: method.string({
-		set: updateElementID
+		set: updateElementID,
+		coerce: true
 	}),
 
 	/**
@@ -272,7 +273,7 @@ Object.assign(Control.prototype, {
 					this[MIGRATION].previousContent = this[ELEMENT].childNodes;
 				}
 
-				this[MIGRATION].prevAttrs = this[ELEMENT_D3].property('attributes');
+				this[MIGRATION].prevAttrs = this[ELEMENT].attributes;
 				this[MIGRATION].prevEvents = dom.getD3Events(this[ELEMENT]);
 				dom.applyD3Events(this[ELEMENT], this[MIGRATION].prevEvents, true);
 
@@ -323,7 +324,7 @@ Object.assign(Control.prototype, {
 					this.maxHeight().element(this[ELEMENT]);
 
 					if (this[MIGRATION].prevAttrs) {
-						this[MIGRATION].prevAttrs.forEach((attr) => {
+						Array.prototype.slice.call(this[MIGRATION].prevAttrs).forEach((attr) => {
 							this[ELEMENT_D3].attr(attr.name, attr.value);
 						});
 					}

@@ -20,7 +20,7 @@ const BUTTONS = Symbol();
  * @extends ControlBase
  * @constructor
  *
- * @param {Object} settings - Accepts all controlBase settings plus:
+ * @arg {Object} settings - Accepts all controlBase settings plus:
  */
 export default class Toolbar extends Control {
 	constructor(settings = {}) {

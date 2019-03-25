@@ -1,0 +1,180 @@
+@import (reference) '../mixins/mixins.less';
+
+.heading {
+	padding: 0;
+	position: relative;
+	margin: 0;
+	text-align: left;
+	font: @headingFont;
+	color: @headingFontColor;
+	white-space: nowrap;
+	overflow-wrap: break-word;
+	overflow: hidden;
+	vertical-align: @headingVerticalAlign;
+
+	&.clickable {
+		cursor: pointer;
+	}
+
+	&.inverse, .inverse & {
+		color: @headingInverseFontColor;
+
+		.subtitle {
+			color: @headingInverseSubTitleFontColor;
+		}
+	}
+
+	> .icon-button {
+		font-size: inherit;
+		line-height: inherit;
+		width: @headingExpanderWidth;
+		vertical-align: @headingExpanderVerticalAlign;
+		padding: 0;
+
+		.icon {
+			font-size: @headingExpanderFontSize;
+			transform: @headingExpanderTransform;
+		}
+	}
+
+	.form-control.checkboxes {
+		vertical-align: @headingCheckboxVerticalAlign;
+		transform: @headingCheckboxTransform;
+	}
+
+	> .icon {
+		margin-right: @headingSpacing;
+		font-size: inherit;
+		line-height: inherit;
+		vertical-align: @headingIconVerticalAlign;
+		transform: @headingIconTransform;
+	}
+
+	img {
+		margin-right: @headingSpacing;
+		height: 1.2em;
+		width: 1.2em;
+		vertical-align: -0.28em;
+	}
+
+	.title-container {
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		line-height: inherit;
+		vertical-align: @headingTitleVerticalAlign;
+		word-break: break-word;
+
+		&.single-line {
+			margin-top: @headingNotInlineSingleLineMarginTop;
+		}
+	}
+
+	span {
+		vertical-align: top;
+		padding-right: @headingSpacing;
+	}
+
+	.subtitle {
+		color: @headingSubTitleFontColor;
+	}
+
+	.error {
+		color: @headingErrorFontColor;
+		background: @headingErrorBackground;
+		padding: @headingErrorPadding;
+		font-weight: @headingErrorFontWeight;
+	}
+
+	.toolbar {
+		position: absolute;
+		right: 0;
+		top: 0;
+		padding: 0;
+		vertical-align: @headingToolbarVerticalAlign;
+	}
+
+	&.not-inline {
+		> .icon {
+			vertical-align: top;
+			margin: 0;
+			width: @headingNotInlineIconWidth;
+			height: @headingNotInlineIconHeight;
+			transform: @headingNotInlineIconTransform;
+			font-size: @headingNotInlineIconFontSize;
+		}
+
+		button {
+			vertical-align: top;
+			width: @headingNotInlineButtonWidth;
+			height: @headingNotInlineButtonHeight;
+		}
+
+		// Insert a newline before the subtitle
+		.subtitle {
+			&:before {
+				content: '\A';
+				white-space: pre;
+			}
+		}
+
+		// Fixes wrapping when the heading has padding
+		&.wrap {
+			.subtitle {
+				&:before {
+					white-space: pre-line;
+				}
+			}
+		}
+	}
+
+	&.wrap {
+		.title-container {
+			white-space: pre-line;
+			overflow-wrap: break-word;
+			word-break: break-word;
+		}
+	}
+}
+
+h1.heading {
+	font-size: @h1FontSize;
+	font-weight: @h1FontWeight;
+	line-height: @h1FontLineHeight;
+	.h1Ex();
+}
+
+h2.heading {
+	font-size: @h2FontSize;
+	font-weight: @h2FontWeight;
+	line-height: @h2FontLineHeight;
+	.h2Ex();
+}
+
+h3.heading {
+	font-size: @h3FontSize;
+	font-weight: @h3FontWeight;
+	line-height: @h3FontLineHeight;
+	.h3Ex();
+}
+
+h4.heading {
+	font-size: @h4FontSize;
+	font-weight: @h4FontWeight;
+	line-height: @h4FontLineHeight;
+	.h4Ex();
+}
+
+h5.heading {
+	font-size: @h5FontSize;
+	font-weight: @h5FontWeight;
+	line-height: @h5FontLineHeight;
+	.h5Ex();
+}
+
+h6.heading {
+	font-size: @h6FontSize;
+	font-weight: @h6FontWeight;
+	line-height: @h6FontLineHeight;
+	.h6Ex();
+}

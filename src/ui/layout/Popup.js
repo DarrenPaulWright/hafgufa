@@ -411,20 +411,20 @@ const positionArrow = function(popupWidth, popupHeight, slideOffset) {
  * @extends Container
  * @constructor
  *
- * @param {Object}        settings - Accepts all controlBase settings plus:
- * @param {String}        [settings.classes] - A space separated list of css classes to apply to the popup.
- * @param {Object|String} [settings.anchor] - DOM element or 'mouse' to follow the cursor.
- * @param {DockPoint}     [settings.anchorDockPoint] - The dock point on the anchor
- * @param {DockPoint}     [settings.popupDockPoint] - The dock point on the popup
- * @param {Boolean}       [settings.isSticky=false] - Keep the popup when it loses focus or mouse leave? Primarily
+ * @arg {Object}        settings - Accepts all controlBase settings plus:
+ * @arg {String}        [settings.classes] - A space separated list of css classes to apply to the popup.
+ * @arg {Object|String} [settings.anchor] - DOM element or 'mouse' to follow the cursor.
+ * @arg {DockPoint}     [settings.anchorDockPoint] - The dock point on the anchor
+ * @arg {DockPoint}     [settings.popupDockPoint] - The dock point on the popup
+ * @arg {Boolean}       [settings.isSticky=false] - Keep the popup when it loses focus or mouse leave? Primarily
  *    intended for use when debugging.
- * @param {String}        [settings.animation=none] - 'none', 'fade', 'zoom'
- * @param {Boolean}       [settings.hideOnMouseLeave=false] - Hide the popup when the mouse leaves the popup?
- * @param {Boolean}       [settings.hideOnEscapeKey=false] - Hide the popup when the escape key is pressed?
- * @param {String|Object} [settings.content] - HTML string, a DOM element, or another control
- * @param {Function}      [settings.onResize] - Callback that gets executed  whenever the popup size is set.
- * @param {Function}      [settings.onRemove] - Callback that gets executed when this.remove is called.
- * @param {boolean}       skipFocusable
+ * @arg {String}        [settings.animation=none] - 'none', 'fade', 'zoom'
+ * @arg {Boolean}       [settings.hideOnMouseLeave=false] - Hide the popup when the mouse leaves the popup?
+ * @arg {Boolean}       [settings.hideOnEscapeKey=false] - Hide the popup when the escape key is pressed?
+ * @arg {String|Object} [settings.content] - HTML string, a DOM element, or another control
+ * @arg {Function}      [settings.onResize] - Callback that gets executed  whenever the popup size is set.
+ * @arg {Function}      [settings.onRemove] - Callback that gets executed when this.remove is called.
+ * @arg {boolean}       skipFocusable
  */
 class Popup extends Container {
 	constructor(settings = {}) {
@@ -565,7 +565,7 @@ Object.assign(Popup.prototype, {
 	 * @method canTrackMouse
 	 * @member module:Popup
 	 * @instance
-	 * @param {Boolean} canTrackMouse
+	 * @arg {Boolean} canTrackMouse
 	 * @returns {Boolean|this}
 	 */
 	canTrackMouse: method.boolean({
