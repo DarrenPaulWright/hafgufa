@@ -2,7 +2,7 @@ import { defer, delay } from 'async-agent';
 import { assert } from 'chai';
 import keyCodes from 'keyCodes';
 import simulant from 'simulant';
-import { isArray } from 'type-enforcer';
+import { isArray, isString } from 'type-enforcer';
 import { CLICK_EVENT, KEY_UP_EVENT, WINDOW } from '../src/utility/domConstants';
 import windowResize from '../src/utility/windowResize';
 
@@ -106,7 +106,7 @@ export default function TestUtil(Control) {
 	};
 
 	const getElement = (element) => {
-		if (typeof element === 'string') {
+		if (isString(element)) {
 			element = document.querySelector(element);
 		}
 		return element;

@@ -1,7 +1,7 @@
 import { clear, delay } from 'async-agent';
-import { method, Queue } from 'type-enforcer';
+import { isFunction, method, Queue } from 'type-enforcer';
 
-const isTest = typeof global.it === 'function';
+const isTest = isFunction(global.it);
 const FADE_INITIAL_CLASS = 'fade-initial';
 const FADE_IN_CLASS = 'fade-in';
 const FADE_DURATION = 200;
