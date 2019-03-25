@@ -442,7 +442,7 @@ export default function ControlBaseTests(Control, testUtil, settings = {}) {
 					testItem += 10;
 				};
 
-				testItem = 1;
+				testItem = 0;
 
 				select(window).on(CLICK_EVENT, containerClick);
 
@@ -460,13 +460,13 @@ export default function ControlBaseTests(Control, testUtil, settings = {}) {
 			it('should NOT prevent the propagation of an event if false', () => {
 				propagationTest(false);
 
-				assert.equal(testItem, 12);
+				assert.equal(testItem, 11);
 			});
 
 			it('should prevent the propagation of an event if true', () => {
 				propagationTest(true);
 
-				assert.equal(testItem, 11);
+				assert.equal(testItem, 10);
 			});
 		});
 	};

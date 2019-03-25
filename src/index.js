@@ -7,12 +7,14 @@ export { default as ControlRecycler } from './ui/ControlRecycler';
 
 export { default as BackDrop } from './ui/elements/BackDrop';
 export { default as Button } from './ui/elements/Button';
+export { default as CheckBox } from './ui/elements/CheckBox';
 export { default as Div } from './ui/elements/Div';
 export { default as HyperLink } from './ui/elements/HyperLink';
 export { default as Icon, ICON_SIZES } from './ui/elements/Icon';
 export { FIT, default as Image } from './ui/elements/Image';
 export { default as Input } from './ui/elements/Input';
 export { default as Label } from './ui/elements/Label';
+export { default as Radio } from './ui/elements/Radio';
 export { default as Resizer } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';

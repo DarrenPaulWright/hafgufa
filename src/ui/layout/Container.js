@@ -19,7 +19,7 @@ const CONTAINER_CLASS = 'container clearfix';
  * @arg {Object[]} content    - Takes a JSON array of objects with control settings
  * @arg {String}   [doPrepend=false]
  */
-const addLayout = (content, doPrepend) => {
+const addLayout = function(content, doPrepend) {
 	const addControl = (controlDefinition) => {
 		if (controlDefinition && controlDefinition.control) {
 			controlDefinition = Object.assign(controlDefinition, {
@@ -51,7 +51,7 @@ const addLayout = (content, doPrepend) => {
  * @arg {Object[]} content    - Takes a JSON array of objects with control settings
  * @arg {String}   [doPrepend=false]
  */
-const addContent = (content, doPrepend) => {
+const addContent = function(content, doPrepend) {
 	if (content) {
 		if (isArray(content) || isObject(content)) {
 			addLayout.call(this, content, doPrepend);

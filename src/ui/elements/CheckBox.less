@@ -1,0 +1,20 @@
+
+.checkbox {
+	&:after {
+		border-radius: @checkboxBorderRadius;
+	}
+
+	&.checked {
+		&:after {
+			content: @checkIcon;
+		}
+	}
+
+	&.indeterminate {
+		&:after {
+			content: @squareIcon;
+			font-size: @checkboxIndeterminateFontSize;
+			line-height: @checkboxIndeterminateLineHeight;
+		}
+	}
+}

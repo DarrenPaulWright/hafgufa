@@ -23,7 +23,9 @@ export default class Label extends Control {
 
 		super(settings);
 
-		objectHelper.applySettings(this, settings);
+		if (settings.type === controlTypes.LABEL) {
+			objectHelper.applySettings(this, settings);
+		}
 	}
 }
 

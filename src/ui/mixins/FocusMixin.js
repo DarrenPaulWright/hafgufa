@@ -23,11 +23,9 @@ const triggerCallback = function(queue) {
  * @function onFocusCallback
  */
 const onFocusCallback = function() {
-	console.log('this[HAS_CHILDREN]: ', this[HAS_CHILDREN]);
 	if (this[SUB_CONTROL] || this[HAS_CHILDREN]) {
 		this[IS_FOCUSED] = true;
 
-		console.log('this[IS_ALL_BLURRED]: ', this[IS_ALL_BLURRED]);
 		if (this[IS_ALL_BLURRED]) {
 			this[IS_ALL_BLURRED] = false;
 			triggerCallback.call(this, this.onFocus());

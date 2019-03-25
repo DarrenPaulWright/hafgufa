@@ -1,0 +1,53 @@
+
+.checkbox, .radio {
+	display: block;
+	cursor: pointer;
+	padding-left: @checkboxRadioPaddingLeft + @checkboxRadioSize + @checkboxRadioTextPaddingLeft;
+	position: relative;
+
+	> input {
+		opacity: 0;
+		width: 0 !important;
+	}
+
+	div {
+		line-height: @checkboxRadioSpanLineHeight;
+	}
+
+	&:after {
+		content: '';
+		color: @checkboxRadioColor;
+		font-size: @checkboxFontSize;
+		line-height: @checkboxLineHeight;
+		text-align: center;
+		position: absolute;
+		left: @checkboxRadioPaddingLeft;
+		width: @checkboxRadioSize;
+		height: @checkboxRadioSize;
+		top: 50%;
+		transform: translateY(-45%);
+		cursor: pointer;
+		background: @checkboxRadioBackground;
+		box-shadow: @checkboxRadioShadow;
+	}
+
+	&:hover, &:active, &:focus {
+		&:after {
+			background: @checkboxRadioBackgroundHover;
+		}
+	}
+}
+
+.radio {
+	&:after {
+		border-radius: @radioBorderRadius;
+	}
+
+	&.checked {
+		&:after {
+			content: @circleIcon;
+			font-size: @radioFontSize;
+			line-height: @radioLineHeight;
+		}
+	}
+}
