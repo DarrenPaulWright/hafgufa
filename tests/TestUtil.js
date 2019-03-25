@@ -316,54 +316,6 @@ export default function TestUtil(Control) {
 		});
 	};
 
-	self.getCacheMock = (onChangeCallback) => ({
-		store: function() {
-			return {
-				get: function() {
-					return new Promise((resolve) => {
-						resolve();
-					});
-				},
-				onChange: function() {
-					if (onChangeCallback) {
-						onChangeCallback();
-					}
-				},
-				offChange: function() {
-				}
-			};
-		},
-
-		onStatusChange: function() {
-			return 1;
-		},
-
-		offStatusChange: function() {
-		},
-
-		onWarning: function() {
-			return 1;
-		},
-
-		offWarning: function() {
-		},
-
-		warnings: function() {
-			return [];
-		},
-
-		onError: function() {
-			return 1;
-		},
-
-		offError: function() {
-		},
-
-		errors: function() {
-			return [];
-		}
-	});
-
 	self.simulateClick = (element) => {
 		self.trigger(element, CLICK_EVENT);
 	};
