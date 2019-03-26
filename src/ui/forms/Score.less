@@ -1,0 +1,40 @@
+@import (reference) '../../mixins.less';
+
+.score {
+	margin: @scoreMargin;
+
+	.score-text {
+		display: inline-block;
+		font-size: @scoreFontSize;
+		line-height: @scoreLineHeight;
+		font-weight: @scoreFontWeight;
+		color: @scoreForeground;
+	}
+
+	.score-label {
+		margin: @scoreLabelMargin;
+		display: inline-block;
+		vertical-align: top;
+		font-size: @scoreLabelFontSize;
+		line-height: @scoreLabelLineHeight;
+		font-weight: @scoreLabelFontWeight;
+		color: @scoreSecondaryForeground;
+		.scoreLabelEx();
+	}
+
+	&.secondary {
+		margin: @scoreSecondaryMargin;
+
+		.score-text {
+			font-size: @scoreSecondaryFontSize;
+			line-height: @scoreSecondaryLineHeight;
+			font-weight: @scoreSecondaryFontWeight;
+		}
+
+		.score-label {
+			font-size: @scoreSecondaryLabelFontSize;
+			line-height: @scoreSecondaryLabelLineHeight;
+			font-weight: @scoreSecondaryLabelFontWeight;
+		}
+	}
+}

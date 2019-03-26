@@ -1,0 +1,64 @@
+
+.form-control {
+	display: inline-block;
+	float: left;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+	color: @chromeFontColor;
+	font: @normalFontWeight @chromeFontSize @chromeFontFamily;
+
+	&.newline {
+		clear: both;
+	}
+
+	> div:first-of-type {
+		white-space: nowrap;
+		position: relative;
+		vertical-align: baseline;
+	}
+
+	&.has-heading {
+		padding-bottom: 0.4em;
+		margin-right: 1ch;
+		vertical-align: top;
+	}
+
+	&.single-line {
+		padding-bottom: 0;
+		white-space: nowrap;
+
+		.heading {
+			display: inline-block;
+			line-height: @formControlSingleLineHeadingLineHeight;
+			vertical-align: top;
+		}
+
+		> div:first-of-type {
+			display: inline-block;
+		}
+	}
+}
+
+.required {
+	.heading > .title {
+		font-weight: @formControlRequiredTitleFontWeight;
+
+		&:before {
+			content: @asteriskIcon;
+			color: @formControlRequiredAsteriskFontColor;
+			line-height: 0;
+			vertical-align: middle;
+			font-weight: @formControlRequiredAsteriskFontWeight;
+			margin-right: 0.3em;
+		}
+	}
+}
+
+.hidden {
+	visibility: hidden !important;
+}
+
+.display-none {
+	display: none !important;
+}

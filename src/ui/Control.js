@@ -1,5 +1,6 @@
 import { throttle } from 'async-agent';
 import { event, select } from 'd3';
+import { isEmpty } from 'object-agent';
 import { CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
 import {
@@ -125,6 +126,17 @@ const setResizeEvent = function() {
 	}
 };
 
+const setCssSizeElement = function(value) {
+	this.padding().element(value);
+	this.margin().element(value);
+	this.minWidth().element(value);
+	this.width().element(value);
+	this.maxWidth().element(value);
+	this.minHeight().element(value);
+	this.height().element(value);
+	this.maxHeight().element(value);
+};
+
 /**
  * The base class for a control
  *
@@ -148,8 +160,11 @@ export default class Control extends Removable {
 
 		self.type(settings.type);
 		self.element(settings.element || dom.buildNew());
+		delete settings.element;
 		self.container(settings.container);
+		delete settings.container;
 		self.skipWindowResize(settings.skipWindowResize);
+		delete settings.skipWindowResize;
 
 		setResizeEvent.call(self);
 
@@ -159,7 +174,6 @@ export default class Control extends Removable {
 			}
 
 			self.element(null);
-			this[MIGRATION] = null;
 		});
 	}
 }
@@ -222,9 +236,7 @@ Object.assign(Control.prototype, {
 	 * @returns {Object|this}
 	 */
 	container: method.element({
-		enforce: (newValue, oldValue) => {
-			return dom.getElement(newValue, true) || oldValue;
-		},
+		enforce: (newValue, oldValue) => dom.getElement(newValue, true) || oldValue,
 		other: null,
 		before: function(container) {
 			if (container && this[ELEMENT] && container.contains(this[ELEMENT])) {
@@ -234,17 +246,14 @@ Object.assign(Control.prototype, {
 		set: function(container) {
 			if (container && this[ELEMENT]) {
 				if (this[MIGRATION].nextSibling) {
-					dom.appendBefore(this[MIGRATION].nextSibling, this[ELEMENT]);
+					this[MIGRATION].nextSibling.parentNode.insertBefore(this[ELEMENT], this[MIGRATION].nextSibling);
 				}
 				else if (this[MIGRATION].previousSibling) {
-					dom.appendAfter(this[MIGRATION].previousSibling, this[ELEMENT]);
+					this[MIGRATION].previousSibling.parentNode.insertBefore(this[ELEMENT], this[MIGRATION].previousSibling.nextSibling);
 				}
 				else {
-					dom.appendTo(container, this[ELEMENT]);
+					container.appendChild(this[ELEMENT]);
 				}
-
-				delete this[MIGRATION].previousSibling;
-				delete this[MIGRATION].nextSibling;
 
 				this.resize();
 			}
@@ -261,32 +270,19 @@ Object.assign(Control.prototype, {
 	 * @returns {Object|this}
 	 */
 	element: method.element({
-		before: function() {
-			if (this[ELEMENT]) {
-				if (this[ELEMENT].nextSibling) {
-					this[MIGRATION].nextSibling = this[ELEMENT].nextSibling;
-				}
-				else if (this[ELEMENT].previousSibling) {
-					this[MIGRATION].previousSibling = this[ELEMENT].previousSibling;
-				}
-				if (this[ELEMENT].childNodes.length) {
-					this[MIGRATION].previousContent = this[ELEMENT].childNodes;
-				}
+		before: function(element) {
+			if (element) {
+				this[MIGRATION] = {
+					nextSibling: element.nextSibling,
+					previousSibling: element.previousSibling,
+					childNodes: element.childNodes,
+					attributes: element.attributes,
+					events: dom.getD3Events(element)
+				};
 
-				this[MIGRATION].prevAttrs = this[ELEMENT].attributes;
-				this[MIGRATION].prevEvents = dom.getD3Events(this[ELEMENT]);
-				dom.applyD3Events(this[ELEMENT], this[MIGRATION].prevEvents, true);
+				setCssSizeElement.call(this, null);
 
-				this.padding().element(null);
-				this.margin().element(null);
-				this.minWidth().element(null);
-				this.width().element(null);
-				this.maxWidth().element(null);
-				this.minHeight().element(null);
-				this.height().element(null);
-				this.maxHeight().element(null);
-
-				dom.remove(this[ELEMENT]);
+				dom.remove(element);
 				this[ELEMENT] = null;
 				this[ELEMENT_D3] = null;
 			}
@@ -299,41 +295,34 @@ Object.assign(Control.prototype, {
 					this.element(newElement);
 				}
 				else {
-					this[ELEMENT] = newValue;
+					this[ELEMENT] = newElement;
 					this[ELEMENT_D3] = select(this[ELEMENT]);
 
-					if (this[MIGRATION].previousContent) {
-						while (this[MIGRATION].previousContent.length) {
-							if (this[MIGRATION].previousContent[0] !== this[ELEMENT]) {
-								this[ELEMENT].appendChild(this[MIGRATION].previousContent[0]);
-							}
-							else {
-								this[MIGRATION].previousContent[0].parentNode.removeChild(this[MIGRATION].previousContent[0]);
+					if (!isEmpty(this[MIGRATION])) {
+						if (this[MIGRATION].childNodes) {
+							while (this[MIGRATION].childNodes.length) {
+								if (this[MIGRATION].childNodes[0] !== this[ELEMENT]) {
+									this[ELEMENT].appendChild(this[MIGRATION].childNodes[0]);
+								}
+								else {
+									this[MIGRATION].childNodes[0].parentNode.removeChild(this[MIGRATION].childNodes[0]);
+								}
 							}
 						}
-						delete this[MIGRATION].previousContent;
+
+						if (this[MIGRATION].attributes) {
+							Array.prototype.slice.call(this[MIGRATION].attributes).forEach((attr) => {
+								this[ELEMENT_D3].attr(attr.name, attr.value);
+							});
+						}
+
+						dom.applyD3Events(this[ELEMENT], this[MIGRATION].events);
 					}
 
-					this.padding().element(this[ELEMENT]);
-					this.margin().element(this[ELEMENT]);
-					this.minWidth().element(this[ELEMENT]);
-					this.width().element(this[ELEMENT]);
-					this.maxWidth().element(this[ELEMENT]);
-					this.minHeight().element(this[ELEMENT]);
-					this.height().element(this[ELEMENT]);
-					this.maxHeight().element(this[ELEMENT]);
+					setCssSizeElement.call(this, this[ELEMENT]);
 
-					if (this[MIGRATION].prevAttrs) {
-						Array.prototype.slice.call(this[MIGRATION].prevAttrs).forEach((attr) => {
-							this[ELEMENT_D3].attr(attr.name, attr.value);
-						});
-					}
-					delete this[MIGRATION].prevAttrs;
-
-					dom.applyD3Events(this[ELEMENT], this[MIGRATION].prevEvents);
-					delete this[MIGRATION].prevEvents;
-
-					this.container(this.container());
+					this.container(this.container(), !!this.container());
+					this[MIGRATION] = {};
 					setPropagationClickEvent.call(this);
 				}
 			}

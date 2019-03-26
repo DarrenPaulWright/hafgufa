@@ -20,6 +20,9 @@ export { default as Resizer } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 
+export { default as FormControl } from './ui/forms/FormControl';
+export { default as Score } from './ui/forms/Score';
+
 export { default as Container } from './ui/layout/Container';
 export { default as Popup } from './ui/layout/Popup';
 export { default as Toolbar } from './ui/layout/Toolbar';
@@ -27,7 +30,10 @@ export { default as Tooltip } from './ui/layout/Tooltip';
 
 export { default as IsWorking } from './ui/display/IsWorking';
 
+export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
+export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';
 export { default as FocusMixin } from './ui/mixins/FocusMixin';
+export { default as IsWorkingMixin } from './ui/mixins/IsWorkingMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';
 
