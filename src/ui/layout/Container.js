@@ -11,66 +11,9 @@ import './Container.less';
 
 const CONTAINER_CLASS = 'container clearfix';
 
-/**
- * Looks through the content array and builds the actual controls.
- *
- * @function addLayout
- *
- * @arg {Object[]} content    - Takes a JSON array of objects with control settings
- * @arg {String}   [doPrepend=false]
- */
-const addLayout = function(content, doPrepend) {
-	const addControl = (controlDefinition) => {
-		if (controlDefinition && controlDefinition.control) {
-			controlDefinition = Object.assign(controlDefinition, {
-				container: this.contentContainer(),
-				parentContainer: this
-			});
-
-			let control = new controlDefinition.control(controlDefinition);
-			if (doPrepend) {
-				control.container(this.contentContainer(), true);
-			}
-			this[CONTROLS].add(control);
-			control = null;
-		}
-	};
-
-	content = castArray(content);
-	if (doPrepend) {
-		content.reverse();
-	}
-	content.forEach(addControl);
-};
-
-/**
- * Adds content to this container
- *
- * @function addContent
- *
- * @arg {Object[]} content    - Takes a JSON array of objects with control settings
- * @arg {String}   [doPrepend=false]
- */
-const addContent = function(content, doPrepend) {
-	if (content) {
-		if (isArray(content) || isObject(content)) {
-			addLayout.call(this, content, doPrepend);
-		}
-		else if (isJson(content)) {
-			addLayout.call(this, JSON.parse(content), doPrepend);
-		}
-		else {
-			dom.content(this, content, doPrepend);
-			if (content.element) {
-				this[CONTROLS].add(content);
-			}
-		}
-		this.elementD3().dispatch(CONTENT_CHANGE_EVENT);
-		this.resize();
-	}
-};
-
 const CONTROLS = Symbol();
+const ADD_CONTENT = Symbol();
+const ADD_LAYOUT = Symbol();
 
 /**
  * @class Container
@@ -104,6 +47,65 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	}
 
 	/**
+	 * Looks through the content array and builds the actual controls.
+	 *
+	 * @function addLayout
+	 *
+	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
+	 * @arg {String}   [doPrepend=false]
+	 */
+	[ADD_LAYOUT](content, doPrepend) {
+		const addControl = (controlDefinition) => {
+			if (controlDefinition && controlDefinition.control) {
+				controlDefinition = Object.assign(controlDefinition, {
+					container: this.contentContainer(),
+					parentContainer: this
+				});
+
+				let control = new controlDefinition.control(controlDefinition);
+				if (doPrepend) {
+					control.container(this.contentContainer(), true);
+				}
+				this[CONTROLS].add(control);
+				control = null;
+			}
+		};
+
+		content = castArray(content);
+		if (doPrepend) {
+			content.reverse();
+		}
+		content.forEach(addControl);
+	}
+
+	/**
+	 * Adds content to this container
+	 *
+	 * @function addContent
+	 *
+	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
+	 * @arg {String}   [doPrepend=false]
+	 */
+	[ADD_CONTENT](content, doPrepend) {
+		if (content) {
+			if (isArray(content) || isObject(content)) {
+				this[ADD_LAYOUT](content, doPrepend);
+			}
+			else if (isJson(content)) {
+				this[ADD_LAYOUT](JSON.parse(content), doPrepend);
+			}
+			else {
+				dom.content(this, content, doPrepend);
+				if (content.element) {
+					this[CONTROLS].add(content);
+				}
+			}
+			this.elementD3().dispatch(CONTENT_CHANGE_EVENT);
+			this.resize();
+		}
+	}
+
+	/**
 	 * Get a control in the content container that matches the provided ID
 	 *
 	 * @method get
@@ -129,7 +131,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 */
 	content(content) {
 		this[CONTROLS].remove();
-		addContent.call(this, content, false);
+		this[ADD_CONTENT](content, false);
 		return this;
 	}
 
@@ -143,7 +145,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	append(content) {
-		addContent.call(this, content, false);
+		this[ADD_CONTENT](content, false);
 		return this;
 	}
 
@@ -157,7 +159,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	prepend(content) {
-		addContent.call(this, content, true);
+		this[ADD_CONTENT](content, true);
 
 		return this;
 	}

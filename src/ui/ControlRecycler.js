@@ -4,21 +4,7 @@ import objectHelper from '../utility/objectHelper';
 
 const VISIBLE_CONTROLS = Symbol();
 const DISCARDED_CONTROLS = Symbol();
-
-/**
- * Discard a control at a specific index of visibleControls.
- * @function discardControl
- * @arg {Number} index
- * @arg {array} visibleControls
- * @arg {array} discardedControls
- */
-const discardControl = function(index) {
-	const control = this[VISIBLE_CONTROLS][index];
-
-	control.container(null);
-	this[DISCARDED_CONTROLS].push(control);
-	this[VISIBLE_CONTROLS].splice(index, 1);
-};
+const DISCARD = Symbol();
 
 /**
  * <p>Instead of creating and destroying controls in rapid succession, recycle them!</p>
@@ -31,6 +17,21 @@ export default class ControlRecycler {
 		this[VISIBLE_CONTROLS] = [];
 		this[DISCARDED_CONTROLS] = [];
 		objectHelper.applySettings(this, settings);
+	}
+
+	/**
+	 * Discard a control at a specific index of visibleControls.
+	 * @function discardControl
+	 * @arg {Number} index
+	 * @arg {array} visibleControls
+	 * @arg {array} discardedControls
+	 */
+	[DISCARD](index) {
+		const control = this[VISIBLE_CONTROLS][index];
+
+		control.container(null);
+		this[DISCARDED_CONTROLS].push(control);
+		this[VISIBLE_CONTROLS].splice(index, 1);
 	}
 }
 
@@ -150,7 +151,7 @@ Object.assign(ControlRecycler.prototype, {
 		if (ID) {
 			for (let controlIndex = 0; controlIndex < this[VISIBLE_CONTROLS].length; controlIndex++) {
 				if (this[VISIBLE_CONTROLS][controlIndex].ID() === ID) {
-					discardControl.call(this, controlIndex);
+					this[DISCARD](controlIndex);
 					break;
 				}
 			}
@@ -165,7 +166,7 @@ Object.assign(ControlRecycler.prototype, {
 	 */
 	discardAllControls: function() {
 		while (this[VISIBLE_CONTROLS].length > 0) {
-			discardControl.call(this, 0);
+			this[DISCARD](0);
 		}
 	},
 

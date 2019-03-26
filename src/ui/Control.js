@@ -144,8 +144,8 @@ const setCssSizeElement = function(value) {
  * @extends Removable
  * @constructor
  *
- * @arg {string}        type
- * @arg {Object}        settings - An object where keys are methods and values are arguments.
+ * @arg {string} type
+ * @arg {Object} settings - An object where keys are methods and values are arguments.
  */
 export default class Control extends Removable {
 	constructor(settings = {}) {
