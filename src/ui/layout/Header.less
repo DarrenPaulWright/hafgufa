@@ -1,0 +1,89 @@
+@import (reference) '../../../node_modules/hafgufa/src/ui/elements/Button.less';
+
+header {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background: @headerBackground;
+	box-shadow: @headerShadow;
+	height: @headerHeight;
+
+	> * {
+		display: inline-block;
+		vertical-align: top;
+		height: 100%;
+	}
+
+	.header-button:extend(.empty-button all) {
+		overflow: visible;
+		padding: 0 0.6em;
+		text-shadow: @headerButtonTextShadow;
+		height: 100%;
+
+		> .icon {
+			color: @headerButtonIconColor;
+			font-size: @headerButtonIconFontSize;
+			transform: @headerButtonIconTransform;
+			text-shadow: @headerButtonIconTextShadow;
+		}
+
+		&:hover, &:focus {
+			background: @headerButtonHoverBackground;
+		}
+
+		&:active {
+			background: @headerButtonActiveBackground;
+		}
+
+		&.selected {
+			color: @headerButtonSelectedFontColor;
+			text-shadow: @headerButtonSelectedTextShadow;
+			background: @headerButtonSelectedBackground;
+			box-shadow: @headerButtonSelectedShadow;
+
+			> .icon {
+				color: @headerButtonSelectedFontColor;
+				text-shadow: @headerButtonSelectedTextShadow;
+			}
+
+			&:hover, &:focus {
+				background: @headerButtonSelectedHoverBackground;
+			}
+		}
+	}
+
+	.search-bar-header, .header-button {
+		position: relative;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: @headerButtonSeparatorWidth;
+			background: @headerButtonSeparatorBackground;
+		}
+
+		&:not(.align-right) {
+			&:after {
+				right: -@headerButtonSeparatorWidth / 2;
+			}
+		}
+
+		&.align-right {
+			&:after {
+				left: -@headerButtonSeparatorWidth / 2;
+			}
+		}
+	}
+
+	.search-bar-header {
+		.tags {
+			margin: @headerSearchBarMargin;
+		}
+	}
+
+	.align-right {
+		float: right;
+	}
+}
