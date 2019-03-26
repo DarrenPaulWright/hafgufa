@@ -1,0 +1,62 @@
+
+.section {
+	margin: 0;
+	padding: @sectionPadding;
+	overflow-y: hidden;
+
+	.section {
+		> .heading {
+			border-radius: @sectionNestedHeaderBorderRadius;
+		}
+	}
+
+	&.has-heading {
+		padding: 0;
+
+		> div:first-of-type {
+			white-space: normal;
+			padding: @sectionPadding;
+
+			&:after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+		}
+	}
+
+	> .heading {
+		padding: @sectionHeadingPadding;
+
+		.toolbar {
+			margin: @sectionHeadingPadding;
+		}
+	}
+
+	&.can-collapse {
+		> .heading {
+			padding: @sectionCanCollapseHeadingPadding;
+			background: @sectionCanCollapseHeadingBackground;
+			border: @sectionCanCollapseHeadingBorder;
+			box-shadow: @sectionCanCollapseHeadingShadow;
+			text-shadow: @sectionCanCollapseHeadingTextShadow;
+
+			.icon {
+				color: @sectionCanCollapseHeadingIconColor;
+				text-shadow: @sectionCanCollapseHeadingIconShadow;
+			}
+
+			&:hover {
+				background: @sectionCanCollapseHeadingHoverBackground;
+			}
+
+			.toolbar {
+				margin: @sectionCanCollapseHeadingPadding;
+			}
+		}
+	}
+
+	&.collapsed {
+		overflow: visible;
+	}
+}

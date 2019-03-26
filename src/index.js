@@ -26,6 +26,7 @@ export { default as Score } from './ui/forms/Score';
 export { default as Container } from './ui/layout/Container';
 export { default as Group } from './ui/layout/Group';
 export { default as Popup } from './ui/layout/Popup';
+export { default as Section } from './ui/layout/Section';
 export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';
 
