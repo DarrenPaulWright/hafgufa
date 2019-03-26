@@ -1,0 +1,39 @@
+
+.group {
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+	padding: 0;
+	border: @groupBorder;
+	background: @groupBackground;
+	box-shadow: @groupShadow;
+	border-radius: @groupBorderRadius;
+	margin: @groupMargin;
+	overflow-y: hidden;
+
+	> .heading {
+		padding: @groupHeadingPadding;
+
+		> .icon {
+			color: @groupIconColor;
+		}
+
+		.toolbar {
+			margin: @groupHeadingPadding;
+		}
+	}
+
+	> div:first-of-type {
+		white-space: normal;
+		padding: @groupPadding;
+		min-height: @groupMinHeight;
+
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+	}
+
+	.groupEx();
+}
