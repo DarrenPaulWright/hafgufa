@@ -1,7 +1,7 @@
 import { throttle } from 'async-agent';
 import { event, select } from 'd3';
 import { isEmpty } from 'object-agent';
-import { CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
+import { castArray, CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
 import {
 	BORDER_BOX,
@@ -311,7 +311,7 @@ Object.assign(Control.prototype, {
 						}
 
 						if (this[MIGRATION].attributes) {
-							Array.prototype.slice.call(this[MIGRATION].attributes).forEach((attr) => {
+							castArray(this[MIGRATION].attributes).forEach((attr) => {
 								this[ELEMENT_D3].attr(attr.name, attr.value);
 							});
 						}
