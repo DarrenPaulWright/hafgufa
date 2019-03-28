@@ -30,11 +30,13 @@ export { default as Popup } from './ui/layout/Popup';
 export { default as Section } from './ui/layout/Section';
 export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';
+export { default as VirtualList } from './ui/layout/VirtualList';
 
 export { default as IsWorking } from './ui/display/IsWorking';
 
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
 export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';
+export { default as DragMixin } from './ui/mixins/DragMixin';
 export { default as FocusMixin } from './ui/mixins/FocusMixin';
 export { default as IsWorkingMixin } from './ui/mixins/IsWorkingMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
