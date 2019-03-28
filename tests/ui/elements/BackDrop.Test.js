@@ -1,10 +1,10 @@
 import { BackDrop } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(BackDrop);
-const controlBaseTests = new ControlBaseTests(BackDrop, testUtil);
+const controlTests = new ControlTests(BackDrop, testUtil);
 
 describe('BackDrop', () => {
-	controlBaseTests.run(['container', 'stopPropagation']);
+	controlTests.run(['container', 'stopPropagation']);
 });

@@ -1,10 +1,10 @@
 import { Input } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Input);
-const controlBaseTests = new ControlBaseTests(Input, testUtil);
+const controlTests = new ControlTests(Input, testUtil);
 
 describe('Input', () => {
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 });

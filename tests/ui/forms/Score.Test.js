@@ -1,14 +1,14 @@
 import { assert } from 'chai';
 import { Score } from '../../../src';
 import TestUtil from '../../TestUtil';
-import FormControlBaseTests from './FormControlBaseTests';
+import FormControlTests from './FormControlTests';
 
 const testUtil = new TestUtil(Score);
-const formControlBaseTests = new FormControlBaseTests(Score, testUtil);
+const formControlTests = new FormControlTests(Score, testUtil);
 
 describe('Score', () => {
 
-	formControlBaseTests.run();
+	formControlTests.run();
 
 	describe('Init', () => {
 		it('should have a div with class "score-text"', () => {

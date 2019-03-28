@@ -3,17 +3,17 @@ import { Heading, HEADING_LEVELS } from '../../../src';
 import { MOUSE_ENTER_EVENT } from '../../../src/utility/domConstants';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Heading);
-const controlBaseTests = new ControlBaseTests(Heading, testUtil, {
+const controlTests = new ControlTests(Heading, testUtil, {
 	mainCssClass: 'heading',
 	focusableElement: '.heading'
 });
 
 describe('Heading', () => {
 
-	controlBaseTests.run(['stopPropagation'], 'focus');
+	controlTests.run(['stopPropagation'], 'focus');
 
 	describe('Init', () => {
 		it('should have a class \'heading\'', () => {

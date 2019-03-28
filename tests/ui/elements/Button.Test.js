@@ -1,16 +1,16 @@
 import { assert } from 'chai';
 import { Button } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Button);
-const controlBaseTests = new ControlBaseTests(Button, testUtil, {
+const controlTests = new ControlTests(Button, testUtil, {
 	focusableElement: 'button'
 });
 
 describe('Button', () => {
 
-	controlBaseTests.run([], ['focus']);
+	controlTests.run([], ['focus']);
 
 	describe('.label', () => {
 		const TEXT_LABEL = 'This is a button!@#$%^&*()';

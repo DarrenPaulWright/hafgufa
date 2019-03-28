@@ -1,32 +1,12 @@
 import { assert } from 'chai';
-import { forOwn } from 'object-agent';
-import { castArray } from 'type-enforcer';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
-export default function FormControlBaseTests(Control, testUtil, settings) {
+export default function FormControlTests(Control, testUtil, settings) {
 	const self = this;
-	const controlHeadingMixinTests = new ControlHeadingMixinTests(Control, testUtil, settings);
 	const TEST_ID = 'testID';
 	const TEST_TITLE = 'Test <br> Title &nbsp;';
-	const extraTests = ['onChange'];
 
-	self.run = (exceptions, additions, extraSettings = {}) => {
-		exceptions = castArray(exceptions);
-
-		controlHeadingMixinTests.run(exceptions, additions);
-
-		exceptions.push('run');
-
-		forOwn(self, (runTests, testName) => {
-			if (!exceptions.includes(testName) && !extraTests.includes(testName)) {
-				runTests();
-			}
-		});
-
-		if (extraSettings.onChange) {
-			self.onChange(extraSettings);
-		}
-	};
+	ControlHeadingMixinTests.call(self, Control, testUtil, settings);
 
 	self.isRequired = () => {
 		describe('FormControl .isRequired', () => {

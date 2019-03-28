@@ -2,16 +2,16 @@ import { assert } from 'chai';
 import { CheckBox } from '../../../src';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(CheckBox);
-const controlBaseTests = new ControlBaseTests(CheckBox, testUtil, {
+const controlTests = new ControlTests(CheckBox, testUtil, {
 	mainCssClass: 'checkbox'
 });
 
 describe('CheckBox', () => {
 
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

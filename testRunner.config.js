@@ -11,8 +11,7 @@ module.exports = [{
 	files: [
 		'tests/TestUtil.js',
 		'tests/query.js',
-		'tests/**/*MixinTests.js',
-		'tests/**/*BaseTests.js',
+		'tests/**/*Tests.js',
 		'src/**/*.less'
 	]
 }, {

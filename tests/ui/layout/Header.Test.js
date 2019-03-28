@@ -1,10 +1,10 @@
 import { Header } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Header);
-const controlBaseTests = new ControlBaseTests(Header, testUtil);
+const controlTests = new ControlTests(Header, testUtil);
 
 describe('Header', () => {
-	controlBaseTests.run();
+	controlTests.run();
 });

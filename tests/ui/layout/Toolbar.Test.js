@@ -1,10 +1,10 @@
 import { Toolbar } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Toolbar);
-const controlBaseTests = new ControlBaseTests(Toolbar, testUtil);
+const controlTests = new ControlTests(Toolbar, testUtil);
 
 describe('Toolbar', () => {
-	controlBaseTests.run();
+	controlTests.run();
 });

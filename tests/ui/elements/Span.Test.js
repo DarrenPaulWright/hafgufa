@@ -1,12 +1,12 @@
 import { Span } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Span);
-const controlBaseTests = new ControlBaseTests(Span, testUtil);
+const controlTests = new ControlTests(Span, testUtil);
 
 describe('Span', () => {
 
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 
 });

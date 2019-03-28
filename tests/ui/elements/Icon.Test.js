@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import { Icon, ICON_SIZES } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Icon);
-const controlBaseTests = new ControlBaseTests(Icon, testUtil);
+const controlTests = new ControlTests(Icon, testUtil);
 
 describe('Icon', () => {
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 
 	describe('.icon', () => {
 		it('should have a span with classes "fa" and "fa-fw" if no icon is set', () => {

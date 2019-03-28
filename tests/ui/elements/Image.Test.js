@@ -2,14 +2,14 @@ import { assert } from 'chai';
 import { Image } from '../../../src';
 import dom from '../../../src/utility/dom';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Image);
-const controlBaseTests = new ControlBaseTests(Image, testUtil);
+const controlTests = new ControlTests(Image, testUtil);
 
 describe('Image', () => {
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('.source', () => {
 		it('should set the src attribute of the img when set', () => {

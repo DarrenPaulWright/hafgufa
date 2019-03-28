@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 import DragContainer from '../../../src/ui/layout/DragContainer';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(DragContainer);
-const controlBaseTests = new ControlBaseTests(DragContainer, testUtil);
+const controlTests = new ControlTests(DragContainer, testUtil);
 
 describe('DragContainer', () => {
-	controlBaseTests.run([], ['focus']);
+	controlTests.run([], ['focus']);
 
 	describe('.stretch', () => {
 		it('should not blow up', () => {

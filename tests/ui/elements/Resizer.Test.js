@@ -1,10 +1,10 @@
 import { Resizer } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Resizer);
-const controlBaseTests = new ControlBaseTests(Resizer, testUtil);
+const controlTests = new ControlTests(Resizer, testUtil);
 
 describe('Resizer', () => {
-	controlBaseTests.run();
+	controlTests.run();
 });

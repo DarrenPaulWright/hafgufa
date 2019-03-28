@@ -4,10 +4,10 @@ import { Button, Heading, VirtualList } from '../../../src';
 import dom from '../../../src/utility/dom';
 import { SCROLL_EVENT } from '../../../src/utility/domConstants';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(VirtualList);
-const controlBaseTests = new ControlBaseTests(VirtualList, testUtil, {
+const controlTests = new ControlTests(VirtualList, testUtil, {
 	extraSettings: {
 		itemControl: Button,
 		itemData: [{
@@ -32,7 +32,7 @@ const testRows = [{
 
 describe('VirtualList', () => {
 
-	controlBaseTests.run(['stopPropagation'], ['focus']);
+	controlTests.run(['stopPropagation'], ['focus']);
 
 	describe('InitialLayout', () => {
 		it('should have a css class called ' + VIRTUAL_LIST_CLASS, () => {

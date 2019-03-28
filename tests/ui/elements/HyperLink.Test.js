@@ -1,13 +1,12 @@
-import { assert } from 'chai';
 import { HyperLink } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(HyperLink);
-const controlBaseTests = new ControlBaseTests(HyperLink, testUtil, {
+const controlTests = new ControlTests(HyperLink, testUtil, {
 	focusableElement: 'HyperLink'
 });
 
 describe('HyperLink', () => {
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 });

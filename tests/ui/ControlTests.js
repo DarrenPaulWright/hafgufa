@@ -4,11 +4,12 @@ import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
 import { CLICK_EVENT } from '../../src/utility/domConstants';
 
-export default function ControlBaseTests(Control, testUtil, settings = {}) {
+const TEST_ID = 'testID';
+const TEST_ID_SUFFIX = 'testIDSuffix';
+const extraTests = ['focus', 'onChange'];
+
+export default function ControlTests(Control, testUtil, settings = {}) {
 	const self = this;
-	const TEST_ID = 'testID';
-	const TEST_ID_SUFFIX = 'testIDSuffix';
-	const extraTests = ['focus'];
 
 	const buildSettings = (localSettings) => Object.assign({}, {
 		ID: TEST_ID,
@@ -18,18 +19,25 @@ export default function ControlBaseTests(Control, testUtil, settings = {}) {
 		fade: false
 	}, settings.extraSettings, localSettings);
 
-	const has = (array, item) => array.includes(item);
-
-	self.run = (exceptions, additions) => {
+	self.run = (exceptions, additions, extraSettings = {}) => {
 		exceptions = castArray(exceptions);
 		additions = castArray(additions);
 
 		exceptions.push('run');
 
 		forOwn(self, (runTests, testName) => {
-			if ((!has(exceptions, testName) && !has(extraTests, testName)) ||
-				(has(additions, testName) && has(extraTests, testName))) {
+			const exclude = exceptions.includes(testName);
+			const include = additions.includes(testName);
+			const extra = extraTests.includes(testName);
+
+			if ((!exclude && !extra) || (include && extra)) {
 				runTests();
+			}
+		});
+
+		forOwn(extraSettings, (value, key) => {
+			if (self[key]) {
+				self[key](extraSettings);
 			}
 		});
 	};

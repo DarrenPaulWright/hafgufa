@@ -2,16 +2,16 @@ import { assert } from 'chai';
 import { Radio } from '../../../src';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Radio);
-const controlBaseTests = new ControlBaseTests(Radio, testUtil, {
+const controlTests = new ControlTests(Radio, testUtil, {
 	mainCssClass: 'radio'
 });
 
 describe('Radio', () => {
 
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

@@ -1,8 +1,6 @@
 import { assert } from 'chai';
-import { forOwn } from 'object-agent';
-import { castArray } from 'type-enforcer';
 import query from '../../query';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const TEST_ID = 'testID';
 const TEST_ICON_FA = 'trash';
@@ -16,21 +14,8 @@ const ERROR_MESSAGE_ELEMENT_CLASS = '.error';
 
 export default function ControlHeadingMixinTests(Control, testUtil, settings = {}) {
 	const self = this;
-	const controlBaseTests = new ControlBaseTests(Control, testUtil, settings);
 
-	self.run = (exceptions = [], additions) => {
-		exceptions = castArray(exceptions);
-
-		controlBaseTests.run(exceptions, additions);
-
-		exceptions.push('run');
-
-		forOwn(self, (runTests, testName) => {
-			if (!exceptions.includes(testName)) {
-				runTests();
-			}
-		});
-	};
+	ControlTests.call(self, Control, testUtil, settings);
 
 	self.icon = () => {
 		describe('ControlHeadingAddon .icon', () => {

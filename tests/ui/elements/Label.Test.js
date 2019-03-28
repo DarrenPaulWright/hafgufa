@@ -1,12 +1,12 @@
 import { Label } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Label);
-const controlBaseTests = new ControlBaseTests(Label, testUtil);
+const controlTests = new ControlTests(Label, testUtil);
 
 describe('Label', () => {
 
-	controlBaseTests.run(['width', 'height']);
+	controlTests.run(['width', 'height']);
 
 });

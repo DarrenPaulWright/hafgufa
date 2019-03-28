@@ -1,9 +1,9 @@
 import { Popup } from '../../../src';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(Popup);
-const controlBaseTests = new ControlBaseTests(Popup, testUtil, {
+const controlTests = new ControlTests(Popup, testUtil, {
 	extraSettings: {
 		isFocusable: true
 	},
@@ -11,5 +11,5 @@ const controlBaseTests = new ControlBaseTests(Popup, testUtil, {
 });
 
 describe('Popup', () => {
-	controlBaseTests.run(['container', 'ID', 'stopPropagation'], ['focus']);
+	controlTests.run(['container', 'ID', 'stopPropagation'], ['focus']);
 });

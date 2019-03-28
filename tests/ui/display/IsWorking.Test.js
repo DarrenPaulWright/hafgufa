@@ -2,10 +2,10 @@ import { assert } from 'chai';
 import { IsWorking } from '../../../src';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
-import ControlBaseTests from '../ControlBaseTests';
+import ControlTests from '../ControlTests';
 
 const testUtil = new TestUtil(IsWorking);
-const controlBaseTests = new ControlBaseTests(IsWorking, testUtil, {
+const controlTests = new ControlTests(IsWorking, testUtil, {
 	mainCssClass: 'is-working',
 	extraSettings: {
 		delay: 0
@@ -19,7 +19,7 @@ const BASE_SETTINGS = {
 
 describe('IsWorking', () => {
 
-	controlBaseTests.run(['width', 'classes', 'onResize']);
+	controlTests.run(['width', 'classes', 'onResize']);
 
 	describe('InitialLayout', () => {
 		it('should have a div with a css class called is-working', () => {
