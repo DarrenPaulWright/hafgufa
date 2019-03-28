@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { Heading, HEADING_LEVELS } from '../../../src';
-import { MOUSE_ENTER_EVENT, WINDOW } from '../../../src/utility/domConstants';
+import { MOUSE_ENTER_EVENT } from '../../../src/utility/domConstants';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlBaseTests from '../ControlBaseTests';
@@ -17,8 +17,8 @@ describe('Heading', () => {
 
 	describe('Init', () => {
 		it('should have a class \'heading\'', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer
+			window.control = new Heading({
+				container: window.testContainer
 			});
 
 			assert.equal(query.count('.heading'), 1);
@@ -34,8 +34,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a span with text in it when title is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1'
 			});
 
@@ -52,8 +52,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a div with a class \'subtitle\' with text in it when subTitle is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				subTitle: 'test 1'
 			});
 
@@ -61,12 +61,12 @@ describe('Heading', () => {
 		});
 
 		it('should NOT have a div with a class \'subtitle\' when subTitle is set back to an empty string', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				subTitle: 'test 1'
 			});
 
-			WINDOW.control.subTitle('');
+			window.control.subTitle('');
 
 			assert.equal(query.count('.heading .subtitle'), 0);
 		});
@@ -81,8 +81,8 @@ describe('Heading', () => {
 		});
 
 		it('should have an icon as the third child when isExpandable is true, isSelectable is true, and an icon is provided', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				showExpander: true,
 				showCheckbox: true,
@@ -95,29 +95,29 @@ describe('Heading', () => {
 		});
 
 		it('should not have an icon element in the DOM when icon is set to an icon and then nothing', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				isExpandable: true,
 				isSelectable: true,
 				icon: 'edit'
 			});
 
-			WINDOW.control.icon('');
+			window.control.icon('');
 
 			assert.equal(query.count('.heading i'), 0);
 		});
 
 		it('should have an icon element in the DOM when icon is set and then an image is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				isExpandable: true,
 				isSelectable: true,
 				icon: 'edit'
 			});
 
-			WINDOW.control.image('edit.png');
+			window.control.image('edit.png');
 
 			assert.equal(query.count('.heading i'), 1);
 		});
@@ -132,8 +132,8 @@ describe('Heading', () => {
 		});
 
 		it('should have an icon with a tooltip if iconTooltip is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				icon: 'circle',
 				iconTooltip: 'test tooltip'
 			});
@@ -156,8 +156,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a div with a class \'image\' as the third child when isExpandable is true, isSelectable is true, and an image is provided', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				isExpandable: true,
 				isSelectable: true,
@@ -168,29 +168,29 @@ describe('Heading', () => {
 		});
 
 		it('should not have an image element in the DOM when image is set to an image and then nothing', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				isExpandable: true,
 				isSelectable: true,
 				image: 'edit.png'
 			});
 
-			WINDOW.control.image('');
+			window.control.image('');
 
 			assert.equal(query.count('.heading .image'), 0);
 		});
 
 		it('should have an image element in the DOM when image is set and then an icon is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				title: 'test 1',
 				isExpandable: true,
 				isSelectable: true,
 				image: 'edit.png'
 			});
 
-			WINDOW.control.icon('edit');
+			window.control.icon('edit');
 
 			assert.equal(query.count('.heading img'), 1);
 		});
@@ -209,8 +209,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a div with a class \'toolbar\' when buttons is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				buttons: [{
 					label: 'test 1',
 					classes: 'test-class'
@@ -223,8 +223,8 @@ describe('Heading', () => {
 		it('should have a the same div when buttons is set twice', () => {
 			let buttonContainer;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				buttons: [{
 					label: 'test 1',
 					classes: 'test-class'
@@ -233,7 +233,7 @@ describe('Heading', () => {
 
 			buttonContainer = query.first('.heading .toolbar');
 
-			WINDOW.control.buttons([{
+			window.control.buttons([{
 				label: 'test 2',
 				classes: 'test-class'
 			}]);
@@ -244,8 +244,8 @@ describe('Heading', () => {
 		it('should return the set data object first in the click event for buttons', () => {
 			let testVar = 0;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				width: '300px',
 				isSelectable: false,
 				isExpandable: false,
@@ -254,7 +254,7 @@ describe('Heading', () => {
 				}
 			});
 
-			WINDOW.control.buttons([{
+			window.control.buttons([{
 				label: 'test 1',
 				onClick: function(data) {
 					testVar = data.testProp;
@@ -267,8 +267,8 @@ describe('Heading', () => {
 		});
 
 		it('should accept a function for a buttons isEnabled property', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				width: '300px',
 				isSelectable: false,
 				isExpandable: false,
@@ -277,7 +277,7 @@ describe('Heading', () => {
 				}
 			});
 
-			WINDOW.control.buttons([{
+			window.control.buttons([{
 				label: 'test 1',
 				isEnabled: function(data) {
 					return data.testProp === 3;
@@ -306,8 +306,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a class \'selected\' when isSelected is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: true,
 				isSelected: true
 			});
@@ -316,8 +316,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a checked checkbox when isSelected is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: true,
 				isSelected: true
 			});
@@ -335,8 +335,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a button when isExpandable is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showExpander: true,
 				isExpandable: true
 			});
@@ -354,8 +354,8 @@ describe('Heading', () => {
 		});
 
 		it('should have an empty button when isExpandable is false and isExpanded is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showExpander: true,
 				isExpandable: false,
 				isExpanded: true
@@ -365,8 +365,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a div with class \'expander\' and not \'expanded\' when isExpandable is true and isExpanded is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showExpander: true,
 				isExpandable: true,
 				isExpanded: true
@@ -385,15 +385,15 @@ describe('Heading', () => {
 		});
 
 		it('should be expanded when shouldMainClickExpand is true and isExpandable is true and isSelectable is true and the main element is clicked', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showExpander: true,
 				isExpandable: true,
 				shouldMainClickExpand: true,
 				isSelectable: true
 			});
 
-			testUtil.simulateClick(WINDOW.control.element());
+			testUtil.simulateClick(window.control.element());
 
 			assert.equal(query.count('.heading button'), 1);
 		});
@@ -417,8 +417,8 @@ describe('Heading', () => {
 		});
 
 		it('should have a class "indeterminate" if isIndeterminate is set', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: true,
 				isIndeterminate: true
 			});
@@ -427,8 +427,8 @@ describe('Heading', () => {
 		});
 
 		it('should NOT have a div with class \'checked\' when isSelected is true and isIndeterminate is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: true,
 				isSelected: true,
 				isIndeterminate: true
@@ -438,14 +438,14 @@ describe('Heading', () => {
 		});
 
 		it('should set isSelected to false when isSelected is true and isIndeterminate is true', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: true,
 				isSelected: true,
 				isIndeterminate: true
 			});
 
-			assert.equal(WINDOW.control.isSelected(), false);
+			assert.equal(window.control.isSelected(), false);
 		});
 	});
 
@@ -453,7 +453,7 @@ describe('Heading', () => {
 		testUtil.testMethod({
 			methodName: 'showExpander',
 			defaultSettings: {
-				container: WINDOW.testContainer
+				container: window.testContainer
 			},
 			defaultValue: false,
 			testValue: true,
@@ -461,8 +461,8 @@ describe('Heading', () => {
 		});
 
 		it('should NOT have a div with class \'expander\' when showExpander is false', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showExpander: false,
 				isExpandable: true,
 				isExpanded: true
@@ -476,7 +476,7 @@ describe('Heading', () => {
 		testUtil.testMethod({
 			methodName: 'showCheckbox',
 			defaultSettings: {
-				container: WINDOW.testContainer
+				container: window.testContainer
 			},
 			defaultValue: false,
 			testValue: true,
@@ -484,8 +484,8 @@ describe('Heading', () => {
 		});
 
 		it('should NOT have a div with class \'checkboxes\' when showCheckbox is false', () => {
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				showCheckbox: false,
 				isSelectable: true,
 				isSelected: true
@@ -506,8 +506,8 @@ describe('Heading', () => {
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer
+			window.control = new Heading({
+				container: window.testContainer
 			});
 
 			testUtil.simulateClick(query.first('.heading'));
@@ -518,8 +518,8 @@ describe('Heading', () => {
 		it('should execute the onSelect callback when clicked', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isSelectable: true,
 				onSelect: function() {
 					testVar = 2;
@@ -543,8 +543,8 @@ describe('Heading', () => {
 		it('should NOT execute the onExpand callback when the expander is clicked if isExpandable is false', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isExpandable: false,
 				onExpand: function() {
 					testVar = 2;
@@ -559,8 +559,8 @@ describe('Heading', () => {
 		it('should NOT execute the onExpand callback when the expander is clicked if onExpand is not set', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isExpandable: true
 			});
 
@@ -572,8 +572,8 @@ describe('Heading', () => {
 		it('should execute the onExpand callback when the expander is clicked', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isExpandable: true,
 				onExpand: function() {
 					testVar = 2;
@@ -588,8 +588,8 @@ describe('Heading', () => {
 		it('should NOT execute the onSelect callback when the expander is clicked', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isExpandable: true,
 				onSelect: function() {
 					testVar = 2;
@@ -604,8 +604,8 @@ describe('Heading', () => {
 		it('should execute the onExpand callback when the branch is clicked and isSelectable is false', () => {
 			let testVar = 1;
 
-			WINDOW.control = new Heading({
-				container: WINDOW.testContainer,
+			window.control = new Heading({
+				container: window.testContainer,
 				isExpandable: true,
 				isSelectable: false,
 				onExpand: function() {

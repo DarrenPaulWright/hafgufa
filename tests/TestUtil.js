@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import keyCodes from 'keyCodes';
 import simulant from 'simulant';
 import { isArray, isString } from 'type-enforcer';
-import { CLICK_EVENT, KEY_UP_EVENT, WINDOW } from '../src/utility/domConstants';
+import { CLICK_EVENT, KEY_UP_EVENT } from '../src/utility/domConstants';
 import windowResize from '../src/utility/windowResize';
 
 /**
@@ -19,8 +19,8 @@ export default function TestUtil(Control) {
 			let foundIndex = -1;
 			let item;
 
-			for (let index = 0; index < WINDOW.eventListeners.length; index++) {
-				item = WINDOW.eventListeners[index];
+			for (let index = 0; index < window.eventListeners.length; index++) {
+				item = window.eventListeners[index];
 				if (item.element === eventObject.element &&
 					item.eventName === eventObject.eventName &&
 					item.handler === eventObject.handler &&
@@ -34,7 +34,7 @@ export default function TestUtil(Control) {
 		};
 
 		if (!Element.prototype._addEventListener) {
-			WINDOW.eventListeners = [];
+			window.eventListeners = [];
 
 			Element.prototype._addEventListener = Element.prototype.addEventListener;
 			Element.prototype.addEventListener = function(eventName, handler, useCapture) {
@@ -48,7 +48,7 @@ export default function TestUtil(Control) {
 				this._addEventListener(eventName, handler, useCapture);
 
 				if (getEventIndex(eventObject) === -1) {
-					WINDOW.eventListeners.push(eventObject);
+					window.eventListeners.push(eventObject);
 				}
 			};
 
@@ -65,14 +65,14 @@ export default function TestUtil(Control) {
 				this._removeEventListener(eventName, handler, useCapture);
 
 				if (eventIndex !== -1) {
-					WINDOW.eventListeners.splice(eventIndex, 1);
+					window.eventListeners.splice(eventIndex, 1);
 				}
 			};
 		}
 	};
 
 	const getControlTypeString = () => {
-		const type = WINDOW.control && WINDOW.control.type ? WINDOW.control.type() : 'undefined';
+		const type = window.control && window.control.type ? window.control.type() : 'undefined';
 		return 'Control: ' + type + '\n';
 	};
 
@@ -80,23 +80,23 @@ export default function TestUtil(Control) {
 		const getEventList = () => {
 			let output = '';
 
-			for (let index = 0; index < WINDOW.eventListeners.length; index++) {
+			for (let index = 0; index < window.eventListeners.length; index++) {
 				if (index > 0) {
 					output += ',\n';
 				}
-				output += WINDOW.eventListeners[index].element.tagName;
-				if (WINDOW.eventListeners[index].element.getAttribute('type')) {
-					output += '(type:' + WINDOW.eventListeners[index].element.getAttribute('type') + ')';
+				output += window.eventListeners[index].element.tagName;
+				if (window.eventListeners[index].element.getAttribute('type')) {
+					output += '(type:' + window.eventListeners[index].element.getAttribute('type') + ')';
 				}
-				output += '[id:' + WINDOW.eventListeners[index].element.getAttribute('id') + ']-';
-				output += WINDOW.eventListeners[index].eventName;
+				output += '[id:' + window.eventListeners[index].element.getAttribute('id') + ']-';
+				output += window.eventListeners[index].eventName;
 			}
 
 			return output;
 		};
 
-		assert.equal(WINDOW.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString() + 'Has:\n' + getEventList());
-		WINDOW.eventListeners = [];
+		assert.equal(window.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString() + 'Has:\n' + getEventList());
+		window.eventListeners = [];
 	};
 
 	const memoryTests = () => {
@@ -115,40 +115,40 @@ export default function TestUtil(Control) {
 	addEventListenerOverRides();
 
 	beforeEach(() => {
-		WINDOW.eventListeners = [];
-		WINDOW.testContainer = document.createElement('div');
-		document.body.appendChild(WINDOW.testContainer);
+		window.eventListeners = [];
+		window.testContainer = document.createElement('div');
+		document.body.appendChild(window.testContainer);
 	});
 
 	afterEach(() => {
-		if (WINDOW.control && WINDOW.control.remove) {
-			WINDOW.control.remove();
+		if (window.control && window.control.remove) {
+			window.control.remove();
 		}
-		if (WINDOW.testContainer) {
-			WINDOW.testContainer.remove();
+		if (window.testContainer) {
+			window.testContainer.remove();
 		}
 
 		memoryTests();
 		eventTests();
 
-		WINDOW.control = null;
+		window.control = null;
 		document.body.textContent = '';
 	});
 
 	self.testMethod = (settings) => {
 		const buildOptions = () => Object.assign({}, settings.defaultSettings, {
-			container: WINDOW.testContainer
+			container: window.testContainer
 		});
 
 		describe('(testMethod)', () => {
 			it('should return "' + settings.defaultValue + '" when the ' + settings.methodName + ' setting is not set', () => {
-				WINDOW.control = new Control(buildOptions());
+				window.control = new Control(buildOptions());
 
-				if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-					assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.defaultValue));
+				if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+					assert.isTrue(window.control[settings.methodName]().isSame(settings.defaultValue));
 				}
 				else {
-					assert.deepEqual(WINDOW.control[settings.methodName](), settings.defaultValue);
+					assert.deepEqual(window.control[settings.methodName](), settings.defaultValue);
 				}
 			});
 
@@ -157,13 +157,13 @@ export default function TestUtil(Control) {
 					const options = buildOptions();
 					options[settings.methodName] = settings.defaultValue;
 
-					WINDOW.control = new Control(options);
+					window.control = new Control(options);
 
-					if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-						assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.defaultValue));
+					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+						assert.isTrue(window.control[settings.methodName]().isSame(settings.defaultValue));
 					}
 					else {
-						assert.deepEqual(WINDOW.control[settings.methodName](), settings.defaultValue);
+						assert.deepEqual(window.control[settings.methodName](), settings.defaultValue);
 					}
 				});
 			}
@@ -173,78 +173,78 @@ export default function TestUtil(Control) {
 					const options = buildOptions();
 					options[settings.methodName] = settings.testValue;
 
-					WINDOW.control = new Control(options);
+					window.control = new Control(options);
 
-					if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-						assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.testValue));
+					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+						assert.isTrue(window.control[settings.methodName]().isSame(settings.testValue));
 					}
 					else {
-						assert.deepEqual(WINDOW.control[settings.methodName](), settings.testValue);
+						assert.deepEqual(window.control[settings.methodName](), settings.testValue);
 					}
 				});
 			}
 
 			if (settings.defaultValue !== undefined) {
 				it('should return "' + settings.defaultValue + '" when the ' + settings.methodName + ' method is set to "' + settings.defaultValue + '"', () => {
-					WINDOW.control = new Control(buildOptions())[settings.methodName](settings.defaultValue);
+					window.control = new Control(buildOptions())[settings.methodName](settings.defaultValue);
 
-					if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-						assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.defaultValue));
+					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+						assert.isTrue(window.control[settings.methodName]().isSame(settings.defaultValue));
 					}
 					else {
-						assert.deepEqual(WINDOW.control[settings.methodName](), settings.defaultValue);
+						assert.deepEqual(window.control[settings.methodName](), settings.defaultValue);
 					}
 				});
 			}
 
 			it('should return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '"', () => {
-				WINDOW.control = new Control(buildOptions())[settings.methodName](settings.testValue);
+				window.control = new Control(buildOptions())[settings.methodName](settings.testValue);
 
-				if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-					assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.testValue));
+				if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+					assert.isTrue(window.control[settings.methodName]().isSame(settings.testValue));
 				}
 				else {
-					assert.deepEqual(WINDOW.control[settings.methodName](), settings.testValue);
+					assert.deepEqual(window.control[settings.methodName](), settings.testValue);
 				}
 			});
 
 			it('should return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" twice', () => {
-				WINDOW.control = new Control(buildOptions());
-				WINDOW.control[settings.methodName](settings.testValue);
-				WINDOW.control[settings.methodName](settings.testValue);
+				window.control = new Control(buildOptions());
+				window.control[settings.methodName](settings.testValue);
+				window.control[settings.methodName](settings.testValue);
 
-				if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-					assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.testValue));
+				if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+					assert.isTrue(window.control[settings.methodName]().isSame(settings.testValue));
 				}
 				else {
-					assert.deepEqual(WINDOW.control[settings.methodName](), settings.testValue);
+					assert.deepEqual(window.control[settings.methodName](), settings.testValue);
 				}
 			});
 
 			if (settings.secondTestValue !== undefined) {
 				it('should return "' + settings.secondTestValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then "' + settings.secondTestValue + '"', () => {
-					WINDOW.control = new Control(buildOptions());
-					WINDOW.control[settings.methodName](settings.testValue);
-					WINDOW.control[settings.methodName](settings.secondTestValue);
+					window.control = new Control(buildOptions());
+					window.control[settings.methodName](settings.testValue);
+					window.control[settings.methodName](settings.secondTestValue);
 
-					if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-						assert.isTrue(WINDOW.control[settings.methodName]().isSame(settings.secondTestValue));
+					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+						assert.isTrue(window.control[settings.methodName]().isSame(settings.secondTestValue));
 					}
 					else {
-						assert.deepEqual(WINDOW.control[settings.methodName](), settings.secondTestValue);
+						assert.deepEqual(window.control[settings.methodName](), settings.secondTestValue);
 					}
 				});
 
 				it('should NOT return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then "' + settings.secondTestValue + '"', () => {
-					WINDOW.control = new Control(buildOptions());
-					WINDOW.control[settings.methodName](settings.testValue);
-					WINDOW.control[settings.methodName](settings.secondTestValue);
+					window.control = new Control(buildOptions());
+					window.control[settings.methodName](settings.testValue);
+					window.control[settings.methodName](settings.secondTestValue);
 
-					if (WINDOW.control[settings.methodName]() && WINDOW.control[settings.methodName]().isSame) {
-						assert.isFalse(WINDOW.control[settings.methodName]().isSame(settings.testValue));
+					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
+						assert.isFalse(window.control[settings.methodName]().isSame(settings.testValue));
 					}
 					else {
-						assert.notDeepEqual(WINDOW.control[settings.methodName](), settings.testValue);
+						assert.notDeepEqual(window.control[settings.methodName](), settings.testValue);
 					}
 				});
 			}
@@ -252,22 +252,22 @@ export default function TestUtil(Control) {
 			if (settings.testValueClass !== undefined) {
 				if (!isArray(settings.testValueClass)) {
 					it('should NOT have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is NOT set', () => {
-						WINDOW.control = new Control(buildOptions());
+						window.control = new Control(buildOptions());
 
 						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 0);
 					});
 
 					it('should have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '"', () => {
-						WINDOW.control = new Control(buildOptions());
-						WINDOW.control[settings.methodName](settings.testValue);
+						window.control = new Control(buildOptions());
+						window.control[settings.methodName](settings.testValue);
 
 						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 1);
 					});
 
 					it('should NOT have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then to "' + settings.defaultValue + '"', () => {
-						WINDOW.control = new Control(buildOptions());
-						WINDOW.control[settings.methodName](settings.testValue);
-						WINDOW.control[settings.methodName](settings.defaultValue);
+						window.control = new Control(buildOptions());
+						window.control[settings.methodName](settings.testValue);
+						window.control[settings.methodName](settings.defaultValue);
 
 						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 0);
 					});
@@ -276,7 +276,7 @@ export default function TestUtil(Control) {
 					settings.testValueClass.forEach((mainClassOptions) => {
 						if (settings.defaultValue !== mainClassOptions.testValue) {
 							it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is NOT set', () => {
-								WINDOW.control = new Control(buildOptions());
+								window.control = new Control(buildOptions());
 
 								assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
 							});
@@ -285,17 +285,17 @@ export default function TestUtil(Control) {
 						settings.testValueClass.forEach((otherClassOptions) => {
 							if (mainClassOptions.class === otherClassOptions.class) {
 								it('should have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + mainClassOptions.testValue + '"', () => {
-									WINDOW.control = new Control(buildOptions());
-									WINDOW.control[settings.methodName](mainClassOptions.testValue);
+									window.control = new Control(buildOptions());
+									window.control[settings.methodName](mainClassOptions.testValue);
 
 									assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 1);
 								});
 
 								if (settings.defaultValue !== mainClassOptions.testValue) {
 									it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + mainClassOptions.testValue + '" and then to "' + settings.defaultValue + '"', () => {
-										WINDOW.control = new Control(buildOptions());
-										WINDOW.control[settings.methodName](mainClassOptions.testValue);
-										WINDOW.control[settings.methodName](settings.defaultValue);
+										window.control = new Control(buildOptions());
+										window.control[settings.methodName](mainClassOptions.testValue);
+										window.control[settings.methodName](settings.defaultValue);
 
 										assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
 									});
@@ -303,8 +303,8 @@ export default function TestUtil(Control) {
 							}
 							else {
 								it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + otherClassOptions.testValue + '"', () => {
-									WINDOW.control = new Control(buildOptions());
-									WINDOW.control[settings.methodName](otherClassOptions.testValue);
+									window.control = new Control(buildOptions());
+									window.control[settings.methodName](otherClassOptions.testValue);
 
 									assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
 								});

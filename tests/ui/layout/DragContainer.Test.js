@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 import DragContainer from '../../../src/ui/layout/DragContainer';
-import { WINDOW } from '../../../src/utility/domConstants';
 import TestUtil from '../../TestUtil';
 import ControlBaseTests from '../ControlBaseTests';
 
@@ -12,12 +11,12 @@ describe('DragContainer', () => {
 
 	describe('.stretch', () => {
 		it('should not blow up', () => {
-			WINDOW.control = new DragContainer({
-				container: WINDOW.testContainer,
+			window.control = new DragContainer({
+				container: window.testContainer,
 				canDrag: true
 			});
 
-			assert.isOk(WINDOW.control.stretch('fit'));
+			assert.isOk(window.control.stretch('fit'));
 		});
 	});
 });

@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
-import { WINDOW } from '../../../src/utility/domConstants';
 import query from '../../query';
 import ControlBaseTests from '../ControlBaseTests';
 
@@ -36,11 +35,11 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.icon = () => {
 		describe('ControlHeadingAddon .icon', () => {
 			it('should show a font-awesome icon as provided', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
 					title: 'Test Title',
 					headingIcon: TEST_ICON_FA,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				});
 
@@ -48,10 +47,10 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT have an icon element if icon is set to an empty string', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
 					headingIcon: '',
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				});
 
@@ -63,10 +62,10 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.title = () => {
 		describe('ControlHeadingAddon .title', () => {
 			it('should show a title as provided', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				});
 
@@ -74,10 +73,10 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should have an empty title element if the title is set to an empty string', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
 					title: '',
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				});
 
@@ -89,11 +88,11 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.subTitle = () => {
 		describe('ControlHeadingAddon .subTitle', () => {
 			it('should show a subTitle as provided if a title is also provided', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
 					subTitle: SUB_TITLE,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				});
 
@@ -107,7 +106,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'error',
 				defaultSettings: {
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					title: TEST_TITLE,
 					localizedStrings: {}
 				},
@@ -117,9 +116,9 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT show an error message if "error" is not called', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					title: TEST_TITLE,
 					localizedStrings: {}
 				});
@@ -128,9 +127,9 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should show an error message when "error" is called', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					title: TEST_TITLE,
 					localizedStrings: {}
 				})
@@ -140,9 +139,9 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT show an error message when error is set to "" after "error"', () => {
-				WINDOW.control = new Control({
+				window.control = new Control({
 					ID: TEST_ID,
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					title: TEST_TITLE,
 					localizedStrings: {}
 				})
@@ -161,7 +160,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'singleLine',
 				defaultSettings: {
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					localizedStrings: {}
 				},
 				defaultValue: false,
@@ -186,8 +185,8 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should have a toolbar in the header if the button option is set', () => {
-				WINDOW.control = new Control({
-					container: WINDOW.testContainer,
+				window.control = new Control({
+					container: window.testContainer,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
@@ -196,32 +195,32 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to empty array', () => {
-				WINDOW.control = new Control({
-					container: WINDOW.testContainer,
+				window.control = new Control({
+					container: window.testContainer,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
 
-				WINDOW.control.headingButtons([]);
+				window.control.headingButtons([]);
 
 				assert.equal(document.querySelectorAll('.' + TOOLBAR_BASE_CLASS).length, 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to an empty array', () => {
-				WINDOW.control = new Control({
-					container: WINDOW.testContainer,
+				window.control = new Control({
+					container: window.testContainer,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
 
-				WINDOW.control.headingButtons([]);
+				window.control.headingButtons([]);
 
 				assert.equal(document.querySelectorAll('.' + TOOLBAR_BASE_CLASS).length, 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set to an empty array', () => {
-				WINDOW.control = new Control({
-					container: WINDOW.testContainer,
+				window.control = new Control({
+					container: window.testContainer,
 					title: 'Test For Buttons',
 					headingButtons: []
 				});
@@ -236,7 +235,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'canCollapse',
 				defaultSettings: {
-					container: WINDOW.testContainer
+					container: window.testContainer
 				},
 				defaultValue: false,
 				testValue: true
@@ -249,7 +248,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'isCollapsed',
 				defaultSettings: {
-					container: WINDOW.testContainer,
+					container: window.testContainer,
 					canCollapse: true
 				},
 				defaultValue: false,
