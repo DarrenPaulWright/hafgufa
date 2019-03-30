@@ -11,7 +11,7 @@ const controlTests = new ControlTests(VirtualList, testUtil, {
 	extraSettings: {
 		itemControl: Button,
 		itemData: [{
-			ID: 1,
+			ID: '1',
 			text: 'test'
 		}]
 	},
@@ -23,11 +23,11 @@ const VIRTUAL_ITEM_CLASS = '.virtual-item';
 const EMPTY_CONTENT_CLASS = '.empty-content-message';
 
 const testRows = [{
-	ID: 1
+	ID: '1'
 }, {
-	ID: 2
+	ID: '2'
 }, {
-	ID: 3
+	ID: '3'
 }];
 
 describe('VirtualList', () => {
@@ -253,7 +253,7 @@ describe('VirtualList', () => {
 
 			return testUtil.defer()
 				.then(() => {
-					assert.equal(testValue.ID, 3);
+					assert.equal(testValue.ID, '3');
 				});
 		});
 	});
@@ -339,7 +339,7 @@ describe('VirtualList', () => {
 
 		for (let index = 1; index < 30; index++) {
 			longList.push({
-				ID: index,
+				ID: index + '',
 				text: 'test: ' + index
 			});
 		}

@@ -34,7 +34,6 @@ const objectHelper = {
 		for (let method in settings) {
 			if (method in control) {
 				control[method](settings[method], forceSave);
-				delete settings[method];
 			}
 		}
 	},

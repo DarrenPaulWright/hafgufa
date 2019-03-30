@@ -42,7 +42,7 @@ import FocusMixin from '../mixins/FocusMixin';
 import DragContainer from './DragContainer';
 import './VirtualList.less';
 
-export const forRange = (first, last, callback) => new Promise((resolve) => {
+const forRange = (first, last, callback) => new Promise((resolve) => {
 	const loop = (index) => {
 		if (index > last) {
 			resolve();
@@ -59,7 +59,7 @@ export const forRange = (first, last, callback) => new Promise((resolve) => {
 	loop(first);
 });
 
-export const forRangeRight = (first, last, callback) => new Promise((resolve) => {
+const forRangeRight = (first, last, callback) => new Promise((resolve) => {
 	const loop = (index) => {
 		if (index < last) {
 			resolve();
@@ -276,7 +276,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			self.css(HEIGHT, self[ITEM_SIZE] * self[TOTAL_ITEMS]);
 		}
 
-		self[VIEWPORT_SIZE] = parseInt(self[self[EXTENT]](), 10) - self[INNER_PADDING][self[EXTENT_PADDING]];
+		self[VIEWPORT_SIZE] = dom.get[self[EXTENT]](self) - self[INNER_PADDING][self[EXTENT_PADDING]];
 		self[VIEWPORT_ITEMS_LENGTH] = Math.ceil(self[VIEWPORT_SIZE] / self[ITEM_SIZE]);
 
 		self[PAGE_SIZE] = Math.max(self[VIEWPORT_ITEMS_LENGTH] - 1, 1) * self[ITEM_SIZE];
@@ -338,14 +338,17 @@ export default class VirtualList extends FocusMixin(Control) {
 		let endIndex;
 
 		const discardControl = (index) => new Promise((resolve) => {
-			let control = self[CONTROL_RECYCLER].getControl(self.itemData()[index].ID);
+			const item = self.itemData()[index];
+			if (item) {
+				let control = self[CONTROL_RECYCLER].getControl(item.ID);
 
-			if (control) {
-				if (control.isFocused()) {
-					self.element().focus();
+				if (control) {
+					if (control.isFocused()) {
+						self.element().focus();
+					}
+					self[CONTROL_RECYCLER].discardControl(control.ID());
+					control = null;
 				}
-				self[CONTROL_RECYCLER].discardControl(control.ID());
-				control = null;
 			}
 
 			resolve();
@@ -425,7 +428,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		return new Promise((resolve) => {
 			let newSize;
 			let newPosition;
-			const itemData = self.itemData()[index];
+			const itemData = self.itemData()[index] || {};
 
 			if (!itemData.ID) {
 				throw (NO_ITEM_ID_ERROR_MESSAGE);
@@ -470,8 +473,9 @@ export default class VirtualList extends FocusMixin(Control) {
 				if (doSetSize) {
 					self[setItemSize](control);
 				}
-				resolve();
 			}
+
+			resolve();
 		});
 	}
 

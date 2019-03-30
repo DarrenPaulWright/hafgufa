@@ -68,9 +68,9 @@ const setCallback = function(control, eventName, callback) {
 };
 
 /**
- * <p>Adds focus and blur related methods to a control.</p>
+ * Adds focus and blur related methods to a control.
  *
- * @module FocusMixin
+ * @mixin FocusMixin
  * @constructor
  *
  * @arg {class} [Base]
