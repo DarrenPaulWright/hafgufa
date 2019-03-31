@@ -1,0 +1,32 @@
+
+.action-button-container {
+	position: absolute !important;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: auto;
+
+	button {
+		display: inline-block;
+		vertical-align: bottom;
+		margin: 0;
+		height: inherit;
+		border-radius: 0 @inputBorderRadius @inputBorderRadius 0;
+		line-height: 1em;
+	}
+
+	.icon-button {
+		padding: 0 @inputPaddingVertical;
+	}
+
+	.action-button {
+		padding: 0 @inputPaddingHorizontal;
+	}
+
+	.text-input-count {
+		display: inline-block;
+		margin: @inputCountMargin;
+		color: @chromeSubFontColor;
+		height: inherit;
+	}
+}

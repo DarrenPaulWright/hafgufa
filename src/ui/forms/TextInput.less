@@ -1,0 +1,30 @@
+
+.input-prefix {
+	padding-right: @inputPrefixSuffixPaddingSize;
+}
+
+.input-suffix {
+	padding-left: @inputPrefixSuffixPaddingSize;
+	padding-right: @inputSuffixPaddingRight;
+}
+
+input, textarea, select {
+	padding: @inputPaddingVertical @inputPaddingHorizontal;
+	color: @chromeFontColor;
+	font: @normalFontWeight @fontSize/@inputLineHeight @inputFontFamily;
+	border: 0;
+	background: @inputBackground;
+	border-radius: @inputBorderRadius;
+	box-shadow: @inputShadow;
+
+	&:hover, &:active, &:focus {
+		background: @inputBackgroundActive;
+		outline: none;
+	}
+}
+
+textarea {
+	white-space: pre-wrap;
+	overflow: auto;
+	resize: none;
+}

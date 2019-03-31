@@ -22,6 +22,7 @@ export { default as TextArea } from './ui/elements/TextArea';
 
 export { default as FormControl } from './ui/forms/FormControl';
 export { default as Score } from './ui/forms/Score';
+export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
 export { default as Container } from './ui/layout/Container';
@@ -35,6 +36,7 @@ export { default as VirtualList } from './ui/layout/VirtualList';
 
 export { default as IsWorking } from './ui/display/IsWorking';
 
+export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
 export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';
 export { default as DragMixin } from './ui/mixins/DragMixin';

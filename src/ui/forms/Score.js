@@ -41,7 +41,7 @@ export default class Score extends FormControl {
 		this[TEXT_DISPLAY] = dom.appendNewTo(this, 'score-text');
 		dom.css(this[TEXT_DISPLAY], WIDTH, settings.textWidth || AUTO);
 
-		objectHelper.applySettings(this, settings, null, ['title']);
+		objectHelper.applySettings(this, settings);
 
 		setDisplayText.call(this);
 	}
