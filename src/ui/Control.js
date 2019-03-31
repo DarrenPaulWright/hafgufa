@@ -1,8 +1,8 @@
 import { throttle } from 'async-agent';
 import { event, select } from 'd3';
-import { isEmpty } from 'object-agent';
-import { castArray, CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
+import { CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
+import replaceElement from '../utility/dom/replaceElement';
 import {
 	BORDER_BOX,
 	BOTTOM,
@@ -41,6 +41,7 @@ const ELEMENT_D3 = Symbol();
 const WINDOW_RESIZE_ID = Symbol();
 const CURRENT_CLASSES = Symbol();
 const MIGRATION = Symbol();
+const OLD_ELEMENT = Symbol();
 const THROTTLED_RESIZE = Symbol();
 
 const DISABLED_CLASS = 'disabled';
@@ -245,16 +246,7 @@ Object.assign(Control.prototype, {
 		},
 		set: function(container) {
 			if (container && this[ELEMENT]) {
-				if (this[MIGRATION].nextSibling) {
-					this[MIGRATION].nextSibling.parentNode.insertBefore(this[ELEMENT], this[MIGRATION].nextSibling);
-				}
-				else if (this[MIGRATION].previousSibling) {
-					this[MIGRATION].previousSibling.parentNode.insertBefore(this[ELEMENT], this[MIGRATION].previousSibling.nextSibling);
-				}
-				else {
-					container.appendChild(this[ELEMENT]);
-				}
-
+				container.appendChild(this[ELEMENT]);
 				this.resize();
 			}
 		}
@@ -272,17 +264,10 @@ Object.assign(Control.prototype, {
 	element: method.element({
 		before: function(element) {
 			if (element) {
-				this[MIGRATION] = {
-					nextSibling: element.nextSibling,
-					previousSibling: element.previousSibling,
-					childNodes: element.childNodes,
-					attributes: element.attributes,
-					events: dom.getD3Events(element)
-				};
+				this[OLD_ELEMENT] = element;
 
 				setCssSizeElement.call(this, null);
 
-				dom.remove(element);
 				this[ELEMENT] = null;
 				this[ELEMENT_D3] = null;
 			}
@@ -298,33 +283,18 @@ Object.assign(Control.prototype, {
 					this[ELEMENT] = newElement;
 					this[ELEMENT_D3] = select(this[ELEMENT]);
 
-					if (!isEmpty(this[MIGRATION])) {
-						if (this[MIGRATION].childNodes) {
-							while (this[MIGRATION].childNodes.length) {
-								if (this[MIGRATION].childNodes[0] !== this[ELEMENT]) {
-									this[ELEMENT].appendChild(this[MIGRATION].childNodes[0]);
-								}
-								else {
-									this[MIGRATION].childNodes[0].parentNode.removeChild(this[MIGRATION].childNodes[0]);
-								}
-							}
-						}
-
-						if (this[MIGRATION].attributes) {
-							castArray(this[MIGRATION].attributes).forEach((attr) => {
-								this[ELEMENT_D3].attr(attr.name, attr.value);
-							});
-						}
-
-						dom.applyD3Events(this[ELEMENT], this[MIGRATION].events);
+					if (this[OLD_ELEMENT]) {
+						replaceElement(this[OLD_ELEMENT], newElement);
 					}
 
 					setCssSizeElement.call(this, this[ELEMENT]);
 
-					this.container(this.container(), !!this.container());
-					this[MIGRATION] = {};
 					setPropagationClickEvent.call(this);
 				}
+			}
+
+			if (this[OLD_ELEMENT]) {
+				dom.remove(this[OLD_ELEMENT]);
 			}
 		},
 		other: [String, null]
