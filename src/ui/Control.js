@@ -339,11 +339,13 @@ Object.assign(Control.prototype, {
 	 */
 	css: method.keyValue({
 		set: function(property, value) {
-			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
-				value = value + PIXELS;
-			}
+			if (this[ELEMENT]) {
+				if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
+					value = value + PIXELS;
+				}
 
-			this[ELEMENT].style[property] = value;
+				this[ELEMENT].style[property] = value;
+			}
 		},
 		get: function(property) {
 			return this[ELEMENT].style[property];
