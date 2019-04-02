@@ -20,6 +20,16 @@ export default class Removable {
 	constructor() {
 		this[IS_REMOVED] = false;
 	}
+
+	/**
+	 * If the returned value is true then remove has been called.
+	 * @method isRemoved
+	 * @member module:Removable
+	 * @instance
+	 */
+	get isRemoved() {
+		return this[IS_REMOVED];
+	}
 }
 
 Object.assign(Removable.prototype, {
@@ -92,7 +102,7 @@ Object.assign(Removable.prototype, {
 
 		const removeFinal = () => {
 			if (self[ON_REMOVE]) {
-				self[ON_REMOVE].trigger()
+				self[ON_REMOVE].trigger(null, null, self)
 					.discardAll();
 				self[ON_REMOVE] = null;
 			}
@@ -127,15 +137,5 @@ Object.assign(Removable.prototype, {
 			clear(self[REMOVE_DELAY]);
 			self.addClass(FADE_IN_CLASS);
 		}
-	},
-
-	/**
-	 * If the returned value is true then remove has been called.
-	 * @method isRemoved
-	 * @member module:Removable
-	 * @instance
-	 */
-	get isRemoved() {
-		return this[IS_REMOVED];
 	}
 });
