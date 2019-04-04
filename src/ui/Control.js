@@ -40,7 +40,6 @@ const ELEMENT = Symbol();
 const ELEMENT_D3 = Symbol();
 const WINDOW_RESIZE_ID = Symbol();
 const CURRENT_CLASSES = Symbol();
-const MIGRATION = Symbol();
 const OLD_ELEMENT = Symbol();
 const THROTTLED_RESIZE = Symbol();
 
@@ -154,7 +153,6 @@ export default class Control extends Removable {
 		const self = this;
 
 		this[CURRENT_CLASSES] = '';
-		this[MIGRATION] = {};
 		this[THROTTLED_RESIZE] = throttle(() => {
 			self.resize(true);
 		}, 10);
@@ -295,6 +293,7 @@ Object.assign(Control.prototype, {
 
 			if (this[OLD_ELEMENT]) {
 				dom.remove(this[OLD_ELEMENT]);
+				this[OLD_ELEMENT] = null;
 			}
 		},
 		other: [String, null]
