@@ -1,5 +1,5 @@
-import { select } from 'd3';
 import { castArray } from 'type-enforcer';
+import dom from '../dom';
 
 export default (from, to) => {
 	const nextSibling = from.nextSibling;
@@ -7,18 +7,14 @@ export default (from, to) => {
 	const parent = from.parentNode;
 
 	castArray(from.attributes).forEach((attr) => {
-		to.setAttribute(attr.name, attr.value);
-	});
-
-	castArray(from.__on).forEach((event) => {
-		if (event) {
-			let name = event.type;
-			if (event.name) {
-				name += '.' + event.name;
-			}
-			select(to).on(name, event.value);
+		if (attr && attr.name) {
+			to.setAttribute(attr.name, attr.value);
 		}
 	});
+
+	dom.classes(to, dom.classes(from));
+
+	dom.applyD3Events(to, dom.getD3Events(from));
 
 	while (from.childNodes.length) {
 		if (from.childNodes[0] !== to) {
