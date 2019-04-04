@@ -1,7 +1,7 @@
 import { event } from 'd3';
 import keyCodes from 'keyCodes';
 import { clone } from 'object-agent';
-import { AUTO, DockPoint, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { AUTO, DockPoint, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	CLICK_EVENT,
@@ -199,7 +199,7 @@ const IGNORE_EVENTS = Symbol();
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.HEADING;
-		settings.element = dom.buildNew('', HEADING_LEVELS.SIX);
+		settings.element = dom.buildNew('', enforce.enum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX));
 		settings.FocusMixin = {};
 		settings.FocusMixin.setFocus = setFocus;
 
@@ -207,10 +207,10 @@ export default class Heading extends FocusMixin(Control) {
 
 		const self = this;
 		self[CONTROLS] = new ControlManager();
-		self.classes('heading')
-			.on(CLICK_EVENT, () => {
-				mainClickEvent.call(self);
-			});
+		self.classes('heading');
+		self.on(CLICK_EVENT, () => {
+			mainClickEvent.call(self);
+		});
 
 		self[CONTROLS].add(new Container({
 			ID: TITLE_CONTAINER,
