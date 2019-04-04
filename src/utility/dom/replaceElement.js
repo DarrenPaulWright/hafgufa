@@ -4,6 +4,7 @@ import { castArray } from 'type-enforcer';
 export default (from, to) => {
 	const nextSibling = from.nextSibling;
 	const previousSibling = from.previousSibling;
+	const parent = from.parentNode;
 
 	castArray(from.attributes).forEach((attr) => {
 		to.setAttribute(attr.name, attr.value);
@@ -34,8 +35,8 @@ export default (from, to) => {
 	else if (previousSibling) {
 		previousSibling.parentNode.insertBefore(to, previousSibling.nextSibling);
 	}
-	else {
-		from.parentNode.appendChild(to);
+	else if (parent) {
+		parent.appendChild(to);
 	}
 
 	from.remove();
