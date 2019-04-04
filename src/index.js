@@ -52,6 +52,7 @@ export { default as Removable } from './ui/mixins/Removable';
 
 export * from './utility/domConstants';
 export { default as dom } from './utility/dom';
+export { default as LocalHistory } from './utility/LocalHistory';
 export { default as objectHelper } from './utility/objectHelper';
 export { default as stringHelper } from './utility/stringHelper';
 export { default as windowResize } from './utility/windowResize';
