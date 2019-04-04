@@ -1,0 +1,201 @@
+import { assert } from 'chai';
+import { Menu } from '../../../src';
+import TestUtil from '../../TestUtil';
+import ControlTests from '../ControlTests';
+
+const testUtil = new TestUtil(Menu);
+const controlTests = new ControlTests(Menu, testUtil, {
+	mainCssClass: 'menu',
+	extraSettings: {
+		menuItems: [{
+			ID: '1',
+			title: 'test'
+		}],
+		delay: 0,
+		fade: false
+	},
+	autoFocus: true
+});
+
+describe('Menu', () => {
+
+	controlTests.run(['container',
+		'element',
+		'ID',
+		'height',
+		'width',
+		'onResize',
+		'stopPropagation'], ['focus']);
+
+	describe.skip('MenuItems', () => {
+		testUtil.testMethod({
+			methodName: 'menuItems',
+			defaultValue: [],
+			testValue: [{
+				ID: 'test',
+				title: 'test'
+			}],
+			secondTestValue: [{
+				ID: 'test 2',
+				title: 'test 2'
+			}]
+		});
+
+		it('should have one menu item if one is provided', () => {
+			window.control = new Menu({
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					assert.equal(document.querySelectorAll('.heading').length, 1);
+				});
+		});
+
+		it('should have three menu items if three are provided', () => {
+			window.control = new Menu({
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2'
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					assert.equal(document.querySelectorAll('.heading').length, 3);
+				});
+		});
+
+		it('should have a selected item if one is set to isSelected', () => {
+			window.control = new Menu({
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2',
+					isSelectable: true,
+					isSelected: true
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					assert.equal(document.querySelectorAll('.checkbox.checked').length, 1);
+				});
+		});
+
+		it('should call settings.onSelect if a menuItem is clicked', () => {
+			let testVar = '';
+
+			window.control = new Menu({
+				onSelect: function(item) {
+					testVar = item;
+				},
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2'
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+
+					assert.equal(testVar, 'test2');
+				});
+		});
+
+		it('should remove itself when a menu item is clicked', () => {
+			window.control = new Menu({
+				onSelect: function() {
+				},
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2'
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+
+					assert.equal(document.querySelectorAll('.context-menu').length, 0);
+				});
+		});
+
+		it('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
+			window.control = new Menu({
+				onSelect: function() {
+				},
+				keepMenuOpen: true,
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2'
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+
+					assert.equal(document.querySelectorAll('.menu').length, 1);
+				});
+		});
+
+		it('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
+			window.control = new Menu({
+				onSelect: function() {
+				},
+				menuItems: [{
+					ID: 'test',
+					title: 'test'
+				}, {
+					ID: 'test2',
+					title: 'test 2',
+					keepMenuOpen: true
+				}, {
+					ID: 'test3',
+					title: 'test 3'
+				}]
+			});
+
+			return testUtil.defer()
+				.then(() => {
+					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+
+					assert.equal(document.querySelectorAll('.menu').length, 1);
+				});
+		});
+	});
+});

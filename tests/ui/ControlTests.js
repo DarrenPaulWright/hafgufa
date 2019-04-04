@@ -62,19 +62,12 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 	self.container = () => {
 		describe('ControlBase container', () => {
-			it('shouldnt have a container element if no container was set', () => {
+			it('should not have a container value if no container was set', () => {
 				window.control = new Control(buildSettings({
 					container: null
 				}));
 
 				assert.equal(window.testContainer.children.length, 0);
-			});
-
-			it('shouldnt have a container value if no container was set', () => {
-				window.control = new Control(buildSettings({
-					container: null
-				}));
-
 				assert.equal(window.control.container(), undefined);
 			});
 
@@ -82,11 +75,6 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				window.control = new Control(buildSettings());
 
 				assert.isTrue(window.testContainer.children.length >= 1);
-			});
-
-			it('should return a container value if the container setting was set', () => {
-				window.control = new Control(buildSettings());
-
 				assert.isOk(window.control.container());
 			});
 
@@ -96,13 +84,6 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				})).container(window.testContainer);
 
 				assert.equal(window.testContainer.children.length, 1);
-			});
-
-			it('should have a container value if the container method was called', () => {
-				window.control = new Control(buildSettings({
-					container: null
-				})).container(window.testContainer);
-
 				assert.isOk(window.control.container());
 			});
 		});
@@ -110,19 +91,12 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 	self.element = () => {
 		describe('ControlBase main container', () => {
-			it('shouldnt have a main element if no container was set', () => {
+			it('should not have a main element if no container was set', () => {
 				window.control = new Control(buildSettings({
 					container: null
 				}));
 
 				assert.equal(window.testContainer.children.length, 0);
-			});
-
-			it('should have a main element value even if no container was set', () => {
-				window.control = new Control(buildSettings({
-					container: null
-				}));
-
 				assert.isOk(window.control.element());
 			});
 
@@ -130,11 +104,6 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				window.control = new Control(buildSettings());
 
 				assert.isOk(window.testContainer.children.length >= 1);
-			});
-
-			it('should have a main element value if the container was set', () => {
-				window.control = new Control(buildSettings());
-
 				assert.isOk(window.control.element());
 			});
 		});

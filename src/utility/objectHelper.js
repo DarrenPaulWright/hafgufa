@@ -58,22 +58,6 @@ const objectHelper = {
 	},
 
 	/**
-	 * Loops through the provided methods and calls the method with whatever the method returns
-	 * @method resetMethods
-	 * @member module:objectHelper
-	 * @static
-	 * @arg {Object} [control] - The control to apply the options to; Usually "self".
-	 * @arg {Object} [methods]
-	 */
-	resetMethods: function(control, methods) {
-		methods.forEach((method) => {
-			if (control[method]) {
-				control[method](control[method](), true);
-			}
-		});
-	},
-
-	/**
 	 * If the first argument is truthy then call it with any extra arguments
 	 * @method callIfExists
 	 * @member module:objectHelper

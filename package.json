@@ -40,8 +40,10 @@
 		"keycodes": "^1.0.0",
 		"less": "^3.9.0",
 		"less-loader": "^4.0.6",
+		"moment": "^2.24.0",
 		"object-agent": "^0.3.2",
-		"type-enforcer": "^0.4.2"
+		"type-enforcer": "^0.4.2",
+		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.4.0",

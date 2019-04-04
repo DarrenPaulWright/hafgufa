@@ -190,12 +190,6 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[IS_RENDERING] = false;
 		self[IS_RENDERING_REQUESTED] = false;
 
-		self.addClass(VIRTUAL_LIST_CLASS)
-			.on(SCROLL_EVENT, () => self[onScroll]())
-			.css(POSITION, RELATIVE)
-			.css(FONT_SIZE, ZERO_PIXELS)
-			.css(BOX_SIZING, CONTENT_BOX);
-
 		self[CONTENT_CONTAINER] = new DragContainer({
 			container: self
 		});
@@ -205,6 +199,12 @@ export default class VirtualList extends FocusMixin(Control) {
 			.css(DISPLAY, INLINE_BLOCK)
 			.css(TOP, ZERO_PIXELS)
 			.css(LEFT, ZERO_PIXELS);
+
+		self.addClass(VIRTUAL_LIST_CLASS)
+			.on(SCROLL_EVENT, () => self[onScroll]())
+			.css(POSITION, RELATIVE)
+			.css(FONT_SIZE, ZERO_PIXELS)
+			.css(BOX_SIZING, CONTENT_BOX);
 
 		objectHelper.applySettings(self, settings, 0, ['height']);
 
@@ -337,37 +337,46 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 		let endIndex;
 
-		const discardControl = (index) => new Promise((resolve) => {
-			const item = self.itemData()[index];
-			if (item) {
-				let control = self[CONTROL_RECYCLER].getControl(item.ID);
-
-				if (control) {
-					if (control.isFocused()) {
-						self.element().focus();
-					}
-					self[CONTROL_RECYCLER].discardControl(control.ID());
-					control = null;
-				}
+		const discardControl = (index) => new Promise((resolve, reject) => {
+			if (self.isRemoved) {
+				reject();
 			}
+			else {
+				const item = self.itemData()[index];
 
-			resolve();
+				if (item) {
+					let control = self[CONTROL_RECYCLER].getControl(item.ID);
+
+					if (control && !control.isRemoved) {
+						if (control.isFocused()) {
+							self.element().focus();
+						}
+						self[CONTROL_RECYCLER].discardControl(control.ID());
+						control = null;
+					}
+				}
+
+				resolve();
+			}
 		});
 
 		const cleanUp = () => {
-			self[IS_RENDERING] = false;
-			if (self[IS_RENDERING_REQUESTED] !== false) {
-				const newStartIndex = clone(self[IS_RENDERING_REQUESTED]);
-				self[IS_RENDERING_REQUESTED] = false;
-				self[renderChunk](newStartIndex);
-			}
+			if (!self.isRemoved) {
+				self[IS_RENDERING] = false;
 
-			if (!self.isVirtualized() && endIndex > -1) {
-				self.updateItemPositions();
-			}
+				if (self[IS_RENDERING_REQUESTED] !== false) {
+					const newStartIndex = clone(self[IS_RENDERING_REQUESTED]);
+					self[IS_RENDERING_REQUESTED] = false;
+					self[renderChunk](newStartIndex);
+				}
 
-			self[CURRENT_START_INDEX] = startIndex;
-			self[CURRENT_END_INDEX] = endIndex;
+				if (!self.isVirtualized() && endIndex > -1) {
+					self.updateItemPositions();
+				}
+
+				self[CURRENT_START_INDEX] = startIndex;
+				self[CURRENT_END_INDEX] = endIndex;
+			}
 		};
 
 		if (self[IS_RENDERING]) {
@@ -425,57 +434,70 @@ export default class VirtualList extends FocusMixin(Control) {
 	[renderItem](index, doPrepend, doSetSize) {
 		const self = this;
 
-		return new Promise((resolve) => {
-			let newSize;
-			let newPosition;
-			const itemData = self.itemData()[index] || {};
-
-			if (!itemData.ID) {
-				throw (NO_ITEM_ID_ERROR_MESSAGE);
+		return new Promise((resolve, reject) => {
+			if (self.isRemoved) {
+				reject();
 			}
+			else {
+				let newSize;
+				let newPosition;
+				const itemData = self.itemData()[index] || {};
 
-			if (self[CONTROL_RECYCLER] && self[CONTROL_RECYCLER].control() && !self.isRemoved) {
-				const control = self[CONTROL_RECYCLER].getRecycledControl(doPrepend);
-
-				if (self.onItemRender()) {
-					self.onItemRender()(control, itemData);
+				if (!itemData.ID) {
+					throw (NO_ITEM_ID_ERROR_MESSAGE);
 				}
 
-				if (self.isVirtualized()) {
-					newSize = self[ITEM_SIZE] > 1 ? self[ITEM_SIZE] : '';
-					newPosition = ((index * self[ITEM_SIZE]) - self[CURRENT_STEP_OFFSET]) + PIXELS;
-				}
-				else {
-					newSize = '';
-					newPosition = ZERO_PIXELS;
-				}
+				if (self[CONTROL_RECYCLER] && self[CONTROL_RECYCLER].control()) {
+					const control = self[CONTROL_RECYCLER].getRecycledControl(doPrepend);
 
-				control
-					.addClass(VIRTUAL_ITEM_CLASS)
-					.css(POSITION, ABSOLUTE)
-					.css(self[POSITION_ORIGIN], newPosition)
-					.css(self[ALT_POSITION_ORIGIN], ZERO_PIXELS)
-					.css(self[EXTENT], newSize)
-					.css(self[ALT_EXTENT], self[ALT_EXTENT_VALUE])
-					.ID(itemData.ID)
-					.container(self[CONTENT_CONTAINER], doPrepend);
+					if (!control.isRemoved) {
+						if (self.onItemRender()) {
+							self.onItemRender()(control, itemData);
+						}
 
-				control.virtualIndex = index;
+						if (self.isVirtualized()) {
+							newSize = self[ITEM_SIZE] > 1 ? self[ITEM_SIZE] : '';
+							newPosition = ((index * self[ITEM_SIZE]) - self[CURRENT_STEP_OFFSET]) + PIXELS;
+						}
+						else {
+							newSize = '';
+							newPosition = ZERO_PIXELS;
+						}
 
-				if (self.isFocusable() && control.isFocusable) {
-					control.isFocusable(true);
+						control
+							.addClass(VIRTUAL_ITEM_CLASS)
+							.css(POSITION, ABSOLUTE)
+							.css(self[POSITION_ORIGIN], newPosition)
+							.css(self[ALT_POSITION_ORIGIN], ZERO_PIXELS)
+							.css(self[EXTENT], newSize)
+							.css(self[ALT_EXTENT], self[ALT_EXTENT_VALUE])
+							.ID(itemData.ID);
 
-					if (self.isFocused() && index === self[MULTI_ITEM_FOCUS].current() && control.focus) {
-						control.focus();
+						if (doPrepend) {
+							self[CONTENT_CONTAINER].prepend(control);
+						}
+						else {
+							self[CONTENT_CONTAINER].append(control);
+						}
+
+						control.virtualIndex = index;
+
+						if (self.isFocusable() && control.isFocusable) {
+							control.isFocusable(true);
+
+							if (self.isFocused() && index === self[MULTI_ITEM_FOCUS].current() && control.focus) {
+								control.focus();
+							}
+						}
+
+						if (doSetSize) {
+							self[setItemSize](control);
+						}
 					}
 				}
 
-				if (doSetSize) {
-					self[setItemSize](control);
-				}
+				resolve();
 			}
-
-			resolve();
 		});
 	}
 
@@ -487,14 +509,19 @@ export default class VirtualList extends FocusMixin(Control) {
 	[setItemPosition](index) {
 		const self = this;
 
-		return new Promise((resolve) => {
-			const control = self[CONTROL_RECYCLER].getControlAtOffset(index);
+		return new Promise((resolve, reject) => {
+			if (self.isRemoved) {
+				reject();
+			}
+			else {
+				const control = self[CONTROL_RECYCLER].getControlAtOffset(index);
 
-			control.css(self[POSITION_ORIGIN], self[CURRENT_ITEM_OFFSET] + PIXELS);
+				control.css(self[POSITION_ORIGIN], self[CURRENT_ITEM_OFFSET] + PIXELS);
 
-			self[CURRENT_ITEM_OFFSET] += dom.get[self[EXTENT_OUTER_SIZE]](control);
+				self[CURRENT_ITEM_OFFSET] += dom.get[self[EXTENT_OUTER_SIZE]](control);
 
-			resolve();
+				resolve();
+			}
 		});
 	}
 

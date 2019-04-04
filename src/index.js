@@ -38,6 +38,9 @@ export { default as VirtualList } from './ui/layout/VirtualList';
 
 export { default as IsWorking } from './ui/display/IsWorking';
 
+export { default as Menu } from './ui/other/Menu';
+export { default as ContextMenu } from './ui/other/ContextMenu';
+
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
 export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';

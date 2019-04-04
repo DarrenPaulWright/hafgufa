@@ -22,7 +22,7 @@ export default (Base) => {
 			super(settings);
 
 			const self = this;
-			self.headingLevel(settings.headingLevel || '');
+			self.headingLevel(settings.headingLevel);
 			delete settings.headingLevel;
 			self.title(settings.title || '');
 			delete settings.title;
@@ -70,8 +70,8 @@ export default (Base) => {
 			set: function(newValue) {
 				const self = this;
 
-				const onExpand = function(heading) {
-					const isCollapsed = !heading.isExpanded();
+				const onExpand = function() {
+					const isCollapsed = !self[HEADING].isExpanded();
 					self.isCollapsed(isCollapsed);
 					if (self.onCollapse()) {
 						self.onCollapse()(isCollapsed);
@@ -142,16 +142,15 @@ export default (Base) => {
 				const showHeading = !!title;
 
 				if (showHeading) {
-					let originalElement = self.element();
-					const initialClasses = self.classes();
-
 					if (!self[HEADING]) {
-						const newElement = dom.buildNew();
-						self.element(newElement);
+						let originalElement = self.element();
+						const initialClasses = self.classes();
+
+						self.element(dom.buildNew());
 						self.classes(initialClasses);
 
 						self[HEADING] = new Heading({
-							container: newElement,
+							container: self.element(),
 							showCheckbox: false,
 							showExpander: false,
 							level: self.headingLevel(),
@@ -164,7 +163,7 @@ export default (Base) => {
 							canCollapse: self.canCollapse()
 						});
 
-						dom.appendTo(newElement, originalElement);
+						dom.appendTo(self.element(), originalElement);
 						dom.removeClass(originalElement, initialClasses);
 						self.contentContainer(originalElement);
 					}

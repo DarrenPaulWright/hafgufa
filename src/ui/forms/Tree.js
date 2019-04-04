@@ -1,5 +1,5 @@
 import { set } from 'object-agent';
-import { AUTO, enforce, HUNDRED_PERCENT, isArray, method, PIXELS } from 'type-enforcer';
+import { AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ABSOLUTE, BODY, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
@@ -38,10 +38,7 @@ const toggleExpanded = Symbol();
 export default class Tree extends FocusMixin(FormControl) {
 	constructor(settings = {}) {
 		let self;
-		settings.type = settings.type || controlTypes.TREE;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-
-		const virtualList = new VirtualList({
+		let virtualList = new VirtualList({
 			height: settings.height ? HUNDRED_PERCENT : AUTO,
 			width: HUNDRED_PERCENT,
 			minWidth: settings.minWidth,
@@ -56,10 +53,12 @@ export default class Tree extends FocusMixin(FormControl) {
 				},
 				isFocusable: true
 			},
-			onItemRender: (...args) => self[renderRow](...args),
+			onItemRender: (heading, branchData) => self[renderRow](heading, branchData),
 			isFocusable: true
 		});
 
+		settings.type = settings.type || controlTypes.TREE;
+		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.element = virtualList.element();
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = virtualList;
@@ -75,21 +74,24 @@ export default class Tree extends FocusMixin(FormControl) {
 		self[SHOW_CHECKBOXES] = false;
 		self[SHOW_CHECKBOXES_ON_GROUPS] = false;
 
-		objectHelper.applySettings(self, settings, null, ['width', 'title']);
-
 		self.onResize(() => {
 			const contentHeight = dom.get.height(self.contentContainer());
 
-			self[VIRTUAL_LIST].minWidth(self.minWidth());
-			self[VIRTUAL_LIST].maxWidth(self.maxWidth());
-			if (contentHeight < self[VIRTUAL_LIST].height()) {
+			self[VIRTUAL_LIST]
+				.minWidth(self.minWidth())
+				.maxWidth(self.maxWidth());
+
+			if (contentHeight && contentHeight < self[VIRTUAL_LIST].borderHeight()) {
 				self[VIRTUAL_LIST].height(contentHeight);
 			}
 		});
 
+		objectHelper.applySettings(self, settings, null, ['width']);
+
 		self.onRemove(() => {
 			self[VIRTUAL_LIST].remove();
 			self[VIRTUAL_LIST] = null;
+			virtualList = null;
 		});
 	}
 
@@ -98,17 +100,15 @@ export default class Tree extends FocusMixin(FormControl) {
 	 * @function renderRow
 	 */
 	[renderRow](heading, branchData) {
-		const self = this;
-
-		heading.removeClass(heading.classes());
-		heading.addClass('heading');
-		heading.isEnabled(heading.isEnabled(), true);
+		heading.removeClass(heading.classes())
+			.addClass('heading')
+			.isEnabled(heading.isEnabled(), true);
 
 		objectHelper.applySettings(heading, branchData);
 
-		heading.isSelected(self.value().includes(branchData.ID), true);
-		heading.showExpander((!branchData.isExpandable && self[SHOW_CHECKBOXES_ON_GROUPS]) || (branchData.isExpandable && self[SHOW_EXPANDERS]));
-		heading.showCheckbox((branchData.isExpandable && self[SHOW_CHECKBOXES_ON_GROUPS]) || (!branchData.isExpandable && self[SHOW_CHECKBOXES]));
+		heading.isSelected(this.value().includes(branchData.ID), true)
+			.showExpander((!branchData.isExpandable && this[SHOW_CHECKBOXES_ON_GROUPS]) || (branchData.isExpandable && this[SHOW_EXPANDERS]))
+			.showCheckbox((branchData.isExpandable && this[SHOW_CHECKBOXES_ON_GROUPS]) || (!branchData.isExpandable && this[SHOW_CHECKBOXES]));
 	}
 
 	/**
@@ -196,7 +196,7 @@ export default class Tree extends FocusMixin(FormControl) {
 		tempBranchControl.css(POSITION, ABSOLUTE);
 		self[renderRow](tempBranchControl, branchData);
 
-		newWidth = tempBranchControl.width() * ROW_WIDTH_BUFFER_RATIO;
+		newWidth = tempBranchControl.borderWidth() * ROW_WIDTH_BUFFER_RATIO;
 		self[VIRTUAL_LIST].width(newWidth);
 
 		tempBranchControl.remove();
@@ -260,19 +260,14 @@ Object.assign(Tree.prototype, {
 	 */
 	value: method.any({
 		init: [],
-		set: function(newValue) {
+		set: function(value) {
 			const self = this;
 
-			if (typeof newValue === 'string') {
-				if (newValue === '') {
-					self.value([]);
-				}
-				else {
-					self.value(newValue.split(','));
-				}
+			if (isString(value)) {
+				self.value(value ? value.split(',') : []);
 			}
-			else if (!isArray(newValue)) {
-				self.value([newValue]);
+			else if (!isArray(value)) {
+				self.value([value]);
 			}
 
 			self[processBranches]();
@@ -303,7 +298,6 @@ Object.assign(Tree.prototype, {
 	 * @returns {Function|this}
 	 */
 	onLayoutChange: method.function({
-
 		other: undefined
 	}),
 
@@ -332,7 +326,7 @@ Object.assign(Tree.prototype, {
 
 		self[VIRTUAL_LIST].maxHeight(self.maxHeight());
 		self[VIRTUAL_LIST].fitHeightToContents();
-		self.height(self[VIRTUAL_LIST].height());
+		self.height(self[VIRTUAL_LIST].borderHeight());
 		self[VIRTUAL_LIST].refresh();
 
 		return self;

@@ -40,6 +40,7 @@ const controlTypes = {
 	LABEL: 'label',
 	LEGEND: 'legend',
 	LIGHT_BOX: 'lightbox',
+	MENU: 'menu',
 	PICKER: 'picker',
 	POPUP: 'popup',
 	PROGRESS: 'progress',

@@ -1,0 +1,39 @@
+
+.popup.menu {
+	overflow: hidden;
+
+	.popup-header {
+		div:nth-of-type(2n) {
+			margin-top: @popupHeaderPadding;
+		}
+	}
+
+	.tree {
+		.heading {
+			padding-left: @menuItemPaddingLeft;
+			font: @buttonFont;
+			line-height: @menuItemLineHeight;
+
+			&:hover, &:active, &:focus {
+				background: @menuItemHoverBackground;
+			}
+
+			&.selected {
+				background: @menuItemSelectedBackground;
+				color: @menuItemSelectedFontColor;
+
+				.icon {
+					color: @menuItemSelectedFontColor;
+				}
+
+				.subtitle {
+					color: @menuItemSubTitleSelectedFontColor;
+				}
+
+				&:hover {
+					background: @menuItemSelectedHoverBackground;
+				}
+			}
+		}
+	}
+}

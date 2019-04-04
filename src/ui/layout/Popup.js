@@ -87,12 +87,6 @@ const onMouseLeave = function() {
 	}
 };
 
-const onEscapeKey = function() {
-	if (event.keyCode === keyCodes('escape')) {
-		this.remove();
-	}
-};
-
 const onWindowClick = function() {
 	if (!this[IS_ACTIVE]) {
 		this.remove();
@@ -448,7 +442,9 @@ class Popup extends Container {
 			.css(TOP, ZERO_PIXELS)
 			.css(LEFT, ZERO_PIXELS);
 
-		objectHelper.applySettings(self, settings);
+		if (settings.type === controlTypes.POPUP) {
+			objectHelper.applySettings(self, settings);
+		}
 
 		self.on(MOUSE_ENTER_EVENT, onMouseEnter)
 			.on(MOUSE_LEAVE_EVENT, onMouseLeave)
@@ -554,8 +550,16 @@ Object.assign(Popup.prototype, {
 	hideOnMouseLeave: method.boolean(),
 
 	hideOnEscapeKey: method.boolean({
-		set: function(newValue) {
-			select(WINDOW).on(KEY_UP_EVENT, newValue ? onEscapeKey : null);
+		set: function(hideOnEscapeKey) {
+			const self = this;
+
+			const onEscapeKey = () => {
+				if (event.keyCode === keyCodes('escape')) {
+					self.remove();
+				}
+			};
+
+			select(WINDOW).on(KEY_UP_EVENT, hideOnEscapeKey ? onEscapeKey : null);
 		}
 	}),
 
