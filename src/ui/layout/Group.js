@@ -20,12 +20,13 @@ import './Group.less';
 export default class Group extends ControlHeadingMixin(Container) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.GROUP;
-		settings.element = dom.buildNew('', 'fieldset');
 		settings.headingLevel = HEADING_LEVELS.FOUR;
 
 		super(settings);
 
-		this.addClass('group clearfix')
+		this
+			.element(dom.buildNew('', 'fieldset'))
+			.addClass('group clearfix')
 			.css(MIN_WIDTH, AUTO);
 
 		objectHelper.applySettings(this, settings);
@@ -46,8 +47,8 @@ Object.assign(Group.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('0.25rem 0.6rem 0.5rem'),
-		set: function(newValue) {
-			this.contentContainer().css(PADDING, newValue.toString());
+		set: function(padding) {
+			dom.css(this.contentContainer(), PADDING, padding.toString());
 		}
 	})
 });

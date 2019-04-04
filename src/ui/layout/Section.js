@@ -20,14 +20,15 @@ import './Section.less';
 export default class Section extends ControlHeadingMixin(Container) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SECTION;
-		settings.element = dom.buildNew('', 'section');
 		settings.headingLevel = enforce.enum(settings.headingLevel, HEADING_LEVELS, HEADING_LEVELS.TWO);
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.canCollapse = enforce.boolean(settings.canCollapse, true);
 
 		super(settings);
 
-		this.addClass('section clearfix');
+		this
+			.element(dom.buildNew('', 'section'))
+			.addClass('section clearfix');
 
 		objectHelper.applySettings(this, settings, null, ['canCollapse']);
 	}
@@ -47,8 +48,8 @@ Object.assign(Section.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('1.25rem'),
-		set: function(newValue) {
-			this.contentContainer().css(PADDING, newValue.toString());
+		set: function(padding) {
+			dom.css(this.contentContainer(), PADDING, padding.toString());
 		}
 	})
 });
