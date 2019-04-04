@@ -1,4 +1,4 @@
-import { castArray, isObject } from 'type-enforcer';
+import { castArray } from 'type-enforcer';
 
 const CONTROLS = Symbol();
 const IDS = Symbol();
@@ -48,11 +48,15 @@ export default class ControlManager {
 	}
 
 	each(callback) {
-		this[CONTROLS].some(callback);
+		if (callback) {
+			this[CONTROLS].some(callback);
+		}
 	}
 
 	map(callback) {
-		return this[CONTROLS].map(callback);
+		if (callback) {
+			return this[CONTROLS].map(callback);
+		}
 	}
 
 	total() {
@@ -60,20 +64,28 @@ export default class ControlManager {
 	}
 
 	remove(input) {
-		if (isObject(input)) {
-			input.remove();
-		}
-		else if (input) {
+		if (input) {
+			if (input.ID) {
+				if (input.ID()) {
+					input = input.ID();
+				}
+				else {
+					input.remove();
+					input = null;
+				}
+			}
 			if (this.get(input)) {
 				this.get(input).remove();
+				delete this[IDS][input];
 			}
 		}
 		else {
 			while (this[CONTROLS].length) {
 				this[CONTROLS][0].remove();
 			}
+			this[CONTROLS] = [];
+			this[IDS] = {};
 		}
-		input = null;
 
 		return this;
 	}
