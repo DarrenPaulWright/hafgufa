@@ -1,6 +1,6 @@
 import { throttle } from 'async-agent';
 import { event } from 'd3';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import { AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import replaceElement from '../../utility/dom/replaceElement';

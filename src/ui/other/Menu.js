@@ -1,5 +1,5 @@
 import { event } from 'd3';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import { AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
 import dom from '../../utility/dom';

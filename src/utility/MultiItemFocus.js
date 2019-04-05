@@ -1,5 +1,5 @@
 import { event, select } from 'd3';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import { method } from 'type-enforcer';
 import { KEY_DOWN_EVENT } from './domConstants';
 

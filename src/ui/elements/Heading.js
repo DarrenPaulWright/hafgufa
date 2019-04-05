@@ -1,5 +1,5 @@
 import { event } from 'd3';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
 import { AUTO, DockPoint, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';

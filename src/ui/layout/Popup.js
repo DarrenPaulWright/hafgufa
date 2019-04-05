@@ -1,6 +1,6 @@
 import { clear, defer, delay } from 'async-agent';
 import { event, select } from 'd3';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import { AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {

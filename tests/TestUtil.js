@@ -1,6 +1,6 @@
 import { defer, delay } from 'async-agent';
 import { assert } from 'chai';
-import keyCodes from 'keyCodes';
+import keyCodes from 'keycodes';
 import simulant from 'simulant';
 import { isArray, isString } from 'type-enforcer';
 import { CLICK_EVENT, KEY_UP_EVENT } from '../src/utility/domConstants';
