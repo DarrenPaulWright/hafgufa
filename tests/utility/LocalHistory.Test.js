@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import LocalHistory from '../../src';
+import { LocalHistory } from '../../src';
 import TestUtil from '../TestUtil';
 
 new TestUtil(LocalHistory);
