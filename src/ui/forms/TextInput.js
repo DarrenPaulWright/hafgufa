@@ -572,7 +572,20 @@ Object.assign(TextInput.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: function() {
+	isFocused: function(doFocus) {
+		if (doFocus !== undefined) {
+			if (doFocus) {
+				if (!this.isFocused()) {
+					this.focus();
+				}
+			}
+			else if (this.isFocused()) {
+				this.blur();
+			}
+
+			return this;
+		}
+
 		return dom.isActive(this[INPUT].element());
 	},
 
