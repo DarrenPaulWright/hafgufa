@@ -97,14 +97,14 @@ export default class Dialog extends Removable {
 
 	[onResizePopup]() {
 		const self = this;
-		const headerHeight = self[HEADING] ? self[HEADING].height() : 0;
-		const footerHeight = self[FOOTER] ? self[FOOTER].height() : 0;
+		const headerHeight = self[HEADING] ? self[HEADING].borderHeight() : 0;
+		const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
 
 		if (self[POPUP]) {
 			self[CONTENT_CONTAINER].css(MARGIN_TOP, headerHeight + PIXELS)
 				.css(MARGIN_BOTTOM, footerHeight + PIXELS)
-				.height(self[POPUP].isAutoHeight() ? AUTO : self[POPUP].height() - headerHeight - footerHeight + PIXELS)
-				.width(self[POPUP].isAutoWidth() ? AUTO : HUNDRED_PERCENT);
+				.height(self[POPUP].height().isAuto ? AUTO : self[POPUP].borderHeight() - headerHeight - footerHeight + PIXELS)
+				.width(self[POPUP].width().isAuto ? AUTO : HUNDRED_PERCENT);
 		}
 	}
 }
