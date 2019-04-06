@@ -1,6 +1,6 @@
 import { throttle } from 'async-agent';
 import { event, select } from 'd3';
-import { CssSize, enforce, isString, method, PIXELS, Thickness } from 'type-enforcer';
+import { CssSize, enforce, isElement, isString, method, PIXELS, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
 import replaceElement from '../utility/dom/replaceElement';
 import {
@@ -36,6 +36,8 @@ import windowResize from '../utility/windowResize';
 import './Control.less';
 import Removable from './mixins/Removable';
 
+const APPEND = Symbol();
+const PREPEND = Symbol();
 const ELEMENT = Symbol();
 const ELEMENT_D3 = Symbol();
 const WINDOW_RESIZE_ID = Symbol();
@@ -157,6 +159,11 @@ export default class Control extends Removable {
 			self.resize(true);
 		}, 10);
 
+		self[APPEND] = settings.append;
+		delete settings.append;
+		self[PREPEND] = settings.prepend;
+		delete settings.prepend;
+
 		self.type(settings.type);
 		self.element(settings.element || dom.buildNew());
 		delete settings.element;
@@ -244,7 +251,33 @@ Object.assign(Control.prototype, {
 		},
 		set: function(container) {
 			if (container && this[ELEMENT]) {
-				container.appendChild(this[ELEMENT]);
+				if (this[APPEND]) {
+					if (isElement(this[APPEND])) {
+						container.insertBefore(this[ELEMENT], this[APPEND].nextSibling);
+					}
+					else {
+						container.appendChild(this[ELEMENT]);
+					}
+				}
+				else if (this[PREPEND]) {
+					if (isElement(this[PREPEND])) {
+						container.insertBefore(this[ELEMENT], this[APPEND]);
+					}
+					else {
+						container.insertBefore(this[ELEMENT], container.firstChild);
+					}
+				}
+				else {
+					container.appendChild(this[ELEMENT]);
+				}
+
+				if (this[APPEND]) {
+					delete this[APPEND];
+				}
+				if (this[PREPEND]) {
+					delete this[PREPEND];
+				}
+
 				this.resize();
 			}
 		}
