@@ -98,6 +98,7 @@ const EMPTY_CONTENT_CONTAINER = Symbol();
 const CONTENT_CONTAINER = Symbol();
 const CONTROL_RECYCLER = Symbol();
 
+const RENDER_COUNT = Symbol();
 const ITEM_SIZE = Symbol();
 const TOTAL_ITEMS = Symbol();
 const VIEWPORT_SIZE = Symbol();
@@ -120,11 +121,11 @@ const setScrollSize = Symbol();
 const setVirtualContentSizes = Symbol();
 const setVirtualContentAltExtent = Symbol();
 const resetVirtualizedItemPositions = Symbol();
+const render = Symbol();
 const renderChunk = Symbol();
 const renderItem = Symbol();
 const setItemPosition = Symbol();
 const onScroll = Symbol();
-const renderAtScrollPosition = Symbol();
 const showEmptyContentMessage = Symbol();
 const updateEmptyContentSize = Symbol();
 const removeEmptyContentMessage = Symbol();
@@ -164,6 +165,7 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		self = this;
 
+		self[RENDER_COUNT] = 0;
 		self[EXTENT] = HEIGHT;
 		self[ALT_EXTENT] = WIDTH;
 		self[ALT_EXTENT_VALUE] = HUNDRED_PERCENT;
@@ -212,7 +214,7 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		self.onResize(() => {
 			self[setScrollSize]();
-			self[renderAtScrollPosition]();
+			self[render]();
 			self[updateEmptyContentSize]();
 		});
 
@@ -247,7 +249,7 @@ export default class VirtualList extends FocusMixin(Control) {
 				self[setScrollSize]();
 
 				if (self[RENDER_ATTEMPTS] > 0) {
-					self[renderAtScrollPosition]();
+					self[render]();
 				}
 				self[RENDER_ATTEMPTS] = 0;
 			}
@@ -337,28 +339,32 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 		let endIndex;
 
-		const discardControl = (index) => new Promise((resolve, reject) => {
-			if (self.isRemoved) {
-				reject();
-			}
-			else {
-				const item = self.itemData()[index];
+		const discardControl = (index) => {
+			const renderCount = self[RENDER_COUNT] + 0;
 
-				if (item) {
-					let control = self[CONTROL_RECYCLER].getControl(item.ID);
-
-					if (control && !control.isRemoved) {
-						if (control.isFocused()) {
-							self.element().focus();
-						}
-						self[CONTROL_RECYCLER].discardControl(control.ID());
-						control = null;
-					}
+			return new Promise((resolve, reject) => {
+				if (self.isRemoved || self[RENDER_COUNT] !== renderCount) {
+					reject();
 				}
+				else {
+					const item = self.itemData()[index];
 
-				resolve();
-			}
-		});
+					if (item) {
+						let control = self[CONTROL_RECYCLER].getControl(item.ID);
+
+						if (control && !control.isRemoved) {
+							if (control.isFocused()) {
+								self.element().focus();
+							}
+							self[CONTROL_RECYCLER].discardControl(control.ID());
+							control = null;
+						}
+					}
+
+					resolve();
+				}
+			});
+		};
 
 		const cleanUp = () => {
 			if (!self.isRemoved) {
@@ -415,9 +421,15 @@ export default class VirtualList extends FocusMixin(Control) {
 				}
 				else {
 					forRange(self[CURRENT_START_INDEX], startIndex - 1, discardControl)
-						.then(() => forRange(endIndex + 1, self[CURRENT_END_INDEX], discardControl))
-						.then(() => forRangeRight(self[CURRENT_START_INDEX] - 1, startIndex, (index) => self[renderItem](index, true)))
-						.then(() => forRange(self[CURRENT_END_INDEX] + 1, endIndex, () => self[renderItem]()))
+						.then(() => {
+							return forRange(endIndex + 1, self[CURRENT_END_INDEX], discardControl);
+						})
+						.then(() => {
+							return forRangeRight(self[CURRENT_START_INDEX] - 1, startIndex, (index) => self[renderItem](index, true));
+						})
+						.then(() => {
+							return forRange(self[CURRENT_END_INDEX] + 1, endIndex, (index) => self[renderItem](index));
+						})
 						.then(cleanUp);
 				}
 			}
@@ -433,9 +445,10 @@ export default class VirtualList extends FocusMixin(Control) {
 	 */
 	[renderItem](index, doPrepend, doSetSize) {
 		const self = this;
+		const renderCount = self[RENDER_COUNT] + 0;
 
 		return new Promise((resolve, reject) => {
-			if (self.isRemoved) {
+			if (self.isRemoved || self[RENDER_COUNT] !== renderCount) {
 				reject();
 			}
 			else {
@@ -535,16 +548,18 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		event.preventDefault();
 		self[CURRENT_SCROLL_OFFSET] = event.target[self[EXTENT_SCROLL_ORIGIN]];
-		self[renderAtScrollPosition]();
+		self[render]();
 	}
 
 	/**
 	 * Calculate the new start position and render.
-	 * @function renderAtScrollPosition
+	 * @function render
 	 */
-	[renderAtScrollPosition]() {
+	[render]() {
 		const self = this;
 		let index = 0;
+
+		self[RENDER_COUNT]++;
 
 		if (self.isVirtualized()) {
 			index = Math.floor((self[CURRENT_SCROLL_OFFSET] / self[ITEM_SIZE]) - (self[VIEWPORT_ITEMS_LENGTH] * self.extraRenderedItemsRatio()));
@@ -837,7 +852,7 @@ Object.assign(VirtualList.prototype, {
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
 		set: function() {
-			this[renderAtScrollPosition]();
+			this[render]();
 		},
 		min: 0
 	}),
@@ -871,7 +886,7 @@ Object.assign(VirtualList.prototype, {
 	 */
 	onItemRender: method.function({
 		set: function() {
-			this[renderAtScrollPosition]();
+			this[render]();
 		},
 		other: undefined
 	}),
@@ -1086,19 +1101,23 @@ Object.assign(VirtualList.prototype, {
 			self[removeEmptyContentMessage]();
 
 			if (!self.itemSize()) {
+				self[RENDER_COUNT]++;
+
 				self[renderItem](0, false, true)
 					.then(() => {
+						self[CONTROL_RECYCLER].discardAllControls();
+
 						if (!self.isRemoved) {
 							self[setAltExtentValue]();
 							self[setScrollSize]();
-							self[renderAtScrollPosition]();
+							self[render]();
 						}
 					});
 			}
 			else {
 				self[setAltExtentValue]();
 				self[setScrollSize]();
-				self[renderAtScrollPosition]();
+				self[render]();
 			}
 		}
 		else {
