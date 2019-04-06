@@ -63,24 +63,27 @@ let windowWidth = 0;
 let windowHeight = 0;
 
 const onMouseEnter = function() {
-	if (event.target === this.element()) {
-		this[IS_ACTIVE] = true;
+	const self = this;
+
+	if (event.target === self.element()) {
+		self[IS_ACTIVE] = true;
 	}
-	if (this.hideOnMouseLeave() && !this.isSticky()) {
-		this[IS_MOUSE_OVER] = true;
-		clear(this[MOUSE_LEAVE_TIMER]);
+	if (self.hideOnMouseLeave() && !self.isSticky()) {
+		self[IS_MOUSE_OVER] = true;
+		clear(self[MOUSE_LEAVE_TIMER]);
 	}
 };
 
 const onMouseLeave = function() {
 	const self = this;
+
 	if (event.target === self.element()) {
-		this[IS_ACTIVE] = false;
+		self[IS_ACTIVE] = false;
 	}
 	if (self.hideOnMouseLeave() && !self.isSticky()) {
-		this[IS_MOUSE_OVER] = false;
-		this[MOUSE_LEAVE_TIMER] = delay(() => {
-			if (!this[IS_MOUSE_OVER]) {
+		self[IS_MOUSE_OVER] = false;
+		self[MOUSE_LEAVE_TIMER] = delay(() => {
+			if (!self[IS_MOUSE_OVER]) {
 				self.remove();
 			}
 		}, MOUSE_LEAVE_BUFFER);
@@ -446,8 +449,12 @@ class Popup extends Container {
 			objectHelper.applySettings(self, settings);
 		}
 
-		self.on(MOUSE_ENTER_EVENT, onMouseEnter)
-			.on(MOUSE_LEAVE_EVENT, onMouseLeave)
+		self.on(MOUSE_ENTER_EVENT, () => {
+				onMouseEnter.call(self);
+			})
+			.on(MOUSE_LEAVE_EVENT, () => {
+				onMouseLeave.call(self);
+			})
 			.onResize((newWindowWidth, newWindowHeight) => {
 				const isMouseAnchor = self.anchor() === Popup.MOUSE;
 
@@ -514,11 +521,17 @@ Object.assign(Popup.prototype, {
 			}
 		},
 		set: function(newValue) {
+			const self = this;
+
 			if (isElement(newValue)) {
-				this.css(Z_INDEX, dom.css(newValue, Z_INDEX) + 1);
+				self.css(Z_INDEX, dom.css(newValue, Z_INDEX) + 1);
 				select(newValue)
-					.on(MOUSE_ENTER_EVENT, onMouseEnter)
-					.on(MOUSE_LEAVE_EVENT, onMouseLeave);
+					.on(MOUSE_ENTER_EVENT, () => {
+						onMouseEnter.call(self);
+					})
+					.on(MOUSE_LEAVE_EVENT, () => {
+						onMouseLeave.call(self);
+					});
 			}
 			else if (newValue === Popup.MOUSE) {
 				select(BODY).on(MOUSE_MOVE_EVENT, onMouseMove);
