@@ -99,7 +99,7 @@ export default class Menu extends Popup {
 			popupDockPoint: enforce.enum(settings.popupDockPoint, DockPoint.POINTS, DockPoint.POINTS.TOP_LEFT),
 			canTrackMouse: enforce.boolean(settings.canTrackMouse, false),
 			hideOnEscapeKey: enforce.boolean(settings.hideOnEscapeKey, true),
-			focusMixin: {
+			FocusMixin: {
 				mainControl: tree
 			}
 		});
