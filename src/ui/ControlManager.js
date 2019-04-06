@@ -44,7 +44,20 @@ export default class ControlManager {
 	}
 
 	get(ID) {
-		return this[IDS][ID];
+		let output = this[IDS][ID];
+
+		if (!output) {
+			this[CONTROLS].some((control) => {
+				if (control.get) {
+					output = control.get(ID);
+					if (output) {
+						return true;
+					}
+				}
+			});
+		}
+
+		return output;
 	}
 
 	each(callback) {

@@ -55,27 +55,21 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {String}   [doPrepend=false]
 	 */
 	[ADD_LAYOUT](content, doPrepend) {
-		const addControl = (controlDefinition) => {
-			if (controlDefinition && controlDefinition.control) {
-				controlDefinition = Object.assign(controlDefinition, {
-					container: this.contentContainer(),
-					parentContainer: this
-				});
-
-				let control = new controlDefinition.control(controlDefinition);
-				if (doPrepend) {
-					control.container(this.contentContainer(), true);
-				}
-				this[CONTROLS].add(control);
-				control = null;
-			}
-		};
-
 		content = castArray(content);
+
 		if (doPrepend) {
 			content.reverse();
 		}
-		content.forEach(addControl);
+
+		content.forEach((controlDefinition) => {
+			if (controlDefinition && controlDefinition.control) {
+				this[CONTROLS].add(new controlDefinition.control(Object.assign(controlDefinition, {
+					container: this.contentContainer(),
+					prepend: doPrepend,
+					parentContainer: this
+				})));
+			}
+		});
 	}
 
 	/**
