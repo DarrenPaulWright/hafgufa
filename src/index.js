@@ -29,6 +29,7 @@ export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
 export { default as Container } from './ui/layout/Container';
+export { default as Dialog } from './ui/layout/Dialog';
 export { default as Group } from './ui/layout/Group';
 export { default as Header } from './ui/layout/Header';
 export { default as Popup } from './ui/layout/Popup';
@@ -51,6 +52,7 @@ export { default as IsWorkingMixin } from './ui/mixins/IsWorkingMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';
 
+export * from './utility/browser';
 export * from './utility/domConstants';
 export { default as dom } from './utility/dom';
 export { default as LocalHistory } from './utility/LocalHistory';

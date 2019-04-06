@@ -1,0 +1,32 @@
+
+.popup.dialog {
+	margin: @dialogMargin;
+	border-radius: @dialogBorderRadius;
+	overflow: hidden;
+
+	.dialog-header {
+		bottom: initial;
+		padding: @dialogHeaderPadding;
+		text-align: center;
+		position: absolute;
+
+		.toolbar {
+			margin: @dialogHeaderPadding;
+		}
+	}
+
+	.dialog-content {
+		padding: @dialogPadding;
+		overflow-y: auto;
+		overflow-x: hidden;
+		position: relative;
+	}
+
+	.dialog-footer {
+		top: initial;
+
+		button {
+			margin: @dialogFooterButtonMargin;
+		}
+	}
+}
