@@ -1,0 +1,49 @@
+@import '../mixins.less';
+
+html, body {
+	height: 100%;
+	color: @fontColor;
+	font: @bodyFont;
+	overflow-y: hidden;
+	background: @bodyBackground;
+}
+
+*, *:before, *:after {
+	box-sizing: border-box;
+	text-rendering: auto;
+}
+
+*:focus {
+	outline: @defaultFocusOutline;
+	outline-offset: @defaultFocusOutlineOffset;
+}
+
+strong {
+	font-weight: @boldFontWeight;
+}
+
+em {
+	font-style: italic;
+}
+
+ul {
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+ol {
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+ul ul, ol ul {
+	list-style-type: circle;
+	list-style-position: inside;
+	margin-left: 1em;
+}
+
+ol ol, ul ol {
+	list-style-type: lower-latin;
+	list-style-position: inside;
+	margin-left: 1em;
+}
