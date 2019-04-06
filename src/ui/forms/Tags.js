@@ -625,7 +625,7 @@ Object.assign(Tags.prototype, {
 	 */
 	placeholder: method.string({
 		set: function(newValue) {
-			self[TEXT_INPUT].placeholder(newValue);
+			this[TEXT_INPUT].placeholder(newValue);
 		}
 	}),
 
