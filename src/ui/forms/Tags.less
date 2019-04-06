@@ -1,0 +1,58 @@
+@import (reference) '../forms/TextInput.less';
+
+.tags {
+	.tags-list-container:extend(input) {
+		padding: @tagWrapperPadding;
+		text-align: left;
+		border-radius: @tagCornerRadius + @tagMargin;
+		cursor: text;
+		white-space: normal;
+
+		&.focused:extend(input:focus) {
+			background: @inputBackgroundActive;
+		}
+
+		.heading {
+			display: inline-block;
+			vertical-align: middle;
+			margin: @tagMargin;
+			background: @formButtonBackground;
+			border-radius: @tagCornerRadius;
+			box-shadow: @formButtonShadow;
+			padding-left: @tagPaddingLeft;
+			font: @buttonFont;
+			line-height: @inputLineHeight;
+			float: left;
+
+			.title-container {
+				vertical-align: @tagHeadingVerticalAlign;
+			}
+		}
+
+		.form-control {
+			margin: @tagMargin;
+		}
+	}
+
+	.fake-input {
+		visibility: collapse;
+		position: absolute;
+		padding: @inputPaddingVertical @inputPaddingHorizontal;
+	}
+
+	input {
+		padding: @inputPaddingVertical @inputPaddingHorizontal;
+		background: none;
+		border: none;
+		box-shadow: none;
+		line-height: @inputLineHeight;
+
+		&:hover, &:active, &:focus {
+			background: none;
+		}
+	}
+}
+
+.menu.tags-menu {
+	border-radius: 0;
+}

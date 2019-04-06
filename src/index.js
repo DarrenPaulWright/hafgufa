@@ -24,6 +24,7 @@ export { default as TextArea } from './ui/elements/TextArea';
 
 export { default as FormControl } from './ui/forms/FormControl';
 export { default as Score } from './ui/forms/Score';
+export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
