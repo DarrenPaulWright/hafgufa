@@ -116,7 +116,7 @@ Object.assign(Removable.prototype, {
 			self[IS_REMOVED] = true;
 
 			if (self[ON_PRE_REMOVE]) {
-				self[ON_PRE_REMOVE].trigger();
+				self[ON_PRE_REMOVE].trigger(null, null, self);
 			}
 
 			if (self.fade() && !isTest) {
