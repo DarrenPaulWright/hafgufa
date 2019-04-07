@@ -23,10 +23,13 @@ export default class BackDrop extends Control {
 
 		super(settings);
 
-		this.addClass(BACKDROP_CLASS);
+		const self = this;
+		self.addClass(BACKDROP_CLASS);
 
-		objectHelper.applySettings(this, settings);
+		objectHelper.applySettings(self, settings);
 
-		this.on(CLICK_EVENT, this.remove);
+		self.on(CLICK_EVENT, () => {
+			self.remove();
+		});
 	}
 }
