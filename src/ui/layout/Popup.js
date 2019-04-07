@@ -212,8 +212,8 @@ const positionPopup = function() {
 			top: ZERO_PIXELS
 		});
 	}
-	popupWidth = this.width();
-	popupHeight = this.height();
+	popupWidth = this.borderWidth();
+	popupHeight = this.borderHeight();
 	this[ACTUAL_POPUP_DOCK_POINT] = this.popupDockPoint();
 
 	if (!this.anchor()) {
@@ -459,11 +459,11 @@ class Popup extends Container {
 				const isMouseAnchor = self.anchor() === Popup.MOUSE;
 
 				if (windowWidth !== newWindowWidth || windowHeight !== newWindowHeight ||
-					self[CURRENT_WIDTH] !== self.width() || self[CURRENT_HEIGHT] !== self.height() || self[FORCE_RESIZE]) {
+					self[CURRENT_WIDTH] !== self.borderWidth() || self[CURRENT_HEIGHT] !== self.borderHeight() || self[FORCE_RESIZE]) {
 					windowWidth = newWindowWidth;
 					windowHeight = newWindowHeight;
-					self[CURRENT_WIDTH] = self.width();
-					self[CURRENT_HEIGHT] = self.height();
+					self[CURRENT_WIDTH] = self.borderWidth();
+					self[CURRENT_HEIGHT] = self.borderHeight();
 
 					if ((!isMouseAnchor) || (isMouseAnchor && self.canTrackMouse()) || (isMouseAnchor && !self[IS_MOUSE_POSITION_SET]) || self[FORCE_RESIZE]) {
 						self[FORCE_RESIZE] = false;
