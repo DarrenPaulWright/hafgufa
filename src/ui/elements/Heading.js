@@ -229,14 +229,14 @@ export default class Heading extends FocusMixin(Control) {
 				self[CONTROLS].get(TITLE_CONTAINER)
 					.width(HUNDRED_PERCENT)
 					.width(self.innerWidth() - dom.get.left(self[CONTROLS].get(TITLE_CONTAINER)) - (self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
-						.width() : ZERO_PIXELS))
+						.borderWidth() : ZERO_PIXELS))
 					.css(PADDING_RIGHT, ZERO_PIXELS);
 			}
 			else {
 				self[CONTROLS].get(TITLE_CONTAINER)
 					.width(AUTO)
 					.css(PADDING_RIGHT, self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
-						.width() : ZERO_PIXELS);
+						.borderWidth() : ZERO_PIXELS);
 			}
 			self[CONTROLS].get(TITLE_CONTAINER)
 				.classes(LARGE_SINGLE_LINE_CLASS, !self.subTitle() && !self.isInline());
