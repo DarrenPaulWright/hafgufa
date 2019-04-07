@@ -55,7 +55,7 @@ export default function(Base) {
 						self[RIGHT_CONTAINER].css({
 							top: container.element().offsetTop,
 							height: height,
-							right: self.width() - width - dom.get.left(container.element())
+							right: self.borderWidth() - width - dom.get.left(container.element())
 						});
 					}
 
@@ -87,7 +87,7 @@ export default function(Base) {
 		}
 
 		[measureRightContainerWidth]() {
-			this[RIGHT_CONTAINER_WIDTH] = this[RIGHT_CONTAINER] ? this[RIGHT_CONTAINER].width() : 0;
+			this[RIGHT_CONTAINER_WIDTH] = this[RIGHT_CONTAINER] ? this[RIGHT_CONTAINER].borderWidth() : 0;
 			this.resize();
 		}
 	}
@@ -98,7 +98,7 @@ export default function(Base) {
 			const self = this;
 			const isIconButton = self.actionButtonIcon() === CLEAR_ICON && self.actionButtonLabel() === '';
 
-			if ((self.actionButtonIcon() || self.actionButtonLabel()) && self.width() > 40 && (!self.rows || self.rows() === 1)) {
+			if ((self.actionButtonIcon() || self.actionButtonLabel()) && self.borderWidth() > 40 && (!self.rows || self.rows() === 1)) {
 				if (!self[ACTION_BUTTON]) {
 					self[ACTION_BUTTON] = new Button({
 						isDisplayed: false,
