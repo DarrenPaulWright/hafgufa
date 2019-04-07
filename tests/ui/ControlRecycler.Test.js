@@ -1,8 +1,6 @@
 import { assert } from 'chai';
+import { Button, ControlRecycler, Icon } from '../../src';
 import TestUtil from '../TestUtil';
-import ControlRecycler from '../../src/ui/ControlRecycler';
-import Button from '../../src/ui/elements/Button';
-import Icon from '../../src/ui/elements/Icon';
 
 const testUtil = new TestUtil(ControlRecycler);
 

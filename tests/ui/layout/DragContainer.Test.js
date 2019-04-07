@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import DragContainer from '../../../src/ui/layout/DragContainer';
+import { DragContainer } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

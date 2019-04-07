@@ -30,6 +30,7 @@ export { default as Tree } from './ui/forms/Tree';
 
 export { default as Container } from './ui/layout/Container';
 export { default as Dialog } from './ui/layout/Dialog';
+export { default as DragContainer } from './ui/layout/DragContainer';
 export { default as Group } from './ui/layout/Group';
 export { default as Header } from './ui/layout/Header';
 export { default as Popup } from './ui/layout/Popup';
