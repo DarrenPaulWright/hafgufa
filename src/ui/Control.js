@@ -110,7 +110,7 @@ const setResizeEvent = function() {
 				let containerHeight;
 
 				if (self.container() && self.height().isPercent) {
-					containerHeight = dom.get.height(self.container()) * (self.parsedHeight / 100);
+					containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
 					containerHeight -= dom.get.margins.height(this[ELEMENT]);
 					if (self.css(BOX_SIZING) !== BORDER_BOX) {
 						containerHeight -= dom.get.paddings.height(this[ELEMENT]);

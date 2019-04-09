@@ -28,7 +28,8 @@ export default class Section extends ControlHeadingMixin(Container) {
 
 		this
 			.element(dom.buildNew('', 'section'))
-			.addClass('section clearfix');
+			.addClass('section clearfix')
+			.removeClass('container');
 
 		objectHelper.applySettings(this, settings, null, ['canCollapse']);
 	}

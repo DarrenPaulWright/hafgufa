@@ -34,8 +34,8 @@ export default (Base) => {
 					self[HEADING].resize();
 
 					if (self.height().isPercent) {
-						titleContainerHeight = self[HEADING].height();
-						dom.css(self.contentContainer(), HEIGHT, self.height() - titleContainerHeight);
+						titleContainerHeight = self[HEADING].borderHeight();
+						dom.css(self.contentContainer(), HEIGHT, self.borderHeight() - titleContainerHeight);
 					}
 				}
 			});

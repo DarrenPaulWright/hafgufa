@@ -27,6 +27,7 @@ export default class Group extends ControlHeadingMixin(Container) {
 		this
 			.element(dom.buildNew('', 'fieldset'))
 			.addClass('group clearfix')
+			.removeClass('container')
 			.css(MIN_WIDTH, AUTO);
 
 		objectHelper.applySettings(this, settings);

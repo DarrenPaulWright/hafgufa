@@ -73,6 +73,7 @@ export const CONTENT_BOX = 'content-box';
 export const BLOCK = 'block';
 export const INLINE_BLOCK = 'inline-block';
 export const HIDDEN = 'hidden';
+export const NONE = 'none';
 
 export const ALT = 'alt';
 export const TITLE = 'title';
@@ -128,6 +129,8 @@ export const DRAG_LEAVE_EVENT = 'dragleave dragend';
 export const DRAG_DROP_EVENT = 'drop';
 export const SWIPE_RIGHT_EVENT = 'swiperight';
 export const SWIPE_LEFT_EVENT = 'swipeleft';
+export const SWIPE_UP_EVENT = 'swipeup';
+export const SWIPE_DOWN_EVENT = 'swipedown';
 export const END_EVENT = 'end';
 export const CHANGE_EVENT = 'change';
 export const CONTENT_CHANGE_EVENT = 'contentChange';

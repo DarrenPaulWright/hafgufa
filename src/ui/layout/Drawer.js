@@ -1,0 +1,288 @@
+import { select } from 'd3';
+import Hammer from 'hammerjs';
+import { CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
+import { IS_PHONE } from '../../utility/browser';
+import d3Helper from '../../utility/d3Helper';
+import {
+	MARGIN,
+	OPACITY,
+	PADDING,
+	SPACE,
+	SWIPE_DOWN_EVENT,
+	SWIPE_LEFT_EVENT,
+	SWIPE_RIGHT_EVENT,
+	SWIPE_UP_EVENT
+} from '../../utility/domConstants';
+import objectHelper from '../../utility/objectHelper';
+import controlTypes from '../controlTypes';
+import Resizer from '../elements/Resizer';
+import { ORIENTATION } from '../uiConstants';
+import Container from './Container';
+import './Drawer.less';
+
+const ALL_SIDE_CLASSES = DockPoint.POINTS.TOP + SPACE + DockPoint.POINTS.RIGHT + SPACE + DockPoint.POINTS.BOTTOM + SPACE + DockPoint.POINTS.LEFT;
+const minSwipeHitSize = new CssSize('3rem');
+
+const DOCK = Symbol();
+const IS_HORIZONTAL = Symbol();
+const RESIZER = Symbol();
+const OVERLAP = Symbol();
+const TOUCH_CONTAINER = Symbol();
+const TOUCH_ELEMENT = Symbol();
+const SWIPE_HIT_SIZE = Symbol();
+
+const addTouch = Symbol();
+const swipeEvents = Symbol();
+const inHitZone = Symbol();
+const removeTouch = Symbol();
+const layout = Symbol();
+
+/**
+ * Display a sliding drawer on the edge of a container.
+ *
+ * @class Drawer
+ * @extends Container
+ * @constructor
+ *
+ * @arg {Object} settings
+ */
+export default class Drawer extends Container {
+	constructor(settings = {}) {
+		settings.type = settings.type || controlTypes.DRAWER;
+		settings.dock = settings.dock || DockPoint.POINTS.LEFT;
+
+		super(settings);
+
+		const self = this;
+
+		self[SWIPE_HIT_SIZE] = minSwipeHitSize.toPixels(true);
+
+		self.addClass('drawer')
+			.removeClass('container');
+
+		if (settings.type === controlTypes.DRAWER) {
+			objectHelper.applySettings(self, settings, 0, ['dock']);
+		}
+
+		self.onRemove(() => {
+			self.canResize(false);
+			self[removeTouch]();
+		});
+	}
+
+	[swipeEvents]() {
+		if (this[IS_HORIZONTAL]) {
+			if (this[DOCK] === DockPoint.POINTS.LEFT) {
+				return [SWIPE_RIGHT_EVENT, SWIPE_LEFT_EVENT];
+			}
+			return [SWIPE_LEFT_EVENT, SWIPE_RIGHT_EVENT];
+		}
+
+		if (this[DOCK] === DockPoint.POINTS.TOP) {
+			return [SWIPE_DOWN_EVENT, SWIPE_UP_EVENT];
+		}
+
+		return [SWIPE_UP_EVENT, SWIPE_DOWN_EVENT];
+	}
+
+	[inHitZone](hammerEvent) {
+		const self = this;
+		const offsets = self.container().getBoundingClientRect();
+		let touchStart;
+
+		if (self[IS_HORIZONTAL]) {
+			touchStart = hammerEvent.center.x - hammerEvent.deltaX;
+
+			if (this[DOCK] === DockPoint.POINTS.LEFT) {
+				return touchStart - offsets.left < this[SWIPE_HIT_SIZE];
+			}
+
+			return touchStart - offsets.left > offsets.width - this[SWIPE_HIT_SIZE];
+		}
+
+		touchStart = hammerEvent.center.y - hammerEvent.deltaY;
+
+		if (this[DOCK] === DockPoint.POINTS.TOP) {
+			return touchStart - offsets.top < this[SWIPE_HIT_SIZE];
+		}
+
+		return touchStart - offsets.top > offsets.height - this[SWIPE_HIT_SIZE];
+	}
+
+	[addTouch]() {
+		const self = this;
+		let [ swipeOpenEvent, swipeCloseEvent] = self[swipeEvents]();
+
+		self[removeTouch]();
+
+		if (self.container()) {
+			self[TOUCH_CONTAINER] = new Hammer(self.container())
+				.on(swipeOpenEvent, (hammerEvent) => {
+					if (self[inHitZone](hammerEvent)) {
+						hammerEvent.srcEvent.stopPropagation();
+						self.isOpen(true);
+					}
+				});
+
+			self[TOUCH_ELEMENT] = new Hammer(self.element())
+				.on(swipeCloseEvent, () => {
+					self.isOpen(false);
+				});
+
+			if (!self[IS_HORIZONTAL]) {
+				self[TOUCH_CONTAINER].domEvents = true;
+				self[TOUCH_CONTAINER]
+					.get('swipe')
+					.set({direction: Hammer.DIRECTION_VERTICAL});
+				self[TOUCH_ELEMENT].domEvents = true;
+				self[TOUCH_ELEMENT]
+					.get('swipe')
+					.set({direction: Hammer.DIRECTION_VERTICAL});
+			}
+		}
+	}
+
+	[removeTouch]() {
+		const clearEvents = (container) => {
+			if (this[container]) {
+				this[container]
+					.off(SWIPE_RIGHT_EVENT)
+					.off(SWIPE_LEFT_EVENT)
+					.off(SWIPE_UP_EVENT)
+					.off(SWIPE_DOWN_EVENT)
+					.destroy();
+				this[container] = null;
+			}
+		};
+
+		clearEvents(TOUCH_CONTAINER);
+		clearEvents(TOUCH_ELEMENT);
+	}
+
+	[layout]() {
+		const self = this;
+		const closedSize = self.closedSize().toPixels(true);
+		let newMargin = 0;
+		let newOpacity = 1;
+		let containerPadding = closedSize;
+		const element = self.isAnimated() ? d3Helper.animate(self) : self.elementD3();
+
+
+		if (self.isOpen()) {
+			if (!self[OVERLAP]) {
+				containerPadding = self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight();
+			}
+		}
+		else {
+			newMargin = -((self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight()) - closedSize);
+			newOpacity = closedSize ? 1 : 0;
+		}
+
+		element
+			.style(MARGIN + '-' + self[DOCK], newMargin + PIXELS)
+			.style(OPACITY, newOpacity);
+
+		select(self.container())
+			.style(PADDING + '-' + self[DOCK], containerPadding + PIXELS);
+
+		if (self[RESIZER]) {
+			self[RESIZER]
+				.orientation(self[IS_HORIZONTAL] ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL)
+				.isEnabled(self.isOpen());
+		}
+	}
+}
+
+Drawer.OVERLAP = new Enum({
+	PHONE: 'phone',
+	ALWAYS: 'always',
+	NEVER: 'never'
+});
+
+Object.assign(Drawer.prototype, {
+	/**
+	 * The side of the container that the drawer should open from.
+	 *
+	 * @method dock
+	 * @member class:Drawer
+	 * @instance
+	 *
+	 * @arg {string} [side] - Must be a dockPoint
+	 *
+	 * @returns {string|this}
+	 */
+	dock: method.dockPoint({
+		set: function(dock) {
+			this[DOCK] = dock.primary();
+
+			this.removeClass(ALL_SIDE_CLASSES)
+				.addClass(this[DOCK]);
+
+			this[IS_HORIZONTAL] = this[DOCK] === DockPoint.POINTS.LEFT || this[DOCK] === DockPoint.POINTS.RIGHT;
+
+			this[addTouch]();
+			this[layout]();
+		}
+	}),
+
+	isAnimated: method.boolean(),
+
+	canResize: method.boolean({
+		set: function(canResize) {
+			const self = this;
+
+			if (canResize) {
+				if (!self[RESIZER]) {
+					self[RESIZER] = new Resizer({
+						container: self,
+						onOffsetChange: (splitOffset) => {
+							console.log('splitOffset: ', splitOffset);
+						},
+						splitOffset: 0
+					});
+					self[layout]();
+				}
+			}
+			else if (self[RESIZER]) {
+				self[RESIZER].remove();
+				self[RESIZER] = null;
+			}
+		}
+	}),
+
+	overlap: method.enum({
+		init: Drawer.OVERLAP.PHONE,
+		enum: Drawer.OVERLAP,
+		set: function(overlap) {
+			this[OVERLAP] = (overlap === Drawer.OVERLAP.PHONE && IS_PHONE) || overlap === Drawer.OVERLAP.ALWAYS;
+			this[layout]();
+		}
+	}),
+
+	closedSize: method.cssSize({
+		init: new CssSize('0'),
+		set: function(closedSize) {
+			this[SWIPE_HIT_SIZE] = Math.max(minSwipeHitSize.toPixels(true), closedSize.toPixels(true));
+			this[layout]();
+		}
+	}),
+
+	isOpen: method.boolean({
+		set: function(isOpen) {
+			if (isOpen) {
+				if (this.onOpen()) {
+					this.onOpen()();
+				}
+			}
+			else if (this.onClose()) {
+				this.onClose()();
+			}
+
+			this[layout]();
+		}
+	}),
+
+	onOpen: method.function(),
+
+	onClose: method.function()
+});

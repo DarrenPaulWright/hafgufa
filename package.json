@@ -37,6 +37,7 @@
 		"bowser": "^2.1.2",
 		"css-loader": "^2.1.1",
 		"d3": "^5.9.1",
+		"hammerjs": "^2.0.8",
 		"keycodes": "^1.0.0",
 		"less": "^3.9.0",
 		"less-loader": "^4.0.6",
