@@ -63,7 +63,7 @@
 @easing: ease-out;
 
 /* Body */
-@bodyBackground: radial-gradient(ellipse at top center, @backgroundColor, white 140%), @backgroundColor;
+@bodyBackground: radial-gradient(ellipse at top center, @backgroundColor, white), @backgroundColor;
 @bodyFont: normal normal @normalFontWeight @fontSize @chromeFontFamily;
 @defaultFocusOutline: 0.05rem solid @highlightColor;
 @defaultFocusOutlineOffset: -0.05rem;
@@ -74,8 +74,8 @@
 
 /* Header */
 @headerHeight: 3.2rem;
-@headerBackground: fade(white, 15%);
-@headerShadow: 0 0.05rem 1rem @largeShadowColor;
+@headerBackground: none;
+@headerShadow: none;
 
 @headerButtonIconColor: lighten(@chromeFontColor, 15%);
 @headerButtonTextShadow: @textShadow;
@@ -299,6 +299,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.1em);
 			font-size: 1.1em;
@@ -311,6 +312,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.2em);
 			font-size: 1.1em;
@@ -688,6 +690,7 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 				left: @padding1;
 				border-width: @thickness;
 			}
+
 			&:after {
 				top: @padding2;
 				right: @padding2;
@@ -713,6 +716,7 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 				left: @padding1;
 				border-width: @thickness;
 			}
+
 			&:after {
 				top: @padding2;
 				right: @padding2;
