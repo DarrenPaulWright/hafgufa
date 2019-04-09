@@ -51,7 +51,7 @@ export default class LocalHistory {
 			self[CURRENT_INDEX] = self[HISTORY].length - 1;
 
 			if (self.onPush()) {
-				self.onPush()();
+				self.onPush()(self[HISTORY][self[CURRENT_INDEX]]);
 			}
 		}
 
