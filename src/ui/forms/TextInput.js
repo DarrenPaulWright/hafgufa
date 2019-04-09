@@ -191,8 +191,6 @@ Object.assign(TextInput.prototype, {
 				.on(ON_CHANGE_EVENTS, throttle(() => {
 					self[maxRowCallback]();
 					self.triggerChange();
-				}, 0, {
-					trailing: false
 				}));
 		},
 		min: 1
