@@ -44,6 +44,7 @@ export { default as IsWorking } from './ui/display/IsWorking';
 
 export { default as Menu } from './ui/other/Menu';
 export { default as ContextMenu } from './ui/other/ContextMenu';
+export { default as SearchBar } from './ui/other/SearchBar';
 
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
