@@ -293,6 +293,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			});
 
 			self.triggerChange(true, skipCallback, isHardTrigger);
+			heading.resize();
 		}
 	}
 
