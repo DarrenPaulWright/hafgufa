@@ -83,7 +83,7 @@ export default class SearchBar extends Control {
 				self[MENU_BUTTON] = null;
 			}
 		});
-	};
+	}
 
 	[toggleSearchBar]() {
 		if (this[IS_SEARCH_BAR_OPEN]) {

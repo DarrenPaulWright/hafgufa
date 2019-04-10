@@ -782,7 +782,7 @@ Object.assign(VirtualList.prototype, {
 	 */
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
-			set: function() {
+		set: function() {
 			this[render]();
 		},
 		min: 0

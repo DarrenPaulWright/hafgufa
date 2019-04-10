@@ -111,7 +111,7 @@ export default class Drawer extends Container {
 
 	[addTouch]() {
 		const self = this;
-		let [ swipeOpenEvent, swipeCloseEvent] = self[swipeEvents]();
+		let [swipeOpenEvent, swipeCloseEvent] = self[swipeEvents]();
 
 		self[removeTouch]();
 
@@ -166,7 +166,6 @@ export default class Drawer extends Container {
 		let newOpacity = 1;
 		let containerPadding = closedSize;
 		const element = self.isAnimated() ? d3Helper.animate(self) : self.elementD3();
-
 
 		if (self.isOpen()) {
 			if (!self[OVERLAP]) {
@@ -235,8 +234,7 @@ Object.assign(Drawer.prototype, {
 				if (!self[RESIZER]) {
 					self[RESIZER] = new Resizer({
 						container: self,
-						onOffsetChange: (splitOffset) => {
-							console.log('splitOffset: ', splitOffset);
+						onOffsetChange: () => {
 						},
 						splitOffset: 0
 					});
