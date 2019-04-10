@@ -89,10 +89,11 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 				this[ADD_LAYOUT](JSON.parse(content), doPrepend);
 			}
 			else {
-				dom.content(this, content, doPrepend);
 				if (content.element) {
 					this[CONTROLS].add(content);
+					content.container(this);
 				}
+				dom.content(this, content, doPrepend);
 			}
 			this.elementD3().dispatch(CONTENT_CHANGE_EVENT);
 			this.resize();

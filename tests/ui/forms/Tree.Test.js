@@ -134,6 +134,24 @@ describe('Tree', () => {
 					assert.equal(document.querySelectorAll('.heading .checkboxes').length, 0);
 				});
 		});
+
+		it('should only have one heading if branches are updated to one branch after more', () => {
+			window.control = new Tree({
+				container: window.testContainer,
+				branches: flatBranches
+			});
+
+			window.control.branches([{
+				ID: '1',
+				title: 'Item 1',
+				isMultiSelect: false
+			}]);
+
+			return testUtil.defer()
+				.then(() => {
+					assert.equal(document.querySelectorAll('.heading').length, 1);
+				});
+		});
 	});
 
 	describe('Selection', () => {

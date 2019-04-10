@@ -79,6 +79,24 @@ describe('VirtualList', () => {
 				});
 		});
 
+		it('should display the same items that are passed in to the items method after previous rows', () => {
+			window.control = new VirtualList({
+				container: window.testContainer,
+				height: '100px'
+			})
+				.itemControl(Button)
+				.itemData(testRows);
+
+			window.control.itemData([{
+				ID: '1'
+			}]);
+
+			return testUtil.defer()
+				.then(() => {
+					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 1);
+				});
+		});
+
 		it('should display an "empty content" message when there are no items', () => {
 			window.control = new VirtualList({
 				container: window.testContainer,
