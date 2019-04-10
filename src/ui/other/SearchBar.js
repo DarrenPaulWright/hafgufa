@@ -47,12 +47,12 @@ export default class SearchBar extends Control {
 		if (IS_PHONE) {
 			self[MENU_BUTTON] = new Button({
 				container: self.element(),
-				classes: 'header-button align-right',
-				label: self[STRINGS].search,
+				classes: 'header-button',
+				label: settings.isCompact ? null : self[STRINGS].search,
 				icon: SEARCH_ICON,
 				isSelectable: true,
 				onClick: function() {
-					toggleSearchBar();
+					self[toggleSearchBar]();
 				}
 			});
 		}
