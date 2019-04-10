@@ -90,16 +90,6 @@ const onMouseLeave = function() {
 	}
 };
 
-const onWindowClick = function() {
-	if (!this[IS_ACTIVE]) {
-		this.remove();
-	}
-};
-
-const onWindowBlur = function() {
-	this.remove();
-};
-
 const onMouseMove = function() {
 	this[IS_ACTIVE] = false;
 	positionPopup.call(this);
@@ -553,7 +543,19 @@ Object.assign(Popup.prototype, {
 	isSticky: method.boolean({
 		init: true,
 		set: function(newValue) {
-			const suffix = '.' + this.ID();
+			const self = this;
+			const suffix = '.' + self.ID();
+
+			const onWindowClick = () => {
+				if (!self[IS_ACTIVE]) {
+					self.remove();
+				}
+			};
+
+			const onWindowBlur = () => {
+				self.remove();
+			};
+
 			select(WINDOW)
 				.on(CLICK_EVENT + suffix, !newValue ? onWindowClick : null)
 				.on(BLUR_EVENT + suffix, !newValue ? onWindowBlur : null);
