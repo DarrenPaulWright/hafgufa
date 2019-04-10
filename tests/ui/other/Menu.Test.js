@@ -27,7 +27,7 @@ describe('Menu', () => {
 		'onResize',
 		'stopPropagation'], ['focus']);
 
-	describe.skip('MenuItems', () => {
+	describe('MenuItems', () => {
 		testUtil.testMethod({
 			methodName: 'menuItems',
 			defaultValue: [],
@@ -148,7 +148,7 @@ describe('Menu', () => {
 				});
 		});
 
-		it('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
+		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
 			window.control = new Menu({
 				onSelect: function() {
 				},
@@ -173,7 +173,7 @@ describe('Menu', () => {
 				});
 		});
 
-		it('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
+		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
 			window.control = new Menu({
 				onSelect: function() {
 				},

@@ -277,8 +277,6 @@ Object.assign(Control.prototype, {
 				if (this[PREPEND]) {
 					delete this[PREPEND];
 				}
-
-				this.resize();
 			}
 		}
 	}),
@@ -560,7 +558,6 @@ Object.assign(Control.prototype, {
 		init: new CssSize(),
 		set: function(width) {
 			this.css(WIDTH, width.toPixels());
-			this.resize();
 		}
 	}),
 
@@ -636,7 +633,6 @@ Object.assign(Control.prototype, {
 		init: new CssSize(),
 		set: function(height) {
 			this.css(HEIGHT, height.toPixels());
-			this.resize();
 		}
 	}),
 
