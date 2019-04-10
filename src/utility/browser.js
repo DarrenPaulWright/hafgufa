@@ -1,9 +1,11 @@
 import bowser from 'bowser';
 import { castArray } from 'type-enforcer';
 
-export const IS_PHONE = bowser.mobile;
-export const IS_TABLET = bowser.tablet;
-export const IS_DESKTOP = !(IS_PHONE || IS_TABLET);
+const env = bowser.parse(window.navigator.userAgent).platform.type;
+
+export const IS_PHONE = env === 'mobile';
+export const IS_TABLET = env === 'tablet';
+export const IS_DESKTOP = env === 'desktop';
 
 export const cacheAssets = (assets) => new Promise((resolve, reject) => {
 	caches.open('assets')
