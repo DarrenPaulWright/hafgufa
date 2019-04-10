@@ -231,8 +231,8 @@ Object.assign(SearchBar.prototype, {
 	breakOnSpaces: method.boolean({
 		init: true,
 		set: function(breakOnSpaces) {
-			if (self[TAGS]) {
-				self[TAGS].breakOnSpaces(breakOnSpaces);
+			if (this[TAGS]) {
+				this[TAGS].breakOnSpaces(breakOnSpaces);
 			}
 		}
 	})
