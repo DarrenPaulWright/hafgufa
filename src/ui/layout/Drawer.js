@@ -55,6 +55,7 @@ export default class Drawer extends Container {
 
 		const self = this;
 
+		self[OVERLAP] = IS_PHONE;
 		self[SWIPE_HIT_SIZE] = minSwipeHitSize.toPixels(true);
 
 		self.addClass('drawer')
