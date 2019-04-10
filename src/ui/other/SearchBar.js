@@ -129,7 +129,7 @@ export default class SearchBar extends Control {
 
 		self[TAGS] = new Tags({
 			container: container,
-			breakOnSpaces: true,
+			breakOnSpaces: self.breakOnSpaces(),
 			placeholder: self[STRINGS].search,
 			suggestions: self.suggestions(),
 			actionButtonIcon: SEARCH_ICON,
@@ -226,6 +226,15 @@ Object.assign(SearchBar.prototype, {
 	 */
 	isFocused: function() {
 		return dom.hasActive(this[SEARCH_BAR]) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;
-	}
+	},
+
+	breakOnSpaces: method.boolean({
+		init: true,
+		set: function(breakOnSpaces) {
+			if (self[TAGS]) {
+				self[TAGS].breakOnSpaces(breakOnSpaces);
+			}
+		}
+	})
 
 });
