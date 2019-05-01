@@ -174,7 +174,7 @@ export default (Base) => {
 
 			self[IS_BOUNCING] = true;
 			self[BOUNCE_FRAME] = requestAnimationFrame(() => {
-				self.animateBounce();
+				self[animateBounce]();
 			});
 		}
 
@@ -187,7 +187,7 @@ export default (Base) => {
 				self[setPosition](self[BOUNCE_VECTOR].end().x, self[BOUNCE_VECTOR].end().y);
 
 				self[BOUNCE_FRAME] = requestAnimationFrame(() => {
-					self.animateBounce();
+					self[animateBounce]();
 				});
 			}
 			else {
