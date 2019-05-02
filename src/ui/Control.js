@@ -258,24 +258,19 @@ Object.assign(Control.prototype, {
 					else {
 						container.appendChild(this[ELEMENT]);
 					}
+					delete this[APPEND];
 				}
 				else if (this[PREPEND]) {
 					if (isElement(this[PREPEND])) {
-						container.insertBefore(this[ELEMENT], this[APPEND]);
+						container.insertBefore(this[ELEMENT], this[PREPEND]);
 					}
 					else {
 						container.insertBefore(this[ELEMENT], container.firstChild);
 					}
+					delete this[PREPEND];
 				}
 				else {
 					container.appendChild(this[ELEMENT]);
-				}
-
-				if (this[APPEND]) {
-					delete this[APPEND];
-				}
-				if (this[PREPEND]) {
-					delete this[PREPEND];
 				}
 			}
 		}
