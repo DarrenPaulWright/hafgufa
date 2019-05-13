@@ -1,0 +1,61 @@
+@import (reference) '../mixins/mixins.less';
+
+.lightbox {
+	background: @lightBoxBackground;
+
+	.icon {
+		color: @lightboxIconColor;
+	}
+
+	.image-layer, .interaction-layer {
+		overflow: hidden;
+
+		.file-thumbnail {
+			.icon-button {
+				.icon {
+					color: @lightBoxDeleteIconColor;
+				}
+
+				.inverse {
+					color: @lightBoxDeleteIconInverseColor;
+				}
+			}
+		}
+	}
+
+	.interaction-layer {
+		pointer-events: none;
+
+		&:after {
+			content: '';
+			.absolute-full-size();
+			box-shadow: @lightBoxShadow;
+		}
+	}
+
+	.lightbox-toolbar {
+		pointer-events: auto;
+		bottom: auto;
+		background: @lightBoxToolbarBackground;
+	}
+
+	.carousel {
+		position: absolute;
+		pointer-events: auto;
+		top: auto;
+		transform: translateY(60%);
+		background: @lightBoxToolbarBackground;
+		transition: all @animationLongDuration @easing;
+
+		&.show {
+			transform: translateY(0);
+		}
+	}
+
+	.carousel-button {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}

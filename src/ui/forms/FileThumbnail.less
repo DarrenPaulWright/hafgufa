@@ -1,0 +1,129 @@
+
+.file-thumbnail {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	padding: @FileThumbnailMargin - @FileThumbnailBorderSize;
+
+	&:hover {
+		img {
+			border-color: @FileThumbnailHoverBorderColor;
+		}
+	}
+
+	&.editable {
+		cursor: pointer;
+	}
+
+	&.selected {
+		img {
+			border-image: @FileThumbnailSelectedBorderImage;
+		}
+
+		&:hover {
+			img {
+				border-image: @FileThumbnailSelectedHoverBorderImage;
+			}
+		}
+	}
+
+	.is-working {
+		background: @FileThumbnailIsWorkingBackground;
+		border-radius: @FileThumbnailIsWorkingBorderRadius;
+	}
+
+	.image-wrapper {
+		position: relative;
+		transition: all @animationDuration @easing;
+		text-align: center;
+
+		.icon {
+			top: 50%;
+			transform: translateY(-50%);
+			vertical-align: baseline;
+			opacity: @FileThumbnailIconOpacity;
+			transition: font-size @animationDuration @easing;
+
+			&.image {
+				opacity: @FileThumbnailIconLoadableOpacity;
+			}
+		}
+
+		img {
+			position: absolute;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+			border: @FileThumbnailBorder;
+			max-height: 100%;
+			max-width: 100%;
+			transition: border-color @animationLongDuration @easing;
+		}
+	}
+
+	.icon-button {
+		bottom: initial;
+		left: initial;
+
+		> .icon {
+			color: @FileThumbnailDeleteButtonColor;
+			text-shadow: none;
+		}
+	}
+
+	&.extra-small {
+		.image-wrapper {
+			height: @FileThumbnailExtraSmallHeight + (2 * @FileThumbnailBorderSize);
+			width: @FileThumbnailExtraSmallWidth + (2 * @FileThumbnailBorderSize);
+
+			> .icon {
+				font-size: @FileThumbnailExtraSmallHeight * @FileThumbnailIconSizeFactor;
+			}
+		}
+	}
+
+	&.small {
+		.image-wrapper {
+			height: @FileThumbnailSmallHeight + (2 * @FileThumbnailBorderSize);
+			width: @FileThumbnailSmallWidth + (2 * @FileThumbnailBorderSize);
+
+			> .icon {
+				font-size: @FileThumbnailSmallHeight * @FileThumbnailIconSizeFactor;
+			}
+		}
+	}
+
+	&.medium {
+		.image-wrapper {
+			height: @FileThumbnailMediumHeight + (2 * @FileThumbnailBorderSize);
+			width: @FileThumbnailMediumWidth + (2 * @FileThumbnailBorderSize);
+
+			> .icon {
+				font-size: @FileThumbnailMediumHeight * @FileThumbnailIconSizeFactor;
+			}
+		}
+	}
+
+	&.large {
+		.image-wrapper {
+			height: @FileThumbnailLargeHeight + (2 * @FileThumbnailBorderSize);
+			width: @FileThumbnailLargeWidth + (2 * @FileThumbnailBorderSize);
+
+			> .icon {
+				font-size: @FileThumbnailLargeHeight * @FileThumbnailIconSizeFactor;
+			}
+		}
+	}
+
+	&.extra-large {
+		.image-wrapper {
+			height: @FileThumbnailExtraLargeHeight + (2 * @FileThumbnailBorderSize);
+			width: @FileThumbnailExtraLargeWidth + (2 * @FileThumbnailBorderSize);
+
+			> .icon {
+				font-size: @FileThumbnailExtraLargeHeight * @FileThumbnailIconSizeFactor;
+			}
+		}
+	}
+}

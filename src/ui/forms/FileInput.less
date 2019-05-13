@@ -1,0 +1,60 @@
+@import (reference) '../mixins/mixins.less';
+
+.file-input {
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	margin: @FileThumbnailMargin;
+	background: fade(@highlightColor, 10);
+	border: 0.25rem dashed fade(@highlightColor, 30);
+	text-align: center;
+	font-size: @chromeFontSize;
+	font-weight: @boldFontWeight;
+	color: @highlightColor;
+	cursor: pointer;
+	transition: all @animationDuration @easing;
+	.allSmallCaps();
+
+	&:hover, &.hover {
+		background: fade(@highlightColor, 15);
+	}
+
+	&.extra-small {
+		height: @FileThumbnailExtraSmallHeight;
+		width: @FileThumbnailExtraSmallWidth;
+		line-height: 1em;
+		border-radius: 0.25rem;
+		font-size: 0.9em;
+	}
+
+	&.small {
+		height: @FileThumbnailSmallHeight;
+		width: @FileThumbnailSmallWidth;
+		line-height: @FileThumbnailSmallHeight - 6;
+		border-radius: 0.5rem;
+	}
+
+	&.medium {
+		height: @FileThumbnailMediumHeight;
+		width: @FileThumbnailMediumWidth;
+		line-height: @FileThumbnailMediumHeight - 6;
+		border-radius: 0.75rem;
+		font-size: @chromeHeaderFontSize;
+	}
+
+	&.large {
+		height: @FileThumbnailLargeHeight;
+		width: @FileThumbnailLargeWidth;
+		line-height: @FileThumbnailLargeHeight - 6;
+		border-radius: 1rem;
+		font-size: @chromeHeaderFontSize;
+	}
+
+	&.extra-large {
+		height: @FileThumbnailExtraLargeHeight;
+		width: @FileThumbnailExtraLargeWidth;
+		line-height: @FileThumbnailExtraLargeHeight - 6;
+		border-radius: 1.5rem;
+		font-size: @chromeHeaderFontSize;
+	}
+}

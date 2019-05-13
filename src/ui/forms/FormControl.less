@@ -12,7 +12,7 @@
 		clear: both;
 	}
 
-	> div:first-of-type {
+	> div {
 		white-space: nowrap;
 		position: relative;
 		vertical-align: baseline;
@@ -28,13 +28,13 @@
 		padding-bottom: 0;
 		white-space: nowrap;
 
-		.heading {
+		> .heading {
 			display: inline-block;
 			line-height: @formControlSingleLineHeadingLineHeight;
 			vertical-align: top;
 		}
 
-		> div:first-of-type {
+		> div {
 			display: inline-block;
 		}
 	}

@@ -599,7 +599,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 		const item = self[CONTROL_RECYCLER].getControlAtOffset(0);
 
-		return item ? item[self[ALT_EXTENT]]() : AUTO;
+		return item ? item[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']() + PIXELS : AUTO;
 	}
 
 	/**
@@ -610,7 +610,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		if (!self.isRemoved) {
-			const isAutoSize = (self[ALT_EXTENT] === HEIGHT ? self.height().isAuto : self.width().isAuto);
+			const isAutoSize = self[self[ALT_EXTENT]]().isAuto;
 			self[ALT_EXTENT_VALUE] = isAutoSize ? self[getFirstItemAltSize]() : HUNDRED_PERCENT;
 
 			self[CONTENT_CONTAINER].css(self[ALT_EXTENT], self[ALT_EXTENT_VALUE]);
@@ -669,7 +669,7 @@ VirtualList.prototype[setVirtualContentAltExtent] = throttle(function() {
 
 			if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
 				controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
-				maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT]]());
+				maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
 			}
 		});
 
@@ -1034,14 +1034,9 @@ Object.assign(VirtualList.prototype, {
 			if (!self.itemSize()) {
 				self[renderItem](0, false, true);
 				self[CONTROL_RECYCLER].discardAllControls();
-
-				if (!self.isRemoved) {
-					self[setAltExtentValue]();
-					self[setScrollSize]();
-					self[render]();
-				}
 			}
-			else {
+
+			if (!self.isRemoved) {
 				self[setAltExtentValue]();
 				self[setScrollSize]();
 				self[render]();

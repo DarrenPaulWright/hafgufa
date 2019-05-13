@@ -21,13 +21,17 @@ export { default as Radio } from './ui/elements/Radio';
 export { default as Resizer, getResizerExtentOffset } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
-
+``;
+export { default as FileInput } from './ui/forms/FileInput';
+export { default as FilePicker } from './ui/forms/FilePicker';
+export { default as FileThumbnail, PREVIEW_SIZES } from './ui/forms/FileThumbnail';
 export { default as FormControl } from './ui/forms/FormControl';
 export { default as Score } from './ui/forms/Score';
 export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
+export { default as Carousel } from './ui/layout/Carousel';
 export { default as Container } from './ui/layout/Container';
 export { default as Dialog } from './ui/layout/Dialog';
 export { default as DragContainer } from './ui/layout/DragContainer';
@@ -42,8 +46,9 @@ export { default as VirtualList } from './ui/layout/VirtualList';
 
 export { default as IsWorking } from './ui/display/IsWorking';
 
-export { default as Menu } from './ui/other/Menu';
 export { default as ContextMenu } from './ui/other/ContextMenu';
+export { default as LightBox } from './ui/other/LightBox';
+export { default as Menu } from './ui/other/Menu';
 export { default as SearchBar } from './ui/other/SearchBar';
 
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
