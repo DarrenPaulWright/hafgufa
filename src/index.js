@@ -45,6 +45,7 @@ export { default as Tooltip } from './ui/layout/Tooltip';
 export { default as VirtualList } from './ui/layout/VirtualList';
 
 export { default as IsWorking } from './ui/display/IsWorking';
+export { default as toast } from './ui/display/toast';
 
 export { default as ContextMenu } from './ui/other/ContextMenu';
 export { default as LightBox } from './ui/other/LightBox';

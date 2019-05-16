@@ -1,0 +1,60 @@
+@import (reference) '../mixins/mixins.less';
+
+.toast-wrapper {
+	position: absolute;
+	right: @toastMargin;
+	bottom: @toastMargin;
+
+	.toast.not-inline {
+		width: @toastWidth;
+		padding: @toastPadding;
+		background: @toastBackground;
+		border-radius: @toastBorderRadius;
+		color: @toastFontColor;
+		margin: @toastSpacing 0 0;
+		box-shadow: @toastShadow;
+		cursor: pointer;
+
+		.subtitle {
+			color: @toastSubFontColor;
+		}
+
+		.icon-button {
+			.icon {
+				color: @toastFontColor;
+			}
+		}
+
+		&.toast-info {
+			> .icon {
+				color: @toastInfoIconColor;
+			}
+		}
+
+		&.toast-success {
+			> .icon {
+				color: @toastSuccessIconColor;
+			}
+		}
+
+		&.toast-warning {
+			> .icon {
+				color: @toastWarningIconColor;
+			}
+		}
+
+		&.toast-error {
+			background: @toastErrorBackground;
+
+			> .icon {
+				color: @toastErrorIconColor;
+			}
+		}
+
+		> .icon {
+			text-shadow: none;
+			width: @toastIconWidth;
+			transform: @toastIconTransform;
+		}
+	}
+}

@@ -524,7 +524,7 @@ Object.assign(Popup.prototype, {
 					});
 			}
 			else if (newValue === Popup.MOUSE) {
-				select(BODY).on(MOUSE_MOVE_EVENT, onMouseMove);
+				select(BODY).on(MOUSE_MOVE_EVENT, () => onMouseMove.call(self));
 			}
 		},
 		other: [undefined, Popup.MOUSE]
