@@ -41,6 +41,7 @@ export { default as Group } from './ui/layout/Group';
 export { default as Header } from './ui/layout/Header';
 export { default as Popup } from './ui/layout/Popup';
 export { default as Section } from './ui/layout/Section';
+export { default as Timeline } from './ui/layout/Timeline';
 export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';
 export { default as VirtualList } from './ui/layout/VirtualList';
@@ -61,6 +62,7 @@ export { default as FocusMixin } from './ui/mixins/FocusMixin';
 export { default as IsWorkingMixin } from './ui/mixins/IsWorkingMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';
+export { default as TooltipMixin } from './ui/mixins/TooltipMixin';
 
 export * from './utility/browser';
 export * from './utility/domConstants';
