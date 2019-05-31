@@ -287,7 +287,7 @@ Object.assign(FilePicker.prototype, {
 	onDelete: method.function(),
 
 	canEdit: method.boolean({
-		set: function(newValue) {
+		set: function() {
 			const self = this;
 			self[FILE_THUMBNAILS].each((fileThumbnail) => {
 				fileThumbnail.onEdit(() => {

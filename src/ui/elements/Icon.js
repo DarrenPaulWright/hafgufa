@@ -3,6 +3,7 @@ import dom from '../../utility/dom';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
+import TooltipMixin from '../mixins/TooltipMixin';
 import './Icon.less';
 
 const ELEMENT = 'i';
@@ -66,7 +67,7 @@ const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
  *
  * @arg {Object} settings
  */
-export default class Icon extends Control {
+export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.ICON;
 		settings.element = dom.buildNew(CORE_CLASSES + ' icon-lg', ELEMENT);
