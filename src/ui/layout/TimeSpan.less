@@ -1,0 +1,24 @@
+
+.time-span {
+	display: inline-block;
+	height: 100%;
+	overflow: visible;
+
+	> .heading {
+		padding: 0 8px;
+		font-variant: all-small-caps;
+	}
+
+	.tick {
+		position: absolute;
+		top: 0;
+		width: 0.07em;
+		height: 0.75em;
+		background: @secondaryFontColor;
+
+		&.sub {
+			height: 0.25em;
+			background: @secondaryFontColor;
+		}
+	}
+}
