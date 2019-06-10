@@ -1,13 +1,7 @@
 import { clear, defer, delay } from 'async-agent';
 import { AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
 import {
-	BODY,
-	MOUSE_ENTER_EVENT,
-	MOUSE_LEAVE_EVENT,
-	PADDING_BOTTOM,
-	PADDING_LEFT,
-	PADDING_RIGHT,
-	PADDING_TOP
+	BODY, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP
 } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
@@ -40,7 +34,8 @@ const IMAGE_MARGIN = 8;
 const CAROUSEL_SLIDE_PERCENT = 0.4;
 const CAROUSEL_HIDE_DELAY_TIME = 500;
 
-class DragImage extends DragMixin(Image) {};
+class DragImage extends DragMixin(Image) {
+}
 
 const TOOLBAR_HEIGHT = Symbol();
 const IMAGE_LAYER = Symbol();
@@ -160,7 +155,8 @@ export default class LightBox extends Control {
 
 	[positionMainImage]() {
 		const self = this;
-		const imageSelectorHeight = self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID) ? self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)
+		const imageSelectorHeight = self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID) ? self[INTERACTION_LAYER].get(
+			LIGHT_BOX_CAROUSEL_ID)
 			.height() * CAROUSEL_SLIDE_PERCENT : self[TOOLBAR_HEIGHT];
 
 		self[IMAGE_LAYER]
@@ -185,18 +181,16 @@ export default class LightBox extends Control {
 		const self = this;
 		if (self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)) {
 			self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)
-				.slideData(
-					self.files()
-						.map((file) => file ? {
-							ID: file.name,
-							source: file.thumbSource || file.source || file.fileData,
-							data: file
-						} : {
-							ID: file.name,
-							data: file
-						})
-						.filter(Boolean)
-				);
+				.slideData(self.files()
+					.map((file) => file ? {
+						ID: file.name,
+						source: file.thumbSource || file.source || file.fileData,
+						data: file
+					} : {
+						ID: file.name,
+						data: file
+					})
+					.filter(Boolean));
 		}
 
 		self[positionMainImage]();

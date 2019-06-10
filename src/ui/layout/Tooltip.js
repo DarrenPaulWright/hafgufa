@@ -35,12 +35,12 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 			const initialContent = settings.content;
 			delete settings.content;
 
-			select(WINDOW).on(MOUSE_WHEEL_EVENT, self.remove);
+			select(WINDOW).on(MOUSE_WHEEL_EVENT, () => self.remove());
 
 			self[POPUP] = new Popup(Object.assign({}, {
 				anchor: Popup.MOUSE,
 				anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
-				popupDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
+				popupDockPoint: settings.tooltipDockPoint || DockPoint.POINTS.BOTTOM_CENTER,
 				fade: true,
 				showArrow: true
 			}, settings, {

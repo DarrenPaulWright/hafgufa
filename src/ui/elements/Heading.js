@@ -1,19 +1,10 @@
 import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
-import { AUTO, DockPoint, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
-	CLICK_EVENT,
-	DISPLAY,
-	INLINE_BLOCK,
-	KEY_DOWN_EVENT,
-	MOUSE_ENTER_EVENT,
-	MOUSE_LEAVE_EVENT,
-	PADDING_RIGHT,
-	TAB_INDEX,
-	TAB_INDEX_DISABLED,
-	TAB_INDEX_ENABLED
+	CLICK_EVENT, DISPLAY, INLINE_BLOCK, KEY_DOWN_EVENT, PADDING_RIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED
 } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
@@ -23,7 +14,6 @@ import CheckBox from '../elements/CheckBox';
 import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
 import Container from '../layout/Container';
 import Toolbar from '../layout/Toolbar';
-import Tooltip from '../layout/Tooltip';
 import FocusMixin from '../mixins/FocusMixin';
 import Button from './Button';
 import './Heading.less';
@@ -113,57 +103,6 @@ const toggleIsExpanded = function() {
 	}
 };
 
-/**
- * Show the tooltip on the icon
- * @function showIconTooltip
- */
-const showIconTooltip = function() {
-	this[CONTROLS].add(new Tooltip({
-		ID: ICON_TOOLTIP,
-		content: this.iconTooltip(),
-		anchor: this[CONTROLS].get(ICON_CONTROL).element(),
-		anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
-		tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER
-	}));
-};
-
-/**
- * Remove the tooltip from the icon
- * @function removeIconTooltip
- */
-const removeIconTooltip = function() {
-	this[CONTROLS].remove(ICON_TOOLTIP);
-};
-
-/**
- * Remove the tooltip from the icon
- * @function removeIconTooltipEvents
- */
-const removeIconTooltipEvents = function() {
-	if (this[CONTROLS].get(ICON_CONTROL)) {
-		removeIconTooltip.call(this);
-		this[CONTROLS].get(ICON_CONTROL)
-			.on(MOUSE_ENTER_EVENT, null)
-			.on(MOUSE_LEAVE_EVENT, null);
-	}
-};
-
-/**
- * Add the tooltip to the icon
- * @function addIconTooltipEvents
- */
-const addIconTooltipEvents = function() {
-	const self = this;
-	if (self.iconTooltip() !== '') {
-		if (self[CONTROLS].get(ICON_CONTROL)) {
-			self[CONTROLS].get(ICON_CONTROL)
-				.on(MOUSE_ENTER_EVENT, () => showIconTooltip.call(self));
-			self[CONTROLS].get(ICON_CONTROL)
-				.on(MOUSE_LEAVE_EVENT, () => removeIconTooltip.call(self));
-		}
-	}
-};
-
 const setCheckBoxValue = function() {
 	this[IGNORE_EVENTS] = true;
 	if (this[CONTROLS].get(CHECKBOX)) {
@@ -182,7 +121,6 @@ const EXPANDER = 'expander';
 const CHECKBOX = 'checkbox';
 const TITLE_CONTAINER = 'title';
 const ICON_CONTROL = 'icon';
-const ICON_TOOLTIP = 'icon-tooltip';
 const IMAGE_CONTROL = 'image';
 const TOOLBAR = 'toolbar';
 const IGNORE_EVENTS = Symbol();
@@ -354,23 +292,20 @@ Object.assign(Heading.prototype, {
 	icon: method.string({
 		set: function(newValue) {
 			if (newValue === '') {
-				removeIconTooltipEvents.call(this);
 				this[CONTROLS].remove(ICON_CONTROL);
 			}
 			else {
-				if (this[CONTROLS].get(ICON_CONTROL)) {
-					removeIconTooltipEvents.call(this);
-				}
-				else {
+				if (!this[CONTROLS].get(ICON_CONTROL)) {
 					this[CONTROLS].add(new Icon({
 						ID: ICON_CONTROL
 					}));
 				}
 
-				this[CONTROLS].get(ICON_CONTROL).icon(newValue);
+				this[CONTROLS].get(ICON_CONTROL)
+					.icon(newValue)
+					.tooltip(this.iconTooltip());
 
 				dom.appendBefore(this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(ICON_CONTROL));
-				addIconTooltipEvents.call(this);
 			}
 		}
 	}),
@@ -384,9 +319,10 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	iconTooltip: method.string({
-		set: function() {
-			removeIconTooltipEvents.call(this);
-			addIconTooltipEvents.call(this);
+		set: function(iconTooltip) {
+			if (this[CONTROLS].get(ICON_CONTROL)) {
+				this[CONTROLS].get(ICON_CONTROL).tooltip(iconTooltip);
+			}
 		}
 	}),
 

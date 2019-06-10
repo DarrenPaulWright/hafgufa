@@ -1,16 +1,6 @@
 import { defer } from 'async-agent';
-import { set } from 'object-agent';
 import { AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
-import {
-	LEFT,
-	MARGIN_BOTTOM,
-	MARGIN_LEFT,
-	MARGIN_RIGHT,
-	MARGIN_TOP,
-	RIGHT,
-	SCROLL_EVENT,
-	SPACE
-} from '../../utility/domConstants';
+import { MARGIN_BOTTOM, MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, SCROLL_EVENT, SPACE } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
