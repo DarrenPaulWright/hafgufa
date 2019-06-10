@@ -5,9 +5,7 @@ import TestUtil from '../../TestUtil';
 new TestUtil(toast);
 
 describe('toast', () => {
-	afterEach(() => {
-		toast.clear();
-	});
+	afterEach(() => toast.clear());
 
 	it('should add a div with class "toast-info" when toast.info is called', () => {
 		toast.info({
