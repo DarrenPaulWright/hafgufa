@@ -27,6 +27,8 @@ export { default as FileInput } from './ui/forms/FileInput';
 export { default as FilePicker } from './ui/forms/FilePicker';
 export { default as FileThumbnail, PREVIEW_SIZES } from './ui/forms/FileThumbnail';
 export { default as FormControl } from './ui/forms/FormControl';
+export { default as GroupedButtons } from './ui/forms/GroupedButtons';
+export { default as Picker } from './ui/forms/Picker';
 export { default as Score } from './ui/forms/Score';
 export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';

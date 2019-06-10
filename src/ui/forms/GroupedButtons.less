@@ -1,0 +1,142 @@
+
+.grouped-buttons {
+	.grouped-buttons-wrapper {
+		display: inline-block;
+		padding: @groupedButtonWrapperSize;
+		background: @groupedButtonWrapperBackground;
+		border-radius: @formButtonCornerRadius + @groupedButtonWrapperSize;
+		box-shadow: @groupedButtonWrapperShadow;
+		white-space: nowrap;
+		overflow: visible;
+	}
+
+	.shadows {
+		position: absolute;
+		top: @groupedButtonWrapperSize;
+		right: @groupedButtonWrapperSize;
+		bottom: @groupedButtonWrapperSize;
+		left: @groupedButtonWrapperSize;
+		font-size: 0;
+
+		div {
+			display: inline-block;
+			box-shadow: @groupedButtonGroupSelectedShadow;
+
+			&:first-of-type {
+				border-top-left-radius: @formButtonCornerRadius;
+				border-bottom-left-radius: @formButtonCornerRadius;
+			}
+
+			&:last-of-type {
+				border-top-right-radius: @formButtonCornerRadius;
+				border-bottom-right-radius: @formButtonCornerRadius;
+			}
+		}
+
+		.shadow {
+			box-shadow: @groupedButtonGroupShadow;
+		}
+	}
+
+	.form-button {
+		position: relative;
+		margin: 0;
+		height: 100%;
+		vertical-align: top;
+
+		border-radius: 0;
+		border-left: 0.05em solid @groupedButtonBorderLeftColor;
+		border-right: 0.05em solid @groupedButtonBorderRightColor;
+		box-shadow: @groupedButtonShadow;
+
+		&:first-of-type {
+			border-top-left-radius: @formButtonCornerRadius;
+			border-bottom-left-radius: @formButtonCornerRadius;
+		}
+
+		&:last-of-type {
+			border-top-right-radius: @formButtonCornerRadius;
+			border-bottom-right-radius: @formButtonCornerRadius;
+		}
+
+		&.selected {
+			box-shadow: @groupedButtonSelectedShadow;
+		}
+
+		&.multi-select {
+			padding-left: @groupedButtonMultiSelectPaddingLeft + @checkboxRadioSize + @checkboxRadioTextPaddingLeft;
+
+			&:after {
+				content: '';
+				line-height: @checkboxLineHeight;
+				text-align: center;
+				position: relative;
+				float: left;
+				width: @checkboxRadioSize;
+				height: @checkboxRadioSize;
+				margin: 0.3em 0 0 -(@checkboxRadioSize + @checkboxRadioTextPaddingLeft);
+
+				cursor: pointer;
+				border-radius: @checkboxBorderRadius;
+				border: none;
+				background: @checkboxRadioBackground;
+				box-shadow: @checkboxRadioShadow;
+			}
+
+			&:hover {
+				&:after {
+					background: @checkboxRadioBackgroundHover;
+				}
+			}
+
+			&.selected {
+				&:after {
+					content: @checkIcon;
+				}
+			}
+		}
+
+		&.not-multi-select {
+			padding-left: @groupedButtonMultiSelectPaddingLeft + @checkboxRadioSize + @checkboxRadioTextPaddingLeft;
+		}
+	}
+
+	&.vertical {
+		.grouped-buttons-wrapper {
+			display: block;
+			white-space: normal;
+		}
+
+		.shadows {
+			div {
+				&:first-of-type {
+					border-top-left-radius: @formButtonCornerRadius;
+					border-top-right-radius: @formButtonCornerRadius;
+				}
+
+				&:last-of-type {
+					border-bottom-left-radius: @formButtonCornerRadius;
+					border-bottom-right-radius: @formButtonCornerRadius;
+				}
+			}
+		}
+
+		.form-button {
+			display: block;
+			width: 100%;
+			text-align: left;
+			border-color: @formButtonBorderColor;
+			border-radius: 0;
+
+			&:first-of-type {
+				border-top-left-radius: @formButtonCornerRadius;
+				border-top-right-radius: @formButtonCornerRadius;
+			}
+
+			&:last-of-type {
+				border-bottom-left-radius: @formButtonCornerRadius;
+				border-bottom-right-radius: @formButtonCornerRadius;
+			}
+		}
+	}
+}
