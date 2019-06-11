@@ -22,6 +22,7 @@ export { default as Resizer, getResizerExtentOffset } from './ui/elements/Resize
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 ``;
+export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
 export { default as FileInput } from './ui/forms/FileInput';
 export { default as FilePicker } from './ui/forms/FilePicker';
