@@ -1,0 +1,95 @@
+@import (reference) '../elements/Button.less';
+
+.calendar {
+	.calendar-header {
+		position: relative;
+		padding: 0 1.5em;
+		text-align: center;
+
+		> button {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		> .form-control {
+			float: none;
+		}
+
+		.prev-button {
+			left: 0;
+		}
+
+		.next-button {
+			right: 0;
+		}
+
+		.grouped-buttons {
+			margin: 0 @calendarHeaderSpacing / 2;
+		}
+	}
+
+	.heading {
+		display: inline-block;
+		text-align: center;
+		width: 14.28%;
+
+		span {
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	.day-button:extend(.form-button all) {
+		line-height: @calendarDayButtonLineHeight;
+		width: 14.28%;
+		height: 16%;
+		position: relative;
+		border-radius: 0;
+		border: 0.05rem solid @formButtonBorderColor;
+		border-left-width: 0;
+		border-top-color: @calendarDayBorderTopColor;
+		border-bottom-color: @calendarDayBorderBottomColor;
+		vertical-align: top;
+		margin: 0;
+		box-shadow: none;
+
+		&:first-of-type, &:nth-of-type(7n+1) {
+			border-left-width: 0.05rem;
+		}
+
+		> span {
+			position: absolute;
+			right: 0.125em;
+			top: 0.25em;
+		}
+
+		&.weekend {
+			background: @calendarWeekendBackground;
+			border-color: @calendarWeekendBorderColor;
+			border-top-color: @calendarWeekendBorderTopColor;
+			border-bottom-color: @calendarWeekendBorderBottomColor;
+
+			&:hover:not(.selected) {
+				background: @calendarWeekendHoverBackground;
+			}
+		}
+
+		&.different-month {
+			background: @calendarDifferentMonthBackgroundColor;
+			border-color: @calendarDifferentMonthBorderColor;
+			color: @calendarDifferentMonthFontColor;
+
+			&:hover {
+				background: @calendarDifferentMonthBackgroundHoverColor
+			}
+		}
+
+		&.today {
+			color: @calendarTodayColor;
+			font-weight: @calendarDayButtonTodayFontWeight;
+			outline: @calendarDayButtonTodayOutlineWidth solid @calendarTodayColor;
+			outline-offset: -@calendarDayButtonTodayOutlineWidth;
+		}
+	}
+}

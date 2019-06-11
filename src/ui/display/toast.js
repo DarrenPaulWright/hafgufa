@@ -98,7 +98,6 @@ const addSlice = (settings) => {
 	}
 
 	settings.id = currentID++;
-	console.log('settings.id: ', settings.id);
 
 	slices.add({
 		id: settings.id,

@@ -48,6 +48,7 @@ export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';
 export { default as VirtualList } from './ui/layout/VirtualList';
 
+export { default as Calendar } from './ui/display/Calendar';
 export { default as IsWorking } from './ui/display/IsWorking';
 export { default as toast } from './ui/display/toast';
 
