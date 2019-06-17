@@ -1,8 +1,8 @@
 import { select } from 'd3';
 import { DockPoint } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
+import Container from '../layout/Container';
 import Popup from '../layout/Popup';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
 import Removable from '../mixins/Removable';
@@ -12,6 +12,7 @@ const TOOLTIP_CLASS = 'tooltip';
 const CONTENT_CLASS = 'tooltip-content';
 
 const POPUP = Symbol();
+const CONTENT_CONTAINER = Symbol();
 
 /**
  * <p>Displays a tooltip anchored to an object or the mouse.</p>
@@ -37,21 +38,23 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 
 			select(WINDOW).on(MOUSE_WHEEL_EVENT, () => self.remove());
 
-			self[POPUP] = new Popup(Object.assign({}, {
+			self[POPUP] = new Popup({
 				anchor: Popup.MOUSE,
-				anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
+				anchorDockPoint: settings.anchorDockPoint || DockPoint.POINTS.TOP_CENTER,
 				popupDockPoint: settings.tooltipDockPoint || DockPoint.POINTS.BOTTOM_CENTER,
 				fade: true,
-				showArrow: true
-			}, settings, {
+				showArrow: true,
+				...settings,
 				classes: TOOLTIP_CLASS + SPACE + (settings.classes || EMPTY_STRING)
-			}));
+			});
 
 			self.content(initialContent);
 
-			self[POPUP].onRemove(() => {
-				select(WINDOW).on(MOUSE_WHEEL_EVENT, null);
-			});
+			self[POPUP]
+				.onRemove(() => {
+					select(WINDOW).on(MOUSE_WHEEL_EVENT, null);
+				})
+				.resize();
 		};
 
 		super(settings);
@@ -69,11 +72,23 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 	}
 
 	content(content) {
-		if (this[POPUP] && content) {
-			const element = dom.buildNew(CONTENT_CLASS);
-			dom.content(element, content);
-			this[POPUP].content(element);
-			this[POPUP].resize(true);
+		const self = this;
+
+		if (!self.isRemoved && this[POPUP]) {
+			if (!self[CONTENT_CONTAINER]) {
+				self[CONTENT_CONTAINER] = new Container({
+					classes: CONTENT_CLASS
+				});
+				self[POPUP].append(self[CONTENT_CONTAINER]);
+			}
+
+			self[CONTENT_CONTAINER].content(content);
+		}
+	}
+
+	resize() {
+		if (this[POPUP]) {
+			this[POPUP].resize();
 		}
 	}
 }

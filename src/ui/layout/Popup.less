@@ -1,5 +1,5 @@
 
-.popup {
+.container.popup {
 	background: @popupBackground;
 	box-shadow: @popupShadow;
 	border-radius: @popupCornerRadius;
@@ -45,7 +45,7 @@
 		}
 	}
 
-	.popup-arrow-wrapper {
+	.popup-arrow {
 		position: absolute;
 		pointer-events: none;
 		top: 0;
@@ -53,20 +53,43 @@
 		height: @popupArrowSize * 4;
 		width: @popupArrowSize * 4;
 		margin: (-@popupArrowSize * 2);
-	}
 
-	.popup-arrow {
 		@arrowBlockSize: sqrt(2) * @popupArrowSize;
 
-		height: @arrowBlockSize;
-		width: @arrowBlockSize;
-		position: absolute;
-		top: @popupArrowSize * 2;
-		left: @popupArrowSize * 2;
-		margin: -(@arrowBlockSize / 2);
-		background: @popupBackground;
-		transform: rotate(45deg);
-		box-shadow: @popupShadow;
+		&:before {
+			content: '';
+			height: @arrowBlockSize;
+			width: @arrowBlockSize;
+			position: absolute;
+			top: @popupArrowSize * 2;
+			left: @popupArrowSize * 2;
+			margin: -(@arrowBlockSize / 2);
+			background: @popupBackground;
+			transform: rotate(45deg);
+			box-shadow: @popupShadow;
+		}
+
+		&.top {
+			clip-path: inset(0 0 49% 0);
+			left: 50%;
+		}
+
+		&.right {
+			clip-path: inset(0 0 0 49%);
+			top: 50%;
+			left: 100%;
+		}
+
+		&.bottom {
+			clip-path: inset(49% 0 0 0);
+			left: 50%;
+			top: 100%;
+		}
+
+		&.left {
+			clip-path: inset(0 49% 0 0);
+			top: 50%;
+		}
 	}
 
 	.popup-header {
