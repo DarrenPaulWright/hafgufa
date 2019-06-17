@@ -63,7 +63,6 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			container: self[BUTTON_CONTAINER],
 			classes: 'shadows'
 		});
-		self[SHADOW_CONTAINER].removeClass('container clearfix');
 
 		self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self[BUTTON_CONTAINER].element())
 			.onSetFocus((index) => {
@@ -178,7 +177,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		insertIndex = Math.min(enforceInteger(insertIndex, currentButtons.length), currentButtons.length);
 
 		if (insertIndex < currentButtons.length) {
-			dom.appendBefore(self[BUTTON_CONTAINER].element().children[insertIndex], button);
+			dom.appendBefore(self[BUTTON_CONTAINER].element().children[insertIndex + 1], button);
 		}
 		else {
 			dom.appendTo(self[BUTTON_CONTAINER], button);
