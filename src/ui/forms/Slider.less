@@ -1,0 +1,38 @@
+
+.slider {
+	position: relative;
+
+	.track, .range {
+		background: @progressBarBackground;
+		border-radius: @sliderTrackSize / 2;
+		height: @sliderTrackSize;
+		margin: (@sliderThumbSize - @sliderTrackSize) / 2;
+		position: absolute;
+		top: 0;
+		width: 100%;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border-radius: @sliderTrackSize / 2;
+			box-shadow: @progressBarShadow;
+			pointer-events: none;
+		}
+	}
+
+	.range {
+		background: linear-gradient(to right, @subHighlightColor, @highlightColor);
+	}
+
+	.form-button {
+		position: absolute !important;
+		height: @sliderThumbSize;
+		width: @sliderThumbSize;
+		top: 0;
+		border-radius: @sliderThumbSize / 2;
+	}
+}

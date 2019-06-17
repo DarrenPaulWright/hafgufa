@@ -36,14 +36,15 @@ export default class Score extends FormControl {
 
 		super(settings);
 
-		this.addClass('score');
+		const self = this;
+		self.addClass('score');
 
-		this[TEXT_DISPLAY] = dom.appendNewTo(this, 'score-text');
-		dom.css(this[TEXT_DISPLAY], WIDTH, settings.textWidth || AUTO);
+		self[TEXT_DISPLAY] = dom.appendNewTo(self, 'score-text');
+		dom.css(self[TEXT_DISPLAY], WIDTH, settings.textWidth || AUTO);
 
-		objectHelper.applySettings(this, settings);
+		objectHelper.applySettings(self, settings);
 
-		setDisplayText.call(this);
+		setDisplayText.call(self);
 	}
 }
 

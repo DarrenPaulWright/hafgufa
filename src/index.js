@@ -31,6 +31,7 @@ export { default as FormControl } from './ui/forms/FormControl';
 export { default as GroupedButtons } from './ui/forms/GroupedButtons';
 export { default as Picker } from './ui/forms/Picker';
 export { default as Score } from './ui/forms/Score';
+export { default as Slider } from './ui/forms/Slider';
 export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';

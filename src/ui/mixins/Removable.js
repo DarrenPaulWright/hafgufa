@@ -137,5 +137,7 @@ Object.assign(Removable.prototype, {
 			clear(self[REMOVE_DELAY]);
 			self.addClass(FADE_IN_CLASS);
 		}
+
+		return self;
 	}
 });

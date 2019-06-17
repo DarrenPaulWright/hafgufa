@@ -297,6 +297,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.1em);
 			font-size: 1.1em;
@@ -309,6 +310,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.1em);
 			font-size: 1.1em;
@@ -362,6 +364,10 @@
 @progressBarCompletedRightColor: @highlightColor;
 @progressBarCompletedBackground: linear-gradient(to right, @subHighlightColor, @progressBarCompletedRightColor 95%);
 @progressBarDividerBorder: 0.2rem solid fade(@chromeFontColor, 20%);
+
+/* Progress Bar */
+@sliderTrackSize: @progressBarMinHeight;
+@sliderThumbSize: 2rem;
 
 /* score */
 @scoreMargin: 0 0 0.85rem 0;
@@ -492,10 +498,10 @@ transparent 0.6rem,
 @groupBorderColor 0.65rem,
 @groupBackgroundColor 0.65rem),
 	right/50% no-repeat linear-gradient(315deg,
-		transparent 0.6rem,
-		@groupBorderColor 0.6rem,
-		@groupBorderColor 0.65rem,
-		@groupBackgroundColor 0.65rem), radial-gradient(at top center, fade(@reflectionColor, 10%), fade(@reflectionColor, 4%), fade(@reflectionColor, 0%));
+transparent 0.6rem,
+@groupBorderColor 0.6rem,
+@groupBorderColor 0.65rem,
+@groupBackgroundColor 0.65rem), radial-gradient(at top center, fade(@reflectionColor, 10%), fade(@reflectionColor, 4%), fade(@reflectionColor, 0%));
 @groupShadow: none;
 @groupIconColor: @highlightColor;
 @groupBorder: none;
@@ -536,8 +542,8 @@ transparent 0.6rem,
 			transparent 0.5rem,
 			@groupBackgroundColor 0.5rem),
 				right/50% no-repeat linear-gradient(315deg,
-					transparent 0.5rem,
-					@groupBackgroundColor 0.5rem);
+			transparent 0.5rem,
+			@groupBackgroundColor 0.5rem);
 		}
 	}
 }
@@ -562,7 +568,7 @@ transparent 0.6rem,
 @popupHeaderPadding: 0.4rem;
 @popupFooterPadding: 0.4rem;
 
-@tooltipMargin: @popupArrowSize + 3;
+@tooltipMargin: 0.7rem;
 @tooltipPadding: 0.3rem 0.6rem;
 @tooltipLineHeight: 1.6em;
 
@@ -690,9 +696,11 @@ transparent 0.6rem,
 			border: inherit;
 			border-radius: inherit;
 		}
+
 		&::before {
 			transform: rotate(120deg);
 		}
+
 		&::after {
 			transform: rotate(240deg);
 		}
@@ -704,6 +712,7 @@ transparent 0.6rem,
 
 			border-width: @thickness;
 			animation: spin 1.5s linear infinite;
+
 			&::before,
 			&::after {
 				left: -@thickness;
@@ -718,6 +727,7 @@ transparent 0.6rem,
 
 			border-width: @thickness;
 			animation: spin 1.25s linear infinite;
+
 			&::before,
 			&::after {
 				left: -@thickness;

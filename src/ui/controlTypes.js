@@ -50,6 +50,7 @@ const controlTypes = {
 	SCORE: 'score',
 	SEARCH_BAR: 'searchBar',
 	SECTION: 'section',
+	SLIDER: 'slider',
 	SPAN: 'span',
 	SPLIT_VIEW: 'splitView',
 	TABS: 'tabs',
