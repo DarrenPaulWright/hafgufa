@@ -1,0 +1,42 @@
+
+.drawer-menu {
+	background: @drawerMenuBackground;
+	box-shadow: @drawerMenuShadow;
+
+	.drawer-menu-header {
+		margin: @drawerMenuPadding @drawerMenuPadding 0 @drawerMenuPadding;
+	}
+
+	.tree {
+		margin: @drawerMenuPadding 0 0 0;
+	}
+
+	.form-control.tree {
+		border-top: @drawerMenuItemBorderShadow;
+		border-bottom: @drawerMenuItemBorderHighlight;
+
+		.heading {
+			font: @buttonFont;
+			text-shadow: @drawerMenuTextShadow;
+			width: 100%;
+			padding: @drawerMenuItemPadding;
+			border-top: @drawerMenuItemBorderHighlight;
+			border-bottom: @drawerMenuItemBorderShadow;
+
+			.icon {
+				font-size: @drawerMenuIconSize;
+				color: @drawerMenuIconColor;
+				text-shadow: @drawerMenuIconShadow;
+			}
+
+			&:hover {
+				background: rgba(0, 0, 0, 0.05);
+			}
+		}
+	}
+
+	.toolbar {
+		border-top: @drawerMenuItemBorderHighlight;
+		padding: @drawerMenuFooterPadding;
+	}
+}
