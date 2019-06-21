@@ -43,7 +43,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.construct = () => {
-		describe('ControlBase initialize', () => {
+		describe('Control initialize', () => {
 			it('without settings', () => {
 				window.control = new Control();
 
@@ -61,7 +61,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.container = () => {
-		describe('ControlBase container', () => {
+		describe('Control container', () => {
 			it('should not have a container value if no container was set', () => {
 				window.control = new Control(buildSettings({
 					container: null
@@ -90,7 +90,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.element = () => {
-		describe('ControlBase main container', () => {
+		describe('Control main container', () => {
 			it('should not have a main element if no container was set', () => {
 				window.control = new Control(buildSettings({
 					container: null
@@ -110,7 +110,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.ID = () => {
-		describe('ControlBase .ID', () => {
+		describe('Control .ID', () => {
 			testUtil.testMethod({
 				methodName: 'ID',
 				defaultSettings: {
@@ -139,7 +139,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.IDSuffix = () => {
-		describe('ControlBase IDSuffix', () => {
+		describe('Control IDSuffix', () => {
 			testUtil.testMethod({
 				methodName: 'IDSuffix',
 				defaultSettings: {
@@ -177,8 +177,8 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.classes = () => {
-		describe('ControlBase classes', () => {
-			const TEST_CLASS = 'testIDSuffix';
+		describe('Control classes', () => {
+			const TEST_CLASS = 'test-class';
 
 			it('should have a css class on the main container when the classes setting is set', () => {
 				window.control = new Control(buildSettings({
@@ -206,7 +206,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.minWidth = () => {
-		describe('ControlBase minWidth', () => {
+		describe('Control minWidth', () => {
 			const TEST_WIDTH = '213px';
 
 			it('shouldnt have a minWidth value if no minWidth was set', () => {
@@ -233,7 +233,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.width = () => {
-		describe('ControlBase width', () => {
+		describe('Control width', () => {
 			const TEST_WIDTH = '213px';
 
 			it('shouldnt have a width value if no width was set', () => {
@@ -260,7 +260,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.maxWidth = () => {
-		describe('ControlBase maxWidth', () => {
+		describe('Control maxWidth', () => {
 			const TEST_WIDTH = '213px';
 
 			it('shouldnt have a maxWidth value if no maxWidth was set', () => {
@@ -287,7 +287,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.minHeight = () => {
-		describe('ControlBase minHeight', () => {
+		describe('Control minHeight', () => {
 			const TEST_HEIGHT = '200px';
 
 			it('shouldnt have a minHeight value if no minHeight was set', () => {
@@ -314,7 +314,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.height = () => {
-		describe('ControlBase height', () => {
+		describe('Control height', () => {
 			const TEST_HEIGHT = '200px';
 
 			it('shouldnt have a height value if no height was set', () => {
@@ -341,7 +341,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.maxHeight = () => {
-		describe('ControlBase maxHeight', () => {
+		describe('Control maxHeight', () => {
 			const TEST_HEIGHT = '200px';
 
 			it('shouldnt have a maxHeight value if no maxHeight was set', () => {
@@ -368,7 +368,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.isEnabled = () => {
-		describe('ControlBase isEnabled', () => {
+		describe('Control isEnabled', () => {
 			const DISABLED_CLASS = 'disabled';
 
 			testUtil.testMethod({
@@ -399,7 +399,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.stopPropagation = () => {
-		describe('ControlBase .stopPropagation', () => {
+		describe('Control .stopPropagation', () => {
 			testUtil.testMethod({
 				methodName: 'stopPropagation',
 				defaultSettings: {
@@ -449,7 +449,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.onResize = () => {
-		describe('ControlBase .onResize', () => {
+		describe('Control .onResize', () => {
 			it('should execute an onResize callback when resize is called', () => {
 				let testItem = 1;
 				let testItem2;
@@ -493,7 +493,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.onRemove = () => {
-		describe('ControlBase onRemove', () => {
+		describe('Control onRemove', () => {
 			it('should accept an onRemove callback but not execute it', () => {
 				let testItem = 1;
 
@@ -539,7 +539,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	};
 
 	self.focus = () => {
-		describe('ControlBase focus', () => {
+		describe('Control focus', () => {
 			if (!settings.autoFocus) {
 				it('should not call the onFocus callback if the control is not focused', () => {
 					let testItem = 1;

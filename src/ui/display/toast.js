@@ -23,7 +23,8 @@ const startTimer = Symbol();
 
 class Slice extends ContextMenuMixin(Heading) {
 	constructor(settings) {
-		Object.assign(settings, {
+		settings = {
+			...settings,
 			container: wrapper,
 			classes: 'toast inverse ' + settings.class,
 			isInline: false,
@@ -35,7 +36,7 @@ class Slice extends ContextMenuMixin(Heading) {
 					self.remove();
 				}
 			}]
-		});
+		};
 
 		super(settings);
 
@@ -55,9 +56,7 @@ class Slice extends ContextMenuMixin(Heading) {
 				icon: DELETE_ICON,
 				isMultiSelect: false,
 				classes: '',
-				onSelect: () => {
-					self.remove();
-				}
+				onSelect: () => self.remove()
 			}, {
 				id: REMOVE_ALL,
 				title: 'Remove All Messages',
@@ -65,14 +64,13 @@ class Slice extends ContextMenuMixin(Heading) {
 				isMultiSelect: false,
 				classes: '',
 				onSelect: () => toast.clear()
-			}]);
+			}])
+			.onRemove(() => {
+				self[stopTimer]();
+				removeSlice(settings.id);
+			});
 
 		self[startTimer]();
-
-		self.onRemove(() => {
-			self[stopTimer]();
-			removeSlice(settings.id);
-		});
 	}
 
 	[stopTimer]() {
@@ -120,37 +118,39 @@ const removeSlice = (sliceID) => {
 
 const toast = {
 	info: (settings) => {
-		addSlice(Object.assign({
+		addSlice({
 			icon: INFO_ICON,
 			class: 'toast-info',
-			duration: 10
-		}, settings));
+			duration: 10,
+			...settings
+		});
 	},
 	success: (settings) => {
-		addSlice(Object.assign({
+		addSlice({
 			icon: CHECK_ICON,
 			class: 'toast-success',
-			duration: 10
-		}, settings));
+			duration: 10,
+			...settings
+		});
 	},
 	warning: (settings) => {
-		addSlice(Object.assign({
+		addSlice({
 			icon: WARNING_ICON,
 			class: 'toast-warning',
-			duration: 60
-		}, settings));
+			duration: 60,
+			...settings
+		});
 	},
 	error: (settings) => {
-		addSlice(Object.assign({
+		addSlice({
 			icon: ERROR_ICON,
 			class: 'toast-error',
-			requireClose: true
-		}, settings));
+			requireClose: true,
+			...settings
+		});
 	},
 	clear: () => {
-		slices.forEach((item) => {
-			item.slice.remove();
-		});
+		slices.values().slice().forEach((item) => item.slice.remove());
 	}
 };
 

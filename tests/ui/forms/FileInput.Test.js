@@ -1,4 +1,4 @@
-import FileInput from '../../../src/ui/forms/FileInput';
+import { FileInput } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

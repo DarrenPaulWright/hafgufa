@@ -303,6 +303,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.1em);
 			font-size: 1.1em;
@@ -315,6 +316,7 @@
 		.icon-button {
 			padding: 0;
 		}
+
 		.icon {
 			transform: translateY(-0.1em);
 			font-size: 1.1em;
@@ -369,6 +371,10 @@
 @progressBarCompletedRightColor: @highlightColor;
 @progressBarCompletedBackground: linear-gradient(to right, @subHighlightColor, @progressBarCompletedRightColor 95%);
 @progressBarDividerBorder: 0.2rem solid fade(@chromeFontColor, 20%);
+
+/* Progress Bar */
+@sliderTrackSize: @progressBarMinHeight;
+@sliderThumbSize: 2rem;
 
 /* score */
 @scoreMargin: 0 0 0.85rem 0;
@@ -500,10 +506,10 @@ transparent 0.5rem,
 @groupBorderColor 0.7rem,
 @groupBackgroundColor 0.7rem),
 	right/50% no-repeat linear-gradient(315deg,
-		transparent 0.8rem,
-		@groupBorderColor 0.8rem,
-		@groupBorderColor 1.1rem,
-		@groupBackgroundColor 1.1rem);
+transparent 0.8rem,
+@groupBorderColor 0.8rem,
+@groupBorderColor 1.1rem,
+@groupBackgroundColor 1.1rem);
 @groupShadow: none;
 @groupIconColor: @highlightColor;
 @groupBorder: none;
@@ -553,7 +559,7 @@ transparent 0.5rem,
 @popupHeaderPadding: 0.4rem;
 @popupFooterPadding: 0.4rem;
 
-@tooltipMargin: @popupArrowSize + 3;
+@tooltipMargin: 0.7rem;
 @tooltipPadding: 0.3rem 0.6rem;
 @tooltipLineHeight: 1.6em;
 

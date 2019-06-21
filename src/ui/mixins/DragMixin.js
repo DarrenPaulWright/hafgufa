@@ -193,6 +193,8 @@ export default (Base) => {
 			else {
 				self[IS_BOUNCING] = false;
 				self[setPosition](Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
+
+				self.onDragDone().trigger(null, [{...self[DRAG_OFFSET]}], self);
 			}
 		}
 
@@ -247,6 +249,10 @@ export default (Base) => {
 					transform += 'scale(' + self.scale() + ')';
 				}
 				self.css(TRANSFORM, transform);
+
+				if (self.isDragging) {
+					self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}], self);
+				}
 			}
 		}
 
@@ -316,6 +322,8 @@ export default (Base) => {
 			self[IS_DRAGGING] = true;
 			self[IS_THROWING] = false;
 			self[IS_BOUNCING] = false;
+
+			self.onDragStart().trigger();
 
 			if (self.scrollOnDrag()) {
 				self[DRAG_OFFSET].x = -self.container()[SCROLL_LEFT];
@@ -407,6 +415,10 @@ export default (Base) => {
 
 			return self;
 		}
+
+		get isDragging() {
+			return this[IS_DRAGGING] || this[IS_THROWING] || this[IS_BOUNCING];
+		}
 	}
 
 	Object.assign(DragMixin.prototype, {
@@ -474,7 +486,18 @@ export default (Base) => {
 
 		snapGridSize: method.number({
 			init: 0
-		})
+		}),
+
+		onDragStart: method.queue(),
+
+		onDrag: method.queue(),
+
+		onDragDone: method.queue(),
+
+		position: function(x, y) {
+			this[updateBounds]();
+			this[setPosition](x, y);
+		}
 	});
 
 	return DragMixin;

@@ -29,9 +29,11 @@ export default class ControlRecycler {
 	[DISCARD](index) {
 		const control = this[VISIBLE_CONTROLS][index];
 
-		control.container(null);
-		this[DISCARDED_CONTROLS].push(control);
-		this[VISIBLE_CONTROLS].splice(index, 1);
+		if (control) {
+			control.container(null);
+			this[DISCARDED_CONTROLS].push(control);
+			this[VISIBLE_CONTROLS].splice(index, 1);
+		}
 	}
 }
 
@@ -70,6 +72,7 @@ Object.assign(ControlRecycler.prototype, {
 
 		if (Control) {
 			control = this[DISCARDED_CONTROLS].shift() || new Control(clone(this.defaultSettings()));
+
 			if (doPrepend) {
 				this[VISIBLE_CONTROLS].unshift(control);
 			}
@@ -90,16 +93,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object}
 	 */
 	getControl: function(ID) {
-		let output;
-
-		for (let controlIndex = 0; controlIndex < this[VISIBLE_CONTROLS].length; controlIndex++) {
-			if (this[VISIBLE_CONTROLS][controlIndex].ID() === ID) {
-				output = this[VISIBLE_CONTROLS][controlIndex];
-				break;
-			}
-		}
-
-		return output;
+		return this[VISIBLE_CONTROLS].find((control) => control.ID() === ID);
 	},
 
 	/**
@@ -148,14 +142,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {String} [ID]
 	 */
 	discardControl: function(ID) {
-		if (ID) {
-			for (let controlIndex = 0; controlIndex < this[VISIBLE_CONTROLS].length; controlIndex++) {
-				if (this[VISIBLE_CONTROLS][controlIndex].ID() === ID) {
-					this[DISCARD](controlIndex);
-					break;
-				}
-			}
-		}
+		this[DISCARD](this[VISIBLE_CONTROLS].findIndex((control) => control.ID() === ID));
 	},
 
 	/**
@@ -200,13 +187,8 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 */
 	remove: function() {
-		this[DISCARDED_CONTROLS].forEach((control) => {
-			control.remove();
-		});
-		this[VISIBLE_CONTROLS].forEach((control) => {
-			control.remove();
-		});
-
+		this[DISCARDED_CONTROLS].forEach((control) => control.remove());
+		this[VISIBLE_CONTROLS].forEach((control) => control.remove());
 		this[DISCARDED_CONTROLS].length = 0;
 		this[VISIBLE_CONTROLS].length = 0;
 	}

@@ -1,8 +1,8 @@
 import { assert } from 'chai';
-import Description from '../../../src/ui/forms/Description';
+import { AUTO } from 'type-enforcer';
+import { Description } from '../../../src';
 import dom from '../../../src/utility/dom';
 import { TEXT_ALIGN, WIDTH } from '../../../src/utility/domConstants';
-import { AUTO } from 'type-enforcer';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 

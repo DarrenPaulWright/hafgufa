@@ -1,4 +1,4 @@
-import FilePicker from '../../../src/ui/forms/FilePicker';
+import { FilePicker } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 

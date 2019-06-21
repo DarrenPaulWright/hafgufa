@@ -4,14 +4,13 @@ import controlTypes from '../controlTypes';
 import Control from './../Control';
 
 /**
- * <p>Display a span element.</p>
+ * Display a div element.
  *
  * @class Div
  * @extends Control
  * @constructor
  *
  * @arg {Object} settings
- * @arg {String} [settings.text]
  */
 export default class Div extends Control {
 	constructor(settings = {}) {

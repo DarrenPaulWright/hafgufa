@@ -22,12 +22,16 @@ export { default as Resizer, getResizerExtentOffset } from './ui/elements/Resize
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 ``;
+export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
 export { default as FileInput } from './ui/forms/FileInput';
 export { default as FilePicker } from './ui/forms/FilePicker';
 export { default as FileThumbnail, PREVIEW_SIZES } from './ui/forms/FileThumbnail';
 export { default as FormControl } from './ui/forms/FormControl';
+export { default as GroupedButtons } from './ui/forms/GroupedButtons';
+export { default as Picker } from './ui/forms/Picker';
 export { default as Score } from './ui/forms/Score';
+export { default as Slider } from './ui/forms/Slider';
 export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
@@ -37,6 +41,7 @@ export { default as Container } from './ui/layout/Container';
 export { default as Dialog } from './ui/layout/Dialog';
 export { default as DragContainer } from './ui/layout/DragContainer';
 export { default as Drawer } from './ui/layout/Drawer';
+export { default as DrawerMenu } from './ui/layout/DrawerMenu';
 export { default as Group } from './ui/layout/Group';
 export { default as Header } from './ui/layout/Header';
 export { default as Popup } from './ui/layout/Popup';
@@ -46,6 +51,7 @@ export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';
 export { default as VirtualList } from './ui/layout/VirtualList';
 
+export { default as Calendar } from './ui/display/Calendar';
 export { default as IsWorking } from './ui/display/IsWorking';
 export { default as toast } from './ui/display/toast';
 

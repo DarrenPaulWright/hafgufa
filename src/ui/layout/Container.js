@@ -1,4 +1,4 @@
-import { castArray, isArray, isJson, isObject, method } from 'type-enforcer';
+import { castArray, isArray, isJson, isString, isObject, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { CONTENT_CHANGE_EVENT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
@@ -85,7 +85,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 			if (isArray(content) || isObject(content)) {
 				this[ADD_LAYOUT](content, doPrepend);
 			}
-			else if (isJson(content)) {
+			else if (isJson(content) && isString(content) && (content.charAt(0) === '[' || content.charAt(0) === '{')) {
 				this[ADD_LAYOUT](JSON.parse(content), doPrepend);
 			}
 			else {
@@ -96,7 +96,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 				dom.content(this, content, doPrepend);
 			}
 			this.elementD3().dispatch(CONTENT_CHANGE_EVENT);
-			this.resize();
+			this.resize(true);
 		}
 	}
 
@@ -126,6 +126,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 */
 	content(content) {
 		this[CONTROLS].remove();
+		dom.empty(this);
 		this[ADD_CONTENT](content, false);
 		return this;
 	}
