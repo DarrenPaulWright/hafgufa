@@ -114,15 +114,13 @@ export default class Slider extends FormControl {
 				}
 
 				const value = self[OFFSETS].map((offset) => self[getValueAtOffset](offset));
-				console.log('value: ', value);
 
 				if (self.value() !== value) {
 					self.value(value);
 					self.triggerChange();
 				}
 			},
-			snapGridSize: self[getSnapSize](),
-			tooltip: self.value() + ''
+			snapGridSize: self[getSnapSize]()
 		}));
 	}
 
@@ -172,7 +170,9 @@ export default class Slider extends FormControl {
 		let start = 0;
 
 		self[THUMBS].forEach((thumb, index) => {
-			thumb.tooltip(self[getValueAtOffset](self[OFFSETS][index]) + '');
+			let value = self[getValueAtOffset](self[OFFSETS][index]);
+
+			thumb.tooltip(self.buildTooltip()(value));
 
 			if (index) {
 				if (self[OFFSETS][1] < self[OFFSETS][0]) {
@@ -251,5 +251,8 @@ Object.assign(Slider.prototype, {
 		set: function() {
 			this[setSnapGrid]();
 		}
+	}),
+	buildTooltip: method.function({
+		init: (value) => value + ''
 	})
 });
