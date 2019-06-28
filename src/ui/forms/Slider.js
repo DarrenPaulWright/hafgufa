@@ -1,4 +1,5 @@
 import { DockPoint, method, PIXELS } from 'type-enforcer';
+import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import objectHelper from '../../utility/objectHelper';
@@ -68,7 +69,7 @@ export default class Slider extends FormControl {
 
 		self.onResize(() => {
 				const thumbSize = self[THUMBS][0].borderWidth();
-				self[TRACK_SIZE] = self[TRACK].borderHeight();
+				self[TRACK_SIZE] = thumbSize - dom.get.margins.width(self[TRACK]);
 				const offset = thumbSize - self[TRACK_SIZE];
 
 				const trackWidth = self.borderWidth() - offset;
