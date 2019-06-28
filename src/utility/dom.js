@@ -66,8 +66,8 @@ const cssPropertiesToParseAsInt = [
 	PADDING_LEFT
 ];
 
-const parseStyle = (element, styleName) => parseInt(WINDOW.getComputedStyle(element)
-	.getPropertyValue(styleName) || 0, 10);
+const parseStyle = (element, styleName) => parseFloat(WINDOW.getComputedStyle(element)
+	.getPropertyValue(styleName) || 0);
 
 const INSERT_HTML_BEGIN = 'afterbegin';
 const INSERT_HTML_END = 'beforeend';
