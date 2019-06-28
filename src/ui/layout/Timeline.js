@@ -1,7 +1,7 @@
 import { event } from 'd3';
 import moment from 'moment';
 import { CssSize, enforceBoolean, Enum, method, PIXELS } from 'type-enforcer';
-import { MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
+import { MOUSE_WHEEL_EVENT, TOP, BOTTOM } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import Div from '../elements/Div';
@@ -115,7 +115,7 @@ const SPANS = [{
 }];
 
 const minSpanWidth = new CssSize('8rem');
-const minSubSpanWidth = new CssSize('2rem');
+const minSubSpanWidth = new CssSize('0.5rem');
 
 const LINE = Symbol();
 const CAROUSEL = Symbol();
@@ -323,7 +323,12 @@ Object.assign(Timeline.prototype, {
 		set: function(lineOffset) {
 			lineOffset.element(this.element());
 
-			this[LINE].css(TOP, lineOffset.toPixels());
+			if (lineOffset.toPixels(true) < 0) {
+				this[LINE].css(BOTTOM, -lineOffset.toPixels(true) + PIXELS);
+			}
+			else {
+				this[LINE].css(TOP, lineOffset.toPixels());
+			}
 
 			this[CAROUSEL].getRenderedControls().forEach((control) => {
 				control.lineOffset(lineOffset);
