@@ -100,7 +100,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		self.contentWidthContainer(self[GROUPED_BUTTONS].element());
 
 		self.onResize(() => {
-			const newMaxButtonWidth = self.borderWidth();
+			const newMaxButtonWidth = self.borderWidth() - (self.singleLine() ? self.getHeading().borderWidth() : 0);
 
 			if (newMaxButtonWidth !== self[MAX_BUTTON_WIDTH] || self[MAX_BUTTON_WIDTH] === 0) {
 				self[MAX_BUTTON_WIDTH] = newMaxButtonWidth;
