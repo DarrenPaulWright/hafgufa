@@ -138,6 +138,7 @@ export default class LightBox extends Control {
 						});
 					}
 				},
+				canThrow: true,
 				scaleMin: 0.1,
 				scaleMax: 10,
 				canDrag: true

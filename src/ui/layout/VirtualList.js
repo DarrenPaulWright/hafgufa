@@ -171,7 +171,8 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[IS_RENDERING_REQUESTED] = false;
 
 		self[CONTENT_CONTAINER] = new DragContainer({
-			container: self
+			container: self,
+			canThrow: true
 		});
 		self[CONTENT_CONTAINER]
 			.css(FONT_SIZE, INITIAL)

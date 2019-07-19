@@ -357,13 +357,19 @@ export default (Base) => {
 				clear(self[DRAG_DELAY]);
 
 				self[IS_DRAGGING] = false;
-				self[IS_THROWING] = true;
 
-				self[THROW_VELOCITY].end(self[VELOCITY_OFFSET]);
+				if (self.canThrow()) {
+					self[IS_THROWING] = true;
 
-				self[THROW_FRAME] = requestAnimationFrame(() => {
-					self[animateThrow]();
-				});
+					self[THROW_VELOCITY].end(self[VELOCITY_OFFSET]);
+
+					self[THROW_FRAME] = requestAnimationFrame(() => {
+						self[animateThrow]();
+					});
+				}
+				else {
+					self.onDragDone().trigger(null, [{...self[DRAG_OFFSET]}], self);
+				}
 			}
 		}
 
@@ -462,6 +468,8 @@ export default (Base) => {
 				}
 			}
 		}),
+
+		canThrow: method.boolean(),
 
 		scaleMin: method.number({
 			init: 1,
