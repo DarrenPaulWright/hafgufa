@@ -291,7 +291,7 @@ describe('Tree', () => {
 				.then(() => {
 					rowHeight = parseFloat(document.querySelector('.heading').style.height, 10);
 
-					assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, (rowHeight * 3) + PIXELS);
+					assert.equal(Math.round(parseFloat(getComputedStyle(document.querySelector('.virtual-list')).height)), Math.round(rowHeight * 3));
 				});
 		});
 
@@ -319,9 +319,9 @@ describe('Tree', () => {
 			window.control.fitHeightToContents();
 			return testUtil.defer()
 				.then(() => {
-					rowHeight = parseFloat(document.querySelector('.heading').style.height, 10);
+					rowHeight = parseFloat(document.querySelector('.heading').style.height);
 
-					assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, (rowHeight * 3) + PIXELS);
+					assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
 				});
 		});
 

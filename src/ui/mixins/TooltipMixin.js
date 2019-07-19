@@ -5,7 +5,6 @@ import Tooltip from '../layout/Tooltip';
 const EVENT_SUFFIX = '.tooltip';
 
 const TOOLTIP = Symbol();
-const ARE_EVENTS_SET = Symbol();
 const ON_DRAG_ID = Symbol();
 const ON_DRAG_DONE_ID = Symbol();
 
@@ -78,6 +77,10 @@ export default (Base) => {
 						self[ON_DRAG_ID] = self.onDrag(self[showTooltip]);
 						self[ON_DRAG_DONE_ID] = self.onDragDone(self[removeTooltip]);
 					}
+
+					if (self[TOOLTIP]) {
+						self[TOOLTIP].content(tooltip);
+					}
 				}
 				else {
 					self.on(MOUSE_ENTER_EVENT + EVENT_SUFFIX, null)
@@ -87,10 +90,8 @@ export default (Base) => {
 						self.onDrag().discard(self[ON_DRAG_ID]);
 						self.onDragDone().discard(self[ON_DRAG_DONE_ID]);
 					}
-				}
 
-				if (self[TOOLTIP]) {
-					self[TOOLTIP].content(tooltip);
+					remove();
 				}
 			}
 		}),

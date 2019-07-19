@@ -355,7 +355,7 @@ export default class VirtualList extends FocusMixin(Control) {
 
 				if (endIndex < self[CURRENT_START_INDEX] || startIndex > self[CURRENT_END_INDEX]) {
 					if (self.isFocused()) {
-						self.focus();
+						self.isFocused(true);
 					}
 					self[CONTROL_RECYCLER].discardAllControls();
 
@@ -448,8 +448,8 @@ export default class VirtualList extends FocusMixin(Control) {
 				if (self.isFocusable() && control.isFocusable) {
 					control.isFocusable(true);
 
-					if (self.isFocused() && index === self[MULTI_ITEM_FOCUS].current() && control.focus) {
-						control.focus();
+					if (self.isFocused() && index === self[MULTI_ITEM_FOCUS].current()) {
+						control.isFocused(true);
 					}
 				}
 
@@ -568,11 +568,11 @@ export default class VirtualList extends FocusMixin(Control) {
 		else {
 			control = self[CONTROL_RECYCLER].getControlAtOffset(index - self[CURRENT_START_INDEX]);
 
-			if (control && control.focus) {
+			if (control) {
 				if (parseInt(control.css(TOP), 10) < (self[CURRENT_SCROLL_OFFSET] + self[ITEM_SIZE])) {
 					self[setScroll](self[CURRENT_SCROLL_OFFSET] - self[ITEM_SIZE]);
 				}
-				control.focus();
+				control.isFocused(true);
 			}
 		}
 	}

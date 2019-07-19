@@ -148,10 +148,10 @@ export default class Menu extends Popup {
 		objectHelper.applySettings(self, settings);
 
 		if (self.canFilter()) {
-			self.get(FILTER_ID).focus();
+			self.get(FILTER_ID).isFocused(true);
 		}
 		else {
-			self.get(TREE_ID).focus();
+			self.get(TREE_ID).isFocused(true);
 		}
 	}
 
@@ -346,9 +346,7 @@ Object.assign(Menu.prototype, {
 					.on(KEY_DOWN_EVENT, () => {
 						if (event.keyCode === keyCodes('down')) {
 							event.preventDefault();
-							if (!self.get(TREE_ID).isFocused()) {
-								self.get(TREE_ID).focus();
-							}
+							self.get(TREE_ID).isFocused(true);
 						}
 					});
 

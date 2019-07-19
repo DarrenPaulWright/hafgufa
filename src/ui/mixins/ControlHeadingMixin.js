@@ -315,18 +315,7 @@ export default (Base) => {
 		 * @instance
 		 * @arg {Object} [newContainer]
 		 */
-		contentWidthContainer: method.element(),
-
-		/**
-		 * See if this control has focus.
-		 * @method isFocused
-		 * @member module:ControlHeadingAddon
-		 * @instance
-		 * @returns {Boolean}
-		 */
-		isFocused: function() {
-			dom.hasActive(this.contentContainer());
-		}
+		contentWidthContainer: method.element()
 	});
 
 	return ControlHeadingMixin;

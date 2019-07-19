@@ -51,7 +51,7 @@ describe('Tags', () => {
 			},
 			validValue: 'test',
 			setValueViaDom: function() {
-				window.control.focus();
+				window.control.isFocused(true);
 				addTag('test');
 			}
 		}
@@ -91,7 +91,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 
 			assert.deepEqual(window.control.value(), ['test1']);
@@ -102,7 +102,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			testUtil.hitEnter();
 
 			assert.deepEqual(window.control.value(), []);
@@ -113,9 +113,9 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('test2');
-			window.control.blur();
+			window.control.isFocused(false);
 
 			assert.deepEqual(window.control.value(), ['test2']);
 		});
@@ -131,7 +131,7 @@ describe('Tags', () => {
 			inputElement = document.querySelector('.text-input');
 			fakeInputElement = document.querySelector('.fake-input');
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('test string that is really long');
 
 			assert.isAbove(dom.get.width(inputElement), (dom.get.width(fakeInputElement) - 2));
@@ -143,7 +143,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			clickDeleteButton(0);
@@ -156,7 +156,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -170,7 +170,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -184,7 +184,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -198,7 +198,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			clickTag(0);
@@ -211,7 +211,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			setInputValue('edit');
@@ -225,7 +225,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			clickTag(0);
 			addTag('test2');
@@ -238,7 +238,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			clickTag(0);
 			addTag('');
@@ -251,7 +251,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -265,7 +265,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -281,7 +281,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -297,7 +297,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1');
 			addTag('test2');
 			addTag('test3');
@@ -505,7 +505,7 @@ describe('Tags', () => {
 				container: window.testContainer
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 
 			return testUtil.defer()
 				.then(() => {
@@ -519,7 +519,7 @@ describe('Tags', () => {
 				suggestions: keywordSuggestions
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 
 			return testUtil.defer()
 				.then(() => {
@@ -533,8 +533,7 @@ describe('Tags', () => {
 				suggestions: keywordSuggestions
 			});
 
-			window.control.focus();
-			window.control.blur();
+			window.control.isFocused(true).isFocused(false);
 
 			return testUtil.delay(100)
 				.then(() => {
@@ -548,7 +547,7 @@ describe('Tags', () => {
 				suggestions: keywordSuggestions
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 
 			return testUtil.defer()
 				.then(() => {
@@ -562,7 +561,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 
 			return testUtil.defer()
 				.then(() => {
@@ -576,7 +575,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 
 			return testUtil.defer()
 				.then(() => {
@@ -590,7 +589,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('2');
 
 			return testUtil.defer()
@@ -605,7 +604,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('2');
 
 			return testUtil.defer()
@@ -624,7 +623,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('nothing');
 
 			return testUtil.defer()
@@ -639,7 +638,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('sub 2');
 
 			return testUtil.defer()
@@ -654,7 +653,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			clickTag(1);
@@ -671,7 +670,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			clickTag(1);
@@ -685,7 +684,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('te 2');
 			clickOption(0);
 			clickTag(0);
@@ -699,7 +698,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			clickTag(1);
@@ -716,7 +715,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			clickTag(1);
@@ -738,7 +737,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			addTag('test 2');
@@ -759,7 +758,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1');
 			addTag('sub 2');
 			addTag('test 2');
@@ -781,7 +780,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			return testUtil.defer()
 				.then(() => {
 					clickOption(1);
@@ -796,7 +795,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			return testUtil.defer()
 				.then(() => {
 					clickOption(1);
@@ -811,7 +810,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('te');
 			return testUtil.defer()
 				.then(() => {
@@ -827,7 +826,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('typed1');
 			addTag('typed2');
 			addTag('typed3');
@@ -848,7 +847,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('typed1');
 			addTag('typed2');
 			addTag('typed3');
@@ -869,7 +868,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('typed1');
 			addTag('typed2');
 			addTag('typed3');
@@ -890,7 +889,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('te 2');
 			return testUtil.defer()
 				.then(() => {
@@ -906,7 +905,7 @@ describe('Tags', () => {
 				suggestions: suggestionsWithSubTitles
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			setInputValue('te 2');
 
 			return testUtil.defer()
@@ -935,7 +934,7 @@ describe('Tags', () => {
 				breakOnSpaces: false
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test 1,test 2;test 3');
 
 			assert.equal(getRenderedTags().length, 3);
@@ -947,7 +946,7 @@ describe('Tags', () => {
 				breakOnSpaces: true
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('test1 test2 test3');
 
 			assert.equal(getRenderedTags().length, 3);
@@ -959,7 +958,7 @@ describe('Tags', () => {
 				breakOnSpaces: true
 			});
 
-			window.control.focus();
+			window.control.isFocused(true);
 			addTag('  test1    test2, test3;test4   ');
 
 			assert.equal(getRenderedTags().length, 4);

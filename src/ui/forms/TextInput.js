@@ -94,7 +94,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		}, true);
 
 		self.onRemove(() => {
-			self.blur()
+			self.isFocused(false)
 				.prefix('')
 				.suffix('');
 
@@ -517,53 +517,6 @@ Object.assign(TextInput.prototype, {
 	},
 
 	/**
-	 * Set focus on the text input element.
-	 * @method focus
-	 * @member module:TextInput
-	 * @instance
-	 */
-	focus: function() {
-		const self = this;
-
-		if (self.rows() === 1) {
-			self[INPUT].focus();
-		}
-		else {
-			if (self[INPUT].setSelectionRange) {
-				self[INPUT].focus();
-				self[INPUT].setSelectionRange(0, 0);
-				self[INPUT].scrollTop = 0;
-			}
-			else if (self[INPUT].createTextRange) {
-				let range = self[INPUT].createTextRange();
-				range.moveStart('character', 0);
-				range.select();
-				self[INPUT].scrollTop = 0;
-			}
-			else {
-				self[INPUT].focus();
-			}
-		}
-
-		return self;
-	},
-
-	/**
-	 * Remove focus from this control if it is focused.
-	 * @method blur
-	 * @member module:ControlBase
-	 * @instance
-	 * @returns {this}
-	 */
-	blur: function() {
-		if (this.isFocused()) {
-			this[INPUT].blur();
-		}
-
-		return this;
-	},
-
-	/**
 	 * See if this control has focus.
 	 * @method isFocused
 	 * @member module:TextInput
@@ -571,20 +524,40 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Boolean}
 	 */
 	isFocused: function(doFocus) {
+		const self = this;
+
 		if (doFocus !== undefined) {
 			if (doFocus) {
-				if (!this.isFocused()) {
-					this.focus();
+				if (!self.isFocused()) {
+					if (self.rows() === 1) {
+						self[INPUT].isFocused(true);
+					}
+					else {
+						if (self[INPUT].setSelectionRange) {
+							self[INPUT].isFocused(true);
+							self[INPUT].setSelectionRange(0, 0);
+							self[INPUT].scrollTop = 0;
+						}
+						else if (self[INPUT].createTextRange) {
+							let range = self[INPUT].createTextRange();
+							range.moveStart('character', 0);
+							range.select();
+							self[INPUT].scrollTop = 0;
+						}
+						else {
+							self[INPUT].isFocused(true);
+						}
+					}
 				}
 			}
-			else if (this.isFocused()) {
-				this.blur();
+			else if (self.isFocused()) {
+				self[INPUT].isFocused(false);
 			}
 
-			return this;
+			return self;
 		}
 
-		return dom.isActive(this[INPUT].element());
+		return dom.isActive(self[INPUT].element());
 	},
 
 	/**

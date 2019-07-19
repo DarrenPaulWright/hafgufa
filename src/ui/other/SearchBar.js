@@ -112,7 +112,7 @@ export default class SearchBar extends Control {
 			});
 
 			self[buildSearchBar](self[SEARCH_BAR], HUNDRED_PERCENT);
-			self[TAGS].focus();
+			self[TAGS].isFocused(true);
 		}
 
 		self[IS_SEARCH_BAR_OPEN] = true;
@@ -214,7 +214,7 @@ Object.assign(SearchBar.prototype, {
 	 * @instance
 	 */
 	focus: function() {
-		this[MENU_BUTTON].focus();
+		this[MENU_BUTTON].isFocused(true);
 	},
 
 	/**

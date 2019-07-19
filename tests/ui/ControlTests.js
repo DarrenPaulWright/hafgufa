@@ -570,7 +570,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return testUtil.defer()
 					.then(() => {
-						window.control.focus();
+						window.control.isFocused(true);
 
 						assert.equal(testItem, 2);
 					});
@@ -710,7 +710,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return testUtil.defer()
 					.then(() => {
-						window.control.focus();
+						window.control.isFocused(true);
 
 						assert.equal(window.control.isFocused(), true);
 					});
@@ -733,7 +733,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			});
 
 			if (!settings.autoFocus) {
-				it('should not call the onBlur callback if .blur is called when the control doesn\'t have focus', () => {
+				it('should not call the onBlur callback if .isFocused(false) is called when the control doesn\'t have focus', () => {
 					let testItem = 1;
 
 					window.control = new Control(buildSettings({
@@ -745,14 +745,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					return testUtil.defer()
 						.then(() => {
-							window.control.blur();
+							window.control.isFocused(false);
 
 							assert.equal(testItem, 1);
 						});
 				});
 			}
 
-			it('should call the onBlur callback once if .focus is called and then .blur', () => {
+			it('should call the onBlur callback once if .isFocused(true) is called and then .isFocused(false)', () => {
 				let testItem = 1;
 
 				window.control = new Control(buildSettings({
@@ -764,7 +764,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return testUtil.defer()
 					.then(() => {
-						window.control.focus().blur();
+						window.control.isFocused(true).isFocused(false);
 
 						return testUtil.defer();
 					})
@@ -780,7 +780,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return testUtil.defer()
 					.then(() => {
-						window.control.focus().blur();
+						window.control.isFocused(true).isFocused(false);
 
 						assert.equal(window.control.isFocused(), false);
 					});
@@ -793,7 +793,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return testUtil.defer()
 					.then(() => {
-						window.control.focus();
+						window.control.isFocused(true);
 						document.activeElement.blur();
 
 						assert.equal(window.control.isFocused(), false);

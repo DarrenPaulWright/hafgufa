@@ -244,7 +244,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 	[setFocusIndex](index) {
 		if (this.buttons().length >= index + 1) {
 			this[BUTTON_RECYCLER].getControl(this.buttons()[index].ID)
-				.focus();
+				.isFocused(true);
 		}
 	}
 }

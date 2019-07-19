@@ -42,12 +42,6 @@ export default class Input extends Control {
 		objectHelper.applySettings(this, settings);
 	}
 
-	focus() {
-		this.element().focus();
-
-		return this;
-	}
-
 	click() {
 		this.element().click();
 

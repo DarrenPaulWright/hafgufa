@@ -87,7 +87,7 @@ export default class FileInput extends Control {
 
 		self.on(CLICK_EVENT, () => {
 				stopEvent();
-				self[INPUT_CONTROL].focus().click();
+				self[INPUT_CONTROL].isFocused(true).click();
 			})
 			.on(DRAG_ENTER_EVENT, () => {
 				stopEvent();

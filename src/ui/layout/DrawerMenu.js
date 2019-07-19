@@ -77,8 +77,10 @@ export default class DrawerMenu extends Control {
 		});
 
 		self.onRemove(() => {
-			self[DRAWER].remove();
-			self[DRAWER] = null;
+			if (self[DRAWER]) {
+				self[DRAWER].remove();
+				self[DRAWER] = null;
+			}
 			self[MENU_BUTTON].remove();
 			self[MENU_BUTTON] = null;
 		});
@@ -178,14 +180,14 @@ Object.assign(DrawerMenu.prototype, {
 		set: function(newValue) {
 			const self = this;
 
-			if (newValue !== self[DRAWER].isOpen()) {
+			if (self[DRAWER] && newValue !== self[DRAWER].isOpen()) {
 				defer(() => {
 					self[toggleMenu]();
 				});
 			}
 		},
 		get: function() {
-			return this[DRAWER].isOpen();
+			return this[DRAWER] ? this[DRAWER].isOpen() : false;
 		}
 	}),
 
@@ -276,7 +278,7 @@ Object.assign(DrawerMenu.prototype, {
 	 * @instance
 	 */
 	focus: () => {
-		this[MENU_BUTTON].focus();
+		this[MENU_BUTTON].isFocused(true);
 	},
 
 	/**
@@ -286,7 +288,17 @@ Object.assign(DrawerMenu.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: () => {
-		return this[MENU_BUTTON].isFocused() || dom.hasActive(this[DRAWER]);
+	isFocused: (isFocused) => {
+		const self = this;
+
+		if (self) {
+			if (isFocused !== undefined) {
+				self[MENU_BUTTON].isFocused(isFocused);
+
+				return self;
+			}
+
+			return self[MENU_BUTTON].isFocused() || (self[DRAWER] ? dom.hasActive(self[DRAWER]) : false);
+		}
 	}
 });

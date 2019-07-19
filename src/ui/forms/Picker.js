@@ -398,7 +398,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			self[POPUP_BUTTON].isEnabled(true);
 
 			if (self[GROUPED_BUTTONS].isFocused()) {
-				self[POPUP_BUTTON].focus();
+				self[POPUP_BUTTON].isFocused(true);
 			}
 
 			popupText = self.showSelectedItems() ? buildPopupButtonLabel() : self.defaultButtonText();
@@ -790,7 +790,7 @@ export default class Picker extends FocusMixin(FormControl) {
 					self[MENU] = null;
 					self[updateGroupedButtonsLayout]();
 					if (self[POPUP_BUTTON] && self.isFocused()) {
-						self[POPUP_BUTTON].focus();
+						self[POPUP_BUTTON].isFocused(true);
 					}
 				},
 				onBlur: function() {

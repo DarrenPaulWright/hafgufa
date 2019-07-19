@@ -76,7 +76,7 @@ export default class DateInput extends FormControl {
 				self[NOW_BUTTON].remove();
 			}
 		});
-	};
+	}
 
 	[buildDatePicker]() {
 		const self = this;
@@ -124,12 +124,12 @@ export default class DateInput extends FormControl {
 				self[POPUP].remove();
 			}
 
-			self[DATE_INPUT].focus();
+			self[DATE_INPUT].isFocused(true);
 
 			self.triggerChange();
 		}
 		else {
-			self[DATE_INPUT].focus();
+			self[DATE_INPUT].isFocused(true);
 		}
 	}
 }
@@ -154,7 +154,7 @@ Object.assign(DateInput.prototype, {
 	},
 
 	focus: () => {
-		this[DATE_INPUT].focus();
+		this[DATE_INPUT].isFocused(true);
 	},
 
 	showNowButton: method.boolean({
@@ -181,5 +181,17 @@ Object.assign(DateInput.prototype, {
 		init: true
 	}),
 
-	isFocused: () => self[IS_FOCUSED]
+	isFocused: (isFocused) => {
+		const self = this;
+
+		if (self) {
+			if (isFocused !== undefined) {
+				self[DATE_INPUT].isFocused(isFocused);
+
+				return self;
+			}
+
+			return self[IS_FOCUSED];
+		}
+	}
 });

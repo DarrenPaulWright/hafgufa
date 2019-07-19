@@ -60,7 +60,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 						self[saveTextChanges]();
 					}
 					else {
-						self[TEXT_INPUT].focus();
+						self[TEXT_INPUT].isFocused(true);
 					}
 				}
 			}
@@ -248,7 +248,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 
 				if (!self.isRemoved) {
 					if (self[TEXT_INPUT].value() !== '') {
-						self[TEXT_INPUT].blur();
+						self[TEXT_INPUT].isFocused(false);
 					}
 					self[CURRENT_EDIT_OFFSET] = heading.data().tagOffset;
 					heading.isVisible(false);
@@ -256,7 +256,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 					self[TEXT_INPUT]
 						.width(initialWidth)
 						.minWidth(initialWidth)
-						.focus();
+						.isFocused(true);
 				}
 			};
 
@@ -320,10 +320,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			dom.appendTo(self[LIST_CONTAINER], self[TEXT_INPUT]);
 		}
 
-		self[TEXT_INPUT].blur().value(newValue || '', true);
+		self[TEXT_INPUT].isFocused(false).value(newValue || '', true);
 
 		if (isFocused) {
-			self[TEXT_INPUT].focus();
+			self[TEXT_INPUT].isFocused(true);
 		}
 		if (self[SUGGESTION_MENU] && !self.isRemoved) {
 			self[SUGGESTION_MENU].anchor(self[TEXT_INPUT].getInput());
@@ -354,7 +354,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		self[TEXT_INPUT]
 			.width(DEFAULT_TEXT_WIDTH)
 			.minWidth(DEFAULT_TEXT_WIDTH)
-			.focus();
+			.isFocused(true);
 
 		self.triggerChange();
 	}

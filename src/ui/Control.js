@@ -816,24 +816,33 @@ Object.assign(Control.prototype, {
 	},
 
 	/**
-	 * See if this control has focus.
+	 * The focused state of this control.
 	 *
 	 * @method isFocused
 	 * @member module:Control
 	 * @instance
 	 *
+	 * @arg {Boolean} [isFocused]
+	 *
 	 * @returns {boolean|this}
 	 */
-	isFocused: function() {
-		return this[ELEMENT] ? (this[ELEMENT] === DOCUMENT.activeElement || this[ELEMENT].contains(DOCUMENT.activeElement)) : false;
-	},
+	isFocused: function(isFocused) {
+		const self = this;
 
-	blur: function() {
-		if (this.isFocused()) {
-			DOCUMENT.activeElement.blur();
+		if (isFocused !== undefined) {
+			if (self[ELEMENT]) {
+				if (isFocused) {
+					self[ELEMENT].focus();
+				}
+				else if (self.isFocused()) {
+					DOCUMENT.activeElement.blur();
+				}
+			}
+
+			return self;
 		}
 
-		return this;
+		return self[ELEMENT] ? (self[ELEMENT] === DOCUMENT.activeElement || self[ELEMENT].contains(DOCUMENT.activeElement)) : false;
 	},
 
 	/**
