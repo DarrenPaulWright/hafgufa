@@ -19,7 +19,7 @@ const ON_RENDER = Symbol();
 const DELAY_TIMER = Symbol();
 
 /**
- * <p>Delays the rendering of a control</p>
+ * Delays the rendering of a control
  *
  * @module DelayedRenderMixin
  * @constructor

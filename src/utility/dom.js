@@ -75,7 +75,7 @@ const DOM_INSERTION_CLASS = 'element-inserted';
 const DOM_INSERTION_EVENTS = 'animationstart MSAnimationStart webkitAnimationStart';
 
 /**
- * <p>Utility functions for adding new content to the DOM.</p>
+ * Utility functions for adding new content to the DOM.
  *
  * @module dom
  */

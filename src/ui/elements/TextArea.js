@@ -6,7 +6,7 @@ import controlTypes from '../controlTypes';
 import Control from './../Control';
 
 /**
- * <p>Display a textarea element.</p>
+ * Display a textarea element.
  *
  * @class TextArea
  * @extends Control

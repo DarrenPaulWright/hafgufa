@@ -40,7 +40,7 @@ const LABEL = Symbol();
 const CURRENT_SIZE = Symbol();
 
 /**
- * <p>Displays an animation while isWorking is true.</p>
+ * Displays an animation while isWorking is true.
  * @class IsWorking
  * @extends Control
  * @constructor

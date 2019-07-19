@@ -58,7 +58,7 @@ const addClickEvent = function() {
 };
 
 /**
- * <p>Adds onClick, click, and url methods to a control</p>
+ * Adds onClick, click, and url methods to a control
  *
  * @module OnClickMixin
  * @constructor

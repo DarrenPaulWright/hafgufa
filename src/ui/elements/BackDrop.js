@@ -7,7 +7,7 @@ import './BackDrop.less';
 const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
 
 /**
- * <p>Display a backdrop that removes itself when clicked.</p>
+ * Display a backdrop that removes itself when clicked.
  *
  * @class BackDrop
  * @extends Control

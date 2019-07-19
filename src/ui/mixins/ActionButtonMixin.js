@@ -24,7 +24,7 @@ const addRightContainer = Symbol();
 const measureRightContainerWidth = Symbol();
 
 /**
- * <p>Adds an action button and count text.</p>
+ * Adds an action button and count text.
  * @module ActionButtonAddon
  * @constructor
  */

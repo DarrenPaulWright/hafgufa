@@ -8,7 +8,7 @@ import OnClickMixin from '../mixins/OnClickMixin';
 import './Hyperlink.less';
 
 /**
- * <p>Display an anchor element.</p>
+ * Display an anchor element.
  *
  * @module Hyperlink
  * @extends ControlBase

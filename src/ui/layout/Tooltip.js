@@ -15,7 +15,7 @@ const POPUP = Symbol();
 const CONTENT_CONTAINER = Symbol();
 
 /**
- * <p>Displays a tooltip anchored to an object or the mouse.</p>
+ * Displays a tooltip anchored to an object or the mouse.
  * @module Tooltip
  * @constructor
  *

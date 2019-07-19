@@ -3,8 +3,8 @@ import { result, sum } from 'lodash';
 import { deepEqual } from 'object-agent';
 
 /**
- * <p>Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
- * a singleton so that all callbacks added are processed together.</p>
+ * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
+ * a singleton so that all callbacks added are processed together.
  * @module formRelationships
  */
 const FormRelationshipHandler = function() {

@@ -12,7 +12,7 @@ const ON_REMOVE = Symbol();
 const REMOVE_DELAY = Symbol();
 
 /**
- * <p>Adds remove methods to a module.</p>
+ * Adds remove methods to a module.
  * @class Removable
  * @constructor
  */

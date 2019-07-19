@@ -31,8 +31,8 @@ select(WINDOW).on(RESIZE_EVENT, throttle(measureWindow, 100));
 measureWindow();
 
 /**
- * <p>Executes callbacks whenever the screen is resized or a control that has changed size triggers the others to
- * layout themselves again. windowResize is a singleton so that all callbacks added are processed together.</p>
+ * Executes callbacks whenever the screen is resized or a control that has changed size triggers the others to
+ * layout themselves again. windowResize is a singleton so that all callbacks added are processed together.
  * @module windowResize
  */
 export default {

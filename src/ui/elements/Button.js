@@ -37,7 +37,7 @@ const mouseLeaveHandler = function() {
 };
 
 /**
- * <p>Display a button.</p>
+ * Display a button.
  * @class Button
  * @extends Control
  * @constructor

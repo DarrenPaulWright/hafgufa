@@ -7,7 +7,7 @@ const callIfExists = (func, argument1, argument2, argument3) => {
 };
 
 /**
- * <p>Object helper functions.</p>
+ * Object helper functions.
  * @module objectHelper
  */
 const objectHelper = {

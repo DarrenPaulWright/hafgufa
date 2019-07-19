@@ -7,7 +7,7 @@ const DISCARDED_CONTROLS = Symbol();
 const DISCARD = Symbol();
 
 /**
- * <p>Instead of creating and destroying controls in rapid succession, recycle them!</p>
+ * Instead of creating and destroying controls in rapid succession, recycle them!
  *
  * @class ControlRecycler
  * @constructor

@@ -87,7 +87,7 @@ const measure = function() {
 };
 
 /**
- * <p>Display a resizer bar.</p>
+ * Display a draggable resizer bar.
  *
  * @class Resizer
  * @extends Control

@@ -6,7 +6,7 @@ import controlTypes from '../controlTypes';
 import Control from './../Control';
 
 /**
- * <p>Display a label element.</p>
+ * Display a label element.
  *
  * @class Label
  * @extends Control

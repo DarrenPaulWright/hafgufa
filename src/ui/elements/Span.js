@@ -6,7 +6,7 @@ import controlTypes from '../controlTypes';
 import Control from './../Control';
 
 /**
- * <p>Display a span element.</p>
+ * Display a span element.
  *
  * @class Span
  * @extends Control

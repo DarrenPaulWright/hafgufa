@@ -21,7 +21,7 @@ export const FIT = new Enum({
 });
 
 /**
- * <p>Display an image element.</p>
+ * Display an image element.
  *
  * @class Image
  * @extends Control

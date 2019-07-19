@@ -22,7 +22,7 @@ const AVAILABLE_TYPES = new Enum({
 });
 
 /**
- * <p>Display an input element.</p>
+ * Display an input element.
  *
  * @class Input
  * @extends Control

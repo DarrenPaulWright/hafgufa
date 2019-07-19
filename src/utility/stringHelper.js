@@ -1,7 +1,7 @@
 import { isArray, isObject } from 'type-enforcer';
 
 /**
- * <p>String helper functions.</p>
+ * String helper functions.
  * @module stringHelper
  */
 const stringHelper = {

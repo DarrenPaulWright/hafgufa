@@ -15,7 +15,7 @@ const getButton = function(input) {
 const BUTTONS = Symbol();
 
 /**
- * <p>Displays a toolbar that accepts and positions content such as buttons.</p>
+ * Displays a toolbar that accepts and positions content such as buttons.
  * @module Toolbar
  * @extends ControlBase
  * @constructor

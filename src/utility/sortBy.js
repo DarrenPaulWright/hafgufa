@@ -5,7 +5,7 @@ let first;
 let second;
 
 /**
- * <p>Utility sort functions.</p>
+ * Utility sort functions.
  * @module sortBy
  */
 
