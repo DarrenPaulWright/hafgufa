@@ -1,27 +1,28 @@
-import { defer } from 'async-agent';
 import { AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
-import { MARGIN_BOTTOM, MARGIN_LEFT, MARGIN_RIGHT, MARGIN_TOP, SCROLL_EVENT, SPACE } from '../../utility/domConstants';
+import {
+	PADDING_BOTTOM,
+	PADDING_LEFT,
+	PADDING_RIGHT,
+	PADDING_TOP,
+	SCROLL_EVENT,
+	SPACE
+} from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import { ICON_SIZES } from '../elements/Icon';
-import { NEXT_ICON, PREVIOUS_ICON } from '../icons';
+import NextPrevMixin from '../mixins/NextPrevMixin';
 import './Carousel.less';
 import VirtualList from './VirtualList';
 
 const VIRTUAL_LIST_ID = 'carouselVirtualList';
-const PREV_BUTTON_ID = 'carouselPrevButton';
-const NEXT_BUTTON_ID = 'carouselNextButton';
-const BUTTON_CLASS = 'icon-button';
 const EVENT_SUFFIX = '.carousel';
 
-const CONTROLS = Symbol();
+const VIRTUAL_LIST = Symbol();
 const IS_FIT = Symbol();
+const BUTTON_SIZE = Symbol();
 
 const fitToSlide = Symbol();
-const updateButtons = Symbol();
 
 /**
  * A horizontal slide viewer.
@@ -32,19 +33,39 @@ const updateButtons = Symbol();
  *
  * @arg {Object} settings
  */
-export default class Carousel extends Control {
+export default class Carousel extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.CAROUSEL;
 		settings.height = enforce.cssSize(settings.height, AUTO, true);
+		settings.NextPrevMixin = {
+			onShowButtons: (onChange, buttonWidth) => {
+				self[BUTTON_SIZE] = buttonWidth;
+
+				self[VIRTUAL_LIST]
+					.padding(ZERO_PIXELS + SPACE + buttonWidth + PIXELS)
+					.on(SCROLL_EVENT + EVENT_SUFFIX, onChange);
+			},
+			onHideButtons: () => {
+				self[BUTTON_SIZE] = 0;
+
+				self[VIRTUAL_LIST]
+					.padding(ZERO_PIXELS)
+					.off(SCROLL_EVENT + EVENT_SUFFIX);
+			},
+			isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
+			isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
+			onPrev: () => this[VIRTUAL_LIST].prevPage(),
+			onNext: () => this[VIRTUAL_LIST].nextPage()
+		};
 
 		super(settings);
 		const self = this;
-		self[CONTROLS] = new ControlManager();
 		self[IS_FIT] = false;
+		self[BUTTON_SIZE] = 0;
 
 		self.addClass('carousel');
 
-		self[CONTROLS].add(new VirtualList({
+		self[VIRTUAL_LIST] = new VirtualList({
 			ID: VIRTUAL_LIST_ID,
 			container: self.element(),
 			isHorizontal: true,
@@ -55,75 +76,49 @@ export default class Carousel extends Control {
 			isCentered: true,
 			hideScrollBars: true,
 			keepAltRows: false
-		}));
+		});
 
 		objectHelper.applySettings(self, settings);
 
 		self.onResize(() => {
-			self[updateButtons]();
-
-			if (self.fitToSlide()) {
-				self[fitToSlide]();
-			}
-		}, true);
-
-		self.onRemove(() => {
-			self.showButtons(false);
-			self[CONTROLS].remove();
-		});
+				if (self.fitToSlide()) {
+					self[fitToSlide]();
+				}
+			})
+			.onRemove(() => {
+				self[VIRTUAL_LIST].remove();
+				self[VIRTUAL_LIST] = null;
+			});
 	}
 
 	[fitToSlide]() {
 		const self = this;
-		const slide = self[CONTROLS].get(VIRTUAL_LIST_ID).firstVisibleItem();
+		const slide = self[VIRTUAL_LIST].firstVisibleItem();
 
-		const setMargins = (margin1, margin2, size) => {
-			self[CONTROLS].get(VIRTUAL_LIST_ID)
-				.css(margin1, size)
-				.css(margin2, size);
+		const setPaddings = (padding1, padding2, size) => {
+			self
+				.css(padding1, size)
+				.css(padding2, size);
 		};
 
 		if (slide) {
-			const thisWidth = self.width();
-			const thisHeight = self.height();
-			const slideWidth = slide.width();
-			const slideHeight = slide.height();
+			const thisWidth = self.borderWidth();
+			const thisHeight = self.borderHeight();
+			const slideWidth = slide.borderWidth();
+			const slideHeight = slide.borderHeight();
 			let newSize;
 
 			self[IS_FIT] = true;
 
 			if (thisWidth / slideWidth > thisHeight / slideHeight) {
 				newSize = (thisWidth - slideWidth) / 2;
+				newSize -= self[BUTTON_SIZE];
 
-				if (self.showButtons()) {
-					newSize -= self[CONTROLS].get(PREV_BUTTON_ID).width() || self[CONTROLS].get(NEXT_BUTTON_ID).width();
-				}
-
-				setMargins(MARGIN_LEFT, MARGIN_RIGHT, newSize);
-
-				if (self.showButtons()) {
-					self[CONTROLS].get(PREV_BUTTON_ID)
-						.css(MARGIN_LEFT, newSize);
-					self[CONTROLS].get(NEXT_BUTTON_ID)
-						.css(MARGIN_RIGHT, newSize);
-				}
+				setPaddings(PADDING_LEFT, PADDING_RIGHT, newSize);
 			}
 			else {
-				setMargins(MARGIN_TOP, MARGIN_BOTTOM, (thisHeight - slideHeight) / 2);
+				setPaddings(PADDING_TOP, PADDING_BOTTOM, (thisHeight - slideHeight) / 2);
 			}
-		}
-	}
-
-	/**
-	 * Update the isEnabled value of the buttons
-	 * @function updateButtons
-	 */
-	[updateButtons]() {
-		if (this.showButtons()) {
-			this[CONTROLS].get(PREV_BUTTON_ID)
-				.isVisible(!this[CONTROLS].get(VIRTUAL_LIST_ID).isAtStart());
-			this[CONTROLS].get(NEXT_BUTTON_ID)
-				.isVisible(!this[CONTROLS].get(VIRTUAL_LIST_ID).isAtEnd());
 		}
 	}
 }
@@ -142,7 +137,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	slideControl: method.function({
 		set: function(slideControl) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).itemControl(slideControl);
+			this[VIRTUAL_LIST].itemControl(slideControl);
 		}
 	}),
 
@@ -159,7 +154,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	slideData: method.array({
 		set: function(slideData) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).itemData(slideData);
+			this[VIRTUAL_LIST].itemData(slideData);
 		}
 	}),
 
@@ -176,7 +171,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	slideDefaultSettings: method.object({
 		set: function(slideDefaultSettings) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).itemDefaultSettings(slideDefaultSettings);
+			this[VIRTUAL_LIST].itemDefaultSettings(slideDefaultSettings);
 			this.resize();
 		}
 	}),
@@ -194,7 +189,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	onSlideRender: method.function({
 		set: function(onSlideRender) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).onItemRender((control, itemData) => {
+			this[VIRTUAL_LIST].onItemRender((control, itemData) => {
 				onSlideRender(control, itemData);
 				if (!this[IS_FIT] && this.fitToSlide()) {
 					this.resize();
@@ -216,7 +211,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	slideWidth: method.string({
 		set: function(slideWidth) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).itemSize(slideWidth);
+			this[VIRTUAL_LIST].itemSize(slideWidth);
 		}
 	}),
 
@@ -233,7 +228,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	fitToSlide: method.boolean({
 		set: function(fitToSlide) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).snapToLeadingEdge(fitToSlide);
+			this[VIRTUAL_LIST].snapToLeadingEdge(fitToSlide);
 			this.resize();
 		}
 	}),
@@ -248,7 +243,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {Object[]}
 	 */
 	getRenderedControls: function() {
-		return this[CONTROLS].get(VIRTUAL_LIST_ID).getRenderedControls();
+		return this[VIRTUAL_LIST].getRenderedControls();
 	},
 
 	/**
@@ -266,117 +261,14 @@ Object.assign(Carousel.prototype, {
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
 		set: function(extraRenderedItemsRatio) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).extraRenderedItemsRatio(extraRenderedItemsRatio);
+			this[VIRTUAL_LIST].extraRenderedItemsRatio(extraRenderedItemsRatio);
 		},
 		min: 0
 	}),
 
-	/**
-	 * Get or set whether the buttons should be viewed
-	 *
-	 * @method showButtons
-	 * @member module:Carousel
-	 * @instance
-	 *
-	 * @arg {boolean}
-	 *
-	 * @returns {boolean|this}
-	 */
-	showButtons: method.boolean({
-		set: function(newValue) {
-			const self = this;
-
-			if (newValue) {
-				if (!self[CONTROLS].get(PREV_BUTTON_ID)) {
-					self[CONTROLS].add(new Button({
-						ID: PREV_BUTTON_ID,
-						container: self.element(),
-						classes: BUTTON_CLASS,
-						icon: PREVIOUS_ICON,
-						iconSize: self.buttonIconSize(),
-						onClick: () => self.prev(),
-						css: {
-							left: '0'
-						}
-					}));
-					self[CONTROLS].add(new Button({
-						ID: NEXT_BUTTON_ID,
-						container: self.element(),
-						classes: BUTTON_CLASS,
-						icon: NEXT_ICON,
-						iconSize: self.buttonIconSize(),
-						onClick: () => self.next(),
-						css: {
-							right: '0'
-						}
-					}));
-					self[CONTROLS].get(VIRTUAL_LIST_ID)
-						.padding(ZERO_PIXELS + SPACE + self[CONTROLS].get(PREV_BUTTON_ID).width() + PIXELS)
-						.on(SCROLL_EVENT + EVENT_SUFFIX, () => {
-							self[updateButtons]();
-						});
-					defer(() => {
-						self[updateButtons]();
-					});
-				}
-			}
-			else {
-				self[CONTROLS].remove(PREV_BUTTON_ID);
-				self[CONTROLS].remove(NEXT_BUTTON_ID);
-				self[CONTROLS].get(VIRTUAL_LIST_ID)
-					.padding(ZERO_PIXELS)
-					.off(SCROLL_EVENT + EVENT_SUFFIX);
-			}
-		}
-	}),
-
-	/**
-	 * Get or set the size of the icons on the buttons
-	 *
-	 * @method buttonIconSize
-	 * @member module:Carousel
-	 * @instance
-	 *
-	 * @arg {string} - see Icon ICON_SIZES
-	 *
-	 * @returns {string|this}
-	 */
-	buttonIconSize: method.enum({
-		init: ICON_SIZES.TWO_TIMES,
-		enum: ICON_SIZES,
-		set: function(buttonIconSize) {
-			if (this.showButtons()) {
-				this[CONTROLS].get(PREV_BUTTON_ID).iconSize(buttonIconSize);
-				this[CONTROLS].get(NEXT_BUTTON_ID).iconSize(buttonIconSize);
-			}
-		}
-	}),
-
-	/**
-	 * Move to the next page of slides
-	 *
-	 * @method next
-	 * @member module:Carousel
-	 * @instance
-	 */
-	next: function() {
-		this[CONTROLS].get(VIRTUAL_LIST_ID).nextPage();
-	},
-
-	/**
-	 * Move to the previous page of slides
-	 *
-	 * @method prev
-	 * @member module:Carousel
-	 * @instance
-	 */
-	prev: function() {
-		this[CONTROLS].get(VIRTUAL_LIST_ID).prevPage();
-	},
-
 	isFocusable: method.boolean({
 		set: function(isFocusable) {
-			this[CONTROLS].get(VIRTUAL_LIST_ID).isFocusable(isFocusable);
+			this[VIRTUAL_LIST].isFocusable(isFocusable);
 		}
 	})
 });

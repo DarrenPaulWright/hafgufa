@@ -66,6 +66,7 @@ export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';
 export { default as DragMixin } from './ui/mixins/DragMixin';
 export { default as FocusMixin } from './ui/mixins/FocusMixin';
 export { default as IsWorkingMixin } from './ui/mixins/IsWorkingMixin';
+export { default as NextPrevMixin } from './ui/mixins/NextPrevMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';
 export { default as TooltipMixin } from './ui/mixins/TooltipMixin';
