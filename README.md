@@ -1,4 +1,4 @@
-# hafgufa
-A javascript UI library.
+# Hafgufa
+> A javascript ES6+ Frameworkless UI library.
 
-This is an early stage and very experimental library and not at all ready for production.
+_⚠ This project is not stable and will change significantly before v1._
