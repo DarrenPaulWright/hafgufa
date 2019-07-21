@@ -177,10 +177,10 @@ Object.assign(DrawerMenu.prototype, {
 	onMenuSlide: method.queue(),
 
 	isMenuOpen: method.boolean({
-		set: function(newValue) {
+		set: function(isMenuOpen) {
 			const self = this;
 
-			if (self[DRAWER] && newValue !== self[DRAWER].isOpen()) {
+			if (self[DRAWER] && isMenuOpen !== self[DRAWER].isOpen()) {
 				defer(() => {
 					self[toggleMenu]();
 				});
@@ -240,6 +240,8 @@ Object.assign(DrawerMenu.prototype, {
 					self[clearMenu]();
 				}
 			});
+
+			self[DRAWER].isOpen(true);
 		}
 	}),
 

@@ -35,6 +35,7 @@ const addTouch = Symbol();
 const swipeEvents = Symbol();
 const inHitZone = Symbol();
 const removeTouch = Symbol();
+const resize = Symbol();
 const layout = Symbol();
 
 /**
@@ -65,10 +66,16 @@ export default class Drawer extends Container {
 			objectHelper.applySettings(self, settings, 0, ['dock']);
 		}
 
-		self.onRemove(() => {
-			self.canResize(false);
-			self[removeTouch]();
-		});
+		self
+			.onResize(() => {
+				if (self[RESIZER]) {
+					self[RESIZER].resize();
+				}
+			})
+			.onRemove(() => {
+				self.canResize(false);
+				self[removeTouch]();
+			});
 	}
 
 	[swipeEvents]() {
@@ -160,6 +167,21 @@ export default class Drawer extends Container {
 		clearEvents(TOUCH_ELEMENT);
 	}
 
+	[resize](offset, availableSize) {
+		const self = this;
+
+		if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM) {
+			offset = availableSize - offset;
+		}
+
+		if (self[IS_HORIZONTAL]) {
+			self.width(offset);
+		}
+		else {
+			self.height(offset);
+		}
+	}
+
 	[layout]() {
 		const self = this;
 		const closedSize = self.closedSize().toPixels(true);
@@ -186,9 +208,16 @@ export default class Drawer extends Container {
 			.style(PADDING + '-' + self[DOCK], containerPadding + PIXELS);
 
 		if (self[RESIZER]) {
+			let splitOffset = self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight();
+
+			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM) {
+				splitOffset = -splitOffset;
+			}
+
 			self[RESIZER]
 				.orientation(self[IS_HORIZONTAL] ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL)
-				.isEnabled(self.isOpen());
+				.isEnabled(self.isOpen())
+				.splitOffset(splitOffset + PIXELS);
 		}
 	}
 }
@@ -213,15 +242,17 @@ Object.assign(Drawer.prototype, {
 	 */
 	dock: method.dockPoint({
 		set: function(dock) {
-			this[DOCK] = dock.primary();
+			const self = this;
 
-			this.removeClass(ALL_SIDE_CLASSES)
-				.addClass(this[DOCK]);
+			self[DOCK] = dock.primary();
 
-			this[IS_HORIZONTAL] = this[DOCK] === DockPoint.POINTS.LEFT || this[DOCK] === DockPoint.POINTS.RIGHT;
+			self.removeClass(ALL_SIDE_CLASSES)
+				.addClass(self[DOCK]);
 
-			this[addTouch]();
-			this[layout]();
+			self[IS_HORIZONTAL] = self[DOCK] === DockPoint.POINTS.LEFT || self[DOCK] === DockPoint.POINTS.RIGHT;
+
+			self[addTouch]();
+			self[layout]();
 		}
 	}),
 
@@ -234,10 +265,10 @@ Object.assign(Drawer.prototype, {
 			if (canResize) {
 				if (!self[RESIZER]) {
 					self[RESIZER] = new Resizer({
-						container: self,
-						onOffsetChange: () => {
-						},
-						splitOffset: 0
+						container: self.element().parentElement,
+						onOffsetChange: (splitOffset, offset, availableSize) => {
+							self[resize](offset, availableSize);
+						}
 					});
 					self[layout]();
 				}

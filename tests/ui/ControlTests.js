@@ -180,7 +180,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 		describe('Control classes', () => {
 			const TEST_CLASS = 'test-class';
 
-			it('should have a css class on the main container when the classes setting is set', () => {
+			it('should have a css class on the main element when the classes setting is set', () => {
 				window.control = new Control(buildSettings({
 					classes: TEST_CLASS
 				}));
@@ -188,14 +188,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				assert.equal(document.querySelectorAll('#' + TEST_ID + '.' + TEST_CLASS).length, 1);
 			});
 
-			it('should have a css class on the main container when the addClass method is set', () => {
+			it('should have a css class on the main element when the addClass method is set', () => {
 				window.control = new Control(buildSettings())
 					.addClass(TEST_CLASS);
 
 				assert.equal(document.querySelectorAll('#' + TEST_ID + '.' + TEST_CLASS).length, 1);
 			});
 
-			it('shouldnt have a css class on the main container when the removeClass method is used to remove a previously added class', () => {
+			it('shouldnt have a css class on the main element when the removeClass method is used to remove a previously added class', () => {
 				window.control = new Control(buildSettings())
 					.addClass(TEST_CLASS)
 					.removeClass(TEST_CLASS);

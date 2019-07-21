@@ -425,6 +425,14 @@ export default (Base) => {
 		get isDragging() {
 			return this[IS_DRAGGING] || this[IS_THROWING] || this[IS_BOUNCING];
 		}
+
+		get availableWidth() {
+			return this[AVAILABLE_WIDTH];
+		}
+
+		get availableHeight() {
+			return this[AVAILABLE_HEIGHT];
+		}
 	}
 
 	Object.assign(DragMixin.prototype, {
@@ -461,6 +469,8 @@ export default (Base) => {
 					self[CONTAINER_D3].on(MOUSE_WHEEL_EVENT, () => {
 						self[setZoom](self.scale() * (1 - (event.deltaY / 1000)), event.x - self[DRAG_OFFSET].x, event.y - self[DRAG_OFFSET].y);
 					});
+
+					self[updateBounds]();
 
 					self.onRemove(() => {
 						self[CONTAINER_D3].on(MOUSE_WHEEL_EVENT, null);

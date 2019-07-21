@@ -362,4 +362,21 @@ export default function TestUtil(Control) {
 	self.delay = (duration = 0) => new Promise((resolve) => {
 		delay(resolve, duration);
 	});
+
+	self.getComputedTranslateXY = (query) => {
+		const style = getComputedStyle(document.querySelector(query));
+		const transform = style.transform || style.webkitTransform || style.mozTransform;
+		let mat = transform.match(/^matrix3d\((.+)\)$/);
+
+		if (mat) {
+			return parseFloat(mat[1].split(', ')[13]);
+		}
+
+		const transArr = [];
+		mat = transform.match(/^matrix\((.+)\)$/);
+		mat ? transArr.push(parseFloat(mat[1].split(', ')[4])) : 0;
+		mat ? transArr.push(parseFloat(mat[1].split(', ')[5])) : 0;
+
+		return transArr;
+	};
 }

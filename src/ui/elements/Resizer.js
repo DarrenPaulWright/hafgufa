@@ -1,10 +1,9 @@
-import { drag, event } from 'd3';
-import { CssSize, enforce, method, PERCENT, PIXELS, ZERO_PIXELS } from 'type-enforcer';
-import { DRAG_END_EVENT, DRAG_MOVE_EVENT } from '../../utility/d3Helper';
-import dom from '../../utility/dom';
-import { HEIGHT, LEFT, TOP, WIDTH } from '../../utility/domConstants';
+import { CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer';
+import { IS_DESKTOP } from '../..';
+import clamp from '../../utility/math/clamp';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
+import DragMixin from '../mixins/DragMixin';
 import { ORIENTATION } from '../uiConstants';
 import Control from './../Control';
 import './Resizer.less';
@@ -12,123 +11,147 @@ import './Resizer.less';
 const RESIZER_CLASS = 'resizer';
 const HORIZONTAL_CLASS = 'horizontal';
 const VERTICAL_CLASS = 'vertical';
+const DESKTOP_SIZE = new CssSize('0.4rem');
+const TOUCH_SIZE = new CssSize('2rem');
+const VISUAL_SIZE = new CssSize('0.03rem');
 
+const SPLIT_OFFSET = Symbol();
 const DIRECTION = Symbol();
-const POSITION = Symbol();
-const ALT_POSITION = Symbol();
 const IS_HORIZONTAL = Symbol();
 const AVAILABLE_SIZE = Symbol();
 const MIN_OFFSET_PIXELS = Symbol();
 const MAX_OFFSET_PIXELS = Symbol();
 
-export const getResizerExtentOffset = function(offset, availableSize) {
+export const offsetToPixels = (offset, availableSize) => {
 	if (!offset) {
 		return 0;
 	}
 	if (offset.isPercent) {
+		if (offset.value < 0) {
+			return ((100 + offset.value) / 100) * availableSize;
+		}
+
 		return (offset.value / 100) * availableSize;
 	}
+
 	if (offset.value < 0) {
 		return availableSize + offset.toPixels(true);
 	}
+
 	return offset.toPixels(true);
 };
 
-const setExtentOffset = function(offsetPixels) {
-	if (this.splitOffset().isPercent) {
-		this.splitOffset((offsetPixels / this[AVAILABLE_SIZE]) * 100 + PERCENT);
+export const pixelsToOffset = (origin, pixels, availableSize) => {
+	if (!origin) {
+		return 0;
 	}
-	else {
-		this.splitOffset(offsetPixels);
+	if (origin.isPercent) {
+		if (origin.value < 0) {
+			return -(100 - ((pixels / availableSize) * 100)) + PERCENT;
+		}
+		return (pixels / availableSize) * 100 + PERCENT;
 	}
+	if (origin.value < 0) {
+		return -(availableSize - pixels) + PIXELS;
+	}
+
+	return pixels + PIXELS;
 };
 
-const position = function() {
-	if (this.container() && this[AVAILABLE_SIZE] !== undefined && this.splitOffset()) {
-		let splitOffsetPixels = getResizerExtentOffset(this.splitOffset(), this[AVAILABLE_SIZE]);
-		const minOffsetPixels = this[MIN_OFFSET_PIXELS] || getResizerExtentOffset(this.minOffset(), this[AVAILABLE_SIZE]);
-		const maxOffsetPixels = this[MAX_OFFSET_PIXELS] || getResizerExtentOffset(this.maxOffset(), this[AVAILABLE_SIZE]);
-
-		this[MIN_OFFSET_PIXELS] = minOffsetPixels;
-		this[MAX_OFFSET_PIXELS] = maxOffsetPixels;
-
-		if (splitOffsetPixels < minOffsetPixels) {
-			setExtentOffset.call(this, minOffsetPixels);
-		}
-		else if (maxOffsetPixels && splitOffsetPixels > maxOffsetPixels) {
-			setExtentOffset.call(this, maxOffsetPixels);
-		}
-		else {
-			this.css(this[ALT_POSITION], ZERO_PIXELS)
-				.css(this[POSITION], splitOffsetPixels + PIXELS);
-		}
-	}
-};
-
-const measure = function() {
-	this[MIN_OFFSET_PIXELS] = null;
-	this[MAX_OFFSET_PIXELS] = null;
-
-	if (this[IS_HORIZONTAL] !== undefined && this.container()) {
-		if (this[IS_HORIZONTAL]) {
-			this[POSITION] = TOP;
-			this[ALT_POSITION] = LEFT;
-			this[DIRECTION] = 'y';
-		}
-		else {
-			this[POSITION] = LEFT;
-			this[ALT_POSITION] = TOP;
-			this[DIRECTION] = 'x';
-		}
-		this[AVAILABLE_SIZE] = dom.get[this[IS_HORIZONTAL] ? HEIGHT : WIDTH](this.container());
-
-		position.call(this);
-	}
-};
+const setSplitOffset = Symbol();
+const setPosition = Symbol();
+const setMinMaxOffsets = Symbol();
 
 /**
  * Display a draggable resizer bar.
  *
  * @class Resizer
  * @extends Control
- * @constructor
  *
  * @arg {Object} settings
  */
-export default class Resizer extends Control {
+export default class Resizer extends DragMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.RESIZER;
-		settings.skipWindowResize = true;
-		settings.orientation = enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL);
-		settings.splitOffset = enforce.cssSize(settings.splitOffset, new CssSize('50%'), true);
+		settings = {
+			...settings,
+			type: settings.type || controlTypes.RESIZER,
+			skipWindowResize: true,
+			orientation: enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),
+			splitOffset: enforce.cssSize(settings.splitOffset, new CssSize('0'), true)
+		};
 
 		super(settings);
 
-		this.addClass(RESIZER_CLASS);
-		objectHelper.applySettings(this, settings);
-		if (!this[MIN_OFFSET_PIXELS]) {
-			position.call(this);
+		const self = this;
+
+		self.addClass(RESIZER_CLASS);
+		self[SPLIT_OFFSET] = new CssSize('unset');
+
+		self
+			.canDrag(true)
+			.restrictHorizontalDrag(true)
+			.restrictVerticalDrag(true)
+			.onDragStart(() => self[setMinMaxOffsets]())
+			.onDrag((offset) => {
+				offset = offset[self[DIRECTION]];
+
+				self[setSplitOffset](offset);
+
+				if (self.onOffsetChange()) {
+					self.onOffsetChange()(self[SPLIT_OFFSET], offset, self[AVAILABLE_SIZE]);
+				}
+			})
+			.onDragDone((offset) => {
+				self[setSplitOffset](offset[self[DIRECTION]]);
+
+				if (self.onOffsetChangeDone()) {
+					self.onOffsetChangeDone()(self[SPLIT_OFFSET], offset[self[DIRECTION]], self[AVAILABLE_SIZE]);
+				}
+			})
+			.onResize(() => {
+				if (self[IS_HORIZONTAL] !== undefined && self.container()) {
+					if (self[IS_HORIZONTAL]) {
+						self[AVAILABLE_SIZE] = self.availableHeight;
+						self[DIRECTION] = 'y';
+					}
+					else {
+						self[AVAILABLE_SIZE] = self.availableWidth;
+						self[DIRECTION] = 'x';
+					}
+
+					self[setPosition]();
+				}
+			});
+
+		objectHelper.applySettings(self, settings);
+	}
+
+	[setSplitOffset](offset) {
+		const self = this;
+
+		self[SPLIT_OFFSET].set(pixelsToOffset(self[SPLIT_OFFSET], offset, self[AVAILABLE_SIZE]));
+	}
+
+	[setPosition]() {
+		const self = this;
+
+		let splitOffsetPixels = offsetToPixels(self[SPLIT_OFFSET], self[AVAILABLE_SIZE]);
+
+		splitOffsetPixels = clamp(splitOffsetPixels, self[MIN_OFFSET_PIXELS], self[MAX_OFFSET_PIXELS]);
+
+		if (self[IS_HORIZONTAL]) {
+			self.position(0, splitOffsetPixels);
 		}
+		else {
+			self.position(splitOffsetPixels, 0);
+		}
+	}
 
-		this.elementD3()
-			.call(drag()
-				.on(DRAG_MOVE_EVENT, () => {
-					setExtentOffset.call(this, Math.max(0, event[this[DIRECTION]]));
-					if (this.onOffsetChange()) {
-						this.onOffsetChange()(this.splitOffset());
-					}
-				})
-				.on(DRAG_END_EVENT, () => {
-					this[MIN_OFFSET_PIXELS] = null;
-					this[MAX_OFFSET_PIXELS] = null;
+	[setMinMaxOffsets]() {
+		const self = this;
 
-					if (this.onOffsetChangeDone()) {
-						this.onOffsetChangeDone()(this.splitOffset());
-					}
-				})
-			);
-
-		this.onResize(measure, true);
+		self[MIN_OFFSET_PIXELS] = offsetToPixels(self.minOffset(), self[AVAILABLE_SIZE]);
+		self[MAX_OFFSET_PIXELS] = offsetToPixels(self.maxOffset(), self[AVAILABLE_SIZE]);
 	}
 }
 
@@ -147,12 +170,21 @@ Object.assign(Resizer.prototype, {
 	orientation: method.enum({
 		enum: ORIENTATION,
 		set: function(orientation) {
-			this[IS_HORIZONTAL] = orientation === ORIENTATION.HORIZONTAL;
+			const self = this;
+			const size = IS_DESKTOP ? DESKTOP_SIZE : TOUCH_SIZE;
+			const margin = -(size.toPixels(true) / 2) + PIXELS;
+			const padding = ((size.toPixels(true) / 2) - VISUAL_SIZE.toPixels(true)) + PIXELS;
 
-			this.classes(HORIZONTAL_CLASS, this[IS_HORIZONTAL])
-				.classes(VERTICAL_CLASS, !this[IS_HORIZONTAL]);
+			self[IS_HORIZONTAL] = orientation === ORIENTATION.HORIZONTAL;
 
-			measure.call(this);
+			self.classes(HORIZONTAL_CLASS, self[IS_HORIZONTAL])
+				.classes(VERTICAL_CLASS, !self[IS_HORIZONTAL])
+				.width(self[IS_HORIZONTAL] ? HUNDRED_PERCENT : size)
+				.height(self[IS_HORIZONTAL] ? size : HUNDRED_PERCENT)
+				.margin(self[IS_HORIZONTAL] ? margin + ' 0' : '0 ' + margin)
+				.padding(padding);
+
+			self.resize(true);
 		}
 	}),
 
@@ -168,7 +200,14 @@ Object.assign(Resizer.prototype, {
 	 * @returns {String|Object}
 	 */
 	splitOffset: method.cssSize({
-		set: position
+		set: function(splitOffset) {
+			this[SPLIT_OFFSET].set(splitOffset);
+
+			this[setPosition]();
+		},
+		get: function() {
+			return this[SPLIT_OFFSET];
+		}
 	}),
 
 	/**
@@ -184,7 +223,10 @@ Object.assign(Resizer.prototype, {
 	 */
 	minOffset: method.cssSize({
 		init: new CssSize('0'),
-		set: position
+		set: function() {
+			this[setMinMaxOffsets]();
+			this[setPosition]();
+		}
 	}),
 
 	/**
@@ -200,7 +242,10 @@ Object.assign(Resizer.prototype, {
 	 */
 	maxOffset: method.cssSize({
 		init: new CssSize('100%'),
-		set: position
+		set: function() {
+			this[setMinMaxOffsets]();
+			this[setPosition]();
+		}
 	}),
 
 	onOffsetChange: method.function({
@@ -210,5 +255,4 @@ Object.assign(Resizer.prototype, {
 	onOffsetChangeDone: method.function({
 		other: undefined
 	})
-
 });

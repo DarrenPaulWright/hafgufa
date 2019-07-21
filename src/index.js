@@ -18,7 +18,7 @@ export { FIT, default as Image } from './ui/elements/Image';
 export { default as Input } from './ui/elements/Input';
 export { default as Label } from './ui/elements/Label';
 export { default as Radio } from './ui/elements/Radio';
-export { default as Resizer, getResizerExtentOffset } from './ui/elements/Resizer';
+export { default as Resizer, offsetToPixels } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
 ``;
