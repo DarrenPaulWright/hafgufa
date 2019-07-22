@@ -42,7 +42,7 @@ export default class DateInput extends FormControl {
 
 		self[DATE_INPUT] = new TextInput({
 			container: self,
-			width: '6rem',
+			width: '7.4rem',
 			onChange: () => self[onDateInputChange],
 			onFocus: () => {
 				self[IS_FOCUSED] = true;
@@ -82,7 +82,7 @@ export default class DateInput extends FormControl {
 		const self = this;
 
 		if (self.showDatePicker() && !self[POPUP]) {
-			let newDate = moment(self[DATE_INPUT].value(), DATE_FORMAT, true);
+			let newDate = moment(self.value());
 			const isSelected = newDate.isValid();
 
 			if (!isSelected) {
@@ -102,10 +102,11 @@ export default class DateInput extends FormControl {
 					height: CALENDAR_HEIGHT,
 					onDateSelected: function(newValue) {
 						self[DATE_INPUT].value(newValue.format(DATE_FORMAT));
+						self.triggerChange();
 						self[POPUP].remove();
 					},
 					navButtonClass: 'icon-button',
-					selectedDate: isSelected ? moment(newDate) : undefined
+					selectedDate: newDate.toDate()
 				}],
 				onRemove: () => {
 					self[POPUP] = null;
@@ -117,7 +118,7 @@ export default class DateInput extends FormControl {
 
 	[onDateInputChange](newValue) {
 		const self = this;
-		const newDate = moment(newValue.value, DATE_FORMAT, true);
+		const newDate = moment(new Date(newValue.value));
 
 		if (newDate.isValid() || newValue.value === '') {
 			if (self[POPUP]) {
@@ -139,18 +140,13 @@ Object.assign(DateInput.prototype, {
 		const self = this;
 
 		if (arguments.length) {
-			newValue = moment(newValue);
-			self[DATE_INPUT].value(newValue.isValid() ? newValue.format(DATE_FORMAT) : '');
+			newValue = enforce.date(newValue, '', true);
+			self[DATE_INPUT].value(moment(newValue).format(DATE_FORMAT));
 
 			return self;
 		}
 
-		const value = moment(self[DATE_INPUT].value(), DATE_FORMAT, true);
-
-		return {
-			date: value.toDate(),
-			text: value.isValid() ? value.format(DATE_FORMAT) : ''
-		};
+		return new Date(self[DATE_INPUT].value());
 	},
 
 	focus: () => {
@@ -166,7 +162,7 @@ Object.assign(DateInput.prototype, {
 					container: self,
 					label: 'Now',
 					onClick: () => {
-						self.value(moment().toISOString())
+						self.value(new Date())
 							.triggerChange();
 					}
 				});
