@@ -5,8 +5,12 @@
 	.line {
 		height: 0.05em;
 		width: 100%;
-		background: linear-gradient(to right, @disabledFontColor, @secondaryFontColor, @disabledFontColor);
+		background: @timelineLineBackground;
 		position: absolute;
 		left: 0;
+	}
+
+	.virtual-list {
+		mask-image: @timelineMask;
 	}
 }

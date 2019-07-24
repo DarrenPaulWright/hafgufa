@@ -414,6 +414,13 @@
 /* virtual list */
 @virtualListEmptyContentPadding: 1.4rem;
 
+/* Carousel */
+@carouselMask: linear-gradient(90deg, transparent, black 4rem, black calc(100% - 4rem), transparent);
+
+/* Timeline */
+@timelineLineBackground: linear-gradient(to right, fade(@secondaryFontColor, 0%), fade(@secondaryFontColor, 20%) 4rem, fade(@secondaryFontColor, 50%), fade(@secondaryFontColor, 20%) calc(100% - 4rem), fade(@secondaryFontColor, 0%));
+@timelineMask: @carouselMask;
+
 /* grid */
 @gridHeaderCellPadding: 0.15rem 0.4rem 0.35rem;
 @gridCellPadding: 0.4rem 0.6rem;
