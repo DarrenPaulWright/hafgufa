@@ -38,11 +38,13 @@ export default class TimeSpan extends Container {
 			.onResize(() => {
 				const lineOffset = self.lineOffset();
 
-				if (lineOffset.toPixels(true) < 0) {
-					this[HEADING].css(BOTTOM, -lineOffset.toPixels(true) - this[HEADING].borderHeight() + PIXELS);
-				}
-				else {
-					this[HEADING].css(TOP, lineOffset.toPixels());
+				if (lineOffset) {
+					if (lineOffset.toPixels(true) < 0) {
+						this[HEADING].css(BOTTOM, -lineOffset.toPixels(true) - this[HEADING].borderHeight() + PIXELS);
+					}
+					else {
+						this[HEADING].css(TOP, lineOffset.toPixels());
+					}
 				}
 			})
 			.onRemove(() => {

@@ -572,7 +572,7 @@ Object.assign(Control.prototype, {
 
 	innerWidth: function() {
 		if (this[ELEMENT]) {
-			return (this[ELEMENT].clientWidth || 0) - dom.get.paddings.width(this[ELEMENT]);
+			return (this[ELEMENT].clientWidth || 0) - this.padding().horizontal;
 		}
 
 		return 0;

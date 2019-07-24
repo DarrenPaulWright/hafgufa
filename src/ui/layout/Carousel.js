@@ -1,21 +1,12 @@
 import { AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
-import {
-	PADDING_BOTTOM,
-	PADDING_LEFT,
-	PADDING_RIGHT,
-	PADDING_TOP,
-	SCROLL_EVENT,
-	SPACE
-} from '../../utility/domConstants';
+import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
-import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import NextPrevMixin from '../mixins/NextPrevMixin';
 import './Carousel.less';
 import VirtualList from './VirtualList';
 
-const VIRTUAL_LIST_ID = 'carouselVirtualList';
 const EVENT_SUFFIX = '.carousel';
 
 const VIRTUAL_LIST = Symbol();
@@ -43,19 +34,19 @@ export default class Carousel extends NextPrevMixin(Control) {
 
 				self[VIRTUAL_LIST]
 					.padding(ZERO_PIXELS + SPACE + buttonWidth + PIXELS)
-					.on(SCROLL_EVENT + EVENT_SUFFIX, onChange);
+					.onLayoutChange(onChange);
 			},
 			onHideButtons: () => {
 				self[BUTTON_SIZE] = 0;
 
 				self[VIRTUAL_LIST]
 					.padding(ZERO_PIXELS)
-					.off(SCROLL_EVENT + EVENT_SUFFIX);
+					.onLayoutChange(null);
 			},
 			isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
 			isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
-			onPrev: () => this[VIRTUAL_LIST].prevPage(),
-			onNext: () => this[VIRTUAL_LIST].nextPage()
+			onPrev: () => self[VIRTUAL_LIST].prevPage(),
+			onNext: () => self[VIRTUAL_LIST].nextPage()
 		};
 
 		super(settings);
@@ -66,7 +57,6 @@ export default class Carousel extends NextPrevMixin(Control) {
 		self.addClass('carousel');
 
 		self[VIRTUAL_LIST] = new VirtualList({
-			ID: VIRTUAL_LIST_ID,
 			container: self.element(),
 			isHorizontal: true,
 			height: settings.height,

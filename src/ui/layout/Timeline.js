@@ -1,13 +1,16 @@
+import { throttle } from 'async-agent';
 import { event } from 'd3';
 import moment from 'moment';
-import { CssSize, enforceBoolean, Enum, method, PIXELS } from 'type-enforcer';
-import { MOUSE_WHEEL_EVENT, TOP, BOTTOM } from '../../utility/domConstants';
+import { repeat } from 'object-agent';
+import { CssSize, enforceBoolean, Enum, method, PIXELS, Thickness } from 'type-enforcer';
+import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import Div from '../elements/Div';
-import Carousel from './Carousel';
+import NextPrevMixin from '../mixins/NextPrevMixin';
 import './Timeline.less';
 import TimeSpan from './TimeSpan';
+import VirtualList from './VirtualList';
 
 const MILLISECONDS_IN_SECOND = 1000;
 const SECONDS_IN_MINUTE = 60;
@@ -118,7 +121,7 @@ const minSpanWidth = new CssSize('8rem');
 const minSubSpanWidth = new CssSize('0.5rem');
 
 const LINE = Symbol();
-const CAROUSEL = Symbol();
+const VIRTUAL_LIST = Symbol();
 const MIN_SPAN_WIDTH = Symbol();
 const MIN_SUB_SPAN_WIDTH = Symbol();
 const START = Symbol();
@@ -135,10 +138,23 @@ const setZoom = Symbol();
 const calcSpans = Symbol();
 const buildSlides = Symbol();
 const renderSpan = Symbol();
+const getSpanOffset = Symbol();
 
-export default class Timeline extends Control {
+export default class Timeline extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
 		settings.canZoom = enforceBoolean(settings.canZoom, true);
+		settings.NextPrevMixin = {
+			onShowButtons: (onChange) => {
+				self[VIRTUAL_LIST].onLayoutChange(onChange);
+			},
+			onHideButtons: () => {
+				self[VIRTUAL_LIST].onLayoutChange(null);
+			},
+			isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
+			isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
+			onPrev: () => self[VIRTUAL_LIST].prevPage(),
+			onNext: () => self[VIRTUAL_LIST].nextPage()
+		};
 
 		super(settings);
 
@@ -153,37 +169,25 @@ export default class Timeline extends Control {
 			classes: 'line'
 		});
 
-		self[CAROUSEL] = new Carousel({
-			container: self,
-			height: '100%',
-			showButtons: true,
-			slideControl: TimeSpan,
-			extraRenderedItemsRatio: 0,
-			onSlideRender: (control, data) => {
+		self[VIRTUAL_LIST] = new VirtualList({
+			container: self.element(),
+			isHorizontal: true,
+			height: settings.height,
+			itemControl: TimeSpan,
+			hideScrollBars: true,
+			keepAltRows: false,
+			onItemRender: (control, data) => {
 				self[renderSpan](control, data);
 			}
 		});
 
-		self
-			.onResize(() => {
-				self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
-				self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
-				self[setLayout]();
-			})
-			.resize();
+		self.onResize(() => {
+			self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
+			self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
+			self[setLayout]();
+		});
 
 		objectHelper.applySettings(self, settings);
-	}
-
-	[setLayout]() {
-		const self = this;
-		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / self[MIN_SPAN_WIDTH];
-		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self.borderWidth());
-
-		if (minZoom !== self[MIN_ZOOM]) {
-			self[MIN_ZOOM] = minZoom;
-			self[setZoom](self[ZOOM]);
-		}
 	}
 
 	[setZoom](newZoom) {
@@ -192,10 +196,17 @@ export default class Timeline extends Control {
 		newZoom = Math.max(newZoom, self[MIN_ZOOM] || 0);
 		newZoom = Math.min(newZoom, self[MAX_ZOOM]);
 
-		if (newZoom !== self[ZOOM] || (self.data().length && !self[CAROUSEL].slideWidth())) {
+		if (newZoom !== self[ZOOM] || (self.data().length && !self[VIRTUAL_LIST].itemSize())) {
 			self[ZOOM] = newZoom;
 			self[calcSpans]();
 		}
+	}
+
+	[getSpanOffset](span, date) {
+		const start = moment(date).startOf(span.incUnit).toDate();
+		const end = moment(date).endOf(span.incUnit).toDate();
+
+		return (date - start) / (end - start);
 	}
 
 	[calcSpans]() {
@@ -204,20 +215,19 @@ export default class Timeline extends Control {
 		SPANS.some((span) => {
 			if (span.min <= self[ZOOM] && span.max >= self[ZOOM]) {
 				let slides;
-				let slideWidth;
 
 				if (self[SPAN] !== span) {
 					self[SPAN] = span;
 					slides = self[buildSlides]();
 				}
 
-				slideWidth = self[ZOOM] * self[MIN_SPAN_WIDTH] * (self[SPAN].length / MILLISECONDS_IN_YEAR);
+				let slideWidth = self[ZOOM] * self[MIN_SPAN_WIDTH] * (self[SPAN].length / MILLISECONDS_IN_YEAR);
 
 				self[SPAN].subSpans.some((subSpan) => {
 					if (slideWidth / subSpan > self[MIN_SUB_SPAN_WIDTH]) {
 						self[SUB_SPANS] = subSpan;
 						if (!slides) {
-							self[CAROUSEL].getRenderedControls().forEach((control) => {
+							self[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
 								control.subSpans(self[SUB_SPANS]);
 							});
 						}
@@ -225,11 +235,13 @@ export default class Timeline extends Control {
 					}
 				});
 
-				self[CAROUSEL]
-					.slideWidth(slideWidth + PIXELS);
+				self[VIRTUAL_LIST]
+					.itemSize(slideWidth + PIXELS)
+					.startOffset(-self[getSpanOffset](span, self[START]) * slideWidth)
+					.endOffset(-((1 - self[getSpanOffset](span, self[END])) + 1) * slideWidth);
 
 				if (slides) {
-					self[CAROUSEL].slideData(slides);
+					self[VIRTUAL_LIST].itemData(slides);
 				}
 
 				return true;
@@ -240,12 +252,11 @@ export default class Timeline extends Control {
 	[buildSlides]() {
 		const self = this;
 		const slides = [];
-		const totalSlides = Math.ceil(self[LENGTH] / self[SPAN].length);
+		const totalSlides = Math.ceil(self[LENGTH] / self[SPAN].length) + 1;
 		const currentValue = moment(self[START]);
-		let title;
 
-		for (let slideIndex = 0; slideIndex < totalSlides; slideIndex++) {
-			title = currentValue.format(self[SPAN].format);
+		repeat(totalSlides, () => {
+			const title = currentValue.format(self[SPAN].format);
 
 			slides.push({
 				ID: 'span_' + title,
@@ -260,7 +271,7 @@ export default class Timeline extends Control {
 			});
 
 			currentValue.add(self[SPAN].incValue, self[SPAN].incUnit);
-		}
+		});
 
 		const start = slides[0].start;
 
@@ -277,19 +288,43 @@ export default class Timeline extends Control {
 	}
 
 	[renderSpan](control, data) {
+		const self = this;
+
 		control
-			.lineOffset(this.lineOffset())
+			.lineOffset(self.lineOffset())
 			.title(data.title)
 			.subTitle(data.subTitle)
-			.subSpans(this[SUB_SPANS]);
+			.subSpans(self[SUB_SPANS]);
 
-		if (this.onSpanRender()) {
-			this.onSpanRender()(control, data);
+		if (self.onSpanRender()) {
+			self.onSpanRender()(control, data);
 		}
 	}
 }
 
 Object.assign(Timeline.prototype, {
+	[setLayout]: throttle(function() {
+		const self = this;
+
+		self[LENGTH] = self[END] - self[START];
+
+		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / self[MIN_SPAN_WIDTH];
+		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self.innerWidth());
+
+		if (minZoom !== self[MIN_ZOOM]) {
+			self[MIN_ZOOM] = minZoom;
+			self[setZoom](self[ZOOM]);
+		}
+	}, 0, {
+		leading: false
+	}),
+	padding: method.thickness({
+		init: new Thickness('0'),
+		set: function(padding) {
+			this[VIRTUAL_LIST].padding(padding);
+			this[setLayout]();
+		}
+	}),
 	data: method.array({
 		set: function(data) {
 			const self = this;
@@ -314,25 +349,40 @@ Object.assign(Timeline.prototype, {
 				}
 			});
 
-			self[LENGTH] = self[END] - self[START];
-
-			this[setLayout]();
+			self[setLayout]();
 		}
+	}),
+	dateStart: method.date({
+		set: function(dateStart) {
+			this[START] = dateStart;
+			this[setLayout]();
+		},
+		coerce: true
+	}),
+	dateEnd: method.date({
+		set: function(dateEnd) {
+			this[END] = dateEnd;
+			this[setLayout]();
+		},
+		coerce: true
 	}),
 	lineOffset: method.cssSize({
 		set: function(lineOffset) {
-			lineOffset.element(this.element());
+			const self = this;
+
+			lineOffset.element(self.element());
 
 			if (lineOffset.toPixels(true) < 0) {
-				this[LINE].css(BOTTOM, -lineOffset.toPixels(true) + PIXELS);
+				self[LINE].css(BOTTOM, -lineOffset.toPixels(true) + PIXELS);
 			}
 			else {
-				this[LINE].css(TOP, lineOffset.toPixels());
+				self[LINE].css(TOP, lineOffset.toPixels());
 			}
 
-			this[CAROUSEL].getRenderedControls().forEach((control) => {
-				control.lineOffset(lineOffset);
-			});
+			self[VIRTUAL_LIST].getRenderedControls()
+				.forEach((control) => {
+					control.lineOffset(lineOffset);
+				});
 		}
 	}),
 	onSpanRender: method.function(),
@@ -341,10 +391,12 @@ Object.assign(Timeline.prototype, {
 			const self = this;
 			const onMouseWheel = () => {
 				event.preventDefault();
+				event.stopPropagation();
+
 				self[setZoom](self[ZOOM] + (self[ZOOM] * (event.deltaY / -1000)));
 			};
 
-			self[CAROUSEL]
+			self[VIRTUAL_LIST]
 				.on(MOUSE_WHEEL_EVENT, canZoom ? onMouseWheel : null);
 
 		}

@@ -1,7 +1,17 @@
 import { defer, throttle } from 'async-agent';
 import { event } from 'd3';
 import { clone } from 'object-agent';
-import { AUTO, enforce, HUNDRED_PERCENT, INITIAL, method, PIXELS, Thickness, ZERO_PIXELS } from 'type-enforcer';
+import {
+	AUTO,
+	CssSize,
+	enforce,
+	HUNDRED_PERCENT,
+	INITIAL,
+	method,
+	PIXELS,
+	Thickness,
+	ZERO_PIXELS
+} from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
 import dom from '../../utility/dom';
 import {
@@ -390,6 +400,10 @@ export default class VirtualList extends FocusMixin(Control) {
 
 				self[CURRENT_START_INDEX] = startIndex;
 				self[CURRENT_END_INDEX] = endIndex;
+
+				if (self.onLayoutChange()) {
+					self.onLayoutChange()();
+				}
 			}
 		}
 	}
@@ -586,7 +600,8 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		offset = Math.floor(offset / self[ITEM_SIZE]) * self[ITEM_SIZE];
-		self[CURRENT_SCROLL_OFFSET] = clamp(offset, 0, (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE]);
+		self[CURRENT_SCROLL_OFFSET] = clamp(offset, 0, (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE] + self.startOffset()
+			.toPixels(true) + self.endOffset().toPixels(true));
 
 		d3Helper.animate(self.elementD3())
 			.tween('scrollTween', d3Helper.propertyTween(self[EXTENT_SCROLL_ORIGIN], self[CURRENT_SCROLL_OFFSET]));
@@ -658,28 +673,42 @@ export default class VirtualList extends FocusMixin(Control) {
 	}
 }
 
-VirtualList.prototype[setVirtualContentAltExtent] = throttle(function() {
-	const self = this;
-	let maxAltExtent = 0;
-
-	if (!self.isRemoved && ((self.isHorizontal() && self.height().isAuto) || self.width().isAuto)) {
-		const scrollBuffer = self[VIEWPORT_SIZE] - SCROLL_BUFFER;
-
-		self[CONTROL_RECYCLER].each((control) => {
-			const controlOffset = parseInt(control.css(self[POSITION_ORIGIN]), 10);
-
-			if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
-				controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
-				maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
-			}
-		});
-
-		d3Helper.animate(self[CONTENT_CONTAINER])
-			.style(self[ALT_EXTENT], maxAltExtent + PIXELS);
-	}
-}, 100);
-
 Object.assign(VirtualList.prototype, {
+	[setVirtualContentAltExtent]: throttle(function() {
+		const self = this;
+		let maxAltExtent = 0;
+
+		if (!self.isRemoved && ((self.isHorizontal() && self.height().isAuto) || self.width().isAuto)) {
+			const scrollBuffer = self[VIEWPORT_SIZE] - SCROLL_BUFFER;
+
+			self[CONTROL_RECYCLER].each((control) => {
+				const controlOffset = parseInt(control.css(self[POSITION_ORIGIN]), 10);
+
+				if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
+					controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
+					maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
+				}
+			});
+
+			d3Helper.animate(self[CONTENT_CONTAINER])
+				.style(self[ALT_EXTENT], maxAltExtent + PIXELS);
+		}
+	}, 100),
+
+	/**
+	 * A callback that gets called whenever the layout changes
+	 *
+	 * @method onLayoutChange
+	 * @member module:VirtualList
+	 * @instance
+	 *
+	 * @param {function} [onLayoutChange]
+	 *
+	 * @returns {function|this}
+	 */
+	onLayoutChange: method.function({
+		other: null
+	}),
 
 	/**
 	 * Get or set whether the list is rendered vertically or horizontally
@@ -693,7 +722,7 @@ Object.assign(VirtualList.prototype, {
 		set: function(isHorizontal) {
 			const self = this;
 
-			if (isHorizontal && !self[CONTENT_CONTAINER].restrictVerticalDrag) {
+			if (isHorizontal && !self[CONTENT_CONTAINER].restrictVerticalDrag()) {
 				self[CONTENT_CONTAINER]
 					.canDrag(true)
 					.restrictVerticalDrag(true)
@@ -956,8 +985,27 @@ Object.assign(VirtualList.prototype, {
 	isAtEnd: function() {
 		const self = this;
 
-		return self[CURRENT_SCROLL_OFFSET] + self[VIEWPORT_SIZE] > (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - SCROLL_BUFFER;
+		return self[CURRENT_SCROLL_OFFSET] + self[VIEWPORT_SIZE] > (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - SCROLL_BUFFER + self.startOffset()
+			.toPixels(true) + self.endOffset().toPixels(true) - self[INNER_PADDING][self[EXTENT_PADDING]];
 	},
+
+	startOffset: method.cssSize({
+		init: new CssSize('0'),
+		set: function(startOffset) {
+			const self = this;
+
+			self[CONTENT_CONTAINER].css(self.isHorizontal() ? 'margin-left' : 'margin-top', startOffset.toPixels());
+		}
+	}),
+
+	endOffset: method.cssSize({
+		init: new CssSize('0'),
+		set: function(endOffset) {
+			const self = this;
+
+			self[CONTENT_CONTAINER].css(self.isHorizontal() ? 'margin-right' : 'margin-bottom', endOffset.toPixels());
+		}
+	}),
 
 	/**
 	 * Hide the scrollbars. This disables all mouse interaction, so other means of navigation must be implemented.
