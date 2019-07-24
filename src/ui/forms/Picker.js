@@ -770,9 +770,9 @@ export default class Picker extends FocusMixin(FormControl) {
 				canFilter: self[FLATTENED_ITEMS_LIST].length >= FILTER_THRESHOLD,
 				canFilterSelectedOnly: self.canFilterSelectedOnly(),
 				canSelectAll: self.canSelectAll(),
-				onAdd: self.onAdd() ? self[addNewItem] : null,
+				onAdd: self.onAdd() ? (...args) => self[addNewItem](...args) : null,
 				onEdit: self.onEdit(),
-				onDelete: self.onDelete() ? self[deleteItem] : null,
+				onDelete: self.onDelete() ? (...args) => self[deleteItem](...args) : null,
 				onSelect: function(itemID) {
 					if (isArray(itemID)) {
 						itemID.forEach((ID, index) => {
