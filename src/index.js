@@ -36,6 +36,12 @@ export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
+export { default as Bar } from './ui/graphs/Bar';
+export { default as Donut } from './ui/graphs/Donut';
+export { default as GraphAxisBase } from './ui/graphs/GraphAxisBase';
+export { default as GraphBase } from './ui/graphs/GraphBase';
+export { default as Scatter } from './ui/graphs/Scatter';
+
 export { default as Carousel } from './ui/layout/Carousel';
 export { default as Container } from './ui/layout/Container';
 export { default as Dialog } from './ui/layout/Dialog';
@@ -70,6 +76,10 @@ export { default as NextPrevMixin } from './ui/mixins/NextPrevMixin';
 export { default as OnClickMixin } from './ui/mixins/OnClickMixin';
 export { default as Removable } from './ui/mixins/Removable';
 export { default as TooltipMixin } from './ui/mixins/TooltipMixin';
+
+export { default as accuracy } from './utility/math/accuracy';
+export { default as clamp } from './utility/math/clamp';
+export { default as round } from './utility/math/round';
 
 export * from './utility/browser';
 export * from './utility/domConstants';

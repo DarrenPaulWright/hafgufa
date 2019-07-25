@@ -4,7 +4,14 @@ import { clone } from 'object-agent';
 import { AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
-	CLICK_EVENT, DISPLAY, INLINE_BLOCK, KEY_DOWN_EVENT, PADDING_RIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED
+	CLICK_EVENT,
+	DISPLAY,
+	INLINE_BLOCK,
+	KEY_DOWN_EVENT,
+	PADDING_RIGHT,
+	TAB_INDEX,
+	TAB_INDEX_DISABLED,
+	TAB_INDEX_ENABLED
 } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';

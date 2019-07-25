@@ -1,0 +1,21 @@
+
+.bar {
+	path {
+		stroke: @graphLineColor;
+	}
+
+	.bar-label {
+		fill: @graphFontColor;
+
+		&.inverse {
+			fill: @graphInverseFontColor;
+			font-weight: @graphInverseFontWeight;
+		}
+	}
+
+	.xAxis {
+		path {
+			display: none;
+		}
+	}
+}

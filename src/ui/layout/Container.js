@@ -1,4 +1,4 @@
-import { castArray, isArray, isJson, isString, isObject, method } from 'type-enforcer';
+import { castArray, isArray, isJson, isObject, isString, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { CONTENT_CHANGE_EVENT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';

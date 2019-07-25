@@ -1,7 +1,13 @@
 import { clear, defer, delay } from 'async-agent';
 import { AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
 import {
-	BODY, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP
+	BODY,
+	MOUSE_ENTER_EVENT,
+	MOUSE_LEAVE_EVENT,
+	PADDING_BOTTOM,
+	PADDING_LEFT,
+	PADDING_RIGHT,
+	PADDING_TOP
 } from '../../utility/domConstants';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';

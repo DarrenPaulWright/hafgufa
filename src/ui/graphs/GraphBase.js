@@ -1,0 +1,385 @@
+import { defer } from 'async-agent';
+import { forOwn } from 'object-agent';
+import { DockPoint, enforce, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer';
+import dom from '../../utility/dom';
+import { HEIGHT, WIDTH } from '../../utility/domConstants';
+import Control from '../Control';
+import Tooltip from '../layout/Tooltip';
+import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
+import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import './GraphBase.less';
+import Legend from './Legend';
+
+const BREAK = '<br>';
+const MAX_TOOLTIP_WIDTH = '20rem';
+
+const DATA_TYPES = new Enum({
+	TWO_AXIS: 'twoAxis',
+	THREE_AXIS: 'threeAxis',
+	FOUR_AXIS: 'fourAxis',
+	FOUR_AXIS_RANGE: 'fourAxisRange',
+	TREE: 'tree',
+	NETWORK: 'network',
+	TIME_LINE: 'timeLine'
+});
+
+const TOOLTIP = Symbol();
+// const STORE_ON_CHANGE_IDS = Symbol();
+const LEGEND = Symbol();
+
+const calculateDataLimits = Symbol();
+const buildTooltipText = Symbol();
+
+/**
+ * @class GraphBase
+ * @constructor
+ *
+ * @arg {Object} settings
+ */
+export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Control)) {
+	constructor(settings = {}) {
+		super({
+			...settings,
+			isWorking: enforce.boolean(settings.isWorking, true)
+		});
+
+		const self = this;
+		self.addClass('graph');
+		self.svgElement(dom.buildNew('', 'svg:svg'));
+
+		// self[STORE_ON_CHANGE_IDS] = [];
+
+		self.onResize(() => {
+			let legendWidth;
+			let renderWidth = self.innerWidth() || dom.get.width(self.element());
+			let renderHeight = self.innerHeight() || dom.get.height(self.element());
+
+			if (self.getHeading()) {
+				renderHeight -= self.getHeading().height();
+			}
+
+			dom.attr(self.svgElement(), WIDTH, renderWidth + PIXELS);
+			dom.attr(self.svgElement(), HEIGHT, renderHeight + PIXELS);
+
+			if (self[LEGEND]) {
+				legendWidth = self[LEGEND].width();
+				renderWidth -= legendWidth + 10;
+				self[LEGEND].attr('transform', 'translate(' + renderWidth + ',' + self.graphPadding().top + ')');
+			}
+
+			self.onUpdateSize().trigger(null, [renderWidth, renderHeight]);
+			if (self.data().length) {
+				self.onUpdateData().trigger();
+			}
+		});
+
+		defer(() => {
+			self.resize();
+		});
+
+		self.onRemove(() => {
+			// self.dataSource([]);
+			self.data([]);
+			self.legendItems([]);
+			self.svgElement(null);
+		});
+	}
+
+	[calculateDataLimits](data, dataType) {
+		const limits = {};
+
+		const parseValue = (value) => parseFloat(value);
+
+		const calculate = (model) => {
+			forOwn(model, (itemKey, limitKey) => {
+				limits['min' + limitKey] = data.length ? parseValue(data[0][itemKey]) : 0;
+				limits['max' + limitKey] = data.length ? parseValue(data[0][itemKey]) : 0;
+			});
+
+			data.forEach((item) => {
+				forOwn(model, (itemKey, limitKey) => {
+					limits['min' + limitKey] = Math.min(limits['min' + limitKey], parseValue(item[itemKey]));
+					limits['max' + limitKey] = Math.max(limits['max' + limitKey], parseValue(item[itemKey]));
+				});
+			});
+		};
+
+		switch (dataType) {
+			case DATA_TYPES.TWO_AXIS:
+				calculate({
+					Value: 'value',
+					Label: 'label'
+				});
+				break;
+			case DATA_TYPES.THREE_AXIS:
+				calculate({
+					Value: 'value',
+					X: 'x',
+					Y: 'y'
+				});
+				break;
+			case DATA_TYPES.FOUR_AXIS:
+				calculate({
+					Value: 'value',
+					X: 'x',
+					Y: 'y',
+					Z: 'z'
+				});
+				break;
+			case DATA_TYPES.FOUR_AXIS_RANGE:
+				calculate({
+					Value: 'value',
+					XMin: 'xMin',
+					XMax: 'xMax',
+					YMin: 'yMin',
+					YMax: 'yMax',
+					Z: 'z'
+				});
+				break;
+		}
+
+		return limits;
+	}
+
+	[buildTooltipText](d, dataType) {
+		const self = this;
+		let output = '';
+
+		switch (dataType) {
+			case DATA_TYPES.TWO_AXIS:
+				output += d.label + BREAK;
+				break;
+			case DATA_TYPES.THREE_AXIS:
+				if (self.xLabel()) {
+					output += self.xLabel() + ': ';
+				}
+				output += d.x + BREAK;
+
+				if (self.yLabel()) {
+					output += self.yLabel() + ': ';
+				}
+				output += d.y + BREAK;
+
+				break;
+			case DATA_TYPES.FOUR_AXIS:
+				if (d.title) {
+					output += '<strong>' + d.title + '</strong>' + BREAK;
+				}
+				if (self.xLabel()) {
+					output += self.xLabel() + ': ';
+				}
+				output += d.x + BREAK;
+
+				if (self.yLabel()) {
+					output += self.yLabel() + ': ';
+				}
+				output += d.y + BREAK;
+
+				if (self.zLabel()) {
+					output += self.zLabel() + ': ';
+				}
+				output += d.z + BREAK;
+
+				break;
+			case DATA_TYPES.FOUR_AXIS_RANGE:
+				if (d.title) {
+					output += '<strong>' + d.title + '</strong>' + BREAK;
+				}
+				if (self.xLabel()) {
+					output += self.xLabel() + ': ';
+				}
+				output += d.xMin + ' - ' + d.xMax + BREAK;
+
+				if (self.yLabel()) {
+					output += self.yLabel() + ': ';
+				}
+				output += d.yMin + ' - ' + d.yMax + BREAK;
+
+				if (self.zLabel()) {
+					output += self.zLabel() + ': ';
+				}
+				output += d.z + BREAK;
+
+				break;
+		}
+
+		output += 'Total: ' + d.value;
+
+		return output;
+	}
+}
+
+Object.assign(GraphBase.prototype, {
+	svgElement: method.element({
+		before: function(oldValue) {
+			if (oldValue) {
+				dom.remove(oldValue);
+			}
+		},
+		set: function(newValue) {
+			if (newValue) {
+				dom.appendTo(this, newValue);
+			}
+		},
+		other: null
+	}),
+
+	onUpdateSize: method.queue(),
+
+	onUpdateData: method.queue(),
+
+	graphPadding: method.thickness({
+		init: new Thickness(12),
+		set: function() {
+			this.resize();
+		}
+	}),
+
+	color: method.string({
+		init: '#b24f26',
+		set: function(newValue) {
+			const self = this;
+
+			self.onUpdateData().trigger();
+			if (self[LEGEND]) {
+				self[LEGEND].color(newValue);
+			}
+		}
+	}),
+
+	data: method.array({
+		set: function(newValue) {
+			const self = this;
+
+			if (!self.isRemoved) {
+				newValue.forEach((dataObject) => {
+					if (isObject(dataObject)) {
+						dataObject.limits = self[calculateDataLimits](dataObject.data, dataObject.dataType);
+					}
+				});
+				self.onUpdateData().trigger();
+				self.isWorking(false);
+			}
+		}
+	}),
+
+	// dataSource: method.array({
+	// 	init: undefined,
+	// 	before: function(oldValue) {
+	// 		if (oldValue && !isArray(oldValue)) {
+	// 			oldValue = [oldValue];
+	// 		}
+	// 		if (oldValue) {
+	// 			oldValue.forEach((source, index) => {
+	// 				if (source.store) {
+	// 					source.store.offChange(self[STORE_ON_CHANGE_IDS][index]);
+	// 					self[STORE_ON_CHANGE_IDS][index] = null;
+	// 				}
+	// 			});
+	// 		}
+	// 	},
+	// 	set: function(newValue) {
+	// 		const saveData = (data, index, dataType) => {
+	// 			const currentData = clone(self.data());
+	// 			currentData[index] = {
+	// 				data: data,
+	// 				dataType: dataType
+	// 			};
+	// 			self.data(currentData);
+	// 		};
+	//
+	// 		if (newValue && !isArray(newValue)) {
+	// 			newValue = [newValue];
+	// 		}
+	//
+	// 		newValue.forEach((source, index) => {
+	// 			if (source.store && source.valueKey) {
+	// 				self[STORE_ON_CHANGE_IDS][index] = dataSource.twoAxisFromValueKey(source, (data) => {
+	// 					saveData(data, index, DATA_TYPES.TWO_AXIS);
+	// 				});
+	// 			}
+	// 			else if (source.store && source.groupKey) {
+	// 				self[STORE_ON_CHANGE_IDS][index] = dataSource.twoAxisFromGroupKey(source, (data) => {
+	// 					saveData(data, index, DATA_TYPES.TWO_AXIS);
+	// 				});
+	// 			}
+	// 			else if (source.store && source.xKey && source.yKey && source.zKey) {
+	// 				self[STORE_ON_CHANGE_IDS][index] = dataSource.fourAxisWithValue(source, (data) => {
+	// 					saveData(data, index, DATA_TYPES.FOUR_AXIS);
+	// 				});
+	// 			}
+	// 			else if (source.store && source.xKey && source.yKey) {
+	// 				self[STORE_ON_CHANGE_IDS][index] = dataSource.threeAxisWithValue(source, (data) => {
+	// 					saveData(data, index, DATA_TYPES.THREE_AXIS);
+	// 				});
+	// 			}
+	// 			else if (source.store && source.xMinKey && source.xMaxKey && source.yMinKey && source.yMaxKey && source.zKey) {
+	// 				self[STORE_ON_CHANGE_IDS][index] = dataSource.fourAxisWithRangeAndValue(source, (data) => {
+	// 					saveData(data, index, DATA_TYPES.FOUR_AXIS_RANGE);
+	// 				});
+	// 			}
+	// 		});
+	// 	},
+	// 	other: Object
+	// }),
+
+	tooltip: function(anchor, datum, dataType) {
+		const self = this;
+
+		if (anchor) {
+			self[TOOLTIP] = new Tooltip({
+				content: self[buildTooltipText](datum, dataType),
+				anchor: anchor,
+				anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
+				tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
+				maxWidth: MAX_TOOLTIP_WIDTH
+			});
+		}
+		else {
+			if (self[TOOLTIP]) {
+				self[TOOLTIP].remove();
+				self[TOOLTIP] = null;
+			}
+		}
+	},
+
+	legendItems: method.array({
+		set: function(newValue) {
+			const self = this;
+
+			if (newValue.length) {
+				if (!self[LEGEND]) {
+					self[LEGEND] = new Legend({
+						container: self.svgElement(),
+						color: self.color()
+					});
+				}
+
+				self[LEGEND].items(newValue);
+				self.resize();
+			}
+			else {
+				self[LEGEND].remove();
+				self[LEGEND] = null;
+			}
+		}
+	}),
+
+	legendItemColor: function(item) {
+		return this[LEGEND] ? this[LEGEND].itemColor(item) : this.color();
+	},
+
+	legendOnMouseOverItem: function(callback) {
+		return this[LEGEND] ? this[LEGEND].onMouseOverItem(callback) : undefined;
+	},
+
+	legendOnMouseOutItem: function(callback) {
+		return this[LEGEND] ? this[LEGEND].onMouseOutItem(callback) : undefined;
+	},
+
+	legendOnSelectionChange: function(callback) {
+		return this[LEGEND] ? this[LEGEND].onSelectionChange(callback) : undefined;
+	}
+});
+
+GraphBase.DATA_TYPES = DATA_TYPES;
