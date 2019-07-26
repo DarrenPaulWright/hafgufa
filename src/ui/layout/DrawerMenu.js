@@ -60,30 +60,38 @@ export default class DrawerMenu extends Control {
 			}
 		});
 
-		objectHelper.applySettings(self, settings);
+		objectHelper.applySettings(self, settings, false, [], ['menuContainer']);
 
 		self.onResize(() => {
-			let treeHeight = 0;
-			if (self[DRAWER].isOpen()) {
-				treeHeight = self[DRAWER].borderHeight() - dom.get.margins.height(self[TREE]);
-				if (self[HEADER]) {
+			if (self[DRAWER] && self[DRAWER].isOpen()) {
+				let treeHeight = self[DRAWER].borderHeight();
+
+				if (self[TREE]) {
+					treeHeight -= dom.get.margins.height(self[TREE]);
+				}
+				if (self[HEADER_CONTAINER] && self[TREE]) {
 					treeHeight -= dom.get.outerHeight(self[HEADER_CONTAINER]);
 				}
 				if (self[FOOTER]) {
 					treeHeight -= dom.get.outerHeight(self[FOOTER]);
 				}
-				self[TREE].height(treeHeight);
-			}
-		});
 
-		self.onRemove(() => {
-			if (self[DRAWER]) {
-				self[DRAWER].remove();
-				self[DRAWER] = null;
+				if (self[TREE]) {
+					self[TREE].height(treeHeight);
+				}
+				else if (self[HEADER_CONTAINER]) {
+					self[HEADER_CONTAINER].height(treeHeight - dom.get.margins.height(self[HEADER_CONTAINER]));
+				}
 			}
-			self[MENU_BUTTON].remove();
-			self[MENU_BUTTON] = null;
-		});
+		})
+			.onRemove(() => {
+				if (self[DRAWER]) {
+					self[DRAWER].remove();
+					self[DRAWER] = null;
+				}
+				self[MENU_BUTTON].remove();
+				self[MENU_BUTTON] = null;
+			});
 	}
 
 	[toggleMenu]() {
@@ -106,7 +114,7 @@ export default class DrawerMenu extends Control {
 		if (headerControl) {
 			self[HEADER_CONTAINER] = new Div({
 				container: self[DRAWER],
-				classes: 'self[DRAWER]-menu-header'
+				classes: 'drawer-menu-header'
 			});
 			self[HEADER] = new headerControl({
 				container: self[HEADER_CONTAINER],
@@ -114,7 +122,7 @@ export default class DrawerMenu extends Control {
 			});
 		}
 
-		if (menuItems) {
+		if (menuItems.length) {
 			self[TREE] = new Tree({
 				container: self[DRAWER],
 				width: HUNDRED_PERCENT,
@@ -256,8 +264,13 @@ Object.assign(DrawerMenu.prototype, {
 				item.ID = item.ID || uuid();
 			});
 
-			if (self[DRAWER].isOpen()) {
-				self[TREE].branches(menuItems);
+			if (self[DRAWER] && self[DRAWER].isOpen()) {
+				if (self[TREE]) {
+					self[TREE].branches(menuItems);
+				}
+				else {
+					self[buildMenu]();
+				}
 			}
 		}
 	}),

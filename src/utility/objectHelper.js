@@ -18,24 +18,24 @@ const objectHelper = {
 	 * @member module:objectHelper
 	 * @static
 	 *
-	 * @arg {Object} [control] - The control to apply the settings to; Usually "self".
-	 * @arg {Object} [settings]
-	 * @arg {boolean} [forceSave=false]
-	 * @arg {Array}  [priorityList=[]] - Array of method names to apply first, if the are actually in the settings.
+	 * @arg {Object} control - The control to apply the settings to; Usually "self".
+	 * @arg {Object} settings
+	 * @arg {boolean} [forceSave]
+	 * @arg {Array}  [priorityList=[]] - Array of method names to apply first, if the are actually in the settings. Methods are called in the order provided in this array.
+	 * @arg {Array}  [deferedList=[]] - Array of method names to apply last, if the are actually in the settings. Methods are called in the order provided in this array.
 	 */
-	applySettings: function(control, settings, forceSave, priorityList = []) {
-		priorityList.forEach((method) => {
+	applySettings: function(control, settings, forceSave, priorityList = [], deferedList = []) {
+		const mainList = Object.keys(settings)
+			.filter((method) => !deferedList.includes(method) && !priorityList.includes(method));
+		const apply = (method) => {
 			if (method in settings && method in control) {
 				control[method](settings[method], forceSave);
-				delete settings[method];
 			}
-		});
+		};
 
-		for (let method in settings) {
-			if (method in control) {
-				control[method](settings[method], forceSave);
-			}
-		}
+		priorityList.forEach(apply);
+		mainList.forEach(apply);
+		deferedList.forEach(apply);
 	},
 
 	/**
