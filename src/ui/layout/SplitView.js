@@ -63,12 +63,14 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		self[FIRST_VIEW] = new Container({
 			container: self,
 			classes: FIRST_VIEW_CLASS,
-			css: set({}, POSITION, ABSOLUTE)
+			css: set({}, POSITION, ABSOLUTE),
+			content: settings.firstViewContent
 		});
 		self[SECOND_VIEW] = new Container({
 			container: self,
 			classes: SECOND_VIEW_CLASS,
-			css: set({}, POSITION, ABSOLUTE)
+			css: set({}, POSITION, ABSOLUTE),
+			content: settings.secondViewContent
 		});
 
 		objectHelper.applySettings(self, settings, null, ['orientation']);
@@ -82,28 +84,28 @@ export default class SplitView extends IsWorkingMixin(Control) {
 				};
 
 				if (self.height().isAuto) {
-					if (self[IS_COLUMNS]) {
-						setSingleSize(HEIGHT, SCROLL_HEIGHT);
-					}
-					else {
-						setStackedSize(HEIGHT, SCROLL_HEIGHT);
-					}
+				if (self[IS_COLUMNS]) {
+					setSingleSize(HEIGHT, SCROLL_HEIGHT);
 				}
-				if (self.width().isAuto) {
-					if (self[IS_COLUMNS]) {
-						setStackedSize(WIDTH, SCROLL_WIDTH);
-					}
-					else {
-						setSingleSize(WIDTH, SCROLL_WIDTH);
-					}
+				else {
+					setStackedSize(HEIGHT, SCROLL_HEIGHT);
 				}
+			}
+			if (self.width().isAuto) {
+				if (self[IS_COLUMNS]) {
+					setStackedSize(WIDTH, SCROLL_WIDTH);
+				}
+				else {
+					setSingleSize(WIDTH, SCROLL_WIDTH);
+				}
+			}
 
-				self[positionViews]();
+			self[positionViews]();
 
-				if (self[RESIZER]) {
-					self[RESIZER].resize();
-				}
-			})
+			if (self[RESIZER]) {
+				self[RESIZER].resize();
+			}
+		})
 			.onRemove(() => {
 				self[FIRST_VIEW].remove();
 				self[SECOND_VIEW].remove();
