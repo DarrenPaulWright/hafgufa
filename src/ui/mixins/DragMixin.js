@@ -58,6 +58,18 @@ const stopDrag = Symbol();
 
 export default (Base) => {
 	class DragMixin extends Base {
+		constructor(settings = {}) {
+			super(settings);
+
+			const self = this;
+
+			self.onResize(() => {
+				if (self.canDrag()) {
+					self[updateBounds]();
+				}
+			});
+		}
+
 		[stopThrow]() {
 			const self = this;
 

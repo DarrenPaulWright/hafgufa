@@ -1,0 +1,23 @@
+
+.split-view {
+	position: relative;
+	overflow: hidden;
+
+	> .first-view {
+		position: absolute;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	> .second-view {
+		position: absolute;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	> .resizer {
+		&:after {
+			background: @splitviewHandleColor;
+		}
+	}
+}
