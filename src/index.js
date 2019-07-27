@@ -82,6 +82,7 @@ export { default as accuracy } from './utility/math/accuracy';
 export { default as clamp } from './utility/math/clamp';
 export { default as round } from './utility/math/round';
 
+export { default as ajax } from './utility/ajax';
 export * from './utility/browser';
 export * from './utility/domConstants';
 export { default as dom } from './utility/dom';
