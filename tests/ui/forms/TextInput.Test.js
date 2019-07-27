@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { TextInput } from '../../../src';
+import locale from '../../../src/utility/locale';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -9,7 +10,7 @@ const formControlTests = new FormControlTests(TextInput, testUtil, {
 	mainCssClass: 'form-control'
 });
 
-const localizedStrings = {
+locale.set({
 	'requiredField': 'Please enter a value',
 	'invalidInt': 'This value should an integer',
 	'invalidNumber': 'This value should be a number',
@@ -19,7 +20,7 @@ const localizedStrings = {
 	'invalidNumberTotalDigits': 'This number should have <maxNumberDigits> or less digits',
 	'invalidMaxLength': 'This value should have <maxLength> or less characters',
 	'invalidMinLength': 'This value should have <maxLength> or more characters'
-};
+});
 
 describe('TextInput', () => {
 
@@ -28,7 +29,6 @@ describe('TextInput', () => {
 			buildControl: function() {
 				window.control = new TextInput({
 					container: window.testContainer,
-					localizedStrings: localizedStrings,
 					changeDelay: 0
 				});
 			},
@@ -45,8 +45,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'rows',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: 1,
 			testValue: 5,
@@ -56,7 +55,6 @@ describe('TextInput', () => {
 		it('should have an input element if rows is 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -66,7 +64,6 @@ describe('TextInput', () => {
 		it('should have an input element if rows is set multiple times', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -78,7 +75,6 @@ describe('TextInput', () => {
 		it('should have an input element if rows is set greater than 1 then back to 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -90,7 +86,6 @@ describe('TextInput', () => {
 		it('should have a textarea element if rows is greater than 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -100,7 +95,6 @@ describe('TextInput', () => {
 		it('should have a textarea element if rows is 1 then set to greater than 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -112,7 +106,6 @@ describe('TextInput', () => {
 		it('should have a textarea element with a set height if rows is greater than 1 and height is set to a percent', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				title: 'Test Title',
 				rows: 5,
 				height: '90%'
@@ -125,7 +118,6 @@ describe('TextInput', () => {
 		it('should have a textarea element WITHOUT a set height if rows is greater than 1 and height is set to a fixed amount', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				title: 'Test Title',
 				rows: 5,
 				height: '200px'
@@ -140,7 +132,6 @@ describe('TextInput', () => {
 		it('should return a value that has been set in the input element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -152,7 +143,6 @@ describe('TextInput', () => {
 		it('should return a blank value that has been set in the input element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -164,7 +154,6 @@ describe('TextInput', () => {
 		it('should return a value that has been set in the textarea element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -176,7 +165,6 @@ describe('TextInput', () => {
 		it('should return an empty value that has been set in the textarea element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -190,7 +178,6 @@ describe('TextInput', () => {
 		it('should set the value of an input element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -202,7 +189,6 @@ describe('TextInput', () => {
 		it('should set the value of an input element to blank', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -214,7 +200,6 @@ describe('TextInput', () => {
 		it('should set the value of an textarea element', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -226,7 +211,6 @@ describe('TextInput', () => {
 		it('should set the value of an textarea element to blank', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -240,7 +224,6 @@ describe('TextInput', () => {
 		it('should return an input element when getInput is called and rows equals 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 1
 			});
 
@@ -250,7 +233,6 @@ describe('TextInput', () => {
 		it('should return a textarea element when getItnput is called and rows is more than 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -262,8 +244,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'isSoftValidation',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: true,
 			testValue: false
@@ -274,8 +255,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'minLength',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: undefined,
 			testValue: 10,
@@ -285,7 +265,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value has fewer characters than the minLength', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				title: 'Test Title',
 				minLength: 10
 			});
@@ -299,7 +278,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value has the same characters as the minLength', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				minLength: 5
 			});
 
@@ -314,8 +292,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'maxLength',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: undefined,
 			testValue: 10,
@@ -325,7 +302,6 @@ describe('TextInput', () => {
 		it('should set the maxLength attribute of the input control if maxLength is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isSoftValidation: false
 			});
 
@@ -337,7 +313,6 @@ describe('TextInput', () => {
 		it('should set the maxLength attribute of the textArea control if maxLength is set and rows is greater than 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				maxLength: 100,
 				isSoftValidation: false,
 				rows: 5
@@ -349,7 +324,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value has more characters than the maxLength', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isSoftValidation: true,
 				maxLength: 4
 			});
@@ -363,7 +337,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value has the same characters as the maxLength', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isSoftValidation: true,
 				maxLength: 5
 			});
@@ -379,8 +352,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'minValue',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: undefined,
 			testValue: 10,
@@ -390,7 +362,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not a number and minValue is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				minValue: 4
 			});
 
@@ -403,7 +374,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is less than the minValue', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				minValue: 4
 			});
 
@@ -416,7 +386,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value is the same as the minValue', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				minValue: 5
 			});
 
@@ -429,7 +398,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is NaN and minValue is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				minValue: 4
 			});
 
@@ -444,8 +412,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'maxValue',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: undefined,
 			testValue: 10,
@@ -455,7 +422,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not a number and maxValue is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				maxValue: 4
 			});
 
@@ -468,7 +434,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is greater than the maxValue', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				maxValue: 4
 			});
 
@@ -481,7 +446,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value is the same as the maxValue', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				maxValue: 5
 			});
 
@@ -494,7 +458,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is NaN and maxValue is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				maxValue: 4
 			});
 
@@ -509,8 +472,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'isInt',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: false,
 			testValue: true
@@ -519,7 +481,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not a number and isInt is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isInt: true
 			});
 
@@ -532,7 +493,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not an integer and isInt is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isInt: true
 			});
 
@@ -545,7 +505,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not an integer and isInt is true and minValue and maxValue are set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isInt: true,
 				minValue: 2,
 				maxValue: 10
@@ -560,7 +519,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value is an integer and isInt is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isInt: true
 			});
 
@@ -573,7 +531,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is NaN and isInt is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isInt: true
 			});
 
@@ -588,8 +545,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'isNumber',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: false,
 			testValue: true
@@ -598,7 +554,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is not a number and isNumber is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isNumber: true
 			});
 
@@ -611,7 +566,6 @@ describe('TextInput', () => {
 		it('should NOT show an error if the input value is a number and isNumber is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isNumber: true
 			});
 
@@ -624,7 +578,6 @@ describe('TextInput', () => {
 		it('should show an error if the input value is NaN and isNumber is true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isNumber: true
 			});
 
@@ -639,8 +592,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'placeholder',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: '',
 			testValue: 'test placeholder',
@@ -650,7 +602,6 @@ describe('TextInput', () => {
 		it('should set the placeholder attribute of the input control if placeholder is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				placeholder: 'test'
 			});
 
@@ -662,8 +613,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'prefix',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: '',
 			testValue: '$',
@@ -673,7 +623,6 @@ describe('TextInput', () => {
 		it('should have a div with class input-prefix when prefix is set', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				prefix: 'test'
 			});
 
@@ -683,7 +632,6 @@ describe('TextInput', () => {
 		it('should have a div with class input-prefix when prefix is set multiple times', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				prefix: 'test'
 			});
 
@@ -697,7 +645,6 @@ describe('TextInput', () => {
 		it('should NOT have a div with class input-prefix when prefix is set and then set to an empty string', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				prefix: 'test'
 			});
 
@@ -711,8 +658,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'isPassword',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: false,
 			testValue: true
@@ -721,7 +667,6 @@ describe('TextInput', () => {
 		it('should have an input with type password when isPassword is set to true', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isPassword: true
 			});
 
@@ -731,7 +676,6 @@ describe('TextInput', () => {
 		it('should have an input with type text when isPassword is set to false', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				isPassword: true
 			});
 
@@ -745,8 +689,7 @@ describe('TextInput', () => {
 		testUtil.testMethod({
 			methodName: 'changeDelay',
 			defaultSettings: {
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			},
 			defaultValue: 200,
 			testValue: 500
@@ -755,7 +698,6 @@ describe('TextInput', () => {
 		it('should have a changeDelay of 500 if rows is greater than 1', () => {
 			window.control = new TextInput({
 				container: window.testContainer,
-				localizedStrings: localizedStrings,
 				rows: 5
 			});
 
@@ -764,8 +706,7 @@ describe('TextInput', () => {
 
 		it('should still have a changeDelay of 200 when triggerChange is called', () => {
 			window.control = new TextInput({
-				container: window.testContainer,
-				localizedStrings: localizedStrings
+				container: window.testContainer
 			});
 
 			window.control.triggerChange();

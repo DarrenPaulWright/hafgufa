@@ -14,7 +14,6 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	const buildSettings = (localSettings) => Object.assign({}, {
 		ID: TEST_ID,
 		container: window.testContainer,
-		localizedStrings: {},
 		delay: 0,
 		fade: false
 	}, settings.extraSettings, localSettings);
@@ -114,8 +113,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			testUtil.testMethod({
 				methodName: 'ID',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: '',
 				testValue: TEST_ID
@@ -143,8 +141,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			testUtil.testMethod({
 				methodName: 'IDSuffix',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: '',
 				testValue: TEST_ID_SUFFIX
@@ -374,8 +371,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			testUtil.testMethod({
 				methodName: 'isEnabled',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: true,
 				testValue: false
@@ -403,8 +399,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			testUtil.testMethod({
 				methodName: 'stopPropagation',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: false,
 				testValue: true

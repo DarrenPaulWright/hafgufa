@@ -13,6 +13,7 @@ import {
 	INPUT_TYPE_FILE,
 	MULTIPLE
 } from '../../utility/domConstants';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -38,7 +39,6 @@ const getFileExtension = (fileName) => {
 	return fileNamePieces[fileNamePieces.length - 1].toLowerCase();
 };
 
-const STRINGS = Symbol();
 const INPUT_CONTROL = Symbol();
 
 const loadFile = Symbol();
@@ -60,7 +60,6 @@ export default class FileInput extends Control {
 		super(settings);
 
 		const self = this;
-		self[STRINGS] = settings.localizedStrings || {};
 
 		self.addClass(FILE_INPUT_CLASS + PREVIEW_SIZES.SMALL);
 
@@ -83,7 +82,7 @@ export default class FileInput extends Control {
 			self[loadFile](files);
 		});
 
-		dom.content(self.element(), IS_DESKTOP ? self[STRINGS].fileInputClickOrDrop : self[STRINGS].fileInputClickToAdd);
+		dom.content(self.element(), locale.get(IS_DESKTOP ? 'fileInputClickOrDrop' : 'fileInputClickToAdd'));
 
 		self.on(CLICK_EVENT, () => {
 				stopEvent();

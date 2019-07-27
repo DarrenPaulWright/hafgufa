@@ -3,6 +3,7 @@ import { remove } from 'lodash';
 import { clone } from 'object-agent';
 import { AUTO, enforce, method } from 'type-enforcer';
 import { EMPTY_STRING } from '../../utility/domConstants';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
@@ -14,7 +15,6 @@ import FormControl from './FormControl';
 
 const FILE_PICKER_CLASS = 'file-picker';
 
-const STRINGS = Symbol();
 const FILE_INPUT = Symbol();
 const FILES = Symbol();
 const FILE_THUMBNAILS = Symbol();
@@ -49,7 +49,6 @@ export default class FilePicker extends FormControl {
 		super(settings);
 
 		const self = this;
-		self[STRINGS] = settings.localizedStrings || {};
 		self[FILES] = [];
 		self[FILE_THUMBNAILS] = new ControlManager();
 		self[LOAD_COUNT] = 0;
@@ -71,7 +70,6 @@ export default class FilePicker extends FormControl {
 		if (!self[FILE_INPUT] && (!self[FILE_THUMBNAILS].total() || self.isMulti())) {
 			self[FILE_INPUT] = new FileInput({
 				container: self.contentContainer(),
-				localizedStrings: self[STRINGS],
 				onPreLoad: (data) => {
 					self[preloadFiles](data);
 				},
@@ -105,7 +103,7 @@ export default class FilePicker extends FormControl {
 				self[buildLightbox](firstFileName);
 			}
 			if (!self.isMulti() && self[FILES].length > 1) {
-				self.error(self[STRINGS].filePickerTooManyItemsError);
+				self.error(locale.get('filePickerTooManyItemsError'));
 			}
 		}
 	}

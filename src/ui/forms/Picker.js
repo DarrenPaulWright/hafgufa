@@ -5,6 +5,7 @@ import { AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
 import { byKey } from '../../../src/utility/sortBy';
 import collectionHelper from '../../utility/collectionHelper';
 import { CLICK_EVENT, WINDOW } from '../../utility/domConstants';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import toast from '../display/toast';
@@ -34,7 +35,6 @@ const POPUP_BUTTON_WIDTH = Symbol();
 const MAX_BUTTON_WIDTH = Symbol();
 const POTENTIAL_NEW_VALUE = Symbol();
 const DIALOG = Symbol();
-const STRINGS = Symbol();
 
 const areValuesEqual = Symbol();
 const updateSelectedItems = Symbol();
@@ -84,7 +84,6 @@ export default class Picker extends FocusMixin(FormControl) {
 		super(settings);
 
 		const self = this;
-		self[STRINGS] = settings.localizedStrings || {};
 		self[SELECTED_ITEMS] = [];
 		self[FLATTENED_ITEMS_LIST] = [];
 		self[FLATTENED_ITEMS_OBJECT] = {};
@@ -95,8 +94,8 @@ export default class Picker extends FocusMixin(FormControl) {
 		self[GROUPED_BUTTONS] = groupedButtons;
 		self[GROUPED_BUTTONS].container(self.contentContainer());
 
-		self.defaultButtonText(self[STRINGS].select);
-		self.emptyButtonText(self[STRINGS].empty);
+		self.defaultButtonText(locale.get('select'));
+		self.emptyButtonText(locale.get('empty'));
 		self.contentWidthContainer(self[GROUPED_BUTTONS].element());
 
 		self.onResize(() => {
@@ -761,7 +760,6 @@ export default class Picker extends FocusMixin(FormControl) {
 			self[POPUP_BUTTON].isSelected(true);
 
 			self[MENU] = new Menu({
-				localizedStrings: self[STRINGS],
 				minWidth: 160,
 				anchor: self[POPUP_BUTTON].element(),
 				anchorDockPoint: DockPoint.POINTS.BOTTOM_LEFT,
@@ -848,7 +846,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		toast.info({
 			title: item.title + ' deleted',
-			subTitle: self[STRINGS].clickToUndo,
+			subTitle: locale.get('clickToUndo'),
 			onClick: function() {
 				isDeleted = false;
 				self.options(originalOptions);
@@ -873,11 +871,11 @@ export default class Picker extends FocusMixin(FormControl) {
 		const self = this;
 
 		self[DIALOG] = new Dialog({
-			title: (itemID ? self[STRINGS].edit : self[STRINGS].add) + ' ' + self.title(),
+			title: (itemID ? locale.get('edit') : locale.get('add')) + ' ' + self.title(),
 			width: '40rem',
 			footer: {
 				buttons: [{
-					label: self[STRINGS].done,
+					label: locale.get('done'),
 					onClick: function() {
 						objectHelper.callIfExists(self.onRemoveDialogContents());
 						self[DIALOG].remove();

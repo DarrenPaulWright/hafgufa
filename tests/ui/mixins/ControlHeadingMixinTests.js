@@ -24,8 +24,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					ID: TEST_ID,
 					title: 'Test Title',
 					headingIcon: TEST_ICON_FA,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(document.querySelectorAll('.fa-' + TEST_ICON_FA).length, 1);
@@ -35,8 +34,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					headingIcon: '',
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(document.querySelectorAll('.fa-' + TEST_ICON_FA).length, 0);
@@ -50,8 +48,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(document.querySelector(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
@@ -61,8 +58,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					title: '',
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(document.querySelectorAll('.heading').length, 0);
@@ -77,8 +73,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					ID: TEST_ID,
 					title: TEST_TITLE,
 					subTitle: SUB_TITLE,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(document.querySelector(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
@@ -92,8 +87,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				methodName: 'error',
 				defaultSettings: {
 					container: window.testContainer,
-					title: TEST_TITLE,
-					localizedStrings: {}
+					title: TEST_TITLE
 				},
 				defaultValue: '',
 				testValue: 'Test Error Message',
@@ -104,8 +98,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					container: window.testContainer,
-					title: TEST_TITLE,
-					localizedStrings: {}
+					title: TEST_TITLE
 				});
 
 				assert.equal(query.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
@@ -115,8 +108,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					container: window.testContainer,
-					title: TEST_TITLE,
-					localizedStrings: {}
+					title: TEST_TITLE
 				})
 					.error(ERROR_MESSAGE);
 
@@ -127,8 +119,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				window.control = new Control({
 					ID: TEST_ID,
 					container: window.testContainer,
-					title: TEST_TITLE,
-					localizedStrings: {}
+					title: TEST_TITLE
 				})
 					.error(ERROR_MESSAGE)
 					.error('');
@@ -145,8 +136,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'singleLine',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: false,
 				testValue: true,

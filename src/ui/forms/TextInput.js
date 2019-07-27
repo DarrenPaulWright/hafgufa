@@ -13,9 +13,9 @@ import {
 	MAX_LENGTH,
 	PLACE_HOLDER
 } from '../../utility/domConstants';
+import locale from '../../utility/locale';
 import clamp from '../../utility/math/clamp';
 import objectHelper from '../../utility/objectHelper';
-import stringHelper from '../../utility/stringHelper';
 import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
 import Span from '../elements/Span';
@@ -28,7 +28,6 @@ const ON_CHANGE_DELAY = 200;
 const ON_CHANGE_DELAY_LONG = 500;
 const ON_CHANGE_EVENTS = 'change keypress cut paste textInput input propertychange';
 
-const STRINGS = Symbol();
 const INPUT = Symbol();
 const PREFIX = Symbol();
 const PREFIX_WIDTH = Symbol();
@@ -63,8 +62,6 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		super(settings);
 
 		const self = this;
-
-		self[STRINGS] = settings.localizedStrings || {};
 
 		self.addClass('text-input');
 
@@ -335,63 +332,61 @@ Object.assign(TextInput.prototype, {
 		let fractionDigits = 0;
 		let totalNumberDigits = 0;
 
-		if (self[STRINGS]) {
-			if (self.isRequired() && currentValue === '') {
-				errorMessage = self[STRINGS].requiredField;
+		if (self.isRequired() && currentValue === '') {
+			errorMessage = locale.get('requiredField');
+		}
+		else if (currentValue !== '') {
+			if (self.maxValue() !== undefined || self.minValue() !== undefined || self.isInt() || self.isNumber()) {
+				if (!errorMessage && self.isInt() && !isInteger(currentValue, true)) {
+					errorMessage = locale.get('invalidInt');
+				}
+				else if (!errorMessage && !isNumber(currentValue, true)) {
+					errorMessage = locale.get('invalidNumber');
+				}
+				else {
+					if (!errorMessage && self.maxValue() !== undefined && self.maxValue() < currentValue) {
+						errorMessage = locale.get('invalidMaxValue', {
+							maxValue: self.maxValue()
+						});
+					}
+					if (!errorMessage && self.minValue() !== undefined && self.minValue() > currentValue) {
+						errorMessage = locale.get('invalidMinValue', {
+							minValue: self.minValue()
+						});
+					}
+
+					splitValue = currentValue.split('.');
+					totalNumberDigits = splitValue[0].length;
+
+					if (splitValue.length > 1) {
+						fractionDigits = splitValue[1].length;
+						totalNumberDigits += fractionDigits;
+					}
+
+					if (!errorMessage && self.maxFractionDigits() !== undefined && self.maxFractionDigits() < fractionDigits) {
+						errorMessage = locale.get('invalidNumberFractionDigits', {
+							maxFractionDigits: self.maxFractionDigits()
+						});
+					}
+					if (!errorMessage && self.maxNumberDigits() !== undefined && self.maxNumberDigits() < totalNumberDigits) {
+						errorMessage = locale.get('invalidNumberTotalDigits', {
+							maxNumberDigits: self.maxNumberDigits()
+						});
+					}
+				}
 			}
-			else if (currentValue !== '') {
-				if (self.maxValue() !== undefined || self.minValue() !== undefined || self.isInt() || self.isNumber()) {
-					if (!errorMessage && self.isInt() && !isInteger(currentValue, true)) {
-						errorMessage = self[STRINGS].invalidInt;
-					}
-					else if (!errorMessage && !isNumber(currentValue, true)) {
-						errorMessage = self[STRINGS].invalidNumber;
-					}
-					else {
-						if (!errorMessage && self.maxValue() !== undefined && self.maxValue() < currentValue) {
-							errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidMaxValue, {
-								maxValue: self.maxValue()
-							});
-						}
-						if (!errorMessage && self.minValue() !== undefined && self.minValue() > currentValue) {
-							errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidMinValue, {
-								minValue: self.minValue()
-							});
-						}
-
-						splitValue = currentValue.split('.');
-						totalNumberDigits = splitValue[0].length;
-
-						if (splitValue.length > 1) {
-							fractionDigits = splitValue[1].length;
-							totalNumberDigits += fractionDigits;
-						}
-
-						if (!errorMessage && self.maxFractionDigits() !== undefined && self.maxFractionDigits() < fractionDigits) {
-							errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidNumberFractionDigits, {
-								maxFractionDigits: self.maxFractionDigits()
-							});
-						}
-						if (!errorMessage && self.maxNumberDigits() !== undefined && self.maxNumberDigits() < totalNumberDigits) {
-							errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidNumberTotalDigits, {
-								maxNumberDigits: self.maxNumberDigits()
-							});
-						}
-					}
+			if (!errorMessage && self.maxLength() !== undefined) {
+				if (self.maxLength() < currentValue.length) {
+					errorMessage = locale.get('invalidMaxLength', {
+						maxLength: self.maxLength()
+					});
 				}
-				if (!errorMessage && self.maxLength() !== undefined) {
-					if (self.maxLength() < currentValue.length) {
-						errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidMaxLength, {
-							maxLength: self.maxLength()
-						});
-					}
-				}
-				if (!errorMessage && self.minLength() !== undefined) {
-					if (self.minLength() > currentValue.length) {
-						errorMessage = stringHelper.locStringReplace(self[STRINGS].invalidMinLength, {
-							minLength: self.minLength()
-						});
-					}
+			}
+			if (!errorMessage && self.minLength() !== undefined) {
+				if (self.minLength() > currentValue.length) {
+					errorMessage = locale.get('invalidMinLength', {
+						minLength: self.minLength()
+					});
 				}
 			}
 		}

@@ -4,6 +4,7 @@ import { AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type
 import uuid from 'uuid/v4';
 import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import { filteredTitle } from '../../utility/sortBy';
 import stringHelper from '../../utility/stringHelper';
@@ -68,7 +69,6 @@ const addItemButtons = Symbol();
 const getFilteredContent = Symbol();
 const filterItems = Symbol();
 
-const STRINGS = Symbol();
 const HAS_IDENTICAL_FILTERED_ITEM = Symbol();
 const ARE_ALL_SELECTED = Symbol();
 
@@ -107,7 +107,6 @@ export default class Menu extends Popup {
 		super(settings);
 
 		const self = this;
-		self[STRINGS] = settings.localizedStrings || {};
 		self.addClass(MENU_CLASS);
 		self.width(AUTO);
 
@@ -121,16 +120,13 @@ export default class Menu extends Popup {
 					self.remove();
 				}
 			},
-			emptyContentMessage: self[STRINGS].noMatchingItems,
+			emptyContentMessage: locale.get('noMatchingItems'),
 			maxHeight: self.maxHeight(),
 			minWidth: self.minWidth(),
 			maxWidth: self.maxWidth(),
 			isMultiSelect: self.isMultiSelect(),
 			onLayoutChange: () => {
 				self.resize(true);
-			},
-			onRemove: () => {
-				self[STRINGS] = null;
 			}
 		});
 
@@ -186,7 +182,7 @@ export default class Menu extends Popup {
 		if (self.onAdd()) {
 			self.get(FILTER_ID)
 				.actionButtonIcon(ADD_ICON)
-				.actionButtonLabel(self[STRINGS].add)
+				.actionButtonLabel(locale.get('add'))
 				.actionButtonOnClick(() => {
 					self.onAdd()(self.currentFilter());
 				});
@@ -205,7 +201,7 @@ export default class Menu extends Popup {
 			};
 			item.buttons.push({
 				icon: EDIT_ICON,
-				alt: self[STRINGS].edit,
+				alt: locale.get('edit'),
 				onClick: (data) => {
 					self.onEdit()(data);
 				}
@@ -219,7 +215,7 @@ export default class Menu extends Popup {
 			};
 			item.buttons.push({
 				icon: DELETE_ICON,
-				alt: self[STRINGS].delete,
+				alt: locale.get('delete'),
 				onClick: (data) => {
 					self.onDelete()(data);
 				}
@@ -335,7 +331,7 @@ Object.assign(Menu.prototype, {
 					ID: FILTER_ID,
 					control: TextInput,
 					width: HUNDRED_PERCENT,
-					placeholder: self[STRINGS].filter,
+					placeholder: locale.get('filter'),
 					value: self.currentFilter(),
 					onChange: (newValue) => {
 						self.currentFilter(newValue.value);
@@ -382,7 +378,7 @@ Object.assign(Menu.prototype, {
 					onChange: (isChecked) => {
 						self.isFilteredSelectedOnly(isChecked);
 					},
-					content: self[STRINGS].showSelectedItems
+					content: locale.get('showSelectedItems')
 				});
 
 				self.resize(true);
@@ -428,7 +424,7 @@ Object.assign(Menu.prototype, {
 
 						self[filterItems]();
 					},
-					content: self[STRINGS].selectAll
+					content: locale.get('selectAll')
 				});
 
 				self.resize(true);

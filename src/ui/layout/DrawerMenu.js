@@ -4,6 +4,7 @@ import uuid from 'uuid/v4';
 import { IS_DESKTOP } from '../../utility/browser';
 import collectionHelper from '../../utility/collectionHelper';
 import dom from '../../utility/dom';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import windowResize from '../../utility/windowResize';
 import Control from '../Control';
@@ -48,12 +49,10 @@ export default class DrawerMenu extends Control {
 		const self = this;
 		self.addClass('drawer-menu-container');
 
-		const strings = settings.localizedStrings || {};
-
 		self[MENU_BUTTON] = new Button({
 			container: self.element(),
 			classes: 'header-button',
-			label: strings.menu,
+			label: locale.get('menu'),
 			icon: MENU_ICON,
 			onClick: function() {
 				self[toggleMenu]();
@@ -63,27 +62,27 @@ export default class DrawerMenu extends Control {
 		objectHelper.applySettings(self, settings, false, [], ['menuContainer']);
 
 		self.onResize(() => {
-			if (self[DRAWER] && self[DRAWER].isOpen()) {
-				let treeHeight = self[DRAWER].borderHeight();
+				if (self[DRAWER] && self[DRAWER].isOpen()) {
+					let treeHeight = self[DRAWER].borderHeight();
 
-				if (self[TREE]) {
-					treeHeight -= dom.get.margins.height(self[TREE]);
-				}
-				if (self[HEADER_CONTAINER] && self[TREE]) {
-					treeHeight -= dom.get.outerHeight(self[HEADER_CONTAINER]);
-				}
-				if (self[FOOTER]) {
-					treeHeight -= dom.get.outerHeight(self[FOOTER]);
-				}
+					if (self[TREE]) {
+						treeHeight -= dom.get.margins.height(self[TREE]);
+					}
+					if (self[HEADER_CONTAINER] && self[TREE]) {
+						treeHeight -= dom.get.outerHeight(self[HEADER_CONTAINER]);
+					}
+					if (self[FOOTER]) {
+						treeHeight -= dom.get.outerHeight(self[FOOTER]);
+					}
 
-				if (self[TREE]) {
-					self[TREE].height(treeHeight);
+					if (self[TREE]) {
+						self[TREE].height(treeHeight);
+					}
+					else if (self[HEADER_CONTAINER]) {
+						self[HEADER_CONTAINER].height(treeHeight - dom.get.margins.height(self[HEADER_CONTAINER]));
+					}
 				}
-				else if (self[HEADER_CONTAINER]) {
-					self[HEADER_CONTAINER].height(treeHeight - dom.get.margins.height(self[HEADER_CONTAINER]));
-				}
-			}
-		})
+			})
 			.onRemove(() => {
 				if (self[DRAWER]) {
 					self[DRAWER].remove();

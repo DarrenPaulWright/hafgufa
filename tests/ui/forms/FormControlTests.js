@@ -13,8 +13,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			it('should default to false', () => {
 				window.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				});
 
 				assert.equal(window.control.isRequired(), false);
@@ -24,8 +23,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				window.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				})
 					.isRequired(true);
 
@@ -37,8 +35,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					ID: TEST_ID,
 					title: TEST_TITLE,
 					container: window.testContainer,
-					isRequired: true,
-					localizedStrings: {}
+					isRequired: true
 				});
 
 				assert.equal(window.control.isRequired(), true);
@@ -47,8 +44,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			it('should NOT have a required class if set to false', () => {
 				window.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				})
 					.isRequired(false);
 
@@ -59,8 +55,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				window.control = new Control({
 					ID: TEST_ID,
 					container: window.testContainer,
-					isRequired: false,
-					localizedStrings: {}
+					isRequired: false
 				});
 
 				assert.equal(window.control.isRequired(), false);
@@ -73,8 +68,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			testUtil.testMethod({
 				methodName: 'newline',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: false,
 				testValue: true,
@@ -181,8 +175,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			testUtil.testMethod({
 				methodName: 'changeDelay',
 				defaultSettings: {
-					container: window.testContainer,
-					localizedStrings: {}
+					container: window.testContainer
 				},
 				defaultValue: 0,
 				testValue: 200

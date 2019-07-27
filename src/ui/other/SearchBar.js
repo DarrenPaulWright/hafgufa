@@ -1,6 +1,7 @@
 import { AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
 import dom from '../../utility/dom';
+import locale from '../../utility/locale';
 import objectHelper from '../../utility/objectHelper';
 import windowResize from '../../utility/windowResize';
 import Control from '../Control';
@@ -11,7 +12,6 @@ import { SEARCH_ICON } from '../icons';
 import Container from '../layout/Container';
 import './SearchBar.less';
 
-const STRINGS = Symbol();
 const MENU_BUTTON = Symbol();
 const SEARCH_BAR = Symbol();
 const SEARCH_BAR_CONTAINER = Symbol();
@@ -39,7 +39,6 @@ export default class SearchBar extends Control {
 
 		const self = this;
 
-		self[STRINGS] = settings.localizedStrings || {};
 		self[IS_SEARCH_BAR_OPEN] = false;
 
 		self.addClass('align-right search-bar-header');
@@ -48,7 +47,7 @@ export default class SearchBar extends Control {
 			self[MENU_BUTTON] = new Button({
 				container: self.element(),
 				classes: 'header-button',
-				label: settings.isCompact ? null : self[STRINGS].search,
+				label: settings.isCompact ? null : locale.get('search'),
 				icon: SEARCH_ICON,
 				isSelectable: true,
 				onClick: function() {
@@ -130,7 +129,7 @@ export default class SearchBar extends Control {
 		self[TAGS] = new Tags({
 			container: container,
 			breakOnSpaces: self.breakOnSpaces(),
-			placeholder: self[STRINGS].search,
+			placeholder: locale.get('search'),
 			suggestions: self.suggestions(),
 			actionButtonIcon: SEARCH_ICON,
 			isActionButtonAutoHide: false,
