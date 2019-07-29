@@ -1,7 +1,7 @@
 import { clear, defer, delay } from 'async-agent';
 import { event, select } from 'd3';
 import keyCodes from 'keycodes';
-import { AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	ABSOLUTE,
@@ -25,7 +25,6 @@ import {
 	Z_INDEX
 } from '../../utility/domConstants';
 import * as mouse from '../../utility/mouse';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Container from './Container';
@@ -182,7 +181,7 @@ class Popup extends Container {
 			.css(LEFT, ZERO_PIXELS);
 
 		if (settings.type === controlTypes.POPUP) {
-			objectHelper.applySettings(self, settings);
+			applySettings(self, settings);
 		}
 
 		self.on(MOUSE_ENTER_EVENT, () => {

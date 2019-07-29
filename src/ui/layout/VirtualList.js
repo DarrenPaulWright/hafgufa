@@ -2,6 +2,7 @@ import { defer, throttle } from 'async-agent';
 import { event } from 'd3';
 import { clone } from 'object-agent';
 import {
+	applySettings,
 	AUTO,
 	CssSize,
 	enforce,
@@ -44,7 +45,6 @@ import {
 } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import MultiItemFocus from '../../utility/MultiItemFocus';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -197,7 +197,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			.css(FONT_SIZE, ZERO_PIXELS)
 			.css(BOX_SIZING, CONTENT_BOX);
 
-		objectHelper.applySettings(self, settings, 0, ['height']);
+		applySettings(self, settings, ['height']);
 
 		self[setExtent]();
 

@@ -1,8 +1,7 @@
-import { AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
 import dom from '../../utility/dom';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import windowResize from '../../utility/windowResize';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -59,7 +58,7 @@ export default class SearchBar extends Control {
 			self[buildSearchBar](self.element(), '20rem');
 		}
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onResize(() => {
 			if (self[SEARCH_BAR]) {

@@ -1,5 +1,5 @@
+import { applySettings } from 'type-enforcer';
 import dom from '../../utility/dom';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Container from './Container';
 import './Header.less';
@@ -23,7 +23,7 @@ export default class Header extends Container {
 		this.removeClass('container');
 
 		if (settings.type === controlTypes.HEADER) {
-			objectHelper.applySettings(this, settings);
+			applySettings(this, settings);
 		}
 	}
 }

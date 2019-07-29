@@ -1,6 +1,5 @@
-import { Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';
@@ -78,7 +77,7 @@ export default class Icon extends TooltipMixin(Control) {
 		const self = this;
 
 		self.element(settings.element);
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self.icon(null);

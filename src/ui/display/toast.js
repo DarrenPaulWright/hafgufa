@@ -2,7 +2,6 @@ import { clear, delay } from 'async-agent';
 import { List } from 'hord';
 import { isNumber } from 'type-enforcer';
 import { BODY, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
 import { CHECK_ICON, CLEAR_ICON, DELETE_ALL_ICON, DELETE_ICON, ERROR_ICON, INFO_ICON, WARNING_ICON } from '../icons';
@@ -45,7 +44,9 @@ class Slice extends ContextMenuMixin(Heading) {
 
 		self
 			.on(CLICK_EVENT, () => {
-				objectHelper.callIfExists(settings.onClick);
+				if (settings.onClick) {
+					settings.onClick();
+				}
 				self.remove();
 			})
 			.on(MOUSE_ENTER_EVENT, () => self[stopTimer]())

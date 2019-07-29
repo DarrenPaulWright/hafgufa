@@ -2,9 +2,8 @@ import { throttle } from 'async-agent';
 import { event } from 'd3';
 import moment from 'moment';
 import { repeat } from 'object-agent';
-import { CssSize, enforceBoolean, Enum, method, PIXELS, Thickness } from 'type-enforcer';
+import { applySettings, CssSize, enforceBoolean, Enum, method, PIXELS, Thickness } from 'type-enforcer';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import Div from '../elements/Div';
 import NextPrevMixin from '../mixins/NextPrevMixin';
@@ -187,7 +186,7 @@ export default class Timeline extends NextPrevMixin(Control) {
 			self[setLayout]();
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 	}
 
 	[setZoom](newZoom) {

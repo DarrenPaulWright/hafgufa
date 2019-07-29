@@ -1,8 +1,7 @@
 import { set } from 'object-agent';
-import { AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ABSOLUTE, BODY, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import VirtualList from '../layout/VirtualList';
@@ -86,7 +85,7 @@ export default class Tree extends FocusMixin(FormControl) {
 			}
 		});
 
-		objectHelper.applySettings(self, settings, null, ['width']);
+		applySettings(self, settings, ['width']);
 
 		self.onRemove(() => {
 			self[VIRTUAL_LIST].remove();
@@ -104,7 +103,7 @@ export default class Tree extends FocusMixin(FormControl) {
 			.addClass('heading')
 			.isEnabled(heading.isEnabled(), true);
 
-		objectHelper.applySettings(heading, branchData);
+		applySettings(heading, branchData);
 
 		heading.isSelected(this.value().includes(branchData.ID), true)
 			.showExpander((!branchData.isExpandable && this[SHOW_CHECKBOXES_ON_GROUPS]) || (branchData.isExpandable && this[SHOW_EXPANDERS]))
@@ -246,7 +245,9 @@ export default class Tree extends FocusMixin(FormControl) {
 			self[EXPANDED_BRANCHES].push(heading.ID());
 		}
 		self[processBranches]();
-		objectHelper.callIfExists(self.onLayoutChange());
+		if (self.onLayoutChange()) {
+			self.onLayoutChange()();
+		}
 	}
 }
 

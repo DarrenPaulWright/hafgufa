@@ -1,8 +1,7 @@
-import { DockPoint, method, PIXELS } from 'type-enforcer';
+import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
@@ -65,7 +64,7 @@ export default class Slider extends FormControl {
 		self[THUMBS] = [];
 		self[addThumb]();
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onResize(() => {
 				const thumbSize = self[THUMBS][0].borderWidth();

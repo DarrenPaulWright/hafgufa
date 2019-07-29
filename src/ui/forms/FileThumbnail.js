@@ -1,7 +1,6 @@
-import { Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -73,7 +72,9 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 							icon: CLEAR_ALT_ICON,
 							classes: BUTTON_CLASS,
 							onClick: () => {
-								objectHelper.callIfExists(self.onDelete(), self);
+								if (self.onDelete()) {
+									self.onDelete()(self);
+								}
 							},
 							fade: true
 						});
@@ -97,7 +98,7 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 
 		self.isWorking(true);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self[ICON].remove();
@@ -194,7 +195,9 @@ Object.assign(FileThumbnail.prototype, {
 		set: function(onEdit) {
 			const self = this;
 			self.set(CLICK_EVENT, () => {
-				objectHelper.callIfExists(self.onEdit(), self);
+				if (self.onEdit()) {
+					self.onEdit()(self);
+				}
 			}, !!onEdit);
 			self.classes(EDITABLE_CLASS, !!onEdit);
 		}

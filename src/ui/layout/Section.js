@@ -1,7 +1,6 @@
-import { enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer';
+import { applySettings, enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { PADDING } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
@@ -31,7 +30,7 @@ export default class Section extends ControlHeadingMixin(Container) {
 			.addClass('section clearfix')
 			.removeClass('container');
 
-		objectHelper.applySettings(this, settings, null, ['canCollapse']);
+		applySettings(this, settings, ['canCollapse']);
 	}
 }
 

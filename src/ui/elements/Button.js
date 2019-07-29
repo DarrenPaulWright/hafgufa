@@ -1,7 +1,6 @@
-import { enforce, Enum, method } from 'type-enforcer';
+import { applySettings, enforce, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ALT, BUTTON, INPUT_TYPE, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, TITLE } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
@@ -69,7 +68,7 @@ export default class Button extends FocusMixin(OnClickMixin(Control)) {
 
 		self.attr(INPUT_TYPE, BUTTON);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self[CONTROLS].remove();

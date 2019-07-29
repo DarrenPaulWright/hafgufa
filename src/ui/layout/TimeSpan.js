@@ -1,6 +1,5 @@
-import { method, PERCENT, PIXELS } from 'type-enforcer';
+import { applySettings, method, PERCENT, PIXELS } from 'type-enforcer';
 import { BOTTOM, LEFT, TOP } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import ControlRecycler from '../ControlRecycler';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
@@ -32,7 +31,7 @@ export default class TimeSpan extends Container {
 			}
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self
 			.onResize(() => {

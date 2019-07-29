@@ -1,8 +1,7 @@
 import { defer } from 'async-agent';
 import moment from 'moment';
-import { AUTO, DockPoint, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, method } from 'type-enforcer';
 import Popup from '../../ui/layout/Popup';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
@@ -67,7 +66,7 @@ export default class DateInput extends FormControl {
 			stopPropagation: true
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self[DATE_INPUT].remove();

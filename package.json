@@ -43,7 +43,7 @@
 		"less": "^3.9.0",
 		"moment": "^2.24.0",
 		"object-agent": "^1.0.1",
-		"type-enforcer": "^0.5.3",
+		"type-enforcer": "^0.5.4",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {

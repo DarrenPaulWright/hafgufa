@@ -1,5 +1,5 @@
+import { applySettings } from 'type-enforcer';
 import dom from '../../utility/dom';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -20,6 +20,6 @@ export default class Div extends Control {
 
 		super(settings);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 }

@@ -1,7 +1,6 @@
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { LABEL } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -24,7 +23,7 @@ export default class Label extends Control {
 		super(settings);
 
 		if (settings.type === controlTypes.LABEL) {
-			objectHelper.applySettings(this, settings);
+			applySettings(this, settings);
 		}
 	}
 }

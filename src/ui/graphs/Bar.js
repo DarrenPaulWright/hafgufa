@@ -1,8 +1,7 @@
 import { color, select } from 'd3';
-import { enforce, method } from 'type-enforcer';
+import { applySettings, enforce, method } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
 import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import './Bar.less';
 import GraphAxisBase from './GraphAxisBase';
@@ -37,7 +36,7 @@ export default class Bar extends GraphAxisBase {
 
 		const self = this;
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self[setupGraph]();
 		self.onUpdateSize((renderWidth, renderHeight) => {

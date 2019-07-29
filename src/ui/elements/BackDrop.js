@@ -1,5 +1,5 @@
+import { applySettings } from 'type-enforcer';
 import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 import './BackDrop.less';
@@ -26,7 +26,7 @@ export default class BackDrop extends Control {
 		const self = this;
 		self.addClass(BACKDROP_CLASS);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.on(CLICK_EVENT, () => {
 			self.remove();

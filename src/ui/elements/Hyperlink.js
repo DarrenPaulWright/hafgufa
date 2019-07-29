@@ -1,7 +1,6 @@
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ANCHOR } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import OnClickMixin from '../mixins/OnClickMixin';
@@ -24,7 +23,7 @@ export default class Hyperlink extends OnClickMixin(Control) {
 
 		super(settings);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 }
 

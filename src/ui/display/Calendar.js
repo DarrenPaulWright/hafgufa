@@ -1,7 +1,6 @@
 import Moment from 'moment';
 import { repeat } from 'object-agent';
-import { AUTO, method } from 'type-enforcer';
-import objectHelper from '../../utility/objectHelper';
+import { applySettings, AUTO, method } from 'type-enforcer';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -62,7 +61,7 @@ export default class Calendar extends Control {
 		self[buildHeader]();
 		self[buildWeekDays]();
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		if (!self[DAY_RECYCLER]) {
 			self[buildDays]();
@@ -181,23 +180,23 @@ export default class Calendar extends Control {
 				}, {
 					// control: Container,
 					// content: [{
-						control: Picker,
-						ID: MONTH_PICKER_ID,
-						width: AUTO,
-						options: self[buildMonthOptions](),
-						onChange: function(newValue) {
-							self.month(parseInt(newValue.value[0].ID, 10));
-						},
-						value: self.month()
-					}, {
-						control: Picker,
-						ID: YEAR_PICKER_ID,
-						width: AUTO,
-						options: self[buildYearOptions](),
-						onChange: function(newValue) {
-							self.year(parseInt(newValue.value[0].ID, 10));
-						},
-						value: self.year()
+					control: Picker,
+					ID: MONTH_PICKER_ID,
+					width: AUTO,
+					options: self[buildMonthOptions](),
+					onChange: function(newValue) {
+						self.month(parseInt(newValue.value[0].ID, 10));
+					},
+					value: self.month()
+				}, {
+					control: Picker,
+					ID: YEAR_PICKER_ID,
+					width: AUTO,
+					options: self[buildYearOptions](),
+					onChange: function(newValue) {
+						self.year(parseInt(newValue.value[0].ID, 10));
+					},
+					value: self.year()
 					// }]
 				}]
 			});

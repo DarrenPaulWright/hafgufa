@@ -1,5 +1,5 @@
 import { clear, defer, delay } from 'async-agent';
-import { AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
 import {
 	BODY,
 	MOUSE_ENTER_EVENT,
@@ -9,7 +9,6 @@ import {
 	PADDING_RIGHT,
 	PADDING_TOP
 } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -88,7 +87,7 @@ export default class LightBox extends Control {
 
 		self[addToolbar]();
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onResize(() => {
 			self[TOOLBAR_HEIGHT] = self[INTERACTION_LAYER].get(LIGHT_BOX_TOOLBAR_ID).height();
@@ -221,7 +220,9 @@ export default class LightBox extends Control {
 						},
 						onDelete: (fileThumbnail) => {
 							self.files(this.files().filter((file) => file.name !== fileThumbnail.ID()), true);
-							objectHelper.callIfExists(self.onDelete(), fileThumbnail.ID());
+							if (self.onDelete()) {
+								self.onDelete()(fileThumbnail.ID());
+							}
 						}
 					},
 					onSlideRender: function(thumb, item) {

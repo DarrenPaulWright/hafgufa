@@ -1,7 +1,7 @@
 import { throttle } from 'async-agent';
 import { event } from 'd3';
 import keyCodes from 'keycodes';
-import { AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
+import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import replaceElement from '../../utility/dom/replaceElement';
 import {
@@ -15,7 +15,6 @@ import {
 } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import clamp from '../../utility/math/clamp';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
 import Span from '../elements/Span';
@@ -69,7 +68,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 			self.validate();
 		});
 
-		objectHelper.applySettings(self, settings, null, ['rows']);
+		applySettings(self, settings, ['rows']);
 
 		self.onBlur(() => {
 			self.validate();

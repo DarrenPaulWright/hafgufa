@@ -1,12 +1,11 @@
 import { select } from 'd3';
 import { findIndex, groupBy, remove, union } from 'lodash';
 import { clone, forOwn, isEmpty } from 'object-agent';
-import { AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
 import { byKey } from '../../../src/utility/sortBy';
 import collectionHelper from '../../utility/collectionHelper';
 import { CLICK_EVENT, WINDOW } from '../../utility/domConstants';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import toast from '../display/toast';
 import Dialog from '../layout/Dialog';
@@ -112,7 +111,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 		});
 
-		objectHelper.applySettings(self, settings, null, ['changeDelay']);
+		applySettings(self, settings, ['changeDelay']);
 
 		self.onRemove(() => {
 			if (self[DIALOG]) {
@@ -877,7 +876,9 @@ export default class Picker extends FocusMixin(FormControl) {
 				buttons: [{
 					label: locale.get('done'),
 					onClick: function() {
-						objectHelper.callIfExists(self.onRemoveDialogContents());
+						if (self.onRemoveDialogContents()) {
+							self.onRemoveDialogContents()();
+						}
 						self[DIALOG].remove();
 					}
 				}]
@@ -1008,7 +1009,9 @@ Object.assign(Picker.prototype, {
 			}
 			self[updateGroupedButtonsLayout]();
 
-			objectHelper.callIfExists(self.onOptionsChange());
+			if (self.onOptionsChange()) {
+				self.onOptionsChange()();
+			}
 
 			if (self[POTENTIAL_NEW_VALUE]) {
 				self.value(self[POTENTIAL_NEW_VALUE], true);

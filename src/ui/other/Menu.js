@@ -1,11 +1,10 @@
 import { event } from 'd3';
 import keyCodes from 'keycodes';
-import { AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
 import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import { filteredTitle } from '../../utility/sortBy';
 import stringHelper from '../../utility/stringHelper';
 import controlTypes from '../controlTypes';
@@ -110,7 +109,7 @@ export default class Menu extends Popup {
 		self.addClass(MENU_CLASS);
 		self.width(AUTO);
 
-		objectHelper.applySettings(tree, {
+		applySettings(tree, {
 			onSelect: (item) => {
 				if (self.onSelect()) {
 					self.onSelect()(item);
@@ -141,7 +140,7 @@ export default class Menu extends Popup {
 				.height(self.borderHeight() - (self.get(HEADER_ID) ? dom.get.height(self.get(HEADER_ID)) : 0));
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		if (self.canFilter()) {
 			self.get(FILTER_ID).isFocused(true);

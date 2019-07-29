@@ -1,7 +1,6 @@
-import { AUTO, method } from 'type-enforcer';
+import { applySettings, AUTO, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { LEFT, TEXT_ALIGN, WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import './Description.less';
 import FormControl from './FormControl';
@@ -27,7 +26,7 @@ export default class Description extends FormControl {
 		const self = this;
 		self.addClass('description');
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 	}
 }
 

@@ -1,9 +1,8 @@
 import { color, select } from 'd3';
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
 import dom from '../../utility/dom';
 import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import * as graphConstants from './graphConstants';
@@ -60,7 +59,7 @@ export default class Legend extends Control {
 			d3Helper.fade(self[ITEM_ELEMENTS].selectAll('.legend-dots'), graphConstants.DURATION, graphConstants.START_OPACITY);
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self[BACKGROUND].remove();

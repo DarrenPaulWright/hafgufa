@@ -1,6 +1,5 @@
 import { clone } from 'object-agent';
-import { method } from 'type-enforcer';
-import objectHelper from '../utility/objectHelper';
+import { applySettings, method } from 'type-enforcer';
 
 const VISIBLE_CONTROLS = Symbol();
 const DISCARDED_CONTROLS = Symbol();
@@ -16,7 +15,7 @@ export default class ControlRecycler {
 	constructor(settings = {}) {
 		this[VISIBLE_CONTROLS] = [];
 		this[DISCARDED_CONTROLS] = [];
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 
 	/**

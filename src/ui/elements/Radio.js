@@ -1,7 +1,6 @@
 import { event } from 'd3';
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Container from '../layout/Container';
 import Input from './Input';
@@ -39,7 +38,7 @@ export default class Radio extends Label {
 		if (settings.type === controlTypes.RADIO) {
 			self.addClass('radio');
 			this[INPUT].inputType(INPUT_TYPE_RADIO);
-			objectHelper.applySettings(self, settings);
+			applySettings(self, settings);
 		}
 
 		self.onRemove(() => {

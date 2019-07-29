@@ -1,4 +1,4 @@
-import { Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	INPUT,
@@ -9,7 +9,6 @@ import {
 	INPUT_TYPE_RADIO,
 	INPUT_TYPE_TEXT
 } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -39,7 +38,7 @@ export default class Input extends Control {
 
 		super(settings);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 
 	click() {

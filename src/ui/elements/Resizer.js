@@ -1,7 +1,6 @@
-import { CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer';
+import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer';
 import { IS_DESKTOP } from '../..';
 import clamp from '../../utility/math/clamp';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import DragMixin from '../mixins/DragMixin';
 import { ORIENTATION } from '../uiConstants';
@@ -123,7 +122,7 @@ export default class Resizer extends DragMixin(Control) {
 				}
 			});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 	}
 
 	[setSplitOffset](offset) {

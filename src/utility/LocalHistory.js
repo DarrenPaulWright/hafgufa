@@ -1,6 +1,5 @@
 import { clone, deepEqual } from 'object-agent';
-import { method } from 'type-enforcer';
-import objectHelper from './objectHelper';
+import { applySettings, method } from 'type-enforcer';
 
 const NO_ITEMS_INDEX = -1;
 
@@ -23,7 +22,7 @@ export default class LocalHistory {
 		self[HISTORY] = [];
 		self[CURRENT_INDEX] = NO_ITEMS_INDEX;
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 	}
 
 	/**

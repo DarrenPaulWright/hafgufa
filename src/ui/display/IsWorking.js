@@ -1,6 +1,5 @@
-import { CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { ABSOLUTE_CLASS } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
@@ -72,7 +71,7 @@ export default class IsWorking extends DelayedRenderMixin(Control) {
 		const self = this;
 		self[CURRENT_SIZE] = 3;
 
-		objectHelper.applySettings(self, settings, false, ['height', 'width']);
+		applySettings(self, settings, ['height', 'width']);
 
 		self
 			.addClass(IS_WORKING_CLASS)

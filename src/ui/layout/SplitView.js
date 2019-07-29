@@ -1,8 +1,7 @@
 import { set } from 'object-agent';
-import { enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import windowResize from '../../utility/windowResize';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -73,7 +72,7 @@ export default class SplitView extends IsWorkingMixin(Control) {
 			content: settings.secondViewContent
 		});
 
-		objectHelper.applySettings(self, settings, null, ['orientation']);
+		applySettings(self, settings, ['orientation']);
 
 		self.onResize(() => {
 				const setStackedSize = (localSize, scrollType) => {
@@ -84,28 +83,28 @@ export default class SplitView extends IsWorkingMixin(Control) {
 				};
 
 				if (self.height().isAuto) {
-				if (self[IS_COLUMNS]) {
-					setSingleSize(HEIGHT, SCROLL_HEIGHT);
+					if (self[IS_COLUMNS]) {
+						setSingleSize(HEIGHT, SCROLL_HEIGHT);
+					}
+					else {
+						setStackedSize(HEIGHT, SCROLL_HEIGHT);
+					}
 				}
-				else {
-					setStackedSize(HEIGHT, SCROLL_HEIGHT);
+				if (self.width().isAuto) {
+					if (self[IS_COLUMNS]) {
+						setStackedSize(WIDTH, SCROLL_WIDTH);
+					}
+					else {
+						setSingleSize(WIDTH, SCROLL_WIDTH);
+					}
 				}
-			}
-			if (self.width().isAuto) {
-				if (self[IS_COLUMNS]) {
-					setStackedSize(WIDTH, SCROLL_WIDTH);
-				}
-				else {
-					setSingleSize(WIDTH, SCROLL_WIDTH);
-				}
-			}
 
-			self[positionViews]();
+				self[positionViews]();
 
-			if (self[RESIZER]) {
-				self[RESIZER].resize();
-			}
-		})
+				if (self[RESIZER]) {
+					self[RESIZER].resize();
+				}
+			})
 			.onRemove(() => {
 				self[FIRST_VIEW].remove();
 				self[SECOND_VIEW].remove();

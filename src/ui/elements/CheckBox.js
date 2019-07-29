@@ -1,6 +1,5 @@
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import { INPUT_TYPE_CHECKBOX } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import './CheckBox.less';
 import Radio, { INPUT } from './Radio';
@@ -23,7 +22,7 @@ export default class CheckBox extends Radio {
 		if (settings.type === controlTypes.CHECKBOX) {
 			this.addClass('checkbox');
 			this[INPUT].inputType(INPUT_TYPE_CHECKBOX);
-			objectHelper.applySettings(this, settings);
+			applySettings(this, settings);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import { select } from 'd3';
 import Hammer from 'hammerjs';
-import { CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
+import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
 import d3Helper from '../../utility/d3Helper';
 import {
@@ -13,7 +13,6 @@ import {
 	SWIPE_RIGHT_EVENT,
 	SWIPE_UP_EVENT
 } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Resizer from '../elements/Resizer';
 import { ORIENTATION } from '../uiConstants';
@@ -63,7 +62,7 @@ export default class Drawer extends Container {
 			.removeClass('container');
 
 		if (settings.type === controlTypes.DRAWER) {
-			objectHelper.applySettings(self, settings, 0, ['dock']);
+			applySettings(self, settings, ['dock']);
 		}
 
 		self

@@ -1,8 +1,7 @@
 import { debounce } from 'async-agent';
-import { AUTO, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import FormControl from './FormControl';
 import './Score.less';
@@ -42,7 +41,7 @@ export default class Score extends FormControl {
 		self[TEXT_DISPLAY] = dom.appendNewTo(self, 'score-text');
 		dom.css(self[TEXT_DISPLAY], WIDTH, settings.textWidth || AUTO);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		setDisplayText.call(self);
 	}

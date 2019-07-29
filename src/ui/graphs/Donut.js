@@ -1,7 +1,6 @@
 import { arc, color, pie, select, sum } from 'd3';
-import { Point } from 'type-enforcer';
+import { applySettings, Point } from 'type-enforcer';
 import { byKeyDesc } from '../../../src/utility/sortBy';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import './Donut.less';
 import GraphBase from './GraphBase';
@@ -48,7 +47,7 @@ export default class Donut extends GraphBase {
 		const self = this;
 		self.addClass('donut');
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self[setupGraph]();
 		self.onUpdateSize((renderWidth, renderHeight) => {

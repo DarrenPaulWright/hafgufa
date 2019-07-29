@@ -1,10 +1,9 @@
 import { delay } from 'async-agent';
 import { event } from 'd3';
 import keyCodes from 'keycodes';
-import { AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import { filteredTitle } from '../../utility/sortBy';
 import stringHelper from '../../utility/stringHelper';
 import controlTypes from '../controlTypes';
@@ -123,7 +122,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		});
 		self.onBlur(self[onBlurTextInput]);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onChange((newValue) => {
 			self[TEXT_INPUT].placeholder(newValue.value.length ? '.' : self.placeholder());

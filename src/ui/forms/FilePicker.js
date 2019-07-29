@@ -1,10 +1,9 @@
 import { delay } from 'async-agent';
 import { remove } from 'lodash';
 import { clone } from 'object-agent';
-import { AUTO, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method } from 'type-enforcer';
 import { EMPTY_STRING } from '../../utility/domConstants';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import LightBox from '../other/LightBox';
@@ -55,7 +54,7 @@ export default class FilePicker extends FormControl {
 
 		self.addClass(FILE_PICKER_CLASS);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self[buildFileInput]();
 
@@ -160,18 +159,23 @@ export default class FilePicker extends FormControl {
 	}
 
 	[saveFile](fileThumbnail) {
-		objectHelper.callIfExists(this.onSave(), {
-			fileData: fileThumbnail.fileData().fileData,
-			fileExtension: fileThumbnail.fileExtension()
-		});
+		if (self.onSave()) {
+			self.onSave()({
+				fileData: fileThumbnail.fileData().fileData,
+				fileExtension: fileThumbnail.fileExtension()
+			});
+		}
 	}
 
 	[deleteFile](fileThumbnail) {
 		const self = this;
-		objectHelper.callIfExists(self.onDelete(), {
-			fileData: fileThumbnail.fileData(),
-			fileExtension: fileThumbnail.fileExtension()
-		});
+
+		if (self.onDelete()) {
+			self.onDelete()({
+				fileData: fileThumbnail.fileData(),
+				fileExtension: fileThumbnail.fileExtension()
+			});
+		}
 
 		remove(self[FILES], {
 			name: fileThumbnail.ID()

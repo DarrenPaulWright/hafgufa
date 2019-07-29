@@ -1,5 +1,5 @@
 import { event } from 'd3';
-import { castArray, method } from 'type-enforcer';
+import { applySettings, castArray, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
 import dom from '../../utility/dom';
 import {
@@ -14,7 +14,6 @@ import {
 	MULTIPLE
 } from '../../utility/domConstants';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
@@ -103,7 +102,7 @@ export default class FileInput extends Control {
 				}
 			});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			self[INPUT_CONTROL].remove();

@@ -1,6 +1,5 @@
-import { AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
 import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import NextPrevMixin from '../mixins/NextPrevMixin';
@@ -68,7 +67,7 @@ export default class Carousel extends NextPrevMixin(Control) {
 			keepAltRows: false
 		});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onResize(() => {
 				if (self.fitToSlide()) {

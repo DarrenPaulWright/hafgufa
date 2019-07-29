@@ -1,8 +1,7 @@
 import { event } from 'd3';
-import { Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { DRAG_START_EVENT, IMAGE, OBJECT_FIT, OPACITY, SOURCE } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 import './Image.less';
@@ -42,7 +41,7 @@ export default class Image extends Control {
 		this.fit(this.fit(), true)
 			.source(DEFAULT_IMAGE_SOURCE);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 }
 

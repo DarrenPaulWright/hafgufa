@@ -1,6 +1,5 @@
-import { isFunction, isNumber } from 'type-enforcer';
+import { applySettings, isFunction, isNumber } from 'type-enforcer';
 import dom from '../../utility/dom';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -31,7 +30,7 @@ export default class Toolbar extends Control {
 		this[BUTTONS] = [];
 		this.addClass(TOOLBAR_BASE_CLASS);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 
 		this.onRemove(() => {
 			this.empty();
@@ -74,7 +73,7 @@ export default class Toolbar extends Control {
 			data.isEnabled = data.isEnabled();
 		}
 
-		objectHelper.applySettings(button, data);
+		applySettings(button, data);
 
 		if (data.align === 'right') {
 			button.addClass('align-right');

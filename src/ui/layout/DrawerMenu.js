@@ -1,11 +1,10 @@
 import { defer } from 'async-agent';
-import { AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
 import { IS_DESKTOP } from '../../utility/browser';
 import collectionHelper from '../../utility/collectionHelper';
 import dom from '../../utility/dom';
 import locale from '../../utility/locale';
-import objectHelper from '../../utility/objectHelper';
 import windowResize from '../../utility/windowResize';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -59,7 +58,7 @@ export default class DrawerMenu extends Control {
 			}
 		});
 
-		objectHelper.applySettings(self, settings, false, [], ['menuContainer']);
+		applySettings(self, settings, [], ['menuContainer']);
 
 		self.onResize(() => {
 				if (self[DRAWER] && self[DRAWER].isOpen()) {

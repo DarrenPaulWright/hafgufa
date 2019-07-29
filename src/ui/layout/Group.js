@@ -1,7 +1,6 @@
-import { AUTO, method, Thickness } from 'type-enforcer';
+import { applySettings, AUTO, method, Thickness } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { MIN_WIDTH, PADDING } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
@@ -30,7 +29,7 @@ export default class Group extends ControlHeadingMixin(Container) {
 			.removeClass('container')
 			.css(MIN_WIDTH, AUTO);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 }
 

@@ -1,7 +1,6 @@
-import { method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { ROWS, TEXT_AREA } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -23,7 +22,7 @@ export default class TextArea extends Control {
 
 		super(settings);
 
-		objectHelper.applySettings(this, settings);
+		applySettings(this, settings);
 	}
 }
 

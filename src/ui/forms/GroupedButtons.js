@@ -1,9 +1,8 @@
-import { AUTO, enforce, enforceInteger, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, enforceInteger, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
 import dom from '../../utility/dom';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../../utility/domConstants';
 import MultiItemFocus from '../../utility/MultiItemFocus';
-import objectHelper from '../../utility/objectHelper';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -81,7 +80,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 				classes: 'shadow'
 			});
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self
 			.onRemove(() => {
@@ -166,7 +165,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		}
 		settings.ID = settings.ID.toString();
 
-		objectHelper.applySettings(button, {
+		applySettings(button, {
 			...settings,
 			container: self[BUTTON_CONTAINER],
 			isSelectable: self.isSelectable(),

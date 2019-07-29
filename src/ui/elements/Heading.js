@@ -1,7 +1,7 @@
 import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
-import { AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	CLICK_EVENT,
@@ -13,7 +13,6 @@ import {
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED
 } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
@@ -167,7 +166,7 @@ export default class Heading extends FocusMixin(Control) {
 			})
 		}));
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onResize(() => {
 			if (!self.width().isAuto) {

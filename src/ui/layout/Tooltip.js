@@ -1,7 +1,6 @@
 import { select } from 'd3';
-import { DockPoint } from 'type-enforcer';
+import { applySettings, DockPoint } from 'type-enforcer';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import Container from '../layout/Container';
 import Popup from '../layout/Popup';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
@@ -61,7 +60,7 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 
 		const self = this;
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			if (self[POPUP]) {

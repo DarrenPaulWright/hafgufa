@@ -1,7 +1,6 @@
 import { defer } from 'async-agent';
-import { AUTO, DockPoint, HUNDRED_PERCENT, isFunction, method, PIXELS, Thickness } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, HUNDRED_PERCENT, isFunction, method, PIXELS, Thickness } from 'type-enforcer';
 import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import BackDrop from '../elements/BackDrop';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
 import { CLEAR_ICON } from '../icons';
@@ -76,7 +75,7 @@ export default class Dialog extends Removable {
 			})
 			.onResize(settings.onResize);
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self.onRemove(() => {
 			if (self[CONTENT_CONTAINER]) {

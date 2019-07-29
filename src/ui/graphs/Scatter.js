@@ -1,8 +1,7 @@
 import { select } from 'd3';
-import { enforce, INITIAL, NONE } from 'type-enforcer';
+import { applySettings, enforce, INITIAL, NONE } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../../utility/domConstants';
-import objectHelper from '../../utility/objectHelper';
 import controlTypes from '../controlTypes';
 import GraphAxisBase from './GraphAxisBase';
 import * as graphConstants from './graphConstants';
@@ -55,7 +54,7 @@ export default class Scatter extends GraphAxisBase {
 		self[UNIQUE_Z_VALUES] = [];
 		self[VISIBLE_ITEMS] = [];
 
-		objectHelper.applySettings(self, settings);
+		applySettings(self, settings);
 
 		self[setupGraph]();
 		self.onUpdateSize((renderWidth, renderHeight) => {
