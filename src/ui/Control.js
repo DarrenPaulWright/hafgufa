@@ -6,7 +6,6 @@ import replaceElement from '../utility/dom/replaceElement';
 import {
 	BORDER_BOX,
 	BOTTOM,
-	BOX_SIZING,
 	CLICK_EVENT,
 	DOCUMENT,
 	EMPTY_STRING,
@@ -30,7 +29,8 @@ import {
 	RIGHT,
 	SPACE,
 	TOP,
-	WIDTH
+	WIDTH,
+	WINDOW
 } from '../utility/domConstants';
 import windowResize from '../utility/windowResize';
 import './Control.less';
@@ -112,9 +112,9 @@ const setResizeEvent = function() {
 				if (self.container() && self.height().isPercent) {
 					containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
 					containerHeight -= dom.get.paddings.height(self.container());
-					containerHeight -= dom.get.margins.height(this[ELEMENT]);
-					if (self.css(BOX_SIZING) !== BORDER_BOX) {
-						containerHeight -= dom.get.paddings.height(this[ELEMENT]);
+					containerHeight -= dom.get.margins.height(self[ELEMENT]);
+					if (WINDOW.getComputedStyle(this[ELEMENT]).boxSizing !== BORDER_BOX) {
+						containerHeight -= dom.get.paddings.height(self[ELEMENT]);
 					}
 					self.css(HEIGHT, Math.floor(containerHeight));
 				}
