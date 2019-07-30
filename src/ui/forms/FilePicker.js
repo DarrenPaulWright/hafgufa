@@ -344,9 +344,12 @@ Object.assign(FilePicker.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isMulti: method.boolean({
-		set: function(newValue) {
-			if (this[FILE_INPUT]) {
-				this[FILE_INPUT].isMulti(newValue);
+		set: function(isMulti) {
+			const self = this;
+
+			self.classes('isMulti', isMulti);
+			if (self[FILE_INPUT]) {
+				self[FILE_INPUT].isMulti(isMulti);
 			}
 		}
 	}),

@@ -1,8 +1,19 @@
 
-.file-picker.has-heading > div, .file-picker:not(.has-heading) {
-	white-space: normal;
-	padding: @filePickerPadding;
-	background: @filePickerBackground;
-	border-radius: @filePickerBorderRadius;
-	box-shadow: @filePickerBoxShadow;
+.file-picker {
+	&.isMulti {
+		&.has-heading > div, &:not(.has-heading) {
+			white-space: normal;
+			padding: @filePickerPadding;
+			background: @filePickerBackground;
+			border-radius: @filePickerBorderRadius;
+			box-shadow: @filePickerBoxShadow;
+		}
+	}
+
+	&:not(.isMulti) {
+		.file-input {
+			margin: 0;
+			width: 100%;
+		}
+	}
 }
