@@ -1,22 +1,22 @@
 /* Primary Definitions */
 @import (css) url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css');
 @import (css) url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import (css) url('https://fonts.googleapis.com/css?family=Roboto:100,300,500|Sarpanch');
+@import (css) url('https://fonts.googleapis.com/css?family=Play:400,700&display=swap');
 
-@chromeFontFamily: 'Roboto', 'FontAwesome', arial, helvetica, sans-serif;
+@chromeFontFamily: 'Play', 'FontAwesome', arial, helvetica, sans-serif;
 @inputFontFamily: @chromeFontFamily;
-@headingFontFamily: 'Sarpanch', 'FontAwesome', arial, helvetica, sans-serif;
+@headingFontFamily: 'Play', 'FontAwesome', arial, helvetica, sans-serif;
 
 @fontSize: 0.9375rem;
 @chromeFontSize: 1rem;
 @chromeHeaderFontSize: 1.4rem;
 
 @lightFontWeight: 100;
-@normalFontWeight: 300;
-@boldFontWeight: 500;
+@normalFontWeight: 400;
+@boldFontWeight: 700;
 
-@highlightColor: #0cf;
-@subHighlightColor: #0fe;
+@highlightColor: #0ac;
+@subHighlightColor: #8df;
 @validColor: #336600;
 @warningColor: #cc7700;
 @errorColor: #cc0000;
@@ -33,7 +33,7 @@
 @separatorReflectionColor: @chromeReflectionColor;
 @separatorShadowColor: fade(@shadowColor, 10%);
 
-@fontColor: #555555;
+@fontColor: #666669;
 @secondaryFontColor: fade(@fontColor, 50%);
 @disabledFontColor: fade(@fontColor, 30%);
 @backgroundColor: #fff;
@@ -41,7 +41,7 @@
 @hyperlinkColor: @highlightColor;
 @hyperlinkHoverColor: lighten(@hyperlinkColor, 5);
 
-@chromeFontColor: #333333;
+@chromeFontColor: #666669;
 @chromeSubFontColor: #88888a;
 @chromeInverseFontColor: #eee;
 @chromeInverseSubFontColor: fade(@chromeInverseFontColor, 60%);
@@ -212,7 +212,7 @@
 @iconButtonActiveOpacity: 0.9;
 
 /* heading */
-@headingFont: normal @normalFontWeight @chromeHeaderFontSize/1.5em @headingFontFamily;
+@headingFont: normal @boldFontWeight @chromeHeaderFontSize/1.5em @headingFontFamily;
 @headingErrorFontColor: @errorColor;
 @headingErrorBackground: repeating-linear-gradient(45deg, fade(@errorColor, 5%), fade(@errorColor, 5%) 0.7rem, fade(@errorColor, 25%) 0.7rem, fade(@errorColor, 25%) 1.4rem);
 @headingErrorPadding: 0 0.75rem;
@@ -250,25 +250,26 @@
 
 @h1FontSize: 1.8rem;
 @h2FontSize: 1.6rem;
-@h3FontSize: 1.3rem;
-@h4FontSize: 1.3rem;
-@h5FontSize: 0.85rem;
+@h3FontSize: 1rem;
+@h4FontSize: 1rem;
+@h5FontSize: 0.7rem;
 @h6FontSize: 0.85rem;
-@h1FontWeight: @lightFontWeight;
-@h2FontWeight: @lightFontWeight;
-@h3FontWeight: @normalFontWeight;
-@h4FontWeight: @lightFontWeight;
+@h1FontWeight: @boldFontWeight;
+@h2FontWeight: @normalFontWeight;
+@h3FontWeight: @boldFontWeight;
+@h4FontWeight: @boldFontWeight;
 @h5FontWeight: @normalFontWeight;
 @h6FontWeight: @normalFontWeight;
 @h1FontLineHeight: 1.2em;
 @h2FontLineHeight: 1.2em;
 @h3FontLineHeight: 1.2em;
 @h4FontLineHeight: 1.2em;
-@h5FontLineHeight: 1.2em;
+@h5FontLineHeight: 1.4em;
 @h6FontLineHeight: 1.2em;
 .h1Ex() {
 	> .icon {
-		transform: translateY(-0.15em);
+		font-size: 1.2em;
+		transform: translateY(0.05em);
 	}
 }
 
@@ -279,19 +280,25 @@
 }
 
 .h3Ex() {
-	.allSmallCaps();
+	.allCaps();
 }
 
 .h4Ex() {
-	.allSmallCaps();
+	.allCaps();
 
 	> .icon {
-		transform: translateY(-0.12em);
+		transform: translateY(-0.2em);
 	}
 }
 
 .h5Ex() {
-	.allSmallCaps();
+	padding-top: 0.5em;
+	.allCaps();
+
+	> .icon {
+		font-size: 1.3em;
+		transform: translateY(-0.2em);
+	}
 
 	.toolbar {
 		.icon-button {
@@ -496,19 +503,11 @@
 @groupMargin: 0 0.85rem 1.15rem 0;
 @groupPadding: 0.3rem 0.7rem 0.6rem;
 @groupMinHeight: 4rem;
-@groupHeadingPadding: 0 0.6em 0.2em 0.6em;
+@groupHeadingPadding: 0.25em 0.6em 0.25em 1em;
 @groupBorderRadius: 0;
 
-@groupBackground: left/50% no-repeat linear-gradient(135deg,
-transparent 0.6rem,
-@groupBorderColor 0.6rem,
-@groupBorderColor 0.65rem,
-@groupBackgroundColor 0.65rem),
-	right/50% no-repeat linear-gradient(315deg,
-transparent 0.6rem,
-@groupBorderColor 0.6rem,
-@groupBorderColor 0.65rem,
-@groupBackgroundColor 0.65rem), radial-gradient(at top center, fade(@reflectionColor, 10%), fade(@reflectionColor, 4%), fade(@reflectionColor, 0%));
+@groupBackground: top/100% 50% no-repeat linear-gradient(135deg, transparent 0.6rem, @groupBorderColor 0.6rem, @groupBorderColor 0.65rem, @groupBackgroundColor 0.65rem), bottom/100% 50% no-repeat linear-gradient(315deg, transparent 0.6rem, @groupBorderColor 0.6rem, @groupBorderColor 0.65rem, @groupBackgroundColor 0.65rem), radial-gradient(at top center, fade(@reflectionColor, 10%), fade(@reflectionColor, 4%) 30%, fade(@reflectionColor, 0%) 65%);
+
 @groupShadow: none;
 @groupIconColor: @highlightColor;
 @groupBorder: none;
@@ -517,8 +516,8 @@ transparent 0.6rem,
 		content: '';
 		display: block;
 		position: absolute;
-		width: calc(100% - 0.85rem);
-		height: calc(100% - 0.85rem);
+		width: calc(100% - 0.88rem);
+		height: calc(100% - 0.88rem);
 		border: 0.05rem solid @groupBorderColor;
 		pointer-events: none;
 	}
@@ -545,10 +544,10 @@ transparent 0.6rem,
 			right: 0.3rem;
 			bottom: 0.25rem;
 			left: 0.3rem;
-			background: left/50% no-repeat linear-gradient(135deg,
+			background: top/100% 50% no-repeat linear-gradient(135deg,
 			transparent 0.5rem,
 			@groupBackgroundColor 0.5rem),
-				right/50% no-repeat linear-gradient(315deg,
+				bottom/100% 50% no-repeat linear-gradient(315deg,
 			transparent 0.5rem,
 			@groupBackgroundColor 0.5rem);
 		}
