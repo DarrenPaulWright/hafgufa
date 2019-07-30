@@ -37,7 +37,7 @@ const addClickEvent = function() {
 	const clickHandler = () => {
 		let url = self.url();
 
-		if (self.isSelectable()) {
+		if (self.isSelectable && self.isSelectable()) {
 			self.isSelected(!self.isSelected());
 		}
 
