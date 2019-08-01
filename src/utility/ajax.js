@@ -1,6 +1,6 @@
 import { throttle } from 'async-agent';
 import axios from 'axios';
-import { Queue } from 'type-enforcer';
+import { enforceBoolean, Queue } from 'type-enforcer';
 
 const queue = new Queue();
 const TYPE = {
@@ -21,8 +21,8 @@ let currentCallTotal = 0;
  * @arg {function} resolve
  * @arg {function} reject
  */
-const call = (type, url, settings, resolve, reject) => {
-	let params = settings ? settings.params : undefined;
+const call = (type, url, settings = {}, resolve, reject) => {
+	let params = settings.params;
 
 	if (type === TYPE.GET) {
 		params = {
@@ -33,7 +33,7 @@ const call = (type, url, settings, resolve, reject) => {
 	currentCallTotal++;
 
 	axios.create({
-		withCredentials: true
+		withCredentials: enforceBoolean(settings.withCredentials, true)
 	})[type](url, params)
 		.then((response) => {
 			currentCallTotal--;
