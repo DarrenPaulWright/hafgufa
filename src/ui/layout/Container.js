@@ -62,11 +62,12 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 
 		content.forEach((controlDefinition) => {
 			if (controlDefinition && controlDefinition.control) {
-				this[CONTROLS].add(new controlDefinition.control(Object.assign(controlDefinition, {
+				this[CONTROLS].add(new controlDefinition.control({
+					...controlDefinition,
 					container: this.contentContainer(),
 					prepend: doPrepend,
 					parentContainer: this
-				})));
+				}));
 			}
 		});
 	}

@@ -51,14 +51,14 @@ export default class DrawerMenu extends Control {
 		self[MENU_BUTTON] = new Button({
 			container: self.element(),
 			classes: 'header-button',
-			label: locale.get('menu'),
+			label: settings.label !== undefined ? settings.label : locale.get('menu'),
 			icon: MENU_ICON,
 			onClick: function() {
 				self[toggleMenu]();
 			}
 		});
 
-		applySettings(self, settings, [], ['menuContainer']);
+		applySettings(self, settings, [], ['menuContainer', 'isMenuOpen']);
 
 		self.onResize(() => {
 				if (self[DRAWER] && self[DRAWER].isOpen()) {
@@ -211,21 +211,24 @@ Object.assign(DrawerMenu.prototype, {
 				isAnimated: !IS_DESKTOP,
 				dock: self.drawerDock().primary(),
 				overlap: !IS_DESKTOP,
+				isOpen: true,
 				onOpen: () => {
-					if (!IS_DESKTOP) {
-						self[BACKDROP] = new BackDrop({
-							container: self.menuContainer(),
-							prepend: self[DRAWER].element(),
-							onRemove: () => {
-								self[DRAWER].isOpen(false);
-							}
-						});
-					}
-					self[buildMenu]();
+					defer(() => {
+						if (!IS_DESKTOP) {
+							self[BACKDROP] = new BackDrop({
+								container: self.menuContainer(),
+								prepend: self[DRAWER].element(),
+								onRemove: () => {
+									self[DRAWER].isOpen(false);
+								}
+							});
+						}
+						self[buildMenu]();
 
-					if (IS_DESKTOP) {
-						windowResize.trigger();
-					}
+						if (IS_DESKTOP) {
+							windowResize.trigger();
+						}
+					});
 
 					self.onMenuSlide().trigger(null, [true]);
 				},
@@ -246,8 +249,6 @@ Object.assign(DrawerMenu.prototype, {
 					self[clearMenu]();
 				}
 			});
-
-			self[DRAWER].isOpen(true);
 		}
 	}),
 

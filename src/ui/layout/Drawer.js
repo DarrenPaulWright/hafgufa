@@ -62,7 +62,7 @@ export default class Drawer extends Container {
 			.removeClass('container');
 
 		if (settings.type === controlTypes.DRAWER) {
-			applySettings(self, settings, ['dock']);
+			applySettings(self, settings, ['dock'], ['isOpen']);
 		}
 
 		self
