@@ -54,6 +54,7 @@ const locale = {
 	language: method.string({
 		set: (language) => {
 			document.querySelector('html').setAttribute('lang', language);
+			locale.onLanguageChange().trigger(null, [language], locale);
 		}
 	}),
 	/**
@@ -61,6 +62,7 @@ const locale = {
 	 *
 	 * @method urlFormat
 	 * @memberOf locale
+	 * @default '[path]-[lang].json'
 	 *
 	 * @arg {String} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
 	 *
@@ -128,9 +130,18 @@ const locale = {
 		}
 
 		return output;
-	}
+	},
+	/**
+	 * Add a callback to be called whenever locale.language changes
+	 *
+	 * @method onLanguageChange
+	 * @memberOf locale
+	 *
+	 * @arg {function} callback
+	 *
+	 * @returns {Queue}
+	 */
+	onLanguageChange: method.queue()
 };
-
-locale.language('en-US');
 
 export default locale;
