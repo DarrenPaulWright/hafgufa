@@ -1,12 +1,14 @@
 @import (reference) '../mixins/mixins.less';
 
 .file-input {
+	@borderThickness: 0.25rem;
+
 	display: inline-block;
 	overflow: hidden;
 	vertical-align: top;
 	margin: @FileThumbnailMargin;
 	background: fade(@highlightColor, 10);
-	border: 0.25rem dashed fade(@highlightColor, 30);
+	border: @borderThickness dashed fade(@highlightColor, 30);
 	text-align: center;
 	font-size: @chromeFontSize;
 	font-weight: @boldFontWeight;
@@ -22,7 +24,7 @@
 	&.extra-small {
 		height: @FileThumbnailExtraSmallHeight;
 		width: @FileThumbnailExtraSmallWidth;
-		line-height: 1em;
+		line-height: @FileThumbnailExtraSmallHeight - (@borderThickness * 2.5);
 		border-radius: 0.5rem;
 		font-size: 0.9em;
 	}
@@ -30,14 +32,14 @@
 	&.small {
 		height: @FileThumbnailSmallHeight;
 		width: @FileThumbnailSmallWidth;
-		line-height: @FileThumbnailSmallHeight - 6;
+		line-height: @FileThumbnailSmallHeight - (@borderThickness * 2);
 		border-radius: 0.5rem;
 	}
 
 	&.medium {
 		height: @FileThumbnailMediumHeight;
 		width: @FileThumbnailMediumWidth;
-		line-height: @FileThumbnailMediumHeight - 6;
+		line-height: @FileThumbnailMediumHeight - (@borderThickness * 2);
 		border-radius: 0.75rem;
 		font-size: @chromeHeaderFontSize;
 	}
@@ -45,7 +47,7 @@
 	&.large {
 		height: @FileThumbnailLargeHeight;
 		width: @FileThumbnailLargeWidth;
-		line-height: @FileThumbnailLargeHeight - 6;
+		line-height: @FileThumbnailLargeHeight - (@borderThickness * 2);
 		border-radius: 1rem;
 		font-size: @chromeHeaderFontSize;
 	}
@@ -53,8 +55,14 @@
 	&.extra-large {
 		height: @FileThumbnailExtraLargeHeight;
 		width: @FileThumbnailExtraLargeWidth;
-		line-height: @FileThumbnailExtraLargeHeight - 6;
+		line-height: @FileThumbnailExtraLargeHeight - (@borderThickness * 2);
 		border-radius: 1.5rem;
 		font-size: @chromeHeaderFontSize;
+	}
+}
+
+.file-picker.isMulti {
+	.file-input.extra-small{
+		line-height: 1.1em;
 	}
 }

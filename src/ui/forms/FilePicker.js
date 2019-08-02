@@ -8,6 +8,7 @@ import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import LightBox from '../other/LightBox';
 import FileInput from './FileInput';
+import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import './FilePicker.less';
 import FileThumbnail, { IMAGE_FILE_TYPES, PREVIEW_SIZES } from './FileThumbnail';
 import FormControl from './FormControl';
@@ -25,7 +26,6 @@ const removeFileInput = Symbol();
 const preloadFiles = Symbol();
 const buildThumbnail = Symbol();
 const editFile = Symbol();
-const saveFile = Symbol();
 const deleteFile = Symbol();
 const onLoadFile = Symbol();
 const buildLightbox = Symbol();
@@ -40,7 +40,7 @@ const updateLightBox = Symbol();
  *
  * @arg {Object}        settings
  */
-export default class FilePicker extends FormControl {
+export default class FilePicker extends IsWorkingMixin(FormControl) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.FILE_PICKER;
 		settings.width = enforce.cssSize(settings.width, AUTO, true);
@@ -131,7 +131,7 @@ export default class FilePicker extends FormControl {
 		}
 		if (self.canDelete()) {
 			thumb.onDelete(() => {
-				self[deleteFile]();
+				self[deleteFile](thumb);
 			});
 		}
 
@@ -143,7 +143,7 @@ export default class FilePicker extends FormControl {
 		}
 
 		if (!self.canEdit()) {
-			self[saveFile](thumb);
+			self.onSave().call(self, data);
 		}
 
 		self[FILE_THUMBNAILS].add(thumb);
@@ -156,15 +156,6 @@ export default class FilePicker extends FormControl {
 
 	[editFile](control) {
 		this[buildLightbox](control.ID());
-	}
-
-	[saveFile](fileThumbnail) {
-		if (self.onSave()) {
-			self.onSave()({
-				fileData: fileThumbnail.fileData().fileData,
-				fileExtension: fileThumbnail.fileExtension()
-			});
-		}
 	}
 
 	[deleteFile](fileThumbnail) {

@@ -98,7 +98,7 @@ export default class FileInput extends Control {
 			.on(DRAG_DROP_EVENT, () => {
 				stopEvent();
 				if (event.dataTransfer.files.length > 0) {
-					loadFile(event.dataTransfer.files);
+					self[loadFile](event.dataTransfer.files);
 				}
 			});
 
@@ -118,10 +118,11 @@ export default class FileInput extends Control {
 				let img = new Image();
 
 				img.onload = () => {
-					resolve(Object.assign(data, {
+					resolve({
+						...data,
 						width: img.width,
 						height: img.height
-					}));
+					});
 					img = null;
 				};
 
