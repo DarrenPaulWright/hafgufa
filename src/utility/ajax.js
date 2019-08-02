@@ -13,65 +13,40 @@ const TYPE = {
 let currentCallTotal = 0;
 
 /**
- * Makes an AJAX call
- * @function call
- * @arg {string} type
- * @arg {string} url
- * @arg {object} settings
- * @arg {function} resolve
- * @arg {function} reject
- */
-const call = (type, url, settings = {}, resolve, reject) => {
-	let params = settings.params;
-
-	if (type === TYPE.GET) {
-		params = {
-			params: params
-		};
-	}
-
-	currentCallTotal++;
-
-	axios.create({
-		withCredentials: enforceBoolean(settings.withCredentials, true)
-	})[type](url, params)
-		.then((response) => {
-			currentCallTotal--;
-
-			try {
-				resolve(response.data);
-			}
-			catch (error) {
-				reject(error, response.data);
-			}
-
-			checkPriorityQueue();
-		})
-		.catch((error) => {
-			currentCallTotal--;
-
-			reject(error);
-
-			checkPriorityQueue();
-		});
-};
-
-/**
  * Prioritize a new call
  * @function prioritizeCall
  * @arg {string} type
  * @arg {string} url
  * @arg {Object} settings
  */
-const prioritizeCall = (type, url, settings) => new Promise((resolve, reject) => {
-	if (settings && settings.priority && settings.priority === 'low') {
-		queue.add(() => {
-			call(type, url, settings, resolve, reject);
-		});
+const prioritizeCall = (type, url, settings = {}) => new Promise((resolve, reject) => {
+	const handleResponse = (callback) => (value) => {
+		currentCallTotal--;
+		callback(value);
+		checkPriorityQueue();
+	};
+
+	const call = () => {
+		currentCallTotal++;
+
+		axios[type](url, settings)
+			.then(handleResponse((response) => {
+				try {
+					resolve(response.data);
+				}
+				catch (error) {
+					reject(error, response.data);
+				}
+			}))
+			.catch(handleResponse((error) => reject(error)));
+	};
+
+	if (settings.priority === 'low') {
+		queue.add(call);
 		checkPriorityQueue();
 	}
 	else {
-		call(type, url, settings, resolve, reject);
+		call();
 	}
 });
 
