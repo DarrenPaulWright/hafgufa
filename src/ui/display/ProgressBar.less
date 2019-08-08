@@ -1,0 +1,128 @@
+@import (reference) '../mixins/mixins.less';
+
+.progress {
+	@paddingRightOffset: 0.8;
+
+	line-height: @h6FontLineHeight;
+
+	.bar-container {
+		position: relative;
+		min-height: @progressBarMinHeight;
+		display: inline-block;
+		background: @progressBarBackground;
+		border-radius: @progressBarBorderRadius;
+		overflow: hidden;
+		white-space: pre;
+
+		&:after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border-radius: @progressBarBorderRadius;
+			box-shadow: @progressBarShadow;
+			pointer-events: none;
+		}
+	}
+
+	.bar {
+		position: absolute;
+		height: 100%;
+		background: @progressBarCompletedBackground;
+		overflow: visible;
+	}
+
+	&.steps {
+		.bar {
+			&:after {
+				content: '';
+				position: absolute;
+				width: @progressBarPointerSize;
+				height: @progressBarPointerSize;
+				right: -(@progressBarPointerSize / 2);
+				background: linear-gradient(45deg, transparent 48%, @progressBarCompletedRightColor 48%);
+				border-radius: @progressBarPointerBorderRadius;
+				top: 50%;
+				transform: translateY(-50%) rotate(45deg);
+			}
+		}
+	}
+
+	.step {
+		display: inline-block;
+		position: relative;
+		vertical-align: top;
+		padding: @progressBarStepPadding;
+		height: 100%;
+		transition: color @animationDuration @easing;
+
+		&:not(:first-of-type) {
+			padding-left: @progressBarNotFirstPaddingLeft;
+		}
+
+		&:not(:last-of-type) {
+			padding-right: @progressBarPointerSize * @paddingRightOffset;
+
+			&:after {
+				display: block;
+			}
+		}
+
+		&:after {
+			content: '';
+			display: none;
+			position: absolute;
+			width: @progressBarPointerSize;
+			height: @progressBarPointerSize;
+			right: @progressBarPointerSize / 4;
+			border-top: @progressBarDividerBorder;
+			border-right: @progressBarDividerBorder;
+			border-radius: @progressBarPointerBorderRadius;
+			top: 50%;
+			transform: translateY(-50%) rotate(45deg);
+			transition: border-color @animationDuration @easing;
+		}
+
+		&.completed {
+			&:after {
+				border-color: transparent;
+			}
+		}
+	}
+
+	&.large {
+		&.steps {
+			.bar {
+				&:after {
+					width: @progressBarLargePointerSize;
+					height: @progressBarLargePointerSize;
+					right: -(@progressBarLargePointerSize / 2);
+				}
+			}
+		}
+
+		.step {
+			&:not(:last-of-type) {
+				padding-right: @progressBarLargePointerSize * @paddingRightOffset;
+			}
+
+			&:after {
+				width: @progressBarLargePointerSize;
+				height: @progressBarLargePointerSize;
+				right: @progressBarLargePointerSize / 4;
+			}
+		}
+	}
+
+	&.big-numbers {
+		.step {
+			padding-left: @progressBarBigNumbersPaddingLeft;
+
+			&:not(:first-of-type) {
+				padding-left: @progressBarBigNumbersNotFirstPaddingLeft;
+			}
+		}
+	}
+}
