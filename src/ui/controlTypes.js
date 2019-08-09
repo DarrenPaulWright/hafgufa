@@ -51,6 +51,7 @@ const controlTypes = {
 	SEARCH_BAR: 'searchBar',
 	SECTION: 'section',
 	SLIDER: 'slider',
+	SOURCE: 'source',
 	SPAN: 'span',
 	SPLIT_VIEW: 'splitView',
 	TABS: 'tabs',
@@ -60,6 +61,7 @@ const controlTypes = {
 	TILE_LAYOUT: 'tileLayout',
 	TOOLBAR: 'toolbar',
 	TREE: 'tree',
+	VIDEO: 'video',
 	VIRTUAL_LIST: 'virtualList'
 };
 

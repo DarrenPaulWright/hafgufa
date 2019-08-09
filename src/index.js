@@ -1,6 +1,7 @@
 export { default as theme } from './ui/themes/theme';
 
 export { default as controlTypes } from './ui/controlTypes';
+export { default as Element } from './ui/Element';
 export { default as Control } from './ui/Control';
 export { default as ControlManager } from './ui/ControlManager';
 export { default as ControlRecycler } from './ui/ControlRecycler';
@@ -21,7 +22,10 @@ export { default as Radio } from './ui/elements/Radio';
 export { default as Resizer, offsetToPixels } from './ui/elements/Resizer';
 export { default as Span } from './ui/elements/Span';
 export { default as TextArea } from './ui/elements/TextArea';
-``;
+
+export { default as Video } from './ui/media/Video';
+export { default as Source } from './ui/media/Source';
+
 export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
 export { default as FileInput } from './ui/forms/FileInput';
