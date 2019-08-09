@@ -30,17 +30,14 @@ export default class ContextMenu extends Menu {
 			}
 			isInit = true;
 		};
-
-		self.addClass(CONTEXT_MENU_CLASS);
-
-		select(BODY)
-			.on(CONTEXT_MENU_EVENT + id, onContextMenu)
-			.on(CLICK_EVENT + id, onContextMenu);
-
-		self.onRemove(() => {
+		const setEvents = (callback) => {
 			select(BODY)
-				.on(CONTEXT_MENU_EVENT + id, null)
-				.on(CLICK_EVENT + id, null);
-		});
+				.on(CONTEXT_MENU_EVENT + id, callback)
+				.on(CLICK_EVENT + id, callback);
+		}
+
+		setEvents(onContextMenu);
+		self.addClass(CONTEXT_MENU_CLASS)
+			.onRemove(() => setEvents(null));
 	}
 }

@@ -87,13 +87,13 @@ export default class Menu extends Popup {
 			width: AUTO
 		});
 
-		settings = Object.assign({
+		settings = {
 			type: controlTypes.MENU,
 			anchor: Popup.MOUSE,
 			maxHeight: MAX_POPUP_HEIGHT,
 			minWidth: MIN_POPUP_WIDTH,
-			maxWidth: MAX_POPUP_WIDTH
-		}, settings, {
+			maxWidth: MAX_POPUP_WIDTH,
+			...settings,
 			anchorDockPoint: enforce.enum(settings.anchorDockPoint, DockPoint.POINTS, DockPoint.POINTS.BOTTOM_RIGHT),
 			popupDockPoint: enforce.enum(settings.popupDockPoint, DockPoint.POINTS, DockPoint.POINTS.TOP_LEFT),
 			canTrackMouse: enforce.boolean(settings.canTrackMouse, false),
@@ -101,7 +101,7 @@ export default class Menu extends Popup {
 			FocusMixin: {
 				mainControl: tree
 			}
-		});
+		};
 
 		super(settings);
 
@@ -120,25 +120,24 @@ export default class Menu extends Popup {
 				}
 			},
 			emptyContentMessage: locale.get('noMatchingItems'),
-			maxHeight: self.maxHeight(),
-			minWidth: self.minWidth(),
-			maxWidth: self.maxWidth(),
+			maxHeight: settings.maxHeight,
+			minWidth: settings.minWidth,
+			maxWidth: settings.maxWidth,
 			isMultiSelect: self.isMultiSelect(),
 			onLayoutChange: () => {
 				self.resize(true);
 			}
 		});
 
-		self.content(tree);
+		self.content(tree)
+			.onResize(() => {
+				self
+					.width(self.get(TREE_ID).borderWidth())
+					.get(TREE_ID)
+					.fitHeightToContents()
+					.height(self.borderHeight() - (self.get(HEADER_ID) ? dom.get.height(self.get(HEADER_ID)) : 0));
+			});
 		tree = null;
-
-		self.onResize(() => {
-			self
-				.width(self.get(TREE_ID).borderWidth())
-				.get(TREE_ID)
-				.fitHeightToContents()
-				.height(self.borderHeight() - (self.get(HEADER_ID) ? dom.get.height(self.get(HEADER_ID)) : 0));
-		});
 
 		applySettings(self, settings);
 
@@ -148,6 +147,8 @@ export default class Menu extends Popup {
 		else {
 			self.get(TREE_ID).isFocused(true);
 		}
+
+		self.resize();
 	}
 
 	[buildHeader]() {
