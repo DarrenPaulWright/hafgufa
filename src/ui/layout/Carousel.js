@@ -6,8 +6,6 @@ import NextPrevMixin from '../mixins/NextPrevMixin';
 import './Carousel.less';
 import VirtualList from './VirtualList';
 
-const EVENT_SUFFIX = '.carousel';
-
 const VIRTUAL_LIST = Symbol();
 const IS_FIT = Symbol();
 const BUTTON_SIZE = Symbol();
@@ -70,10 +68,10 @@ export default class Carousel extends NextPrevMixin(Control) {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-				if (self.fitToSlide()) {
-					self[fitToSlide]();
-				}
-			})
+			if (self.fitToSlide()) {
+				self[fitToSlide]();
+			}
+		})
 			.onRemove(() => {
 				self[VIRTUAL_LIST].remove();
 				self[VIRTUAL_LIST] = null;

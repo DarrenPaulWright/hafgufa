@@ -49,6 +49,7 @@ export default (Base) => {
 				}
 				else {
 					this[IS_WORKING].remove();
+					this[IS_WORKING] = null;
 				}
 			}
 		}),

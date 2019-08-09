@@ -188,6 +188,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 
 	[onLoadFile](data) {
 		const self = this;
+
 		Object.assign(self[FILES].find((item) => item.name === data.name), data);
 		self[buildThumbnail](data);
 		self[updateLightBox]();
@@ -240,6 +241,9 @@ Object.assign(FilePicker.prototype, {
 			self[FILES].forEach((file) => {
 				self[buildThumbnail](file, true);
 			});
+			if (!self[FILES].length) {
+				self[buildFileInput]();
+			}
 		},
 		get: function() {
 			return this[FILES];

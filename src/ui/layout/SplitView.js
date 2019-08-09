@@ -11,8 +11,6 @@ import { ORIENTATION as RESIZER_ORIENTATION } from '../uiConstants';
 import Container from './Container';
 import './SplitView.less';
 
-const RESIZER_SIZE = 1;
-const RESIZER_MARGIN = 3;
 const SPLIT_VIEW_CLASS = 'split-view';
 const FIRST_VIEW_CLASS = 'first-view';
 const SECOND_VIEW_CLASS = 'second-view';
@@ -75,36 +73,36 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		applySettings(self, settings, ['orientation']);
 
 		self.onResize(() => {
-				const setStackedSize = (localSize, scrollType) => {
-					self.css(localSize, Math.ceil(dom.get[scrollType](self[FIRST_VIEW]) + dom.get[scrollType](self[FIRST_VIEW])));
-				};
-				const setSingleSize = (localSize, scrollType) => {
-					self.css(localSize, Math.ceil(Math.max(dom.get[scrollType](self[FIRST_VIEW]), dom.get[scrollType](self[FIRST_VIEW]))));
-				};
+			const setStackedSize = (localSize, scrollType) => {
+				self.css(localSize, Math.ceil(dom.get[scrollType](self[FIRST_VIEW]) + dom.get[scrollType](self[FIRST_VIEW])));
+			};
+			const setSingleSize = (localSize, scrollType) => {
+				self.css(localSize, Math.ceil(Math.max(dom.get[scrollType](self[FIRST_VIEW]), dom.get[scrollType](self[FIRST_VIEW]))));
+			};
 
-				if (self.height().isAuto) {
-					if (self[IS_COLUMNS]) {
-						setSingleSize(HEIGHT, SCROLL_HEIGHT);
-					}
-					else {
-						setStackedSize(HEIGHT, SCROLL_HEIGHT);
-					}
+			if (self.height().isAuto) {
+				if (self[IS_COLUMNS]) {
+					setSingleSize(HEIGHT, SCROLL_HEIGHT);
 				}
-				if (self.width().isAuto) {
-					if (self[IS_COLUMNS]) {
-						setStackedSize(WIDTH, SCROLL_WIDTH);
-					}
-					else {
-						setSingleSize(WIDTH, SCROLL_WIDTH);
-					}
+				else {
+					setStackedSize(HEIGHT, SCROLL_HEIGHT);
 				}
+			}
+			if (self.width().isAuto) {
+				if (self[IS_COLUMNS]) {
+					setStackedSize(WIDTH, SCROLL_WIDTH);
+				}
+				else {
+					setSingleSize(WIDTH, SCROLL_WIDTH);
+				}
+			}
 
-				self[positionViews]();
+			self[positionViews]();
 
-				if (self[RESIZER]) {
-					self[RESIZER].resize();
-				}
-			})
+			if (self[RESIZER]) {
+				self[RESIZER].resize();
+			}
+		})
 			.onRemove(() => {
 				self[FIRST_VIEW].remove();
 				self[SECOND_VIEW].remove();
@@ -123,11 +121,9 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		const altViewSize = self[ALT_SIZE] === WIDTH ? self.borderWidth() : self.borderHeight();
 		let splitOffset = offsetToPixels(self.splitOffset(), viewSize);
 
-		self[FIRST_VIEW][self[SIZE]](splitOffset)
-			[self[ALT_SIZE]](altViewSize);
+		self[FIRST_VIEW][self[SIZE]](splitOffset)[self[ALT_SIZE]](altViewSize);
 
-		self[SECOND_VIEW][self[SIZE]](viewSize - splitOffset)
-			[self[ALT_SIZE]](altViewSize)
+		self[SECOND_VIEW][self[SIZE]](viewSize - splitOffset)[self[ALT_SIZE]](altViewSize)
 			.css(self[SIZE_ORIGIN], splitOffset)
 			.css(self[ALT_SIZE_ORIGIN], ZERO_PIXELS);
 	}
@@ -212,11 +208,7 @@ Object.assign(SplitView.prototype, {
 		set: function(isResizable) {
 			const self = this;
 
-			let totalResizerSize;
-
 			if (isResizable) {
-				totalResizerSize = RESIZER_SIZE + (2 * RESIZER_MARGIN);
-
 				if (!self[RESIZER]) {
 					self[RESIZER] = new Resizer({
 						container: self,

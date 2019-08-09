@@ -12,7 +12,7 @@ const HORIZONTAL_CLASS = 'horizontal';
 const VERTICAL_CLASS = 'vertical';
 const DESKTOP_SIZE = new CssSize('0.4rem');
 const TOUCH_SIZE = new CssSize('2rem');
-const VISUAL_SIZE = new CssSize('0.03rem');
+const VISUAL_SIZE = new CssSize('0.032rem');
 
 const SPLIT_OFFSET = Symbol();
 const DIRECTION = Symbol();

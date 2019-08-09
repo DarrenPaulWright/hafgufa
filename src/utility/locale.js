@@ -45,7 +45,6 @@ const locale = {
 	 *
 	 * @method language
 	 * @memberOf locale
-	 * @default 'en-US'
 	 *
 	 * @arg {String} language
 	 *

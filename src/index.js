@@ -68,6 +68,7 @@ export { default as Menu } from './ui/other/Menu';
 export { default as SearchBar } from './ui/other/SearchBar';
 
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
+export { default as ContextMenuMixin } from './ui/mixins/ContextMenuMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
 export { default as DelayedRenderMixin } from './ui/mixins/DelayedRenderMixin';
 export { default as DragMixin } from './ui/mixins/DragMixin';

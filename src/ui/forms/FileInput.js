@@ -138,6 +138,7 @@ export default class FileInput extends Control {
 
 			reader.onload = () => {
 				resolve({
+					file: file,
 					fileData: reader.result,
 					name: getFileName(file.name),
 					extension: getFileExtension(file.name),
