@@ -106,7 +106,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		const self = this;
 
 		if (!self.isRemoved) {
-			let baseWidth = self.borderWidth();
+			let baseWidth = self.innerWidth();
 			let textWidth = self.textWidth() || new CssSize(self.width().isAuto ? '14em' : HUNDRED_PERCENT);
 
 			if (textWidth.toString() !== HUNDRED_PERCENT) {
