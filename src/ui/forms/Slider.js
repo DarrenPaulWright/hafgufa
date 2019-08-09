@@ -32,6 +32,7 @@ const getSnapSize = Symbol();
 const setSnapGrid = Symbol();
 const positionThumbs = Symbol();
 
+const IS_DRAGGING = Symbol();
 const OFFSETS = Symbol();
 const TRACK = Symbol();
 const RANGE = Symbol();
@@ -95,16 +96,24 @@ export default class Slider extends FormControl {
 		const self = this;
 		const saveOffset = function(offset) {
 			const thumbIndex = self[THUMBS].indexOf(this);
-			self[OFFSETS][thumbIndex] = offset.x;
-			self[positionRange]();
+
+			if (self[OFFSETS][thumbIndex] !== offset.x) {
+				self[OFFSETS][thumbIndex] = offset.x;
+				self[positionRange]();
+				if (self.onSlide().length) {
+					self.onSlide().trigger(null, [self[OFFSETS].map((offset) => self[getValueAtOffset](offset))]);
+				}
+			}
 		};
 
 		self[THUMBS].push(new Thumb({
 			container: self,
 			onDragStart: () => {
+				self[IS_DRAGGING] = true;
 			},
 			onDrag: saveOffset,
 			onDragDone: (offset) => {
+				self[IS_DRAGGING] = false;
 				saveOffset.call(this, offset);
 
 				if (self[OFFSETS].length > 1 && self[OFFSETS][0] > self[OFFSETS][1]) {
@@ -230,13 +239,15 @@ Object.assign(Slider.prototype, {
 		set: function(value) {
 			const self = this;
 
-			while (value.length > self[THUMBS].length) {
-				self[addThumb]();
+			if (!self[IS_DRAGGING]) {
+				while (value.length > self[THUMBS].length) {
+					self[addThumb]();
+				}
+				while (value.length < self[THUMBS].length) {
+					self[removeThumb]();
+				}
+				self[positionThumbs]();
 			}
-			while (value.length < self[THUMBS].length) {
-				self[removeThumb]();
-			}
-			self[positionThumbs]();
 		}
 	}),
 	min: method.number({
@@ -253,5 +264,6 @@ Object.assign(Slider.prototype, {
 	}),
 	buildTooltip: method.function({
 		init: (value) => value + ''
-	})
+	}),
+	onSlide: method.queue()
 });
