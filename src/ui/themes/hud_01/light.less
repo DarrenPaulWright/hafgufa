@@ -681,7 +681,7 @@
 /* Is Working */
 @isWorkingBackground: transparent;
 @isWorkingColor: @highlightColor;
-@isWorkingSubColor: fade(@fontColor, 6%);
+@isWorkingSubColor: fade(lighten(@highlightColor, 25), 12.5%);
 .isWorkingEx() {
 	> div {
 		@thickness: 0.1rem;
@@ -690,6 +690,7 @@
 		border: @thickness solid @isWorkingSubColor;
 		border-top-color: @isWorkingColor;
 		animation: spin 2s linear infinite;
+		box-shadow: 0 0 (@thickness * 2) fade(@highlightColor, 40%), inset 0 0 (@thickness * 2) fade(@highlightColor, 40%);
 
 		&::before,
 		&::after {
@@ -714,10 +715,11 @@
 
 	&.medium {
 		> div {
-			@thickness: 0.09rem;
+			@thickness: 0.05rem;
 
 			border-width: @thickness;
 			animation: spin 1.5s linear infinite;
+			box-shadow: 0 0 (@thickness * 2) fade(@highlightColor, 40%), inset 0 0 (@thickness * 2) fade(@highlightColor, 40%);
 
 			&::before,
 			&::after {
@@ -729,10 +731,11 @@
 
 	&.small {
 		> div {
-			@thickness: 0.08rem;
+			@thickness: 0.04rem;
 
 			border-width: @thickness;
 			animation: spin 1.25s linear infinite;
+			box-shadow: 0 0 (@thickness * 2) fade(@highlightColor, 40%), inset 0 0 (@thickness * 2) fade(@highlightColor, 40%);
 
 			&::before,
 			&::after {
