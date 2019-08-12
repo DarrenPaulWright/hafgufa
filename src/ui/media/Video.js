@@ -1,4 +1,4 @@
-import { applySettings, castArray, isArray, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -14,8 +14,8 @@ const methodProperty = (property) => {
 			return this;
 		}
 		return this.element()[property];
-	}
-}
+	};
+};
 
 export default class Video extends Control {
 	constructor(settings = {}) {
