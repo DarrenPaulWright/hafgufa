@@ -4,8 +4,10 @@ import moment from 'moment';
 import { repeat } from 'object-agent';
 import { applySettings, CssSize, enforceBoolean, Enum, method, PIXELS, Thickness } from 'type-enforcer';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
+import clamp from '../../utility/math/clamp';
 import Control from '../Control';
 import Div from '../elements/Div';
+import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import NextPrevMixin from '../mixins/NextPrevMixin';
 import './Timeline.less';
 import TimeSpan from './TimeSpan';
@@ -40,7 +42,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 1000,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incValue: 1000,
 	incUnit: 'y'
 }, {
 	min: 0.25,
@@ -49,7 +50,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 100,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incValue: 100,
 	incUnit: 'y'
 }, {
 	min: 0.5,
@@ -58,7 +58,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 10,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incValue: 10,
 	incUnit: 'y'
 }, {
 	min: 1,
@@ -67,7 +66,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR,
 	subSpans: [12, 6, 4, 2],
 	format: 'YYYY',
-	incValue: 1,
 	incUnit: 'y'
 }, {
 	min: MONTHS_IN_YEAR,
@@ -76,7 +74,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR / MONTHS_IN_YEAR,
 	subSpans: [4, 2],
 	format: 'MMM YYYY',
-	incValue: 1,
 	incUnit: 'M'
 }, {
 	min: MONTHS_IN_YEAR * 30,
@@ -85,7 +82,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_DAY,
 	subSpans: [24, 12, 6, 4, 2],
 	format: 'D MMM YYYY',
-	incValue: 1,
 	incUnit: 'd'
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY,
@@ -94,7 +90,6 @@ const SPANS = [{
 	length: MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [6, 4, 2],
 	format: 'ha, D MMM YYYY',
-	incValue: 1,
 	incUnit: 'h'
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR,
@@ -103,7 +98,6 @@ const SPANS = [{
 	length: SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [6, 4, 2],
 	format: 'h:mma, D MMM YYYY',
-	incValue: MINUTES_IN_HOUR,
 	incUnit: 'm'
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE,
@@ -112,7 +106,6 @@ const SPANS = [{
 	length: MILLISECONDS_IN_SECOND,
 	subSpans: [10, 5, 2],
 	format: 'h:mm:ssa, D MMM YYYY',
-	incValue: SECONDS_IN_MINUTE,
 	incUnit: 's'
 }];
 
@@ -123,6 +116,7 @@ const LINE = Symbol();
 const VIRTUAL_LIST = Symbol();
 const MIN_SPAN_WIDTH = Symbol();
 const MIN_SUB_SPAN_WIDTH = Symbol();
+const INNER_WIDTH = Symbol();
 const START = Symbol();
 const END = Symbol();
 const LENGTH = Symbol();
@@ -132,6 +126,7 @@ const MAX_ZOOM = Symbol();
 const SPAN = Symbol();
 const SUB_SPANS = Symbol();
 
+const reset = Symbol();
 const setLayout = Symbol();
 const setZoom = Symbol();
 const calcSpans = Symbol();
@@ -139,7 +134,7 @@ const buildSlides = Symbol();
 const renderSpan = Symbol();
 const getSpanOffset = Symbol();
 
-export default class Timeline extends NextPrevMixin(Control) {
+export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 	constructor(settings = {}) {
 		settings.canZoom = enforceBoolean(settings.canZoom, true);
 		settings.NextPrevMixin = {
@@ -169,7 +164,7 @@ export default class Timeline extends NextPrevMixin(Control) {
 		});
 
 		self[VIRTUAL_LIST] = new VirtualList({
-			container: self.element(),
+			container: self,
 			isHorizontal: true,
 			height: settings.height,
 			itemControl: TimeSpan,
@@ -181,10 +176,16 @@ export default class Timeline extends NextPrevMixin(Control) {
 		});
 
 		self.onResize(() => {
-			self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
-			self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
-			self[setLayout]();
-		});
+				self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
+				self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
+			
+				const innerWidth = self[VIRTUAL_LIST].innerWidth();
+				if (innerWidth !== self[INNER_WIDTH]) {
+					self[INNER_WIDTH] = innerWidth;
+					self[reset]();
+				}
+			})
+			.resize();
 
 		applySettings(self, settings);
 	}
@@ -192,8 +193,7 @@ export default class Timeline extends NextPrevMixin(Control) {
 	[setZoom](newZoom) {
 		const self = this;
 
-		newZoom = Math.max(newZoom, self[MIN_ZOOM] || 0);
-		newZoom = Math.min(newZoom, self[MAX_ZOOM]);
+		newZoom = clamp(newZoom, self[MIN_ZOOM] || 0, self[MAX_ZOOM]);
 
 		if (newZoom !== self[ZOOM] || (self.data().length && !self[VIRTUAL_LIST].itemSize())) {
 			self[ZOOM] = newZoom;
@@ -251,25 +251,24 @@ export default class Timeline extends NextPrevMixin(Control) {
 	[buildSlides]() {
 		const self = this;
 		const slides = [];
+		const isDuration = self.duration() !== undefined;
 		const totalSlides = Math.ceil(self[LENGTH] / self[SPAN].length) + 1;
-		const currentValue = moment(self[START]);
+		const currentValue = isDuration ? moment.utc(0) : moment(self[START]);
+		const format = isDuration ? 'HH:mm:ss' : self[SPAN].format;
+		const exporter = isDuration ? ((value) => value.toDate().valueOf()) : ((value) => value.toDate());
 
 		repeat(totalSlides, () => {
-			const title = currentValue.format(self[SPAN].format);
+			const title = currentValue.format(format);
 
 			slides.push({
 				ID: 'span_' + title,
 				title: title,
 				events: [],
-				start: moment(currentValue)
-					.startOf(self[SPAN].incUnit).toDate(),
-				end: moment(currentValue)
-					.endOf(self[SPAN].incUnit)
-					.add(self[SPAN].incValue - 1, self[SPAN].incUnit)
-					.toDate()
+				start: exporter(moment(currentValue).startOf(self[SPAN].incUnit)),
+				end: exporter(moment(currentValue).endOf(self[SPAN].incUnit))
 			});
 
-			currentValue.add(self[SPAN].incValue, self[SPAN].incUnit);
+			currentValue.add(self[SPAN].length);
 		});
 
 		const start = slides[0].start;
@@ -302,13 +301,19 @@ export default class Timeline extends NextPrevMixin(Control) {
 }
 
 Object.assign(Timeline.prototype, {
+	[reset]: function() {
+		this[SPAN] = undefined;
+		this[MIN_ZOOM] = undefined;
+		this[ZOOM] = 1;
+		this[setLayout]();
+	},
 	[setLayout]: throttle(function() {
 		const self = this;
 
 		self[LENGTH] = self[END] - self[START];
 
 		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / self[MIN_SPAN_WIDTH];
-		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self.innerWidth());
+		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self[INNER_WIDTH]);
 
 		if (minZoom !== self[MIN_ZOOM]) {
 			self[MIN_ZOOM] = minZoom;
@@ -321,49 +326,58 @@ Object.assign(Timeline.prototype, {
 		init: new Thickness('0'),
 		set: function(padding) {
 			this[VIRTUAL_LIST].padding(padding);
-			this[setLayout]();
+			this[reset]();
 		}
 	}),
 	data: method.array({
 		set: function(data) {
 			const self = this;
 
-			self[START] = data[0].date;
-			self[END] = data[0].date;
+			if (!(self.dateStart() && self.dateEnd()) && !self.duration()) {
+				self[START] = data[0].startdate || data[0].date;
+				self[END] = data[0].endDate || data[0].date;
 
-			data.forEach((item) => {
-				if (item.date) {
-					if (item.date > self[END]) {
-						self[END] = item.date;
+				data.forEach((item) => {
+					if (item.date) {
+						if (item.date > self[END]) {
+							self[END] = item.date;
+						}
+						if (item.endDate > self[END]) {
+							self[END] = item.endDate;
+						}
+						if (item.date < self[START]) {
+							self[START] = item.date;
+						}
+						if (item.startDate < self[START]) {
+							self[START] = item.startDate;
+						}
 					}
-					if (item.endDate > self[END]) {
-						self[END] = item.date;
-					}
-					if (item.date < self[START]) {
-						self[START] = item.date;
-					}
-					if (item.startDate < self[START]) {
-						self[START] = item.date;
-					}
-				}
-			});
+				});
+			}
 
-			self[setLayout]();
+			self[reset]();
 		}
 	}),
 	dateStart: method.date({
 		set: function(dateStart) {
 			this[START] = dateStart;
-			this[setLayout]();
+			this[reset]();
 		},
 		coerce: true
 	}),
 	dateEnd: method.date({
 		set: function(dateEnd) {
 			this[END] = dateEnd;
-			this[setLayout]();
+			this[reset]();
 		},
 		coerce: true
+	}),
+	duration: method.number({
+		set: function(duration) {
+			this[START] = 0;
+			this[END] = duration;
+			this[reset]();
+		}
 	}),
 	lineOffset: method.cssSize({
 		set: function(lineOffset) {
@@ -403,11 +417,11 @@ Object.assign(Timeline.prototype, {
 	maxZoom: method.enum({
 		enum: SPAN_TYPES,
 		init: SPAN_TYPES.MILLISECOND,
-		set: function() {
+		set: function(maxZoom) {
 			const self = this;
 
 			SPANS.some((span) => {
-				if (span.type === self.maxZoom()) {
+				if (span.type === maxZoom) {
 					self[MAX_ZOOM] = span.max;
 					return true;
 				}
