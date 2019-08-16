@@ -1,3 +1,5 @@
+import { event } from 'd3';
+import { DRAG_START_EVENT } from 'hafgufa/src/utility/d3Helper';
 import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
@@ -23,6 +25,7 @@ class Thumb extends TooltipMixin(DragMixin(Button)) {
 }
 
 const addThumb = Symbol();
+const saveNewValue = Symbol();
 const removeThumb = Symbol();
 const setValueToIncrement = Symbol();
 const getValueAtOffset = Symbol();
@@ -37,7 +40,9 @@ const OFFSETS = Symbol();
 const TRACK = Symbol();
 const RANGE = Symbol();
 const THUMBS = Symbol();
+const MOUSE_OFFSET = Symbol();
 const TRACK_SIZE = Symbol();
+const TRACK_MARGINS = Symbol();
 const LOCATION_SIZE = Symbol();
 
 export default class Slider extends FormControl {
@@ -53,7 +58,32 @@ export default class Slider extends FormControl {
 
 		self[TRACK] = new Div({
 			container: self,
-			classes: 'track'
+			classes: 'track',
+			on: {
+				mousedown: () => {
+					const mouseOffset = clamp(
+						event.clientX - self.element().getBoundingClientRect().x - self[MOUSE_OFFSET],
+						0,
+						self[LOCATION_SIZE]
+					);
+					let minDiff = self[LOCATION_SIZE] + 1;
+					let position = -1;
+
+					self[OFFSETS].forEach((offset, index) => {
+						const diff = Math.abs(offset - mouseOffset);
+						if (diff < minDiff) {
+							minDiff = diff;
+							position = index;
+						}
+					});
+
+					self[THUMBS][position].position(mouseOffset, 0);
+					self[THUMBS][position].elementD3().dispatch(DRAG_START_EVENT);
+					self[OFFSETS][position] = mouseOffset;
+					self[positionRange]();
+					self[saveNewValue]();
+				}
+			}
 		});
 
 		self[RANGE] = new Div({
@@ -68,11 +98,14 @@ export default class Slider extends FormControl {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-				const thumbSize = self[THUMBS][0].borderWidth();
-				self[TRACK_SIZE] = thumbSize - dom.get.margins.width(self[TRACK]);
-				const offset = thumbSize - self[TRACK_SIZE];
+				if (self[TRACK_SIZE] === undefined) {
+					const thumbSize = self[THUMBS][0].borderWidth();
+					self[MOUSE_OFFSET] = thumbSize / 2;
+					self[TRACK_MARGINS] = dom.get.margins.width(self[TRACK]);
+					self[TRACK_SIZE] = thumbSize - self[TRACK_MARGINS];
+				}
 
-				const trackWidth = self.borderWidth() - offset;
+				const trackWidth = self.borderWidth() - self[TRACK_MARGINS];
 				self[TRACK].width(trackWidth);
 
 				self[LOCATION_SIZE] = trackWidth - self[TRACK_SIZE];
@@ -115,21 +148,26 @@ export default class Slider extends FormControl {
 			onDragDone: (offset) => {
 				self[IS_DRAGGING] = false;
 				saveOffset.call(this, offset);
-
-				if (self[OFFSETS].length > 1 && self[OFFSETS][0] > self[OFFSETS][1]) {
-					self[OFFSETS].push(self[OFFSETS].shift());
-					self[THUMBS].push(self[THUMBS].shift());
-				}
-
-				const value = self[OFFSETS].map((offset) => self[getValueAtOffset](offset));
-
-				if (self.value() !== value) {
-					self.value(value);
-					self.triggerChange();
-				}
+				self[saveNewValue]();
 			},
 			snapGridSize: self[getSnapSize]()
 		}));
+	}
+
+	[saveNewValue]() {
+		const self = this;
+
+		if (self[OFFSETS].length > 1 && self[OFFSETS][0] > self[OFFSETS][1]) {
+			self[OFFSETS].push(self[OFFSETS].shift());
+			self[THUMBS].push(self[THUMBS].shift());
+		}
+
+		const value = self[OFFSETS].map((offset) => self[getValueAtOffset](offset));
+
+		if (self.value() !== value) {
+			self.value(value);
+			self.triggerChange();
+		}
 	}
 
 	[removeThumb]() {
