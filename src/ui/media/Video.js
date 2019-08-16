@@ -6,15 +6,12 @@ import Source from './Source';
 
 const SOURCES = Symbol();
 
-const methodProperty = (property) => {
-	return function(value) {
-		if (arguments.length) {
-			console.log('set ' + property + ':', value);
-			this.element()[property] = value;
-			return this;
-		}
-		return this.element()[property];
-	};
+const methodProperty = (property) => function(value) {
+	if (arguments.length) {
+		this.element()[property] = value;
+		return this;
+	}
+	return this.element()[property];
 };
 
 export default class Video extends Control {
@@ -45,6 +42,9 @@ export default class Video extends Control {
 				if (self.onEnd().length) {
 					self.onEnd().trigger(null, [], self);
 				}
+			},
+			error: () => {
+				self.onError().trigger(null, [self.element().error], self);
 			}
 		});
 	}
@@ -73,6 +73,8 @@ Object.assign(Video.prototype, {
 				source.remove();
 			});
 			self[SOURCES].length = 0;
+
+			self.element().textContent = '';
 		},
 		set: function(sources) {
 			const self = this;
@@ -82,19 +84,21 @@ Object.assign(Video.prototype, {
 					self[SOURCES].push(new Source({
 						container: self,
 						attr: {
-							src: source
+							src: source.source || source,
+							type: source.type || ''
 						}
 					}));
 				});
 			}
 			else {
-				self.attr('src', sources[0]);
+				self.attr('src', sources[0].source || sources[0]);
 			}
 		}
 	}),
 	onReady: method.queue(),
 	onTimeUpdate: method.queue(),
 	onEnd: method.queue(),
+	onError: method.queue(),
 	currentTime: methodProperty('currentTime'),
 	volume: methodProperty('volume'),
 	duration: methodProperty('duration'),
