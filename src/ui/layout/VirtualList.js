@@ -773,7 +773,7 @@ Object.assign(VirtualList.prototype, {
 	 */
 	itemSize: method.string({
 		set: function(newValue) {
-			this[ITEM_SIZE] = parseInt(newValue, 10) || 1;
+			this[ITEM_SIZE] = parseFloat(newValue) || 1;
 			this.refresh();
 		}
 	}),
