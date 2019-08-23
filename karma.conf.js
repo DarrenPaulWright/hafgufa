@@ -1,27 +1,4 @@
-const testRunnerConfig = require('test-runner-config');
-const config = require('./testRunner.config.js');
-
 const singleRun = process.argv.includes('--single-run');
-
-const exclude = (file) => {
-	return {
-		pattern: file,
-		included: false
-	};
-};
-
-const files = testRunnerConfig.getKarmaFiles(config, {
-	src: exclude
-});
-const preprocessors = {};
-testRunnerConfig.getKarmaFiles(config, {
-	css: exclude,
-	src: exclude
-}).files.forEach((pattern) => {
-	if (pattern.included !== false) {
-		preprocessors[pattern] = ['webpack'];
-	}
-});
 
 const reporters = ['brief', 'coverage'];
 if (singleRun) {
@@ -30,6 +7,7 @@ if (singleRun) {
 
 module.exports = function(config) {
 	config.set({
+		frameworks: ['mocha'],
 		browsers: ['ChromeHeadless', 'FirefoxHeadless'],
 		customLaunchers: {
 			FirefoxHeadless: {
@@ -37,9 +15,10 @@ module.exports = function(config) {
 				flags: ['-headless']
 			}
 		},
-		files: files.files,
-		frameworks: ['mocha'],
-		preprocessors: preprocessors,
+		files: ['tests/index.js'],
+		preprocessors: {
+			'tests/index.js': ['webpack']
+		},
 		reporters: reporters,
 		briefReporter: {
 			renderOnRunCompleteOnly: singleRun
@@ -64,7 +43,8 @@ module.exports = function(config) {
 			},
 			module: {
 				rules: [{
-					test: /\.less$/, loaders: ['null-loader']
+					test: /\.less$/,
+					loaders: ['null-loader']
 				}, {
 					test: /\.js$/,
 					enforce: 'pre',
@@ -84,9 +64,6 @@ module.exports = function(config) {
 				}]
 			},
 			watch: true
-		},
-		webpackServer: {
-			noInfo: true
 		}
 	});
 };

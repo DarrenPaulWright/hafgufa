@@ -1,6 +1,6 @@
 import { event } from 'd3';
-import { DRAG_START_EVENT } from 'hafgufa/src/utility/d3Helper';
 import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
+import { DRAG_START_EVENT } from '../../utility/d3Helper';
 import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';

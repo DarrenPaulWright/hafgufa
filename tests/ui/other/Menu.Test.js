@@ -19,13 +19,7 @@ const controlTests = new ControlTests(Menu, testUtil, {
 
 describe('Menu', () => {
 
-	controlTests.run(['container',
-		'element',
-		'ID',
-		'height',
-		'width',
-		'onResize',
-		'stopPropagation'], ['focus']);
+	controlTests.run(['container', 'element', 'ID', 'height', 'width', 'onResize', 'stopPropagation']);
 
 	describe('MenuItems', () => {
 		testUtil.testMethod({
