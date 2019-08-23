@@ -3,7 +3,9 @@ import { method } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../utility/domConstants';
 import ContextMenu from '../other/ContextMenu';
 
-const CONTEXT_MENU = Symbol();
+let contextMenu;
+let contextMenuSource;
+let contextMenuStart;
 
 const removeMenu = Symbol();
 
@@ -19,14 +21,14 @@ export default (Base) => {
 			super(settings);
 
 			const self = this;
-			this.onRemove(() => {
+			self.onRemove(() => {
 				self[removeMenu]();
 			});
 		}
 
 		[removeMenu]() {
-			if (this[CONTEXT_MENU]) {
-				this[CONTEXT_MENU].remove();
+			if (contextMenu && (contextMenuSource === this || (Date.now() - contextMenuStart) > 200)) {
+				contextMenu.remove();
 			}
 		}
 	}
@@ -45,26 +47,35 @@ export default (Base) => {
 		 */
 		contextMenu: method.array({
 			init: null,
-			set: function(contextMenu) {
+			set: function(menuItems) {
 				const self = this;
-				const hasMenu = contextMenu && contextMenu.length;
+				const hasMenu = menuItems && menuItems.length;
 
 				self.set(CONTEXT_MENU_EVENT, () => {
 					event.preventDefault();
 
 					self[removeMenu]();
 
-					self[CONTEXT_MENU] = new ContextMenu({
-						menuItems: self.contextMenu(),
-						onSelect: (item) => {
-							if (self.onContextMenuChange()) {
-								self.onContextMenuChange()(item);
+					if (!contextMenu) {
+						contextMenuSource = self;
+						contextMenuStart = Date.now();
+
+						contextMenu = new ContextMenu({
+							menuItems: self.contextMenu(),
+							onSelect: (item) => {
+								if (self.onContextMenuChange()) {
+									self.onContextMenuChange().call(self, item);
+								}
+							},
+							onRemove: () => {
+								contextMenuSource = null;
+								contextMenu = null;
 							}
-						},
-						onRemove: () => {
-							self[CONTEXT_MENU] = null;
-						}
-					});
+						});
+					}
+					else {
+						contextMenu.menuItems(contextMenu.menuItems().concat(self.contextMenu()));
+					}
 				}, hasMenu);
 
 				if (!hasMenu) {
