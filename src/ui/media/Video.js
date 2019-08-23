@@ -4,7 +4,9 @@ import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Source from './Source';
 
+const IS_PLAYING = Symbol();
 const SOURCES = Symbol();
+const SECONDS_PER_FRAME = Symbol();
 
 const methodProperty = (property) => function(value) {
 	if (arguments.length) {
@@ -23,25 +25,22 @@ export default class Video extends Control {
 		super(settings);
 
 		const self = this;
+		self[IS_PLAYING] = false;
 		self[SOURCES] = [];
+		self[SECONDS_PER_FRAME] = 0;
 
 		applySettings(self, settings);
 
 		self.on({
 			loadedmetadata: () => {
-				if (self.onReady().length) {
-					self.onReady().trigger(null, [self.duration()], self);
-				}
+				self.onReady().trigger(null, [self.duration()], self);
 			},
 			timeupdate: () => {
-				if (self.onTimeUpdate().length) {
-					self.onTimeUpdate().trigger(null, [self.currentTime()], self);
-				}
+				self.onTimeUpdate().trigger(null, [self.currentTime()], self);
 			},
 			ended: () => {
-				if (self.onEnd().length) {
-					self.onEnd().trigger(null, [], self);
-				}
+				self[IS_PLAYING] = false;
+				self.onPause().trigger(null, [], self);
 			},
 			error: () => {
 				self.onError().trigger(null, [self.element().error], self);
@@ -50,11 +49,39 @@ export default class Video extends Control {
 	}
 
 	play() {
-		this.element().play();
+		const self = this;
+
+		self[IS_PLAYING] = true;
+		self.element().play();
+		self.onPlay().trigger(null, [], self);
 	}
 
 	pause() {
-		this.element().pause();
+		const self = this;
+
+		self[IS_PLAYING] = false;
+		self.element().pause();
+		self.onPause().trigger(null, [], self);
+	}
+
+	nextFrame() {
+		const self = this;
+
+		if (!self[IS_PLAYING]) {
+			self.currentTime(Math.min(self.currentTime() + self[SECONDS_PER_FRAME], self.duration()));
+		}
+	}
+
+	prevFrame() {
+		const self = this;
+
+		if (!self[IS_PLAYING]) {
+			self.currentTime(Math.max(self.currentTime() - self[SECONDS_PER_FRAME], 0));
+		}
+	}
+
+	get isPlaying() {
+		return this[IS_PLAYING];
 	}
 }
 
@@ -80,15 +107,13 @@ Object.assign(Video.prototype, {
 			const self = this;
 
 			if (sources.length > 1) {
-				sources.forEach((source) => {
-					self[SOURCES].push(new Source({
-						container: self,
-						attr: {
-							src: source.source || source,
-							type: source.type || ''
-						}
-					}));
-				});
+				self[SOURCES] = sources.map((source) => new Source({
+					container: self,
+					attr: {
+						src: source.source || source,
+						type: source.type || ''
+					}
+				}));
 			}
 			else {
 				self.attr('src', sources[0].source || sources[0]);
@@ -97,8 +122,14 @@ Object.assign(Video.prototype, {
 	}),
 	onReady: method.queue(),
 	onTimeUpdate: method.queue(),
-	onEnd: method.queue(),
 	onError: method.queue(),
+	onPlay: method.queue(),
+	onPause: method.queue(),
+	fps: method.number({
+		set: function(fps) {
+			this[SECONDS_PER_FRAME] = 1 / fps;
+		}
+	}),
 	currentTime: methodProperty('currentTime'),
 	volume: methodProperty('volume'),
 	duration: methodProperty('duration'),
