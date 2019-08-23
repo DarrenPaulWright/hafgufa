@@ -166,8 +166,8 @@
 
 @formButtonBorderColor: #bbbcbd;
 @formButtonBorder: none;
-@formButtonBackground: rgba(0, 0, 0, 0.05);
-@formButtonHoverBackground: rgba(0, 0, 0, 0.1);
+@formButtonBackground: rgba(0, 0, 0, 0.1);
+@formButtonHoverBackground: rgba(0, 0, 0, 0.2);
 @formButtonActiveBackground: @formButtonHoverBackground;
 @formButtonActiveShadow: @formButtonShadow;
 
@@ -313,6 +313,11 @@
 }
 
 .h6Ex() {
+	> .icon {
+		font-size: 1.3em;
+		transform: translateY(-0.15em);
+	}
+
 	.toolbar {
 		.icon-button {
 			padding: 0;
