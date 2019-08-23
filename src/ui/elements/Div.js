@@ -20,6 +20,8 @@ export default class Div extends Control {
 
 		super(settings);
 
-		applySettings(this, settings);
+		if (settings.type === controlTypes.DIV) {
+			applySettings(this, settings);
+		}
 	}
 }

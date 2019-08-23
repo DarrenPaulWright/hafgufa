@@ -1,0 +1,128 @@
+
+.tabs {
+	width: 100%;
+	overflow: hidden;
+
+	.tab-container {
+		position: relative;
+		width: 100%;
+		text-align: left;
+		background: @tabsTabContainerBackgroundColor;
+		overflow: hidden;
+	}
+
+	> .toolbar {
+		background: @toolbarColor;
+		border-bottom: 0.05rem solid @toolbarShadowColor;
+	}
+
+	> .tabs-content {
+		width: 100%;
+		overflow-y: auto;
+		background: @tabContentBackgroundColor;
+	}
+
+	&.horizontal {
+		> .tab-container {
+			padding: @tabsHorizontalTabContainerPadding;
+			box-shadow: @tabsHorizontalTabContainerShadow;
+
+			.grouped-buttons {
+				margin: @tabsHorizontalGroupMargin;
+				padding: 0;
+				display: inline-block;
+			}
+
+			.grouped-buttons-wrapper {
+				padding: 0;
+				background: none;
+				box-shadow: @tabsHorizontalTabsShadow;
+				border-radius: @formButtonCornerRadius @formButtonCornerRadius 0 0;
+
+				.form-button {
+					box-shadow: @tabsHorizontalTabContainerShadow, @tabsHorizontalTabShadow;
+					border-bottom-width: 0;
+
+					&.selected {
+						box-shadow: @tabsHorizontalTabShadow;
+						border-bottom: 0.05rem solid @tabSelectedColor;
+						background: @tabSelectedColor;
+						border-image: none;
+						border-top-width: 0;
+
+						&:hover {
+							background: @tabSelectedColor;
+						}
+					}
+
+					&:first-of-type {
+						border-bottom-left-radius: 0;
+						border-left-color: transparent;
+					}
+
+					&:last-of-type {
+						border-bottom-right-radius: 0;
+						border-right-color: transparent;
+					}
+				}
+			}
+		}
+
+	}
+
+	&.vertical {
+		> .tab-container {
+			float: left;
+			padding: @tabsVerticalTabContainerPadding;
+			border-right: 0.05rem solid @toolbarShadowColor;
+			border-bottom: none;
+			width: @tabsVerticalTabContainerWidth;
+			overflow-y: auto;
+			overflow-x: hidden;
+			transition: width @animationDuration @easing;
+
+			.grouped-buttons {
+				margin: @tabsVerticalGroupMargin;
+
+				.heading {
+					margin-left: @tabsVerticalGroupHeadingMarginLeft;
+				}
+			}
+
+			.form-button {
+				span {
+					opacity: 1;
+					transition: opacity @animationDuration @easing;
+				}
+			}
+
+			&.collapsed {
+				width: @tabsVerticalTabContainerCollapsedWidth;
+
+				.form-button {
+					text-overflow: clip;
+
+					span {
+						opacity: 0;
+					}
+				}
+			}
+		}
+
+		.tabs-collapse-button {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		> .tabs-content {
+			width: auto;
+			margin-left: @tabsVerticalTabContainerWidth;
+			transition: margin-left @animationDuration @easing;
+
+			&.collapsed {
+				margin-left: @tabsVerticalTabContainerCollapsedWidth;
+			}
+		}
+	}
+}
