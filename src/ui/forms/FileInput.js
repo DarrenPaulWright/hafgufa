@@ -1,7 +1,6 @@
 import { event } from 'd3';
 import { applySettings, castArray, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
-import dom from '../../utility/dom';
 import {
 	ACCEPT,
 	CHANGE_EVENT,
@@ -16,14 +15,19 @@ import {
 import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
+import Icon from '../elements/Icon';
 import Input from '../elements/Input';
+import Label from '../elements/Label';
+import { AUDIO_FILE_ICON, FILE_ICON, IMAGE_FILE_ICON, VIDEO_FILE_ICON } from '../icons';
 import './FileInput.less';
 import { PREVIEW_SIZES } from './FileThumbnail';
 
 const FILE_INPUT_CLASS = 'file-input ';
 const FILE_ELEMENT_CLASS = 'file-element';
 const HOVER_CLASS = 'hover';
+const AUDIO_TYPE = 'audio/*';
 const IMAGE_TYPE = 'image/*';
+const VIDEO_TYPE = 'video/*';
 const EXTENSION_SEPARATOR = '.';
 
 const stopEvent = () => {
@@ -39,6 +43,8 @@ const getFileExtension = (fileName) => {
 };
 
 const INPUT_CONTROL = Symbol();
+const ICON = Symbol();
+const LABEL = Symbol();
 
 const loadFile = Symbol();
 const isValidMimeType = Symbol();
@@ -63,7 +69,6 @@ export default class FileInput extends Control {
 		self.addClass(FILE_INPUT_CLASS + PREVIEW_SIZES.SMALL);
 
 		self[INPUT_CONTROL] = new Input({
-			container: self,
 			inputType: INPUT_TYPE_FILE,
 			class: FILE_ELEMENT_CLASS
 		});
@@ -81,7 +86,15 @@ export default class FileInput extends Control {
 			self[loadFile](files);
 		});
 
-		dom.content(self.element(), locale.get(IS_DESKTOP ? 'fileInputClickOrDrop' : 'fileInputClickToAdd'));
+		self[ICON] = new Icon({
+			container: self,
+			icon: FILE_ICON
+		});
+
+		self[LABEL] = new Label({
+			container: self,
+			content: locale.get(IS_DESKTOP ? 'fileInputClickOrDrop' : 'fileInputClickToAdd')
+		});
 
 		self.on(CLICK_EVENT, () => {
 				stopEvent();
@@ -106,6 +119,8 @@ export default class FileInput extends Control {
 
 		self.onRemove(() => {
 			self[INPUT_CONTROL].remove();
+			self[ICON].remove();
+			self[LABEL].remove();
 		});
 	}
 
@@ -180,15 +195,30 @@ export default class FileInput extends Control {
 }
 
 Object.assign(FileInput.prototype, {
+	isAudio: method.boolean({
+		set: function(isAudio) {
+			this.mimeTypes([isAudio ? AUDIO_TYPE : EMPTY_STRING]);
+			this[ICON].icon(AUDIO_FILE_ICON);
+		}
+	}),
+
 	isImage: method.boolean({
 		set: function(isImage) {
 			this.mimeTypes([isImage ? IMAGE_TYPE : EMPTY_STRING]);
+			this[ICON].icon(IMAGE_FILE_ICON);
+		}
+	}),
+
+	isVideo: method.boolean({
+		set: function(isVideo) {
+			this.mimeTypes([isVideo ? VIDEO_TYPE : EMPTY_STRING]);
+			this[ICON].icon(VIDEO_FILE_ICON);
 		}
 	}),
 
 	mimeTypes: method.array({
 		set: function(mimeTypes) {
-			this[INPUT_CONTROL].attr(ACCEPT, mimeTypes);
+			this[INPUT_CONTROL].attr(ACCEPT, mimeTypes.join(','));
 		}
 	}),
 

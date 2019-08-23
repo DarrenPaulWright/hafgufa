@@ -77,8 +77,10 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 				},
 				previewSize: self.previewSize(),
 				isMulti: self.isMulti() || self.isImage(),
+				isAudio: self.isAudio(),
 				isImage: self.isImage(),
-				mimeTypes: self.mimeTypes()
+				isVideo: self.isVideo(),
+				mimeTypes: self.mimeTypes().length ? self.mimeTypes() : undefined
 			});
 		}
 	}
@@ -250,10 +252,26 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
+	isAudio: method.boolean({
+		set: function(isAudio) {
+			if (this[FILE_INPUT]) {
+				this[FILE_INPUT].isAudio(isAudio);
+			}
+		}
+	}),
+
 	isImage: method.boolean({
 		set: function(isImage) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isImage(isImage);
+			}
+		}
+	}),
+
+	isVideo: method.boolean({
+		set: function(isVideo) {
+			if (this[FILE_INPUT]) {
+				this[FILE_INPUT].isVideo(isVideo);
 			}
 		}
 	}),

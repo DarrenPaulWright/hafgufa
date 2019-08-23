@@ -1,5 +1,7 @@
 @import (reference) '../mixins/mixins.less';
 
+@goldenRatio: 0.618;
+
 .file-input {
 	@borderThickness: 0.25rem;
 
@@ -21,12 +23,25 @@
 		background: fade(@highlightColor, 20);
 	}
 
+	.icon {
+		display: block;
+		position: absolute;
+		line-height: inherit;
+		opacity: 0.075;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
 	&.extra-small {
 		height: @FileThumbnailExtraSmallHeight;
 		width: @FileThumbnailExtraSmallWidth;
 		line-height: @FileThumbnailExtraSmallHeight - (@borderThickness * 2.5);
 		border-radius: 0.5rem;
 		font-size: 0.9em;
+
+		.icon {
+			font-size: @FileThumbnailExtraSmallHeight * @goldenRatio;
+		}
 	}
 
 	&.small {
@@ -34,6 +49,10 @@
 		width: @FileThumbnailSmallWidth;
 		line-height: @FileThumbnailSmallHeight - (@borderThickness * 2);
 		border-radius: 0.5rem;
+
+		.icon {
+			font-size: @FileThumbnailSmallHeight * @goldenRatio;
+		}
 	}
 
 	&.medium {
@@ -42,6 +61,10 @@
 		line-height: @FileThumbnailMediumHeight - (@borderThickness * 2);
 		border-radius: 0.75rem;
 		font-size: @chromeHeaderFontSize;
+
+		.icon {
+			font-size: @FileThumbnailMediumHeight * @goldenRatio;
+		}
 	}
 
 	&.large {
@@ -50,6 +73,10 @@
 		line-height: @FileThumbnailLargeHeight - (@borderThickness * 2);
 		border-radius: 1rem;
 		font-size: @chromeHeaderFontSize;
+
+		.icon {
+			font-size: @FileThumbnailLargeHeight * @goldenRatio;
+		}
 	}
 
 	&.extra-large {
@@ -58,6 +85,10 @@
 		line-height: @FileThumbnailExtraLargeHeight - (@borderThickness * 2);
 		border-radius: 1.5rem;
 		font-size: @chromeHeaderFontSize;
+
+		.icon {
+			font-size: @FileThumbnailExtraLargeHeight * @goldenRatio;
+		}
 	}
 }
 
