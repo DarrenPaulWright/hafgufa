@@ -29,7 +29,7 @@ const measureRightContainerWidth = Symbol();
  * @constructor
  */
 export default function(Base) {
-	class ActionButtonMixin extends (Base) {
+	class ActionButtonMixin extends Base {
 		constructor(settings = {}) {
 			const containerCallback = settings.ActionButtonMixin.container;
 

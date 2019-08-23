@@ -497,7 +497,7 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	padding: method.thickness({
-		init: new Thickness(),
+		init: new Thickness('initial'),
 		set: function(newValue) {
 			this.css(PADDING, newValue.toString());
 		}
@@ -515,7 +515,7 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	margin: method.thickness({
-		init: new Thickness(),
+		init: new Thickness('initial'),
 		set: function(newValue) {
 			this.css(MARGIN, newValue.toString());
 		}
