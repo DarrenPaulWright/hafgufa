@@ -74,6 +74,11 @@ export default (Base) => {
 						});
 					}
 					else {
+						const last = contextMenu.menuItems()[contextMenu.menuItems().length - 1];
+						if (!last.classes) {
+							last.classes = '';
+						}
+						last.classes += ' separator';
 						contextMenu.menuItems(contextMenu.menuItems().concat(self.contextMenu()));
 					}
 				}, hasMenu);
