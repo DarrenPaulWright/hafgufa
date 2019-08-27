@@ -6,8 +6,8 @@ import { byKey } from '../../../src/utility/sortBy';
 import collectionHelper from '../../utility/collectionHelper';
 import { CLICK_EVENT, WINDOW } from '../../utility/domConstants';
 import locale from '../../utility/locale';
+import softDelete from '../../utility/softDelete';
 import controlTypes from '../controlTypes';
-import toast from '../display/toast';
 import Dialog from '../layout/Dialog';
 import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
@@ -827,37 +827,32 @@ export default class Picker extends FocusMixin(FormControl) {
 
 	[deleteItem](item) {
 		const self = this;
-		let isDeleted = true;
 		let options = self.options();
-		let originalOptions = clone(options);
 		let wasSelected = false;
 
-		self[hideMenu]();
-
-		if (self[checkSelected](item.ID)) {
-			wasSelected = true;
-			self[toggleSelectedItem](options.children[0].ID);
-		}
-
-		remove(options.children, (option) => option.ID === item.ID);
-
-		self.options(options, true);
-
-		toast.info({
+		softDelete({
 			title: item.title + ' deleted',
-			subTitle: locale.get('clickToUndo'),
-			onClick: function() {
-				isDeleted = false;
+			value: options,
+			onDo() {
+				self[hideMenu]();
+
+				if (self[checkSelected](item.ID)) {
+					wasSelected = true;
+					self[toggleSelectedItem](options.children[0].ID);
+				}
+
+				remove(options.children, (option) => option.ID === item.ID);
+
+				self.options(options, true);
+			},
+			onUndo(originalOptions) {
 				self.options(originalOptions);
 				if (wasSelected) {
 					self[toggleSelectedItem](item);
 				}
 			},
-			onRemove: function() {
-				if (isDeleted) {
-					self.onDelete().call(self, item);
-				}
-				originalOptions = null;
+			onCommit() {
+				self.onDelete().call(self, item);
 			}
 		});
 	}
