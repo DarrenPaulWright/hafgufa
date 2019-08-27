@@ -568,7 +568,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Function|this}
 	 */
 	onSelect: method.function({
-		set(onSelect) {
+		set() {
 			setClickable.call(this);
 		},
 		other: undefined
