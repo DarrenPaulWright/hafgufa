@@ -1,7 +1,7 @@
 import { set } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { ABSOLUTE, BODY, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
+import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import VirtualList from '../layout/VirtualList';
@@ -187,7 +187,7 @@ export default class Tree extends FocusMixin(FormControl) {
 		const self = this;
 
 		let tempBranchControl = new Heading({
-			container: BODY,
+			container: self,
 			width: AUTO
 		});
 		let newWidth;
