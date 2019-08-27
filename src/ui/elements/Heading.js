@@ -69,7 +69,7 @@ const mainClickEvent = function() {
 };
 
 const setClickable = function() {
-	this.classes(IS_CLICKABLE_CLASS, (this.isExpandable() || this.isSelectable() || this.showCheckbox()));
+	this.classes(IS_CLICKABLE_CLASS, (this.isExpandable() || this.isSelectable() || this.showCheckbox() || this.onSelect()));
 };
 
 const keyDownEvent = function() {
@@ -568,6 +568,9 @@ Object.assign(Heading.prototype, {
 	 * @returns {Function|this}
 	 */
 	onSelect: method.function({
+		set(onSelect) {
+			setClickable.call(this);
+		},
 		other: undefined
 	}),
 
