@@ -55,18 +55,18 @@ export default class TimeSpan extends Container {
 
 Object.assign(TimeSpan.prototype, {
 	title: method.string({
-		set: function(title) {
+		set(title) {
 			this[HEADING].title(title);
 		}
 	}),
 	subTitle: method.string({
-		set: function(subTitle) {
+		set(subTitle) {
 			this[HEADING].subTitle(subTitle);
 		}
 	}),
 	subSpans: method.integer({
 		min: 1,
-		set: function(subSpans) {
+		set(subSpans) {
 			const self = this;
 			const tickWidth = 100 / subSpans;
 
@@ -85,7 +85,7 @@ Object.assign(TimeSpan.prototype, {
 		}
 	}),
 	lineOffset: method.cssSize({
-		set: function() {
+		set() {
 			this.resize();
 		}
 	})

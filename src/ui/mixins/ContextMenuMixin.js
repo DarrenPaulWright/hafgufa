@@ -47,7 +47,7 @@ export default (Base) => {
 		 */
 		contextMenu: method.array({
 			init: null,
-			set: function(menuItems) {
+			set(menuItems) {
 				const self = this;
 				const hasMenu = menuItems && menuItems.length;
 
@@ -62,12 +62,12 @@ export default (Base) => {
 
 						contextMenu = new ContextMenu({
 							menuItems: self.contextMenu(),
-							onSelect: (item) => {
+							onSelect(item) {
 								if (self.onContextMenuChange()) {
 									self.onContextMenuChange().call(self, item);
 								}
 							},
-							onRemove: () => {
+							onRemove() {
 								contextMenuSource = null;
 								contextMenu = null;
 							}

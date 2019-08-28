@@ -26,14 +26,14 @@ describe('TextInput', () => {
 
 	formControlTests.run(['changeDelay'], null, {
 		onChange: {
-			buildControl: function() {
+			buildControl() {
 				window.control = new TextInput({
 					container: window.testContainer,
 					changeDelay: 0
 				});
 			},
 			validValue: 'test',
-			setValueViaDom: function() {
+			setValueViaDom() {
 				const input = document.querySelector('input[type=text]');
 				input.value = '4';
 				testUtil.trigger(input, 'change');

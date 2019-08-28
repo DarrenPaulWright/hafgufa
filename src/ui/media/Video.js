@@ -32,17 +32,17 @@ export default class Video extends Control {
 		applySettings(self, settings);
 
 		self.on({
-			loadedmetadata: () => {
+			loadedmetadata() {
 				self.onReady().trigger(null, [self.duration()], self);
 			},
-			timeupdate: () => {
+			timeupdate() {
 				self.onTimeUpdate().trigger(null, [self.currentTime()], self);
 			},
-			ended: () => {
+			ended() {
 				self[IS_PLAYING] = false;
 				self.onPause().trigger(null, [], self);
 			},
-			error: () => {
+			error() {
 				self.onError().trigger(null, [self.element().error], self);
 			}
 		});
@@ -87,13 +87,13 @@ export default class Video extends Control {
 
 Object.assign(Video.prototype, {
 	showControls: method.boolean({
-		set: function(showControls) {
+		set(showControls) {
 			this.element().controls = showControls;
 		}
 	}),
 	sources: method.array({
 		init: [],
-		before: function() {
+		before() {
 			const self = this;
 
 			self[SOURCES].forEach((source) => {
@@ -103,7 +103,7 @@ Object.assign(Video.prototype, {
 
 			self.element().textContent = '';
 		},
-		set: function(sources) {
+		set(sources) {
 			const self = this;
 
 			if (sources.length > 1) {
@@ -126,7 +126,7 @@ Object.assign(Video.prototype, {
 	onPlay: method.queue(),
 	onPause: method.queue(),
 	fps: method.number({
-		set: function(fps) {
+		set(fps) {
 			this[SECONDS_PER_FRAME] = 1 / fps;
 		}
 	}),

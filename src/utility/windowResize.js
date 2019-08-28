@@ -48,7 +48,7 @@ export default {
 	 *
 	 * @returns {Number} - An unique ID for this callback.
 	 */
-	add: (callback, element, type) => {
+	add(callback, element, type) {
 		const newID = queue.add(callback, {
 			element: element,
 			type: type
@@ -70,7 +70,7 @@ export default {
 	 *
 	 * @arg {Number} ID - The ID returned by windowResize.add().
 	 */
-	discard: (ID) => {
+	discard(ID) {
 		dom.removeDomInsertionCallback(queue.discard(ID).element);
 	},
 
@@ -91,7 +91,7 @@ export default {
 	 * @arg {Number} [ID] - To trigger only a specific callback, provide the ID returned by windowResize.add().
 	 *     Otherwise all callbacks are called.
 	 */
-	trigger: (ID) => {
+	trigger(ID) {
 		if (ID) {
 			trigger(ID);
 		}
@@ -106,5 +106,7 @@ export default {
 	 * @member module:windowResize
 	 * @instance
 	 */
-	getTotalCallbacks: () => queue.length
+	getTotalCallbacks() {
+		return queue.length;
+	}
 };

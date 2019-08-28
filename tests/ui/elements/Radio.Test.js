@@ -94,7 +94,7 @@ describe('Radio', () => {
 
 			window.control = new Radio({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -115,7 +115,7 @@ describe('Radio', () => {
 
 			window.control = new Radio({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -137,7 +137,7 @@ describe('Radio', () => {
 
 			window.control = new Radio({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -163,7 +163,7 @@ describe('Radio', () => {
 
 			window.control = new Radio({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}

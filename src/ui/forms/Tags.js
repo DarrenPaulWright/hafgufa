@@ -54,7 +54,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			classes: 'tags-list-container',
 			removeClass: 'container',
 			on: {
-				click: () => {
+				click() {
 					if (self[TEXT_INPUT].isFocused()) {
 						self[saveTextChanges]();
 					}
@@ -70,10 +70,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			minWidth: DEFAULT_TEXT_WIDTH,
 			textWidth: HUNDRED_PERCENT,
 			changeDelay: 0,
-			onEnter: (value) => {
+			onEnter(value) {
 				self[saveTextChanges](value);
 			},
-			onChange: (value) => {
+			onChange(value) {
 				self[onChangeTextInput](value);
 			},
 			actionButtonIcon: ''
@@ -269,7 +269,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 				showCheckbox: false,
 				buttons: [{
 					icon: CLEAR_ICON,
-					onClick: (data) => {
+					onClick(data) {
 						self[removeTag](data);
 					}
 				}],
@@ -410,12 +410,12 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 					popupDockPoint: DockPoint.POINTS.TOP_LEFT,
 					classes: 'tags-menu',
 					isSticky: true,
-					onSelect: (id) => {
+					onSelect(id) {
 						self[selectSuggestion](id);
 					},
 					isMultiSelect: false,
 					keepMenuOpen: true,
-					onRemove: function() {
+					onRemove() {
 						self[SUGGESTION_MENU] = null;
 						self[onBlurTextInput]();
 					},
@@ -511,7 +511,7 @@ Object.assign(Tags.prototype, {
 	 * @returns {String|this}
 	 */
 	value: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			self[removeAllTags]();
@@ -544,7 +544,7 @@ Object.assign(Tags.prototype, {
 			});
 			self.triggerChange(true, true, false);
 		},
-		get: function() {
+		get() {
 			return this[CURRENT_TAGS].map((item) => item.ID);
 		},
 		other: String
@@ -562,7 +562,7 @@ Object.assign(Tags.prototype, {
 	 * @returns {Array|this}
 	 */
 	suggestions: method.array({
-		set: function(suggestions) {
+		set(suggestions) {
 			const self = this;
 
 			suggestions = suggestions.map((suggestion) => {
@@ -599,7 +599,7 @@ Object.assign(Tags.prototype, {
 	 */
 	// suggestionsDataSource: method.object({
 	// 	init: {},
-	// 	before: function(oldValue) {
+	// 	before(oldValue) {
 	// 		if (oldValue) {
 	// 			if (suggestionsDataSourceOnChangeID) {
 	// 				oldValue.store.offChange(suggestionsDataSourceOnChangeID);
@@ -607,7 +607,7 @@ Object.assign(Tags.prototype, {
 	// 			}
 	// 		}
 	// 	},
-	// 	set: function(newValue) {
+	// 	set(newValue) {
 	// 		if (newValue.store) {
 	// 			if (newValue.key) {
 	// 				suggestionsDataSourceOnChangeID = dataSource.uniqueBy(newValue, self.suggestions);
@@ -624,7 +624,7 @@ Object.assign(Tags.prototype, {
 	 * @returns {String|this}
 	 */
 	placeholder: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			this[TEXT_INPUT].placeholder(newValue);
 		}
 	}),

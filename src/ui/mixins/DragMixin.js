@@ -451,7 +451,7 @@ export default (Base) => {
 
 	Object.assign(DragMixin.prototype, {
 		canDrag: method.boolean({
-			set: function(canDrag) {
+			set(canDrag) {
 				const self = this;
 
 				if (canDrag) {
@@ -526,7 +526,7 @@ export default (Base) => {
 
 		onDragDone: method.queue(),
 
-		position: function(x, y) {
+		position(x, y) {
 			this[updateBounds]();
 			this[setPosition](x, y);
 		}

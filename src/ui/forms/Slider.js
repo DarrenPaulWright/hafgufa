@@ -60,7 +60,7 @@ export default class Slider extends FormControl {
 			container: self,
 			classes: 'track',
 			on: {
-				mousedown: () => {
+				mousedown() {
 					const mouseOffset = clamp(
 						event.clientX - self.element().getBoundingClientRect().x - self[MOUSE_OFFSET],
 						0,
@@ -141,11 +141,11 @@ export default class Slider extends FormControl {
 
 		self[THUMBS].push(new Thumb({
 			container: self,
-			onDragStart: () => {
+			onDragStart() {
 				self[IS_DRAGGING] = true;
 			},
 			onDrag: saveOffset,
-			onDragDone: (offset) => {
+			onDragDone(offset) {
 				self[IS_DRAGGING] = false;
 				saveOffset.call(this, offset);
 				self[saveNewValue]();
@@ -274,7 +274,7 @@ Object.assign(Slider.prototype, {
 	value: method.array({
 		init: [0],
 		coerce: true,
-		set: function(value) {
+		set(value) {
 			const self = this;
 
 			if (!self[IS_DRAGGING]) {
@@ -296,12 +296,14 @@ Object.assign(Slider.prototype, {
 	}),
 	increment: method.number({
 		init: 0,
-		set: function() {
+		set() {
 			this[setSnapGrid]();
 		}
 	}),
 	buildTooltip: method.function({
-		init: (value) => value + ''
+		init(value) {
+			return value + '';
+		}
 	}),
 	onSlide: method.queue()
 });

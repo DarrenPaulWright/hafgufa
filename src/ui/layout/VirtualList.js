@@ -719,7 +719,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {boolean|this}
 	 */
 	isHorizontal: method.boolean({
-		set: function(isHorizontal) {
+		set(isHorizontal) {
 			const self = this;
 
 			if (isHorizontal && !self[CONTENT_CONTAINER].restrictVerticalDrag()) {
@@ -742,7 +742,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Object[]|this}
 	 */
 	itemData: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			self[TOTAL_ITEMS] = newValue.length;
@@ -772,7 +772,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {string|this}
 	 */
 	itemSize: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			this[ITEM_SIZE] = parseFloat(newValue) || 1;
 			this.refresh();
 		}
@@ -791,7 +791,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Object|this}
 	 */
 	itemControl: method.function({
-		set: function(newValue) {
+		set(newValue) {
 			if (this[CONTROL_RECYCLER]) {
 				this[CONTROL_RECYCLER].control(newValue);
 			}
@@ -812,7 +812,7 @@ Object.assign(VirtualList.prototype, {
 	 */
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
-		set: function() {
+		set() {
 			this[render]();
 		},
 		min: 0
@@ -831,7 +831,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Object|this}
 	 */
 	itemDefaultSettings: method.object({
-		set: function(newValue) {
+		set(newValue) {
 			this[CONTROL_RECYCLER].defaultSettings(newValue);
 		},
 		other: undefined
@@ -846,7 +846,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Function|this}
 	 */
 	onItemRender: method.function({
-		set: function() {
+		set() {
 			this[render]();
 		},
 		other: undefined
@@ -861,7 +861,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {Object[]}
 	 */
-	getRenderedControls: function() {
+	getRenderedControls() {
 		return this[CONTROL_RECYCLER].getRenderedControls();
 	},
 
@@ -874,7 +874,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {Object[]}
 	 */
-	firstVisibleItem: function() {
+	firstVisibleItem() {
 		const self = this;
 		const index = Math.ceil(self[CURRENT_SCROLL_OFFSET] / self[ITEM_SIZE]);
 		let output;
@@ -895,7 +895,7 @@ Object.assign(VirtualList.prototype, {
 	 * @instance
 	 * @returns {this}
 	 */
-	updateItemPositions: function() {
+	updateItemPositions() {
 		const self = this;
 
 		if (!self.isVirtualized()) {
@@ -917,7 +917,7 @@ Object.assign(VirtualList.prototype, {
 	 * @instance
 	 * @returns {this}
 	 */
-	fitHeightToContents: function() {
+	fitHeightToContents() {
 		this.css(HEIGHT, this[CONTENT_CONTAINER].borderHeight());
 
 		return this;
@@ -930,7 +930,7 @@ Object.assign(VirtualList.prototype, {
 	 * @instance
 	 * @param {Number} index - index of an item that is currently displayed
 	 */
-	scrollToIndex: function(index) {
+	scrollToIndex(index) {
 		const self = this;
 
 		self[setScroll]((Math.max(0, index) * self[ITEM_SIZE]) - (self[ITEM_SIZE] - SCROLL_BUFFER));
@@ -944,7 +944,7 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 */
-	nextPage: function() {
+	nextPage() {
 		this[setScroll](this[CURRENT_SCROLL_OFFSET] + this[PAGE_SIZE]);
 	},
 
@@ -956,7 +956,7 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 */
-	prevPage: function() {
+	prevPage() {
 		this[setScroll](this[CURRENT_SCROLL_OFFSET] - this[PAGE_SIZE]);
 	},
 
@@ -969,7 +969,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {boolean}
 	 */
-	isAtStart: function() {
+	isAtStart() {
 		return this[CURRENT_SCROLL_OFFSET] < SCROLL_BUFFER;
 	},
 
@@ -982,7 +982,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {boolean}
 	 */
-	isAtEnd: function() {
+	isAtEnd() {
 		const self = this;
 
 		return self[CURRENT_SCROLL_OFFSET] + self[VIEWPORT_SIZE] > (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - SCROLL_BUFFER + self.startOffset()
@@ -991,7 +991,7 @@ Object.assign(VirtualList.prototype, {
 
 	startOffset: method.cssSize({
 		init: new CssSize('0'),
-		set: function(startOffset) {
+		set(startOffset) {
 			const self = this;
 
 			self[CONTENT_CONTAINER].css(self.isHorizontal() ? 'margin-left' : 'margin-top', startOffset.toPixels());
@@ -1000,7 +1000,7 @@ Object.assign(VirtualList.prototype, {
 
 	endOffset: method.cssSize({
 		init: new CssSize('0'),
-		set: function(endOffset) {
+		set(endOffset) {
 			const self = this;
 
 			self[CONTENT_CONTAINER].css(self.isHorizontal() ? 'margin-right' : 'margin-bottom', endOffset.toPixels());
@@ -1019,7 +1019,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {boolean|this}
 	 */
 	hideScrollBars: method.boolean({
-		set: function() {
+		set() {
 			this[setExtent]();
 		}
 	}),
@@ -1049,7 +1049,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {boolean|this}
 	 */
 	snapToLeadingEdge: method.boolean({
-		set: function(snapToLeadingEdge) {
+		set(snapToLeadingEdge) {
 			const self = this;
 
 			if (self.isHorizontal()) {
@@ -1069,7 +1069,7 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 */
-	refresh: function() {
+	refresh() {
 		const self = this;
 
 		self[CURRENT_START_INDEX] = 0;
@@ -1097,7 +1097,7 @@ Object.assign(VirtualList.prototype, {
 	},
 
 	isFocusable: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue) {

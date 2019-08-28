@@ -97,7 +97,7 @@ export default (Base) => {
 		 * @returns {string|element|this}
 		 */
 		url: method.string({
-			set: function(url) {
+			set(url) {
 				addClickEvent.call(this);
 				if (this.text) {
 					this.text(this.text(), true);
@@ -122,7 +122,7 @@ export default (Base) => {
 		 * @returns {Function|this}
 		 */
 		onClick: method.function({
-			set: function() {
+			set() {
 				addClickEvent.call(this);
 			},
 			other: null

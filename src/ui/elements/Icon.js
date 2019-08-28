@@ -98,7 +98,7 @@ Object.assign(Icon.prototype, {
 	 * @returns {String|this}
 	 */
 	icon: method.string({
-		before: function(oldValue) {
+		before(oldValue) {
 			if (oldValue) {
 				if (oldValue.includes(MAIN_SEPARATOR)) {
 					dom.empty(this);
@@ -111,7 +111,7 @@ Object.assign(Icon.prototype, {
 				}
 			}
 		},
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue) {
 				buildIcon(this.element(), newValue);
 			}
@@ -130,10 +130,10 @@ Object.assign(Icon.prototype, {
 	size: method.enum({
 		enum: ICON_SIZES,
 		init: ICON_SIZES.LARGE,
-		before: function(oldValue) {
+		before(oldValue) {
 			this.removeClass('icon-' + oldValue);
 		},
-		set: function(newValue) {
+		set(newValue) {
 			this.addClass('icon-' + newValue);
 		}
 	})

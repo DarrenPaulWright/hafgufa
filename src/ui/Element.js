@@ -118,14 +118,16 @@ Object.assign(Element.prototype, {
 	 * @returns {Object|this}
 	 */
 	container: method.element({
-		enforce: (newValue, oldValue) => dom.getElement(newValue, true) || oldValue,
+		enforce(newValue, oldValue) {
+			return dom.getElement(newValue, true) || oldValue;
+		},
 		other: null,
-		before: function(container) {
+		before(container) {
 			if (container && this[ELEMENT] && container.contains(this[ELEMENT])) {
 				container.removeChild(this[ELEMENT]);
 			}
 		},
-		set: function(container) {
+		set(container) {
 			if (container && this[ELEMENT]) {
 				if (this[APPEND]) {
 					if (isElement(this[APPEND])) {
@@ -162,11 +164,11 @@ Object.assign(Element.prototype, {
 	 * @returns {Object|this}
 	 */
 	element: method.element({
-		before: function() {
+		before() {
 			dom.remove(this[ELEMENT]);
 			this[ELEMENT] = null;
 		},
-		set: function(element) {
+		set(element) {
 			if (element) {
 				this[ELEMENT] = element;
 			}
@@ -185,12 +187,12 @@ Object.assign(Element.prototype, {
 	 *    the attribute's value.
 	 */
 	attr: method.keyValue({
-		set: function(attribute, value) {
+		set(attribute, value) {
 			if (this[ELEMENT]) {
 				this[ELEMENT].setAttribute(attribute, value);
 			}
 		},
-		get: function(attribute) {
+		get(attribute) {
 			return this[ELEMENT].getAttribute(attribute);
 		}
 	})

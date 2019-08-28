@@ -102,7 +102,7 @@ export default class Legend extends Control {
 
 Object.assign(Legend.prototype, {
 	items: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 			const TEXT_X = (RADIUS * 2) + TEXT_PADDING + CHECKBOX_OFFSET;
 			const getY = (d, index) => ((index + 1) * ITEM_OFFSET) + PADDING + RADIUS;
@@ -168,7 +168,7 @@ Object.assign(Legend.prototype, {
 		}
 	}),
 
-	itemColor: (item) => {
+	itemColor(item) {
 		const self = this;
 
 		return self[D3_COLOR].brighter(((self[ITEMS].indexOf(item) + 1) / self[ITEMS].length) * COLOR_MULTIPLIER);
@@ -176,7 +176,7 @@ Object.assign(Legend.prototype, {
 
 	color: method.string({
 		init: '#b24f26',
-		set: function() {
+		set() {
 			this.items(this.items(), true);
 		}
 	}),

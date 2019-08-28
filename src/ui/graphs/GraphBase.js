@@ -211,12 +211,12 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 
 Object.assign(GraphBase.prototype, {
 	svgElement: method.element({
-		before: function(oldValue) {
+		before(oldValue) {
 			if (oldValue) {
 				dom.remove(oldValue);
 			}
 		},
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue) {
 				dom.appendTo(this, newValue);
 			}
@@ -230,14 +230,14 @@ Object.assign(GraphBase.prototype, {
 
 	graphPadding: method.thickness({
 		init: new Thickness(12),
-		set: function() {
+		set() {
 			this.resize();
 		}
 	}),
 
 	color: method.string({
 		init: '#b24f26',
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			self.onUpdateData().trigger();
@@ -248,7 +248,7 @@ Object.assign(GraphBase.prototype, {
 	}),
 
 	data: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (!self.isRemoved) {
@@ -265,7 +265,7 @@ Object.assign(GraphBase.prototype, {
 
 	// dataSource: method.array({
 	// 	init: undefined,
-	// 	before: function(oldValue) {
+	// 	before(oldValue) {
 	// 		if (oldValue && !isArray(oldValue)) {
 	// 			oldValue = [oldValue];
 	// 		}
@@ -278,7 +278,7 @@ Object.assign(GraphBase.prototype, {
 	// 			});
 	// 		}
 	// 	},
-	// 	set: function(newValue) {
+	// 	set(newValue) {
 	// 		const saveData = (data, index, dataType) => {
 	// 			const currentData = clone(self.data());
 	// 			currentData[index] = {
@@ -323,7 +323,7 @@ Object.assign(GraphBase.prototype, {
 	// 	other: Object
 	// }),
 
-	tooltip: function(anchor, datum, dataType) {
+	tooltip(anchor, datum, dataType) {
 		const self = this;
 
 		if (anchor) {
@@ -344,7 +344,7 @@ Object.assign(GraphBase.prototype, {
 	},
 
 	legendItems: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue.length) {
@@ -365,19 +365,19 @@ Object.assign(GraphBase.prototype, {
 		}
 	}),
 
-	legendItemColor: function(item) {
+	legendItemColor(item) {
 		return this[LEGEND] ? this[LEGEND].itemColor(item) : this.color();
 	},
 
-	legendOnMouseOverItem: function(callback) {
+	legendOnMouseOverItem(callback) {
 		return this[LEGEND] ? this[LEGEND].onMouseOverItem(callback) : undefined;
 	},
 
-	legendOnMouseOutItem: function(callback) {
+	legendOnMouseOutItem(callback) {
 		return this[LEGEND] ? this[LEGEND].onMouseOutItem(callback) : undefined;
 	},
 
-	legendOnSelectionChange: function(callback) {
+	legendOnSelectionChange(callback) {
 		return this[LEGEND] ? this[LEGEND].onSelectionChange(callback) : undefined;
 	}
 });

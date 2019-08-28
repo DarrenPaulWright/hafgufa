@@ -39,7 +39,7 @@ Object.assign(Description.prototype, {
 	 * @returns {String|this}
 	 */
 	value: method.string({
-		set: function(value) {
+		set(value) {
 			dom.content(this, value);
 		}
 	}),
@@ -53,7 +53,7 @@ Object.assign(Description.prototype, {
 	 */
 	textWidth: method.string({
 		init: AUTO,
-		set: function(newValue) {
+		set(newValue) {
 			dom.css(this.contentContainer(), WIDTH, newValue);
 		}
 	}),
@@ -67,7 +67,7 @@ Object.assign(Description.prototype, {
 	 */
 	align: method.string({
 		init: LEFT,
-		set: function(newValue) {
+		set(newValue) {
 			dom.css(this.contentContainer(), TEXT_ALIGN, newValue);
 		}
 	}),
@@ -82,7 +82,7 @@ Object.assign(Description.prototype, {
 	 * @returns {boolean|this}
 	 */
 	isColumns: method.boolean({
-		set: function(isColumns) {
+		set(isColumns) {
 			this.classes(COLUMNS_CLASS, isColumns);
 		}
 	}),
@@ -93,5 +93,7 @@ Object.assign(Description.prototype, {
 	 * @instance
 	 * @returns {Boolean} - Always returns false.
 	 */
-	isFocused: () => false
+	isFocused() {
+		return false;
+	}
 });

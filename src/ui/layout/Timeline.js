@@ -138,16 +138,24 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 	constructor(settings = {}) {
 		settings.canZoom = enforceBoolean(settings.canZoom, true);
 		settings.NextPrevMixin = {
-			onShowButtons: (onChange) => {
+			onShowButtons(onChange) {
 				self[VIRTUAL_LIST].onLayoutChange(onChange);
 			},
-			onHideButtons: () => {
+			onHideButtons() {
 				self[VIRTUAL_LIST].onLayoutChange(null);
 			},
-			isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
-			isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
-			onPrev: () => self[VIRTUAL_LIST].prevPage(),
-			onNext: () => self[VIRTUAL_LIST].nextPage()
+			isAtStart() {
+				return self[VIRTUAL_LIST].isAtStart();
+			},
+			isAtEnd() {
+				return self[VIRTUAL_LIST].isAtEnd();
+			},
+			onPrev() {
+				return self[VIRTUAL_LIST].prevPage();
+			},
+			onNext() {
+				return self[VIRTUAL_LIST].nextPage();
+			}
 		};
 
 		super(settings);
@@ -170,7 +178,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 			itemControl: TimeSpan,
 			hideScrollBars: true,
 			keepAltRows: false,
-			onItemRender: (control, data) => {
+			onItemRender(control, data) {
 				self[renderSpan](control, data);
 			}
 		});
@@ -178,7 +186,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		self.onResize(() => {
 				self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
 				self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
-			
+
 				const innerWidth = self[VIRTUAL_LIST].innerWidth();
 				if (innerWidth !== self[INNER_WIDTH]) {
 					self[INNER_WIDTH] = innerWidth;
@@ -301,7 +309,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 }
 
 Object.assign(Timeline.prototype, {
-	[reset]: function() {
+	[reset]() {
 		this[SPAN] = undefined;
 		this[MIN_ZOOM] = undefined;
 		this[ZOOM] = 1;
@@ -324,13 +332,13 @@ Object.assign(Timeline.prototype, {
 	}),
 	padding: method.thickness({
 		init: new Thickness('0'),
-		set: function(padding) {
+		set(padding) {
 			this[VIRTUAL_LIST].padding(padding);
 			this[reset]();
 		}
 	}),
 	data: method.array({
-		set: function(data) {
+		set(data) {
 			const self = this;
 
 			if (!(self.dateStart() && self.dateEnd()) && !self.duration()) {
@@ -359,28 +367,28 @@ Object.assign(Timeline.prototype, {
 		}
 	}),
 	dateStart: method.date({
-		set: function(dateStart) {
+		set(dateStart) {
 			this[START] = dateStart;
 			this[reset]();
 		},
 		coerce: true
 	}),
 	dateEnd: method.date({
-		set: function(dateEnd) {
+		set(dateEnd) {
 			this[END] = dateEnd;
 			this[reset]();
 		},
 		coerce: true
 	}),
 	duration: method.number({
-		set: function(duration) {
+		set(duration) {
 			this[START] = 0;
 			this[END] = duration;
 			this[reset]();
 		}
 	}),
 	lineOffset: method.cssSize({
-		set: function(lineOffset) {
+		set(lineOffset) {
 			const self = this;
 
 			lineOffset.element(self.element());
@@ -400,7 +408,7 @@ Object.assign(Timeline.prototype, {
 	}),
 	onSpanRender: method.function(),
 	canZoom: method.boolean({
-		set: function(canZoom) {
+		set(canZoom) {
 			const self = this;
 			const onMouseWheel = () => {
 				event.preventDefault();
@@ -417,7 +425,7 @@ Object.assign(Timeline.prototype, {
 	maxZoom: method.enum({
 		enum: SPAN_TYPES,
 		init: SPAN_TYPES.MILLISECOND,
-		set: function(maxZoom) {
+		set(maxZoom) {
 			const self = this;
 
 			SPANS.some((span) => {

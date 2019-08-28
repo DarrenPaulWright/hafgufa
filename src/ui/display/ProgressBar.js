@@ -226,7 +226,7 @@ Object.assign(ProgressBar.prototype, {
 	 */
 	progress: method.number({
 		init: 0,
-		set: function(progress) {
+		set(progress) {
 			const self = this;
 
 			self[updateProgress](progress);
@@ -244,7 +244,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @returns {Array|this}
 	 */
 	steps: method.array({
-		set: function() {
+		set() {
 			this[buildSteps]();
 		}
 	}),
@@ -258,7 +258,7 @@ Object.assign(ProgressBar.prototype, {
 	 */
 	currentStep: method.integer({
 		init: 1,
-		set: function() {
+		set() {
 			this[updateCurrentStep]();
 		},
 		min: 1
@@ -272,7 +272,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	showBigNumbers: method.boolean({
-		set: function() {
+		set() {
 			this[updateBigNumbers]();
 		}
 	}),
@@ -285,7 +285,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	showInlineNumbers: method.boolean({
-		set: function() {
+		set() {
 			this[updateTitles]();
 		}
 	})

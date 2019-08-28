@@ -80,7 +80,7 @@ const DOM_INSERTION_EVENTS = 'animationstart MSAnimationStart webkitAnimationSta
  * @module dom
  */
 const dom = {
-	getElement: function(element, isContainer = false) {
+	getElement(element, isContainer = false) {
 		if (isElement(element) || element === WINDOW) {
 			return element;
 		}
@@ -108,7 +108,7 @@ const dom = {
 	 *
 	 * @returns {Object} - Reference to an element NOT attached to the DOM.
 	 */
-	buildNew: function(className, element) {
+	buildNew(className, element) {
 		let newElement;
 
 		if (element && element.includes(SVG_SEPARATOR)) {
@@ -137,7 +137,7 @@ const dom = {
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
-	prependNewTo: function(container, className, element) {
+	prependNewTo(container, className, element) {
 		return dom.prependTo(container, dom.buildNew(className, element));
 	},
 	/**
@@ -153,7 +153,7 @@ const dom = {
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
-	appendNewTo: function(container, className, element) {
+	appendNewTo(container, className, element) {
 		return dom.appendTo(container, dom.buildNew(className, element));
 	},
 	/**
@@ -169,7 +169,7 @@ const dom = {
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
-	appendNewBefore: function(container, className, element) {
+	appendNewBefore(container, className, element) {
 		return dom.appendBefore(container, dom.buildNew(className, element));
 	},
 	/**
@@ -185,7 +185,7 @@ const dom = {
 	 *
 	 * @returns {Object} - Reference to an element in the DOM.
 	 */
-	appendNewAfter: function(container, className, element) {
+	appendNewAfter(container, className, element) {
 		return dom.appendAfter(container, dom.buildNew(className, element));
 	},
 	/**
@@ -198,7 +198,7 @@ const dom = {
 	 * @arg {object} container - The parent element
 	 * @arg {element} element   - The element to be prepended
 	 */
-	prependTo: function(container, element) {
+	prependTo(container, element) {
 		container = dom.getElement(container, true);
 		element = dom.getElement(element);
 
@@ -217,7 +217,7 @@ const dom = {
 	 * @arg {object} container - The parent element
 	 * @arg {element} element   - The element to be prepended
 	 */
-	appendTo: function(container, element) {
+	appendTo(container, element) {
 		container = dom.getElement(container, true);
 		element = dom.getElement(element);
 
@@ -236,7 +236,7 @@ const dom = {
 	 * @arg {object} container - The parent element
 	 * @arg {element} element   - The element to be prepended
 	 */
-	appendBefore: function(container, element) {
+	appendBefore(container, element) {
 		container = dom.getElement(container, true);
 		element = dom.getElement(element);
 
@@ -255,7 +255,7 @@ const dom = {
 	 * @arg {object} container - The parent element
 	 * @arg {element} element   - The element to be prepended
 	 */
-	appendAfter: function(container, element) {
+	appendAfter(container, element) {
 		container = dom.getElement(container, true);
 		element = dom.getElement(element);
 
@@ -275,7 +275,7 @@ const dom = {
 	 *
 	 * @returns {element}
 	 */
-	find: function(query) {
+	find(query) {
 		return DOCUMENT.querySelector(query);
 	},
 	/**
@@ -289,7 +289,7 @@ const dom = {
 	 *
 	 * @returns {boolean}
 	 */
-	isActive: function(element) {
+	isActive(element) {
 		return isElement(element) ? element === DOCUMENT.activeElement : false;
 	},
 	/**
@@ -303,7 +303,7 @@ const dom = {
 	 *
 	 * @returns {boolean}
 	 */
-	hasActive: function(element) {
+	hasActive(element) {
 		return isElement(element) ? element.contains(DOCUMENT.activeElement) : false;
 	},
 	/**
@@ -313,7 +313,7 @@ const dom = {
 	 * @member module:dom
 	 * @static
 	 */
-	blur: function() {
+	blur() {
 		DOCUMENT.activeElement.blur();
 	},
 	/**
@@ -327,7 +327,7 @@ const dom = {
 	 *
 	 * @returns {string}
 	 */
-	prepDomIDString: function(input) {
+	prepDomIDString(input) {
 		return (isString(input)) ? input.replace(SPACE, EMPTY_STRING)
 			.replace(/[^A-Za-z0-9_:\.-]/g, EMPTY_STRING) : EMPTY_STRING;
 	},
@@ -342,7 +342,7 @@ const dom = {
 	 *
 	 * @returns {boolean}
 	 */
-	isHTML: function(input) {
+	isHTML(input) {
 		return /<[a-z][\s\S]*>|\&|null/i.test(input);
 	},
 	/**
@@ -358,7 +358,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	content: function(element, content, doPrepend) {
+	content(element, content, doPrepend) {
 		element = dom.getElement(element, true);
 
 		if (element) {
@@ -400,7 +400,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	empty: function(element) {
+	empty(element) {
 		element = dom.getElement(element, true);
 
 		if (element) {
@@ -421,7 +421,7 @@ const dom = {
 	 *
 	 * @returns {element}
 	 */
-	buildLink: function(link, text) {
+	buildLink(link, text) {
 		const anchor = dom.buildNew('', 'a');
 
 		if (link && !link.includes('http')) {
@@ -443,7 +443,7 @@ const dom = {
 	 *
 	 * @returns {element}
 	 */
-	buildEmailLink: function(email) {
+	buildEmailLink(email) {
 		const link = dom.buildNew('', 'a');
 		link.href = 'mailto:' + email;
 		link.textContent = email;
@@ -461,7 +461,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	addClass: function(element, className) {
+	addClass(element, className) {
 		element = dom.getElement(element);
 
 		if (element && isString(className) && className !== EMPTY_STRING) {
@@ -496,7 +496,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	removeClass: function(element, className) {
+	removeClass(element, className) {
 		const BASE_PREFIX = '(^|\\b)';
 		const BASE_SUFFIX = '(\\b|$)';
 		const FLAGS = 'gi';
@@ -537,7 +537,7 @@ const dom = {
 	 * @arg {Boolean} [performAdd=true] - True will add the provided classes to the element, false will remove the
 	 *     classes.
 	 */
-	classes: function(element, className, performAdd) {
+	classes(element, className, performAdd) {
 		element = dom.getElement(element);
 
 		if (element) {
@@ -567,7 +567,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	css: function(element, property, value) {
+	css(element, property, value) {
 		const setProperty = (property, value) => {
 			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 				value = value + PIXELS;
@@ -613,7 +613,7 @@ const dom = {
 	 *
 	 * @returns {dom}
 	 */
-	attr: function(element, attributeName, attributeValue) {
+	attr(element, attributeName, attributeValue) {
 		element = dom.getElement(element);
 
 		if (element) {
@@ -642,7 +642,7 @@ const dom = {
 	 * @arg {Object}   element   - Must be a reference to the actual element
 	 * @arg {Function} callback
 	 */
-	addDomInsertionCallback: function(element, callback) {
+	addDomInsertionCallback(element, callback) {
 		element = dom.getElement(element);
 
 		if (element) {
@@ -674,7 +674,7 @@ const dom = {
 	 *
 	 * @arg {Object}   element   - Must be a reference to the actual element
 	 */
-	removeDomInsertionCallback: function(element) {
+	removeDomInsertionCallback(element) {
 		element = dom.getElement(element);
 		dom.removeClass(element, DOM_INSERTION_CLASS);
 		select(element).on(DOM_INSERTION_EVENTS, null);
@@ -688,7 +688,7 @@ const dom = {
 	 *
 	 * @arg {element} element  - DOM element
 	 */
-	remove: function(element) {
+	remove(element) {
 		element = dom.getElement(element);
 
 		if (element) {
@@ -706,10 +706,10 @@ const dom = {
 
 		element = null;
 	},
-	getD3Events: function(element) {
+	getD3Events(element) {
 		return element.__on;
 	},
-	applyD3Events: function(element, events, doRemove) {
+	applyD3Events(element, events, doRemove) {
 		if (events) {
 			let name;
 
@@ -745,7 +745,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		width: function(element) {
+		width(element) {
 			element = dom.getElement(element);
 
 			if (element) {
@@ -770,7 +770,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		height: function(element) {
+		height(element) {
 			element = dom.getElement(element);
 
 			if (element) {
@@ -796,7 +796,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		top: function(element, toBody = false) {
+		top(element, toBody = false) {
 			element = dom.getElement(element);
 
 			return !element ? 0 : (toBody ? element.getBoundingClientRect().top : element.offsetTop);
@@ -813,7 +813,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		left: function(element, toBody = false) {
+		left(element, toBody = false) {
 			element = dom.getElement(element);
 
 			return !element ? 0 : (toBody ? element.getBoundingClientRect().left : element.offsetLeft);
@@ -829,7 +829,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		outerWidth: function(element) {
+		outerWidth(element) {
 			return dom.get.width(element) + dom.get.margins.width(element);
 		},
 		/**
@@ -843,15 +843,15 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		outerHeight: function(element) {
+		outerHeight(element) {
 			return dom.get.height(element) + dom.get.margins.height(element);
 		},
-		scrollWidth: function(element) {
+		scrollWidth(element) {
 			element = dom.getElement(element);
 
 			return !element ? 0 : element.scrollWidth;
 		},
-		scrollHeight: function(element) {
+		scrollHeight(element) {
 			element = dom.getElement(element);
 
 			return !element ? 0 : element.scrollHeight;
@@ -868,11 +868,11 @@ const dom = {
 		 * @returns {Number}
 		 */
 		borders: {
-			width: function(element) {
+			width(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, BORDER_LEFT_WIDTH) + parseStyle(element, BORDER_RIGHT_WIDTH);
 			},
-			height: function(element) {
+			height(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, BORDER_TOP_WIDTH) + parseStyle(element, BORDER_BOTTOM_WIDTH);
 			}
@@ -889,11 +889,11 @@ const dom = {
 		 * @returns {Number}
 		 */
 		margins: {
-			width: function(element) {
+			width(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, MARGIN_LEFT) + parseStyle(element, MARGIN_RIGHT);
 			},
-			height: function(element) {
+			height(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, MARGIN_TOP) + parseStyle(element, MARGIN_BOTTOM);
 			}
@@ -910,11 +910,11 @@ const dom = {
 		 * @returns {Number}
 		 */
 		paddings: {
-			width: function(element) {
+			width(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, PADDING_LEFT) + parseStyle(element, PADDING_RIGHT);
 			},
-			height: function(element) {
+			height(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, PADDING_TOP) + parseStyle(element, PADDING_BOTTOM);
 			}
@@ -930,7 +930,7 @@ const dom = {
 		 *
 		 * @returns {Number}
 		 */
-		lineHeight: function(element) {
+		lineHeight(element) {
 			element = dom.getElement(element);
 			return !element ? 0 : parseStyle(element, LINE_HEIGHT);
 		},
@@ -946,11 +946,11 @@ const dom = {
 		 * @returns {Number}
 		 */
 		scrollbar: {
-			width: function(element) {
+			width(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : element.offsetWidth - element.clientWidth;
 			},
-			height: function(element) {
+			height(element) {
 				element = dom.getElement(element);
 				return !element ? 0 : element.offsetHeight - element.clientHeight;
 			}

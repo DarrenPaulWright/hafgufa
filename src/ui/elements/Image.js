@@ -58,7 +58,7 @@ Object.assign(Image.prototype, {
 	 * @returns {string|this}
 	 */
 	source: method.string({
-		set: function(source) {
+		set(source) {
 			this.attr(SOURCE, source || DEFAULT_IMAGE_SOURCE)
 				.css(OPACITY, (source && source !== ' ') ? 1 : 0.001);
 		}
@@ -78,13 +78,13 @@ Object.assign(Image.prototype, {
 	fit: method.enum({
 		enum: FIT,
 		init: FIT.CONTAIN,
-		set: function(fit) {
+		set(fit) {
 			this.css(OBJECT_FIT, fit);
 		}
 	}),
 
 	preventDrag: method.boolean({
-		set: function(preventDrag) {
+		set(preventDrag) {
 			this.set(DRAG_START_EVENT, preventDefault, preventDrag);
 		}
 	})

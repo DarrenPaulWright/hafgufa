@@ -170,12 +170,16 @@ export default class Calendar extends Control {
 				content: [{
 					control: Button,
 					icon: PREVIOUS_ICON,
-					onClick: () => self[gotoPreviousMonth](),
+					onClick() {
+						self[gotoPreviousMonth]();
+					},
 					classes: 'icon-button prev-button'
 				}, {
 					control: Button,
 					icon: NEXT_ICON,
-					onClick: () => self[gotoNextMonth](),
+					onClick() {
+						self[gotoNextMonth]();
+					},
 					classes: 'icon-button next-button'
 				}, {
 					// control: Container,
@@ -184,7 +188,7 @@ export default class Calendar extends Control {
 					ID: MONTH_PICKER_ID,
 					width: AUTO,
 					options: self[buildMonthOptions](),
-					onChange: function(newValue) {
+					onChange(newValue) {
 						self.month(parseInt(newValue.value[0].ID, 10));
 					},
 					value: self.month()
@@ -193,7 +197,7 @@ export default class Calendar extends Control {
 					ID: YEAR_PICKER_ID,
 					width: AUTO,
 					options: self[buildYearOptions](),
-					onChange: function(newValue) {
+					onChange(newValue) {
 						self.year(parseInt(newValue.value[0].ID, 10));
 					},
 					value: self.year()
@@ -275,7 +279,9 @@ export default class Calendar extends Control {
 					container: self,
 					classes: DAY_CLASS,
 					isSelectable: true,
-					onClick: (button) => self[onClickDay](button)
+					onClick(button) {
+						self[onClickDay](button);
+					}
 				});
 		}
 
@@ -318,7 +324,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	month: method.integer({
 		init: new Moment().month(),
-		set: function(month) {
+		set(month) {
 			const self = this;
 			self[buildDays]();
 			if (self[HEADER]) {
@@ -339,7 +345,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	year: method.integer({
 		init: new Moment().year(),
-		set: function(year) {
+		set(year) {
 			const self = this;
 			self[buildDays]();
 			if (self[HEADER]) {
@@ -371,7 +377,7 @@ Object.assign(Calendar.prototype, {
 	 * @returns {Date|this}
 	 */
 	selectedDate: method.date({
-		set: function() {
+		set() {
 			this[buildDays]();
 		},
 		other: undefined
@@ -387,7 +393,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	weekdayFormat: method.string({
 		init: 'ddd',
-		set: function() {
+		set() {
 			const self = this;
 			self[buildWeekDays]();
 			self.resize();
@@ -404,7 +410,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	monthFormat: method.string({
 		init: 'MMM',
-		set: function() {
+		set() {
 			const self = this;
 			if (self[HEADER]) {
 				self[HEADER].get(MONTH_PICKER_ID).options([]).options(self[buildMonthOptions]());
@@ -422,7 +428,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	yearRangePast: method.integer({
 		init: 100,
-		set: function() {
+		set() {
 			const self = this;
 			if (self[HEADER]) {
 				self[HEADER].get(YEAR_PICKER_ID)
@@ -442,7 +448,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	yearRangeFuture: method.integer({
 		init: 10,
-		set: function() {
+		set() {
 			const self = this;
 			if (self[HEADER]) {
 				self[HEADER].get(YEAR_PICKER_ID)

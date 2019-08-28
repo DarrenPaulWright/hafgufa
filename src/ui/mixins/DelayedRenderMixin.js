@@ -47,7 +47,7 @@ export default (Base) => {
 		delay: method.number({
 			init: 0.2,
 			min: 0,
-			set: function(delay) {
+			set(delay) {
 				stop.call(this);
 				if (delay) {
 					start.call(this);

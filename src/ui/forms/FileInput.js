@@ -196,28 +196,28 @@ export default class FileInput extends Control {
 
 Object.assign(FileInput.prototype, {
 	isAudio: method.boolean({
-		set: function(isAudio) {
+		set(isAudio) {
 			this.mimeTypes([isAudio ? AUDIO_TYPE : EMPTY_STRING]);
 			this[ICON].icon(AUDIO_FILE_ICON);
 		}
 	}),
 
 	isImage: method.boolean({
-		set: function(isImage) {
+		set(isImage) {
 			this.mimeTypes([isImage ? IMAGE_TYPE : EMPTY_STRING]);
 			this[ICON].icon(IMAGE_FILE_ICON);
 		}
 	}),
 
 	isVideo: method.boolean({
-		set: function(isVideo) {
+		set(isVideo) {
 			this.mimeTypes([isVideo ? VIDEO_TYPE : EMPTY_STRING]);
 			this[ICON].icon(VIDEO_FILE_ICON);
 		}
 	}),
 
 	mimeTypes: method.array({
-		set: function(mimeTypes) {
+		set(mimeTypes) {
 			this[INPUT_CONTROL].attr(ACCEPT, mimeTypes.join(','));
 		}
 	}),
@@ -231,7 +231,7 @@ Object.assign(FileInput.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isMulti: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			this[INPUT_CONTROL].attr(MULTIPLE, newValue);
 		}
 	}),
@@ -247,10 +247,10 @@ Object.assign(FileInput.prototype, {
 	previewSize: method.enum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
-		before: function(oldValue) {
+		before(oldValue) {
 			this.removeClass(oldValue);
 		},
-		set: function(newValue) {
+		set(newValue) {
 			this.addClass(newValue);
 		}
 	}),

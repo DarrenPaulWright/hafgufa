@@ -53,7 +53,7 @@ export default class DrawerMenu extends Control {
 			classes: 'header-button',
 			label: settings.label !== undefined ? settings.label : locale.get('menu'),
 			icon: MENU_ICON,
-			onClick: function() {
+			onClick() {
 				self[toggleMenu]();
 			}
 		});
@@ -126,7 +126,7 @@ export default class DrawerMenu extends Control {
 				width: HUNDRED_PERCENT,
 				branches: menuItems,
 				isMultiSelect: false,
-				onSelect: function(item) {
+				onSelect(item) {
 					const onSelect = self.onSelect();
 
 					if (onSelect) {
@@ -175,7 +175,7 @@ export default class DrawerMenu extends Control {
 Object.assign(DrawerMenu.prototype, {
 	icon: method.string({
 		init: MENU_ICON,
-		set: function(icon) {
+		set(icon) {
 			this[MENU_BUTTON].icon(icon);
 		}
 	}),
@@ -183,7 +183,7 @@ Object.assign(DrawerMenu.prototype, {
 	onMenuSlide: method.queue(),
 
 	isMenuOpen: method.boolean({
-		set: function(isMenuOpen) {
+		set(isMenuOpen) {
 			const self = this;
 
 			if (self[DRAWER] && isMenuOpen !== self[DRAWER].isOpen()) {
@@ -192,7 +192,7 @@ Object.assign(DrawerMenu.prototype, {
 				});
 			}
 		},
-		get: function() {
+		get() {
 			return this[DRAWER] ? this[DRAWER].isOpen() : false;
 		}
 	}),
@@ -200,7 +200,7 @@ Object.assign(DrawerMenu.prototype, {
 	onSelect: method.function(),
 
 	menuContainer: method.element({
-		set: function(menuContainer) {
+		set(menuContainer) {
 			const self = this;
 
 			self[DRAWER] = new Drawer({
@@ -212,13 +212,13 @@ Object.assign(DrawerMenu.prototype, {
 				dock: self.drawerDock().primary(),
 				overlap: !IS_DESKTOP,
 				isOpen: true,
-				onOpen: () => {
+				onOpen() {
 					defer(() => {
 						if (!IS_DESKTOP) {
 							self[BACKDROP] = new BackDrop({
 								container: self.menuContainer(),
 								prepend: self[DRAWER].element(),
-								onRemove: () => {
+								onRemove() {
 									self[DRAWER].isOpen(false);
 								}
 							});
@@ -232,7 +232,7 @@ Object.assign(DrawerMenu.prototype, {
 
 					self.onMenuSlide().trigger(null, [true]);
 				},
-				onClose: () => {
+				onClose() {
 					if (self[BACKDROP]) {
 						self[BACKDROP].remove();
 						self[BACKDROP] = null;
@@ -245,7 +245,7 @@ Object.assign(DrawerMenu.prototype, {
 
 					self.onMenuSlide().trigger(null, [false]);
 				},
-				onRemove: () => {
+				onRemove() {
 					self[clearMenu]();
 				}
 			});
@@ -257,7 +257,7 @@ Object.assign(DrawerMenu.prototype, {
 	headerSettings: method.object(),
 
 	menuItems: method.array({
-		set: function(menuItems) {
+		set(menuItems) {
 			const self = this;
 			collectionHelper.eachChild(menuItems, (item) => {
 				item.ID = item.ID || uuid();
@@ -278,7 +278,7 @@ Object.assign(DrawerMenu.prototype, {
 
 	drawerDock: method.dockPoint({
 		init: new DockPoint('LEFT'),
-		set: function(drawerDock) {
+		set(drawerDock) {
 			if (this[DRAWER]) {
 				this[DRAWER].dock(drawerDock);
 			}
@@ -291,7 +291,7 @@ Object.assign(DrawerMenu.prototype, {
 	 * @member module:DrawerMenu
 	 * @instance
 	 */
-	focus: () => {
+	focus() {
 		this[MENU_BUTTON].isFocused(true);
 	},
 
@@ -302,7 +302,7 @@ Object.assign(DrawerMenu.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: (isFocused) => {
+	isFocused(isFocused) {
 		const self = this;
 
 		if (self) {

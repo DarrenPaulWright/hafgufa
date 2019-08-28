@@ -105,7 +105,7 @@ export default (Base) => {
 		 * @returns {boolean|this}
 		 */
 		showButtons: method.boolean({
-			set: function(newValue) {
+			set(newValue) {
 				const self = this;
 
 				if (newValue) {
@@ -116,7 +116,9 @@ export default (Base) => {
 							classes: BUTTON_CLASS,
 							icon: PREVIOUS_ICON,
 							iconSize: self.buttonIconSize(),
-							onClick: () => self.prev(),
+							onClick() {
+								self.prev();
+							},
 							height: HUNDRED_PERCENT,
 							css: {
 								position: ABSOLUTE,
@@ -130,7 +132,9 @@ export default (Base) => {
 							classes: BUTTON_CLASS,
 							icon: NEXT_ICON,
 							iconSize: self.buttonIconSize(),
-							onClick: () => self.next(),
+							onClick() {
+								self.next();
+							},
 							height: HUNDRED_PERCENT,
 							css: {
 								position: ABSOLUTE,
@@ -167,7 +171,7 @@ export default (Base) => {
 		buttonIconSize: method.enum({
 			init: ICON_SIZES.TWO_TIMES,
 			enum: ICON_SIZES,
-			set: function(buttonIconSize) {
+			set(buttonIconSize) {
 				const self = this;
 
 				if (self.showButtons()) {

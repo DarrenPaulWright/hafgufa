@@ -82,7 +82,7 @@ describe('LocalHistory', () => {
 		it('should NOT call a callback function when undo is called and no history exists', () => {
 			let callbackValue = '';
 			const history = new LocalHistory({
-				onUndo: function(historyObject) {
+				onUndo(historyObject) {
 					callbackValue = historyObject.test;
 				}
 			});
@@ -93,7 +93,7 @@ describe('LocalHistory', () => {
 		it('should call a callback function when undo is called and history exists', () => {
 			let callbackValue = '';
 			const history = new LocalHistory({
-				onUndo: function(historyObject) {
+				onUndo(historyObject) {
 					callbackValue = historyObject.test;
 				}
 			});
@@ -106,7 +106,7 @@ describe('LocalHistory', () => {
 		it('should NOT call a callback function when replace is called and no history exists', () => {
 			let callbackValue = '';
 			const history = new LocalHistory({
-				onPush: function() {
+				onPush() {
 					callbackValue = 'test4';
 				}
 			});
@@ -117,7 +117,7 @@ describe('LocalHistory', () => {
 		it('should call a callback function when push is called and history exists', () => {
 			let callbackValue = 0;
 			const history = new LocalHistory({
-				onPush: function() {
+				onPush() {
 					callbackValue += 1;
 				}
 			});

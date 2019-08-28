@@ -71,7 +71,7 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 							stopPropagation: true,
 							icon: CLEAR_ALT_ICON,
 							classes: BUTTON_CLASS,
-							onClick: () => {
+							onClick() {
 								if (self.onDelete()) {
 									self.onDelete()(self);
 								}
@@ -130,10 +130,10 @@ Object.assign(FileThumbnail.prototype, {
 	previewSize: method.enum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
-		before: function(oldValue) {
+		before(oldValue) {
 			this.removeClass(oldValue);
 		},
-		set: function(previewSize) {
+		set(previewSize) {
 			this.addClass(previewSize);
 		}
 	}),
@@ -147,7 +147,7 @@ Object.assign(FileThumbnail.prototype, {
 	 * @returns {String|this}
 	 */
 	imageSource: method.any({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 			if (self[IMAGE]) {
 				self[IMAGE].source(newValue || '')
@@ -161,7 +161,7 @@ Object.assign(FileThumbnail.prototype, {
 	fileData: method.object(),
 
 	fileExtension: method.string({
-		set: function(fileExtension) {
+		set(fileExtension) {
 			let fileIcon = FILE_ICON;
 
 			if (IMAGE_FILE_TYPES.includes(fileExtension)) {
@@ -186,13 +186,13 @@ Object.assign(FileThumbnail.prototype, {
 	}),
 
 	isSelected: method.boolean({
-		set: function(isSelected) {
+		set(isSelected) {
 			this.classes(IS_SELECTED_CLASS, isSelected);
 		}
 	}),
 
 	onEdit: method.function({
-		set: function(onEdit) {
+		set(onEdit) {
 			const self = this;
 			self.set(CLICK_EVENT, () => {
 				if (self.onEdit()) {

@@ -26,24 +26,32 @@ export default class Carousel extends NextPrevMixin(Control) {
 		settings.type = settings.type || controlTypes.CAROUSEL;
 		settings.height = enforce.cssSize(settings.height, AUTO, true);
 		settings.NextPrevMixin = {
-			onShowButtons: (onChange, buttonWidth) => {
+			onShowButtons(onChange, buttonWidth) {
 				self[BUTTON_SIZE] = buttonWidth;
 
 				self[VIRTUAL_LIST]
 					.padding(ZERO_PIXELS + SPACE + buttonWidth + PIXELS)
 					.onLayoutChange(onChange);
 			},
-			onHideButtons: () => {
+			onHideButtons() {
 				self[BUTTON_SIZE] = 0;
 
 				self[VIRTUAL_LIST]
 					.padding(ZERO_PIXELS)
 					.onLayoutChange(null);
 			},
-			isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
-			isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
-			onPrev: () => self[VIRTUAL_LIST].prevPage(),
-			onNext: () => self[VIRTUAL_LIST].nextPage()
+			isAtStart() {
+				return self[VIRTUAL_LIST].isAtStart();
+			},
+			isAtEnd() {
+				return self[VIRTUAL_LIST].isAtEnd();
+			},
+			onPrev() {
+				return self[VIRTUAL_LIST].prevPage();
+			},
+			onNext() {
+				return self[VIRTUAL_LIST].nextPage();
+			}
 		};
 
 		super(settings);
@@ -68,10 +76,10 @@ export default class Carousel extends NextPrevMixin(Control) {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-			if (self.fitToSlide()) {
-				self[fitToSlide]();
-			}
-		})
+				if (self.fitToSlide()) {
+					self[fitToSlide]();
+				}
+			})
 			.onRemove(() => {
 				self[VIRTUAL_LIST].remove();
 				self[VIRTUAL_LIST] = null;
@@ -123,7 +131,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {function|this}
 	 */
 	slideControl: method.function({
-		set: function(slideControl) {
+		set(slideControl) {
 			this[VIRTUAL_LIST].itemControl(slideControl);
 		}
 	}),
@@ -140,7 +148,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {object[]|this}
 	 */
 	slideData: method.array({
-		set: function(slideData) {
+		set(slideData) {
 			this[VIRTUAL_LIST].itemData(slideData);
 		}
 	}),
@@ -157,7 +165,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {object|this}
 	 */
 	slideDefaultSettings: method.object({
-		set: function(slideDefaultSettings) {
+		set(slideDefaultSettings) {
 			this[VIRTUAL_LIST].itemDefaultSettings(slideDefaultSettings);
 			this.resize();
 		}
@@ -175,7 +183,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {function|this}
 	 */
 	onSlideRender: method.function({
-		set: function(onSlideRender) {
+		set(onSlideRender) {
 			this[VIRTUAL_LIST].onItemRender((control, itemData) => {
 				onSlideRender(control, itemData);
 				if (!this[IS_FIT] && this.fitToSlide()) {
@@ -197,7 +205,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {string|this}
 	 */
 	slideWidth: method.string({
-		set: function(slideWidth) {
+		set(slideWidth) {
 			this[VIRTUAL_LIST].itemSize(slideWidth);
 		}
 	}),
@@ -214,7 +222,7 @@ Object.assign(Carousel.prototype, {
 	 * @returns {boolean|this}
 	 */
 	fitToSlide: method.boolean({
-		set: function(fitToSlide) {
+		set(fitToSlide) {
 			this[VIRTUAL_LIST].snapToLeadingEdge(fitToSlide);
 			this.resize();
 		}
@@ -229,7 +237,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {Object[]}
 	 */
-	getRenderedControls: function() {
+	getRenderedControls() {
 		return this[VIRTUAL_LIST].getRenderedControls();
 	},
 
@@ -247,14 +255,14 @@ Object.assign(Carousel.prototype, {
 	 */
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
-		set: function(extraRenderedItemsRatio) {
+		set(extraRenderedItemsRatio) {
 			this[VIRTUAL_LIST].extraRenderedItemsRatio(extraRenderedItemsRatio);
 		},
 		min: 0
 	}),
 
 	isFocusable: method.boolean({
-		set: function(isFocusable) {
+		set(isFocusable) {
 			this[VIRTUAL_LIST].isFocusable(isFocusable);
 		}
 	})

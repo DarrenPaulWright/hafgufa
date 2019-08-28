@@ -196,20 +196,20 @@ Object.assign(Heading.prototype, {
 	level: method.enum({
 		enum: HEADING_LEVELS,
 		init: HEADING_LEVELS.SIX,
-		set: function(level) {
+		set(level) {
 			this.element(dom.buildNew('', level));
 		}
 	}),
 
 	isInline: method.boolean({
 		init: true,
-		set: function(isInline) {
+		set(isInline) {
 			this.classes('not-inline', !isInline);
 		}
 	}),
 
 	canWrap: method.boolean({
-		set: function(canWrap) {
+		set(canWrap) {
 			this.classes('wrap', canWrap);
 		}
 	}),
@@ -223,7 +223,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	title: method.string({
-		set: function(title) {
+		set(title) {
 			this[CONTROLS].get(TITLE_CONTAINER).get(TITLE_ID).text(title);
 		}
 	}),
@@ -240,7 +240,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	subTitle: method.string({
-		set: function(subTitle) {
+		set(subTitle) {
 			if (subTitle !== '') {
 				if (!this[CONTROLS].get(TITLE_CONTAINER).get(SUB_TITLE_ID)) {
 					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
@@ -268,7 +268,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	error: method.string({
-		set: function(error) {
+		set(error) {
 			if (error !== '') {
 				if (!this[CONTROLS].get(TITLE_CONTAINER).get(ERROR_ID)) {
 					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
@@ -296,7 +296,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	icon: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue === '') {
 				this[CONTROLS].remove(ICON_CONTROL);
 			}
@@ -325,7 +325,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	iconTooltip: method.string({
-		set: function(iconTooltip) {
+		set(iconTooltip) {
 			if (this[CONTROLS].get(ICON_CONTROL)) {
 				this[CONTROLS].get(ICON_CONTROL).tooltip(iconTooltip);
 			}
@@ -341,7 +341,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {String|this}
 	 */
 	image: method.string({
-		set: function(image) {
+		set(image) {
 			if (image === '') {
 				this[CONTROLS].remove(IMAGE_CONTROL);
 			}
@@ -367,7 +367,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Array|this}
 	 */
 	buttons: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue.length) {
@@ -418,7 +418,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			if (this[CONTROLS].get(CHECKBOX)) {
 				this[CONTROLS].get(CHECKBOX).isVisible(newValue);
 			}
@@ -435,7 +435,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isSelected: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue) {
 				this.isIndeterminate(false);
 			}
@@ -453,7 +453,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isIndeterminate: method.boolean({
-		set: function(isIndeterminate) {
+		set(isIndeterminate) {
 			if (isIndeterminate) {
 				this.isSelected(false);
 			}
@@ -470,7 +470,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isExpandable: method.boolean({
-		set: function() {
+		set() {
 			updateExpander.call(this);
 			setClickable.call(this);
 		}
@@ -508,14 +508,14 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	showExpander: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue) {
 				this[CONTROLS].add(new Button({
 					ID: EXPANDER,
 					classes: 'icon-button',
-					onClick: () => {
+					onClick() {
 						toggleIsExpanded.call(self);
 					}
 				}));
@@ -538,7 +538,7 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	showCheckbox: method.boolean({
-		set: function(showCheckbox) {
+		set(showCheckbox) {
 			const self = this;
 
 			if (showCheckbox) {
@@ -546,7 +546,7 @@ Object.assign(Heading.prototype, {
 					ID: CHECKBOX,
 					container: this.element(),
 					isVisible: this.isSelectable(),
-					onChange: () => {
+					onChange() {
 						toggleChecked.call(self);
 					}
 				}));
@@ -599,7 +599,7 @@ Object.assign(Heading.prototype, {
 	}),
 
 	isFocusable: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue) {
 				this.attr(TAB_INDEX, TAB_INDEX_ENABLED)
 					.on(KEY_DOWN_EVENT, keyDownEvent);

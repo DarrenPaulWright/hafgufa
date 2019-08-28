@@ -34,7 +34,7 @@ export default class Removable {
 
 Object.assign(Removable.prototype, {
 	fade: method.boolean({
-		set: function(fade) {
+		set(fade) {
 			const self = this;
 
 			if (fade) {
@@ -57,7 +57,7 @@ Object.assign(Removable.prototype, {
 	 * @arg {Function} callback
 	 * @returns {this}
 	 */
-	onPreRemove: function(callback) {
+	onPreRemove(callback) {
 		const self = this;
 
 		if (!self.isRemoved && callback) {
@@ -78,7 +78,7 @@ Object.assign(Removable.prototype, {
 	 * @arg {Function} callback
 	 * @returns {this}
 	 */
-	onRemove: function(callback) {
+	onRemove(callback) {
 		const self = this;
 
 		if (!self.isRemoved && callback) {
@@ -97,7 +97,7 @@ Object.assign(Removable.prototype, {
 	 * @member module:Removable
 	 * @instance
 	 */
-	remove: function() {
+	remove() {
 		const self = this;
 
 		const removeFinal = () => {
@@ -129,7 +129,7 @@ Object.assign(Removable.prototype, {
 		}
 	},
 
-	revive: function() {
+	revive() {
 		const self = this;
 
 		if (self.fade()) {

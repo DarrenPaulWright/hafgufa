@@ -217,7 +217,7 @@ Object.assign(Container.prototype, {
 	contentContainer: method.element(),
 
 	isFocusable: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			this.attr(TAB_INDEX, newValue ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		}
 	})

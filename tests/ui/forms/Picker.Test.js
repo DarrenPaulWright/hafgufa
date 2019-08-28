@@ -39,7 +39,7 @@ describe('Picker', () => {
 
 	formControlTests.run([], ['focus'], {
 		onChange: {
-			buildControl: function() {
+			buildControl() {
 				window.control = new Picker({
 					container: window.testContainer,
 					showAll: true,
@@ -47,7 +47,7 @@ describe('Picker', () => {
 				});
 			},
 			validValue: 'first',
-			setValueViaDom: function() {
+			setValueViaDom() {
 				testUtil.simulateClick(query.first('.form-button'));
 			},
 			skipSameValue: true

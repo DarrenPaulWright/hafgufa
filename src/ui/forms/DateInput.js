@@ -42,8 +42,10 @@ export default class DateInput extends FormControl {
 		self[DATE_INPUT] = new TextInput({
 			container: self,
 			width: '7.4rem',
-			onChange: () => self[onDateInputChange],
-			onFocus: () => {
+			onChange() {
+				return self[onDateInputChange];
+			},
+			onFocus() {
 				self[IS_FOCUSED] = true;
 
 				self[buildDatePicker]();
@@ -52,7 +54,7 @@ export default class DateInput extends FormControl {
 					settings.onFocus(self);
 				}
 			},
-			onBlur: () => {
+			onBlur() {
 				self[IS_FOCUSED] = false;
 
 				if (settings.onBlur) {
@@ -99,7 +101,7 @@ export default class DateInput extends FormControl {
 					year: newDate.year(),
 					width: CALENDAR_WIDTH,
 					height: CALENDAR_HEIGHT,
-					onDateSelected: function(newValue) {
+					onDateSelected(newValue) {
 						self[DATE_INPUT].value(newValue.format(DATE_FORMAT));
 						self.triggerChange();
 						self[POPUP].remove();
@@ -107,7 +109,7 @@ export default class DateInput extends FormControl {
 					navButtonClass: 'icon-button',
 					selectedDate: newDate.toDate()
 				}],
-				onRemove: () => {
+				onRemove() {
 					self[POPUP] = null;
 				},
 				hideOnEscapeKey: true
@@ -135,7 +137,7 @@ export default class DateInput extends FormControl {
 }
 
 Object.assign(DateInput.prototype, {
-	value: function(newValue) {
+	value(newValue) {
 		const self = this;
 
 		if (arguments.length) {
@@ -148,19 +150,19 @@ Object.assign(DateInput.prototype, {
 		return new Date(self[DATE_INPUT].value());
 	},
 
-	focus: () => {
+	focus() {
 		this[DATE_INPUT].isFocused(true);
 	},
 
 	showNowButton: method.boolean({
-		set: function(showNowButton) {
+		set(showNowButton) {
 			const self = this;
 
 			if (showNowButton) {
 				self[NOW_BUTTON] = new Button({
 					container: self,
 					label: 'Now',
-					onClick: () => {
+					onClick() {
 						self.value(new Date())
 							.triggerChange();
 					}
@@ -176,7 +178,7 @@ Object.assign(DateInput.prototype, {
 		init: true
 	}),
 
-	isFocused: (isFocused) => {
+	isFocused(isFocused) {
 		const self = this;
 
 		if (self) {

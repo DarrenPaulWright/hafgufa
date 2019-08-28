@@ -201,7 +201,7 @@ Object.assign(Tabs.prototype, {
 
 	orientation: method.enum({
 		enum: ORIENTATION,
-		set: function(orientation) {
+		set(orientation) {
 			const self = this;
 
 			self[IS_VERTICAL] = orientation === ORIENTATION.VERTICAL;
@@ -217,7 +217,7 @@ Object.assign(Tabs.prototype, {
 
 	hideToolbar: method.boolean({
 		init: true,
-		set: function(hideToolbar) {
+		set(hideToolbar) {
 			const self = this;
 
 			if (hideToolbar) {
@@ -236,7 +236,7 @@ Object.assign(Tabs.prototype, {
 	}),
 
 	canCollapseTabContainer: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue) {
@@ -244,7 +244,7 @@ Object.assign(Tabs.prototype, {
 					container: self[TAB_CONTAINER],
 					icon: COLLAPSE_LEFT_ICON,
 					classes: 'icon-button tabs-collapse-button',
-					onClick: function() {
+					onClick() {
 						self[toggleTabContainer]();
 					}
 				});
@@ -277,7 +277,7 @@ Object.assign(Tabs.prototype, {
 	 * @returns {Array|this}
 	 */
 	tabs: method.array({
-		before: function() {
+		before() {
 			const self = this;
 
 			self[GROUPS].forEach((group) => {
@@ -286,7 +286,7 @@ Object.assign(Tabs.prototype, {
 			self[GROUPS].length = 0;
 			self[TABS].length = 0;
 		},
-		set: function(newTabs) {
+		set(newTabs) {
 			const self = this;
 
 			newTabs.forEach((tab, index) => {
@@ -297,7 +297,9 @@ Object.assign(Tabs.prototype, {
 					ID: tabId,
 					icon: tab.icon,
 					label: tab.title,
-					onClick: (button) => self[onTabClick](button)
+					onClick(button) {
+						self[onTabClick](button);
+					}
 				});
 
 				self[TABS].push({
@@ -314,7 +316,7 @@ Object.assign(Tabs.prototype, {
 		}
 	}),
 
-	selectTab: function(ID, skipOnClick) {
+	selectTab(ID, skipOnClick) {
 		const self = this;
 
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = skipOnClick;
@@ -324,15 +326,15 @@ Object.assign(Tabs.prototype, {
 		return self;
 	},
 
-	toolbar: function() {
+	toolbar() {
 		return this[TOOLBAR];
 	},
 
-	currentTab: function() {
+	currentTab() {
 		return this[CURRENT_TAB] ? this[CURRENT_TAB].ID : undefined;
 	},
 
-	get: function(id) {
+	get(id) {
 		return this[CONTENT_CONTAINER].get(id);
 	},
 

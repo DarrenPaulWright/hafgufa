@@ -255,14 +255,16 @@ Object.assign(Control.prototype, {
 	 * @returns {Object|this}
 	 */
 	container: method.element({
-		enforce: (newValue, oldValue) => dom.getElement(newValue, true) || oldValue,
+		enforce(newValue, oldValue) {
+			return dom.getElement(newValue, true) || oldValue;
+		},
 		other: null,
-		before: function(container) {
+		before(container) {
 			if (container && this[ELEMENT] && container.contains(this[ELEMENT])) {
 				container.removeChild(this[ELEMENT]);
 			}
 		},
-		set: function(container) {
+		set(container) {
 			if (container && this[ELEMENT]) {
 				if (this[APPEND]) {
 					if (isElement(this[APPEND])) {
@@ -299,7 +301,9 @@ Object.assign(Control.prototype, {
 	 * @returns {Object|this}
 	 */
 	element: method.element({
-		enforce: (newValue, oldValue) => dom.getElement(newValue) || oldValue,
+		enforce(newValue, oldValue) {
+			return dom.getElement(newValue) || oldValue;
+		},
 		before(element) {
 			if (element) {
 				this[OLD_ELEMENT] = element;
@@ -335,7 +339,7 @@ Object.assign(Control.prototype, {
 		other: [String, null]
 	}),
 
-	elementD3: function() {
+	elementD3() {
 		return this[ELEMENT_D3];
 	},
 
@@ -351,12 +355,12 @@ Object.assign(Control.prototype, {
 	 *    the attribute's value.
 	 */
 	attr: method.keyValue({
-		set: function(attribute, value) {
+		set(attribute, value) {
 			if (this[ELEMENT]) {
 				this[ELEMENT].setAttribute(attribute, value);
 			}
 		},
-		get: function(attribute) {
+		get(attribute) {
 			return this[ELEMENT].getAttribute(attribute);
 		}
 	}),
@@ -373,7 +377,7 @@ Object.assign(Control.prototype, {
 	 *    the computed style.
 	 */
 	css: method.keyValue({
-		set: function(property, value) {
+		set(property, value) {
 			if (this[ELEMENT]) {
 				if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 					value = value + PIXELS;
@@ -382,7 +386,7 @@ Object.assign(Control.prototype, {
 				this[ELEMENT].style[property] = value;
 			}
 		},
-		get: function(property) {
+		get(property) {
 			return this[ELEMENT].style[property];
 		}
 	}),
@@ -398,7 +402,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	addClass: function(className) {
+	addClass(className) {
 		if (this[ELEMENT] && isString(className) && className !== EMPTY_STRING) {
 			let classArray = className.trim().split(SPACE);
 
@@ -431,7 +435,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	removeClass: function(className) {
+	removeClass(className) {
 		const BASE_PREFIX = '(^|\\b)';
 		const BASE_SUFFIX = '(\\b|$)';
 		const FLAGS = 'gi';
@@ -472,7 +476,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	classes: function(classes, performAdd) {
+	classes(classes, performAdd) {
 		if (arguments.length) {
 			if (this[ELEMENT]) {
 				if (enforce.boolean(performAdd, true)) {
@@ -507,7 +511,7 @@ Object.assign(Control.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('initial'),
-		set: function(newValue) {
+		set(newValue) {
 			this.css(PADDING, newValue.toString());
 		}
 	}),
@@ -525,7 +529,7 @@ Object.assign(Control.prototype, {
 	 */
 	margin: method.thickness({
 		init: new Thickness('initial'),
-		set: function(newValue) {
+		set(newValue) {
 			this.css(MARGIN, newValue.toString());
 		}
 	}),
@@ -543,7 +547,7 @@ Object.assign(Control.prototype, {
 	 */
 	minWidth: method.cssSize({
 		init: new CssSize(),
-		set: function(newValue) {
+		set(newValue) {
 			this.css(MIN_WIDTH, newValue.toPixels());
 		}
 	}),
@@ -561,12 +565,12 @@ Object.assign(Control.prototype, {
 	 */
 	width: method.cssSize({
 		init: new CssSize(),
-		set: function(width) {
+		set(width) {
 			this.css(WIDTH, width.toPixels());
 		}
 	}),
 
-	borderWidth: function() {
+	borderWidth() {
 		if (this[ELEMENT]) {
 			if (this[ELEMENT] instanceof SVGElement) {
 				return this[ELEMENT].getBBox().width;
@@ -579,7 +583,7 @@ Object.assign(Control.prototype, {
 		return 0;
 	},
 
-	innerWidth: function() {
+	innerWidth() {
 		if (this[ELEMENT]) {
 			return (this[ELEMENT].clientWidth || 0) - dom.get.paddings.width(this[ELEMENT]);
 		}
@@ -600,7 +604,7 @@ Object.assign(Control.prototype, {
 	 */
 	maxWidth: method.cssSize({
 		init: new CssSize(),
-		set: function(newValue) {
+		set(newValue) {
 			this.css(MAX_WIDTH, newValue.toPixels());
 		}
 	}),
@@ -618,7 +622,7 @@ Object.assign(Control.prototype, {
 	 */
 	minHeight: method.cssSize({
 		init: new CssSize(),
-		set: function(newValue) {
+		set(newValue) {
 			this.css(MIN_HEIGHT, newValue.toPixels());
 		}
 	}),
@@ -636,12 +640,12 @@ Object.assign(Control.prototype, {
 	 */
 	height: method.cssSize({
 		init: new CssSize(),
-		set: function(height) {
+		set(height) {
 			this.css(HEIGHT, height.toPixels());
 		}
 	}),
 
-	borderHeight: function() {
+	borderHeight() {
 		if (this[ELEMENT]) {
 			if (this[ELEMENT] instanceof SVGElement) {
 				return this[ELEMENT].getBBox().height;
@@ -654,7 +658,7 @@ Object.assign(Control.prototype, {
 		return 0;
 	},
 
-	innerHeight: function() {
+	innerHeight() {
 		if (this[ELEMENT]) {
 			return (this[ELEMENT].clientHeight || 0) - dom.get.paddings.height(this[ELEMENT]);
 		}
@@ -675,7 +679,7 @@ Object.assign(Control.prototype, {
 	 */
 	maxHeight: method.cssSize({
 		init: new CssSize(),
-		set: function(maxHeight) {
+		set(maxHeight) {
 			this.css(MAX_HEIGHT, maxHeight.toPixels());
 		}
 	}),
@@ -693,7 +697,7 @@ Object.assign(Control.prototype, {
 	 */
 	isEnabled: method.boolean({
 		init: true,
-		set: function(isEnabled) {
+		set(isEnabled) {
 			this.classes(DISABLED_CLASS, !isEnabled);
 
 			if (this[ELEMENT] && !isEnabled && this.isFocused) {
@@ -730,7 +734,7 @@ Object.assign(Control.prototype, {
 	 */
 	isVisible: method.boolean({
 		init: true,
-		set: function(isVisible) {
+		set(isVisible) {
 			this.classes(HIDDEN_CLASS, !isVisible);
 
 			if (!isVisible) {
@@ -757,7 +761,7 @@ Object.assign(Control.prototype, {
 	 */
 	isDisplayed: method.boolean({
 		init: true,
-		set: function(isDisplayed) {
+		set(isDisplayed) {
 			this.classes(NOT_DISPLAYED_CLASS, !isDisplayed);
 
 			if (!isDisplayed) {
@@ -784,7 +788,7 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	on: method.keyValue({
-		set: function(eventName, handler) {
+		set(eventName, handler) {
 			if (this[ELEMENT_D3]) {
 				this[ELEMENT_D3].on(eventName, handler);
 			}
@@ -802,7 +806,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	off: function(eventName) {
+	off(eventName) {
 		return this.on(eventName, null);
 	},
 
@@ -820,7 +824,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	set: function(eventName, handler, performAdd) {
+	set(eventName, handler, performAdd) {
 		return this.on(eventName, performAdd ? handler : null);
 	},
 
@@ -835,7 +839,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	isFocused: function(isFocused) {
+	isFocused(isFocused) {
 		const self = this;
 
 		if (isFocused !== undefined) {
@@ -892,7 +896,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @arg {boolean} [isForced=false] - if true a resize will happen immediately
 	 */
-	resize: function(isForced) {
+	resize(isForced) {
 		if (isForced) {
 			if (!this.isRemoved) {
 				if (!this.skipWindowResize()) {

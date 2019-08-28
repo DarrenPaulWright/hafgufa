@@ -164,7 +164,7 @@ export default (Base) => {
 		 * @returns {queue}
 		 */
 		onFocus: method.queue({
-			set: function(queue) {
+			set(queue) {
 				if (queue.length === 1 && (!this.isFocusable || this.isFocusable())) {
 					setCallback.call(this, this[MAIN_CONTROL], FOCUS_IN_EVENT, onFocusCallback);
 					if (this[SUB_CONTROL]) {
@@ -183,7 +183,7 @@ export default (Base) => {
 		 * @returns {queue}
 		 */
 		onBlur: method.queue({
-			set: function(queue) {
+			set(queue) {
 				if (queue.length === 1 && (!this.isFocusable || this.isFocusable())) {
 					setCallback.call(this, this[MAIN_CONTROL], FOCUS_OUT_EVENT, onBlurCallback);
 					if (this[SUB_CONTROL]) {

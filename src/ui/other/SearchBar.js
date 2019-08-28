@@ -49,7 +49,7 @@ export default class SearchBar extends Control {
 				label: settings.isCompact ? null : locale.get('search'),
 				icon: SEARCH_ICON,
 				isSelectable: true,
-				onClick: function() {
+				onClick() {
 					self[toggleSearchBar]();
 				}
 			});
@@ -150,7 +150,7 @@ export default class SearchBar extends Control {
 
 Object.assign(SearchBar.prototype, {
 	suggestions: method.array({
-		set: function(suggestions) {
+		set(suggestions) {
 			if (this[TAGS]) {
 				this[TAGS].suggestions(suggestions);
 			}
@@ -175,12 +175,12 @@ Object.assign(SearchBar.prototype, {
 	 *
 	 * @returns {object}
 	 */
-	searchBarContainer: function() {
+	searchBarContainer() {
 		return this[SEARCH_BAR_CONTAINER];
 	},
 
 	countText: method.string({
-		set: function(countText) {
+		set(countText) {
 			if (this[TAGS]) {
 				this[TAGS].countText(countText);
 			}
@@ -192,7 +192,7 @@ Object.assign(SearchBar.prototype, {
 	 * @member module:SearchBar
 	 * @instance
 	 */
-	hideSearchBar: function() {
+	hideSearchBar() {
 		const self = this;
 
 		if (self[IS_SEARCH_BAR_OPEN]) {
@@ -211,7 +211,7 @@ Object.assign(SearchBar.prototype, {
 	 * @member module:SearchBar
 	 * @instance
 	 */
-	focus: function() {
+	focus() {
 		this[MENU_BUTTON].isFocused(true);
 	},
 
@@ -222,13 +222,13 @@ Object.assign(SearchBar.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: function() {
+	isFocused() {
 		return dom.hasActive(this[SEARCH_BAR]) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;
 	},
 
 	breakOnSpaces: method.boolean({
 		init: true,
-		set: function(breakOnSpaces) {
+		set(breakOnSpaces) {
 			if (this[TAGS]) {
 				this[TAGS].breakOnSpaces(breakOnSpaces);
 			}

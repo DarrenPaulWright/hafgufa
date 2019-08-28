@@ -3,10 +3,18 @@ const testRunnerConfig = require('test-runner-config');
 const config = require('./testRunner.config.js');
 
 const files = testRunnerConfig.getWallabyFiles(config, {
-	css: (file) => ({pattern: file, instrument: false, load: true}),
-	helper: (file) => ({pattern: file, instrument: false, load: false}),
-	src: (file) => ({pattern: file, instrument: true, load: false}),
-	specs: (file) => ({pattern: file, instrument: false, load: false})
+	css(file) {
+		return {pattern: file, instrument: false, load: true};
+	},
+	helper(file) {
+		return {pattern: file, instrument: false, load: false};
+	},
+	src(file) {
+		return {pattern: file, instrument: true, load: false};
+	},
+	specs(file) {
+		return {pattern: file, instrument: false, load: false};
+	}
 });
 
 module.exports = function(wallaby) {
@@ -25,7 +33,20 @@ module.exports = function(wallaby) {
 		},
 		module: {
 			rules: [{
-				test: /\.less$/, loaders: ['null-loader']
+				test: /\.less$/,
+				loaders: ['null-loader']
+			}, {
+				test: /\.js$/,
+				enforce: 'pre',
+				exclude: /node_modules/,
+				use: [{
+					loader: 'eslint-loader',
+					options: {
+						configFile: '.eslintrc.json',
+						cache: true,
+						emitWarning: true
+					}
+				}]
 			}, {
 				test: /\.js/,
 				exclude: /node_modules/,
@@ -47,7 +68,7 @@ module.exports = function(wallaby) {
 		compilers: {
 			'**/*.js': wallaby.compilers.babel()
 		},
-		setup: function() {
+		setup() {
 			window.__moduleBundler.loadTests();
 		},
 		// debug: true,

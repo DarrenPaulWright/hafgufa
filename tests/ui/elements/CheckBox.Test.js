@@ -113,7 +113,7 @@ describe('CheckBox', () => {
 
 			window.control = new CheckBox({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -134,7 +134,7 @@ describe('CheckBox', () => {
 
 			window.control = new CheckBox({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -156,7 +156,7 @@ describe('CheckBox', () => {
 
 			window.control = new CheckBox({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -182,7 +182,7 @@ describe('CheckBox', () => {
 
 			window.control = new CheckBox({
 				container: window.testContainer,
-				onChange: function(isChecked) {
+				onChange(isChecked) {
 					context = this;
 					value = isChecked;
 				}
@@ -252,7 +252,7 @@ describe('CheckBox', () => {
 	// 				'label': 'option1',
 	// 				'value': '1',
 	// 				'isChecked': false,
-	// 				onChange: function() {
+	// 				onChange() {
 	// 					testVar = 'test';
 	// 				}
 	// 			}]
@@ -272,7 +272,7 @@ describe('CheckBox', () => {
 	// 				'label': 'option1',
 	// 				'value': '1',
 	// 				'isChecked': false,
-	// 				onChecked: function() {
+	// 				onChecked() {
 	// 					testVar = 'test';
 	// 				}
 	// 			}]
@@ -292,7 +292,7 @@ describe('CheckBox', () => {
 	// 				'label': 'option1',
 	// 				'value': '1',
 	// 				'isChecked': false,
-	// 				onUnChecked: function() {
+	// 				onUnChecked() {
 	// 					testVar = 'test';
 	// 				}
 	// 			}]
@@ -313,7 +313,7 @@ describe('CheckBox', () => {
 	// 				'label': 'option1',
 	// 				'value': '1',
 	// 				'isChecked': false,
-	// 				onChecked: function() {
+	// 				onChecked() {
 	// 					testVar = event;
 	// 				}
 	// 			}]
@@ -333,7 +333,7 @@ describe('CheckBox', () => {
 	// 				'label': 'option1',
 	// 				'value': '1',
 	// 				'isChecked': false,
-	// 				onUnChecked: function() {
+	// 				onUnChecked() {
 	// 					testVar = event;
 	// 				}
 	// 			}]

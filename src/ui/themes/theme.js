@@ -71,7 +71,7 @@ const newLink = (self, prevLink, isThemeChange) => {
 				color: 'white',
 				'z-index': '10000000'
 			},
-			onRemove: () => {
+			onRemove() {
 				isWorking = null;
 			}
 		});

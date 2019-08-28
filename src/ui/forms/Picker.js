@@ -272,7 +272,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			self[FLATTENED_ITEMS_LIST].push(item);
 			self[FLATTENED_ITEMS_OBJECT][item.ID] = item;
 		}, {
-			onEachParent: function(parent) {
+			onEachParent(parent) {
 				if (parent.isMultiSelect) {
 					self[HAS_MULTI_SELECT] = true;
 				}
@@ -336,7 +336,9 @@ export default class Picker extends FocusMixin(FormControl) {
 
 				self[GROUPED_BUTTONS].addButton({
 					ID: preferredItem.ID,
-					onClick: (...args) => self[onButtonClick](...args)
+					onClick(...args) {
+						self[onButtonClick](...args);
+					}
 				});
 				currentButton = self[GROUPED_BUTTONS].getButton(preferredItem.ID);
 				self[prepPreferredItemButton](currentButton, preferredItem);
@@ -387,7 +389,9 @@ export default class Picker extends FocusMixin(FormControl) {
 				self[GROUPED_BUTTONS].addButton({
 					ID: POPUP_BUTTON_ID,
 					classes: POPUP_BUTTON_CLASS,
-					onClick: (...args) => self[onButtonClick](...args)
+					onClick(...args) {
+						self[onButtonClick](...args);
+					}
 				});
 				self[POPUP_BUTTON] = self[GROUPED_BUTTONS].getButton(POPUP_BUTTON_ID);
 				self[POPUP_BUTTON].removeClass('multi-select');
@@ -482,7 +486,9 @@ export default class Picker extends FocusMixin(FormControl) {
 		const buildPreferredButton = (settings, index) => {
 			self[GROUPED_BUTTONS].addButton({
 				ID: settings.ID,
-				onClick: (...args) => self[onButtonClick](...args)
+				onClick(...args) {
+					self[onButtonClick](...args);
+				}
 			}, index);
 
 			currentButton = self[GROUPED_BUTTONS].getButton(settings.ID);
@@ -770,7 +776,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				onAdd: self.onAdd() ? (...args) => self[addNewItem](...args) : null,
 				onEdit: self.onEdit(),
 				onDelete: self.onDelete() ? (...args) => self[deleteItem](...args) : null,
-				onSelect: function(itemID) {
+				onSelect(itemID) {
 					if (isArray(itemID)) {
 						itemID.forEach((ID, index) => {
 							self[toggleSelectedItem](ID, index < itemID.length - 1);
@@ -783,14 +789,14 @@ export default class Picker extends FocusMixin(FormControl) {
 						self[hideMenu]();
 					}
 				},
-				onRemove: function() {
+				onRemove() {
 					self[MENU] = null;
 					self[updateGroupedButtonsLayout]();
 					if (self[POPUP_BUTTON] && self.isFocused()) {
 						self[POPUP_BUTTON].isFocused(true);
 					}
 				},
-				onBlur: function() {
+				onBlur() {
 					self[hideMenu]();
 				},
 				menuItems: self[mapMenuItems]()
@@ -870,7 +876,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			footer: {
 				buttons: [{
 					label: locale.get('done'),
-					onClick: function() {
+					onClick() {
 						if (self.onRemoveDialogContents()) {
 							self.onRemoveDialogContents()();
 						}
@@ -888,7 +894,7 @@ export default class Picker extends FocusMixin(FormControl) {
 Object.assign(Picker.prototype, {
 	// dataSource: method.object({
 	// 	init: {},
-	// 	before: function(oldValue) {
+	// 	before(oldValue) {
 	// 		if (oldValue) {
 	// 			if (dataSourceOnChangeID) {
 	// 				oldValue.store.offChange(dataSourceOnChangeID);
@@ -900,7 +906,7 @@ Object.assign(Picker.prototype, {
 	// 			}
 	// 		}
 	// 	},
-	// 	set: function(newValue) {
+	// 	set(newValue) {
 	// 		let optionsStore;
 	// 		let preferredStore;
 	// 		let disabledItems;
@@ -978,7 +984,7 @@ Object.assign(Picker.prototype, {
 			isMultiSelect: false,
 			children: []
 		},
-		enforce: function(newOptions, oldOptions) {
+		enforce(newOptions, oldOptions) {
 			if (isArray(newOptions)) {
 				newOptions = {
 					isMultiSelect: false,
@@ -991,10 +997,10 @@ Object.assign(Picker.prototype, {
 			}
 			return oldOptions;
 		},
-		compare: function(newOptions, oldOptions) {
+		compare(newOptions, oldOptions) {
 			return !Picker[areOptionsEqual](newOptions, oldOptions);
 		},
-		set: function(options) {
+		set(options) {
 			const self = this;
 
 			self[processNewOptions](options);
@@ -1023,7 +1029,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {Array|this}
 	 */
 	preferred: method.array({
-		set: function() {
+		set() {
 			this[buildPreferredItemsList]();
 		}
 	}),
@@ -1052,7 +1058,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {Boolean|String} - If a new value doesn't match an option then 'false' is returned. If no value is
 	 *     provided then the current value is returned.
 	 */
-	value: function(newValue, isForcedSave) {
+	value(newValue, isForcedSave) {
 		const self = this;
 
 		if (typeof newValue !== 'undefined') {
@@ -1095,7 +1101,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 */
-	getContentWidth: function() {
+	getContentWidth() {
 		return this[GROUPED_BUTTONS].borderWidth();
 	},
 
@@ -1105,7 +1111,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 */
-	selectAll: function() {
+	selectAll() {
 		const self = this;
 
 		if (self[HAS_MULTI_SELECT]) {
@@ -1127,7 +1133,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 */
-	unselectAll: function() {
+	unselectAll() {
 		if (this[SELECTED_ITEMS].length > 0) {
 			this[setSelectedItems]([]);
 		}
@@ -1158,7 +1164,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	defaultButtonText: method.string({
-		set: function() {
+		set() {
 			this[updateGroupedButtonsLayout]();
 		}
 	}),
@@ -1175,7 +1181,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	defaultButtonIcon: method.string({
-		set: function() {
+		set() {
 			this[updateGroupedButtonsLayout]();
 		}
 	}),
@@ -1192,7 +1198,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	emptyButtonText: method.string({
-		set: function() {
+		set() {
 			this[updateGroupedButtonsLayout]();
 		}
 	}),
@@ -1213,7 +1219,7 @@ Object.assign(Picker.prototype, {
 	}),
 
 	showAll: method.boolean({
-		set: function() {
+		set() {
 			this[buildPreferredItemsList]();
 		}
 	}),
@@ -1240,7 +1246,7 @@ Object.assign(Picker.prototype, {
 	onDelete: method.function(),
 
 	onBuildDialogContents: method.function({
-		set: function() {
+		set() {
 			const self = this;
 
 			self.onAdd((newItem) => {

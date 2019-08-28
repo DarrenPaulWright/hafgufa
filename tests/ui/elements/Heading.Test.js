@@ -256,7 +256,7 @@ describe('Heading', () => {
 
 			window.control.buttons([{
 				label: 'test 1',
-				onClick: function(data) {
+				onClick(data) {
 					testVar = data.testProp;
 				}
 			}]);
@@ -279,7 +279,7 @@ describe('Heading', () => {
 
 			window.control.buttons([{
 				label: 'test 1',
-				isEnabled: function(data) {
+				isEnabled(data) {
 					return data.testProp === 3;
 				}
 			}]);
@@ -499,7 +499,7 @@ describe('Heading', () => {
 		testUtil.testMethod({
 			methodName: 'onSelect',
 			defaultValue: undefined,
-			testValue: function() {
+			testValue() {
 			}
 		});
 
@@ -521,7 +521,7 @@ describe('Heading', () => {
 			window.control = new Heading({
 				container: window.testContainer,
 				isSelectable: true,
-				onSelect: function() {
+				onSelect() {
 					testVar = 2;
 				}
 			});
@@ -536,7 +536,7 @@ describe('Heading', () => {
 		testUtil.testMethod({
 			methodName: 'onExpand',
 			defaultValue: undefined,
-			testValue: function() {
+			testValue() {
 			}
 		});
 
@@ -546,7 +546,7 @@ describe('Heading', () => {
 			window.control = new Heading({
 				container: window.testContainer,
 				isExpandable: false,
-				onExpand: function() {
+				onExpand() {
 					testVar = 2;
 				}
 			});
@@ -575,7 +575,7 @@ describe('Heading', () => {
 			window.control = new Heading({
 				container: window.testContainer,
 				isExpandable: true,
-				onExpand: function() {
+				onExpand() {
 					testVar = 2;
 				}
 			});
@@ -591,7 +591,7 @@ describe('Heading', () => {
 			window.control = new Heading({
 				container: window.testContainer,
 				isExpandable: true,
-				onSelect: function() {
+				onSelect() {
 					testVar = 2;
 				}
 			});
@@ -608,7 +608,7 @@ describe('Heading', () => {
 				container: window.testContainer,
 				isExpandable: true,
 				isSelectable: false,
-				onExpand: function() {
+				onExpand() {
 					testVar = 2;
 				}
 			});

@@ -6,9 +6,9 @@ import { EMPTY_STRING } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
+import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import LightBox from '../other/LightBox';
 import FileInput from './FileInput';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import './FilePicker.less';
 import FileThumbnail, { IMAGE_FILE_TYPES, PREVIEW_SIZES } from './FileThumbnail';
 import FormControl from './FormControl';
@@ -69,10 +69,10 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		if (!self[FILE_INPUT] && (!self[FILE_THUMBNAILS].total() || self.isMulti())) {
 			self[FILE_INPUT] = new FileInput({
 				container: self.contentContainer(),
-				onPreLoad: (data) => {
+				onPreLoad(data) {
 					self[preloadFiles](data);
 				},
-				onLoad: (data) => {
+				onLoad(data) {
 					self[onLoadFile](data);
 				},
 				previewSize: self.previewSize(),
@@ -201,10 +201,10 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		if (!self[LIGHTBOX]) {
 			self[LIGHTBOX] = new LightBox({
 				isMulti: self.isMulti(),
-				onDelete: function(fileName) {
+				onDelete(fileName) {
 					self[deleteFile](self[FILE_THUMBNAILS].get(fileName));
 				},
-				onRemove: function() {
+				onRemove() {
 					self[LIGHTBOX] = null;
 				}
 			});
@@ -235,7 +235,7 @@ Object.assign(FilePicker.prototype, {
 	 * @returns {Number|this}
 	 */
 	value: method.array({
-		set: function(value) {
+		set(value) {
 			const self = this;
 			self[FILES] = value;
 			self[FILE_THUMBNAILS].remove();
@@ -247,13 +247,13 @@ Object.assign(FilePicker.prototype, {
 				self[buildFileInput]();
 			}
 		},
-		get: function() {
+		get() {
 			return this[FILES];
 		}
 	}),
 
 	isAudio: method.boolean({
-		set: function(isAudio) {
+		set(isAudio) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isAudio(isAudio);
 			}
@@ -261,7 +261,7 @@ Object.assign(FilePicker.prototype, {
 	}),
 
 	isImage: method.boolean({
-		set: function(isImage) {
+		set(isImage) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isImage(isImage);
 			}
@@ -269,7 +269,7 @@ Object.assign(FilePicker.prototype, {
 	}),
 
 	isVideo: method.boolean({
-		set: function(isVideo) {
+		set(isVideo) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isVideo(isVideo);
 			}
@@ -290,7 +290,7 @@ Object.assign(FilePicker.prototype, {
 	isQuickEdit: method.boolean(),
 
 	mimeTypes: method.array({
-		set: function(newValue) {
+		set(newValue) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].mimeTypes(newValue);
 			}
@@ -302,7 +302,7 @@ Object.assign(FilePicker.prototype, {
 	onDelete: method.function(),
 
 	canEdit: method.boolean({
-		set: function() {
+		set() {
 			const self = this;
 			self[FILE_THUMBNAILS].each((fileThumbnail) => {
 				fileThumbnail.onEdit(() => {
@@ -314,7 +314,7 @@ Object.assign(FilePicker.prototype, {
 
 	canDelete: method.boolean({
 		init: true,
-		set: function(newValue) {
+		set(newValue) {
 			this[FILE_THUMBNAILS].each((fileThumbnail) => {
 				fileThumbnail.canDelete(newValue);
 			});
@@ -332,7 +332,7 @@ Object.assign(FilePicker.prototype, {
 	previewSize: method.enum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 			if (self[FILE_INPUT]) {
 				self[FILE_INPUT].previewSize(newValue);
@@ -357,7 +357,7 @@ Object.assign(FilePicker.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isMulti: method.boolean({
-		set: function(isMulti) {
+		set(isMulti) {
 			const self = this;
 
 			self.classes('isMulti', isMulti);
@@ -374,7 +374,9 @@ Object.assign(FilePicker.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: () => false
+	isFocused() {
+		return false;
+	}
 });
 
 FilePicker.PREVIEW_SIZES = PREVIEW_SIZES;

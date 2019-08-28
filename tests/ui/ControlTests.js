@@ -451,7 +451,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				window.control = new Control(buildSettings({
 					skipWindowResize: true,
-					onResize: function() {
+					onResize() {
 						testItem += 1;
 					}
 				}));
@@ -470,7 +470,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				let testItem2;
 
 				window.control = new Control(buildSettings({
-					onResize: function() {
+					onResize() {
 						testItem += 1;
 					}
 				}));
@@ -493,7 +493,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				let testItem = 1;
 
 				window.control = new Control(buildSettings({
-					onRemove: function() {
+					onRemove() {
 						testItem = 2;
 					}
 				}));
@@ -541,7 +541,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onFocus: function() {
+						onFocus() {
 							testItem += 1;
 						}
 					}));
@@ -558,7 +558,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				window.control = new Control(buildSettings({
 					isFocusable: true,
-					onFocus: function() {
+					onFocus() {
 						testItem += 1;
 					}
 				}));
@@ -577,7 +577,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onFocus: function() {
+						onFocus() {
 							testItem += 1;
 						}
 					}));
@@ -595,7 +595,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onBlur: function() {
+						onBlur() {
 							testItem += 1;
 						}
 					}));
@@ -619,7 +619,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onBlur: function() {
+						onBlur() {
 							testItem += 1;
 						}
 					}));
@@ -641,7 +641,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onFocus: function() {
+						onFocus() {
 							testItem += 1;
 						}
 					}));
@@ -663,7 +663,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 						window.control = new Control(buildSettings({
 							isFocusable: true,
-							onBlur: function() {
+							onBlur() {
 								testItem += 1;
 							}
 						}));
@@ -682,7 +682,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 						window.control = new Control(buildSettings({
 							isFocusable: true,
-							onBlur: function() {
+							onBlur() {
 								testItem += 1;
 							}
 						}));
@@ -716,7 +716,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				window.control = new Control(buildSettings({
 					isFocusable: true,
-					onBlur: function() {
+					onBlur() {
 						testItem += 1;
 					}
 				}));
@@ -733,7 +733,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					window.control = new Control(buildSettings({
 						isFocusable: true,
-						onBlur: function() {
+						onBlur() {
 							testItem += 1;
 						}
 					}));
@@ -752,7 +752,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				window.control = new Control(buildSettings({
 					isFocusable: true,
-					onBlur: function() {
+					onBlur() {
 						testItem += 1;
 					}
 				}));

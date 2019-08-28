@@ -91,7 +91,7 @@ Object.assign(IsWorking.prototype, {
 	 * @returns {String|this}
 	 */
 	label: method.string({
-		set: function(label) {
+		set(label) {
 			if (label) {
 				if (!this[LABEL]) {
 					this[LABEL] = new Label({

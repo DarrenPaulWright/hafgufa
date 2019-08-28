@@ -63,16 +63,16 @@ Object.assign(Input.prototype, {
 	 */
 	inputType: method.enum({
 		enum: AVAILABLE_TYPES,
-		set: function(inputType) {
+		set(inputType) {
 			this.attr(INPUT_TYPE, inputType);
 		}
 	}),
 
 	value: method.any({
-		set: function(value) {
+		set(value) {
 			this.element().value = value;
 		},
-		get: function() {
+		get() {
 			return this.element().value;
 		}
 	})

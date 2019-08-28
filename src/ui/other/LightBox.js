@@ -116,7 +116,7 @@ export default class LightBox extends Control {
 				icon: CLEAR_ICON,
 				classes: 'icon-button',
 				align: 'right',
-				onClick: () => {
+				onClick() {
 					self.remove();
 				}
 			}]
@@ -133,7 +133,7 @@ export default class LightBox extends Control {
 			self[MAIN_IMAGE] = new DragImage({
 				container: self[IMAGE_LAYER],
 				on: {
-					load: () => {
+					load() {
 						defer(() => {
 							self[MAIN_IMAGE]
 								.stretch('fit')
@@ -215,17 +215,17 @@ export default class LightBox extends Control {
 					slideControl: FileThumbnail,
 					slideDefaultSettings: {
 						padding: THUMB_MARGIN + PIXELS,
-						onEdit: (fileThumbnail) => {
+						onEdit(fileThumbnail) {
 							self.selectedItems([fileThumbnail.ID()]);
 						},
-						onDelete: (fileThumbnail) => {
+						onDelete(fileThumbnail) {
 							self.files(this.files().filter((file) => file.name !== fileThumbnail.ID()), true);
 							if (self.onDelete()) {
 								self.onDelete()(fileThumbnail.ID());
 							}
 						}
 					},
-					onSlideRender: function(thumb, item) {
+					onSlideRender(thumb, item) {
 						thumb
 							.imageSource(item.source)
 							.fileExtension(item.data.extension)
@@ -272,13 +272,13 @@ export default class LightBox extends Control {
 
 Object.assign(LightBox.prototype, {
 	files: method.array({
-		set: function() {
+		set() {
 			this[renderImages]();
 		}
 	}),
 
 	selectedItems: method.array({
-		set: function() {
+		set() {
 			this[renderMainImage]();
 			this[updateSelectedItems]();
 		}

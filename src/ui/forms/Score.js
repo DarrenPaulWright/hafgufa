@@ -61,7 +61,7 @@ Object.assign(Score.prototype, {
 	}),
 
 	label: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue === '') {
 				dom.remove(this[LABEL]);
 				this[LABEL] = null;
@@ -83,5 +83,7 @@ Object.assign(Score.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: () => false
+	isFocused() {
+		return false;
+	}
 });

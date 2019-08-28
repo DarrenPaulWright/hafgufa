@@ -73,38 +73,38 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		applySettings(self, settings, ['orientation']);
 
 		self.onResize(() => {
-			const setStackedSize = (localSize, scrollType) => {
-				self.css(localSize, Math.ceil(dom.get[scrollType](self[FIRST_VIEW]) + dom.get[scrollType](self[SECOND_VIEW])));
-			};
-			const setSingleSize = (localSize, scrollType) => {
-				self[FIRST_VIEW][localSize]('0');
-				self[SECOND_VIEW][localSize]('0');
-				self.css(localSize, Math.ceil(Math.max(dom.get[scrollType](self[FIRST_VIEW]), dom.get[scrollType](self[SECOND_VIEW]))));
-			};
+				const setStackedSize = (localSize, scrollType) => {
+					self.css(localSize, Math.ceil(dom.get[scrollType](self[FIRST_VIEW]) + dom.get[scrollType](self[SECOND_VIEW])));
+				};
+				const setSingleSize = (localSize, scrollType) => {
+					self[FIRST_VIEW][localSize]('0');
+					self[SECOND_VIEW][localSize]('0');
+					self.css(localSize, Math.ceil(Math.max(dom.get[scrollType](self[FIRST_VIEW]), dom.get[scrollType](self[SECOND_VIEW]))));
+				};
 
-			if (self.height().isAuto) {
-				if (self[IS_COLUMNS]) {
-					setSingleSize(HEIGHT, SCROLL_HEIGHT);
+				if (self.height().isAuto) {
+					if (self[IS_COLUMNS]) {
+						setSingleSize(HEIGHT, SCROLL_HEIGHT);
+					}
+					else {
+						setStackedSize(HEIGHT, SCROLL_HEIGHT);
+					}
 				}
-				else {
-					setStackedSize(HEIGHT, SCROLL_HEIGHT);
+				if (self.width().isAuto) {
+					if (self[IS_COLUMNS]) {
+						setStackedSize(WIDTH, SCROLL_WIDTH);
+					}
+					else {
+						setSingleSize(WIDTH, SCROLL_WIDTH);
+					}
 				}
-			}
-			if (self.width().isAuto) {
-				if (self[IS_COLUMNS]) {
-					setStackedSize(WIDTH, SCROLL_WIDTH);
-				}
-				else {
-					setSingleSize(WIDTH, SCROLL_WIDTH);
-				}
-			}
 
-			self[positionViews]();
+				self[positionViews]();
 
-			if (self[RESIZER]) {
-				self[RESIZER].resize();
-			}
-		})
+				if (self[RESIZER]) {
+					self[RESIZER].resize();
+				}
+			})
 			.onRemove(() => {
 				self[FIRST_VIEW].remove();
 				self[SECOND_VIEW].remove();
@@ -168,7 +168,7 @@ Object.assign(SplitView.prototype, {
 	orientation: method.enum({
 		init: ORIENTATION.COLUMNS,
 		enum: ORIENTATION,
-		set: function(orientation) {
+		set(orientation) {
 			const self = this;
 
 			self[IS_COLUMNS] = orientation === ORIENTATION.COLUMNS;
@@ -193,7 +193,7 @@ Object.assign(SplitView.prototype, {
 	 * @returns {String|Object}
 	 */
 	splitOffset: method.cssSize({
-		set: function(splitOffset) {
+		set(splitOffset) {
 			const self = this;
 
 			if (self[RESIZER]) {
@@ -211,7 +211,7 @@ Object.assign(SplitView.prototype, {
 	 * @returns {String|Object}
 	 */
 	isResizable: method.boolean({
-		set: function(isResizable) {
+		set(isResizable) {
 			const self = this;
 
 			if (isResizable) {
@@ -222,11 +222,11 @@ Object.assign(SplitView.prototype, {
 						splitOffset: self.splitOffset(),
 						minOffset: self.minOffset(),
 						maxOffset: self.maxOffset(),
-						onOffsetChange: (splitOffset) => {
+						onOffsetChange(splitOffset) {
 							self.splitOffset(splitOffset);
 							windowResize.trigger();
 						},
-						onOffsetChangeDone: (splitOffset) => {
+						onOffsetChangeDone(splitOffset) {
 							if (self.onOffsetChange()) {
 								self.onOffsetChange()(splitOffset.toString());
 							}
@@ -254,7 +254,7 @@ Object.assign(SplitView.prototype, {
 	 * @returns {Number|Object}
 	 */
 	minOffset: method.cssSize({
-		set: function(minOffset) {
+		set(minOffset) {
 			const self = this;
 
 			if (self[RESIZER]) {
@@ -272,7 +272,7 @@ Object.assign(SplitView.prototype, {
 	 * @returns {Number|Object}
 	 */
 	maxOffset: method.cssSize({
-		set: function(maxOffset) {
+		set(maxOffset) {
 			const self = this;
 
 			if (self[RESIZER]) {

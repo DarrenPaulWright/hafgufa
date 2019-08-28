@@ -47,7 +47,7 @@ export default class Dialog extends Removable {
 
 		if (!settings.anchor) {
 			self[BACKDROP] = new BackDrop({
-				onPreRemove: () => {
+				onPreRemove() {
 					self.remove();
 				}
 			});
@@ -63,7 +63,7 @@ export default class Dialog extends Removable {
 			content: self[CONTENT_CONTAINER],
 			isSticky: settings.anchor === undefined,
 			showArrow: settings.anchor !== undefined,
-			onResize: () => {
+			onResize() {
 				self[onResizePopup]();
 			}
 		}));
@@ -110,7 +110,7 @@ export default class Dialog extends Removable {
 
 Object.assign(Dialog.prototype, {
 	title: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue) {
@@ -138,7 +138,7 @@ Object.assign(Dialog.prototype, {
 	}),
 
 	footer: method.object({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (newValue) {
@@ -158,36 +158,36 @@ Object.assign(Dialog.prototype, {
 		other: undefined
 	}),
 
-	contentContainer: function() {
+	contentContainer() {
 		return this[CONTENT_CONTAINER];
 	},
 
-	content: function(content) {
+	content(content) {
 		this[CONTENT_CONTAINER].content(isFunction(content) ? content(this) : content);
 		this[POPUP].resize(true);
 	},
 
-	get: function(ID) {
+	get(ID) {
 		return this[CONTENT_CONTAINER].get(ID);
 	},
 
-	disableButton: function(button) {
+	disableButton(button) {
 		this[FOOTER].updateButton(button, {
 			isEnabled: false
 		});
 	},
 
-	toggleButtons: function(isEnabled) {
+	toggleButtons(isEnabled) {
 		this[FOOTER].toggleButtons(isEnabled);
 	},
 
-	enableButton: function(button) {
+	enableButton(button) {
 		this[FOOTER].updateButton(button, {
 			isEnabled: true
 		});
 	},
 
-	updateButton: function(button, properties) {
+	updateButton(button, properties) {
 		this[FOOTER].updateButton(button, properties);
 	},
 
@@ -204,7 +204,7 @@ Object.assign(Dialog.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('1rem 1.25rem'),
-		set: function(padding) {
+		set(padding) {
 			this[CONTENT_CONTAINER].padding(padding);
 		}
 	}),
@@ -219,20 +219,20 @@ Object.assign(Dialog.prototype, {
 	 */
 	isEnabled: method.boolean({
 		init: true,
-		set: function(newValue) {
+		set(newValue) {
 			this[CONTENT_CONTAINER].isEnabled(!newValue);
 		}
 	}),
 
-	hideButton: function(button) {
+	hideButton(button) {
 		this[FOOTER].hideButton(button);
 	},
 
-	each: function(callback) {
+	each(callback) {
 		this[CONTENT_CONTAINER].each(callback);
 	},
 
-	resize: function() {
+	resize() {
 		const self = this;
 
 		if (self[POPUP]) {

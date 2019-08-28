@@ -47,7 +47,7 @@ Object.assign(Group.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('0.25rem 0.6rem 0.5rem'),
-		set: function(padding) {
+		set(padding) {
 			dom.css(this.contentContainer(), PADDING, padding.toString());
 		}
 	})

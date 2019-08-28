@@ -104,7 +104,7 @@ Object.assign(Button.prototype, {
 	 */
 	label: method.string({
 		init: undefined,
-		set: function(label) {
+		set(label) {
 			const hasOtherContent = !!(this.icon() || this.image());
 
 			if (hasOtherContent && !label) {
@@ -133,7 +133,7 @@ Object.assign(Button.prototype, {
 	 * @returns {this}
 	 */
 	alt: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			this.attr(ALT, newValue)
 				.attr(TITLE, newValue);
 		}
@@ -152,7 +152,7 @@ Object.assign(Button.prototype, {
 	 * @returns {String|this}
 	 */
 	icon: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			if (!newValue) {
 				this[CONTROLS].remove(ICON_ID);
 			}
@@ -193,7 +193,7 @@ Object.assign(Button.prototype, {
 	iconSize: method.enum({
 		init: ICON_SIZES.LARGE,
 		enum: ICON_SIZES,
-		set: function(newValue) {
+		set(newValue) {
 			if (this[CONTROLS].get(ICON_ID)) {
 				this[CONTROLS].get(ICON_ID).size(newValue);
 			}
@@ -210,7 +210,7 @@ Object.assign(Button.prototype, {
 	iconPosition: method.enum({
 		init: ICON_POSITIONS.LEFT,
 		enum: ICON_POSITIONS,
-		set: function(newValue) {
+		set(newValue) {
 			this.classes('icon-top-bottom', newValue === ICON_POSITIONS.TOP || newValue === ICON_POSITIONS.BOTTOM);
 			this.classes('icon-right', newValue === ICON_POSITIONS.RIGHT);
 
@@ -232,7 +232,7 @@ Object.assign(Button.prototype, {
 	 * @returns {String|this}
 	 */
 	image: method.string({
-		set: function(image) {
+		set(image) {
 			if (!image) {
 				this[CONTROLS].remove(IMAGE_ID);
 			}
@@ -269,7 +269,7 @@ Object.assign(Button.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			if (!newValue) {
 				this.isSelected(false);
 			}
@@ -289,7 +289,7 @@ Object.assign(Button.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isSelected: method.boolean({
-		set: function(newValue) {
+		set(newValue) {
 			if (newValue && !this.isSelectable()) {
 				this.isSelected(false);
 			}
@@ -308,7 +308,7 @@ Object.assign(Button.prototype, {
 	 * @returns {Function|this}
 	 */
 	onMouseEnter: method.function({
-		set: function(newValue) {
+		set(newValue) {
 			this.on(MOUSE_ENTER_EVENT, (newValue !== null) ? mouseEnterHandler : null);
 		},
 		other: null
@@ -323,7 +323,7 @@ Object.assign(Button.prototype, {
 	 * @returns {Function|this}
 	 */
 	onMouseLeave: method.function({
-		set: function(newValue) {
+		set(newValue) {
 			this.on(MOUSE_LEAVE_EVENT, (newValue !== null) ? mouseLeaveHandler : null);
 		},
 		other: null

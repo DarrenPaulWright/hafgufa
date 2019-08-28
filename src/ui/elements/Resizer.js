@@ -169,7 +169,7 @@ Object.assign(Resizer.prototype, {
 	 */
 	orientation: method.enum({
 		enum: ORIENTATION,
-		set: function(orientation) {
+		set(orientation) {
 			const self = this;
 			const size = IS_DESKTOP ? DESKTOP_SIZE : TOUCH_SIZE;
 			const margin = -(size.toPixels(true) / 2) + PIXELS;
@@ -200,12 +200,12 @@ Object.assign(Resizer.prototype, {
 	 * @returns {String|Object}
 	 */
 	splitOffset: method.cssSize({
-		set: function(splitOffset) {
+		set(splitOffset) {
 			this[SPLIT_OFFSET].set(splitOffset);
 
 			this[setPosition]();
 		},
-		get: function() {
+		get() {
 			return this[SPLIT_OFFSET];
 		}
 	}),
@@ -223,7 +223,7 @@ Object.assign(Resizer.prototype, {
 	 */
 	minOffset: method.cssSize({
 		init: new CssSize('0'),
-		set: function() {
+		set() {
 			this[setMinMaxOffsets]();
 			this[setPosition]();
 		}
@@ -242,7 +242,7 @@ Object.assign(Resizer.prototype, {
 	 */
 	maxOffset: method.cssSize({
 		init: new CssSize('100%'),
-		set: function() {
+		set() {
 			this[setMinMaxOffsets]();
 			this[setPosition]();
 		}

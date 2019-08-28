@@ -39,21 +39,21 @@ Object.assign(TextArea.prototype, {
 	 * @returns {int|this}
 	 */
 	rows: method.integer({
-		set: function(rows) {
+		set(rows) {
 			this.attr(ROWS, rows);
 		}
 	}),
 
 	value: method.any({
-		set: function(value) {
+		set(value) {
 			this.element().value = value;
 		},
-		get: function() {
+		get() {
 			return this.element().value;
 		}
 	}),
 
-	focus: function() {
+	focus() {
 		this.element().focus();
 	}
 });

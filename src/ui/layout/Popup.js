@@ -464,7 +464,7 @@ Popup.MOUSE = 'mouse';
 
 Object.assign(Popup.prototype, {
 	showArrow: method.boolean({
-		set: function(showArrow) {
+		set(showArrow) {
 			const self = this;
 
 			if (showArrow) {
@@ -481,7 +481,7 @@ Object.assign(Popup.prototype, {
 	}),
 
 	anchor: method.element({
-		before: function(oldValue) {
+		before(oldValue) {
 			if (isElement(oldValue)) {
 				select(oldValue)
 					.on(MOUSE_ENTER_EVENT, null)
@@ -491,7 +491,7 @@ Object.assign(Popup.prototype, {
 				select(BODY).on(MOUSE_MOVE_EVENT, null);
 			}
 		},
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			if (isElement(newValue)) {
@@ -513,21 +513,21 @@ Object.assign(Popup.prototype, {
 
 	anchorDockPoint: method.dockPoint({
 		init: new DockPoint(POINTS.BOTTOM_CENTER),
-		set: function() {
+		set() {
 			this[setSlidability]();
 		}
 	}),
 
 	popupDockPoint: method.dockPoint({
 		init: new DockPoint(POINTS.TOP_CENTER),
-		set: function() {
+		set() {
 			this[setSlidability]();
 		}
 	}),
 
 	isSticky: method.boolean({
 		init: true,
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 			const suffix = '.' + self.ID();
 
@@ -550,7 +550,7 @@ Object.assign(Popup.prototype, {
 	hideOnMouseLeave: method.boolean(),
 
 	hideOnEscapeKey: method.boolean({
-		set: function(hideOnEscapeKey) {
+		set(hideOnEscapeKey) {
 			const self = this;
 
 			const onEscapeKey = () => {

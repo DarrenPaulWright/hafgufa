@@ -68,17 +68,17 @@ export default class Radio extends Label {
 
 Object.assign(Radio.prototype, {
 	name: method.string({
-		set: function(name) {
+		set(name) {
 			this[INPUT].attr('name', name);
 		}
 	}),
 	value: method.string({
-		set: function(value) {
+		set(value) {
 			this[INPUT].attr('value', value);
 		}
 	}),
 	isChecked: method.boolean({
-		set: function(isChecked) {
+		set(isChecked) {
 			this[INPUT].element().checked = isChecked;
 			this.classes('checked', isChecked);
 

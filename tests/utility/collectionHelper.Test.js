@@ -279,7 +279,7 @@ describe('collectionHelper', () => {
 				prop: 'test 3'
 			}];
 			const settings = {
-				onEachParent: function(item) {
+				onEachParent(item) {
 					item.testProperty = item.prop;
 				}
 			};
@@ -321,7 +321,7 @@ describe('collectionHelper', () => {
 				testProperty: 'test 3'
 			}];
 			const settings = {
-				onEachChild: function(item) {
+				onEachChild(item) {
 					item.testProperty = item.prop;
 				}
 			};
@@ -408,10 +408,10 @@ describe('collectionHelper', () => {
 				childProperty: 'children2',
 				saveDepth: true,
 				ignoreChildrenProperty: 'ignoreChildren',
-				onEachParent: function(item) {
+				onEachParent(item) {
 					item.testProperty = 'parent ' + item.prop;
 				},
-				onEachChild: function(item) {
+				onEachChild(item) {
 					item.testProperty = 'child ' + item.prop;
 				}
 			};
@@ -456,10 +456,10 @@ describe('collectionHelper', () => {
 				childProperty: 'children2',
 				saveDepth: true,
 				ignoreChildrenProperty: 'ignoreChildren',
-				onEachParent: function(item) {
+				onEachParent(item) {
 					item.testProperty = 'parent ' + item.prop;
 				},
-				onEachChild: function(item) {
+				onEachChild(item) {
 					item.testProperty = 'child ' + item.prop;
 				}
 			};
@@ -750,7 +750,7 @@ describe('collectionHelper', () => {
 
 			collectionHelper.eachChild(testCollection, () => {
 			}, {
-				onEachParent: function(item, depth) {
+				onEachParent(item, depth) {
 					total += depth;
 				}
 			});

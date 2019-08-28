@@ -53,7 +53,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		settings.rows = settings.rows || 1;
 		settings.changeDelay = 'changeDelay' in settings ? settings.changeDelay : (settings.rows === 1 ? ON_CHANGE_DELAY : ON_CHANGE_DELAY_LONG);
 		settings.ActionButtonMixin = {
-			container: () => {
+			container() {
 				return self[INPUT];
 			}
 		};
@@ -156,7 +156,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Int|this}
 	 */
 	rows: method.integer({
-		set: function(rows) {
+		set(rows) {
 			const self = this;
 			let oldInput = self[INPUT];
 
@@ -193,13 +193,13 @@ Object.assign(TextInput.prototype, {
 	}),
 
 	maxRows: method.integer({
-		set: function() {
+		set() {
 			this[maxRowCallback]();
 		}
 	}),
 
 	textWidth: method.cssSize({
-		set: function() {
+		set() {
 			this[positionElements]();
 		}
 	}),
@@ -212,7 +212,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isPassword: method.boolean({
-		set: function(isPassword) {
+		set(isPassword) {
 			if (this.rows() === 1) {
 				this[INPUT].inputType(isPassword ? INPUT_TYPE_PASSWORD : INPUT_TYPE_TEXT);
 			}
@@ -221,7 +221,7 @@ Object.assign(TextInput.prototype, {
 
 	isSoftValidation: method.boolean({
 		init: true,
-		set: function() {
+		set() {
 			if (this.maxLength()) {
 				this.maxLength(this.maxLength(), true);
 			}
@@ -247,7 +247,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Int|this}
 	 */
 	maxLength: method.integer({
-		set: function(newValue) {
+		set(newValue) {
 			this[INPUT].attr(MAX_LENGTH, (this.isSoftValidation() || !newValue) ? null : newValue);
 		},
 		other: undefined
@@ -323,7 +323,7 @@ Object.assign(TextInput.prototype, {
 	 * @instance
 	 * @returns {this}
 	 */
-	validate: function() {
+	validate() {
 		const self = this;
 		const currentValue = self.value();
 		let errorMessage = '';
@@ -405,7 +405,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {String|this}
 	 */
 	placeholder: method.string({
-		set: function(newValue) {
+		set(newValue) {
 			this[INPUT].attr(PLACE_HOLDER, newValue);
 		}
 	}),
@@ -418,14 +418,14 @@ Object.assign(TextInput.prototype, {
 	 * @returns {String|this}
 	 */
 	prefix: method.string({
-		set: function(prefix) {
+		set(prefix) {
 			const self = this;
 
 			if (prefix) {
 				if (!self[PREFIX]) {
 					self[PREFIX] = new Span({
 						classes: 'input-prefix',
-						onResize: () => {
+						onResize() {
 							self[PREFIX_WIDTH] = self[PREFIX].borderWidth();
 							self[positionElements]();
 						}
@@ -451,14 +451,14 @@ Object.assign(TextInput.prototype, {
 	 * @returns {String|this}
 	 */
 	suffix: method.string({
-		set: function(suffix) {
+		set(suffix) {
 			const self = this;
 
 			if (suffix) {
 				if (!self[SUFFIX]) {
 					self[SUFFIX] = new Span({
 						classes: 'input-suffix',
-						onResize: () => {
+						onResize() {
 							self[SUFFIX_WIDTH] = self[SUFFIX].borderWidth();
 							self[positionElements]();
 						}
@@ -483,7 +483,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {String} [newValue]
 	 * @returns {String|this}
 	 */
-	value: function(newValue) {
+	value(newValue) {
 		const self = this;
 
 		if (arguments.length) {
@@ -506,7 +506,7 @@ Object.assign(TextInput.prototype, {
 	 * @member module:TextInput
 	 * @instance
 	 */
-	getInput: function() {
+	getInput() {
 		return this[INPUT].element();
 	},
 
@@ -517,7 +517,7 @@ Object.assign(TextInput.prototype, {
 	 * @instance
 	 * @returns {Boolean}
 	 */
-	isFocused: function(doFocus) {
+	isFocused(doFocus) {
 		const self = this;
 
 		if (doFocus !== undefined) {
@@ -563,7 +563,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {this}
 	 */
 	onFocus: method.queue({
-		set: function(queue) {
+		set(queue) {
 			if (queue.length === 1) {
 				const self = this;
 
@@ -585,7 +585,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {this}
 	 */
 	onBlur: method.queue({
-		set: function(queue) {
+		set(queue) {
 			if (queue.length === 1) {
 				const self = this;
 
@@ -607,7 +607,7 @@ Object.assign(TextInput.prototype, {
 	 * @returns {this}
 	 */
 	onEnter: method.queue({
-		set: function(queue) {
+		set(queue) {
 			if (queue.length === 1) {
 				const self = this;
 

@@ -48,7 +48,7 @@ Object.assign(Section.prototype, {
 	 */
 	padding: method.thickness({
 		init: new Thickness('1.25rem'),
-		set: function(padding) {
+		set(padding) {
 			dom.css(this.contentContainer(), PADDING, padding.toString());
 		}
 	})

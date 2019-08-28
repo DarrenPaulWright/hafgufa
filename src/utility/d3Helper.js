@@ -37,7 +37,7 @@ const getElement = (element, isContainer = false) => {
 const d3Helper = {
 	ANIMATION_DURATION: ANIMATION_DURATION,
 	SLOW_ANIMATION_DURATION: SLOW_ANIMATION_DURATION,
-	appendNewTo: function(container, className, element) {
+	appendNewTo(container, className, element) {
 		if (!(container instanceof selection)) {
 			container = getElement(container, true);
 		}
@@ -45,7 +45,7 @@ const d3Helper = {
 			.append(element || DIV)
 			.classed(className, true);
 	},
-	linearGradient: function(ID, svg, point1, point2, stops) {
+	linearGradient(ID, svg, point1, point2, stops) {
 		let gradient = svg.append('defs')
 			.append('linearGradient')
 			.attr('id', ID)
@@ -64,16 +64,16 @@ const d3Helper = {
 
 		gradient = null;
 	},
-	animate: function(selection, duration) {
+	animate(selection, duration) {
 		return getElement(selection).transition()
 			.duration(duration || ANIMATION_DURATION)
 			.ease(EASE);
 	},
-	fade: function(selection, duration, opacity) {
+	fade(selection, duration, opacity) {
 		return d3Helper.animate(selection, duration)
 			.style(OPACITY, opacity);
 	},
-	propertyTween: function(property, value) {
+	propertyTween(property, value) {
 		return function() {
 			const element = this;
 			const interpolator = interpolateNumber(element[property], value);
@@ -83,10 +83,10 @@ const d3Helper = {
 			};
 		};
 	},
-	maxTextWidth: function(selection) {
+	maxTextWidth(selection) {
 		return max(selection.nodes(), (t) => t.getComputedTextLength ? t.getComputedTextLength() : 0) || 0;
 	},
-	maxTextHeight: function(selection) {
+	maxTextHeight(selection) {
 		return max(selection.nodes(), (t) => parseInt(WINDOW.getComputedStyle(t).fontSize, 10)) || 0;
 	}
 };

@@ -44,15 +44,17 @@ export default class Tree extends FocusMixin(FormControl) {
 			maxWidth: settings.maxWidth,
 			itemControl: Heading,
 			itemDefaultSettings: {
-				onSelect: function() {
+				onSelect() {
 					self[toggleSelected](this);
 				},
-				onExpand: function() {
+				onExpand() {
 					self[toggleExpanded](this);
 				},
 				isFocusable: true
 			},
-			onItemRender: (heading, branchData) => self[renderRow](heading, branchData),
+			onItemRender(heading, branchData) {
+				self[renderRow](heading, branchData);
+			},
 			isFocusable: true
 		});
 
@@ -261,7 +263,7 @@ Object.assign(Tree.prototype, {
 	 */
 	value: method.any({
 		init: [],
-		set: function(value) {
+		set(value) {
 			const self = this;
 
 			if (isString(value)) {
@@ -285,7 +287,7 @@ Object.assign(Tree.prototype, {
 	 * @returns {Array|this}
 	 */
 	branches: method.array({
-		set: function() {
+		set() {
 			this[processBranches]();
 		}
 	}),
@@ -322,7 +324,7 @@ Object.assign(Tree.prototype, {
 	 * @instance
 	 * @returns {this}
 	 */
-	fitHeightToContents: function() {
+	fitHeightToContents() {
 		const self = this;
 
 		self[VIRTUAL_LIST].maxHeight(self.maxHeight());
@@ -334,13 +336,13 @@ Object.assign(Tree.prototype, {
 	},
 
 	emptyContentMessage: method.string({
-		set: function(emptyContentMessage) {
+		set(emptyContentMessage) {
 			this[VIRTUAL_LIST].emptyContentMessage(emptyContentMessage);
 		}
 	}),
 
 	isMultiSelect: method.boolean({
-		set: function() {
+		set() {
 			this[processBranches]();
 		}
 	})

@@ -31,7 +31,7 @@ class Slice extends ContextMenuMixin(Heading) {
 			fade: true,
 			buttons: [{
 				icon: CLEAR_ICON,
-				onClick: () => {
+				onClick() {
 					self.remove();
 				}
 			}]
@@ -57,14 +57,18 @@ class Slice extends ContextMenuMixin(Heading) {
 				icon: DELETE_ICON,
 				isMultiSelect: false,
 				classes: '',
-				onSelect: () => self.remove()
+				onSelect() {
+					self.remove();
+				}
 			}, {
 				id: REMOVE_ALL,
 				title: 'Remove All Messages',
 				icon: DELETE_ALL_ICON,
 				isMultiSelect: false,
 				classes: '',
-				onSelect: () => toast.clear()
+				onSelect() {
+					toast.clear();
+				}
 			}])
 			.onRemove(() => {
 				self[stopTimer]();
@@ -118,7 +122,7 @@ const removeSlice = (sliceID) => {
 };
 
 const toast = {
-	info: (settings) => {
+	info(settings) {
 		addSlice({
 			icon: INFO_ICON,
 			class: 'toast-info',
@@ -126,7 +130,7 @@ const toast = {
 			...settings
 		});
 	},
-	success: (settings) => {
+	success(settings) {
 		addSlice({
 			icon: CHECK_ICON,
 			class: 'toast-success',
@@ -134,7 +138,7 @@ const toast = {
 			...settings
 		});
 	},
-	warning: (settings) => {
+	warning(settings) {
 		addSlice({
 			icon: WARNING_ICON,
 			class: 'toast-warning',
@@ -142,7 +146,7 @@ const toast = {
 			...settings
 		});
 	},
-	error: (settings) => {
+	error(settings) {
 		addSlice({
 			icon: ERROR_ICON,
 			class: 'toast-error',
@@ -150,7 +154,7 @@ const toast = {
 			...settings
 		});
 	},
-	clear: () => {
+	clear() {
 		slices.values().slice().forEach((item) => item.slice.remove());
 	}
 };

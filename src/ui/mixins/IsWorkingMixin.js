@@ -32,13 +32,13 @@ export default (Base) => {
 		 * @returns {boolean|this}
 		 */
 		isWorking: method.boolean({
-			set: function(isWorking) {
+			set(isWorking) {
 				if (isWorking) {
 					if (!this[IS_WORKING]) {
 						this[IS_WORKING] = new IsWorking({
 							container: this.element(),
 							label: this.isWorkingLabel(),
-							onRemove: function() {
+							onRemove() {
 								this[IS_WORKING] = null;
 							}
 						});
@@ -66,7 +66,7 @@ export default (Base) => {
 		 * @returns {string|this}
 		 */
 		isWorkingLabel: method.string({
-			set: function(newValue) {
+			set(newValue) {
 				if (this[IS_WORKING]) {
 					this[IS_WORKING].label(newValue);
 				}

@@ -170,7 +170,9 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			container: self[BUTTON_CONTAINER],
 			isSelectable: self.isSelectable(),
 			width: self[getButtonWidthSetting](),
-			onClick: (button) => self[onButtonClick](button)
+			onClick(button) {
+				self[onButtonClick](button);
+			}
 		});
 
 		insertIndex = Math.min(enforceInteger(insertIndex, currentButtons.length), currentButtons.length);
@@ -257,7 +259,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @returns {Array|String|this}
 	 */
 	value: method.any({
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 			if (self.isMultiSelect()) {
 				self.value(enforce.array(newValue, [newValue]));
@@ -281,7 +283,7 @@ Object.assign(GroupedButtons.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	addButton: function(buttonSettings, insertIndex) {
+	addButton(buttonSettings, insertIndex) {
 		const self = this;
 
 		if (buttonSettings) {
@@ -301,7 +303,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {String} ID
 	 * @returns {this}
 	 */
-	removeButton: function(ID) {
+	removeButton(ID) {
 		const self = this;
 		const buttons = self.buttons();
 
@@ -320,7 +322,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @instance
 	 * @returns {this}
 	 */
-	removeAllButtons: function() {
+	removeAllButtons() {
 		return this.buttons([]);
 	},
 
@@ -333,7 +335,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {String}    ID
 	 * @returns {Object}
 	 */
-	getButton: function(ID) {
+	getButton(ID) {
 		return this[BUTTON_RECYCLER].getControl(ID);
 	},
 
@@ -347,7 +349,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @returns {Array|this}
 	 */
 	buttons: method.array({
-		set: function(buttons) {
+		set(buttons) {
 			const self = this;
 
 			self[BUTTON_RECYCLER].discardAllControls();
@@ -364,7 +366,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @instance
 	 * @returns {Int}
 	 */
-	totalButtons: function() {
+	totalButtons() {
 		return this.buttons().length;
 	},
 
@@ -381,7 +383,7 @@ Object.assign(GroupedButtons.prototype, {
 	 */
 	isSelectable: method.boolean({
 		init: true,
-		set: function(isSelectable) {
+		set(isSelectable) {
 			this[BUTTON_RECYCLER].each((control) => {
 				control.isSelectable(isSelectable);
 			});
@@ -398,7 +400,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isMultiSelect: method.boolean({
-		set: function() {
+		set() {
 			this.value(this.value());
 		}
 	}),
@@ -415,7 +417,7 @@ Object.assign(GroupedButtons.prototype, {
 	orientation: method.enum({
 		init: ORIENTATION.HORIZONTAL,
 		enum: ORIENTATION,
-		set: function(newValue) {
+		set(newValue) {
 			const self = this;
 
 			self.classes('vertical', newValue === ORIENTATION.VERTICAL);

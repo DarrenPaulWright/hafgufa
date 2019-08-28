@@ -65,7 +65,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg   {Boolean} [doPrepend=false]
 	 * @returns {Object}
 	 */
-	getRecycledControl: function(doPrepend) {
+	getRecycledControl(doPrepend) {
 		let control;
 		const Control = this.control();
 
@@ -91,7 +91,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {String} [ID]
 	 * @returns {Object}
 	 */
-	getControl: function(ID) {
+	getControl(ID) {
 		return this[VISIBLE_CONTROLS].find((control) => control.ID() === ID);
 	},
 
@@ -102,7 +102,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 * @returns {Object[]}
 	 */
-	getRenderedControls: function() {
+	getRenderedControls() {
 		return this[VISIBLE_CONTROLS];
 	},
 
@@ -114,7 +114,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {Function} [callback] - provides a reference to the control and the index
 	 * @returns {Object[]}
 	 */
-	each: function(callback) {
+	each(callback) {
 		this[VISIBLE_CONTROLS].forEach(callback);
 	},
 
@@ -129,7 +129,7 @@ Object.assign(ControlRecycler.prototype, {
 	 *
 	 * @returns {Object[]}
 	 */
-	map: function(callback) {
+	map(callback) {
 		return this[VISIBLE_CONTROLS].map(callback);
 	},
 
@@ -140,7 +140,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 * @arg {String} [ID]
 	 */
-	discardControl: function(ID) {
+	discardControl(ID) {
 		this[DISCARD](this[VISIBLE_CONTROLS].findIndex((control) => control.ID() === ID));
 	},
 
@@ -150,7 +150,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 */
-	discardAllControls: function() {
+	discardAllControls() {
 		while (this[VISIBLE_CONTROLS].length > 0) {
 			this[DISCARD](0);
 		}
@@ -164,7 +164,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {Number} [controlOffset]
 	 * @returns {Object}
 	 */
-	getControlAtOffset: function(controlOffset) {
+	getControlAtOffset(controlOffset) {
 		return this[VISIBLE_CONTROLS][controlOffset];
 	},
 
@@ -175,7 +175,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 * @returns {Number}
 	 */
-	totalVisibleControls: function() {
+	totalVisibleControls() {
 		return this[VISIBLE_CONTROLS].length;
 	},
 
@@ -185,7 +185,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 */
-	remove: function() {
+	remove() {
 		this[DISCARDED_CONTROLS].forEach((control) => control.remove());
 		this[VISIBLE_CONTROLS].forEach((control) => control.remove());
 		this[DISCARDED_CONTROLS].length = 0;

@@ -175,9 +175,9 @@ describe('Calendar', () => {
 		testUtil.testMethod({
 			methodName: 'onDateSelected',
 			defaultValue: undefined,
-			testValue: function() {
+			testValue() {
 			},
-			secondTestValue: function() {
+			secondTestValue() {
 			}
 		});
 
@@ -186,7 +186,7 @@ describe('Calendar', () => {
 
 			window.control = new Calendar({
 				container: window.testContainer,
-				onDateSelected: function() {
+				onDateSelected() {
 					testVar = 'test';
 				}
 			});

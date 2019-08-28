@@ -44,13 +44,13 @@ describe('Tags', () => {
 
 	formControlTests.run([], ['focus'], {
 		onChange: {
-			buildControl: function() {
+			buildControl() {
 				window.control = new Tags({
 					container: window.testContainer
 				});
 			},
 			validValue: 'test',
-			setValueViaDom: function() {
+			setValueViaDom() {
 				window.control.isFocused(true);
 				addTag('test');
 			}

@@ -41,7 +41,7 @@ Object.assign(Label.prototype, {
 	 * @returns {string|element|this}
 	 */
 	content: method.string({
-		set: function(text) {
+		set(text) {
 			dom.content(this, text);
 		}
 	})

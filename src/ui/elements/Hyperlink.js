@@ -40,7 +40,7 @@ Object.assign(Hyperlink.prototype, {
 	 * @returns {string|element|this}
 	 */
 	text: method.string({
-		set: function(text) {
+		set(text) {
 			dom.content(this, text || this.url());
 		}
 	})

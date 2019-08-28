@@ -39,7 +39,7 @@ Object.assign(Span.prototype, {
 	 * @returns {string|element|this}
 	 */
 	text: method.string({
-		set: function(text) {
+		set(text) {
 			dom.content(this, text);
 		}
 	})

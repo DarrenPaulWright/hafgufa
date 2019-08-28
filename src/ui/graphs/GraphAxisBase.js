@@ -278,13 +278,13 @@ export default class GraphAxisBase extends GraphBase {
 
 Object.assign(GraphAxisBase.prototype, {
 	xLabel: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	}),
 
 	xSuffix: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	}),
@@ -294,21 +294,21 @@ Object.assign(GraphAxisBase.prototype, {
 	}),
 
 	xScale: method.any({
-		get: function() {
+		get() {
 			return this[X_SCALE];
 		}
 	}),
 
 	xScaleType: method.enum({
 		enum: SCALE_TYPES,
-		set: function(xScaleType) {
+		set(xScaleType) {
 			this[X_SCALE] = this[buildScale](xScaleType);
 		}
 	}),
 
 	xMin: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
@@ -316,7 +316,7 @@ Object.assign(GraphAxisBase.prototype, {
 
 	xMax: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
@@ -324,20 +324,20 @@ Object.assign(GraphAxisBase.prototype, {
 
 	xInterval: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
 	}),
 
 	yLabel: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	}),
 
 	ySuffix: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	}),
@@ -347,21 +347,21 @@ Object.assign(GraphAxisBase.prototype, {
 	}),
 
 	yScale: method.any({
-		get: function() {
+		get() {
 			return this[Y_SCALE];
 		}
 	}),
 
 	yScaleType: method.enum({
 		enum: SCALE_TYPES,
-		set: function(yScaleType) {
+		set(yScaleType) {
 			this[Y_SCALE] = this[buildScale](yScaleType);
 		}
 	}),
 
 	yMin: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
@@ -369,7 +369,7 @@ Object.assign(GraphAxisBase.prototype, {
 
 	yMax: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
@@ -377,20 +377,20 @@ Object.assign(GraphAxisBase.prototype, {
 
 	yInterval: method.number({
 		init: null,
-		set: function() {
+		set() {
 			this[updateData]();
 		},
 		other: null
 	}),
 
 	zLabel: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	}),
 
 	zSuffix: method.string({
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	})

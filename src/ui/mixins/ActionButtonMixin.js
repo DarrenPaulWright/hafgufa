@@ -137,7 +137,7 @@ export default function(Base) {
 		 */
 		actionButtonIcon: method.string({
 			init: CLEAR_ICON,
-			set: function() {
+			set() {
 				this.refreshActionButton();
 			}
 		}),
@@ -152,7 +152,7 @@ export default function(Base) {
 		 * @returns {String|this}
 		 */
 		actionButtonLabel: method.string({
-			set: function() {
+			set() {
 				this.refreshActionButton();
 			}
 		}),
@@ -167,10 +167,10 @@ export default function(Base) {
 		 * @returns {Function|this}
 		 */
 		actionButtonOnClick: method.function({
-			init: function() {
+			init() {
 				this.value('').triggerChange();
 			},
-			set: function() {
+			set() {
 				this.refreshActionButton();
 			}
 		}),
@@ -186,7 +186,7 @@ export default function(Base) {
 		 */
 		isActionButtonAutoHide: method.boolean({
 			init: true,
-			set: function() {
+			set() {
 				this.refreshActionButton();
 			}
 		}),
@@ -202,7 +202,7 @@ export default function(Base) {
 		 */
 		isActionButtonEnabled: method.boolean({
 			init: true,
-			set: function() {
+			set() {
 				this.refreshActionButton();
 			}
 		}),
@@ -219,7 +219,7 @@ export default function(Base) {
 		 * @returns {String|this}
 		 */
 		countText: method.string({
-			set: function(countText) {
+			set(countText) {
 				const self = this;
 
 				if (countText) {

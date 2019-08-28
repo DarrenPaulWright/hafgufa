@@ -272,7 +272,7 @@ Object.assign(Drawer.prototype, {
 				if (!self[RESIZER]) {
 					self[RESIZER] = new Resizer({
 						container: self.element().parentElement,
-						onOffsetChange: (splitOffset, offset, availableSize) => {
+						onOffsetChange(splitOffset, offset, availableSize) {
 							self[IS_RESIZER] = true;
 
 							self[resize](splitOffset, availableSize);

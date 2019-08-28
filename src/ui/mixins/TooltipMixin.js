@@ -37,7 +37,7 @@ export default (Base) => {
 					anchor: self.element(),
 					anchorDockPoint: self.tooltipDockPoint().opposite,
 					tooltipDockPoint: self.tooltipDockPoint(),
-					onRemove: () => {
+					onRemove() {
 						self[TOOLTIP] = null;
 					}
 				});
@@ -58,7 +58,7 @@ export default (Base) => {
 
 	Object.assign(TooltipMixin.prototype, {
 		tooltip: method.any({
-			set: function(tooltip) {
+			set(tooltip) {
 				const self = this;
 
 				const show = () => {

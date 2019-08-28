@@ -117,7 +117,7 @@ Object.assign(FormControl.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isRequired: method.boolean({
-		set: function(isRequired) {
+		set(isRequired) {
 			this.classes('required', isRequired);
 		}
 	}),
@@ -139,7 +139,7 @@ Object.assign(FormControl.prototype, {
 	 */
 	changeDelay: method.integer({
 		min: 0,
-		set: function(changeDelay) {
+		set(changeDelay) {
 			this[ON_CHANGE] = debounce(function(skipCallback) {
 				const self = this;
 
@@ -161,7 +161,7 @@ Object.assign(FormControl.prototype, {
 	}),
 
 	newline: method.boolean({
-		set: function(newline) {
+		set(newline) {
 			this.classes('newline', newline);
 		}
 	}),

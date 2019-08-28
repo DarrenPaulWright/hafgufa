@@ -206,7 +206,7 @@ export default class Bar extends GraphAxisBase {
 Object.assign(Bar.prototype, {
 	cornerRadius: method.number({
 		init: 2,
-		set: function() {
+		set() {
 			this[updateData]();
 		}
 	})

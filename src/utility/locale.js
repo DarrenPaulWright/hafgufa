@@ -26,7 +26,7 @@ const locale = {
 		init: {
 			English: 'en-US'
 		},
-		set: (languages) => {
+		set(languages) {
 			const browser = getBrowserLanguage();
 
 			if (new Enum(languages).has(browser.toLowerCase())) {
@@ -51,7 +51,7 @@ const locale = {
 	 * @returns {String}
 	 */
 	language: method.string({
-		set: (language) => {
+		set(language) {
 			document.querySelector('html').setAttribute('lang', language);
 			locale.onLanguageChange().trigger(null, [language], locale);
 		}
@@ -80,7 +80,7 @@ const locale = {
 	 *
 	 * @returns {String}
 	 */
-	load: (...args) => {
+	load(...args) {
 		const format = locale.urlFormat();
 		const language = locale.language().toLowerCase();
 
@@ -105,7 +105,7 @@ const locale = {
 	 *
 	 * @arg {Object} newStrings
 	 */
-	set: (newStrings) => {
+	set(newStrings) {
 		Object.assign(strings, newStrings);
 	},
 	/**
@@ -119,7 +119,7 @@ const locale = {
 	 *
 	 * @returns {String}
 	 */
-	get: (key, replacer) => {
+	get(key, replacer) {
 		let output = strings[key] || '';
 
 		if (replacer && output) {

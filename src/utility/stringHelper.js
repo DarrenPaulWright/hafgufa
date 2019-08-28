@@ -18,7 +18,7 @@ const stringHelper = {
 	 *
 	 * @returns {Boolean}
 	 */
-	isEachInString: function(needle, haystack, breakOnSpaces = true) {
+	isEachInString(needle, haystack, breakOnSpaces = true) {
 		const searchSubString = (searchs) => {
 			for (let i = 0, length = searchs.length; i < length; i++) {
 				if (searchs[i].charAt(0) === '-') {
@@ -63,7 +63,7 @@ const stringHelper = {
 	 * @arg   {String} string
 	 * @returns {Boolean}
 	 */
-	isUpperCase: function(string) {
+	isUpperCase(string) {
 		return (string === string.toUpperCase() && string !== string.toLowerCase());
 	},
 	/**
@@ -75,7 +75,7 @@ const stringHelper = {
 	 * @arg   {Object} replaceObject
 	 * @returns {String}
 	 */
-	locStringReplace: function(locString, replaceObject) {
+	locStringReplace(locString, replaceObject) {
 		for (let replaceItem in replaceObject) {
 			locString = locString.replace('<' + replaceItem + '>', replaceObject[replaceItem]);
 		}
@@ -89,7 +89,7 @@ const stringHelper = {
 	 * @arg   {String} json
 	 * @returns {Boolean}
 	 */
-	cleanJson: function(json) {
+	cleanJson(json) {
 		const validJson = stringHelper.isValidJson(json);
 
 		return validJson ? JSON.stringify(validJson) : json;
@@ -102,7 +102,7 @@ const stringHelper = {
 	 * @arg   {String} maybeJson
 	 * @returns {Boolean|String}
 	 */
-	isValidJson: function(maybeJson) {
+	isValidJson(maybeJson) {
 		try {
 			return isObject(maybeJson) || isArray(maybeJson) ? maybeJson : JSON.parse(maybeJson);
 		}
@@ -118,7 +118,7 @@ const stringHelper = {
 	 * @arg   {String} json
 	 * @returns {String}
 	 */
-	beautifyJson: function(json) {
+	beautifyJson(json) {
 		const validJson = stringHelper.isValidJson(json);
 
 		return validJson ? JSON.stringify(validJson, null, 4) : json;

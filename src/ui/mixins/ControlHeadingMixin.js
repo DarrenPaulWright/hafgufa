@@ -52,7 +52,7 @@ export default (Base) => {
 		headingLevel: method.enum({
 			enum: HEADING_LEVELS,
 			init: HEADING_LEVELS.FIVE,
-			set: function(level) {
+			set(level) {
 				if (this[HEADING]) {
 					this[HEADING].level(level);
 				}
@@ -67,7 +67,7 @@ export default (Base) => {
 		 * @returns {Boolean|this}
 		 */
 		canCollapse: method.boolean({
-			set: function(newValue) {
+			set(newValue) {
 				const self = this;
 
 				const onExpand = function() {
@@ -97,7 +97,7 @@ export default (Base) => {
 		 * @returns {Boolean|this}
 		 */
 		isCollapsed: method.boolean({
-			set: function(isCollapsed) {
+			set(isCollapsed) {
 				const self = this;
 
 				self.classes(COLLAPSED_CLASS, isCollapsed);
@@ -137,7 +137,7 @@ export default (Base) => {
 		 */
 		title: method.string({
 			init: undefined,
-			set: function(title) {
+			set(title) {
 				const self = this;
 				const showHeading = !!title;
 
@@ -197,7 +197,7 @@ export default (Base) => {
 		 * @returns {string|this}
 		 */
 		subTitle: method.string({
-			set: function(subTitle) {
+			set(subTitle) {
 				if (this[HEADING]) {
 					this[HEADING].subTitle(subTitle);
 				}
@@ -216,7 +216,7 @@ export default (Base) => {
 		 * @returns {string|this}
 		 */
 		error: method.string({
-			set: function(error) {
+			set(error) {
 				if (this[HEADING]) {
 					this[HEADING].error(error);
 				}
@@ -231,7 +231,7 @@ export default (Base) => {
 		 * @arg {String} headingIcon
 		 */
 		headingIcon: method.string({
-			set: function(headingIcon) {
+			set(headingIcon) {
 				if (this[HEADING]) {
 					this[HEADING].icon(headingIcon);
 				}
@@ -248,7 +248,7 @@ export default (Base) => {
 		 * @arg {String} headingImage
 		 */
 		headingImage: method.string({
-			set: function(headingImage) {
+			set(headingImage) {
 				if (this[HEADING]) {
 					this[HEADING].image(headingImage);
 				}
@@ -263,7 +263,7 @@ export default (Base) => {
 		 * @arg {String} headingButton
 		 */
 		headingButtons: method.array({
-			set: function(headingButtons) {
+			set(headingButtons) {
 				if (this[HEADING]) {
 					this[HEADING].buttons(headingButtons);
 				}
@@ -279,7 +279,7 @@ export default (Base) => {
 		 * @returns {Boolean|this}
 		 */
 		singleLine: method.boolean({
-			set: function(newValue) {
+			set(newValue) {
 				this.classes(SINGLE_LINE_CLASS, newValue);
 				if (this[HEADING]) {
 					this[HEADING].width(newValue ? AUTO : HUNDRED_PERCENT);
@@ -294,7 +294,7 @@ export default (Base) => {
 		 * @instance
 		 * @returns {Object}
 		 */
-		getHeading: function() {
+		getHeading() {
 			return this[HEADING];
 		},
 

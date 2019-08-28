@@ -143,7 +143,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 * @returns {Int|this}
 	 */
 	length: method.integer({
-		set: function(length) {
+		set(length) {
 			this.current(Math.min(this.current(), length - 1));
 		}
 	})

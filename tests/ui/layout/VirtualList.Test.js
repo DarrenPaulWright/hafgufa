@@ -228,7 +228,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				height: '100px',
 				itemControl: Button,
-				onItemRender: function() {
+				onItemRender() {
 					testValue = 1;
 				}
 			})
@@ -245,7 +245,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				height: '100px',
 				itemControl: Button,
-				onItemRender: function(control) {
+				onItemRender(control) {
 					testValue = control;
 				}
 			})
@@ -263,7 +263,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				height: '100px',
 				itemControl: Button,
-				onItemRender: function(control, rowData) {
+				onItemRender(control, rowData) {
 					testValue = rowData;
 				}
 			})
@@ -288,7 +288,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				itemControl: Button,
 				isVirtualized: false,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					let newLabel = 'test';
 					for (let index = 0; index < rowData.ID; index++) {
 						newLabel += '<br>test ' + index;
@@ -312,7 +312,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				itemControl: Button,
 				isVirtualized: true,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					let newLabel = 'test';
 					for (let index = 0; index < rowData.ID; index++) {
 						newLabel += '<br>test ' + index;
@@ -337,7 +337,7 @@ describe('VirtualList', () => {
 				container: window.testContainer,
 				itemControl: Button,
 				isVirtualized: false,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					let newLabel = 'test';
 					for (let index = 0; index < rowData.ID; index++) {
 						newLabel += '<br>test ' + index;
@@ -366,7 +366,7 @@ describe('VirtualList', () => {
 			window.control = new VirtualList({
 				container: window.testContainer,
 				itemControl: Button,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					button.label(rowData.text);
 				},
 				itemSize: '20px',
@@ -386,7 +386,7 @@ describe('VirtualList', () => {
 			window.control = new VirtualList({
 				container: window.testContainer,
 				itemControl: Button,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					button.label(rowData.text);
 				},
 				itemSize: '20px',
@@ -409,7 +409,7 @@ describe('VirtualList', () => {
 			window.control = new VirtualList({
 				container: window.testContainer,
 				itemControl: Button,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					button.label(rowData.text);
 				},
 				itemSize: '20px',
@@ -433,7 +433,7 @@ describe('VirtualList', () => {
 			window.control = new VirtualList({
 				container: window.testContainer,
 				itemControl: Button,
-				onItemRender: function(button, rowData) {
+				onItemRender(button, rowData) {
 					button.label(rowData.text);
 				},
 				itemSize: '20px',

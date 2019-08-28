@@ -75,7 +75,9 @@ export default {
 	 * @arg {String} url - url to call
 	 * @arg {Object} settings
 	 */
-	get: (url, settings) => prioritizeCall(TYPE.GET, url, settings),
+	get(url, settings) {
+		return prioritizeCall(TYPE.GET, url, settings);
+	},
 
 	/**
 	 * Make an ajax call to get data.
@@ -85,7 +87,9 @@ export default {
 	 * @arg {String} url - url to call
 	 * @arg {Object} settings
 	 */
-	patch: (url, settings) => prioritizeCall(TYPE.PATCH, url, settings),
+	patch(url, settings) {
+		return prioritizeCall(TYPE.PATCH, url, settings);
+	},
 
 	/**
 	 * Make an ajax call to get data.
@@ -95,7 +99,9 @@ export default {
 	 * @arg {String} url - url to call
 	 * @arg {Object} settings
 	 */
-	put: (url, settings) => prioritizeCall(TYPE.PUT, url, settings),
+	put(url, settings) {
+		return prioritizeCall(TYPE.PUT, url, settings);
+	},
 
 	/**
 	 * Make an ajax call to post data.
@@ -105,7 +111,9 @@ export default {
 	 * @arg {String} url - url to call
 	 * @arg {Object} settings
 	 */
-	post: (url, settings) => prioritizeCall(TYPE.POST, url, settings),
+	post(url, settings) {
+		return prioritizeCall(TYPE.POST, url, settings);
+	},
 
 	/**
 	 * Make an ajax call to delete data.
@@ -115,5 +123,7 @@ export default {
 	 * @arg {String} url - url to call
 	 * @arg {Object} settings
 	 */
-	delete: (url, settings) => prioritizeCall(TYPE.DELETE, url, settings)
+	delete(url, settings) {
+		return prioritizeCall(TYPE.DELETE, url, settings);
+	}
 };

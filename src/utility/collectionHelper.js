@@ -1,5 +1,5 @@
-import { enforce, isArray } from 'type-enforcer';
 import { clone, forOwn } from 'object-agent';
+import { enforce, isArray } from 'type-enforcer';
 import { byKey } from './sortBy';
 
 const find = (array, item, start, end, increment) => {
@@ -35,7 +35,7 @@ const collectionHelper = {
 	 * @arg {Object} startFilter
 	 * @arg {Object} [endFilter=collection.length]
 	 */
-	slice: function(collection, startFilter, endFilter) {
+	slice(collection, startFilter, endFilter) {
 		let startIndex = Math.max(findIndex(collection, startFilter), 0);
 		let endIndex = endFilter ? findLastIndex(collection, endFilter) : collection.length;
 
@@ -63,7 +63,7 @@ const collectionHelper = {
 	 * @arg {Function} [settings.onEachParent]
 	 * @arg {Function} [settings.onEachChild]
 	 */
-	flatten: function(collection, settings = {}) {
+	flatten(collection, settings = {}) {
 		let childProperty = enforce.string(settings.childProperty, 'children');
 		let childItem;
 
@@ -127,7 +127,7 @@ const collectionHelper = {
 	 * @arg {String}   [settings.childProperty=children]
 	 * @arg {String}   [settings.deleteParentProperty=false]
 	 */
-	nest: function(collection, settings = {}) {
+	nest(collection, settings = {}) {
 		const idKey = settings.idProperty || 'ID';
 		const parentKey = settings.parentProperty || 'parent';
 		const childKey = settings.childProperty || 'children';
@@ -166,7 +166,7 @@ const collectionHelper = {
 	 * @arg {String}   [settings.childProperty=children]
 	 * @arg {Function} [settings.onEachParent]
 	 */
-	eachChild: function(collection, onEachChild, settings = {}) {
+	eachChild(collection, onEachChild, settings = {}) {
 		let isCancelled = false;
 		const childProperty = enforce.string(settings.childProperty, 'children');
 		let returnValue;
@@ -197,7 +197,7 @@ const collectionHelper = {
 
 		each(collection, 0);
 	},
-	count: function(collection, countKey) {
+	count(collection, countKey) {
 		const output = [];
 		let index;
 
@@ -219,7 +219,7 @@ const collectionHelper = {
 
 		return output;
 	},
-	zipById: function(values, idKey, zipFunction) {
+	zipById(values, idKey, zipFunction) {
 		let valuesIndex;
 		let itemIndex;
 		let innerValueIndex;

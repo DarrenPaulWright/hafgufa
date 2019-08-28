@@ -110,7 +110,7 @@ export default class Menu extends Popup {
 		self.width(AUTO);
 
 		applySettings(tree, {
-			onSelect: (item) => {
+			onSelect(item) {
 				if (self.onSelect()) {
 					self.onSelect()(item);
 				}
@@ -124,7 +124,7 @@ export default class Menu extends Popup {
 			minWidth: settings.minWidth,
 			maxWidth: settings.maxWidth,
 			isMultiSelect: self.isMultiSelect(),
-			onLayoutChange: () => {
+			onLayoutChange() {
 				self.resize(true);
 			}
 		});
@@ -202,7 +202,7 @@ export default class Menu extends Popup {
 			item.buttons.push({
 				icon: EDIT_ICON,
 				alt: locale.get('edit'),
-				onClick: (data) => {
+				onClick(data) {
 					self.onEdit()(data);
 				}
 			});
@@ -216,7 +216,7 @@ export default class Menu extends Popup {
 			item.buttons.push({
 				icon: DELETE_ICON,
 				alt: locale.get('delete'),
-				onClick: (data) => {
+				onClick(data) {
 					self.onDelete()(data);
 				}
 			});
@@ -294,7 +294,7 @@ Object.assign(Menu.prototype, {
 	onSelect: method.function(),
 
 	menuItems: method.array({
-		enforce: function(newValue, oldValue) {
+		enforce(newValue, oldValue) {
 			if (!isArray(newValue)) {
 				return oldValue;
 			}
@@ -307,13 +307,13 @@ Object.assign(Menu.prototype, {
 
 			return newValue;
 		},
-		set: function() {
+		set() {
 			this[filterItems]();
 		}
 	}),
 
 	isMultiSelect: method.boolean({
-		set: function(isMultiSelect) {
+		set(isMultiSelect) {
 			if (this.get(TREE_ID)) {
 				this.get(TREE_ID).isMultiSelect(isMultiSelect);
 			}
@@ -321,7 +321,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	canFilter: method.boolean({
-		set: function(canFilter) {
+		set(canFilter) {
 			const self = this;
 
 			if (canFilter) {
@@ -333,7 +333,7 @@ Object.assign(Menu.prototype, {
 					width: HUNDRED_PERCENT,
 					placeholder: locale.get('filter'),
 					value: self.currentFilter(),
-					onChange: (newValue) => {
+					onChange(newValue) {
 						self.currentFilter(newValue.value);
 					}
 				});
@@ -354,7 +354,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	currentFilter: method.string({
-		set: function(currentFilter) {
+		set(currentFilter) {
 			if (this.canFilter()) {
 				this.get(FILTER_ID)
 					.value(currentFilter);
@@ -364,7 +364,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	canFilterSelectedOnly: method.boolean({
-		set: function(canFilterSelectedOnly) {
+		set(canFilterSelectedOnly) {
 			const self = this;
 
 			if (canFilterSelectedOnly) {
@@ -375,7 +375,7 @@ Object.assign(Menu.prototype, {
 					control: CheckBox,
 					width: HUNDRED_PERCENT,
 					isChecked: self.isFilteredSelectedOnly(),
-					onChange: (isChecked) => {
+					onChange(isChecked) {
 						self.isFilteredSelectedOnly(isChecked);
 					},
 					content: locale.get('showSelectedItems')
@@ -387,7 +387,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	isFilteredSelectedOnly: method.boolean({
-		set: function(isFilteredSelectedOnly) {
+		set(isFilteredSelectedOnly) {
 			if (this.canFilterSelectedOnly()) {
 				this.get(SELECTED_ONLY_ID)
 					.isChecked(isFilteredSelectedOnly);
@@ -397,7 +397,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	canSelectAll: method.boolean({
-		set: function(canSelectAll) {
+		set(canSelectAll) {
 			const self = this;
 
 			if (canSelectAll) {
@@ -408,7 +408,7 @@ Object.assign(Menu.prototype, {
 					control: CheckBox,
 					width: HUNDRED_PERCENT,
 					isChecked: self[ARE_ALL_SELECTED],
-					onChange: (isChecked) => {
+					onChange(isChecked) {
 						const changedItems = [];
 
 						eachChild(self.menuItems(), (item) => {
@@ -433,7 +433,7 @@ Object.assign(Menu.prototype, {
 	}),
 
 	onAdd: method.function({
-		set: function() {
+		set() {
 			this.canFilter(true);
 			this[setAddButton]();
 		}

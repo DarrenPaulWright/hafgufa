@@ -95,7 +95,7 @@ describe('Menu', () => {
 			let testVar = '';
 
 			window.control = new Menu({
-				onSelect: function(item) {
+				onSelect(item) {
 					testVar = item;
 				},
 				menuItems: [{
@@ -120,7 +120,7 @@ describe('Menu', () => {
 
 		it('should remove itself when a menu item is clicked', () => {
 			window.control = new Menu({
-				onSelect: function() {
+				onSelect() {
 				},
 				menuItems: [{
 					ID: 'test',
@@ -144,7 +144,7 @@ describe('Menu', () => {
 
 		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
 			window.control = new Menu({
-				onSelect: function() {
+				onSelect() {
 				},
 				keepMenuOpen: true,
 				menuItems: [{
@@ -169,7 +169,7 @@ describe('Menu', () => {
 
 		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
 			window.control = new Menu({
-				onSelect: function() {
+				onSelect() {
 				},
 				menuItems: [{
 					ID: 'test',
