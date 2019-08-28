@@ -1,6 +1,6 @@
 {
 	"name": "hafgufa",
-	"version": "0.7.4",
+	"version": "0.7.5",
 	"description": "A javascript ES6+ Frameworkless UI library.",
 	"author": "Darren Paul Wright <Darren@DarrenPaulWright.com>",
 	"license": "MIT",
