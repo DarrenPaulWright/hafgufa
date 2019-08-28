@@ -73,6 +73,7 @@ export default class Resizer extends DragMixin(Control) {
 	constructor(settings = {}) {
 		settings = {
 			...settings,
+			ignorePadding: true,
 			type: settings.type || controlTypes.RESIZER,
 			skipWindowResize: true,
 			orientation: enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),

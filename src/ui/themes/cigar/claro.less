@@ -597,14 +597,16 @@
 @FileThumbnailIconLoadableOpacity: 0.1;
 @FileThumbnailDeleteButtonColor: @errorColor;
 
+/* Drawer */
+@drawerTopColor: desaturate(darken(@groupTopColor, 5), 3);
+@drawerBottomColor: desaturate(darken(@groupBottomColor, 5), 3);
+@drawerBackground: @checkImageUrl, @noiseImageUrl, radial-gradient(ellipse at top center, @drawerTopColor 0%, @drawerBottomColor 140%);
+@drawerShadow: 0.15rem 0 0.6rem @largeShadowColor;
+
 /* Drawer Menu */
 @drawerMenuWidth: 18rem;
 @drawerMenuMaxWidth: 80vmin;
 @drawerMenuPadding: 1.4rem;
-@drawerMenuTopColor: desaturate(darken(@groupTopColor, 5), 3);
-@drawerMenuBottomColor: desaturate(darken(@groupBottomColor, 5), 3);
-@drawerMenuBackground: @checkImageUrl, @noiseImageUrl, radial-gradient(ellipse at top center, @drawerMenuTopColor 0%, @drawerMenuBottomColor 140%);
-@drawerMenuShadow: 0.15rem 0 0.6rem @largeShadowColor;
 
 @drawerMenuTextShadow: @textShadow;
 @drawerMenuIconSize: 1.4em;

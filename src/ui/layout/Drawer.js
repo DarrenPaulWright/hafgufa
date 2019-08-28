@@ -18,6 +18,7 @@ import Resizer from '../elements/Resizer';
 import { ORIENTATION } from '../uiConstants';
 import Container from './Container';
 import './Drawer.less';
+import { ELEMENT_PROP } from '../Control';
 
 const ALL_SIDE_CLASSES = DockPoint.POINTS.TOP + SPACE + DockPoint.POINTS.RIGHT + SPACE + DockPoint.POINTS.BOTTOM + SPACE + DockPoint.POINTS.LEFT;
 const minSwipeHitSize = new CssSize('3rem');
@@ -25,6 +26,7 @@ const minSwipeHitSize = new CssSize('3rem');
 const DOCK = Symbol();
 const IS_HORIZONTAL = Symbol();
 const RESIZER = Symbol();
+const IS_RESIZER = Symbol();
 const OVERLAP = Symbol();
 const TOUCH_CONTAINER = Symbol();
 const TOUCH_ELEMENT = Symbol();
@@ -67,7 +69,7 @@ export default class Drawer extends Container {
 
 		self
 			.onResize(() => {
-				if (self[RESIZER]) {
+				if (self[RESIZER] && !self[IS_RESIZER]) {
 					self[RESIZER].resize();
 				}
 			})
@@ -170,7 +172,12 @@ export default class Drawer extends Container {
 		const self = this;
 
 		if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM) {
-			offset = availableSize - offset;
+			if (offset.isPercent) {
+				offset = new CssSize(offset.toString().replace('-', ''));
+			}
+			else {
+				offset = new CssSize(availableSize - offset.toPixels(true));
+			}
 		}
 
 		if (self[IS_HORIZONTAL]) {
@@ -206,17 +213,17 @@ export default class Drawer extends Container {
 		select(self.container())
 			.style(PADDING + '-' + self[DOCK], containerPadding + PIXELS);
 
-		if (self[RESIZER]) {
-			let splitOffset = self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight();
+		if (self[RESIZER] && !self[IS_RESIZER]) {
+			let splitOffset = self[IS_HORIZONTAL] ? self.width() : self.height();
 
-			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM) {
-				splitOffset = -splitOffset;
+			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM && splitOffset.toString().charAt(0) !== '-') {
+				splitOffset = '-' + splitOffset.toString();
 			}
 
 			self[RESIZER]
 				.orientation(self[IS_HORIZONTAL] ? ORIENTATION.VERTICAL : ORIENTATION.HORIZONTAL)
 				.isEnabled(self.isOpen())
-				.splitOffset(splitOffset + PIXELS);
+				.splitOffset(splitOffset);
 		}
 	}
 }
@@ -240,7 +247,7 @@ Object.assign(Drawer.prototype, {
 	 * @returns {string|this}
 	 */
 	dock: method.dockPoint({
-		set: function(dock) {
+		set(dock) {
 			const self = this;
 
 			self[DOCK] = dock.primary();
@@ -258,7 +265,7 @@ Object.assign(Drawer.prototype, {
 	isAnimated: method.boolean(),
 
 	canResize: method.boolean({
-		set: function(canResize) {
+		set(canResize) {
 			const self = this;
 
 			if (canResize) {
@@ -266,7 +273,14 @@ Object.assign(Drawer.prototype, {
 					self[RESIZER] = new Resizer({
 						container: self.element().parentElement,
 						onOffsetChange: (splitOffset, offset, availableSize) => {
-							self[resize](offset, availableSize);
+							self[IS_RESIZER] = true;
+
+							self[resize](splitOffset, availableSize);
+							self[layout]();
+
+							self.resize();
+
+							self[IS_RESIZER] = false;
 						}
 					});
 					self[layout]();
@@ -282,7 +296,7 @@ Object.assign(Drawer.prototype, {
 	overlap: method.enum({
 		init: Drawer.OVERLAP.PHONE,
 		enum: Drawer.OVERLAP,
-		set: function(overlap) {
+		set(overlap) {
 			this[OVERLAP] = (overlap === Drawer.OVERLAP.PHONE && IS_PHONE) || overlap === Drawer.OVERLAP.ALWAYS;
 			this[layout]();
 		}
@@ -290,14 +304,14 @@ Object.assign(Drawer.prototype, {
 
 	closedSize: method.cssSize({
 		init: new CssSize('0'),
-		set: function(closedSize) {
+		set(closedSize) {
 			this[SWIPE_HIT_SIZE] = Math.max(minSwipeHitSize.toPixels(true), closedSize.toPixels(true));
 			this[layout]();
 		}
 	}),
 
 	isOpen: method.boolean({
-		set: function(isOpen) {
+		set(isOpen) {
 			if (isOpen) {
 				if (this.onOpen()) {
 					this.onOpen()();

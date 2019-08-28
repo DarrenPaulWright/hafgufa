@@ -3,6 +3,8 @@ import { drag, event, select } from 'd3';
 import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
 import { DRAG_END_EVENT, DRAG_MOVE_EVENT, DRAG_START_EVENT } from '../../utility/d3Helper';
 import {
+	ABSOLUTE,
+	ABSOLUTE_CLASS,
 	BOTTOM,
 	LEFT,
 	MOUSE_WHEEL_EVENT,
@@ -25,6 +27,7 @@ const CONTAINER_D3 = Symbol();
 const DRAGGABLE_RECT = Symbol();
 const AVAILABLE_WIDTH = Symbol();
 const AVAILABLE_HEIGHT = Symbol();
+const IGNORE_PADDING = Symbol();
 
 const DRAG_BOUNDS = Symbol();
 const DRAG_OFFSET = Symbol();
@@ -62,6 +65,7 @@ export default (Base) => {
 			super(settings);
 
 			const self = this;
+			self[IGNORE_PADDING] = settings.ignorePadding;
 
 			self.onResize(() => {
 				if (self.canDrag()) {
@@ -278,8 +282,8 @@ export default (Base) => {
 				self[DRAGGABLE_RECT] = self.element().getBoundingClientRect();
 				const outerRect = self.container().getBoundingClientRect();
 
-				self[AVAILABLE_WIDTH] = outerRect.width - padding.horizontal;
-				self[AVAILABLE_HEIGHT] = outerRect.height - padding.vertical;
+				self[AVAILABLE_WIDTH] = outerRect.width - (IGNORE_PADDING ? 0 : padding.horizontal);
+				self[AVAILABLE_HEIGHT] = outerRect.height - (IGNORE_PADDING ? 0 : padding.vertical);
 
 				if (self[DRAGGABLE_RECT].width < self[AVAILABLE_WIDTH]) {
 					self[DRAG_BOUNDS].left = 0;
@@ -464,7 +468,7 @@ export default (Base) => {
 					self[BOUNCE_DESTINATION] = new Point();
 
 					self.elementD3()
-						.style(POSITION, RELATIVE)
+						.style(POSITION, ABSOLUTE)
 						.style('transform-origin', 'top left')
 						.call(drag()
 							.on(DRAG_START_EVENT, () => {
