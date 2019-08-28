@@ -4,13 +4,11 @@ import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
 import { DRAG_END_EVENT, DRAG_MOVE_EVENT, DRAG_START_EVENT } from '../../utility/d3Helper';
 import {
 	ABSOLUTE,
-	ABSOLUTE_CLASS,
 	BOTTOM,
 	LEFT,
 	MOUSE_WHEEL_EVENT,
 	PADDING,
 	POSITION,
-	RELATIVE,
 	RIGHT,
 	SCALE_CHANGE_EVENT,
 	SCROLL_LEFT,

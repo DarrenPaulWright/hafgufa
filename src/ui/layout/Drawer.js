@@ -18,7 +18,6 @@ import Resizer from '../elements/Resizer';
 import { ORIENTATION } from '../uiConstants';
 import Container from './Container';
 import './Drawer.less';
-import { ELEMENT_PROP } from '../Control';
 
 const ALL_SIDE_CLASSES = DockPoint.POINTS.TOP + SPACE + DockPoint.POINTS.RIGHT + SPACE + DockPoint.POINTS.BOTTOM + SPACE + DockPoint.POINTS.LEFT;
 const minSwipeHitSize = new CssSize('3rem');
@@ -216,7 +215,8 @@ export default class Drawer extends Container {
 		if (self[RESIZER] && !self[IS_RESIZER]) {
 			let splitOffset = self[IS_HORIZONTAL] ? self.width() : self.height();
 
-			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM && splitOffset.toString().charAt(0) !== '-') {
+			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM && splitOffset.toString()
+				.charAt(0) !== '-') {
 				splitOffset = '-' + splitOffset.toString();
 			}
 
