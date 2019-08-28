@@ -2,7 +2,7 @@ export { default as theme } from './ui/themes/theme';
 
 export { default as controlTypes } from './ui/controlTypes';
 export { default as Element } from './ui/Element';
-export { default as Control } from './ui/Control';
+export { default as Control, ELEMENT_PROP } from './ui/Control';
 export { default as ControlManager } from './ui/ControlManager';
 export { default as ControlRecycler } from './ui/ControlRecycler';
 export * from './ui/uiConstants';

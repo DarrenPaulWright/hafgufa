@@ -36,11 +36,15 @@ import windowResize from '../utility/windowResize';
 import './Control.less';
 import Removable from './mixins/Removable';
 
+export const ELEMENT_PROP = Symbol();
+
 const APPEND = Symbol();
 const PREPEND = Symbol();
 const ELEMENT = Symbol();
 const ELEMENT_D3 = Symbol();
 const WINDOW_RESIZE_ID = Symbol();
+const CURRENT_HEIGHT = Symbol();
+const CURRENT_WIDTH = Symbol();
 const CURRENT_CLASSES = Symbol();
 const OLD_ELEMENT = Symbol();
 const THROTTLED_RESIZE = Symbol();
@@ -119,7 +123,15 @@ const setResizeEvent = function() {
 					self.css(HEIGHT, Math.floor(containerHeight));
 				}
 
-				self.onResize().trigger(null, [windowWidth, windowHeight, self], self);
+				const newWidth = self.borderWidth();
+				const newHeight = self.borderHeight();
+
+				if (self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
+					self[CURRENT_WIDTH] = newWidth;
+					self[CURRENT_HEIGHT] = newHeight;
+
+					self.onResize().trigger(null, [windowWidth, windowHeight, self], self);
+				}
 			}
 		}, self[ELEMENT], self.type());
 	}
@@ -287,7 +299,8 @@ Object.assign(Control.prototype, {
 	 * @returns {Object|this}
 	 */
 	element: method.element({
-		before: function(element) {
+		enforce: (newValue, oldValue) => dom.getElement(newValue) || oldValue,
+		before(element) {
 			if (element) {
 				this[OLD_ELEMENT] = element;
 
@@ -297,28 +310,24 @@ Object.assign(Control.prototype, {
 				this[ELEMENT_D3] = null;
 			}
 		},
-		set: function(newValue) {
-			if (newValue) {
-				const newElement = dom.getElement(newValue);
+		set(newElement) {
+			if (newElement) {
+				this[ELEMENT] = newElement;
+				this[ELEMENT_D3] = select(this[ELEMENT]);
 
-				if (newElement !== newValue) {
-					this.element(newElement);
+				this[ELEMENT][ELEMENT_PROP] = this;
+
+				if (this[OLD_ELEMENT]) {
+					replaceElement(this[OLD_ELEMENT], newElement);
 				}
-				else {
-					this[ELEMENT] = newElement;
-					this[ELEMENT_D3] = select(this[ELEMENT]);
 
-					if (this[OLD_ELEMENT]) {
-						replaceElement(this[OLD_ELEMENT], newElement);
-					}
+				setCssSizeElement.call(this, this[ELEMENT]);
 
-					setCssSizeElement.call(this, this[ELEMENT]);
-
-					setPropagationClickEvent.call(this);
-				}
+				setPropagationClickEvent.call(this);
 			}
 
 			if (this[OLD_ELEMENT]) {
+				this[OLD_ELEMENT][ELEMENT_PROP] = null;
 				dom.remove(this[OLD_ELEMENT]);
 				this[OLD_ELEMENT] = null;
 			}
