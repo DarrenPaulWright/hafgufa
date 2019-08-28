@@ -36,7 +36,9 @@ const clickTab = Symbol();
 const methodPass = (options = {}) => {
 	return function(...args) {
 		if (args.length) {
-			this[options.class][options.method](...args);
+			if (this[options.class]) {
+				this[options.class][options.method](...args);
+			}
 
 			return this;
 		}
