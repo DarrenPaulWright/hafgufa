@@ -43,7 +43,7 @@ module.exports = function(wallaby) {
 					loader: 'eslint-loader',
 					options: {
 						configFile: '.eslintrc.json',
-						cache: true,
+						cache: false,
 						emitWarning: true
 					}
 				}]

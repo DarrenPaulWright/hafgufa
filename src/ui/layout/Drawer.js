@@ -25,7 +25,6 @@ const minSwipeHitSize = new CssSize('3rem');
 const DOCK = Symbol();
 const IS_HORIZONTAL = Symbol();
 const RESIZER = Symbol();
-const IS_RESIZER = Symbol();
 const OVERLAP = Symbol();
 const TOUCH_CONTAINER = Symbol();
 const TOUCH_ELEMENT = Symbol();
@@ -68,7 +67,7 @@ export default class Drawer extends Container {
 
 		self
 			.onResize(() => {
-				if (self[RESIZER] && !self[IS_RESIZER]) {
+				if (self[RESIZER] && !self[RESIZER].isDragging) {
 					self[RESIZER].resize();
 				}
 			})
@@ -212,7 +211,7 @@ export default class Drawer extends Container {
 		select(self.container())
 			.style(PADDING + '-' + self[DOCK], containerPadding + PIXELS);
 
-		if (self[RESIZER] && !self[IS_RESIZER]) {
+		if (self[RESIZER] && !self[RESIZER].isDragging) {
 			let splitOffset = self[IS_HORIZONTAL] ? self.width() : self.height();
 
 			if (self[DOCK] === DockPoint.POINTS.RIGHT || self[DOCK] === DockPoint.POINTS.BOTTOM && splitOffset.toString()
@@ -273,14 +272,9 @@ Object.assign(Drawer.prototype, {
 					self[RESIZER] = new Resizer({
 						container: self.element().parentElement,
 						onOffsetChange(splitOffset, offset, availableSize) {
-							self[IS_RESIZER] = true;
-
 							self[resize](splitOffset, availableSize);
 							self[layout]();
-
-							self.resize();
-
-							self[IS_RESIZER] = false;
+							self.resize(true);
 						}
 					});
 					self[layout]();

@@ -17,7 +17,6 @@
 	"rules": {
 		"curly": 2,
 		"no-console": 0,
-		"no-useless-escape": 0,
-		"object-shorthand": 2
+		"no-useless-escape": 0
 	}
 }
