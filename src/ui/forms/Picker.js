@@ -35,6 +35,7 @@ const MAX_BUTTON_WIDTH = Symbol();
 const POTENTIAL_NEW_VALUE = Symbol();
 const DIALOG = Symbol();
 
+const resize = Symbol();
 const areValuesEqual = Symbol();
 const updateSelectedItems = Symbol();
 const buildPreferredItemsList = Symbol();
@@ -98,17 +99,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		self.contentWidthContainer(self[GROUPED_BUTTONS].element());
 
 		self.onResize(() => {
-			const newMaxButtonWidth = self.borderWidth() - (self.singleLine() ? self.getHeading().borderWidth() : 0);
-
-			if (newMaxButtonWidth !== self[MAX_BUTTON_WIDTH] || self[MAX_BUTTON_WIDTH] === 0) {
-				self[MAX_BUTTON_WIDTH] = newMaxButtonWidth;
-				if (self.width().isAuto) {
-					if (self[POPUP_BUTTON]) {
-						self[POPUP_BUTTON].maxWidth(self[MAX_BUTTON_WIDTH]);
-					}
-				}
-				self[updateGroupedButtonsLayout]();
-			}
+			self[resize]();
 		});
 
 		applySettings(self, settings, ['changeDelay']);
@@ -187,6 +178,21 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 
 		return true;
+	}
+
+	[resize]() {
+		const self = this;
+		const newMaxButtonWidth = self.borderWidth() - (self.singleLine() ? self.getHeading().borderWidth() : 0);
+
+		if (newMaxButtonWidth !== self[MAX_BUTTON_WIDTH] || self[MAX_BUTTON_WIDTH] === 0) {
+			self[MAX_BUTTON_WIDTH] = newMaxButtonWidth;
+			if (self.width().isAuto) {
+				if (self[POPUP_BUTTON]) {
+					self[POPUP_BUTTON].maxWidth(self[MAX_BUTTON_WIDTH]);
+				}
+			}
+			self[updateGroupedButtonsLayout]();
+		}
 	}
 
 	/**
@@ -352,7 +358,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			self[GROUPED_BUTTONS].removeAllButtons();
 			self[MAX_BUTTON_WIDTH] = 0;
-			self.resize(true);
+			self[resize]();
 		}
 	}
 
