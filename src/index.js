@@ -58,6 +58,7 @@ export { default as Popup } from './ui/layout/Popup';
 export { default as Section } from './ui/layout/Section';
 export { default as SplitView } from './ui/layout/SplitView';
 export { default as Tabs } from './ui/layout/Tabs';
+export { default as TileLayout, TILE_COLUMN_ALIGN } from './ui/layout/TileLayout';
 export { default as Timeline } from './ui/layout/Timeline';
 export { default as Toolbar } from './ui/layout/Toolbar';
 export { default as Tooltip } from './ui/layout/Tooltip';

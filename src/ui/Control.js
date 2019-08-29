@@ -48,6 +48,7 @@ const CURRENT_WIDTH = Symbol();
 const CURRENT_CLASSES = Symbol();
 const OLD_ELEMENT = Symbol();
 const THROTTLED_RESIZE = Symbol();
+const FORCE_RESIZE = Symbol();
 
 const DISABLED_CLASS = 'disabled';
 const HIDDEN_CLASS = 'hidden';
@@ -126,7 +127,8 @@ const setResizeEvent = function() {
 				const newWidth = self.borderWidth();
 				const newHeight = self.borderHeight();
 
-				if (self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
+				if (self[FORCE_RESIZE] || self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
+					self[FORCE_RESIZE] = false;
 					self[CURRENT_WIDTH] = newWidth;
 					self[CURRENT_HEIGHT] = newHeight;
 
@@ -159,7 +161,6 @@ const setCssSizeElement = function(value) {
  * @extends Removable
  * @constructor
  *
- * @arg {string} type
  * @arg {Object} settings - An object where keys are methods and values are arguments.
  */
 export default class Control extends Removable {
@@ -897,20 +898,24 @@ Object.assign(Control.prototype, {
 	 * @arg {boolean} [isForced=false] - if true a resize will happen immediately
 	 */
 	resize(isForced) {
+		const self = this;
+
+		self[FORCE_RESIZE] = self[FORCE_RESIZE] || isForced;
+
 		if (isForced) {
-			if (!this.isRemoved) {
-				if (!this.skipWindowResize()) {
-					windowResize.trigger(this[WINDOW_RESIZE_ID]);
+			if (!self.isRemoved) {
+				if (!self.skipWindowResize()) {
+					windowResize.trigger(self[WINDOW_RESIZE_ID]);
 				}
 				else {
-					this.onResize().trigger(null, null, this);
+					self.onResize().trigger(null, null, this);
 				}
 			}
 		}
 		else {
-			this[THROTTLED_RESIZE]();
+			self[THROTTLED_RESIZE]();
 		}
 
-		return this;
+		return self;
 	}
 });
