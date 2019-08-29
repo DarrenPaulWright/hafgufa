@@ -200,7 +200,6 @@ Object.assign(SplitView.prototype, {
 	splitOffset: method.cssSize({
 		set(splitOffset) {
 			const self = this;
-			console.log('splitOffset:', splitOffset);
 
 			if (self[RESIZER] && !self[RESIZER].isDragging) {
 				self[RESIZER].splitOffset(splitOffset);

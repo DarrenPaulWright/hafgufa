@@ -16,7 +16,6 @@ export default class Div extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.DIV;
 		settings.element = dom.buildNew();
-		settings.skipWindowResize = true;
 
 		super(settings);
 
