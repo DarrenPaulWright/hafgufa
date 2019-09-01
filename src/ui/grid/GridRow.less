@@ -1,0 +1,53 @@
+
+.grid-row {
+	white-space: nowrap;
+	background: @gridRowBackground;
+	overflow: hidden; /* Prevent virtual list from rendering an extra pixel */
+
+	&:nth-of-type(even) {
+		background: @gridRowAlternatingBackground;
+
+		&.clickable {
+			&:hover {
+				background: @gridRowAlternatingHoverBackground;
+			}
+
+			&.selected {
+				background: @gridRowAlternatingSelectedBackground;
+
+				&:hover {
+					background: @gridRowAlternatingSelectedHoverBackground
+				}
+			}
+		}
+	}
+
+	&.clickable {
+		cursor: pointer;
+
+		&:hover {
+			background: @gridRowHoverBackground;
+		}
+
+		&.selected {
+			background: @gridRowSelectedBackground;
+
+			&:hover {
+				background: @gridRowSelectedHoverBackground;
+			}
+		}
+	}
+}
+
+.grid-group-header {
+	width: 100%;
+	height: inherit;
+	border: @gridRowGroupBorder;
+	background: @gridRowGroupBackground;
+	cursor: pointer;
+
+	&:hover {
+		border: @gridRowGroupHoverBorder;
+		background: @gridRowGroupHoverBackground;
+	}
+}

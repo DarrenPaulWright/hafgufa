@@ -7,19 +7,17 @@ import './Toolbar.less';
 
 const TOOLBAR_BASE_CLASS = 'toolbar clearfix';
 
-const getButton = function(input) {
-	return isNumber(input) ? this[BUTTONS][input] : input;
-};
-
 const BUTTONS = Symbol();
+
+const getButton = Symbol();
 
 /**
  * Displays a toolbar that accepts and positions content such as buttons.
  * @module Toolbar
- * @extends ControlBase
+ * @extends Control
  * @constructor
  *
- * @arg {Object} settings - Accepts all controlBase settings plus:
+ * @arg {Object} settings
  */
 export default class Toolbar extends Control {
 	constructor(settings = {}) {
@@ -37,6 +35,10 @@ export default class Toolbar extends Control {
 		});
 	}
 
+	[getButton](input) {
+		return isNumber(input) ? this[BUTTONS][input] : input;
+	}
+
 	content(newContent) {
 		this.empty();
 		newContent.forEach((button) => {
@@ -45,13 +47,14 @@ export default class Toolbar extends Control {
 	}
 
 	getButtonAtIndex(index) {
-		getButton.call(this, index);
+		return this[getButton](index);
 	}
 
 	addButton(data) {
-		const button = new Button(Object.assign({}, data, {
+		const button = new Button({
+			...data,
 			container: this.element()
-		}));
+		});
 		this[BUTTONS].push(button);
 		this.updateButton(button, data);
 
@@ -59,15 +62,15 @@ export default class Toolbar extends Control {
 	}
 
 	hideButton(button) {
-		getButton.call(this, button).isVisible(false);
+		this[getButton](button).isVisible(false);
 	}
 
 	showButton(button) {
-		getButton.call(this, button).isVisible(true);
+		this[getButton](button).isVisible(true);
 	}
 
 	updateButton(button, data) {
-		button = getButton.call(this, button);
+		button = this[getButton](button);
 
 		if (isFunction(data.isEnabled)) {
 			data.isEnabled = data.isEnabled();

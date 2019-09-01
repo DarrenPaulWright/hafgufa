@@ -1,0 +1,35 @@
+
+.grid-footer {
+	width: 100%;
+	padding: @gridFooterPadding;
+
+	position: absolute;
+	bottom: 0;
+
+	color: @gridFooterFontColor;
+	font: @gridFooterFontSize @chromeFontFamily;
+
+	border-top: 0.05rem solid @gridHeaderHighlight;
+	border-bottom: 0.05rem solid @gridHeaderShadow;
+	background: @gridHeaderBackground;
+
+	overflow: hidden;
+	white-space: nowrap;
+
+	.grid-footer-left {
+		float: left;
+		padding: 0;
+		text-align: right;
+	}
+
+	.grid-footer-right {
+		float: right;
+		padding: 0.2rem 0;
+		text-align: right;
+	}
+
+	.icon-button {
+		margin-right: 0.25rem;
+		font-size: @gridFooterFontSize;
+	}
+}

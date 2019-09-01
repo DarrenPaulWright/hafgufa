@@ -74,6 +74,8 @@ export { default as LightBox } from './ui/other/LightBox';
 export { default as Menu } from './ui/other/Menu';
 export { default as SearchBar } from './ui/other/SearchBar';
 
+export { default as Grid } from './ui/grid/Grid';
+
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
 export { default as ContextMenuMixin } from './ui/mixins/ContextMenuMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';

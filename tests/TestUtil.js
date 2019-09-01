@@ -1,5 +1,6 @@
 import { defer, delay } from 'async-agent';
 import { assert } from 'chai';
+import displayValue from 'display-value';
 import keyCodes from 'keycodes';
 import simulant from 'simulant';
 import { isArray, isString } from 'type-enforcer';
@@ -78,24 +79,20 @@ export default function TestUtil(Control) {
 
 	const eventTests = () => {
 		const getEventList = () => {
-			let output = '';
-
-			for (let index = 0; index < window.eventListeners.length; index++) {
-				if (index > 0) {
-					output += ',\n';
-				}
-				output += window.eventListeners[index].element.tagName;
-				if (window.eventListeners[index].element.getAttribute('type')) {
-					output += '(type:' + window.eventListeners[index].element.getAttribute('type') + ')';
-				}
-				output += '[id:' + window.eventListeners[index].element.getAttribute('id') + ']-';
-				output += window.eventListeners[index].eventName;
-			}
-
-			return output;
+			return window.eventListeners.map((listener) => {
+					let output = listener.element.tagName;
+					if (listener.element.getAttribute('type')) {
+						output += '(type:' + listener.element.getAttribute('type') + ')';
+					}
+					output += '[id:' + listener.element.getAttribute('id') + ']-';
+					output += '[classes:' + listener.element.classList + ']-';
+					output += listener.eventName;
+					return output;
+				})
+				.join(',\n');
 		};
 
-		assert.equal(window.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString() + 'Has:\n' + getEventList());
+		assert.equal(window.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString() + 'Still has these events:\n' + getEventList());
 		window.eventListeners = [];
 	};
 
@@ -106,10 +103,7 @@ export default function TestUtil(Control) {
 	};
 
 	const getElement = (element) => {
-		if (isString(element)) {
-			element = document.querySelector(element);
-		}
-		return element;
+		return isString(element) ? document.querySelector(element) : element;
 	};
 
 	addEventListenerOverRides();
@@ -141,7 +135,7 @@ export default function TestUtil(Control) {
 		});
 
 		describe('(testMethod)', () => {
-			it('should return "' + settings.defaultValue + '" when the ' + settings.methodName + ' setting is not set', () => {
+			it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is not set', () => {
 				window.control = new Control(buildOptions());
 
 				if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
@@ -153,7 +147,7 @@ export default function TestUtil(Control) {
 			});
 
 			if (settings.defaultValue !== undefined) {
-				it('should return "' + settings.defaultValue + '" when the ' + settings.methodName + ' setting is set to "' + settings.defaultValue + '"', () => {
+				it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is set to ' + displayValue(settings.defaultValue), () => {
 					const options = buildOptions();
 					options[settings.methodName] = settings.defaultValue;
 
@@ -169,7 +163,7 @@ export default function TestUtil(Control) {
 			}
 
 			if (!settings.skipOptions) {
-				it('should return "' + settings.testValue + '" when the ' + settings.methodName + ' setting is set to "' + settings.testValue + '"', () => {
+				it('should return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' setting is set to ' + displayValue(settings.testValue), () => {
 					const options = buildOptions();
 					options[settings.methodName] = settings.testValue;
 
@@ -185,7 +179,7 @@ export default function TestUtil(Control) {
 			}
 
 			if (settings.defaultValue !== undefined) {
-				it('should return "' + settings.defaultValue + '" when the ' + settings.methodName + ' method is set to "' + settings.defaultValue + '"', () => {
+				it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.defaultValue), () => {
 					window.control = new Control(buildOptions())[settings.methodName](settings.defaultValue);
 
 					if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
@@ -197,7 +191,7 @@ export default function TestUtil(Control) {
 				});
 			}
 
-			it('should return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '"', () => {
+			it('should return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue), () => {
 				window.control = new Control(buildOptions())[settings.methodName](settings.testValue);
 
 				if (window.control[settings.methodName]() && window.control[settings.methodName]().isSame) {
@@ -208,7 +202,7 @@ export default function TestUtil(Control) {
 				}
 			});
 
-			it('should return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" twice', () => {
+			it('should return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue) + ' twice', () => {
 				window.control = new Control(buildOptions());
 				window.control[settings.methodName](settings.testValue);
 				window.control[settings.methodName](settings.testValue);
@@ -222,7 +216,7 @@ export default function TestUtil(Control) {
 			});
 
 			if (settings.secondTestValue !== undefined) {
-				it('should return "' + settings.secondTestValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then "' + settings.secondTestValue + '"', () => {
+				it('should return ' + displayValue(settings.secondTestValue) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue) + ' and then ' + displayValue(settings.secondTestValue), () => {
 					window.control = new Control(buildOptions());
 					window.control[settings.methodName](settings.testValue);
 					window.control[settings.methodName](settings.secondTestValue);
@@ -235,7 +229,7 @@ export default function TestUtil(Control) {
 					}
 				});
 
-				it('should NOT return "' + settings.testValue + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then "' + settings.secondTestValue + '"', () => {
+				it('should NOT return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue) + ' and then ' + displayValue(settings.secondTestValue), () => {
 					window.control = new Control(buildOptions());
 					window.control[settings.methodName](settings.testValue);
 					window.control[settings.methodName](settings.secondTestValue);
@@ -251,20 +245,20 @@ export default function TestUtil(Control) {
 
 			if (settings.testValueClass !== undefined) {
 				if (!isArray(settings.testValueClass)) {
-					it('should NOT have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is NOT set', () => {
+					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName + ' method is NOT set', () => {
 						window.control = new Control(buildOptions());
 
 						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 0);
 					});
 
-					it('should have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '"', () => {
+					it('should have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue), () => {
 						window.control = new Control(buildOptions());
 						window.control[settings.methodName](settings.testValue);
 
 						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 1);
 					});
 
-					it('should NOT have class "' + settings.testValueClass + '" when the ' + settings.methodName + ' method is set to "' + settings.testValue + '" and then to "' + settings.defaultValue + '"', () => {
+					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(settings.testValue) + ' and then to ' + displayValue(settings.defaultValue), () => {
 						window.control = new Control(buildOptions());
 						window.control[settings.methodName](settings.testValue);
 						window.control[settings.methodName](settings.defaultValue);
@@ -275,7 +269,7 @@ export default function TestUtil(Control) {
 				else {
 					settings.testValueClass.forEach((mainClassOptions) => {
 						if (settings.defaultValue !== mainClassOptions.testValue) {
-							it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is NOT set', () => {
+							it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName + ' method is NOT set', () => {
 								window.control = new Control(buildOptions());
 
 								assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
@@ -284,7 +278,7 @@ export default function TestUtil(Control) {
 
 						settings.testValueClass.forEach((otherClassOptions) => {
 							if (mainClassOptions.class === otherClassOptions.class) {
-								it('should have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + mainClassOptions.testValue + '"', () => {
+								it('should have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(mainClassOptions.testValue), () => {
 									window.control = new Control(buildOptions());
 									window.control[settings.methodName](mainClassOptions.testValue);
 
@@ -292,7 +286,7 @@ export default function TestUtil(Control) {
 								});
 
 								if (settings.defaultValue !== mainClassOptions.testValue) {
-									it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + mainClassOptions.testValue + '" and then to "' + settings.defaultValue + '"', () => {
+									it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(mainClassOptions.testValue) + ' and then to ' + displayValue(settings.defaultValue), () => {
 										window.control = new Control(buildOptions());
 										window.control[settings.methodName](mainClassOptions.testValue);
 										window.control[settings.methodName](settings.defaultValue);
@@ -302,7 +296,7 @@ export default function TestUtil(Control) {
 								}
 							}
 							else {
-								it('should NOT have class "' + mainClassOptions.class + '" when the ' + settings.methodName + ' method is set to "' + otherClassOptions.testValue + '"', () => {
+								it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName + ' method is set to ' + displayValue(otherClassOptions.testValue), () => {
 									window.control = new Control(buildOptions());
 									window.control[settings.methodName](otherClassOptions.testValue);
 
@@ -366,16 +360,16 @@ export default function TestUtil(Control) {
 	self.getComputedTranslateXY = (query) => {
 		const style = getComputedStyle(document.querySelector(query));
 		const transform = style.transform || style.webkitTransform || style.mozTransform;
-		let mat = transform.match(/^matrix3d\((.+)\)$/);
 
-		if (mat) {
-			return parseFloat(mat[1].split(', ')[13]);
+		let matrix = transform.match(/^matrix3d\((.+)\)$/);
+		if (matrix) {
+			return parseFloat(matrix[1].split(', ')[13]);
 		}
 
 		const transArr = [];
-		mat = transform.match(/^matrix\((.+)\)$/);
-		mat ? transArr.push(parseFloat(mat[1].split(', ')[4])) : 0;
-		mat ? transArr.push(parseFloat(mat[1].split(', ')[5])) : 0;
+		matrix = transform.match(/^matrix\((.+)\)$/);
+		matrix ? transArr.push(parseFloat(matrix[1].split(', ')[4])) : 0;
+		matrix ? transArr.push(parseFloat(matrix[1].split(', ')[5])) : 0;
 
 		return transArr;
 	};

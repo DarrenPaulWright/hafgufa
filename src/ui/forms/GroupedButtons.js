@@ -85,6 +85,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		self
 			.onRemove(() => {
 				self[BUTTON_RECYCLER].remove();
+				self[SHADOW_CONTAINER].remove();
 				self[SHADOW_RECYCLER].remove();
 				self[MULTI_ITEM_FOCUS].remove();
 				self[BUTTON_CONTAINER].remove();

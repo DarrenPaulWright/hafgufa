@@ -1,0 +1,53 @@
+
+.grid-cell {
+	vertical-align: top;
+	padding: @gridCellPadding;
+	font-size: @gridCellFontSize;
+	border-left: 0.05rem solid transparent;
+	border-right: 0.05rem solid @gridCellSeparatorColor;
+	min-height: 1em;
+	height: inherit;
+
+	&.can-wrap {
+		white-space: normal;
+	}
+
+	&.no-padding {
+		padding: 0;
+	}
+
+	&:last-of-type {
+		border-right-color: transparent;
+	}
+
+	> .icon {
+		margin: @gridCellIconMargin;
+		color: inherit;
+		text-shadow: none;
+	}
+
+	span {
+		pointer-events: none;
+	}
+
+	a {
+		pointer-events: auto;
+	}
+
+	.toolbar {
+		margin: @gridCellToolbarMargin;
+		vertical-align: top;
+	}
+
+	&.align-right {
+		text-align: right;
+	}
+
+	&.align-center {
+		text-align: center;
+	}
+
+	&.align-left {
+		text-align: left;
+	}
+}

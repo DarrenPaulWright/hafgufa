@@ -9,6 +9,7 @@ import './Radio.less';
 
 export const INPUT = Symbol();
 const CONTAINER = Symbol();
+const IS_MANUAL = Symbol();
 
 /**
  * A single radio button with label.
@@ -32,12 +33,13 @@ export default class Radio extends Label {
 		})
 			.on(CLICK_EVENT, () => {
 				event.stopPropagation();
+				self[IS_MANUAL] = true;
 				self.isChecked(!self.isChecked());
 			});
 
 		if (settings.type === controlTypes.RADIO) {
 			self.addClass('radio');
-			this[INPUT].inputType(INPUT_TYPE_RADIO);
+			self[INPUT].inputType(INPUT_TYPE_RADIO);
 			applySettings(self, settings);
 		}
 
@@ -79,15 +81,18 @@ Object.assign(Radio.prototype, {
 	}),
 	isChecked: method.boolean({
 		set(isChecked) {
-			this[INPUT].element().checked = isChecked;
-			this.classes('checked', isChecked);
+			const self = this;
 
-			if (this.onChange()) {
-				this.onChange().call(this, isChecked);
+			self[INPUT].element().checked = isChecked;
+			self.classes('checked', isChecked);
+
+			if (self[IS_MANUAL] && self.onChange()) {
+				self[IS_MANUAL] = false;
+				self.onChange().call(self, isChecked);
 			}
 
-			if (this.isIndeterminate && isChecked) {
-				this.isIndeterminate(false);
+			if (self.isIndeterminate && isChecked) {
+				self.isIndeterminate(false);
 			}
 		}
 	}),

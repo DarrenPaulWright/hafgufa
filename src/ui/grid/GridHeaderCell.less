@@ -1,0 +1,64 @@
+
+.grid-header-cell {
+	display: table-cell;
+	height: 100%;
+	padding: @gridHeaderCellPadding;
+	border: 0.05rem solid @gridHeaderHighlight;
+	border-bottom-color: @gridHeaderShadow;
+	border-right-color: @gridHeaderShadow;
+	text-align: center;
+	white-space: normal;
+
+	&:first-of-type {
+		border-left-color: transparent;
+	}
+
+	&:last-of-type {
+		border-right-color: transparent;
+	}
+
+	& > .heading {
+		text-align: center;
+	}
+
+	.sortable {
+		cursor: pointer;
+
+		&:hover {
+			color: @gridHeaderCellHoverColor;
+		}
+
+		span {
+			&:after {
+				@charWidth: 0.57em;
+
+				content: @sortIcon;
+				font-size: @chromeFontSize;
+				margin-left: @charWidth;
+				color: fade(@gridHeaderTextColor, 20);
+				text-shadow: none;
+				letter-spacing: -@charWidth;
+			}
+		}
+	}
+
+	.sort-asc {
+		span {
+			&:after {
+				content: "@{sortIcon}@{sortAscIcon}@{sortAscIcon}@{sortAscIcon}@{sortAscIcon}@{sortAscIcon}";
+			}
+		}
+	}
+
+	.sort-desc {
+		span {
+			&:after {
+				content: "@{sortIcon}@{sortDescIcon}@{sortDescIcon}@{sortDescIcon}@{sortDescIcon}@{sortDescIcon}";
+			}
+		}
+	}
+
+	&.checkbox-cell {
+		vertical-align: bottom;
+	}
+}

@@ -437,28 +437,18 @@
 @gridRowHoverBackground: fade(@chromeFontColor, 10%);
 @gridRowSelectedBackground: @highlightColor;
 @gridRowSelectedHoverBackground: lighten(@gridRowSelectedBackground, 10);
-@gridRowErrorBackground: lighten(@errorColor, 50);
-@gridRowErrorHoverBackground: darken(@gridRowErrorBackground, 5);
 
 @gridRowAlternatingBackground: fade(@chromeFontColor, 6%);
 @gridRowAlternatingHoverBackground: multiply(@gridRowHoverBackground, @gridRowAlternatingBackground);
 @gridRowAlternatingSelectedBackground: darken(@gridRowSelectedBackground, 3);
 @gridRowAlternatingSelectedHoverBackground: multiply(@gridRowAlternatingBackground, @gridRowSelectedHoverBackground);
-@gridRowErrorAlternatingBackground: multiply(@gridRowAlternatingBackground, @gridRowErrorBackground);
-@gridRowErrorHoverAlternatingBackground: multiply(@gridRowAlternatingBackground, @gridRowErrorHoverBackground);
-
-@gridRowErrorBorder: 0.05rem solid @errorColor;
 
 @gridRowGroupBorder: 0.05rem solid @formButtonBorderColor;
 @gridRowGroupBackground: @formButtonBackground;
 @gridRowGroupHoverBorder: 0.05rem solid darken(@formButtonBorderColor, 3);
 @gridRowGroupHoverBackground: @formButtonHoverBackground;
-@gridRowGroupErrorFontColor: @errorColor;
-@gridRowGroupErrorFontWeight: @boldFontWeight;
 
 @gridCellSeparatorColor: fade(@fontColor, 5%);
-@gridCellErrorColor: @errorColor;
-@gridCellErrorFontWeight: @boldFontWeight;
 
 @editableGridBorderRadius: 0.6rem;
 
