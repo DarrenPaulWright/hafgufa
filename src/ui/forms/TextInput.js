@@ -23,7 +23,7 @@ import ActionButtonMixin from '../mixins/ActionButtonMixin';
 import FormControl from './FormControl';
 import './TextInput.less';
 
-const ON_CHANGE_DELAY = 200;
+export const ON_CHANGE_DELAY = 200;
 const ON_CHANGE_DELAY_LONG = 500;
 const ON_CHANGE_EVENTS = 'change keypress cut paste textInput input propertychange';
 

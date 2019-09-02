@@ -54,7 +54,9 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 		});
 
 		self.onRemove(() => {
-			self[ON_CHANGE].clear();
+			if (self[ON_CHANGE]) {
+				self[ON_CHANGE].clear();
+			}
 			formRelationships.remove(self[RELATIONSHIP_ID]);
 		});
 	}
@@ -79,7 +81,7 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 			if ((isHardTrigger || (self.value && !deepEqual(self[CURRENT_VALUE], self.value()))) && self.onChange().length) {
 				self[ON_CHANGE].call(self, skipCallback);
 
-				if (!ignoreDelay || !self.changeDelay()) {
+				if (ignoreDelay || !self.changeDelay()) {
 					self[ON_CHANGE].flush();
 				}
 			}

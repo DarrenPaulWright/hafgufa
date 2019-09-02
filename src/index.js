@@ -26,6 +26,7 @@ export { default as TextArea } from './ui/elements/TextArea';
 export { default as Video } from './ui/media/Video';
 export { default as Source } from './ui/media/Source';
 
+export { default as Conversion } from './ui/forms/Conversion';
 export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
 export { default as FileInput } from './ui/forms/FileInput';
