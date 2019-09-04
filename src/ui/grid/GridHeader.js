@@ -87,6 +87,8 @@ Object.assign(GridHeader.prototype, {
 			self[TOTAL_FLEXIBLE_COLUMN_WIDTH] = 0;
 
 			columns.forEach((column, index) => {
+				let filterType;
+
 				column.size = column.size || '1*';
 				column.isFixedWidth = column.size.includes(PIXELS);
 
@@ -102,32 +104,29 @@ Object.assign(GridHeader.prototype, {
 				}
 
 				switch (column.type) {
-					case COLUMN_TYPES.CUSTOM:
-						column.filterType = column.canFilter ? column.filterType || FILTER_TYPES.AUTO_COMPLETE : null;
-						break;
 					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.EMAIL:
-						column.filterType = column.canFilter ? column.filterType || FILTER_TYPES.AUTO_COMPLETE : null;
+						filterType = column.canFilter ? column.filterType || FILTER_TYPES.AUTO_COMPLETE : null;
 						break;
 					case COLUMN_TYPES.NUMBER:
-						column.filterType = column.canFilter ? column.filterType || FILTER_TYPES.NUMBER : null;
+						filterType = column.canFilter ? column.filterType || FILTER_TYPES.NUMBER : null;
 						break;
 					case COLUMN_TYPES.DATE:
 					case COLUMN_TYPES.DATE_TIME:
 					case COLUMN_TYPES.TIME:
-						column.filterType = column.canFilter ? FILTER_TYPES.DATE : null;
+						filterType = column.canFilter ? FILTER_TYPES.DATE : null;
 						break;
 				}
 				column.minWidth = column.isFixedWidth ? null : (parseInt(column.minWidth || MIN_COLUMN_WIDTH, 10));
 
-				applySettings(self[CELL_RECYCLER].getControlAtOffset(index) || self[CELL_RECYCLER].getRecycledControl(), {
+				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
 					container: self.element(),
 					ID: column.ID,
 					label: column.title,
 					canSort: column.canSort,
 					filter: column.filter || '',
 					dataType: column.type,
-					filterType: column.filterType,
+					filterType: filterType,
 					sortDirection: column.direction,
 					selectableColumns: self.selectableColumns()
 				});

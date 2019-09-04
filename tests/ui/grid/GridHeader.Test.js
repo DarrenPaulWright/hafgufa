@@ -338,34 +338,6 @@ describe('GridHeader', () => {
 
 			assert.equal(document.querySelectorAll('input[type=text]').length, 0);
 		});
-
-		it('should set a default filter type of text if canFilter is true and column type is custom', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.CUSTOM
-				}]
-			});
-
-			assert.equal(document.querySelectorAll('.tags').length, 1);
-		});
-
-		it('should NOT set a default filter type of number if canFilter is false and column type is custom', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: false,
-					type: gridConstants.COLUMN_TYPES.CUSTOM
-				}]
-			});
-
-			assert.equal(document.querySelectorAll('.tags').length, 0);
-		});
 	});
 
 	describe('Callbacks', () => {

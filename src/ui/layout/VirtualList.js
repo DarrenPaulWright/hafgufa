@@ -8,6 +8,7 @@ import {
 	enforce,
 	HUNDRED_PERCENT,
 	INITIAL,
+	isNumber,
 	method,
 	PIXELS,
 	Thickness,
@@ -237,9 +238,10 @@ export default class VirtualList extends FocusMixin(Control) {
 			if (self[ITEM_SIZE] > 0) {
 				self[setScrollSize]();
 
-				if (self[RENDER_ATTEMPTS] > 0) {
-					self[render]();
-				}
+				self[setAltExtentValue]();
+				self[setScrollSize]();
+				self[render]();
+
 				self[RENDER_ATTEMPTS] = 0;
 			}
 			else if (self[RENDER_ATTEMPTS] < MAX_RENDER_ATTEMPTS) {
@@ -522,8 +524,10 @@ export default class VirtualList extends FocusMixin(Control) {
 			});
 		}
 
-		self[renderChunk](index);
-		self[setVirtualContentAltExtent]();
+		if (isNumber(index)) {
+			self[renderChunk](index);
+			self[setVirtualContentAltExtent]();
+		}
 	}
 
 	/**
@@ -1080,12 +1084,10 @@ Object.assign(VirtualList.prototype, {
 		if (self.itemData() && self[TOTAL_ITEMS] > 0) {
 			self[removeEmptyContentMessage]();
 
-			if (!self.itemSize()) {
+			if (!self.itemSize() && self.isVirtualized()) {
 				self[renderItem](0, false, true);
-				self[CONTROL_RECYCLER].discardAllControls();
 			}
-
-			if (!self.isRemoved) {
+			else if (!self.isRemoved) {
 				self[setAltExtentValue]();
 				self[setScrollSize]();
 				self[render]();

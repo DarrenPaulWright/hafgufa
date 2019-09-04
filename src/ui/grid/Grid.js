@@ -3,6 +3,7 @@ import { event } from 'd3';
 import { findIndex } from 'lodash';
 import Moment from 'moment';
 import { clone, deepEqual } from 'object-agent';
+import shortid from 'shortid';
 import { applySettings, AUTO, enforce, enforceString, HUNDRED_PERCENT, isArray, method, Queue } from 'type-enforcer';
 import collectionHelper from '../../utility/collectionHelper';
 import locale from '../../utility/locale';
@@ -54,6 +55,7 @@ const sort = Symbol();
 const flattenRows = Symbol();
 const getFilterData = Symbol();
 const debouncedGroup = Symbol();
+const updateSelectState = Symbol();
 
 /**
  * A data grid control.
@@ -64,18 +66,6 @@ const debouncedGroup = Symbol();
  * @arg {Boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
  * @arg {String} [settings.isVirtualized=true] - If set to false then all rows will be rendered and row heights can be variable.
  * @arg {String} [settings.noItemsText] - Text to be displayed if there are no items in the grid
- *
- *
- *
- *
- *
- * @arg {Object}   [settings.rows]                              -
- * @arg {Function} [settings.rows.onClick]                      - If this points to the same function as a button in
- *    settings.columns[].buttons[].onClick then mouse over of the row will also highlight the corresponding button
- * @arg {Function} [settings.rows.isSelectable=false]           - If true then the row is highlighted when clicked.
- *    grid.clearSelected() must be called to remove the selected state
- * @arg {Object}   [settings.rows.height]                       - Force the height of rows
- *
  *
  *
  *
@@ -107,11 +97,8 @@ export default class Grid extends Control {
 
 		self[RENDERED_QUEUE] = new Queue();
 
-		settings.rows = settings.rows || {};
-
 		self[GRID_COLUMN_BLOCK] = new GridColumnBlock({
 			container: self.element(),
-			rows: settings.rows,
 			isAutoHeight: settings.height === AUTO,
 			noItemsText: settings.noItemsText,
 			isVirtualized: settings.isVirtualized,
@@ -119,7 +106,6 @@ export default class Grid extends Control {
 			onSort: (direction, columnNum) => self[sort](direction, columnNum),
 			onFilter: (value, columnId) => self[filter](value, columnId),
 			onGetFilterData: (filterType, columnNum, callback) => self[getFilterData](filterType, columnNum, callback),
-			onSelectRow: self.selectRow,
 			onSelectGroup: (control) => self[selectGroup](control),
 			onSelectAllGroups: (isSelected) => self[selectAllGroups](isSelected),
 			onExpandCollapseGroup: (group) => self[expandCollapseGroup](group),
@@ -128,7 +114,7 @@ export default class Grid extends Control {
 
 		self[updateFooter]();
 
-		applySettings(self, settings, ['columns', 'groupBy']);
+		applySettings(self, settings, ['columns', 'groupBy'], ['rows']);
 
 		self.onResize(() => {
 			const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
@@ -192,7 +178,13 @@ export default class Grid extends Control {
 	[updateFooter]() {
 		const self = this;
 
-		if (!self.hideFooter()) {
+		if (self.hideFooter()) {
+			if (self[FOOTER]) {
+				self[FOOTER].remove();
+				self[FOOTER] = null;
+			}
+		}
+		else {
 			if (!self[FOOTER]) {
 				self[FOOTER] = new GridFooter({
 					container: self.element(),
@@ -395,7 +387,10 @@ export default class Grid extends Control {
 		const self = this;
 
 		self[filter]();
-		if (self.onMultiSelect()) {
+		if (self.onSelect() && self[SELECTED_ROWS].length === 1) {
+			self.onSelect()(self[SELECTED_ROWS][0]);
+		}
+		if (self.onMultiSelect() && self[SELECTED_ROWS].length > 1) {
 			self.onMultiSelect()(self[SELECTED_ROWS]);
 		}
 
@@ -590,42 +585,42 @@ export default class Grid extends Control {
 		}
 
 		self.columns().forEach((column) => {
-			let filterFunction = column.filterType === FILTER_TYPES.CUSTOM ? column.filterFunction : false;
+			let filterFunction;
 
-			if (column.filter && column.filter !== '' && !column.isHidden) {
-				if (!filterFunction && column.filter && column.filter !== '') {
-					switch (column.type) {
-						case COLUMN_TYPES.TEXT:
-						case COLUMN_TYPES.EMAIL:
-						case COLUMN_TYPES.LINK:
-							filterFunction = (row) => (column.filter === 'undefined' && !row.cells[column.ID].text) || stringHelper.isEachInString(
+			if (column.filter && !column.isHidden) {
+				switch (column.type) {
+					case COLUMN_TYPES.TEXT:
+					case COLUMN_TYPES.EMAIL:
+					case COLUMN_TYPES.LINK:
+						filterFunction = (row) => {
+							return (column.filter === 'undefined' && !row.cells[column.ID].text) || stringHelper.isEachInString(
 								column.filter,
 								row.cells[column.ID].text || '-'
 							);
-							break;
-						case COLUMN_TYPES.NUMBER:
-							filterFunction = (row) => {
-								const minValue = column.filter.split(',')[0];
-								const maxValue = column.filter.split(',')[1];
-								const actualValue = row.cells[column.ID].text;
+						};
+						break;
+					case COLUMN_TYPES.NUMBER:
+						filterFunction = (row) => {
+							const minValue = column.filter.split(',')[0];
+							const maxValue = column.filter.split(',')[1];
+							const actualValue = row.cells[column.ID].text;
 
-								if (minValue && maxValue) {
-									return actualValue >= minValue && actualValue <= maxValue;
-								}
-								else if (minValue) {
-									return actualValue >= minValue;
-								}
-								else {
-									return actualValue <= maxValue;
-								}
-							};
-							break;
-						case COLUMN_TYPES.DATE:
-						case COLUMN_TYPES.DATE_TIME:
-						case COLUMN_TYPES.TIME:
-							filterFunction = (row) => row.cells[column.ID].text === column.filter;
-							break;
-					}
+							if (minValue && maxValue) {
+								return actualValue >= minValue && actualValue <= maxValue;
+							}
+							else if (minValue) {
+								return actualValue >= minValue;
+							}
+							else {
+								return actualValue <= maxValue;
+							}
+						};
+						break;
+					case COLUMN_TYPES.DATE:
+					case COLUMN_TYPES.DATE_TIME:
+					case COLUMN_TYPES.TIME:
+						filterFunction = (row) => row.cells[column.ID].text === column.filter;
+						break;
 				}
 
 				if (filterFunction) {
@@ -657,7 +652,7 @@ export default class Grid extends Control {
 	}
 
 	/**
-	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#renderRows}
+	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#rows}
 	 * @function sort
 	 * @arg   {String}   direction  - 'asc' or 'desc'
 	 * @arg   {Number}   columnNum  - column index of the column to be sorted
@@ -691,7 +686,7 @@ export default class Grid extends Control {
 		};
 
 		const applySort = () => {
-			let currentColumn = {};
+			let currentColumn;
 
 			self.columns().forEach((column) => {
 				if (column.ID === columnNum) {
@@ -708,8 +703,8 @@ export default class Grid extends Control {
 				}
 			});
 
-			if (direction !== undefined ||
-				(direction === undefined && currentColumn.direction !== SORT_TYPES.NONE)) {
+			if (currentColumn && (direction !== undefined ||
+				(direction === undefined && currentColumn.direction !== SORT_TYPES.NONE))) {
 
 				sortWithinGroups(self[FILTERED_ROWS], currentColumn);
 			}
@@ -723,7 +718,7 @@ export default class Grid extends Control {
 		self[FLATTENED_ROWS] = self[flattenRows](self[FILTERED_ROWS].children);
 
 		if (self[GRID_COLUMN_BLOCK]) {
-			self[GRID_COLUMN_BLOCK].renderRows(self[FLATTENED_ROWS]);
+			self[GRID_COLUMN_BLOCK].rows(self[FLATTENED_ROWS]);
 		}
 
 		self[IS_RENDERING] = false;
@@ -746,7 +741,7 @@ export default class Grid extends Control {
 			saveDepth: true,
 			ignoreChildrenProperty: 'isCollapsed',
 			onEachParent(row) {
-				row.ID = stringHelper.getNewUUID();
+				row.ID = shortid.generate();
 				row.footerSuffix = row.footerSuffix || self.itemsLabel() || locale.get('items');
 
 				counts = self[getChildrenCount](row);
@@ -761,7 +756,7 @@ export default class Grid extends Control {
 				}
 			},
 			onEachChild(row) {
-				row.ID = row.rowID || stringHelper.getNewUUID();
+				row.ID = row.rowID || shortid.generate();
 				row.isSelected = self[SELECTED_ROWS].includes(row.rowID);
 			}
 		});
@@ -816,26 +811,6 @@ export default class Grid extends Control {
 			}
 		};
 
-		const buildCustomFilters = () => {
-			if (filterType === 'date') {
-				if (self.columns()[columnNum].customFilters) {
-					self.columns()[columnNum].customFilters.forEach((filter) => {
-						output.push({
-							text: filter,
-							date: ''
-						});
-					});
-				}
-				buildDateFilters();
-			}
-			else {
-				// each(self.columns()[columnNum].customFilters, function() {
-				// 	output.push(rowCellData.cells[columnNum].text);
-				// });
-				buildDropDownFilters();
-			}
-		};
-
 		self[whenDoneRendering](() => {
 			if (self[FILTERED_ROWS].children && self[FILTERED_ROWS].children.length > 0) {
 				switch (filterType) {
@@ -848,14 +823,22 @@ export default class Grid extends Control {
 					case FILTER_TYPES.DATE:
 						buildDateFilters();
 						break;
-					case FILTER_TYPES.CUSTOM:
-						buildCustomFilters();
-						break;
 				}
 			}
 
 			callback(output);
 		});
+	}
+
+	[updateSelectState]() {
+		const self = this;
+
+		if (self.onSelect() || self.onMultiSelect()) {
+			self[GRID_COLUMN_BLOCK].onSelect((...args) => self.selectRow(...args));
+		}
+		else {
+			self[GRID_COLUMN_BLOCK].onSelect(undefined);
+		}
 	}
 
 	/**
@@ -878,7 +861,7 @@ export default class Grid extends Control {
 	 * @return {Object[]}
 	 */
 	getRows() {
-		return clone(this[ROWS]);
+		return clone(this[ROWS], {isCircular: true});
 	}
 
 	/**
@@ -1163,7 +1146,7 @@ export default class Grid extends Control {
 	}
 
 	/**
-	 * If settings.rows.isSelectable = true, then this will select the first rendered row (after sorting).
+	 * If onSelect or onMultiSelect is set, then this will select the first rendered row (after sorting).
 	 * @method selectFirstRow
 	 * @member module:Grid
 	 * @instance
@@ -1218,14 +1201,14 @@ export default class Grid extends Control {
 	 * @instance
 	 */
 	refresh() {
-		this[GRID_COLUMN_BLOCK].refreshLayout();
+		this[GRID_COLUMN_BLOCK].refresh();
 	}
 }
 
 Object.assign(Grid.prototype, {
 	[debouncedGroup]: debounce(function() {
 		const self = this;
-		let currentId = 0;
+		let currentId = 1;
 		let currentRowId = 0;
 
 		const getIsCollapsed = (isCollapsedCallback, group) => {
@@ -1351,10 +1334,6 @@ Object.assign(Grid.prototype, {
 	 * @arg {Function} [columns[].sortFunctionDesc] - Override for the 'desc' sort function. If "type" is "custom" and canSort is true, then this must be provided.
 	 * @arg {Boolean} [columns[].canFilter=false] - 'True' will add a filter control to the header that automatically filters when the user interacts with it.
 	 * @arg {String} [columns[].filterType] - Available types: dropdown, autoComplete, date, custom.
-	 * @arg {Object[]} [columns[].customFilters[]] - Array of strings to define custom filter values when filterType is set to 'custom'
-	 * @arg {String} [columns[].filterFunction] - Function to be used when filterType is set to 'custom'
-	 * @arg {Function} [columns[].onRenderCell] - Renders the contents of a cell. Only works if "type" is "custom", and this must be provided. This is called when a virtualized row is first instantiated.
-	 * @arg {Function} [columns[].onRemoveCell] - Called when the cell is about to be removed permanently . Only works if "type" is "custom".
 	 * @arg {Function} [columns[].canHide=false] - If true then the user can hide this column via a context menu
 	 * @arg {Function} [columns[].isHidden=false] - If true then hide the column unless the user selects it from the context menu
 	 * @arg {String} [columns[].minWidth=5rem]
@@ -1380,7 +1359,7 @@ Object.assign(Grid.prototype, {
 					filterType: enforce.enum(column.filterType, FILTER_TYPES, FILTER_TYPES.TEXT),
 					canFilter: enforce.boolean(column.canFilter, false),
 					direction: enforce.enum(column.defaultSort, SORT_TYPES, SORT_TYPES.NONE)
-				}
+				};
 
 				switch (column.type) {
 					case COLUMN_TYPES.TEXT:
@@ -1444,8 +1423,16 @@ Object.assign(Grid.prototype, {
 			this[HAS_GROUPS] = groupBy.length !== 0;
 		}
 	}),
-	onSelect: method.function(),
-	onMultiSelect: method.function(),
+	onSelect: method.function({
+		set() {
+			this[updateSelectState]();
+		}
+	}),
+	onMultiSelect: method.function({
+		set() {
+			this[updateSelectState]();
+		}
+	}),
 	itemsLabel: method.string(),
 	hideFooter: method.boolean({
 		set() {

@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import GridRow from '../../../src/ui/grid/GridRow';
-import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../../src/utility/domConstants';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
@@ -15,7 +14,7 @@ describe('GridRow', () => {
 
 	controlBaseTests.run();
 
-	describe('UpdateWidth', () => {
+	describe('.updateWidth', () => {
 		it('should set the widths of cells based on column widths even if the width of the row is set narrower than the total of the cells', () => {
 			window.control = new GridRow({
 				container: window.testContainer
@@ -33,7 +32,7 @@ describe('GridRow', () => {
 					currentWidth: 160,
 					order: 2
 				}])
-				.data({
+				.rowData({
 					cells: [{
 						text: 'test 1'
 					}, {
@@ -67,7 +66,7 @@ describe('GridRow', () => {
 					currentWidth: 160,
 					order: 2
 				}])
-				.data({
+				.rowData({
 					groupId: 1,
 					cells: [{
 						text: 'test 1'
@@ -84,14 +83,15 @@ describe('GridRow', () => {
 		});
 	});
 
-	describe('Data', () => {
-		it('should render a heading if data.groupId is defined', () => {
+	describe('.rowData', () => {
+		it('should render a heading if rowData.groupId is defined', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0
-				});
+				.rowData({
+					groupId: 1
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelectorAll('.heading').length, 1);
 		});
@@ -100,13 +100,14 @@ describe('GridRow', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title 1'
-				});
+				})
+				.groupId(1);
 
-			window.control.data({
-				groupId: 0,
+			window.control.rowData({
+				groupId: 1,
 				title: 'test title 1'
 			});
 
@@ -124,53 +125,57 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 1
 				}])
-				.data({
-					groupId: 0
-				});
+				.rowData({
+					groupId: 1
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelectorAll('.heading .checkbox').length, 1);
 		});
 
-		it('should have a title text if data.title is set and the row is a header', () => {
+		it('should have a title text if rowData.title is set and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title'
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelector('.heading > .title-container > span').textContent, 'test title');
 		});
 
-		it('should have a subtitle if data.childCount is set and the row is a header', () => {
+		it('should have a subtitle if rowData.childCount is set and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					childCount: 3
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelector('.subtitle').textContent, '3 items');
 		});
 
-		it('should have a subtitle if data.childCount and data.footerSuffix is set and the row is a header', () => {
+		it('should have a subtitle if rowData.childCount and rowData.footerSuffix is set and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					childCount: 3,
 					footerSuffix: 'things'
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelector('.subtitle').textContent, '3 things');
 		});
 
-		it('should have a selected checkbox if data.isSelected is set to true and the row is a header', () => {
+		it('should have a selected checkbox if rowData.isSelected is set to true and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
@@ -178,13 +183,15 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					childCount: 3,
 					footerSuffix: 'things',
 					isSelected: true
-				});
+				})
+				.isSelected(true)
+				.groupId(1);
 
 			assert.isTrue(document.querySelector('.checkbox input').checked);
 		});
@@ -198,12 +205,13 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					childCount: 3,
 					footerSuffix: 'things'
-				});
+				})
+				.groupId(1);
 
 			assert.isTrue(document.querySelector('.checkbox input').indeterminate);
 		});
@@ -216,43 +224,46 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					childCount: 3,
 					footerSuffix: 'things'
-				});
+				})
+				.groupId(1);
 
 			window.control.isIndeterminate(true);
 
 			assert.isTrue(document.querySelector('.checkbox input').indeterminate);
 		});
 
-		it('should render an image if data.image is a function that returns a string and the row is a header', () => {
+		it('should render an image if rowData.image is a function that returns a string and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					image() {
 						return 'base/test.png';
 					}
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelectorAll('img').length, 1);
 		});
 
-		it('should NOT render an image if data.image is a function that returns an empty string and the row is a header', () => {
+		it('should NOT render an image if rowData.image is a function that returns an empty string and the row is a header', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					image() {
 					}
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelectorAll('img').length, 0);
 		});
@@ -266,10 +277,11 @@ describe('GridRow', () => {
 					testVar++;
 				}
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title'
-				});
+				})
+				.groupId(1);
 
 			testUtil.simulateClick(document.querySelector('.heading'));
 
@@ -289,12 +301,13 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title',
 					image() {
 					}
-				});
+				})
+				.groupId(1);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 
@@ -305,20 +318,22 @@ describe('GridRow', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title'
-				});
+				})
+				.groupId(1);
 
 			window.control.columns([{
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 0
 				}])
-				.data({
+				.rowData({
 					columns: [{
 						text: 'test'
 					}]
-				});
+				})
+				.groupId(0);
 
 			assert.equal(document.querySelectorAll('.heading.display-none').length, 1);
 		});
@@ -327,7 +342,7 @@ describe('GridRow', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
-				.data({
+				.rowData({
 					columns: [{
 						text: 'test'
 					}]
@@ -337,20 +352,30 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 0
 				}])
-				.data({
-					groupId: 0,
+				.rowData({
+					groupId: 1,
 					title: 'test title'
-				});
+				})
+				.groupId(1);
 
 			assert.equal(document.querySelectorAll('.grid-cell').length, 0);
 		});
 	});
 
-	describe('Columns', () => {
+	describe('.columns', () => {
 		it('should render 3 cells if three columns are provided', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
+				.rowData({
+					cells: [{
+						text: 'test 1'
+					}, {
+						text: 'test 2'
+					}, {
+						text: 'test 3'
+					}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 0
@@ -360,16 +385,7 @@ describe('GridRow', () => {
 				}, {
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 2
-				}])
-				.data({
-					cells: [{
-						text: 'test 1'
-					}, {
-						text: 'test 2'
-					}, {
-						text: 'test 3'
-					}]
-				});
+				}]);
 
 			assert.equal(document.querySelectorAll('.grid-cell').length, 3);
 		});
@@ -388,7 +404,7 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 2
 				}])
-				.data({
+				.rowData({
 					cells: [{
 						text: 'test 1'
 					}, {
@@ -405,7 +421,7 @@ describe('GridRow', () => {
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					order: 1
 				}])
-				.data({
+				.rowData({
 					cells: [{
 						text: 'test 1'
 					}, {
@@ -419,19 +435,7 @@ describe('GridRow', () => {
 		});
 	});
 
-	describe('IsSelectable', () => {
-		testUtil.testMethod({
-			methodName: 'isSelectable',
-			defaultSettings: {
-				container: window.testContainer
-			},
-			defaultValue: false,
-			testValue: true,
-			testValueClass: 'clickable'
-		});
-	});
-
-	describe('IsSelected', () => {
+	describe('.isSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSelected',
 			defaultSettings: {
@@ -446,14 +450,14 @@ describe('GridRow', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					ID: 0,
 					order: 0
 				}])
-				.data({
-					cells: [{}]
-				})
 				.isSelected(true);
 
 			assert.equal(document.querySelector('input').checked, true);
@@ -463,13 +467,13 @@ describe('GridRow', () => {
 			window.control = new GridRow({
 				container: window.testContainer
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
-				.data({
-					cells: [{}]
-				})
 				.isSelected(false);
 
 			assert.equal(document.querySelector('input').checked, false);
@@ -478,17 +482,16 @@ describe('GridRow', () => {
 		it('should check a checkbox if it has a checkbox cell and the row is clicked', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.grid-row'));
 
@@ -498,17 +501,16 @@ describe('GridRow', () => {
 		it('should NOT check a checkbox if it has a checkbox cell and the row is clicked twice', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.grid-row'));
 			testUtil.simulateClick(document.querySelector('.grid-row'));
@@ -519,17 +521,16 @@ describe('GridRow', () => {
 		it('should NOT check a checkbox if it has a checkbox cell and the row is clicked and then isSelected is set to false', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.grid-row'));
 			window.control.isSelected(false);
@@ -540,17 +541,16 @@ describe('GridRow', () => {
 		it('should check a checkbox if it has a checkbox cell and the row is clicked and then isSelected is set to true', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.grid-row'));
 			window.control.isSelected(true);
@@ -561,17 +561,16 @@ describe('GridRow', () => {
 		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 
@@ -581,17 +580,16 @@ describe('GridRow', () => {
 		it('should NOT check a checkbox if it has a checkbox cell and the checkbox is clicked twice', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 			testUtil.simulateClick(document.querySelector('.checkbox'));
@@ -602,17 +600,16 @@ describe('GridRow', () => {
 		it('should NOT check a checkbox if it has a checkbox cell and the checkbox is clicked and then isSelected is set to false', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 			window.control.isSelected(false);
@@ -623,17 +620,16 @@ describe('GridRow', () => {
 		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked and then isSelected is set to true', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 			window.control.isSelected(true);
@@ -641,24 +637,23 @@ describe('GridRow', () => {
 			assert.equal(document.querySelector('input').checked, true);
 		});
 
-		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked and then the row data is reset', () => {
+		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked and then the rowData is reset', () => {
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
 					order: 0
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelector('.checkbox'));
 
-			window.control.data({
+			window.control.rowData({
 				cells: [{}]
 			});
 
@@ -666,7 +661,7 @@ describe('GridRow', () => {
 		});
 	});
 
-	describe('IsIndeterminate', () => {
+	describe('.isIndeterminate', () => {
 		testUtil.testMethod({
 			methodName: 'isIndeterminate',
 			defaultSettings: {
@@ -677,121 +672,9 @@ describe('GridRow', () => {
 		});
 	});
 
-	describe('OnMouseEnter', () => {
+	describe('.onSelect', () => {
 		testUtil.testMethod({
-			methodName: 'onMouseEnter',
-			defaultSettings: {
-				container: window.testContainer
-			},
-			defaultValue: undefined,
-			testValue() {
-				return 1;
-			}
-		});
-
-		it('should call the onMouseEnter callback when the mouseEnter event is triggered', () => {
-			let testVar = 0;
-			const onMouseEnter = (rowData, rowControl) => {
-				if (rowData && rowControl === window.control) {
-					testVar++;
-				}
-			};
-
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				onMouseEnter: onMouseEnter
-			});
-
-			testUtil.trigger(window.control.element(), MOUSE_ENTER_EVENT);
-
-			assert.equal(testVar, 1);
-		});
-
-		it('should NOT call the onMouseEnter callback when onMouseEnter is set back to undefined and the mouseEnter event is triggered', () => {
-			let testVar = 0;
-			const onMouseEnter = (rowData, event, rowControl) => {
-				if (rowData && event && rowControl === window.control) {
-					testVar++;
-				}
-			};
-
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				onMouseEnter: onMouseEnter
-			});
-
-			window.control.onMouseEnter(undefined);
-
-			testUtil.trigger(window.control.element(), MOUSE_ENTER_EVENT);
-
-			assert.equal(testVar, 0);
-		});
-	});
-
-	describe('OnMouseLeave', () => {
-		testUtil.testMethod({
-			methodName: 'onMouseLeave',
-			defaultSettings: {
-				container: window.testContainer
-			},
-			defaultValue: undefined,
-			testValue() {
-				return 1;
-			}
-		});
-
-		it('should call the onMouseLeave callback when the mouseLeave event is triggered', () => {
-			let testVar = 0;
-			const onMouseLeave = (rowData, rowControl) => {
-				if (rowData && rowControl === window.control) {
-					testVar++;
-				}
-			};
-
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				onMouseLeave: onMouseLeave
-			});
-
-			testUtil.trigger(window.control.element(), MOUSE_ENTER_EVENT);
-			testUtil.trigger(window.control.element(), MOUSE_LEAVE_EVENT);
-
-			assert.equal(testVar, 1);
-		});
-
-		it('should call the onMouseLeave callback when onMouseLeave is set back to undefined and the mouseLeave event is triggered', () => {
-			let testVar = 0;
-			const onMouseLeave = (rowData, event, rowControl) => {
-				if (rowData && event && rowControl === window.control) {
-					testVar++;
-				}
-			};
-
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				onMouseLeave: onMouseLeave
-			});
-
-			window.control.onMouseLeave(undefined);
-
-			testUtil.trigger(window.control.element(), MOUSE_ENTER_EVENT);
-			testUtil.trigger(window.control.element(), MOUSE_LEAVE_EVENT);
-
-			assert.equal(testVar, 0);
-		});
-	});
-
-	describe('OnClick', () => {
-		testUtil.testMethod({
-			methodName: 'onClick',
+			methodName: 'onSelect',
 			defaultSettings: {
 				container: window.testContainer
 			},
@@ -802,7 +685,7 @@ describe('GridRow', () => {
 			testValueClass: 'clickable'
 		});
 
-		it('should call the onClick callback when clicked', () => {
+		it('should call the onSelect callback when clicked', () => {
 			let testVar = 0;
 			const onRowClick = () => {
 				testVar++;
@@ -810,9 +693,7 @@ describe('GridRow', () => {
 
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				onClick: onRowClick
+				onSelect: onRowClick
 			});
 
 			testUtil.simulateClick(window.control.element());
@@ -820,7 +701,7 @@ describe('GridRow', () => {
 			assert.equal(testVar, 1);
 		});
 
-		it('should NOT call the onClick callback if an "a" element is clicked', () => {
+		it('should call the onSelect callback when a button is clicked', () => {
 			let testVar = 0;
 			const onRowClick = () => {
 				testVar++;
@@ -828,38 +709,11 @@ describe('GridRow', () => {
 
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				onClick: onRowClick
+				onSelect: onRowClick
 			})
-				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
-					ID: 0
-				}])
-				.data({
-					cells: [{
-						text: '<a>test</a>'
-					}]
-				});
-
-			testUtil.simulateClick(document.querySelector('a'));
-
-			assert.equal(testVar, 1);
-		});
-
-		it('should NOT call the onClick callback when a button is clicked', () => {
-			let testVar = 0;
-			const onRowClick = () => {
-				testVar++;
-			};
-
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true,
-				onClick: onRowClick
-			})
+				.rowData({
+					cells: [{}]
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.ACTIONS,
 					ID: 0,
@@ -871,57 +725,26 @@ describe('GridRow', () => {
 						onClick() {
 						}
 					}]
-				}])
-				.data({
-					cells: [{}]
-				});
+				}]);
 
 			testUtil.simulateClick(document.querySelectorAll('button')[1]);
 
-			assert.equal(testVar, 0);
+			assert.equal(testVar, 1);
 		});
 
-		it('should have class "clickable" if onClick is set and IsSelectable is true', () => {
+		it('should have class "clickable" if onSelect is set', () => {
 			const onRowClick = () => {
 			};
 
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true,
-				onClick: onRowClick
+				onSelect: onRowClick
 			});
 
 			assert.isTrue(query.hasClass(window.control.element(), 'clickable'));
 		});
 
-		it('should have class "clickable" if onClick is not set and IsSelectable is true', () => {
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
-			});
-
-			assert.isTrue(query.hasClass(window.control.element(), 'clickable'));
-		});
-
-		it('should NOT have class "clickable" if onClick is set and the row is a header', () => {
-			window.control = new GridRow({
-				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
-			})
-				.data({
-					groupId: 1
-				});
-
-			assert.isNotTrue(query.hasClass(window.control.element(), 'clickable'));
-		});
-
-		it('should return the row data when a button is clicked after setting data twice', () => {
+		it('should return the rowData when a button is clicked after setting rowData twice', () => {
 			let testVar = '';
 			const onRowClick = (rowData) => {
 				testVar = rowData.something;
@@ -929,10 +752,13 @@ describe('GridRow', () => {
 
 			window.control = new GridRow({
 				container: window.testContainer,
-				onSelectRow() {
-				},
-				isSelectable: true
+				onSelect() {
+				}
 			})
+				.rowData({
+					cells: [{}],
+					something: 'interesting'
+				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.ACTIONS,
 					currentWidth: 120,
@@ -943,18 +769,14 @@ describe('GridRow', () => {
 					}, {
 						icon: 'trash'
 					}]
-				}])
-				.data({
-					cells: [{}],
-					something: 'interesting'
-				});
+				}]);
 
-			window.control.data({
+			window.control.rowData({
 				cells: [{}],
 				something: 'else'
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('button')[0]);
+			testUtil.simulateClick(document.querySelector('button'));
 
 			assert.equal(testVar, 'else');
 		});

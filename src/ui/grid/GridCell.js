@@ -23,7 +23,6 @@ const TOOLBAR = Symbol();
 const TOOLTIP_CONTROL = Symbol();
 const DISPLAY_TYPE = Symbol();
 const CURRENT_CONTENT = Symbol();
-const CUSTOM_DATA = Symbol();
 const CHECKBOX = Symbol();
 const ICON_CONTROL = Symbol();
 
@@ -52,7 +51,6 @@ export default class GridCell extends Control {
 		super(settings);
 
 		const self = this;
-		self[CUSTOM_DATA] = {};
 
 		self.classes(CELL_CLASS);
 		self.css({
@@ -196,9 +194,7 @@ export default class GridCell extends Control {
 				}
 			});
 		}
-		if (self[CHECKBOX]) {
-			self[CHECKBOX].isChecked(self.isSelected(), true);
-		}
+		self[CHECKBOX].isChecked(self.isSelected(), true);
 	}
 
 	/**
@@ -217,10 +213,9 @@ export default class GridCell extends Control {
 						return {
 							...settings,
 							classes: settings.classes || 'icon-button',
-							stopPropagation: true,
 							onClick() {
 								if (settings.onClick) {
-									settings.onClick(self.data());
+									settings.onClick(self.rowData());
 								}
 								if (self.onSelect()) {
 									self.onSelect()(true);
@@ -291,41 +286,8 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Object} [data]
 	 * @returns {Object|this}
 	 */
-	data: method.object({
+	rowData: method.object({
 		init: {}
-	}),
-
-	/**
-	 * @method onRenderCell
-	 * @member module:GridCell
-	 * @instance
-	 * @arg {Function} onRenderCell
-	 * @returns {Function|this}
-	 */
-	onRenderCell: method.function({
-		other: undefined
-	}),
-
-	/**
-	 * @method onRemoveCell
-	 * @member module:GridCell
-	 * @instance
-	 * @arg {Function} onRemoveCell
-	 * @returns {Function|this}
-	 */
-	onRemoveCell: method.function({
-		other: undefined
-	}),
-
-	/**
-	 * @method onRowClick
-	 * @member module:GridCell
-	 * @instance
-	 * @arg {Function} onRowClick
-	 * @returns {Function|this}
-	 */
-	onRowClick: method.function({
-		other: undefined
 	}),
 
 	/**
@@ -349,9 +311,6 @@ Object.assign(GridCell.prototype, {
 			if (self[CHECKBOX]) {
 				self[CHECKBOX].remove();
 				self[CHECKBOX] = null;
-			}
-			if (self.onRemoveCell()) {
-				self.onRemoveCell()(self.content(), self);
 			}
 			self[CURRENT_CONTENT] = null;
 			dom.empty(self);
@@ -412,12 +371,6 @@ Object.assign(GridCell.prototype, {
 					self[DISPLAY_TYPE] = DISPLAY_TYPES.BUTTONS;
 
 					self[addActionButtons](content);
-					break;
-
-				case COLUMN_TYPES.CUSTOM:
-					self[DISPLAY_TYPE] = DISPLAY_TYPES.CUSTOM;
-
-					self.onRenderCell()(content, self.element(), self[CUSTOM_DATA]);
 					break;
 
 				case COLUMN_TYPES.CHECKBOX:

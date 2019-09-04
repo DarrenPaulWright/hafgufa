@@ -88,7 +88,7 @@ describe('Radio', () => {
 	});
 
 	describe('.onChange', () => {
-		it('should call the onChange callback when isChecked is set to true', () => {
+		it('should not call the onChange callback when isChecked is set to true', () => {
 			let context;
 			let value;
 
@@ -105,11 +105,11 @@ describe('Radio', () => {
 
 			window.control.isChecked(true);
 
-			assert.equal(context, window.control);
-			assert.equal(value, true);
+			assert.equal(context, undefined);
+			assert.equal(value, undefined);
 		});
 
-		it('should call the onChange callback when isChecked is set to false', () => {
+		it('should not call the onChange callback when isChecked is set to false', () => {
 			let context;
 			let value;
 
@@ -127,8 +127,8 @@ describe('Radio', () => {
 			window.control.isChecked(true);
 			window.control.isChecked(false);
 
-			assert.equal(context, window.control);
-			assert.equal(value, false);
+			assert.equal(context, undefined);
+			assert.equal(value, undefined);
 		});
 
 		it('should call the onChange callback when the label is clicked', () => {

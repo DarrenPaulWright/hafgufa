@@ -158,14 +158,24 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Get a reference to a control at a specific offset.
+	 *
 	 * @method getControlAtOffset
 	 * @member module:ControlRecycler
 	 * @instance
+	 *
 	 * @arg {Number} [controlOffset]
+	 * @arg {Boolean} [canCreateNew=false]
+	 *
 	 * @returns {Object}
 	 */
-	getControlAtOffset(controlOffset) {
-		return this[VISIBLE_CONTROLS][controlOffset];
+	getControlAtOffset(controlOffset, canCreateNew = false) {
+		let control = this[VISIBLE_CONTROLS][controlOffset];
+
+		if (!control && canCreateNew) {
+			control = this.getRecycledControl();
+		}
+
+		return control;
 	},
 
 	/**

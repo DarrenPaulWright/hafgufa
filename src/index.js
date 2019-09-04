@@ -29,6 +29,7 @@ export { default as Source } from './ui/media/Source';
 export { default as Conversion } from './ui/forms/Conversion';
 export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
+export { default as EditableGrid } from './ui/forms/EditableGrid';
 export { default as FileInput } from './ui/forms/FileInput';
 export { default as FilePicker } from './ui/forms/FilePicker';
 export { default as FileThumbnail, PREVIEW_SIZES } from './ui/forms/FileThumbnail';

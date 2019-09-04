@@ -231,7 +231,8 @@ export default class Calendar extends Control {
 		}
 
 		repeat(DAYS_IN_A_WEEK, (dayIndex) => {
-			(self[WEEKDAY_RECYCLER].getControlAtOffset(dayIndex) || self[WEEKDAY_RECYCLER].getRecycledControl())
+			self[WEEKDAY_RECYCLER]
+				.getControlAtOffset(dayIndex, true)
 				.title(date.day(dayIndex).format(newFormat));
 		});
 	}
@@ -297,7 +298,8 @@ export default class Calendar extends Control {
 				classes += DIFFERENT_MONTH_CLASS;
 			}
 
-			(self[DAY_RECYCLER].getControlAtOffset(dayIndex) || self[DAY_RECYCLER].getRecycledControl())
+			self[DAY_RECYCLER]
+				.getControlAtOffset(dayIndex, true)
 				.removeClass(TODAY_CLASS + DIFFERENT_MONTH_CLASS)
 				.addClass(classes)
 				.isSelected(self.selectedDate() && currentDay.isSame(self.selectedDate(), MOMENTJS_DAY))

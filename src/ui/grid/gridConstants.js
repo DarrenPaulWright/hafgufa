@@ -10,7 +10,6 @@ export const COLUMN_TYPES = new Enum({
 	DATE_TIME: 'datetime',
 	ACTIONS: 'actions',
 	IMAGE: 'image',
-	CUSTOM: 'custom',
 	CHECKBOX: 'checkbox',
 	NONE: 'none'
 });
@@ -19,7 +18,6 @@ export const FILTER_TYPES = new Enum({
 	AUTO_COMPLETE: 'autoComplete',
 	NUMBER: 'number',
 	DATE: 'date',
-	CUSTOM: 'custom',
 	NONE: 'none'
 });
 export const SORT_TYPES = new Enum({
@@ -37,8 +35,7 @@ export const DISPLAY_TYPES = new Enum({
 	TEXT: 'text',
 	IMAGE: 'image',
 	BUTTONS: 'buttons',
-	CHECKBOX: 'checkbox',
-	CUSTOM: 'custom'
+	CHECKBOX: 'checkbox'
 });
 export const CONTEXT_MENU_COLUMN_PREFIX = 'column-';
 export const CONTEXT_MENU_SORT_PREFIX = 'sort-';

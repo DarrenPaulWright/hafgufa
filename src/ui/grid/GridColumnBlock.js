@@ -24,14 +24,12 @@ const updateRow = Symbol();
 export default class GridColumnBlock extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.GRID_COLUMN_BLOCK;
-		settings.rows = settings.rows || {};
 
 		super(settings);
 
 		const self = this;
 		self[RENDERED_WIDTH] = 0;
 		self.classes('grid-column-block');
-		self.areRowsSelectable(Boolean(settings.rows.onClick || settings.rows.isSelectable || settings.rows.onMultiSelect));
 
 		self[GRID_HEADER] = new GridHeader({
 			container: self.element(),
@@ -46,16 +44,12 @@ export default class GridColumnBlock extends Control {
 			container: self.element(),
 			height: settings.isAutoHeight ? AUTO : HUNDRED_PERCENT,
 			isVirtualized: settings.isVirtualized,
-			itemSize: settings.rows.height || null,
 			emptyContentMessage: settings.noItemsText || 'No items to display',
 			itemControl: GridRow,
 			extraRenderedItemsRatio: 1,
 			itemDefaultSettings: {
-				onClick: settings.rows.onClick,
-				onMouseEnter: settings.rows.onMouseEnter,
-				onMouseLeave: settings.rows.onMouseLeave,
 				wordWrap: settings.wordWrap,
-				onSelectRow: settings.onSelectRow,
+				onSelect: settings.onSelect,
 				onSelectGroup: settings.onSelectGroup,
 				onExpandCollapseGroup: settings.onExpandCollapseGroup
 			},
@@ -81,7 +75,7 @@ export default class GridColumnBlock extends Control {
 				self[VIRTUAL_LIST].height(AUTO);
 			}
 			else {
-				self[VIRTUAL_LIST].height((self.height() - self[GRID_HEADER].height()) + PIXELS);
+				self[VIRTUAL_LIST].height((self.borderHeight() - self[GRID_HEADER].borderHeight()) + PIXELS);
 			}
 		}, true);
 
@@ -96,14 +90,17 @@ export default class GridColumnBlock extends Control {
 	[updateRow](rowControl, rowData) {
 		const self = this;
 
-		rowControl.data(rowData);
 		rowControl
-			.isSelectable(self.areRowsSelectable())
-			.isSelected(rowData.isSelected || false)
+			.rowData(rowData)
+			.rowID(rowData.rowID || '')
+			.onSelect(self.onSelect())
+			.isSelected(rowData.groupId ? false : rowData.isSelected || false)
 			.isIndeterminate(rowData.isIndeterminate || false)
 			.classes(rowData.classes || '')
 			.updateWidth(self[RENDERED_WIDTH])
-			.isEnabled(!(rowData.groupId && rowData.childCount === 0 && self.isFiltered()))
+			.isEnabled(rowData.disabled || !(rowData.groupId && rowData.childCount === 0 && self.isFiltered()))
+			.indentLevel(rowData.depth || 0)
+			.groupId(rowData.groupId || 0)
 			.columns(self[GRID_HEADER].columns() || {});
 	}
 }
@@ -165,12 +162,12 @@ Object.assign(GridColumnBlock.prototype, {
 	/**
 	 * Delete all the rows currently displayed and build new ones. If no new rows are provided, show the empty contents
 	 * message.
-	 * @method renderRows
+	 * @method rows
 	 * @member module:GridColumnBlock
 	 * @instance
 	 * @arg {Object} newRows - This is the final result of {@link module:Grid#sort}
 	 */
-	renderRows(newRows) {
+	rows(newRows) {
 		const self = this;
 
 		self[VIRTUAL_LIST].itemData(newRows);
@@ -199,5 +196,18 @@ Object.assign(GridColumnBlock.prototype, {
 	 */
 	isFiltered: method.boolean(),
 
-	areRowsSelectable: method.boolean()
+	onSelect: method.function({
+		set(onSelect) {
+			this[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
+				control.onSelect(onSelect);
+			});
+		},
+		other: undefined
+	}),
+
+	refresh() {
+		this[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
+			control.refresh();
+		});
+	}
 });

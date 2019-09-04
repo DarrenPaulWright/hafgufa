@@ -122,8 +122,8 @@ describe('GridColumnBlock', () => {
 		});
 	});
 
-	describe('RenderRows', () => {
-		it('should return the row data when a button is clicked after setting renderRows', () => {
+	describe('rows', () => {
+		it('should return the row data when a button is clicked after setting rows', () => {
 			let testVar = '';
 			const onRowClick = (rowData) => {
 				testVar = rowData.something;
@@ -155,7 +155,7 @@ describe('GridColumnBlock', () => {
 					}]
 				}]);
 
-			window.control.renderRows([{
+			window.control.rows([{
 				ID: shortid.generate(),
 				rowID: '1',
 				cells: [{
@@ -171,9 +171,9 @@ describe('GridColumnBlock', () => {
 				something: 'another'
 			}]);
 
-			window.control.renderRows([]);
+			window.control.rows([]);
 
-			window.control.renderRows([{
+			window.control.rows([{
 				ID: shortid.generate(),
 				rowID: '1',
 				cells: [{
