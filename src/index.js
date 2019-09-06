@@ -26,6 +26,7 @@ export { default as TextArea } from './ui/elements/TextArea';
 export { default as Video } from './ui/media/Video';
 export { default as Source } from './ui/media/Source';
 
+export { default as CheckBoxes } from './ui/forms/CheckBoxes';
 export { default as Conversion } from './ui/forms/Conversion';
 export { default as DateInput } from './ui/forms/DateInput';
 export { default as Description } from './ui/forms/Description';
@@ -36,6 +37,7 @@ export { default as FileThumbnail, PREVIEW_SIZES } from './ui/forms/FileThumbnai
 export { default as FormControl } from './ui/forms/FormControl';
 export { default as GroupedButtons } from './ui/forms/GroupedButtons';
 export { default as Picker } from './ui/forms/Picker';
+export { default as Radios } from './ui/forms/Radios';
 export { default as Score } from './ui/forms/Score';
 export { default as Slider } from './ui/forms/Slider';
 export { default as Tags } from './ui/forms/Tags';

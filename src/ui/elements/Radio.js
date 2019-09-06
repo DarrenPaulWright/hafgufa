@@ -88,7 +88,7 @@ Object.assign(Radio.prototype, {
 
 			if (self[IS_MANUAL] && self.onChange()) {
 				self[IS_MANUAL] = false;
-				self.onChange().call(self, isChecked);
+				self.onChange().trigger(null, [isChecked], self);
 			}
 
 			if (self.isIndeterminate && isChecked) {
@@ -96,5 +96,5 @@ Object.assign(Radio.prototype, {
 			}
 		}
 	}),
-	onChange: method.function()
+	onChange: method.queue()
 });
