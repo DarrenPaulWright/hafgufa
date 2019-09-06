@@ -65,6 +65,7 @@ const setMinMaxOffsets = Symbol();
  * Display a draggable resizer bar.
  *
  * @class Resizer
+ * @extends DragMixin
  * @extends Control
  *
  * @arg {Object} settings

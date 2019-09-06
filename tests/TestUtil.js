@@ -72,12 +72,12 @@ export default function TestUtil(Control) {
 		}
 	};
 
-	const getControlTypeString = () => {
+	const getControlTypeString = function() {
 		const type = window.control && window.control.type ? window.control.type() : 'undefined';
-		return 'Control: ' + type + '\n';
+		return 'Test: ' + this.currentTest.fullTitle() + '\nControl: ' + type + '\n';
 	};
 
-	const eventTests = () => {
+	const eventTests = function() {
 		const getEventList = () => {
 			return window.eventListeners.map((listener) => {
 					let output = listener.element.tagName;
@@ -92,12 +92,12 @@ export default function TestUtil(Control) {
 				.join(',\n');
 		};
 
-		assert.equal(window.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString() + 'Still has these events:\n' + getEventList());
+		assert.equal(window.eventListeners.length, 0, 'All events should be removed when a control is removed.\n' + getControlTypeString.call(this) + 'Still has these events:\n' + getEventList());
 		window.eventListeners = [];
 	};
 
-	const memoryTests = () => {
-		assert.isTrue(windowResize.getTotalCallbacks() <= 1, 'windowResize shouldn\'t have any callbacks after a test is complete. Be sure you properly remove all controls.\n' + getControlTypeString());
+	const memoryTests = function() {
+		assert.isTrue(windowResize.getTotalCallbacks() <= 1, 'windowResize shouldn\'t have any callbacks after a test is complete. Be sure you properly remove all controls.\n' + getControlTypeString.call(this));
 
 		windowResize.discardAll();
 	};
@@ -108,13 +108,13 @@ export default function TestUtil(Control) {
 
 	addEventListenerOverRides();
 
-	beforeEach(() => {
+	beforeEach(function() {
 		window.eventListeners = [];
 		window.testContainer = document.createElement('div');
 		document.body.appendChild(window.testContainer);
 	});
 
-	afterEach(() => {
+	afterEach(function() {
 		if (window.control && window.control.remove) {
 			window.control.remove();
 		}
@@ -122,8 +122,8 @@ export default function TestUtil(Control) {
 			window.testContainer.remove();
 		}
 
-		memoryTests();
-		eventTests();
+		memoryTests.call(this);
+		eventTests.call(this);
 
 		window.control = null;
 		document.body.textContent = '';

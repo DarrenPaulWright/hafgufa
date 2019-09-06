@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { BODY, Div, Drawer } from '../../../src';
+import { Drawer } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -11,13 +11,10 @@ const controlBaseTests = new ControlTests(Drawer, testUtil, {
 describe('Drawer', () => {
 	controlBaseTests.run();
 
-	const newContainer = () => {
-		return new Div({
-			container: BODY,
-			width: 1000,
-			height: 1000
-		});
-	};
+	beforeEach(() => {
+		window.testContainer.style.width = '1000px';
+		window.testContainer.style.height = '1000px';
+	});
 
 	describe('.dock', () => {
 		it('should have a class "top" if set to top', () => {
@@ -60,7 +57,7 @@ describe('Drawer', () => {
 	describe('.canResize', () => {
 		it('should NOT have a resizer if canResize is false', () => {
 			window.control = new Drawer({
-				container: newContainer(),
+				container: window.testContainer,
 				dock: 'top',
 				canResize: false
 			});
@@ -70,7 +67,7 @@ describe('Drawer', () => {
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "top"', () => {
 			window.control = new Drawer({
-				container: newContainer(),
+				container: window.testContainer,
 				dock: 'top',
 				height: '4rem',
 				canResize: true
@@ -82,7 +79,7 @@ describe('Drawer', () => {
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "right"', () => {
 			window.control = new Drawer({
-				container: newContainer(),
+				container: window.testContainer,
 				dock: 'right',
 				width: '4rem',
 				canResize: true
@@ -94,7 +91,7 @@ describe('Drawer', () => {
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "bottom"', () => {
 			window.control = new Drawer({
-				container: newContainer(),
+				container: window.testContainer,
 				dock: 'bottom',
 				height: '4rem',
 				canResize: true
@@ -106,7 +103,7 @@ describe('Drawer', () => {
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "left"', () => {
 			window.control = new Drawer({
-				container: newContainer(),
+				container: window.testContainer,
 				dock: 'left',
 				width: '4rem',
 				canResize: true
