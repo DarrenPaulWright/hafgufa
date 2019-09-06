@@ -66,10 +66,14 @@ export default (Base) => {
 			self[IGNORE_PADDING] = settings.ignorePadding;
 
 			self.onResize(() => {
-				if (self.canDrag()) {
-					self[updateBounds]();
-				}
-			});
+					if (self.canDrag()) {
+						self[updateBounds]();
+					}
+				})
+				.onRemove(() => {
+					clear(self[DRAG_DELAY]);
+					self[stopThrow]();
+				});
 		}
 
 		[stopThrow]() {
