@@ -229,7 +229,6 @@ export default class EditableGrid extends FormControl {
 			cellData.rowID = rowID;
 
 			self[CURRENT_VALUE].forEach((row) => {
-				console.log('row:', row);
 				if (row.rowID === cellData.rowID) {
 					rowFound = true;
 					row.values[columnIndex] = cellData;
@@ -371,8 +370,8 @@ export default class EditableGrid extends FormControl {
 					control: TextInput,
 					textWidth: editOptions.textWidth || '14rem',
 					onChange(newValue) {
-						cellData.text = newValue.value;
-						self[prefill](column.editOptions, newValue.value);
+						cellData.text = newValue;
+						self[prefill](column.editOptions, newValue);
 						self[onEditControlChange](cellData, rowData.rowID, columnCount, newValue);
 					},
 					value: cellData.text || editOptions.defaultValue
@@ -391,8 +390,8 @@ export default class EditableGrid extends FormControl {
 				Object.assign(controlSettings, {
 					control: Conversion,
 					onChange(newValue) {
-						cellData.text = newValue.value;
-						self[prefill](column.editOptions, newValue.value);
+						cellData.text = newValue;
+						self[prefill](column.editOptions, newValue);
 						self[onEditControlChange](cellData, rowData.rowID, columnCount, newValue);
 					},
 					value: cellData.text || editOptions.defaultValue
@@ -404,14 +403,14 @@ export default class EditableGrid extends FormControl {
 					showAll: enforce.boolean(column.showAll, true),
 					showSelectAll: column.showSelectAll,
 					onChange(newValue) {
-						if (newValue.value.length) {
-							cellData.text = newValue.value.map((item) => item.title).join(', ');
+						if (newValue.length) {
+							cellData.text = newValue.map((item) => item.title).join(', ');
 						}
 						else {
 							cellData.text = '';
 						}
-						if (newValue.value.length) {
-							self[prefill](column.editOptions, newValue.value[0]);
+						if (newValue.length) {
+							self[prefill](column.editOptions, newValue[0]);
 						}
 						self[onEditControlChange](cellData, rowData.rowID, columnCount);
 					},
@@ -539,7 +538,6 @@ export default class EditableGrid extends FormControl {
 	[showDialog](rowId) {
 		const self = this;
 		const rowData = self[CURRENT_VALUE].find((row) => row.rowID === rowId);
-		console.log('show dialog');
 
 		self[IS_EDITING] = !!rowData;
 

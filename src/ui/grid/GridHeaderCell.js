@@ -108,7 +108,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			container: self.element(),
 			defaultButtonText: 'Filter',
 			onChange(newValue) {
-				self[applyOrFilter](newValue.value.map((item) => item.ID));
+				self[applyOrFilter](newValue.map((item) => item.ID));
 			}
 		});
 
@@ -126,7 +126,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			container: self.element(),
 			onChange(newValue) {
 				if (!self[IGNORE_EVENTS]) {
-					self[applyOrFilter](newValue.value);
+					self[applyOrFilter](newValue);
 				}
 			}
 		});

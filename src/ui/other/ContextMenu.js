@@ -34,7 +34,7 @@ export default class ContextMenu extends Menu {
 			select(BODY)
 				.on(CONTEXT_MENU_EVENT + id, callback)
 				.on(CLICK_EVENT + id, callback);
-		}
+		};
 
 		setEvents(onContextMenu);
 		self.addClass(CONTEXT_MENU_CLASS)

@@ -334,7 +334,7 @@ Object.assign(Menu.prototype, {
 					placeholder: locale.get('filter'),
 					value: self.currentFilter(),
 					onChange(newValue) {
-						self.currentFilter(newValue.value);
+						self.currentFilter(newValue);
 					}
 				});
 

@@ -149,12 +149,7 @@ Object.assign(FormControl.prototype, {
 
 				if (!skipCallback) {
 					self.onChange()
-						.trigger(null, [{
-							id: self.ID(),
-							control: self,
-							value: self[CURRENT_VALUE],
-							data: self.data()
-						}], self);
+						.trigger(null, [self[CURRENT_VALUE]], self);
 				}
 			}, changeDelay, {
 				maxWait: 15000

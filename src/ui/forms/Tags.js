@@ -125,7 +125,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		applySettings(self, settings);
 
 		self.onChange((newValue) => {
-			self[TEXT_INPUT].placeholder(newValue.value.length ? '.' : self.placeholder());
+			self[TEXT_INPUT].placeholder(newValue.length ? '.' : self.placeholder());
 		});
 
 		self.onResize(() => {
@@ -173,9 +173,9 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	[onChangeTextInput](newValue) {
 		const self = this;
 
-		self[FAKE_INPUT].textContent = newValue.value;
+		self[FAKE_INPUT].textContent = newValue;
 
-		if (self[CURRENT_TAGS].length || newValue.value.length) {
+		if (self[CURRENT_TAGS].length || newValue.length) {
 			self[TEXT_INPUT].width(dom.get.width(self[FAKE_INPUT]) + dom.get.paddings.width(self[TEXT_INPUT]) + 8);
 		}
 		else {

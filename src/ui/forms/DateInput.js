@@ -119,9 +119,9 @@ export default class DateInput extends FormControl {
 
 	[onDateInputChange](newValue) {
 		const self = this;
-		const newDate = moment(new Date(newValue.value));
+		const newDate = moment(new Date(newValue));
 
-		if (newDate.isValid() || newValue.value === '') {
+		if (newDate.isValid() || newValue === '') {
 			if (self[POPUP]) {
 				self[POPUP].remove();
 			}

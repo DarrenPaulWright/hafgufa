@@ -40,7 +40,7 @@ export default class Conversion extends FocusMixin(FormControl) {
 		const fromTextInput = new TextInput({
 			width: INPUT_WIDTH,
 			onChange(newValue) {
-				self[setValue](newValue.value, true);
+				self[setValue](newValue, true);
 				self.triggerChange();
 			}
 		});
@@ -48,7 +48,7 @@ export default class Conversion extends FocusMixin(FormControl) {
 		const toTextInput = new TextInput({
 			width: INPUT_WIDTH,
 			onChange(newValue) {
-				self[setValue](newValue.value, false);
+				self[setValue](newValue, false);
 				self.triggerChange();
 			}
 		});
