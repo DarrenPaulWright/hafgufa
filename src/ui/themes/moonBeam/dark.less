@@ -49,15 +49,14 @@
 /* group */
 @groupBackgroundColor: desaturate(darken(@highlightColor, 36%), 70%);
 
-@groupBackground: radial-gradient(
-		ellipse at top center,
-		fade(@highlightColor, 20%),
-		fade(@highlightColor, 10%) 40%,
-		fade(@highlightColor, 0%)),
+@groupBackground: radial-gradient(ellipse at top center,
+fade(@highlightColor, 20%),
+fade(@highlightColor, 10%) 40%,
+fade(@highlightColor, 0%)),
 @groupBackgroundColor;
 
-@groupShadow: inset 0 0.05rem 0 fade(@highlightColor, 80%),
-inset 0 -0.05rem 0 fade(@highlightColor, 80%),
+@groupShadow: inset 0 0.06rem 0 fade(@highlightColor, 80%),
+inset 0 -0.06rem 0 fade(@highlightColor, 80%),
 inset 0 @topGlowSize @topGlowSize -@topGlowSize fade(@highlightColor, 40%),
 inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 40%),
 0 0 1rem fade(@highlightColor, 20%);

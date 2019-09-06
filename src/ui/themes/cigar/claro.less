@@ -27,8 +27,8 @@
 @largeShadowColor: fade(@shadowColor, 40%);
 @chromeReflectionColor: fade(@reflectionColor, 40%);
 
-@textShadow: 0 0.05rem 0 fade(@reflectionColor, 85%);
-@iconShadow: 0 0.05rem 0.05rem fade(@reflectionColor, 85%);
+@textShadow: 0 0.06rem 0 fade(@reflectionColor, 85%);
+@iconShadow: 0 0.06rem 0.06rem fade(@reflectionColor, 85%);
 
 @separatorReflectionColor: fade(@reflectionColor, 20%);
 @separatorShadowColor: fade(@shadowColor, 10%);
@@ -68,8 +68,8 @@
 /* Body */
 @bodyBackground: radial-gradient(ellipse at top center, fade(@shadowColor, 0%) 10%, @smallShadowColor 140%), @hexImageUrl, @noiseImageUrl, @backgroundColor;
 @bodyFont: normal normal @normalFontWeight @fontSize @chromeFontFamily;
-@defaultFocusOutline: 0.05rem solid @highlightColor;
-@defaultFocusOutlineOffset: -0.05rem;
+@defaultFocusOutline: 0.06rem solid @highlightColor;
+@defaultFocusOutlineOffset: -0.06rem;
 
 @hyperlinkFont: @boldFontWeight @chromeFontFamily;
 @hyperlinkTextDecoration: none;
@@ -107,7 +107,7 @@
 @icon3xSize: 3em;
 @icon4xSize: 4em;
 @icon5xSize: 5em;
-@iconTextMargin: -0.05rem 0 0;
+@iconTextMargin: -0.06rem 0 0;
 @iconStackedSize: 0.7em;
 @subIconSize: 0.67em;
 @subIconPosition: 0.5em;
@@ -152,19 +152,19 @@
 @groupedButtonMultiSelectPaddingLeft: 0.85rem;
 @buttonImageSize: 2.3rem;
 @popupButtonCaretWidth: 1.4rem;
-@iconButtonPadding: 0.05rem 0.05rem 0.2rem;
+@iconButtonPadding: 0.06rem 0.06rem 0.2rem;
 
 .buttonEx() {
 }
 
 @buttonSelectedTextColor: saturate(lighten(@highlightColor, 20), 10);
-@buttonReflectionShadow: inset 0 0.05rem 0 @chromeReflectionColor;
+@buttonReflectionShadow: inset 0 0.06rem 0 @chromeReflectionColor;
 
 @buttonFont: normal normal @normalFontWeight @chromeFontSize/1.5em @chromeFontFamily;
 @buttonFontColor: @chromeFontColor;
 
-@formButtonShadow: @buttonReflectionShadow, 0 0.05rem 0.3rem @smallShadowColor;
-@formButtonSelectedShadow: inset 0 0.15rem 0.6rem @smallShadowColor, 0 0.05rem 0 @chromeReflectionColor;
+@formButtonShadow: @buttonReflectionShadow, 0 0.06rem 0.3rem @smallShadowColor;
+@formButtonSelectedShadow: inset 0 0.15rem 0.6rem @smallShadowColor, 0 0.06rem 0 @chromeReflectionColor;
 @formButtonSelectedTextShadow: 0 0 1.15rem @buttonSelectedTextColor;
 
 @formButtonBorderColor: #b5afa9;
@@ -181,7 +181,7 @@
 @formButtonIconShadow: @headerButtonIconTextShadow;
 
 @formButtonSelectedFontColor: @buttonSelectedTextColor;
-@formButtonSelectedBorder: 0.05rem solid;
+@formButtonSelectedBorder: 0.06rem solid;
 @formButtonSelectedBorderImage: radial-gradient(@subHighlightColor 65%, @formButtonSelectedFontColor 70%, transparent 95%) 1;
 @formButtonSelectedTopColor: #5f5850;
 @formButtonSelectedBottomColor: #5f5850;
@@ -213,7 +213,7 @@
 @groupedButtonSelectedShadow: @formButtonSelectedShadow;
 @groupedButtonBorderLeftColor: @separatorShadowColor;
 @groupedButtonBorderRightColor: @separatorReflectionColor;
-@groupedButtonWrapperShadow: 0 0.05rem 0 @chromeReflectionColor, inset 0 0.05rem 0.2rem @largeShadowColor;
+@groupedButtonWrapperShadow: 0 0.06rem 0 @chromeReflectionColor, inset 0 0.06rem 0.2rem @largeShadowColor;
 @groupedButtonWrapperBackground: @formButtonBorderColor;
 
 @iconButtonOpacity: 0.5;
@@ -359,7 +359,7 @@
 
 @inputBackground: fade(@shadowColor, 10%);
 @inputBackgroundActive: fade(@inputBackground, 8%);
-@inputShadow: inset 0 0.3rem 0.4rem fade(@shadowColor, 15%), 0 0.05rem 0 @chromeReflectionColor;
+@inputShadow: inset 0 0.3rem 0.4rem fade(@shadowColor, 15%), 0 0.06rem 0 @chromeReflectionColor;
 
 /* Progress Bar */
 @progressBarMinHeight: 0.6rem;
@@ -372,7 +372,7 @@
 @progressBarPointerSize: 1.4em;
 @progressBarLargePointerSize: 2.6em;
 @progressBarBackground: @inputBackground;
-@progressBarShadow: inset 0 0.05rem 0.3rem @smallShadowColor;
+@progressBarShadow: inset 0 0.06rem 0.3rem @smallShadowColor;
 @progressBarCompletedRightColor: @highlightColor;
 @progressBarCompletedBackground: linear-gradient(to right, @subHighlightColor, @progressBarCompletedRightColor 95%);
 @progressBarDividerBorder: 0.2rem solid fade(@chromeFontColor, 20%);
@@ -451,9 +451,9 @@
 @gridRowAlternatingSelectedBackground: darken(@gridRowSelectedBackground, 3);
 @gridRowAlternatingSelectedHoverBackground: multiply(@gridRowAlternatingBackground, @gridRowSelectedHoverBackground);
 
-@gridRowGroupBorder: 0.05rem solid @formButtonBorderColor;
+@gridRowGroupBorder: 0.06rem solid @formButtonBorderColor;
 @gridRowGroupBackground: @formButtonBackground;
-@gridRowGroupHoverBorder: 0.05rem solid darken(@formButtonBorderColor, 3);
+@gridRowGroupHoverBorder: 0.06rem solid darken(@formButtonBorderColor, 3);
 @gridRowGroupHoverBackground: @formButtonHoverBackground;
 
 @gridCellSeparatorColor: fade(@fontColor, 5%);
@@ -484,7 +484,7 @@
 @tabsHorizontalGroupMargin: 0 @tabsHorizontalTabContainerPaddingSize 0 0;
 @tabsHorizontalTabContainerShadow: inset 0 -0.15rem 0.3rem -0.15rem @smallShadowColor;
 @tabsHorizontalTabsShadow: 0 0 0.3rem @smallShadowColor;
-@tabsHorizontalTabShadow: inset 0 0.05rem 0 @chromeReflectionColor;
+@tabsHorizontalTabShadow: inset 0 0.06rem 0 @chromeReflectionColor;
 
 @tabsVerticalTabContainerPaddingSize: 1.4rem;
 @tabsVerticalTabContainerWidth: 15rem;
@@ -503,7 +503,7 @@
 @groupTopColor: @backgroundColor;
 @groupBottomColor: @mainHeaderBottomColor;
 @groupBackground: @checkImageUrl, @noiseImageUrl, radial-gradient(ellipse at top center, @groupTopColor 0%, @groupBottomColor 140%) @groupBottomColor;
-@groupShadow: inset 0 0.05rem 0 @chromeReflectionColor, 0 0.6rem 0.85rem @largeShadowColor;
+@groupShadow: inset 0 0.06rem 0 @chromeReflectionColor, 0 0.6rem 0.85rem @largeShadowColor;
 @groupIconColor: @highlightColor;
 @groupBorder: none;
 .groupEx() {
@@ -544,10 +544,10 @@
 @popupShadow: 0 0.15rem 1.15rem 0 @popupShadowColor;
 
 @popupHeaderBackground: @toolbarColor;
-@popupHeaderBorderBottom: 0.05rem solid @toolbarShadowColor;
+@popupHeaderBorderBottom: 0.06rem solid @toolbarShadowColor;
 
 @popupFooterBackground: @toolbarColor;
-@popupFooterBorderTop: 0.05rem solid @toolbarHighlightColor;
+@popupFooterBorderTop: 0.06rem solid @toolbarHighlightColor;
 
 @tooltipBackground: @smallShadowColor;
 @tooltipFontColor: @chromeInverseFontColor;
@@ -603,8 +603,8 @@
 @drawerMenuIconColor: @headerButtonIconColor;
 @drawerMenuIconShadow: @iconShadow;
 @drawerMenuItemPadding: 0.6rem 0.6rem 0.4rem;
-@drawerMenuItemBorderHighlight: 0.05rem solid @separatorReflectionColor;
-@drawerMenuItemBorderShadow: 0.05rem solid @separatorShadowColor;
+@drawerMenuItemBorderHighlight: 0.06rem solid @separatorReflectionColor;
+@drawerMenuItemBorderShadow: 0.06rem solid @separatorShadowColor;
 
 @drawerMenuFooterPadding: 0.3rem;
 
@@ -728,7 +728,7 @@
 @toastErrorBackground: fade(@errorColor, 80%);
 
 /* graph */
-@graphLineWidth: 0.05rem;
+@graphLineWidth: 0.06rem;
 @graphLineColor: @fontColor;
 @graphLineOpacity: 0.15;
 @graphFontSize: @fontSize * 0.85;
