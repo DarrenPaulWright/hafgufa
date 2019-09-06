@@ -146,7 +146,7 @@ export default (Base) => {
 						let originalElement = self.element();
 						const initialClasses = self.classes();
 
-						self.element(dom.buildNew());
+						self.element('div');
 						self.classes(initialClasses);
 
 						self[HEADING] = new Heading({

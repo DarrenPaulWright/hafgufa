@@ -26,7 +26,7 @@ export default class Section extends ControlHeadingMixin(Container) {
 		super(settings);
 
 		this
-			.element(dom.buildNew('', 'section'))
+			.element('section')
 			.addClass('section clearfix')
 			.removeClass('container');
 

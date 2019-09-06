@@ -1,7 +1,7 @@
 import { easeQuadIn, interpolateNumber, max, select, selection } from 'd3';
 import { isElement, isString } from 'type-enforcer';
 import dom from './dom';
-import { DIV, OPACITY, WINDOW } from './domConstants';
+import { OPACITY, WINDOW } from './domConstants';
 
 export const DRAG_START_EVENT = 'start';
 export const DRAG_MOVE_EVENT = 'drag';
@@ -42,7 +42,7 @@ const d3Helper = {
 			container = getElement(container, true);
 		}
 		return container
-			.append(element || DIV)
+			.append(element || 'div')
 			.classed(className, true);
 	},
 	linearGradient(ID, svg, point1, point2, stops) {

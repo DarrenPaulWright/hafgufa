@@ -5,7 +5,6 @@ import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';
 import './Icon.less';
 
-const ELEMENT = 'i';
 const CORE_CLASSES = 'icon';
 const SUB_ICON_CLASS = ' sub-icon';
 const INVERSE_CLASS = ' inverse';
@@ -38,7 +37,7 @@ const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
 	else if (name.includes(separator)) {
 		name.split(separator).forEach((subIcon, index) => {
 			buildIcon(
-				dom.appendNewTo(element, CORE_CLASSES, ELEMENT),
+				dom.appendNewTo(element, CORE_CLASSES, 'i'),
 				subIcon,
 				SUB_SEPARATOR,
 				index > 0 ? INVERSE_CLASS : ''
@@ -69,12 +68,13 @@ const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
 export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.ICON;
-		settings.element = dom.buildNew(CORE_CLASSES + ' icon-lg', ELEMENT);
+		settings.element = 'i';
 		settings.skipWindowResize = true;
 
 		super(settings);
 
 		const self = this;
+		self.addClass(CORE_CLASSES + ' icon-lg');
 
 		self.element(settings.element);
 		applySettings(self, settings);

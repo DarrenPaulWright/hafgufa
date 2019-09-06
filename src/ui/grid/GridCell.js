@@ -6,6 +6,7 @@ import Control from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import Icon from '../elements/Icon';
+import Image from '../elements/Image';
 import Toolbar from '../layout/Toolbar';
 import Tooltip from '../layout/Tooltip';
 import './GridCell.less';
@@ -25,6 +26,7 @@ const DISPLAY_TYPE = Symbol();
 const CURRENT_CONTENT = Symbol();
 const CHECKBOX = Symbol();
 const ICON_CONTROL = Symbol();
+const IMAGE_CONTROL = Symbol();
 
 const checkOverflow = Symbol();
 const addHtml = Symbol();
@@ -122,28 +124,26 @@ export default class GridCell extends Control {
 	 */
 	[addImage](content) {
 		const self = this;
-		let image;
-		let anchor;
 
 		dom.empty(self);
 
-		image = dom.buildNew('', 'img');
-		dom.attr(image, 'src', content.src);
-		dom.css(image, {
-			height: content.height,
-			width: content.width,
-			margin: content.margin
-		});
-
-		if (content.link) {
-			anchor = dom.buildNew('', 'a');
-			dom.attr(anchor, 'target', '_blank');
-			dom.attr(anchor, 'href', content.link);
-
-			dom.appendTo(anchor, image);
+		if (!self[IMAGE_CONTROL]) {
+			self[IMAGE_CONTROL] = new Image({
+				container: self
+			});
+		}
+		else if (!content || !content.src) {
+			self[IMAGE_CONTROL].remove();
+			self[IMAGE_CONTROL] = null;
 		}
 
-		dom.content(self, anchor || image);
+		if (self[IMAGE_CONTROL]) {
+			self[IMAGE_CONTROL]
+				.source(content.src)
+				.height(content.height)
+				.width(content.width)
+				.margin(content.margin);
+		}
 
 		self[CURRENT_CONTENT] = content.src;
 	}
@@ -160,7 +160,7 @@ export default class GridCell extends Control {
 				dom.empty(self);
 
 				self[ICON_CONTROL] = new Icon({
-					container: self.element()
+					container: self
 				});
 			}
 		}
@@ -185,7 +185,7 @@ export default class GridCell extends Control {
 
 		if (!self[CHECKBOX]) {
 			self[CHECKBOX] = new CheckBox({
-				container: self.element(),
+				container: self,
 				stopPropagation: true,
 				onChange(isChecked) {
 					if (self.onSelect()) {

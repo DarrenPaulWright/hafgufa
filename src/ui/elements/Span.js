@@ -1,6 +1,5 @@
 import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { SPAN } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -17,7 +16,7 @@ import Control from './../Control';
 export default class Span extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SPAN;
-		settings.element = dom.buildNew('', SPAN);
+		settings.element = 'span';
 		settings.skipWindowResize = true;
 
 		super(settings);

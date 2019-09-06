@@ -1,6 +1,5 @@
 import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { LABEL } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -17,7 +16,7 @@ import Control from './../Control';
 export default class Label extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.LABEL;
-		settings.element = dom.buildNew('', LABEL);
+		settings.element = 'label';
 		settings.skipWindowResize = true;
 
 		super(settings);

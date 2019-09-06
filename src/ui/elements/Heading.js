@@ -143,7 +143,7 @@ const IGNORE_EVENTS = Symbol();
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.HEADING;
-		settings.element = dom.buildNew('', enforce.enum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX));
+		settings.element = enforce.enum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX);
 		settings.FocusMixin = {};
 		settings.FocusMixin.setFocus = setFocus;
 
@@ -197,7 +197,7 @@ Object.assign(Heading.prototype, {
 		enum: HEADING_LEVELS,
 		init: HEADING_LEVELS.SIX,
 		set(level) {
-			this.element(dom.buildNew('', level));
+			this.element(level);
 		}
 	}),
 

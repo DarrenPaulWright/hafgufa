@@ -1,7 +1,6 @@
 import { color, select } from 'd3';
 import { applySettings, method } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
-import dom from '../../utility/dom';
 import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -35,7 +34,7 @@ const toggleItem = Symbol();
 export default class Legend extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.LEGEND;
-		settings.element = dom.buildNew('', 'svg:g');
+		settings.element = 'svg:g';
 
 		super(settings);
 

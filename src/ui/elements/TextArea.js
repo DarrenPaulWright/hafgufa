@@ -1,6 +1,5 @@
 import { applySettings, method } from 'type-enforcer';
-import dom from '../../utility/dom';
-import { ROWS, TEXT_AREA } from '../../utility/domConstants';
+import { ROWS } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -17,7 +16,7 @@ import Control from './../Control';
 export default class TextArea extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.TEXT_AREA;
-		settings.element = dom.buildNew('', TEXT_AREA);
+		settings.element = 'textarea';
 		settings.skipWindowResize = true;
 
 		super(settings);

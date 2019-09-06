@@ -138,16 +138,7 @@ describe('GridCell', () => {
 			content: {
 				src: 'test.png'
 			},
-			output: '<img src=\"test.png\">',
-
-			textAlign: 'CENTER'
-		}, {
-			type: 'IMAGE',
-			content: {
-				src: 'test.png',
-				link: 'index.html'
-			},
-			output: '<a target=\"_blank\" href=\"index.html\"><img src=\"test.png\"></a>',
+			output: '<img src=\"test.png\" style=\"object-fit: contain; opacity: 1;\">',
 			textAlign: 'CENTER'
 		}, {
 			type: 'IMAGE',
@@ -163,7 +154,7 @@ describe('GridCell', () => {
 					icon: 'circle'
 				}]
 			},
-			output: '<div class=\"toolbar clearfix\"><button class=\"icon-button\" type=\"button\"><i class=\"icon icon-lg fa-circle\" id="buttonIcon"></i></button></div>',
+			output: '<div class=\"toolbar clearfix\"><button type=\"button\" class=\"icon-button\"><i class=\"icon icon-lg fa-circle\" id="buttonIcon"></i></button></div>',
 			textAlign: 'NONE'
 		}, {
 			type: 'CHECKBOX',

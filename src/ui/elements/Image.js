@@ -1,7 +1,6 @@
 import { event } from 'd3';
 import { applySettings, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
-import { DRAG_START_EVENT, IMAGE, OBJECT_FIT, OPACITY, SOURCE } from '../../utility/domConstants';
+import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 import './Image.less';
@@ -33,7 +32,7 @@ export const FIT = new Enum({
 export default class Image extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.IMAGE;
-		settings.element = dom.buildNew('', IMAGE);
+		settings.element = 'img';
 		settings.skipWindowResize = true;
 
 		super(settings);

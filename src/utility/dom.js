@@ -8,7 +8,6 @@ import {
 	BORDER_RIGHT_WIDTH,
 	BORDER_TOP_WIDTH,
 	BOTTOM,
-	DIV,
 	DOCUMENT,
 	EMPTY_STRING,
 	HEIGHT,
@@ -118,7 +117,7 @@ const dom = {
 
 		}
 		else {
-			newElement = DOCUMENT.createElement(element || DIV);
+			newElement = DOCUMENT.createElement(element || 'div');
 			dom.addClass(newElement, className);
 		}
 

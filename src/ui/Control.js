@@ -78,81 +78,25 @@ const cssPropertiesToParseAsInt = [
 	PADDING_BOTTOM,
 	PADDING_LEFT
 ];
+const cssSizeMethods = [
+	'padding',
+	'margin',
+	'minWidth',
+	'width',
+	'maxWidth',
+	'minHeight',
+	'height',
+	'maxHeight'
+];
 
 const propagationClickEvent = () => {
 	event.stopPropagation();
 };
 
-/**
- * Set a click event that stops propagation.
- * @function setPropagationClickEvent
- */
-const setPropagationClickEvent = function() {
-	const self = this;
-
-	self.set(
-		CLICK_EVENT + STOP_PROPAGATION_EVENT_SUFFIX,
-		propagationClickEvent,
-		(self.stopPropagation() && self.isEnabled())
-	);
-};
-
-/**
- * Update the elements id attribute with the current ID and IDSuffix.
- * @function updateElementID
- */
-const updateElementID = function() {
-	const self = this;
-	self.attr('id', self.ID() ? (self.ID() + (self.IDSuffix() || '')) : null);
-};
-
-const setResizeEvent = function() {
-	const self = this;
-
-	if (!self.skipWindowResize()) {
-		self[WINDOW_RESIZE_ID] = windowResize.add((windowWidth, windowHeight) => {
-			if (!self.isRemoved) {
-				let containerHeight;
-
-				if (self.container() && self.height().isPercent) {
-					containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
-					containerHeight -= dom.get.paddings.height(self.container());
-					containerHeight -= dom.get.margins.height(self[ELEMENT]);
-					if (WINDOW.getComputedStyle(this[ELEMENT]).boxSizing !== BORDER_BOX) {
-						containerHeight -= dom.get.paddings.height(self[ELEMENT]);
-					}
-					self.css(HEIGHT, Math.floor(containerHeight));
-				}
-
-				const newWidth = self.borderWidth();
-				const newHeight = self.borderHeight();
-
-				if (self[FORCE_RESIZE] || self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
-					self[FORCE_RESIZE] = false;
-					self[CURRENT_WIDTH] = newWidth;
-					self[CURRENT_HEIGHT] = newHeight;
-
-					self.onResize().trigger(null, [windowWidth, windowHeight, self], self);
-				}
-			}
-		}, self[ELEMENT], self.type());
-	}
-	else if (self[WINDOW_RESIZE_ID]) {
-		windowResize.discard(self[WINDOW_RESIZE_ID]);
-		self[WINDOW_RESIZE_ID] = null;
-	}
-};
-
-const setCssSizeElement = function(value) {
-	this.padding().element(value);
-	this.margin().element(value);
-	this.minWidth().element(value);
-	this.width().element(value);
-	this.maxWidth().element(value);
-	this.minHeight().element(value);
-	this.height().element(value);
-	this.maxHeight().element(value);
-};
+const updateElementID = Symbol();
+const setPropagationClickEvent = Symbol();
+const setCssSizeElement = Symbol();
+const setResizeEvent = Symbol();
 
 /**
  * The base class for a control
@@ -179,14 +123,14 @@ export default class Control extends Removable {
 		delete settings.prepend;
 
 		self.type(settings.type);
-		self.element(settings.element || dom.buildNew());
+		self.element(settings.element || 'div');
 		delete settings.element;
 		self.container(settings.container);
 		delete settings.container;
 		self.skipWindowResize(settings.skipWindowResize);
 		delete settings.skipWindowResize;
 
-		setResizeEvent.call(self);
+		self[setResizeEvent]();
 
 		self.onRemove(() => {
 			if (self[WINDOW_RESIZE_ID]) {
@@ -195,6 +139,70 @@ export default class Control extends Removable {
 
 			self.element(null);
 		});
+	}
+
+	/**
+	 * Update the elements id attribute with the current ID and IDSuffix.
+	 * @function updateElementID
+	 */
+	[updateElementID]() {
+		const self = this;
+		self.attr('id', self.ID() ? (self.ID() + (self.IDSuffix() || '')) : null);
+	}
+
+	/**
+	 * Set a click event that stops propagation.
+	 * @function setPropagationClickEvent
+	 */
+	[setPropagationClickEvent]() {
+		const self = this;
+
+		self.set(
+			CLICK_EVENT + STOP_PROPAGATION_EVENT_SUFFIX,
+			propagationClickEvent,
+			(self.stopPropagation() && self.isEnabled())
+		);
+	}
+
+	[setCssSizeElement](value) {
+		cssSizeMethods.forEach((method) => this[method]().element(value));
+	}
+
+	[setResizeEvent]() {
+		const self = this;
+
+		if (!self.skipWindowResize()) {
+			self[WINDOW_RESIZE_ID] = windowResize.add((windowWidth, windowHeight) => {
+				if (!self.isRemoved) {
+					let containerHeight;
+
+					if (self.container() && self.height().isPercent) {
+						containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
+						containerHeight -= dom.get.paddings.height(self.container());
+						containerHeight -= dom.get.margins.height(self[ELEMENT]);
+						if (WINDOW.getComputedStyle(this[ELEMENT]).boxSizing !== BORDER_BOX) {
+							containerHeight -= dom.get.paddings.height(self[ELEMENT]);
+						}
+						self.css(HEIGHT, Math.floor(containerHeight));
+					}
+
+					const newWidth = self.borderWidth();
+					const newHeight = self.borderHeight();
+
+					if (self[FORCE_RESIZE] || self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
+						self[FORCE_RESIZE] = false;
+						self[CURRENT_WIDTH] = newWidth;
+						self[CURRENT_HEIGHT] = newHeight;
+
+						self.onResize().trigger(null, [windowWidth, windowHeight, self], self);
+					}
+				}
+			}, self[ELEMENT], self.type());
+		}
+		else if (self[WINDOW_RESIZE_ID]) {
+			windowResize.discard(self[WINDOW_RESIZE_ID]);
+			self[WINDOW_RESIZE_ID] = null;
+		}
 	}
 }
 
@@ -225,7 +233,9 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	ID: method.string({
-		set: updateElementID,
+		set() {
+			this[updateElementID]();
+		},
 		coerce: true
 	}),
 
@@ -241,7 +251,9 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	IDSuffix: method.string({
-		set: updateElementID
+		set() {
+			this[updateElementID]();
+		}
 	}),
 
 	/**
@@ -303,41 +315,63 @@ Object.assign(Control.prototype, {
 	 */
 	element: method.element({
 		enforce(newValue, oldValue) {
-			return dom.getElement(newValue) || oldValue;
+			if (newValue) {
+				if (isElement(newValue) || newValue === WINDOW) {
+					return newValue;
+				}
+				if (isString(newValue)) {
+					const index = newValue.indexOf(':');
+
+					if (index !== -1) {
+						newValue = DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substring(0, index)}`, newValue.substring(index + 1));
+					}
+					else {
+						newValue = DOCUMENT.createElement(newValue);
+					}
+
+					return newValue;
+				}
+			}
+
+			return oldValue;
 		},
 		before(element) {
+			const self = this;
+
 			if (element) {
-				this[OLD_ELEMENT] = element;
+				self[OLD_ELEMENT] = element;
 
-				setCssSizeElement.call(this, null);
+				self[setCssSizeElement](null);
 
-				this[ELEMENT] = null;
-				this[ELEMENT_D3] = null;
+				self[ELEMENT] = null;
+				self[ELEMENT_D3] = null;
 			}
 		},
 		set(newElement) {
+			const self = this;
+
 			if (newElement) {
-				this[ELEMENT] = newElement;
-				this[ELEMENT_D3] = select(this[ELEMENT]);
+				self[ELEMENT] = newElement;
+				self[ELEMENT_D3] = select(self[ELEMENT]);
 
-				this[ELEMENT][ELEMENT_PROP] = this;
+				self[ELEMENT][ELEMENT_PROP] = self;
 
-				if (this[OLD_ELEMENT]) {
-					replaceElement(this[OLD_ELEMENT], newElement);
+				if (self[OLD_ELEMENT]) {
+					replaceElement(self[OLD_ELEMENT], newElement);
 				}
 
-				setCssSizeElement.call(this, this[ELEMENT]);
+				self[setCssSizeElement](self[ELEMENT]);
 
-				setPropagationClickEvent.call(this);
+				self[setPropagationClickEvent]();
 			}
 
-			if (this[OLD_ELEMENT]) {
-				this[OLD_ELEMENT][ELEMENT_PROP] = null;
-				dom.remove(this[OLD_ELEMENT]);
-				this[OLD_ELEMENT] = null;
+			if (self[OLD_ELEMENT]) {
+				self[OLD_ELEMENT][ELEMENT_PROP] = null;
+				dom.remove(self[OLD_ELEMENT]);
+				self[OLD_ELEMENT] = null;
 			}
 		},
-		other: [String, null]
+		other: null
 	}),
 
 	elementD3() {
@@ -699,13 +733,15 @@ Object.assign(Control.prototype, {
 	isEnabled: method.boolean({
 		init: true,
 		set(isEnabled) {
-			this.classes(DISABLED_CLASS, !isEnabled);
+			const self = this;
 
-			if (this[ELEMENT] && !isEnabled && this.isFocused) {
-				this.isFocused(false);
+			self.classes(DISABLED_CLASS, !isEnabled);
+
+			if (self[ELEMENT] && !isEnabled && self.isFocused) {
+				self.isFocused(false);
 			}
 
-			setPropagationClickEvent.call(this);
+			self[setPropagationClickEvent]();
 		}
 	}),
 
@@ -719,7 +755,9 @@ Object.assign(Control.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	stopPropagation: method.boolean({
-		set: setPropagationClickEvent
+		set() {
+			this[setPropagationClickEvent]();
+		}
 	}),
 
 	/**
@@ -871,7 +909,9 @@ Object.assign(Control.prototype, {
 	 * @returns {Boolean}
 	 */
 	skipWindowResize: method.boolean({
-		set: setResizeEvent
+		set() {
+			this[setResizeEvent]();
+		}
 	}),
 
 	/**

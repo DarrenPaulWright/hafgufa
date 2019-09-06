@@ -1,6 +1,6 @@
 import { applySettings, enforce, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { ALT, BUTTON, INPUT_TYPE, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, TITLE } from '../../utility/domConstants';
+import { ALT, INPUT_TYPE, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, TITLE } from '../../utility/domConstants';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
@@ -37,28 +37,19 @@ const mouseLeaveHandler = function() {
 
 /**
  * Display a button.
+ *
  * @class Button
  * @extends Control
  * @constructor
  *
- * @arg {Object}        settings                    - Accepts all controlBase and formControlBase settings plus:
- * @arg {function}      [settings.onClick]          - Function to be called when the button is clicked
- * @arg {function}      [settings.onMouseEnter]     - Function to be called when the mouse cursor enters the button
- * @arg {function}      [settings.onMouseLeave]     - Function to be called when the mouse cursor leaves the button
- * @arg {String}        [settings.label]            - The button label
- * @arg {String}        [settings.icon]             - The button icon
- * @arg {String}        [settings.iconSize=ICON_SIZES.LARGE] - The button icon size, see Button.ICON_SIZES
- * @arg {String}        [settings.image]            - The button image
- * @arg {String}        [settings.isSelectable=false]
- * @arg {String}        [settings.isSelected=false]
- * @arg {Function}      [settings.onFocus]          - Triggered whenever the control recieves focus
- * @arg {Function}      [settings.onBlur]           - Triggered whenever the control loses focus
+ * @arg {Object} settings
  */
 export default class Button extends FocusMixin(OnClickMixin(Control)) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.BUTTON;
 		settings.label = enforce.string(settings.label, '');
-		settings.element = dom.buildNew(settings.classes || DEFAULT_CLASS, BUTTON);
+		settings.classes = settings.classes || DEFAULT_CLASS;
+		settings.element = 'button';
 
 		super(settings);
 
@@ -66,7 +57,7 @@ export default class Button extends FocusMixin(OnClickMixin(Control)) {
 
 		self[CONTROLS] = new ControlManager();
 
-		self.attr(INPUT_TYPE, BUTTON);
+		self.attr(INPUT_TYPE, 'button');
 
 		applySettings(self, settings);
 

@@ -1,6 +1,5 @@
 import { applySettings, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { ANCHOR } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import OnClickMixin from '../mixins/OnClickMixin';
@@ -19,7 +18,7 @@ import './Hyperlink.less';
 export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.HYPERLINK;
-		settings.element = dom.buildNew('', ANCHOR);
+		settings.element = 'a';
 
 		super(settings);
 

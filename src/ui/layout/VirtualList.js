@@ -37,7 +37,6 @@ import {
 	SCROLL_EVENT,
 	SCROLL_LEFT,
 	SCROLL_TOP,
-	SPAN,
 	TAB_INDEX,
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED,
@@ -540,7 +539,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		if (self.emptyContentMessage() && !self[EMPTY_CONTENT_CONTAINER]) {
 			self[EMPTY_CONTENT_CONTAINER] = dom.appendNewTo(self[CONTENT_CONTAINER], EMPTY_CONTENT_CLASS);
 
-			dom.appendNewTo(self[EMPTY_CONTENT_CONTAINER], '', SPAN)
+			dom.appendNewTo(self[EMPTY_CONTENT_CONTAINER], '', 'span')
 				.textContent = self.emptyContentMessage();
 
 			self[updateEmptyContentSize]();

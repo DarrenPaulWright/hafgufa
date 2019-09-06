@@ -6,18 +6,6 @@ export const BODY = DOCUMENT.body;
 
 export const ABSOLUTE_CLASS = 'absolute-full-size ';
 
-export const ANCHOR = 'a';
-export const BREAK = 'br';
-export const BUTTON = 'button';
-export const DIV = 'div';
-export const SPAN = 'span';
-export const INPUT = 'input';
-export const TEXT_AREA = 'textarea';
-export const LABEL = 'label';
-export const IMAGE = 'img';
-export const SVG = 'svg:svg';
-export const CIRCLE = 'svg:circle';
-
 export const SPACE = ' ';
 export const EMPTY_STRING = '';
 

@@ -1,5 +1,4 @@
 import { applySettings, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Source from './Source';
@@ -19,7 +18,7 @@ const methodProperty = (property) => function(value) {
 export default class Video extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.VIDEO;
-		settings.element = dom.buildNew(null, 'video');
+		settings.element = 'video';
 		settings.skipWindowResize = true;
 
 		super(settings);

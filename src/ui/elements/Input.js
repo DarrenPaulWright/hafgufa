@@ -1,7 +1,5 @@
 import { applySettings, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import {
-	INPUT,
 	INPUT_TYPE,
 	INPUT_TYPE_CHECKBOX,
 	INPUT_TYPE_FILE,
@@ -33,7 +31,7 @@ const AVAILABLE_TYPES = new Enum({
 export default class Input extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.INPUT;
-		settings.element = dom.buildNew('', INPUT);
+		settings.element = 'input';
 		settings.skipWindowResize = true;
 
 		super(settings);
