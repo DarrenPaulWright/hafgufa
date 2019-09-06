@@ -16,7 +16,7 @@ import './Header.less';
 export default class Header extends Container {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.HEADER;
-		settings.element = dom.buildNew('', 'header');
+		settings.element = dom.buildNew('clearfix', 'header');
 
 		super(settings);
 

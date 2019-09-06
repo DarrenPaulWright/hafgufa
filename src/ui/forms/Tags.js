@@ -51,7 +51,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	constructor(settings = {}) {
 		let self;
 		let listContainer = new Container({
-			classes: 'tags-list-container',
+			classes: 'tags-list-container clearfix',
 			removeClass: 'container',
 			on: {
 				click() {

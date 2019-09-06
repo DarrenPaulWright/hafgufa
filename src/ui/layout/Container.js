@@ -8,7 +8,7 @@ import FocusMixin from '../mixins/FocusMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import './Container.less';
 
-const CONTAINER_CLASS = 'container clearfix';
+const CONTAINER_CLASS = 'container';
 
 const CONTROLS = Symbol();
 const ADD_CONTENT = Symbol();
