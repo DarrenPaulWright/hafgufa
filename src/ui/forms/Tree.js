@@ -1,6 +1,5 @@
 import { set } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
@@ -60,7 +59,7 @@ export default class Tree extends FocusMixin(FormControl) {
 
 		settings.type = settings.type || controlTypes.TREE;
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.element = virtualList.element();
+		settings.contentContainer = virtualList;
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = virtualList;
 
@@ -76,24 +75,12 @@ export default class Tree extends FocusMixin(FormControl) {
 		self[SHOW_CHECKBOXES_ON_GROUPS] = false;
 
 		self.onResize(() => {
-			const contentHeight = dom.get.height(self.contentContainer());
-
-			self[VIRTUAL_LIST]
+			virtualList
 				.minWidth(self.minWidth())
 				.maxWidth(self.maxWidth());
-
-			if (contentHeight && contentHeight < self[VIRTUAL_LIST].borderHeight()) {
-				self[VIRTUAL_LIST].height(contentHeight);
-			}
 		});
 
 		applySettings(self, settings, ['width']);
-
-		self.onRemove(() => {
-			self[VIRTUAL_LIST].remove();
-			self[VIRTUAL_LIST] = null;
-			virtualList = null;
-		});
 	}
 
 	/**
@@ -132,14 +119,14 @@ export default class Tree extends FocusMixin(FormControl) {
 					delete branches[index].isExpanded;
 				}
 
-				branchData = Object.assign({
-					icon: ''
-				}, branches[index], {
+				branchData = {
+					icon: '',
+					...branches[index],
 					css: set({}, PADDING_LEFT, depth ? ((depth * INDENT_PIXELS) + PIXELS) : EMPTY_STRING),
 					isSelectable: self.isMultiSelect() || enforce.boolean(branches[index].isSelectable, false),
 					isExpandable: !!branches[index].children,
 					isExpanded: self[EXPANDED_BRANCHES].includes(branches[index].ID)
-				});
+				};
 
 				if (branchData.isExpandable) {
 					self[SHOW_EXPANDERS] = true;

@@ -125,28 +125,21 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		applySettings(self, settings);
 
 		self.onChange((newValue) => {
-			self[TEXT_INPUT].placeholder(newValue.length ? '.' : self.placeholder());
-		});
+				self[TEXT_INPUT].placeholder(newValue.length ? '.' : self.placeholder());
+			})
+			.onResize(() => {
+				let padding = self[LIST_CONTAINER].width() - self[LIST_CONTAINER].innerWidth();
+				padding += dom.get.margins.width(self[TEXT_INPUT]);
 
-		self.onResize(() => {
-			let padding = self[LIST_CONTAINER].width() - self[LIST_CONTAINER].innerWidth();
-			padding += dom.get.margins.width(self[TEXT_INPUT]);
-
-			self[MAX_TAG_WIDTH] = self.width() - padding;
-			self[TEXT_INPUT].maxWidth(self[MAX_TAG_WIDTH]);
-			self[CURRENT_TAGS].forEach((tag) => {
-				tag.heading.maxWidth(self[MAX_TAG_WIDTH]);
+				self[MAX_TAG_WIDTH] = self.innerWidth() - padding;
+				self[TEXT_INPUT].maxWidth(self[MAX_TAG_WIDTH]);
+				self[CURRENT_TAGS].forEach((tag) => {
+					tag.heading.maxWidth(self[MAX_TAG_WIDTH]);
+				});
+			})
+			.onRemove(() => {
+				self[removeSuggestionPopup](true);
 			});
-		});
-
-		self.onRemove(() => {
-			self[removeAllTags]();
-			self[removeSuggestionPopup](true);
-			self[TEXT_INPUT].remove();
-			self[TEXT_INPUT] = null;
-			self[LIST_CONTAINER].remove();
-			self[LIST_CONTAINER] = null;
-		});
 	}
 
 	/**

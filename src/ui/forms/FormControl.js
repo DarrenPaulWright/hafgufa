@@ -1,8 +1,6 @@
 import { debounce } from 'async-agent';
 import { deepEqual } from 'object-agent';
 import { enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
-import dom from '../../utility/dom';
-import { HEIGHT } from '../../utility/domConstants';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import './FormControl.less';
@@ -39,18 +37,6 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 			control: self,
 			controlID: self.ID(),
 			relationships: settings.relationships
-		});
-
-		self.onResize((windowWidth, windowHeight, container) => {
-			let titleContainerHeight = 0;
-
-			if (self.height().isPercent) {
-				if (self.getHeading()) {
-					titleContainerHeight = self.getHeading().height();
-				}
-
-				dom.css(self.contentContainer(), HEIGHT, container.height() - titleContainerHeight);
-			}
 		});
 
 		self.onRemove(() => {

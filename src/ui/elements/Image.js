@@ -33,7 +33,6 @@ export default class Image extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.IMAGE;
 		settings.element = 'img';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

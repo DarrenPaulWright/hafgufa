@@ -1,4 +1,3 @@
-import { select } from 'd3';
 import Hammer from 'hammerjs';
 import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
@@ -13,6 +12,7 @@ import {
 	SWIPE_RIGHT_EVENT,
 	SWIPE_UP_EVENT
 } from '../../utility/domConstants';
+import { CONTROL_PROP } from '../Control';
 import controlTypes from '../controlTypes';
 import Resizer from '../elements/Resizer';
 import { ORIENTATION } from '../uiConstants';
@@ -61,7 +61,7 @@ export default class Drawer extends Container {
 		self.addClass('drawer')
 			.removeClass('container');
 
-		if (settings.type === controlTypes.DRAWER) {
+		if (self.type === controlTypes.DRAWER) {
 			applySettings(self, settings, ['dock'], ['isOpen']);
 		}
 
@@ -71,8 +71,9 @@ export default class Drawer extends Container {
 					self[RESIZER].resize();
 				}
 			})
-			.onRemove(() => {
+			.onPreRemove(() => {
 				self.canResize(false);
+				self[layout]();
 				self[removeTouch]();
 			});
 	}
@@ -191,10 +192,10 @@ export default class Drawer extends Container {
 		const closedSize = self.closedSize().toPixels(true);
 		let newMargin = 0;
 		let newOpacity = 1;
-		let containerPadding = closedSize;
-		const element = self.isAnimated() ? d3Helper.animate(self) : self.elementD3();
+		let containerPadding = self.isRemoved ? 0 : closedSize;
+		const element = (self.isAnimated() && !self.isRemoved) ? d3Helper.animate(self) : self.elementD3();
 
-		if (self.isOpen()) {
+		if (self.isOpen() && !self.isRemoved) {
 			if (!self[OVERLAP]) {
 				containerPadding = self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight();
 			}
@@ -204,12 +205,20 @@ export default class Drawer extends Container {
 			newOpacity = closedSize ? 1 : 0;
 		}
 
-		element
-			.style(MARGIN + '-' + self[DOCK], newMargin + PIXELS)
-			.style(OPACITY, newOpacity);
+		if (!self.isRemoved) {
+			element
+				.style(MARGIN + '-' + self[DOCK], newMargin + PIXELS)
+				.style(OPACITY, newOpacity);
+		}
 
-		select(self.container())
-			.style(PADDING + '-' + self[DOCK], containerPadding + PIXELS);
+		if (self.container()) {
+			self.container().style[PADDING + self[DOCK].charAt(0)
+				.toUpperCase() + self[DOCK].substring(1)] = containerPadding + PIXELS;
+
+			if (self.container()[CONTROL_PROP]) {
+				self.container()[CONTROL_PROP].resize(true);
+			}
+		}
 
 		if (self[RESIZER] && !self[RESIZER].isDragging) {
 			let splitOffset = self[IS_HORIZONTAL] ? self.width() : self.height();

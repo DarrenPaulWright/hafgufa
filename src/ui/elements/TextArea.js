@@ -17,7 +17,6 @@ export default class TextArea extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.TEXT_AREA;
 		settings.element = 'textarea';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

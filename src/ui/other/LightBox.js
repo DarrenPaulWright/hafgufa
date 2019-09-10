@@ -90,19 +90,8 @@ export default class LightBox extends Control {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-			self[TOOLBAR_HEIGHT] = self[INTERACTION_LAYER].get(LIGHT_BOX_TOOLBAR_ID).height();
+			self[TOOLBAR_HEIGHT] = self[INTERACTION_LAYER].get(LIGHT_BOX_TOOLBAR_ID).borderHeight();
 			self[positionMainImage]();
-		}, true);
-
-		self.onRemove(() => {
-			if (self[MAIN_IMAGE]) {
-				self[MAIN_IMAGE].remove();
-				self[MAIN_IMAGE] = null;
-			}
-			self[IMAGE_LAYER].remove();
-			self[IMAGE_LAYER] = null;
-			self[INTERACTION_LAYER].remove();
-			self[INTERACTION_LAYER] = null;
 		});
 	}
 

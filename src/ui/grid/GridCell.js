@@ -48,7 +48,6 @@ const removeTooltip = Symbol();
 export default class GridCell extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.GRID_CELL;
-		settings.skipWindowResize = true;
 
 		super(settings);
 
@@ -65,16 +64,11 @@ export default class GridCell extends Control {
 
 		applySettings(self, settings);
 
-		self.onResize(() => self[checkOverflow]());
-
-		self.onRemove(() => {
-			if (self[ICON_CONTROL]) {
-				self[ICON_CONTROL].remove();
-				self[ICON_CONTROL] = null;
-			}
-			self[removeTooltip]();
-			self.dataType(COLUMN_TYPES.NONE);
-		});
+		self
+			.onResize(() => self[checkOverflow]())
+			.onRemove(() => {
+				self[removeTooltip]();
+			});
 	}
 
 	/**

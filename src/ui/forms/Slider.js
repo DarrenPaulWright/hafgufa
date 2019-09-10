@@ -97,7 +97,7 @@ export default class Slider extends FormControl {
 
 		applySettings(self, settings);
 
-		self.onResize(() => {
+		self.onResize((width) => {
 				if (self[TRACK_SIZE] === undefined) {
 					const thumbSize = self[THUMBS][0].borderWidth();
 					self[MOUSE_OFFSET] = thumbSize / 2;
@@ -105,22 +105,13 @@ export default class Slider extends FormControl {
 					self[TRACK_SIZE] = thumbSize - self[TRACK_MARGINS];
 				}
 
-				const trackWidth = self.borderWidth() - self[TRACK_MARGINS];
+				const trackWidth = width - self[TRACK_MARGINS];
 				self[TRACK].width(trackWidth);
 
 				self[LOCATION_SIZE] = trackWidth - self[TRACK_SIZE];
 
 				self[setSnapGrid]();
 				self[positionThumbs]();
-			})
-			.onRemove(() => {
-				while (self[THUMBS].length) {
-					self[removeThumb]();
-				}
-				self[RANGE].remove();
-				self[RANGE] = null;
-				self[TRACK].remove();
-				self[TRACK] = null;
 			})
 			.resize();
 	}

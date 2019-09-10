@@ -67,9 +67,9 @@ export default class Calendar extends Control {
 			self[buildDays]();
 		}
 
-		self.onResize(() => {
-			const dayWidth = Math.floor(self.width() / DAYS_IN_A_WEEK);
-			const dayHeight = Math.floor((self.height() - self[HEADER].borderHeight() - self[WEEKDAY_CONTAINER].borderHeight()) / WEEKS_IN_A_MONTH);
+		self.onResize((width, height) => {
+			const dayWidth = Math.floor(width / DAYS_IN_A_WEEK);
+			const dayHeight = Math.floor((height - self[HEADER].borderHeight() - self[WEEKDAY_CONTAINER].borderHeight()) / WEEKS_IN_A_MONTH);
 
 			self[WEEKDAY_RECYCLER].each((weekday) => {
 				weekday.width(dayWidth);
@@ -78,20 +78,6 @@ export default class Calendar extends Control {
 				button.width(dayWidth);
 				button.height(dayHeight);
 			});
-		}, true);
-
-		self.onRemove(() => {
-			self[HEADER].remove();
-			self[HEADER] = null;
-
-			self[WEEKDAY_RECYCLER].remove();
-			self[WEEKDAY_RECYCLER] = null;
-
-			self[WEEKDAY_CONTAINER].remove();
-			self[WEEKDAY_CONTAINER] = null;
-
-			self[DAY_RECYCLER].remove();
-			self[DAY_RECYCLER] = null;
 		});
 	}
 

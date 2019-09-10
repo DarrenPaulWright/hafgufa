@@ -1,4 +1,3 @@
-import { throttle } from 'async-agent';
 import { event, select } from 'd3';
 import { CssSize, enforce, isElement, isString, method, PIXELS, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
@@ -32,23 +31,16 @@ import {
 	WIDTH,
 	WINDOW
 } from '../utility/domConstants';
+import PrivateVars from '../utility/PrivateVars';
 import windowResize from '../utility/windowResize';
 import './Control.less';
+import ControlManager from './ControlManager';
 import Removable from './mixins/Removable';
 
-export const ELEMENT_PROP = Symbol();
+const _ = new PrivateVars();
 
-const APPEND = Symbol();
-const PREPEND = Symbol();
-const ELEMENT = Symbol();
-const ELEMENT_D3 = Symbol();
-const WINDOW_RESIZE_ID = Symbol();
-const CURRENT_HEIGHT = Symbol();
-const CURRENT_WIDTH = Symbol();
-const CURRENT_CLASSES = Symbol();
-const OLD_ELEMENT = Symbol();
-const THROTTLED_RESIZE = Symbol();
-const FORCE_RESIZE = Symbol();
+export const CONTROL_PROP = Symbol();
+export const CHILD_CONTROLS = Symbol();
 
 const DISABLED_CLASS = 'disabled';
 const HIDDEN_CLASS = 'hidden';
@@ -93,10 +85,12 @@ const propagationClickEvent = () => {
 	event.stopPropagation();
 };
 
+const registerControl = Symbol();
 const updateElementID = Symbol();
 const setPropagationClickEvent = Symbol();
 const setCssSizeElement = Symbol();
-const setResizeEvent = Symbol();
+const percentHeightOverride = Symbol();
+const resizeContainer = Symbol();
 
 /**
  * The base class for a control
@@ -110,35 +104,39 @@ const setResizeEvent = Symbol();
 export default class Control extends Removable {
 	constructor(settings = {}) {
 		super();
+
 		const self = this;
+		self[CHILD_CONTROLS] = new ControlManager();
 
-		this[CURRENT_CLASSES] = '';
-		this[THROTTLED_RESIZE] = throttle(() => {
-			self.resize(true);
-		}, 10);
+		_.set(self, {
+			currentClasses: '',
+			type: settings.type,
+			append: settings.append,
+			prepend: settings.prepend
+		});
 
-		self[APPEND] = settings.append;
 		delete settings.append;
-		self[PREPEND] = settings.prepend;
 		delete settings.prepend;
+		delete settings.type;
 
-		self.type(settings.type);
 		self.element(settings.element || 'div');
 		delete settings.element;
+		self.ID(settings.ID);
+		delete settings.ID;
 		self.container(settings.container);
 		delete settings.container;
-		self.skipWindowResize(settings.skipWindowResize);
-		delete settings.skipWindowResize;
-
-		self[setResizeEvent]();
 
 		self.onRemove(() => {
-			if (self[WINDOW_RESIZE_ID]) {
-				windowResize.discard(self[WINDOW_RESIZE_ID]);
-			}
-
+			self[CHILD_CONTROLS].remove();
+			self.container(null);
 			self.element(null);
 		});
+	}
+
+	[registerControl](control) {
+		this[CHILD_CONTROLS].add(control);
+
+		return this;
 	}
 
 	/**
@@ -168,45 +166,30 @@ export default class Control extends Removable {
 		cssSizeMethods.forEach((method) => this[method]().element(value));
 	}
 
-	[setResizeEvent]() {
+	[percentHeightOverride]() {
 		const self = this;
 
-		if (!self.skipWindowResize()) {
-			self[WINDOW_RESIZE_ID] = windowResize.add((windowWidth, windowHeight) => {
-				if (!self.isRemoved) {
-					let containerHeight;
+		if (self.height().isPercent && self.container()) {
+			const element = _(self).element;
+			let containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
+			containerHeight -= dom.get.paddings.height(self.container());
 
-					if (self.container() && self.height().isPercent) {
-						containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
-						containerHeight -= dom.get.paddings.height(self.container());
-						containerHeight -= dom.get.margins.height(self[ELEMENT]);
-						if (WINDOW.getComputedStyle(this[ELEMENT]).boxSizing !== BORDER_BOX) {
-							containerHeight -= dom.get.paddings.height(self[ELEMENT]);
-						}
-						self.css(HEIGHT, Math.floor(containerHeight));
-					}
+			containerHeight -= dom.get.margins.height(element);
+			if (WINDOW.getComputedStyle(element).boxSizing !== BORDER_BOX) {
+				containerHeight -= dom.get.paddings.height(element);
+			}
 
-					const newWidth = self.borderWidth();
-					const newHeight = self.borderHeight();
-
-					if (self[FORCE_RESIZE] || self[CURRENT_WIDTH] !== newWidth || self[CURRENT_HEIGHT] !== newHeight) {
-						self[FORCE_RESIZE] = false;
-						self[CURRENT_WIDTH] = newWidth;
-						self[CURRENT_HEIGHT] = newHeight;
-
-						self.onResize().trigger(null, [windowWidth, windowHeight, self], self);
-					}
-				}
-			}, self[ELEMENT], self.type());
-		}
-		else if (self[WINDOW_RESIZE_ID]) {
-			windowResize.discard(self[WINDOW_RESIZE_ID]);
-			self[WINDOW_RESIZE_ID] = null;
+			self.css(HEIGHT, Math.floor(containerHeight));
 		}
 	}
-}
 
-Object.assign(Control.prototype, {
+	[resizeContainer]() {
+		const self = this;
+
+		if (self.container() && self.container()[CONTROL_PROP]) {
+			self.container()[CONTROL_PROP].resize(true);
+		}
+	}
 
 	/**
 	 * The "type" of control.
@@ -219,43 +202,12 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	type: method.string(),
+	get type() {
+		return _(this).type;
+	}
+}
 
-	/**
-	 * Set the id attribute.
-	 *
-	 * @method ID
-	 * @member module:Control
-	 * @instance
-	 *
-	 * @arg {String} [newID] - A unique ID
-	 *
-	 * @returns {String|this}
-	 */
-	ID: method.string({
-		set() {
-			this[updateElementID]();
-		},
-		coerce: true
-	}),
-
-	/**
-	 * A string to append to the end of the ID.
-	 *
-	 * @method IDSuffix
-	 * @member module:Control
-	 * @instance
-	 *
-	 * @arg {String} [newIDSuffix]
-	 *
-	 * @returns {String|this}
-	 */
-	IDSuffix: method.string({
-		set() {
-			this[updateElementID]();
-		}
-	}),
-
+Object.assign(Control.prototype, {
 	/**
 	 * Set the containing DOM element and append element to it.
 	 *
@@ -273,32 +225,55 @@ Object.assign(Control.prototype, {
 		},
 		other: null,
 		before(container) {
-			if (container && this[ELEMENT] && container.contains(this[ELEMENT])) {
-				container.removeChild(this[ELEMENT]);
+			const self = this;
+			const _priv = _(self);
+
+			if (container && _priv.element && container.contains(_priv.element)) {
+				container.removeChild(_priv.element);
+				if (container[CONTROL_PROP]) {
+					container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
+				}
+			}
+
+			if (_priv.windowResizeId) {
+				windowResize.discard(_priv.windowResizeId);
+				_priv.windowResizeId = null;
 			}
 		},
 		set(container) {
-			if (container && this[ELEMENT]) {
-				if (this[APPEND]) {
-					if (isElement(this[APPEND])) {
-						container.insertBefore(this[ELEMENT], this[APPEND].nextSibling);
+			const self = this;
+			const _priv = _(self);
+
+			if (container && _priv.element) {
+				if (_priv.append) {
+					if (isElement(_priv.append)) {
+						container.insertBefore(_priv.element, _priv.append.nextSibling);
 					}
 					else {
-						container.appendChild(this[ELEMENT]);
+						container.appendChild(_priv.element);
 					}
-					delete this[APPEND];
+					delete _priv.append;
 				}
-				else if (this[PREPEND]) {
-					if (isElement(this[PREPEND])) {
-						container.insertBefore(this[ELEMENT], this[PREPEND]);
+				else if (_priv.prepend) {
+					if (isElement(_priv.prepend)) {
+						container.insertBefore(_priv.element, _priv.prepend);
 					}
 					else {
-						container.insertBefore(this[ELEMENT], container.firstChild);
+						container.insertBefore(_priv.element, container.firstChild);
 					}
-					delete this[PREPEND];
+					delete _priv.prepend;
 				}
 				else {
-					container.appendChild(this[ELEMENT]);
+					container.appendChild(_priv.element);
+				}
+
+				if (container[CONTROL_PROP]) {
+					container[CONTROL_PROP][registerControl](self);
+				}
+				else {
+					_priv.windowResizeId = windowResize.add(() => {
+						self.resize(true);
+					}, self.type);
 				}
 			}
 		}
@@ -337,46 +312,87 @@ Object.assign(Control.prototype, {
 		},
 		before(element) {
 			const self = this;
+			const _priv = _(self);
 
 			if (element) {
-				self[OLD_ELEMENT] = element;
+				_priv.oldElement = element;
 
 				self[setCssSizeElement](null);
 
-				self[ELEMENT] = null;
-				self[ELEMENT_D3] = null;
+				_priv.element = null;
+				_priv.elementD3 = null;
 			}
 		},
 		set(newElement) {
 			const self = this;
+			const _priv = _(self);
 
 			if (newElement) {
-				self[ELEMENT] = newElement;
-				self[ELEMENT_D3] = select(self[ELEMENT]);
+				_priv.element = newElement;
+				_priv.elementD3 = select(newElement);
+				_priv.element[CONTROL_PROP] = self;
 
-				self[ELEMENT][ELEMENT_PROP] = self;
-
-				if (self[OLD_ELEMENT]) {
-					replaceElement(self[OLD_ELEMENT], newElement);
+				if (_priv.oldElement) {
+					replaceElement(_priv.oldElement, newElement);
 				}
 
-				self[setCssSizeElement](self[ELEMENT]);
-
+				self[setCssSizeElement](_priv.element);
 				self[setPropagationClickEvent]();
 			}
 
-			if (self[OLD_ELEMENT]) {
-				self[OLD_ELEMENT][ELEMENT_PROP] = null;
-				dom.remove(self[OLD_ELEMENT]);
-				self[OLD_ELEMENT] = null;
+			if (_priv.oldElement) {
+				_priv.oldElement[CONTROL_PROP] = null;
+				dom.remove(_priv.oldElement);
+				_priv.oldElement = null;
 			}
 		},
 		other: null
 	}),
 
 	elementD3() {
-		return this[ELEMENT_D3];
+		return _(this).elementD3;
 	},
+
+	/**
+	 * Set the id attribute.
+	 *
+	 * @method ID
+	 * @member module:Control
+	 * @instance
+	 *
+	 * @arg {String} [newID] - A unique ID
+	 *
+	 * @returns {String|this}
+	 */
+	ID: method.string({
+		set(id) {
+			const self = this;
+
+			self[updateElementID]();
+
+			if (id && self.container() && self.container()[CONTROL_PROP]) {
+				self.container()[CONTROL_PROP][CHILD_CONTROLS].update(self);
+			}
+		},
+		coerce: true
+	}),
+
+	/**
+	 * A string to append to the end of the ID.
+	 *
+	 * @method IDSuffix
+	 * @member module:Control
+	 * @instance
+	 *
+	 * @arg {String} [newIDSuffix]
+	 *
+	 * @returns {String|this}
+	 */
+	IDSuffix: method.string({
+		set() {
+			this[updateElementID]();
+		}
+	}),
 
 	/**
 	 * Get or set an attribute of the main element of this control
@@ -391,12 +407,12 @@ Object.assign(Control.prototype, {
 	 */
 	attr: method.keyValue({
 		set(attribute, value) {
-			if (this[ELEMENT]) {
-				this[ELEMENT].setAttribute(attribute, value);
+			if (_(this).element) {
+				_(this).element.setAttribute(attribute, value);
 			}
 		},
 		get(attribute) {
-			return this[ELEMENT].getAttribute(attribute);
+			return _(this).element.getAttribute(attribute);
 		}
 	}),
 
@@ -413,16 +429,16 @@ Object.assign(Control.prototype, {
 	 */
 	css: method.keyValue({
 		set(property, value) {
-			if (this[ELEMENT]) {
+			if (_(this).element) {
 				if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 					value = value + PIXELS;
 				}
 
-				this[ELEMENT].style[property] = value;
+				_(this).element.style[property] = value;
 			}
 		},
 		get(property) {
-			return this[ELEMENT].style[property];
+			return _(this).element.style[property];
 		}
 	}),
 
@@ -438,19 +454,19 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	addClass(className) {
-		if (this[ELEMENT] && isString(className) && className !== EMPTY_STRING) {
+		if (_(this).element && isString(className) && className !== EMPTY_STRING) {
 			let classArray = className.trim().split(SPACE);
 
 			for (let index = 0; index < classArray.length; index++) {
-				if (this[ELEMENT].classList) {
-					this[ELEMENT].classList.add(classArray[index]);
+				if (_(this).element.classList) {
+					_(this).element.classList.add(classArray[index]);
 				}
 				else {
-					if (this[ELEMENT].className.baseVal) {
-						this[ELEMENT].className.baseVal += SPACE + classArray[index];
+					if (_(this).element.className.baseVal) {
+						_(this).element.className.baseVal += SPACE + classArray[index];
 					}
 					else {
-						this[ELEMENT].className += SPACE + classArray[index];
+						_(this).element.className += SPACE + classArray[index];
 					}
 				}
 			}
@@ -476,21 +492,28 @@ Object.assign(Control.prototype, {
 		const FLAGS = 'gi';
 		let classArray;
 
-		if (this[ELEMENT] && isString(className) && className !== EMPTY_STRING) {
+		if (_(this).element && isString(className) && className !== EMPTY_STRING) {
 			classArray = className.trim().split(SPACE);
 
 			for (let index = 0; index < classArray.length; index++) {
-				if (this[ELEMENT].classList) {
-					this[ELEMENT].classList.remove(classArray[index]);
+				if (_(this).element.classList) {
+					_(this).element.classList.remove(classArray[index]);
 				}
 				else {
-					if (this[ELEMENT].className.baseVal !== undefined) {
-						this[ELEMENT].className.baseVal = this[ELEMENT].className.baseVal.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-							.join('|') + BASE_SUFFIX, FLAGS), SPACE);
+					if (_(this).element.className.baseVal !== undefined) {
+						_(this).element.className.baseVal = _(this)
+							.element
+							.className
+							.baseVal
+							.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
+								.join('|') + BASE_SUFFIX, FLAGS), SPACE);
 					}
 					else {
-						this[ELEMENT].className = this[ELEMENT].className.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-							.join('|') + BASE_SUFFIX, FLAGS), SPACE);
+						_(this).element.className = _(this)
+							.element
+							.className
+							.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
+								.join('|') + BASE_SUFFIX, FLAGS), SPACE);
 					}
 				}
 			}
@@ -513,7 +536,7 @@ Object.assign(Control.prototype, {
 	 */
 	classes(classes, performAdd) {
 		if (arguments.length) {
-			if (this[ELEMENT]) {
+			if (_(this).element) {
 				if (enforce.boolean(performAdd, true)) {
 					this.addClass(classes);
 				}
@@ -521,16 +544,16 @@ Object.assign(Control.prototype, {
 					this.removeClass(classes);
 				}
 
-				this[CURRENT_CLASSES] = this[ELEMENT].classList ? this[ELEMENT].classList.value : this[ELEMENT].className.baseVal || this[ELEMENT].className;
+				_(this).currentClasses = _(this).element.classList ? _(this).element.classList.value : _(this).element.className.baseVal || _(this).element.className;
 			}
-			else if (!this[CURRENT_CLASSES]) {
-				this[CURRENT_CLASSES] = classes;
+			else if (!_(this).currentClasses) {
+				_(this).currentClasses = classes;
 			}
 
 			return this;
 		}
 
-		return this[CURRENT_CLASSES];
+		return _(this).currentClasses;
 	},
 
 	/**
@@ -606,12 +629,12 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderWidth() {
-		if (this[ELEMENT]) {
-			if (this[ELEMENT] instanceof SVGElement) {
-				return this[ELEMENT].getBBox().width;
+		if (_(this).element) {
+			if (_(this).element instanceof SVGElement) {
+				return _(this).element.getBBox().width;
 			}
 			else {
-				return this[ELEMENT].offsetWidth;
+				return _(this).element.offsetWidth;
 			}
 		}
 
@@ -619,8 +642,8 @@ Object.assign(Control.prototype, {
 	},
 
 	innerWidth() {
-		if (this[ELEMENT]) {
-			return (this[ELEMENT].clientWidth || 0) - dom.get.paddings.width(this[ELEMENT]);
+		if (_(this).element) {
+			return (_(this).element.clientWidth || 0) - dom.get.paddings.width(_(this).element);
 		}
 
 		return 0;
@@ -681,12 +704,12 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderHeight() {
-		if (this[ELEMENT]) {
-			if (this[ELEMENT] instanceof SVGElement) {
-				return this[ELEMENT].getBBox().height;
+		if (_(this).element) {
+			if (_(this).element instanceof SVGElement) {
+				return _(this).element.getBBox().height;
 			}
 			else {
-				return this[ELEMENT].offsetHeight;
+				return _(this).element.offsetHeight;
 			}
 		}
 
@@ -694,8 +717,8 @@ Object.assign(Control.prototype, {
 	},
 
 	innerHeight() {
-		if (this[ELEMENT]) {
-			return (this[ELEMENT].clientHeight || 0) - dom.get.paddings.height(this[ELEMENT]);
+		if (_(this).element) {
+			return (_(this).element.clientHeight || 0) - dom.get.paddings.height(_(this).element);
 		}
 
 		return 0;
@@ -737,7 +760,7 @@ Object.assign(Control.prototype, {
 
 			self.classes(DISABLED_CLASS, !isEnabled);
 
-			if (self[ELEMENT] && !isEnabled && self.isFocused) {
+			if (_(self).element && !isEnabled && self.isFocused) {
 				self.isFocused(false);
 			}
 
@@ -774,15 +797,17 @@ Object.assign(Control.prototype, {
 	isVisible: method.boolean({
 		init: true,
 		set(isVisible) {
-			this.classes(HIDDEN_CLASS, !isVisible);
+			const self = this;
+
+			self.classes(HIDDEN_CLASS, !isVisible);
 
 			if (!isVisible) {
-				if (this.isFocused) {
-					this.isFocused(false);
+				if (self.isFocused) {
+					self.isFocused(false);
 				}
 			}
 			else {
-				this.resize();
+				self[resizeContainer]();
 			}
 		}
 	}),
@@ -801,15 +826,17 @@ Object.assign(Control.prototype, {
 	isDisplayed: method.boolean({
 		init: true,
 		set(isDisplayed) {
-			this.classes(NOT_DISPLAYED_CLASS, !isDisplayed);
+			const self = this;
+
+			self.classes(NOT_DISPLAYED_CLASS, !isDisplayed);
 
 			if (!isDisplayed) {
-				if (this.isFocused) {
-					this.isFocused(false);
+				if (self.isFocused) {
+					self.isFocused(false);
 				}
 			}
 			else {
-				this.resize();
+				self[resizeContainer]();
 			}
 		}
 	}),
@@ -828,8 +855,8 @@ Object.assign(Control.prototype, {
 	 */
 	on: method.keyValue({
 		set(eventName, handler) {
-			if (this[ELEMENT_D3]) {
-				this[ELEMENT_D3].on(eventName, handler);
+			if (_(this).elementD3) {
+				_(this).elementD3.on(eventName, handler);
 			}
 		}
 	}),
@@ -880,11 +907,12 @@ Object.assign(Control.prototype, {
 	 */
 	isFocused(isFocused) {
 		const self = this;
+		const element = _(self).element;
 
 		if (isFocused !== undefined) {
-			if (self[ELEMENT]) {
+			if (element) {
 				if (isFocused) {
-					self[ELEMENT].focus();
+					element.focus();
 				}
 				else if (self.isFocused()) {
 					DOCUMENT.activeElement.blur();
@@ -894,25 +922,9 @@ Object.assign(Control.prototype, {
 			return self;
 		}
 
-		return self[ELEMENT] ? (self[ELEMENT] === DOCUMENT.activeElement || self[ELEMENT].contains(DOCUMENT.activeElement)) : false;
+		return element ? (element === DOCUMENT.activeElement || element
+			.contains(DOCUMENT.activeElement)) : false;
 	},
-
-	/**
-	 * Get or Set whether or not this control should trigger the window resize event
-	 *
-	 * @method skipWindowResize
-	 * @member module:Control
-	 * @instance
-	 *
-	 * @arg {Boolean} newSkipWindowResize
-	 *
-	 * @returns {Boolean}
-	 */
-	skipWindowResize: method.boolean({
-		set() {
-			this[setResizeEvent]();
-		}
-	}),
 
 	/**
 	 * Adds a callback to the onResize method
@@ -939,21 +951,27 @@ Object.assign(Control.prototype, {
 	 */
 	resize(isForced) {
 		const self = this;
+		const _priv = _(self);
 
-		self[FORCE_RESIZE] = self[FORCE_RESIZE] || isForced;
+		if (!self.isRemoved && !_priv.isResizing) {
+			_priv.isResizing = true;
+			self[percentHeightOverride]();
 
-		if (isForced) {
-			if (!self.isRemoved) {
-				if (!self.skipWindowResize()) {
-					windowResize.trigger(self[WINDOW_RESIZE_ID]);
-				}
-				else {
-					self.onResize().trigger(null, null, this);
-				}
+			const newWidth = self.borderWidth();
+			const newHeight = self.borderHeight();
+
+			if (isForced || _priv.currentWidth !== newWidth || _priv.currentHeight !== newHeight) {
+				_priv.currentWidth = newWidth;
+				_priv.currentHeight = newHeight;
+
+				self.onResize().trigger(null, [_priv.currentWidth, _priv.currentHeight], self);
 			}
-		}
-		else {
-			self[THROTTLED_RESIZE]();
+
+			self[CHILD_CONTROLS].each((control) => {
+				control.resize();
+			});
+
+			_priv.isResizing = false;
 		}
 
 		return self;

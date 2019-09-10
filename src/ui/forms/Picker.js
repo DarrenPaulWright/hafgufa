@@ -92,11 +92,10 @@ export default class Picker extends FocusMixin(FormControl) {
 		self[MAX_BUTTON_WIDTH] = 0;
 
 		self[GROUPED_BUTTONS] = groupedButtons;
-		self[GROUPED_BUTTONS].container(self.contentContainer());
+		self[GROUPED_BUTTONS].container(self);
 
 		self.defaultButtonText(locale.get('select'));
 		self.emptyButtonText(locale.get('empty'));
-		self.contentWidthContainer(self[GROUPED_BUTTONS].element());
 
 		self.onResize(() => {
 			self[resize]();

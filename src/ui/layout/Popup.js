@@ -25,6 +25,7 @@ import {
 	Z_INDEX
 } from '../../utility/domConstants';
 import * as mouse from '../../utility/mouse';
+import windowResize from '../../utility/windowResize';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Container from './Container';
@@ -180,7 +181,7 @@ class Popup extends Container {
 			.css(TOP, ZERO_PIXELS)
 			.css(LEFT, ZERO_PIXELS);
 
-		if (settings.type === controlTypes.POPUP) {
+		if (self.type === controlTypes.POPUP) {
 			applySettings(self, settings);
 		}
 
@@ -190,15 +191,15 @@ class Popup extends Container {
 			.on(MOUSE_LEAVE_EVENT, () => {
 				self[onMouseLeave]();
 			})
-			.onResize((newWindowWidth, newWindowHeight) => {
+			.onResize((width, height) => {
 				const isMouseAnchor = self.anchor() === Popup.MOUSE;
 
-				if (windowWidth !== newWindowWidth || windowHeight !== newWindowHeight ||
+				if (windowWidth !== windowResize.width || windowHeight !== windowResize.height ||
 					self[CURRENT_WIDTH] !== self.borderWidth() || self[CURRENT_HEIGHT] !== self.borderHeight() || self[FORCE_RESIZE]) {
-					windowWidth = newWindowWidth;
-					windowHeight = newWindowHeight;
-					self[CURRENT_WIDTH] = self.borderWidth();
-					self[CURRENT_HEIGHT] = self.borderHeight();
+					windowWidth = windowResize.width;
+					windowHeight = windowResize.height;
+					self[CURRENT_WIDTH] = width;
+					self[CURRENT_HEIGHT] = height;
 
 					if ((!isMouseAnchor) || (isMouseAnchor && self.canTrackMouse()) || (isMouseAnchor && !self[IS_MOUSE_POSITION_SET]) || self[FORCE_RESIZE]) {
 						self[FORCE_RESIZE] = false;

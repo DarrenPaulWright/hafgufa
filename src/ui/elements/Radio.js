@@ -37,21 +37,11 @@ export default class Radio extends Label {
 				self.isChecked(!self.isChecked());
 			});
 
-		if (settings.type === controlTypes.RADIO) {
+		if (self.type === controlTypes.RADIO) {
 			self.addClass('radio');
 			self[INPUT].inputType(INPUT_TYPE_RADIO);
 			applySettings(self, settings);
 		}
-
-		self.onRemove(() => {
-			self[INPUT].remove();
-			self[INPUT] = null;
-
-			if (self[CONTAINER]) {
-				self[CONTAINER].remove();
-				self[CONTAINER] = null;
-			}
-		});
 	}
 
 	content(content) {

@@ -62,40 +62,25 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 
 		const self = this;
 
-		self.addClass('text-input');
-
-		self.onChange(() => {
-			self.validate();
-		});
+		self
+			.addClass('text-input')
+			.onChange(() => {
+				self.validate();
+			});
 
 		applySettings(self, settings, ['rows']);
 
 		self.onBlur(() => {
-			self.validate();
-		});
+				self.validate();
+			})
+			.onResize(() => {
+				self[positionElements]();
+				self[maxRowCallback]();
 
-		self.onResize(() => {
-			if (self[PREFIX]) {
-				self[PREFIX].resize();
-			}
-			if (self[SUFFIX]) {
-				self[SUFFIX].resize();
-			}
-			self[positionElements]();
-			self[maxRowCallback]();
-
-			if (self.rows() > 1 && !self.height().isAuto) {
-				self[INPUT].height(dom.get.height(self.contentContainer()));
-			}
-		}, true);
-
-		self.onRemove(() => {
-			self.isFocused(false)
-				.prefix('')
-				.suffix('');
-
-			self[INPUT].remove();
-		});
+				if (self.rows() > 1 && !self.height().isAuto) {
+					self[INPUT].height(self.contentContainer.borderHeight());
+				}
+			});
 	}
 
 	/**
@@ -162,14 +147,14 @@ Object.assign(TextInput.prototype, {
 
 			if (rows === 1) {
 				self[INPUT] = new Input({
-					container: oldInput ? null : self,
+					container: self,
 					inputType: INPUT_TYPE_TEXT
 				});
 				self.changeDelay(ON_CHANGE_DELAY);
 			}
 			else {
 				self[INPUT] = new TextArea({
-					container: oldInput ? null : self,
+					container: self,
 					rows: rows
 				});
 				self.changeDelay(ON_CHANGE_DELAY_LONG);
@@ -180,8 +165,6 @@ Object.assign(TextInput.prototype, {
 				oldInput.remove();
 				oldInput = null;
 			}
-
-			self.contentWidthContainer(self[INPUT]);
 
 			self[INPUT]
 				.on(ON_CHANGE_EVENTS, throttle(() => {
@@ -424,6 +407,8 @@ Object.assign(TextInput.prototype, {
 			if (prefix) {
 				if (!self[PREFIX]) {
 					self[PREFIX] = new Span({
+						container: self,
+						prepend: true,
 						classes: 'input-prefix',
 						onResize() {
 							self[PREFIX_WIDTH] = self[PREFIX].borderWidth();
@@ -431,8 +416,7 @@ Object.assign(TextInput.prototype, {
 						}
 					});
 				}
-				self[PREFIX].text(prefix);
-				dom.prependTo(self, self[PREFIX]);
+				self[PREFIX].text(prefix).resize();
 			}
 			else if (self[PREFIX]) {
 				self[PREFIX].remove();
@@ -457,6 +441,7 @@ Object.assign(TextInput.prototype, {
 			if (suffix) {
 				if (!self[SUFFIX]) {
 					self[SUFFIX] = new Span({
+						container: self,
 						classes: 'input-suffix',
 						onResize() {
 							self[SUFFIX_WIDTH] = self[SUFFIX].borderWidth();
@@ -464,8 +449,7 @@ Object.assign(TextInput.prototype, {
 						}
 					});
 				}
-				self[SUFFIX].text(suffix);
-				dom.appendTo(self, self[SUFFIX]);
+				self[SUFFIX].text(suffix).resize();
 			}
 			else if (self[SUFFIX]) {
 				self[SUFFIX].remove();

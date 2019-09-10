@@ -74,7 +74,7 @@ Object.assign(CheckBoxes.prototype, {
 			self[CHECK_BOXES] = values.map((settings) => {
 				const checkbox = new CheckBox({
 					...settings,
-					container: self.contentContainer(),
+					container: self,
 					width: HUNDRED_PERCENT
 				});
 				checkbox.onChange(() => {

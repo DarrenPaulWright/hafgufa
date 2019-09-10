@@ -1,7 +1,11 @@
-import { castArray } from 'type-enforcer';
+import { forOwn } from 'object-agent';
+import { castArray, isString } from 'type-enforcer';
+import PrivateVars from '../utility/PrivateVars';
 
-const CONTROLS = Symbol();
-const IDS = Symbol();
+const _ = new PrivateVars();
+
+const indexControl = Symbol();
+const discardControl = Symbol();
 
 /**
  * @class ControlManager
@@ -9,51 +13,82 @@ const IDS = Symbol();
  */
 export default class ControlManager {
 	constructor() {
-		this[CONTROLS] = [];
-		this[IDS] = {};
+		_.set(this, {
+			controls: [],
+			ids: {}
+		});
+	}
+
+	[indexControl](control) {
+		if (control.ID && control.ID()) {
+			_(this).ids[control.ID()] = control;
+		}
+	}
+
+	[discardControl](control, removeOnRemove = false) {
+		const self = this;
+		const _priv = _(self);
+		const index = _priv.controls.findIndex((data) => data.control === control);
+
+		if (index !== -1) {
+			if (removeOnRemove) {
+				const data = _priv.controls[index];
+				data.control.onPreRemove().discard(data.onPreRemoveId);
+			}
+
+			_priv.controls.splice(index, 1);
+
+			if (control.ID()) {
+				delete _priv.ids[control.ID()];
+			}
+		}
 	}
 
 	add(input) {
 		const self = this;
+		const _priv = _(self);
 
 		castArray(input).forEach((control) => {
-			const cleanup = () => {
-				self[CONTROLS].splice(self[CONTROLS].indexOf(control), 1);
-				if (control.ID && control.ID()) {
-					delete self[IDS][control.ID()];
-				}
-				control = null;
-			};
+			_priv.controls.push({
+				control,
+				onPreRemoveId: control.onPreRemove().add(function() {
+					self[discardControl](this);
+				})
+			});
 
-			self[CONTROLS].push(control);
-			if (control.ID && control.ID()) {
-				self[IDS][control.ID()] = control;
-			}
-
-			if (control.onPreRemove) {
-				control.onPreRemove(cleanup);
-			}
-			else {
-				control.onRemove(cleanup);
-			}
+			self[indexControl](control);
 		});
 
-		input = null;
+		return self;
+	}
+
+	discard(input) {
+		this[discardControl](isString(input) ? _(this).ids[input] : input, true);
 
 		return this;
 	}
 
+	update(control) {
+		const _priv = _(this);
+		const self = this;
+
+		forOwn(_priv.ids, (thisControl, ID) => {
+			if (thisControl === control) {
+				delete _priv.ids[ID];
+				return true;
+			}
+		});
+
+		self[indexControl](control);
+	}
+
 	get(ID) {
-		let output = this[IDS][ID];
+		const _priv = _(this);
+		let output = _priv.ids[ID];
 
 		if (!output) {
-			this[CONTROLS].some((control) => {
-				if (control.get) {
-					output = control.get(ID);
-					if (output) {
-						return true;
-					}
-				}
+			_priv.controls.some((data) => {
+				return data.control.get ? Boolean(output = data.control.get(ID)) : false;
 			});
 		}
 
@@ -62,44 +97,39 @@ export default class ControlManager {
 
 	each(callback) {
 		if (callback) {
-			this[CONTROLS].some(callback);
+			_(this).controls.some((data, index) => callback(data.control, index));
 		}
 	}
 
 	map(callback) {
 		if (callback) {
-			return this[CONTROLS].map(callback);
+			return _(this).controls.map((data, index) => callback(data.control, index));
 		}
 	}
 
 	total() {
-		return this[CONTROLS].length;
+		return _(this).controls.length;
 	}
 
 	remove(input) {
+		const self = this;
+		const _priv = _(self);
+		const controls = _priv.controls;
+
 		if (input) {
-			if (input.ID) {
-				if (input.ID()) {
-					input = input.ID();
-				}
-				else {
-					input.remove();
-					input = null;
-				}
+			if (!input.ID) {
+				input = _priv.ids[input];
 			}
-			if (this.get(input)) {
-				this.get(input).remove();
-				delete this[IDS][input];
+			if (input) {
+				input.remove();
 			}
 		}
 		else {
-			while (this[CONTROLS].length) {
-				this[CONTROLS][0].remove();
+			while (controls.length) {
+				controls[0].control.remove();
 			}
-			this[CONTROLS] = [];
-			this[IDS] = {};
 		}
 
-		return this;
+		return self;
 	}
 }

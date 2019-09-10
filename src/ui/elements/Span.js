@@ -17,7 +17,6 @@ export default class Span extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SPAN;
 		settings.element = 'span';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

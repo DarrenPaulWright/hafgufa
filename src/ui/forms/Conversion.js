@@ -8,7 +8,7 @@ import FocusMixin from '../mixins/FocusMixin';
 import FormControl from './FormControl';
 import TextInput, { ON_CHANGE_DELAY } from './TextInput';
 
-const INPUT_WIDTH = '8em';
+const INPUT_WIDTH = '8rem';
 
 const FROM_TEXT_INPUT = Symbol();
 const TO_TEXT_INPUT = Symbol();
@@ -56,11 +56,13 @@ export default class Conversion extends FocusMixin(FormControl) {
 
 		settings.type = settings.type || controlTypes.CONVERSION;
 		settings.changeDelay = enforceInteger(settings.changeDelay, ON_CHANGE_DELAY);
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = fromTextInput;
-		settings.FocusMixin.subControl = toTextInput;
-		settings.FocusMixin.getFocus = () => {
-			return self[FROM_TEXT_INPUT].isFocused() || self[TO_TEXT_INPUT].isFocused();
+		settings.FocusMixin = {
+			...settings.FocusMixin,
+			mainControl: fromTextInput,
+			subControl: toTextInput,
+			getFocus() {
+				return self[FROM_TEXT_INPUT].isFocused() || self[TO_TEXT_INPUT].isFocused();
+			}
 		};
 
 		super(settings);
@@ -87,17 +89,12 @@ export default class Conversion extends FocusMixin(FormControl) {
 		self.addClass('conversion');
 
 		self[FROM_TEXT_INPUT] = fromTextInput;
-		self[FROM_TEXT_INPUT].container(self.contentContainer());
+		self[FROM_TEXT_INPUT].container(self);
 
 		self[TO_TEXT_INPUT] = toTextInput;
-		self[TO_TEXT_INPUT].container(self.contentContainer());
+		self[TO_TEXT_INPUT].container(self);
 
 		applySettings(self, settings);
-
-		self.onRemove(() => {
-			self[FROM_TEXT_INPUT].remove();
-			self[TO_TEXT_INPUT].remove();
-		});
 	}
 
 	[getFactor](typeString) {

@@ -1,20 +1,9 @@
-import { debounce } from 'async-agent';
 import { applySettings, AUTO, enforce, method } from 'type-enforcer';
-import dom from '../../utility/dom';
-import { WIDTH } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
+import Label from '../elements/Label';
+import Container from '../layout/Container';
 import FormControl from './FormControl';
 import './Score.less';
-
-const DEFAULT_NULL_TEXT = '-';
-
-/**
- * Debounced display of current value.
- * @function setDisplayText
- */
-const setDisplayText = debounce(function() {
-	this[TEXT_DISPLAY].textContent = this.value() || DEFAULT_NULL_TEXT;
-});
 
 const TEXT_DISPLAY = Symbol();
 const LABEL = Symbol();
@@ -38,12 +27,15 @@ export default class Score extends FormControl {
 		const self = this;
 		self.addClass('score');
 
-		self[TEXT_DISPLAY] = dom.appendNewTo(self, 'score-text');
-		dom.css(self[TEXT_DISPLAY], WIDTH, settings.textWidth || AUTO);
+		self[TEXT_DISPLAY] = new Container({
+			container: self,
+			classes: 'score-text',
+			removeClass: 'container',
+			width: settings.textWidth || AUTO,
+			content: '-'
+		});
 
 		applySettings(self, settings);
-
-		setDisplayText.call(self);
 	}
 }
 
@@ -57,21 +49,27 @@ Object.assign(Score.prototype, {
 	 */
 	value: method.number({
 		init: null,
-		set: setDisplayText
+		set() {
+			this[TEXT_DISPLAY].content(this.value() + '');
+		}
 	}),
 
 	label: method.string({
-		set(newValue) {
-			if (newValue === '') {
-				dom.remove(this[LABEL]);
-				this[LABEL] = null;
+		set(label) {
+			const self = this;
+
+			if (label === '') {
+				self[LABEL].remove();
+				self[LABEL] = null;
 			}
 			else {
-				if (!this[LABEL]) {
-					this[LABEL] = dom.appendNewAfter(this[TEXT_DISPLAY], 'score-label');
+				if (!self[LABEL]) {
+					self[LABEL] = new Label({
+						container: self
+					});
 				}
 
-				dom.content(this[LABEL], newValue);
+				self[LABEL].content(label);
 			}
 		}
 	}),

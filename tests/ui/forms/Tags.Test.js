@@ -257,7 +257,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickTag(1);
 
-			assert.deepEqual(document.querySelector('.tags-list-container').children[1].children[0], testUtil.getTextInput());
+			assert.deepEqual(document.querySelector('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
 		});
 
 		it('should maintain the order of tags when the first tag is edited', () => {

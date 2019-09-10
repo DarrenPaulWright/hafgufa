@@ -73,7 +73,7 @@ export default function TestUtil(Control) {
 	};
 
 	const getControlTypeString = function() {
-		const type = window.control && window.control.type ? window.control.type() : 'undefined';
+		const type = window.control && window.control.type ? window.control.type : 'undefined';
 		return 'Test: ' + this.currentTest.fullTitle() + '\nControl: ' + type + '\n';
 	};
 
@@ -97,7 +97,7 @@ export default function TestUtil(Control) {
 	};
 
 	const memoryTests = function() {
-		assert.isTrue(windowResize.getTotalCallbacks() <= 1, 'windowResize shouldn\'t have any callbacks after a test is complete. Be sure you properly remove all controls.\n' + getControlTypeString.call(this));
+		assert.isTrue(windowResize.length <= 1, 'windowResize shouldn\'t have any callbacks after a test is complete. Be sure you properly remove all controls.\n' + getControlTypeString.call(this));
 
 		windowResize.discardAll();
 	};
@@ -130,7 +130,8 @@ export default function TestUtil(Control) {
 	});
 
 	self.testMethod = (settings) => {
-		const buildOptions = () => Object.assign({}, settings.defaultSettings, {
+		const buildOptions = () => ({
+			...settings.defaultSettings,
 			container: window.testContainer
 		});
 

@@ -76,8 +76,6 @@ export default class SplitView extends IsWorkingMixin(Control) {
 				self[resize]();
 			})
 			.onRemove(() => {
-				self[FIRST_VIEW].remove();
-				self[SECOND_VIEW].remove();
 				self.isResizable(false);
 			});
 	}
@@ -113,7 +111,7 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		self[positionViews]();
 
 		if (self[RESIZER] && !self[RESIZER].isDragging) {
-			self[RESIZER].resize();
+			self[RESIZER].resize(true);
 		}
 	}
 
@@ -128,11 +126,13 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		const altViewSize = self[ALT_SIZE] === WIDTH ? self.borderWidth() : self.borderHeight();
 		let splitOffset = offsetToPixels(self.splitOffset(), viewSize);
 
-		self[FIRST_VIEW][self[SIZE]](splitOffset)[self[ALT_SIZE]](altViewSize);
+		self[FIRST_VIEW][self[SIZE]](splitOffset)
+			[self[ALT_SIZE]](altViewSize).resize(true);
 
 		self[SECOND_VIEW][self[SIZE]](viewSize - splitOffset)[self[ALT_SIZE]](altViewSize)
 			.css(self[SIZE_ORIGIN], splitOffset)
-			.css(self[ALT_SIZE_ORIGIN], ZERO_PIXELS);
+			.css(self[ALT_SIZE_ORIGIN], ZERO_PIXELS)
+			.resize(true);
 	}
 
 	get(id) {

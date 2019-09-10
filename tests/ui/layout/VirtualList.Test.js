@@ -251,7 +251,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testValue.type(), button.type());
+			assert.equal(testValue.type, button.type);
 
 			button.remove();
 		});

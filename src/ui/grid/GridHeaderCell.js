@@ -89,12 +89,6 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 				}
 			}
 		});
-
-		self.onRemove(() => {
-			self[removeControls]();
-			self[HEADING].remove();
-			self[HEADING] = null;
-		});
 	}
 
 	/**

@@ -40,18 +40,16 @@ export default class Bar extends GraphAxisBase {
 
 		self[setupGraph]();
 		self.onUpdateSize((renderWidth, renderHeight) => {
-			self[updateSize](renderWidth, renderHeight);
-		});
-		self.onUpdateData(() => {
-			self[updateData]();
-		});
-
-		self.resize();
-
-		self.onRemove(() => {
-			self[BARS] = null;
-			self[SVG] = null;
-		});
+				self[updateSize](renderWidth, renderHeight);
+			})
+			.onUpdateData(() => {
+				self[updateData]();
+			})
+			.onRemove(() => {
+				self[BARS] = null;
+				self[SVG] = null;
+			})
+			.resize();
 	}
 
 	[setupGraph]() {

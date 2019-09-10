@@ -60,31 +60,30 @@ export default class GridColumnBlock extends Control {
 
 		applySettings(self, settings);
 
-		self.onResize(() => {
-			self[GRID_HEADER].scrollbarWidth(dom.get.scrollbar.width(self[VIRTUAL_LIST]));
-			self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(self.borderWidth());
-			self[GRID_HEADER].width(self[RENDERED_WIDTH]);
-			self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);
+		self.onResize((width, height) => {
+				self[GRID_HEADER].scrollbarWidth(dom.get.scrollbar.width(self[VIRTUAL_LIST]));
+				self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(width);
+				self[GRID_HEADER].width(self[RENDERED_WIDTH]);
+				self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);
 
-			self[VIRTUAL_LIST].getRenderedControls().forEach((rowControl) => {
-				rowControl.columns(self[GRID_HEADER].columns());
-				rowControl.updateWidth(self[RENDERED_WIDTH]);
+				self[VIRTUAL_LIST].getRenderedControls().forEach((rowControl) => {
+					rowControl.columns(self[GRID_HEADER].columns());
+					rowControl.updateWidth(self[RENDERED_WIDTH]);
+				});
+
+				if (self.height().isAuto) {
+					self[VIRTUAL_LIST].height(AUTO);
+				}
+				else {
+					self[VIRTUAL_LIST].height((height - self[GRID_HEADER].borderHeight()) + PIXELS);
+				}
+			})
+			.onRemove(() => {
+				self[VIRTUAL_LIST].remove();
+				self[VIRTUAL_LIST] = null;
+				self[GRID_HEADER].remove();
+				self[GRID_HEADER] = null;
 			});
-
-			if (self.height().isAuto) {
-				self[VIRTUAL_LIST].height(AUTO);
-			}
-			else {
-				self[VIRTUAL_LIST].height((self.borderHeight() - self[GRID_HEADER].borderHeight()) + PIXELS);
-			}
-		}, true);
-
-		self.onRemove(() => {
-			self[VIRTUAL_LIST].remove();
-			self[VIRTUAL_LIST] = null;
-			self[GRID_HEADER].remove();
-			self[GRID_HEADER] = null;
-		});
 	}
 
 	[updateRow](rowControl, rowData) {

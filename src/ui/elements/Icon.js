@@ -69,7 +69,6 @@ export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.ICON;
 		settings.element = 'i';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

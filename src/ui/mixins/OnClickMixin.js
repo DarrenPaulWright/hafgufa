@@ -45,7 +45,7 @@ const addClickEvent = function() {
 			self.onClick()(self);
 		}
 
-		if (self.type() !== controlTypes.HYPERLINK && url) {
+		if (self.type !== controlTypes.HYPERLINK && url) {
 			const link = buildLink(url);
 			window.open(link.url, link.target);
 		}
@@ -103,7 +103,7 @@ export default (Base) => {
 					this.text(this.text(), true);
 				}
 
-				if (this.type() === controlTypes.HYPERLINK) {
+				if (this.type === controlTypes.HYPERLINK) {
 					const link = buildLink(url);
 
 					this.element().target = link.target;

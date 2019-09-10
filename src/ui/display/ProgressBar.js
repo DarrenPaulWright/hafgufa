@@ -56,7 +56,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 		});
 
 		self[BAR_CONTAINER] = new Container({
-			container: self.contentContainer(),
+			container: self,
 			classes: 'bar-container'
 		});
 
@@ -74,10 +74,6 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 			.resize();
 
 		self.onRemove(() => {
-			self[BAR].remove();
-			self[BAR] = null;
-			self[BAR_CONTAINER].remove();
-			self[BAR_CONTAINER] = null;
 			self[CONTROLS].remove();
 		});
 	}

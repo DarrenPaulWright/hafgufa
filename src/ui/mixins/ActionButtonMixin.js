@@ -38,41 +38,32 @@ export default function(Base) {
 			const self = this;
 			self[RIGHT_CONTAINER_WIDTH] = 0;
 
-			self.css(POSITION, RELATIVE);
+			self.css(POSITION, RELATIVE)
+				.onChange(() => {
+					self.refreshActionButton();
+				})
+				.onResize(() => {
+					const container = containerCallback();
 
-			self.onChange(() => {
-				self.refreshActionButton();
-			});
+					if (container) {
+						const height = container.borderHeight();
+						const width = container.borderWidth();
 
-			self.onResize(() => {
-				const container = containerCallback();
+						if (self[RIGHT_CONTAINER]) {
+							self[RIGHT_CONTAINER].css({
+								top: container.element().offsetTop,
+								height: height,
+								right: self.borderWidth() - width - dom.get.left(container.element())
+							});
+						}
 
-				if (container) {
-					const height = container.borderHeight();
-					const width = container.borderWidth();
+						if (self[COUNT_CONTROL]) {
+							self[COUNT_CONTROL].css(LINE_HEIGHT, height);
+						}
 
-					if (self[RIGHT_CONTAINER]) {
-						self[RIGHT_CONTAINER].css({
-							top: container.element().offsetTop,
-							height: height,
-							right: self.borderWidth() - width - dom.get.left(container.element())
-						});
+						container.css(PADDING_RIGHT, self[RIGHT_CONTAINER_WIDTH]);
 					}
-
-					if (self[COUNT_CONTROL]) {
-						self[COUNT_CONTROL].css(LINE_HEIGHT, height);
-					}
-
-					container.css(PADDING_RIGHT, self[RIGHT_CONTAINER_WIDTH]);
-				}
-			});
-
-			self.onRemove(() => {
-				if (self[RIGHT_CONTAINER]) {
-					self[RIGHT_CONTAINER].remove();
-					self[RIGHT_CONTAINER] = null;
-				}
-			});
+				});
 		}
 
 		[addRightContainer]() {

@@ -77,7 +77,7 @@ export default class EditableGrid extends FormControl {
 		self.addClass('editable-grid');
 
 		self[GRID] = new Grid({
-			container: self.contentContainer(),
+			container: self,
 			columns: settings.columns,
 			height: settings.height === AUTO ? AUTO : '14rem',
 			onSelect: (rowId) => self[showDialog](rowId),
@@ -98,22 +98,21 @@ export default class EditableGrid extends FormControl {
 		applySettings(self, settings, [], ['value']);
 
 		self.onResize(() => {
-			if (!self.height().isAuto) {
-				self[GRID]
-					.height(self.innerHeight() - dom.get.top(self.contentContainer()) - dom.get.outerHeight(self[ADD_NEW_BUTTON]))
-					.resize();
-			}
-		}, true);
+				if (!self.height().isAuto) {
+					self[GRID]
+						.height(self.innerHeight() - dom.get.top(self.contentContainer) - dom.get.outerHeight(self[ADD_NEW_BUTTON]))
+						.resize();
+				}
+			})
+			.onRemove(() => {
+				self[ADD_NEW_BUTTON].remove();
 
-		self.onRemove(() => {
-			self[ADD_NEW_BUTTON].remove();
+				if (self[ADD_NEW_DIALOG]) {
+					self[ADD_NEW_DIALOG].remove();
+				}
 
-			if (self[ADD_NEW_DIALOG]) {
-				self[ADD_NEW_DIALOG].remove();
-			}
-
-			self[GRID].remove();
-		});
+				self[GRID].remove();
+			});
 	}
 
 	[deleteItem](rowData) {

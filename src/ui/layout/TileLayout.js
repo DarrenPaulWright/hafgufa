@@ -152,7 +152,7 @@ export default class TileLayout extends Container {
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
 
-		super();
+		super(settings);
 
 		const self = this;
 		self[VIRTUAL_SCROLL_ELEMENT] = new Container();
@@ -196,13 +196,13 @@ export default class TileLayout extends Container {
 		self[LAYOUT_WIDTH] = self.innerWidth();
 
 		self[VIRTUAL_SCROLL_ELEMENT]
-			.container(self.element())
+			.container(self)
 			.css(POSITION, ABSOLUTE)
 			.width('1px');
 
 		applySettings(self, settings);
 
-		self.onResize(() => {
+		self.onResize(throttle(() => {
 				const availableWidth = self.innerWidth();
 
 				if (!self.height().isAuto) {
@@ -224,11 +224,7 @@ export default class TileLayout extends Container {
 				else {
 					self.css(OVERFLOW_Y, AUTO);
 				}
-			})
-			.onRemove(() => {
-				self[VIRTUAL_SCROLL_ELEMENT].remove();
-				self[VIRTUAL_SCROLL_ELEMENT] = null;
-			})
+			}, 100))
 			.resize();
 	}
 
@@ -305,14 +301,14 @@ export default class TileLayout extends Container {
 
 		if (!control.isRegistered) {
 			control
-				.onResize(() => {
+				.onResize((width, height) => {
 					if (self[IS_VIRTUALIZED]) {
 						const index = parseInt(control.attr(CONTROL_INDEX_ATTR));
 
 						if (self[TILE_OFFSETS][index] && !self[TILE_OFFSETS][index].removed && index >= self[CUTOFF_INDEX_TOP] && index <= self[CUTOFF_INDEX_BOTTOM]) {
-							const newHeight = control.borderHeight() + self[RENDERED_TILE_MARGIN];
+							const newHeight = height + self[RENDERED_TILE_MARGIN];
 							if (newHeight !== self[RENDERED_HEIGHTS][index]) {
-								self[RENDERED_HEIGHTS][index] = control.borderHeight() + self[RENDERED_TILE_MARGIN];
+								self[RENDERED_HEIGHTS][index] = height + self[RENDERED_TILE_MARGIN];
 								self[placeControls](index);
 							}
 						}
@@ -381,7 +377,10 @@ export default class TileLayout extends Container {
 			offset.gaps = clone(self[GAPS]);
 
 			if (!fitInGaps(offset, self[RENDERED_HEIGHTS][index], columnSpan, self[GAPS])) {
-				offset = Object.assign(offset, minInRange(self[COLUMN_COUNT] - columnSpan + 1, columnSpan, self[COLUMN_OFFSETS]));
+				offset = {
+					...offset,
+					...minInRange(self[COLUMN_COUNT] - columnSpan + 1, columnSpan, self[COLUMN_OFFSETS])
+				};
 				saveOffset(offset, columnSpan, self[RENDERED_HEIGHTS][index], self[COLUMN_OFFSETS], self[GAPS]);
 			}
 			self[TILE_OFFSETS][index] = offset;
@@ -722,10 +721,6 @@ export default class TileLayout extends Container {
 				}
 			}
 		}
-	}
-
-	contentContainer() {
-		return null;
 	}
 }
 

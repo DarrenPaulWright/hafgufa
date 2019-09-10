@@ -1,7 +1,6 @@
 import { debounce, throttle } from 'async-agent';
 import { select } from 'd3';
 import { Queue } from 'type-enforcer';
-import dom from './dom';
 import { RESIZE_EVENT, WINDOW } from './domConstants';
 
 let windowWidth = 0;
@@ -12,7 +11,7 @@ const queue = new Queue();
  * Executes a callback on ID only.
  * @function trigger
  */
-const trigger = (ID) => queue.trigger(ID, [windowWidth, windowHeight]);
+const trigger = (ID) => queue.trigger(ID);
 
 /**
  * Executes all callbacks.
@@ -48,15 +47,10 @@ export default {
 	 *
 	 * @returns {Number} - An unique ID for this callback.
 	 */
-	add(callback, element, type) {
+	add(callback, type) {
 		const newID = queue.add(callback, {
-			element: element,
 			type: type
 		});
-
-		if (element) {
-			dom.addDomInsertionCallback(element, () => trigger(newID));
-		}
 
 		return newID;
 	},
@@ -71,7 +65,7 @@ export default {
 	 * @arg {Number} ID - The ID returned by windowResize.add().
 	 */
 	discard(ID) {
-		dom.removeDomInsertionCallback(queue.discard(ID).element);
+		queue.discard(ID);
 	},
 
 	/**
@@ -100,13 +94,21 @@ export default {
 		}
 	},
 
+	get width() {
+		return windowWidth;
+	},
+
+	get height() {
+		return windowHeight;
+	},
+
 	/**
 	 * Gets the total number of current callbacks.
 	 * @method getTotalCallbacks
 	 * @member module:windowResize
 	 * @instance
 	 */
-	getTotalCallbacks() {
+	get length() {
 		return queue.length;
 	}
 };

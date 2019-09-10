@@ -47,7 +47,6 @@ export default class TimeSpan extends Container {
 				}
 			})
 			.onRemove(() => {
-				self[HEADING].remove();
 				self[TICK_RECYCLER].remove();
 			});
 	}

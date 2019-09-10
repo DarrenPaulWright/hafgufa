@@ -22,7 +22,7 @@ export default class Header extends Container {
 		this.removeClass('container');
 		this.addClass('clearfix');
 
-		if (settings.type === controlTypes.HEADER) {
+		if (this.type === controlTypes.HEADER) {
 			applySettings(this, settings);
 		}
 	}

@@ -154,7 +154,7 @@ describe('GridCell', () => {
 					icon: 'circle'
 				}]
 			},
-			output: '<div class=\"toolbar clearfix\"><button type=\"button\" class=\"icon-button\"><i class=\"icon icon-lg fa-circle\" id="buttonIcon"></i></button></div>',
+			output: '<div class=\"toolbar clearfix\"><button type=\"button\" class=\"icon-button\"><i id="buttonIcon" class=\"icon icon-lg fa-circle\"></i></button></div>',
 			textAlign: 'NONE'
 		}, {
 			type: 'CHECKBOX',

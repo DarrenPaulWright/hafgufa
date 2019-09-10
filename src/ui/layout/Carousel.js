@@ -62,7 +62,7 @@ export default class Carousel extends NextPrevMixin(Control) {
 		self.addClass('carousel');
 
 		self[VIRTUAL_LIST] = new VirtualList({
-			container: self.element(),
+			container: self,
 			isHorizontal: true,
 			height: settings.height,
 			itemControl: settings.slideControl,
@@ -76,14 +76,10 @@ export default class Carousel extends NextPrevMixin(Control) {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-				if (self.fitToSlide()) {
-					self[fitToSlide]();
-				}
-			})
-			.onRemove(() => {
-				self[VIRTUAL_LIST].remove();
-				self[VIRTUAL_LIST] = null;
-			});
+			if (self.fitToSlide()) {
+				self[fitToSlide]();
+			}
+		});
 	}
 
 	[fitToSlide]() {

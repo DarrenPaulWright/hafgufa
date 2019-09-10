@@ -1,14 +1,14 @@
 import { AUTO, HUNDRED_PERCENT, method, NONE } from 'type-enforcer';
-import dom from '../../utility/dom';
-import { DISPLAY, HEIGHT } from '../../utility/domConstants';
-import windowResize from '../../utility/windowResize';
+import { DISPLAY } from '../../utility/domConstants';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
+import Container from '../layout/Container';
 
 const SINGLE_LINE_CLASS = 'single-line';
 const CAN_COLLAPSE_CLASS = 'can-collapse';
 const COLLAPSED_CLASS = 'collapsed';
 
 const HEADING = Symbol();
+export const CONTENT_CONTAINER = Symbol();
 
 /**
  * Provides a Heading control and a content container
@@ -27,24 +27,31 @@ export default (Base) => {
 			self.title(settings.title || '');
 			delete settings.title;
 
-			self.onResize(() => {
-				let titleContainerHeight = 0;
+			self[CONTENT_CONTAINER] = settings.contentContainer || new Container();
+			self[CONTENT_CONTAINER].container(self.element());
+			self[CONTENT_CONTAINER].removeClass('container');
+			delete settings.contentContainer;
 
+			self.onResize((width, height) => {
 				if (self[HEADING]) {
 					self[HEADING].resize();
 
 					if (self.height().isPercent) {
-						titleContainerHeight = self[HEADING].borderHeight();
-						dom.css(self.contentContainer(), HEIGHT, self.borderHeight() - titleContainerHeight);
+						self[CONTENT_CONTAINER].height(height - self[HEADING].borderHeight());
 					}
 				}
 			});
+		}
 
-			self.onRemove(() => {
-				if (self[HEADING]) {
-					self[HEADING].remove();
-				}
-			});
+		/**
+		 * The content container element
+		 * @method contentContainer
+		 * @member module:ControlHeadingAddon
+		 * @instance
+		 * @returns {Object}
+		 */
+		get contentContainer() {
+			return this[CONTENT_CONTAINER];
 		}
 	}
 
@@ -106,11 +113,10 @@ export default (Base) => {
 					self.isCollapsed(false);
 				}
 				else if (self[HEADING] && self.canCollapse()) {
-					dom.css(self.contentContainer(), DISPLAY, isCollapsed ? NONE : null);
+					self[CONTENT_CONTAINER].css(DISPLAY, isCollapsed ? NONE : null);
 					self[HEADING].isExpanded(!isCollapsed);
-					if (!isCollapsed) {
-						windowResize.trigger();
-					}
+
+					self.resize();
 				}
 			}
 		}),
@@ -139,18 +145,12 @@ export default (Base) => {
 			init: undefined,
 			set(title) {
 				const self = this;
-				const showHeading = !!title;
 
-				if (showHeading) {
+				if (title) {
 					if (!self[HEADING]) {
-						let originalElement = self.element();
-						const initialClasses = self.classes();
-
-						self.element('div');
-						self.classes(initialClasses);
-
 						self[HEADING] = new Heading({
 							container: self.element(),
+							prepend: true,
 							showCheckbox: false,
 							showExpander: false,
 							level: self.headingLevel(),
@@ -162,10 +162,6 @@ export default (Base) => {
 							singleLine: self.singleLine(),
 							canCollapse: self.canCollapse()
 						});
-
-						dom.appendTo(self.element(), originalElement);
-						dom.removeClass(originalElement, initialClasses);
-						self.contentContainer(originalElement);
 					}
 
 					self[HEADING].title(title);
@@ -174,14 +170,10 @@ export default (Base) => {
 					if (self[HEADING]) {
 						self[HEADING].remove();
 						self[HEADING] = null;
-
-						self.element(self.contentContainer());
 					}
-					self.contentContainer(self.element());
 				}
 
-				self.classes('has-heading', showHeading);
-				self.contentWidthContainer(self.contentContainer());
+				self.classes('has-heading', Boolean(title));
 			}
 		}),
 
@@ -296,26 +288,7 @@ export default (Base) => {
 		 */
 		getHeading() {
 			return this[HEADING];
-		},
-
-		/**
-		 * Get or Set the content container element
-		 * @method contentContainer
-		 * @member module:ControlHeadingAddon
-		 * @instance
-		 * @returns {Object}
-		 */
-		contentContainer: method.element(),
-
-		/**
-		 * Get or Set which container to use to determine where to place the error message if you need something other than
-		 * the full width.
-		 * @method contentWidthContainer
-		 * @member module:ControlHeadingAddon
-		 * @instance
-		 * @arg {Object} [newContainer]
-		 */
-		contentWidthContainer: method.element()
+		}
 	});
 
 	return ControlHeadingMixin;

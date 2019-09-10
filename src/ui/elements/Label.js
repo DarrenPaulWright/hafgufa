@@ -17,11 +17,10 @@ export default class Label extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.LABEL;
 		settings.element = 'label';
-		settings.skipWindowResize = true;
 
 		super(settings);
 
-		if (settings.type === controlTypes.LABEL) {
+		if (this.type === controlTypes.LABEL) {
 			applySettings(this, settings);
 		}
 	}

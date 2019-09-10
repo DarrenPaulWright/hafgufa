@@ -1,10 +1,10 @@
 import { applySettings, AUTO, method, Thickness } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { MIN_WIDTH, PADDING } from '../../utility/domConstants';
+import Control from '../Control';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
-import Container from './Container';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import './Group.less';
 
 /**
@@ -16,15 +16,15 @@ import './Group.less';
  *
  * @param {Object} settings
  */
-export default class Group extends ControlHeadingMixin(Container) {
+export default class Group extends MergeContentContainerMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.GROUP;
+		settings.element = 'fieldset';
 		settings.headingLevel = HEADING_LEVELS.FOUR;
 
 		super(settings);
 
 		this
-			.element('fieldset')
 			.addClass('group clearfix')
 			.removeClass('container')
 			.css(MIN_WIDTH, AUTO);
@@ -48,7 +48,7 @@ Object.assign(Group.prototype, {
 	padding: method.thickness({
 		init: new Thickness('0.25rem 0.6rem 0.5rem'),
 		set(padding) {
-			dom.css(this.contentContainer(), PADDING, padding.toString());
+			this.contentContainer.css(PADDING, padding.toString());
 		}
 	})
 });

@@ -66,9 +66,6 @@ export default class GridRow extends Control {
 		applySettings(self, settings);
 
 		self.onRemove(() => {
-			if (self[GROUP_HEADING]) {
-				self[GROUP_HEADING].remove();
-			}
 			self[CELL_RECYCLER].remove();
 		});
 	}

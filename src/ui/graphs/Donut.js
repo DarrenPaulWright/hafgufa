@@ -51,25 +51,23 @@ export default class Donut extends GraphBase {
 
 		self[setupGraph]();
 		self.onUpdateSize((renderWidth, renderHeight) => {
-			self[updateSize](renderWidth, renderHeight);
-		});
-		self.onUpdateData(() => {
-			self[updateData]();
-		});
-
-		self.resize();
-
-		self.onRemove(() => {
-			self[PIE_DATA] = null;
-			self[RADIUS] = null;
-			self[DONUT_ARC] = null;
-			self[LINE_START_ARC] = null;
-			self[LINE_PIVOT_ARC] = null;
-			if (self[SVG]) {
-				self[SVG].remove();
-				self[SVG] = null;
-			}
-		});
+				self[updateSize](renderWidth, renderHeight);
+			})
+			.onUpdateData(() => {
+				self[updateData]();
+			})
+			.onRemove(() => {
+				self[PIE_DATA] = null;
+				self[RADIUS] = null;
+				self[DONUT_ARC] = null;
+				self[LINE_START_ARC] = null;
+				self[LINE_PIVOT_ARC] = null;
+				if (self[SVG]) {
+					self[SVG].remove();
+					self[SVG] = null;
+				}
+			})
+			.resize();
 	}
 
 	[setupGraph]() {

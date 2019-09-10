@@ -1,11 +1,8 @@
-import { debounce, delay } from 'async-agent';
 import { event } from 'd3';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
 import dom from '../../utility/dom';
-import { HEIGHT } from '../../utility/domConstants';
-import windowResize from '../../utility/windowResize';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
@@ -74,7 +71,10 @@ export default class Tabs extends Div {
 		self[IS_TAB_CONTAINER_COLLAPSED] = false;
 		self[COLLAPSE_BUTTON];
 		self[IS_VERTICAL] = false;
-		self[TAB_CONTAINER] = dom.appendNewTo(self.element(), 'tab-container');
+		self[TAB_CONTAINER] = new Container({
+			container: self.element(),
+			classes: 'tab-container'
+		});
 		self[CONTENT_CONTAINER] = new Container({
 			container: self.element(),
 			classes: 'tabs-content'
@@ -86,39 +86,31 @@ export default class Tabs extends Div {
 			...settings
 		});
 
-		self.onResize(() => {
-				const availableHeight = self.borderHeight();
+		self.onResize((width, height) => {
+				const availableHeight = height;
 
 				if (self[IS_VERTICAL]) {
-					dom.css(self[TAB_CONTAINER], HEIGHT, availableHeight);
+					self[TAB_CONTAINER].height(availableHeight);
 					self[CONTENT_CONTAINER].height(availableHeight);
 				}
 				else if (self.height().isPercent) {
 					self[CONTENT_CONTAINER].height(availableHeight - dom.get.outerHeight(self[TAB_CONTAINER]) - (self[TOOLBAR] ? self[TOOLBAR].borderHeight() : 0));
 				}
+
+				self[TAB_CONTAINER].resize(true);
+				self[CONTENT_CONTAINER].resize(true);
 			})
 			.resize();
-
-		self.onRemove(() => {
-			self.canCollapseTabContainer(false);
-			self.hideToolbar(true);
-			self[CONTENT_CONTAINER].remove();
-			self[CONTENT_CONTAINER] = null;
-			self.tabs([]);
-		});
 	}
 
 	[toggleTabContainer]() {
 		const self = this;
 
 		self[IS_TAB_CONTAINER_COLLAPSED] = !self[IS_TAB_CONTAINER_COLLAPSED];
-		dom.classes(self[TAB_CONTAINER], 'collapsed', self[IS_TAB_CONTAINER_COLLAPSED]);
+		self[TAB_CONTAINER].classes('collapsed', self[IS_TAB_CONTAINER_COLLAPSED]);
 		self[CONTENT_CONTAINER].classes('collapsed', self[IS_TAB_CONTAINER_COLLAPSED]);
 		self[COLLAPSE_BUTTON].icon(self[IS_TAB_CONTAINER_COLLAPSED] ? UN_COLLAPSE_RIGHT_ICON : COLLAPSE_LEFT_ICON);
-
-		delay(() => {
-			windowResize.trigger();
-		}, 200);
+		self.resize(true);
 	}
 
 	[getGroup](groupTitle) {
@@ -188,7 +180,7 @@ export default class Tabs extends Div {
 }
 
 Object.assign(Tabs.prototype, {
-	[clickTab]: debounce(function(ID) {
+	[clickTab](ID) {
 		const self = this;
 
 		if (self[TABS].length > 0) {
@@ -197,7 +189,7 @@ Object.assign(Tabs.prototype, {
 				tab.group.getButton(ID).click();
 			}
 		}
-	}, 20),
+	},
 
 	orientation: method.enum({
 		enum: ORIENTATION,
@@ -309,10 +301,6 @@ Object.assign(Tabs.prototype, {
 					data: tab
 				});
 			});
-
-			if (self[TABS].length) {
-				self.selectTab(self[TABS][0].ID);
-			}
 		}
 	}),
 

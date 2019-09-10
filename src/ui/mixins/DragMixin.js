@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { drag, event, select } from 'd3';
+import { drag, event } from 'd3';
 import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
 import { DRAG_END_EVENT, DRAG_MOVE_EVENT, DRAG_START_EVENT } from '../../utility/d3Helper';
 import {
@@ -14,14 +14,14 @@ import {
 	SCROLL_LEFT,
 	SCROLL_TOP,
 	TOP,
-	TRANSFORM
+	TRANSFORM,
+	WINDOW
 } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 
 const FRICTION = 0.85;
 const ELASTICITY = 0.75;
 
-const CONTAINER_D3 = Symbol();
 const DRAGGABLE_RECT = Symbol();
 const AVAILABLE_WIDTH = Symbol();
 const AVAILABLE_HEIGHT = Symbol();
@@ -279,7 +279,8 @@ export default (Base) => {
 
 			if (self.container()) {
 				const scale = self.scale();
-				const padding = new Thickness(self[CONTAINER_D3].style(PADDING) || 0);
+				const padding = new Thickness(WINDOW.getComputedStyle(self.container())
+					.getPropertyValue(PADDING) || 0);
 
 				self[DRAGGABLE_RECT] = self.element().getBoundingClientRect();
 				const outerRect = self.container().getBoundingClientRect();
@@ -483,16 +484,11 @@ export default (Base) => {
 								self[stopDrag]();
 							}));
 
-					self[CONTAINER_D3] = select(self.container());
-					self[CONTAINER_D3].on(MOUSE_WHEEL_EVENT, () => {
+					self.on(MOUSE_WHEEL_EVENT, () => {
 						self[setZoom](self.scale() * (1 - (event.deltaY / 1000)), event.x - self[DRAG_OFFSET].x, event.y - self[DRAG_OFFSET].y);
 					});
 
 					self[updateBounds]();
-
-					self.onRemove(() => {
-						self[CONTAINER_D3].on(MOUSE_WHEEL_EVENT, null);
-					});
 				}
 			}
 		}),

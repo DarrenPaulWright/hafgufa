@@ -1,10 +1,10 @@
 import { applySettings, enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { PADDING } from '../../utility/domConstants';
+import Control from '../Control';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
-import Container from './Container';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import './Section.less';
 
 /**
@@ -16,9 +16,10 @@ import './Section.less';
  *
  * @param {Object} settings
  */
-export default class Section extends ControlHeadingMixin(Container) {
+export default class Section extends MergeContentContainerMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SECTION;
+		settings.element = 'section';
 		settings.headingLevel = enforce.enum(settings.headingLevel, HEADING_LEVELS, HEADING_LEVELS.TWO);
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.canCollapse = enforce.boolean(settings.canCollapse, true);
@@ -26,8 +27,7 @@ export default class Section extends ControlHeadingMixin(Container) {
 		super(settings);
 
 		this
-			.element('section')
-			.addClass('section clearfix')
+			.addClass('section')
 			.removeClass('container');
 
 		applySettings(this, settings, ['canCollapse']);
@@ -49,7 +49,7 @@ Object.assign(Section.prototype, {
 	padding: method.thickness({
 		init: new Thickness('1.25rem'),
 		set(padding) {
-			dom.css(this.contentContainer(), PADDING, padding.toString());
+			this.contentContainer.css(PADDING, padding.toString());
 		}
 	})
 });

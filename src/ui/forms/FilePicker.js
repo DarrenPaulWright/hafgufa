@@ -68,7 +68,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		const self = this;
 		if (!self[FILE_INPUT] && (!self[FILE_THUMBNAILS].total() || self.isMulti())) {
 			self[FILE_INPUT] = new FileInput({
-				container: self.contentContainer(),
+				container: self,
 				onPreLoad(data) {
 					self[preloadFiles](data);
 				},
@@ -113,7 +113,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		const self = this;
 		let thumb = new FileThumbnail({
 			ID: data.name,
-			container: self.contentContainer(),
+			container: self,
 			previewSize: self.previewSize(),
 			fileExtension: data.extension,
 			fileData: data

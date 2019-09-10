@@ -73,11 +73,7 @@ export default class IsWorking extends DelayedRenderMixin(Control) {
 
 		applySettings(self, settings, ['height', 'width']);
 
-		self
-			.addClass(IS_WORKING_CLASS)
-			.onRemove(() => {
-				self.label('');
-			});
+		self.addClass(IS_WORKING_CLASS);
 	}
 }
 
@@ -95,7 +91,7 @@ Object.assign(IsWorking.prototype, {
 			if (label) {
 				if (!this[LABEL]) {
 					this[LABEL] = new Label({
-						container: this.element()
+						container: this
 					});
 				}
 				this[LABEL].content(label);

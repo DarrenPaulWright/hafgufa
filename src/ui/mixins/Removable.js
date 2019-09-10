@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { isFunction, method, Queue } from 'type-enforcer';
+import { isFunction, method } from 'type-enforcer';
 
 const isTest = isFunction(global.it);
 const FADE_INITIAL_CLASS = 'fade-initial';
@@ -7,8 +7,6 @@ const FADE_IN_CLASS = 'fade-in';
 const FADE_DURATION = 200;
 
 const IS_REMOVED = Symbol();
-const ON_PRE_REMOVE = Symbol();
-const ON_REMOVE = Symbol();
 const REMOVE_DELAY = Symbol();
 
 /**
@@ -50,48 +48,6 @@ Object.assign(Removable.prototype, {
 	}),
 
 	/**
-	 * Adds a callback that gets called before any fade animations
-	 * @method onPreRemove
-	 * @member module:Removable
-	 * @instance
-	 * @arg {Function} callback
-	 * @returns {this}
-	 */
-	onPreRemove(callback) {
-		const self = this;
-
-		if (!self.isRemoved && callback) {
-			if (!self[ON_PRE_REMOVE]) {
-				self[ON_PRE_REMOVE] = new Queue();
-			}
-			self[ON_PRE_REMOVE].add(callback);
-		}
-
-		return self;
-	},
-
-	/**
-	 * Adds a callback to the remove method
-	 * @method onRemove
-	 * @member module:Removable
-	 * @instance
-	 * @arg {Function} callback
-	 * @returns {this}
-	 */
-	onRemove(callback) {
-		const self = this;
-
-		if (!self.isRemoved && callback) {
-			if (!self[ON_REMOVE]) {
-				self[ON_REMOVE] = new Queue();
-			}
-			self[ON_REMOVE].add(callback);
-		}
-
-		return self;
-	},
-
-	/**
 	 * Calls all the onRemove callbacks and sets isRemoved to true
 	 * @method remove
 	 * @member module:Removable
@@ -101,22 +57,20 @@ Object.assign(Removable.prototype, {
 		const self = this;
 
 		const removeFinal = () => {
-			if (self[ON_REMOVE]) {
-				self[ON_REMOVE].trigger(null, null, self)
+			if (self.onRemove()) {
+				self.onRemove().trigger(null, null, self)
 					.discardAll();
-				self[ON_REMOVE] = null;
 			}
-			if (self[ON_PRE_REMOVE]) {
-				self[ON_PRE_REMOVE].discardAll();
-				self[ON_PRE_REMOVE] = null;
+			if (self.onPreRemove()) {
+				self.onPreRemove().discardAll();
 			}
 		};
 
 		if (self && !self.isRemoved) {
 			self[IS_REMOVED] = true;
 
-			if (self[ON_PRE_REMOVE]) {
-				self[ON_PRE_REMOVE].trigger(null, null, self);
+			if (self.onPreRemove()) {
+				self.onPreRemove().trigger(null, null, self);
 			}
 
 			if (self.fade() && !isTest) {
@@ -140,4 +94,25 @@ Object.assign(Removable.prototype, {
 
 		return self;
 	}
+});
+
+Object.assign(Removable.prototype, {
+	/**
+	 * Adds a callback that gets called before any fade animations
+	 * @method onPreRemove
+	 * @member module:Removable
+	 * @instance
+	 * @arg {Function} callback
+	 * @returns {this}
+	 */
+	onPreRemove: method.queue(),
+	/**
+	 * Adds a callback to the remove method
+	 * @method onRemove
+	 * @member module:Removable
+	 * @instance
+	 * @arg {Function} callback
+	 * @returns {this}
+	 */
+	onRemove: method.queue()
 });

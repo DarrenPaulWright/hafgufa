@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { select } from 'd3';
 import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
-import { CLICK_EVENT } from '../../src/utility/domConstants';
+import { CLICK_EVENT, Container, windowResize } from '../../src/';
 
 const TEST_ID = 'testID';
 const TEST_ID_SUFFIX = 'testIDSuffix';
@@ -11,12 +11,16 @@ const extraTests = ['focus', 'onChange'];
 export default function ControlTests(Control, testUtil, settings = {}) {
 	const self = this;
 
-	const buildSettings = (localSettings) => Object.assign({}, {
-		ID: TEST_ID,
-		container: window.testContainer,
-		delay: 0,
-		fade: false
-	}, settings.extraSettings, localSettings);
+	const buildSettings = (localSettings) => {
+		return {
+			ID: TEST_ID,
+			container: window.testContainer,
+			delay: 0,
+			fade: false,
+			...settings.extraSettings,
+			...localSettings
+		};
+	};
 
 	self.run = (exceptions, additions, extraSettings = {}) => {
 		exceptions = castArray(exceptions);
@@ -62,12 +66,15 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	self.container = () => {
 		describe('Control container', () => {
 			it('should not have a container value if no container was set', () => {
+				const initialLength = windowResize.length;
+
 				window.control = new Control(buildSettings({
 					container: null
 				}));
 
 				assert.equal(window.testContainer.children.length, 0);
 				assert.equal(window.control.container(), undefined);
+				assert.equal(windowResize.length, initialLength);
 			});
 
 			it('should have a container element if the container setting was set', () => {
@@ -84,6 +91,43 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				assert.equal(window.testContainer.children.length, 1);
 				assert.isOk(window.control.container());
+			});
+
+			it('should add a callback to windowResize', () => {
+				const initialLength = windowResize.length;
+
+				window.control = new Control(buildSettings({
+					container: window.testContainer
+				}));
+
+				assert.equal(windowResize.length, initialLength + 1);
+			});
+
+			it('should NOT add a callback to windowResize if set in the content setting of a Container', () => {
+				const initialLength = windowResize.length;
+
+				window.control = new Container({
+					container: window.testContainer,
+					content: buildSettings({
+						control: Control
+					})
+				});
+
+				assert.equal(windowResize.length, initialLength + 1);
+			});
+
+			it('should NOT add a callback to windowResize if set in the content method of a Container', () => {
+				const initialLength = windowResize.length;
+
+				window.control = new Container({
+					container: window.testContainer
+				});
+
+				window.control.content(buildSettings({
+					control: Control
+				}));
+
+				assert.equal(windowResize.length, initialLength + 1);
 			});
 		});
 	};

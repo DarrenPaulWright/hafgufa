@@ -38,10 +38,9 @@ const buildTooltipText = Symbol();
  */
 export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
-		super({
-			...settings,
-			isWorking: enforce.boolean(settings.isWorking, true)
-		});
+		settings.isWorking = enforce.boolean(settings.isWorking, true);
+
+		super(settings);
 
 		const self = this;
 		self.addClass('graph');

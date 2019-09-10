@@ -73,7 +73,7 @@ Object.assign(Radios.prototype, {
 			self[RADIOS] = values.map((settings) => {
 				const radio = new Radio({
 					...settings,
-					container: self.contentContainer(),
+					container: self,
 					width: HUNDRED_PERCENT,
 					name: self[NAME]
 				});

@@ -19,7 +19,7 @@ export default class CheckBox extends Radio {
 
 		super(settings);
 
-		if (settings.type === controlTypes.CHECKBOX) {
+		if (this.type === controlTypes.CHECKBOX) {
 			this.addClass('checkbox');
 			this[INPUT].inputType(INPUT_TYPE_CHECKBOX);
 			applySettings(this, settings);

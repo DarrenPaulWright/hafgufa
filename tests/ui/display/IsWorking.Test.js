@@ -23,9 +23,10 @@ describe('IsWorking', () => {
 
 	describe('InitialLayout', () => {
 		it('should have a div with a css class called is-working', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer
-			}));
+			});
 
 			assert.equal(query.count('.is-working'), 1);
 		});
@@ -33,56 +34,61 @@ describe('IsWorking', () => {
 
 	describe('VariableHeights', () => {
 		it('should have a large animation container by default', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer,
 				height: '20rem',
 				width: '20rem',
 				delay: 0
-			}));
+			});
 
 			assert.equal(query.count('.is-working'), 1);
 		});
 
 		it('should have a medium animation container if the height of the control is less than 200', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer,
 				height: '14rem',
 				width: '20rem',
 				delay: 0
-			}));
+			});
 
 			assert.equal(query.count('.is-working.medium'), 1);
 		});
 
 		it('should have a medium animation container if the width of the control is less than 200', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer,
 				height: '20rem',
 				width: '14rem',
 				delay: 0
-			}));
+			});
 
 			assert.equal(query.count('.is-working.medium'), 1);
 		});
 
 		it('should have a small animation container if the height of the control is less than 100', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer,
 				height: '7rem',
 				width: '20rem',
 				delay: 0
-			}));
+			});
 
 			assert.equal(query.count('.is-working.small'), 1);
 		});
 
 		it('should have a small animation container if the width of the control is less than 100', () => {
-			window.control = new IsWorking(Object.assign({}, BASE_SETTINGS, {
+			window.control = new IsWorking({
+				...BASE_SETTINGS,
 				container: window.testContainer,
 				height: '20rem',
 				width: '7rem',
 				delay: 0
-			}));
+			});
 
 			assert.equal(query.count('.is-working.small'), 1);
 		});

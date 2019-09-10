@@ -158,7 +158,7 @@ Object.assign(Dialog.prototype, {
 		other: undefined
 	}),
 
-	contentContainer() {
+	get contentContainer() {
 		return this[CONTENT_CONTAINER];
 	},
 

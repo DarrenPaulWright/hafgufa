@@ -5,7 +5,6 @@ import { IS_DESKTOP } from '../../utility/browser';
 import collectionHelper from '../../utility/collectionHelper';
 import dom from '../../utility/dom';
 import locale from '../../utility/locale';
-import windowResize from '../../utility/windowResize';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import BackDrop from '../elements/BackDrop';
@@ -60,36 +59,14 @@ export default class DrawerMenu extends Control {
 
 		applySettings(self, settings, [], ['menuContainer', 'isMenuOpen']);
 
-		self.onResize(() => {
-				if (self[DRAWER] && self[DRAWER].isOpen()) {
-					let treeHeight = self[DRAWER].borderHeight();
-
-					if (self[TREE]) {
-						treeHeight -= dom.get.margins.height(self[TREE]);
-					}
-					if (self[HEADER_CONTAINER] && self[TREE]) {
-						treeHeight -= dom.get.outerHeight(self[HEADER_CONTAINER]);
-					}
-					if (self[FOOTER]) {
-						treeHeight -= dom.get.outerHeight(self[FOOTER]);
-					}
-
-					if (self[TREE]) {
-						self[TREE].height(treeHeight);
-					}
-					else if (self[HEADER_CONTAINER]) {
-						self[HEADER_CONTAINER].height(treeHeight - dom.get.margins.height(self[HEADER_CONTAINER]));
-					}
-				}
-			})
-			.onRemove(() => {
-				if (self[DRAWER]) {
-					self[DRAWER].remove();
-					self[DRAWER] = null;
-				}
-				self[MENU_BUTTON].remove();
-				self[MENU_BUTTON] = null;
-			});
+		self.onRemove(() => {
+			if (self[DRAWER]) {
+				self[DRAWER].remove();
+				self[DRAWER] = null;
+			}
+			self[MENU_BUTTON].remove();
+			self[MENU_BUTTON] = null;
+		});
 	}
 
 	[toggleMenu]() {
@@ -224,10 +201,6 @@ Object.assign(DrawerMenu.prototype, {
 							});
 						}
 						self[buildMenu]();
-
-						if (IS_DESKTOP) {
-							windowResize.trigger();
-						}
 					});
 
 					self.onMenuSlide().trigger(null, [true]);
@@ -239,11 +212,28 @@ Object.assign(DrawerMenu.prototype, {
 					}
 					self[clearMenu]();
 
-					if (IS_DESKTOP) {
-						windowResize.trigger();
-					}
-
 					self.onMenuSlide().trigger(null, [false]);
+				},
+				onResize(width, height) {
+					if (this.isOpen()) {
+						if (self[TREE]) {
+							height -= dom.get.margins.height(self[TREE]);
+
+							if (self[HEADER_CONTAINER]) {
+								height -= dom.get.outerHeight(self[HEADER_CONTAINER]);
+							}
+						}
+						if (self[FOOTER]) {
+							height -= dom.get.outerHeight(self[FOOTER]);
+						}
+
+						if (self[TREE]) {
+							self[TREE].maxHeight(height);
+						}
+						else if (self[HEADER_CONTAINER]) {
+							self[HEADER_CONTAINER].height(height - dom.get.margins.height(self[HEADER_CONTAINER]));
+						}
+					}
 				},
 				onRemove() {
 					self[clearMenu]();

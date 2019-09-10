@@ -1,9 +1,9 @@
 import { applySettings, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
+import Div from '../elements/Div';
 import Icon from '../elements/Icon';
 import Image from '../elements/Image';
 import {
@@ -85,7 +85,10 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 				self[hideDeleteButton]();
 			});
 
-		self[IMAGE_WRAPPER] = dom.appendNewTo(self, IMAGE_WRAPPER_CLASS);
+		self[IMAGE_WRAPPER] = new Div({
+			container: self,
+			classes: IMAGE_WRAPPER_CLASS
+		});
 
 		self[ICON] = new Icon({
 			container: self[IMAGE_WRAPPER]
@@ -99,14 +102,6 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 		self.isWorking(true);
 
 		applySettings(self, settings);
-
-		self.onRemove(() => {
-			self[ICON].remove();
-			self[ICON] = null;
-			self[IMAGE].remove();
-			self[IMAGE] = null;
-			self[hideDeleteButton]();
-		});
 	}
 
 	[hideDeleteButton]() {

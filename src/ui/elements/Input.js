@@ -32,7 +32,6 @@ export default class Input extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.INPUT;
 		settings.element = 'input';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

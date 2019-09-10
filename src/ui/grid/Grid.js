@@ -116,25 +116,20 @@ export default class Grid extends Control {
 
 		applySettings(self, settings, ['columns', 'groupBy'], ['rows']);
 
-		self.onResize(() => {
-			const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
+		self.onResize((width, height) => {
+				const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
 
-			if (!self.height().isAuto) {
-				self[GRID_COLUMN_BLOCK].height(self.borderHeight() - footerHeight);
-			}
-			else {
-				self[GRID_COLUMN_BLOCK].height(AUTO);
-			}
-		});
-
-		self.onRemove(() => {
-			self[GRID_COLUMN_BLOCK].remove();
-			self[GRID_COLUMN_BLOCK] = null;
-			if (self[FOOTER]) {
-				self[FOOTER].remove();
-				self[FOOTER] = null;
-			}
-		});
+				if (!self.height().isAuto) {
+					self[GRID_COLUMN_BLOCK].height(height - footerHeight);
+				}
+				else {
+					self[GRID_COLUMN_BLOCK].height(AUTO);
+				}
+			})
+			.onRemove(() => {
+				self[GRID_COLUMN_BLOCK].remove();
+				self[GRID_COLUMN_BLOCK] = null;
+			});
 
 		self.resize();
 	}

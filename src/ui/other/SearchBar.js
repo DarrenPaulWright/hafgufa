@@ -2,7 +2,6 @@ import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enfo
 import { IS_PHONE } from '../../utility/browser';
 import dom from '../../utility/dom';
 import locale from '../../utility/locale';
-import windowResize from '../../utility/windowResize';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -61,26 +60,25 @@ export default class SearchBar extends Control {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-			if (self[SEARCH_BAR]) {
-				self[TAGS].width(self[SEARCH_BAR].innerWidth() - 1);
-			}
-		});
-
-		self.onRemove(() => {
-			self[clearSearchBar]();
-			if (self[SEARCH_BAR_CONTAINER]) {
-				self[SEARCH_BAR_CONTAINER].remove();
-				self[SEARCH_BAR_CONTAINER] = null;
-			}
-			if (self[SEARCH_BAR]) {
-				self[SEARCH_BAR].remove();
-				self[SEARCH_BAR] = null;
-			}
-			if (self[MENU_BUTTON]) {
-				self[MENU_BUTTON].remove();
-				self[MENU_BUTTON] = null;
-			}
-		});
+				if (self[SEARCH_BAR]) {
+					self[TAGS].width(self[SEARCH_BAR].innerWidth() - 1);
+				}
+			})
+			.onRemove(() => {
+				self[clearSearchBar]();
+				if (self[SEARCH_BAR_CONTAINER]) {
+					self[SEARCH_BAR_CONTAINER].remove();
+					self[SEARCH_BAR_CONTAINER] = null;
+				}
+				if (self[SEARCH_BAR]) {
+					self[SEARCH_BAR].remove();
+					self[SEARCH_BAR] = null;
+				}
+				if (self[MENU_BUTTON]) {
+					self[MENU_BUTTON].remove();
+					self[MENU_BUTTON] = null;
+				}
+			});
 	}
 
 	[toggleSearchBar]() {
@@ -199,7 +197,6 @@ Object.assign(SearchBar.prototype, {
 			self[clearSearchBar]();
 			self[SEARCH_BAR].remove();
 			self[SEARCH_BAR] = null;
-			windowResize.trigger();
 		}
 
 		self[IS_SEARCH_BAR_OPEN] = false;

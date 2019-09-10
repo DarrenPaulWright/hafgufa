@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 import { FileThumbnail } from '../../../src';
-import dom from '../../../src/utility/dom';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -27,7 +26,7 @@ describe('FileThumbnail', () => {
 				imageSource: 'http://www.examle.com/test.jpg'
 			});
 
-			assert.equal(dom.attr(document.querySelector('img'), 'src'), 'http://www.examle.com/test.jpg');
+			assert.equal(document.querySelector('img').getAttribute('src'), 'http://www.examle.com/test.jpg');
 		});
 	});
 

@@ -31,7 +31,7 @@ export default class Toolbar extends Control {
 		applySettings(this, settings);
 
 		this.onRemove(() => {
-			this.empty();
+			this[BUTTONS].length = 0;
 		});
 	}
 
@@ -53,7 +53,7 @@ export default class Toolbar extends Control {
 	addButton(data) {
 		const button = new Button({
 			...data,
-			container: this.element()
+			container: this
 		});
 		this[BUTTONS].push(button);
 		this.updateButton(button, data);

@@ -54,7 +54,7 @@ Object.assign(Description.prototype, {
 	textWidth: method.string({
 		init: AUTO,
 		set(newValue) {
-			dom.css(this.contentContainer(), WIDTH, newValue);
+			this.contentContainer.css(WIDTH, newValue);
 		}
 	}),
 
@@ -68,7 +68,7 @@ Object.assign(Description.prototype, {
 	align: method.string({
 		init: LEFT,
 		set(newValue) {
-			dom.css(this.contentContainer(), TEXT_ALIGN, newValue);
+			this.contentContainer.css(TEXT_ALIGN, newValue);
 		}
 	}),
 

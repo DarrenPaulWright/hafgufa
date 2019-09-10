@@ -1,27 +1,22 @@
 import { applySettings, castArray, isArray, isJson, isObject, isString, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { CONTENT_CHANGE_EVENT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../../utility/domConstants';
-import Control from '../Control';
+import Control, { CHILD_CONTROLS } from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import './Container.less';
 
-const CONTAINER_CLASS = 'container';
-
-const CONTROLS = Symbol();
-const ADD_CONTENT = Symbol();
-const ADD_LAYOUT = Symbol();
+const addContent = Symbol();
+const addLayout = Symbol();
 
 /**
  * @class Container
  * @extends Control
  * @constructor
  *
- * @arg {Object}   settings
- * @arg {Object[]} [settings.content]
- * @arg {Object[]} [settings.parentContainer]
+ * @arg {Object} settings
  */
 export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	constructor(settings = {}) {
@@ -32,17 +27,12 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 		super(settings);
 
 		const self = this;
-		self[CONTROLS] = new ControlManager();
-		self.addClass(CONTAINER_CLASS)
-			.contentContainer(self.element());
+		self[CHILD_CONTROLS] = new ControlManager();
+		self.addClass('container');
 
-		if (settings.type === controlTypes.CONTAINER) {
+		if (self.type === controlTypes.CONTAINER) {
 			applySettings(self, settings);
 		}
-
-		self.onRemove(() => {
-			self[CONTROLS].remove();
-		});
 	}
 
 	/**
@@ -53,7 +43,9 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
 	 * @arg {String}   [doPrepend=false]
 	 */
-	[ADD_LAYOUT](content, doPrepend) {
+	[addLayout](content, doPrepend) {
+		const self = this;
+
 		content = castArray(content);
 
 		if (doPrepend) {
@@ -62,12 +54,11 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 
 		content.forEach((controlDefinition) => {
 			if (controlDefinition && controlDefinition.control) {
-				this[CONTROLS].add(new controlDefinition.control({
+				new controlDefinition.control({
 					...controlDefinition,
-					container: this.contentContainer(),
-					prepend: doPrepend,
-					parentContainer: this
-				}));
+					container: self,
+					prepend: doPrepend
+				});
 			}
 		});
 	}
@@ -80,23 +71,23 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
 	 * @arg {String}   [doPrepend=false]
 	 */
-	[ADD_CONTENT](content, doPrepend) {
+	[addContent](content, doPrepend) {
+		const self = this;
+
 		if (content) {
 			if (isArray(content) || isObject(content)) {
-				this[ADD_LAYOUT](content, doPrepend);
+				self[addLayout](content, doPrepend);
 			}
 			else if (isJson(content) && isString(content) && (content.charAt(0) === '[' || content.charAt(0) === '{')) {
-				this[ADD_LAYOUT](JSON.parse(content), doPrepend);
+				self[addLayout](JSON.parse(content), doPrepend);
 			}
 			else {
 				if (content.element) {
-					this[CONTROLS].add(content);
-					content.container(this);
+					content.container(self);
 				}
-				dom.content(this, content, doPrepend);
+				dom.content(self, content, doPrepend);
 			}
-			this.elementD3().dispatch(CONTENT_CHANGE_EVENT);
-			this.resize(true);
+			self.elementD3().dispatch(CONTENT_CHANGE_EVENT);
 		}
 	}
 
@@ -112,7 +103,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @returns {Object}
 	 */
 	get(ID) {
-		return this[CONTROLS].get(ID);
+		return this[CHILD_CONTROLS].get(ID);
 	}
 
 	/**
@@ -125,9 +116,9 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	content(content) {
-		this[CONTROLS].remove();
+		this[CHILD_CONTROLS].remove();
 		dom.empty(this);
-		this[ADD_CONTENT](content, false);
+		this[addContent](content, false);
 		return this;
 	}
 
@@ -141,7 +132,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	append(content) {
-		this[ADD_CONTENT](content, false);
+		this[addContent](content, false);
 		return this;
 	}
 
@@ -155,7 +146,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	prepend(content) {
-		this[ADD_CONTENT](content, true);
+		this[addContent](content, true);
 
 		return this;
 	}
@@ -171,7 +162,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {boolean}  [skipDeep=false] - if true then only iterate on immediate children
 	 */
 	each(callback, skipDeep) {
-		return this[CONTROLS].each((control, index) => {
+		return this[CHILD_CONTROLS].each((control, index) => {
 			if (callback(control, index)) {
 				return true;
 			}
@@ -191,11 +182,11 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {function} callback
 	 */
 	map(callback) {
-		return this[CONTROLS].map(callback);
+		return this[CHILD_CONTROLS].map(callback);
 	}
 
 	total() {
-		return this[CONTROLS].total();
+		return this[CHILD_CONTROLS].total();
 	}
 
 	/**
@@ -208,13 +199,11 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {string} ID
 	 */
 	removeContent(ID) {
-		this[CONTROLS].remove(ID);
+		this[CHILD_CONTROLS].remove(ID);
 	}
 }
 
 Object.assign(Container.prototype, {
-
-	contentContainer: method.element(),
 
 	isFocusable: method.boolean({
 		set(newValue) {

@@ -58,7 +58,7 @@ describe('Description', () => {
 				align: 'center'
 			});
 
-			assert.equal(dom.css(document.querySelector('div > div'), TEXT_ALIGN), 'center');
+			assert.equal(dom.css(document.querySelector('.description > div'), TEXT_ALIGN), 'center');
 		});
 	});
 

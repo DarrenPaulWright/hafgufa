@@ -19,7 +19,6 @@ export default class Video extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.VIDEO;
 		settings.element = 'video';
-		settings.skipWindowResize = true;
 
 		super(settings);
 

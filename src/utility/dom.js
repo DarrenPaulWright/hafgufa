@@ -1,8 +1,7 @@
-import { event, select } from 'd3';
+import { select } from 'd3';
 import { clone, forOwn } from 'object-agent';
 import { castArray, enforce, isElement, isObject, isString, PIXELS } from 'type-enforcer';
 import {
-	BODY,
 	BORDER_BOTTOM_WIDTH,
 	BORDER_LEFT_WIDTH,
 	BORDER_RIGHT_WIDTH,
@@ -70,8 +69,6 @@ const parseStyle = (element, styleName) => parseFloat(WINDOW.getComputedStyle(el
 
 const INSERT_HTML_BEGIN = 'afterbegin';
 const INSERT_HTML_END = 'beforeend';
-const DOM_INSERTION_CLASS = 'element-inserted';
-const DOM_INSERTION_EVENTS = 'animationstart MSAnimationStart webkitAnimationStart';
 
 /**
  * Utility functions for adding new content to the DOM.
@@ -84,7 +81,7 @@ const dom = {
 			return element;
 		}
 		else if (isContainer && element && element.contentContainer) {
-			return element.contentContainer();
+			return element.contentContainer.element();
 		}
 		else if (element && element.element) {
 			return element.element();
@@ -632,53 +629,6 @@ const dom = {
 		return dom;
 	},
 	/**
-	 * Set a callback that gets triggered when an element is added to the DOM
-	 *
-	 * @method addDomInsertionCallback
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object}   element   - Must be a reference to the actual element
-	 * @arg {Function} callback
-	 */
-	addDomInsertionCallback(element, callback) {
-		element = dom.getElement(element);
-
-		if (element) {
-			if (!BODY.contains(element)) {
-				dom.addClass(element, DOM_INSERTION_CLASS);
-				select(element).on(DOM_INSERTION_EVENTS, () => {
-					if (event.animationName === 'nodeInserted') {
-						callback();
-						dom.removeDomInsertionCallback(event.target);
-					}
-				});
-			}
-			else {
-				callback();
-				callback = null;
-			}
-
-			return true;
-		}
-
-		return false;
-	},
-	/**
-	 * Remove a callback set by addDomInsertionCallback
-	 *
-	 * @method removeDomInsertionCallback
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object}   element   - Must be a reference to the actual element
-	 */
-	removeDomInsertionCallback(element) {
-		element = dom.getElement(element);
-		dom.removeClass(element, DOM_INSERTION_CLASS);
-		select(element).on(DOM_INSERTION_EVENTS, null);
-	},
-	/**
 	 * Removes an element from the DOM
 	 *
 	 * @method remove
@@ -691,8 +641,6 @@ const dom = {
 		element = dom.getElement(element);
 
 		if (element) {
-			dom.removeDomInsertionCallback(element);
-
 			dom.applyD3Events(element, dom.getD3Events(element), true);
 
 			if (element.remove) {
