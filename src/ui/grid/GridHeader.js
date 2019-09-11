@@ -48,7 +48,7 @@ export default class GridHeader extends Control {
 		self.onRemove(() => {
 			self[CELL_RECYCLER].remove();
 		});
-	};
+	}
 
 	/**
 	 * Apply css classes to appropriate column labels to show the sort state and call grid.sort().

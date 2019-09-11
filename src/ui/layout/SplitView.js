@@ -126,8 +126,7 @@ export default class SplitView extends IsWorkingMixin(Control) {
 		const altViewSize = self[ALT_SIZE] === WIDTH ? self.borderWidth() : self.borderHeight();
 		let splitOffset = offsetToPixels(self.splitOffset(), viewSize);
 
-		self[FIRST_VIEW][self[SIZE]](splitOffset)
-			[self[ALT_SIZE]](altViewSize).resize(true);
+		self[FIRST_VIEW][self[SIZE]](splitOffset)[self[ALT_SIZE]](altViewSize).resize(true);
 
 		self[SECOND_VIEW][self[SIZE]](viewSize - splitOffset)[self[ALT_SIZE]](altViewSize)
 			.css(self[SIZE_ORIGIN], splitOffset)

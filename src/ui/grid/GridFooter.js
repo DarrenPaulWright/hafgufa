@@ -48,7 +48,7 @@ export default class GridFooter extends Control {
 				self[COLLAPSE_ALL_BUTTON].remove();
 			}
 		});
-	};
+	}
 
 	/**
 	 * Build a string of counts based on various set properties
