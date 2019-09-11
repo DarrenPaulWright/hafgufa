@@ -48,7 +48,7 @@ export default class DrawerMenu extends Control {
 		self.addClass('drawer-menu-container');
 
 		self[MENU_BUTTON] = new Button({
-			container: self.element(),
+			container: self,
 			classes: 'header-button',
 			label: settings.label !== undefined ? settings.label : locale.get('menu'),
 			icon: MENU_ICON,
@@ -64,8 +64,6 @@ export default class DrawerMenu extends Control {
 				self[DRAWER].remove();
 				self[DRAWER] = null;
 			}
-			self[MENU_BUTTON].remove();
-			self[MENU_BUTTON] = null;
 		});
 	}
 
@@ -126,7 +124,7 @@ export default class DrawerMenu extends Control {
 			});
 		}
 
-		self.resize();
+		self[DRAWER].resize(true);
 	}
 
 	[clearMenu]() {
@@ -215,7 +213,7 @@ Object.assign(DrawerMenu.prototype, {
 					self.onMenuSlide().trigger(null, [false]);
 				},
 				onResize(width, height) {
-					if (this.isOpen()) {
+					if (this.isOpen() && (self[TREE] || self[HEADER_CONTAINER])) {
 						if (self[TREE]) {
 							height -= dom.get.margins.height(self[TREE]);
 
