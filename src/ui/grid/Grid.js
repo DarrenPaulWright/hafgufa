@@ -7,8 +7,8 @@ import shortid from 'shortid';
 import { applySettings, AUTO, enforce, enforceString, HUNDRED_PERCENT, isArray, method, Queue } from 'type-enforcer';
 import collectionHelper from '../../utility/collectionHelper';
 import locale from '../../utility/locale';
+import search from '../../utility/search';
 import { byKey, dateAsc, dateDesc, numberAsc, numberDesc, textAsc, textDesc } from '../../utility/sortBy';
-import stringHelper from '../../utility/stringHelper';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import './Grid.less';
@@ -588,7 +588,7 @@ export default class Grid extends Control {
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:
 						filterFunction = (row) => {
-							return (column.filter === 'undefined' && !row.cells[column.ID].text) || stringHelper.isEachInString(
+							return (column.filter === 'undefined' && !row.cells[column.ID].text) || search.find(
 								column.filter,
 								row.cells[column.ID].text || '-'
 							);

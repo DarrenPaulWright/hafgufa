@@ -4,8 +4,8 @@ import keyCodes from 'keycodes';
 import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
 import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
+import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';
-import stringHelper from '../../utility/stringHelper';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import TextInput from '../forms/TextInput';
@@ -203,7 +203,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		};
 
 		if (value) {
-			const parsedSearch = stringHelper.parseSearch(value, self.breakOnSpaces());
+			const parsedSearch = search.parseNeedle(value, self.breakOnSpaces());
 			parsedSearch.forEach((orValues, orIndex) => {
 				orValues.forEach((item) => {
 					setTag(item, totalIndex);
@@ -459,8 +459,8 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			});
 
 			if (currentTypedInput) {
-				filteredSuggestions = filteredSuggestions.filter((suggestion) => stringHelper.isEachInString(currentTypedInput, suggestion.title || '') ||
-					stringHelper.isEachInString(currentTypedInput, suggestion.subTitle || ''));
+				filteredSuggestions = filteredSuggestions.filter((suggestion) => search.find(currentTypedInput, suggestion.title || '') ||
+					search.find(currentTypedInput, suggestion.subTitle || ''));
 				filteredTitle(filteredSuggestions, currentTypedInput);
 			}
 
@@ -510,7 +510,7 @@ Object.assign(Tags.prototype, {
 			self[removeAllTags]();
 
 			if (typeof newValue === 'string') {
-				const parsedSearch = stringHelper.parseSearch(newValue, self.breakOnSpaces());
+				const parsedSearch = search.parseNeedle(newValue, self.breakOnSpaces());
 				newValue = [];
 				parsedSearch.forEach((orValues, orIndex) => {
 					orValues.forEach((item) => {

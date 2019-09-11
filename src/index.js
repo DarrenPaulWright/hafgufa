@@ -107,6 +107,6 @@ export * from './utility/domConstants';
 export { default as dom } from './utility/dom';
 export { default as locale } from './utility/locale';
 export { default as LocalHistory } from './utility/LocalHistory';
-export { default as stringHelper } from './utility/stringHelper';
+export { default as search } from './utility/search';
 export { default as softDelete } from './utility/softDelete';
 export { default as windowResize } from './utility/windowResize';

@@ -5,8 +5,8 @@ import uuid from 'uuid/v4';
 import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import locale from '../../utility/locale';
+import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';
-import stringHelper from '../../utility/stringHelper';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import TextInput from '../forms/TextInput';
@@ -249,7 +249,7 @@ export default class Menu extends Popup {
 					self[ARE_ALL_SELECTED] = false;
 				}
 
-				if (stringHelper.isEachInString(currentFilter, filterString)) {
+				if (search.find(currentFilter, filterString)) {
 					if (!self.isFilteredSelectedOnly() || item.isSelected) {
 						self[addItemButtons](item);
 
