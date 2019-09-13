@@ -103,7 +103,7 @@ describe('ProgressBar', () => {
 				showBigNumbers: true
 			});
 
-			assert.equal(testUtil.count('i'), 12);
+			assert.equal(testUtil.count('i'), 8);
 		});
 
 		it('should have class "large" if showBigNumbers is true and no subTitles are set', () => {

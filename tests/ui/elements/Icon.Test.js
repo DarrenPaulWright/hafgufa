@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { Icon, ICON_SIZES } from '../../../src';
+import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -10,15 +11,16 @@ describe('Icon', () => {
 	controlTests.run(['width', 'height']);
 
 	describe('.icon', () => {
-		it('should have a span with classes "fa" and "fa-fw" if no icon is set', () => {
+		it('should render an empty control if no icon is set', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.icon').length, 1);
+			assert.equal(document.querySelector('.icon').textContent, '');
 		});
 
-		it('should have a span with class "fa-cog" if icon is set to "cog"', () => {
+		it('should render "cog"', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
 				icon: 'cog'
@@ -27,52 +29,52 @@ describe('Icon', () => {
 			assert.equal(document.querySelectorAll('.fa-cog').length, 1);
 		});
 
-		it('should have a span with class "fa-stack" and two inner spans with respective classes "fa-circle" and "fa-plus" if icon is set to "circle;plus"', () => {
+		it('should render "circle;plus"', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
-				icon: 'circle;plus'
+				icon: 'circle:plus'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0], document.querySelector('.icon.fa-circle'));
-			assert.equal(mainIcon.children[1], document.querySelector('.icon.fa-plus'));
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon, document.querySelector('.icon.fa-circle'));
+			assert.equal(mainIcon.children[0], document.querySelector('.icon.fa-plus'));
 		});
 
-		it('should have appropriate spans if icon is set to "cog;[plus-circle]"', () => {
+		it('should render "cog[plus-circle]"', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
-				icon: 'cog;[plus-circle]'
+				icon: 'cog[plus-circle]'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0], document.querySelector('.icon.fa-cog'));
-			assert.equal(mainIcon.children[1], document.querySelector('.icon.sub-icon.fa-plus-circle'));
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon, document.querySelector('.icon.fa-cog'));
+			assert.equal(mainIcon.children[0], document.querySelector('.icon.sub-icon.fa-plus-circle'));
 		});
 
-		it('should have appropriate spans if icon is set to "cog;[circle:plus-circle]"', () => {
+		it('should render "cog[circle:plus-circle]"', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
-				icon: 'cog;[circle:plus-circle]'
+				icon: 'cog[circle:plus-circle]'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 			const subIcon = document.querySelector('.sub-icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0], document.querySelector('.icon.fa-cog'));
-			assert.equal(mainIcon.children[1], document.querySelector('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 2);
-			assert.equal(subIcon.children[0], document.querySelector('.icon.fa-circle'));
-			assert.equal(subIcon.children[1], document.querySelector('.icon.fa-plus-circle'));
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon, document.querySelector('.icon.fa-cog'));
+			assert.equal(mainIcon.children[0], document.querySelector('.icon.sub-icon'));
+			assert.equal(subIcon.children.length, 1);
+			assert.equal(subIcon, document.querySelector('.icon.fa-circle'));
+			assert.equal(subIcon.children[0], document.querySelector('.icon.fa-plus-circle'));
 		});
 	});
 
 	describe('.icon unicode', () => {
-		it('should have a span with the proper unicode char if icon is set to ""', () => {
+		it('should render ""', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
 				icon: ''
@@ -81,47 +83,101 @@ describe('Icon', () => {
 			assert.equal(document.querySelector('.icon').textContent, '');
 		});
 
-		it('should have a span with class "fa-stack" and two inner spans with respective text "" and "" if icon is set to ";"', () => {
+		it('should render ":"', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
-				icon: ';'
+				icon: ':'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0].textContent, '');
-			assert.equal(mainIcon.children[1].textContent, '');
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0].textContent, '');
 		});
 
-		it('should have appropriate spans if icon is set to ";[]"', () => {
+		it('should render ":" and then ""', () => {
 			testUtil.control = new Icon({
 				container: testUtil.container,
-				icon: ';[]'
+				icon: ':'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0].textContent, '');
-			assert.equal(mainIcon.children[1].textContent, '');
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0].textContent, '');
+
+			window.control.icon('');
+
+			assert.equal(mainIcon.textContent, '');
+			assert.isNotTrue(query.hasClass(mainIcon, 'has-stack'));
 		});
 
-		it('should have appropriate spans if icon is set to ";[:]"', () => {
-			testUtil.control = new Icon({
-				container: testUtil.container,
-				icon: ';[:]'
+		it('should render "[]"', () => {
+			window.control = new Icon({
+				container: window.testContainer,
+				icon: '[]'
+			});
+
+			const mainIcon = document.querySelector('.icon');
+
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0].textContent, '');
+		});
+
+		it('should render "[:]"', () => {
+			window.control = new Icon({
+				container: window.testContainer,
+				icon: '[:]'
+			});
+
+			const mainIcon = document.querySelector('.icon');
+			const subIcon = document.querySelector('.sub-icon');
+
+			assert.equal(mainIcon.children.length, 1);
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0], document.querySelector('.icon.sub-icon'));
+			assert.equal(subIcon.children.length, 1);
+			assert.equal(subIcon.textContent, '');
+			assert.equal(subIcon.children[0].textContent, '');
+		});
+
+		it('should render ":[:]"', () => {
+			window.control = new Icon({
+				container: window.testContainer,
+				icon: ':[:]'
 			});
 
 			const mainIcon = document.querySelector('.icon');
 			const subIcon = document.querySelector('.sub-icon');
 
 			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.children[0].textContent, '');
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0], document.querySelector('.icon .icon'));
 			assert.equal(mainIcon.children[1], document.querySelector('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 2);
-			assert.equal(subIcon.children[0].textContent, '');
-			assert.equal(subIcon.children[1].textContent, '');
+			assert.equal(subIcon.children.length, 1);
+			assert.equal(subIcon.textContent, '');
+			assert.equal(subIcon.children[0].textContent, '');
+		});
+
+		it('should render "::[:]"', () => {
+			testUtil.control = new Icon({
+				container: testUtil.container,
+				icon: '::[:]'
+			});
+
+			const mainIcon = document.querySelector('.icon');
+			const subIcon = document.querySelector('.sub-icon');
+
+			assert.equal(mainIcon.children.length, 2);
+			assert.equal(mainIcon.textContent, '');
+			assert.equal(mainIcon.children[0], document.querySelector('.icon .icon'));
+			assert.equal(mainIcon.children[1], document.querySelector('.icon.sub-icon'));
+			assert.equal(subIcon.children.length, 1);
+			assert.equal(subIcon.textContent, '');
+			assert.equal(subIcon.children[0].textContent, '');
 		});
 	});
 

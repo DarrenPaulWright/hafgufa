@@ -176,7 +176,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 
 		self[CONTROLS].each((control, index) => {
 			control
-				.icon(self.showBigNumbers() ? (CIRCLE_ICON + ';' + (index + 1)) : '')
+				.icon(self.showBigNumbers() ? (CIRCLE_ICON + ':' + (index + 1)) : '')
 				.isInline(!self[IS_LARGE]);
 		});
 

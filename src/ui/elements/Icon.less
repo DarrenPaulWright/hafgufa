@@ -15,33 +15,30 @@
 		left: 0;
 		width: 100%;
 		text-align: center;
-	}
-
-	> .icon:nth-of-type(2) {
-		font-size: @iconStackedSize;
-		line-height: round(1 / @iconStackedSize, 2);
-	}
-
-	> .inverse {
 		color: @iconInverseColor;
+		font-size: @iconStackedSize !important;
+		transform: translateY(20.5%);
+
+		> .icon {
+			color: @iconInverseInverseColor;
+		}
 	}
 
 	&.text {
 		font: @iconTextFont;
-		margin: @iconTextMargin;
+		line-height: 0.95em;
 	}
 
-	.sub-icon {
-		font-size: @subIconSize;
-		margin: @subIconMargin;
+	&.sub-icon {
+		font-size: @subIconSize !important;
+		transform: translate(25%, 70%);
 		color: @subIconColor;
-		line-height: inherit;
 
-		.icon {
+		&.has-stack {
 			color: @subIconStackedFirstColor;
 		}
 
-		.inverse {
+		.icon {
 			color: @subIconStackedSecondColor;
 		}
 	}
@@ -75,18 +72,18 @@
 	.icon {
 		color: @iconInverseColor;
 
-		> .inverse {
+		> .icon {
 			color: @iconInverseInverseColor;
 		}
 
 		.sub-icon {
 			color: @subIconInverseColor;
 
-			.icon {
+			&.has-stack {
 				color: @iconInverseInverseColor;
 			}
 
-			.inverse {
+			.icon {
 				color: @subIconInverseColor;
 			}
 		}

@@ -1,20 +1,8 @@
 import { applySettings, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
-import Control from '../Control';
+import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';
 import './Icon.less';
-
-const CORE_CLASSES = 'icon';
-const SUB_ICON_CLASS = ' sub-icon';
-const INVERSE_CLASS = ' inverse';
-const TEXT_CLASS = ' text';
-const FONT_AWESOME_CLASS_PREFIX = 'fa-';
-const MAIN_SEPARATOR = ';';
-const SUB_SEPARATOR = ':';
-const SUB_SEPARATOR_START = '[';
-const SUB_SEPARATOR_END = ']';
-const CHAR_REGEX = /[a-zA-Z0-9]/;
 
 export const ICON_SIZES = new Enum({
 	NORMAL: '1x',
@@ -24,38 +12,6 @@ export const ICON_SIZES = new Enum({
 	FOUR_TIMES: '4x',
 	FIVE_TIMES: '5x'
 });
-
-const iconClass = (name) => FONT_AWESOME_CLASS_PREFIX + name;
-
-const buildIcon = (element, name, separator = MAIN_SEPARATOR, classes = '') => {
-	if (name.indexOf(SUB_SEPARATOR_START) === 0) {
-		name = name.substring(name.indexOf(SUB_SEPARATOR_START) + 1, name.indexOf(SUB_SEPARATOR_END));
-
-		dom.addClass(element, SUB_ICON_CLASS);
-		buildIcon(element, name, SUB_SEPARATOR);
-	}
-	else if (name.includes(separator)) {
-		name.split(separator).forEach((subIcon, index) => {
-			buildIcon(
-				dom.appendNewTo(element, CORE_CLASSES, 'i'),
-				subIcon,
-				SUB_SEPARATOR,
-				index > 0 ? INVERSE_CLASS : ''
-			);
-		});
-	}
-	else if (name.length === 1 && CHAR_REGEX.test(name)) {
-		dom.content(element, name);
-		dom.addClass(element, TEXT_CLASS + classes);
-	}
-	else if (name.length === 1) {
-		dom.content(element, name);
-		dom.addClass(element, classes);
-	}
-	else {
-		dom.addClass(element, iconClass(name) + classes);
-	}
-};
 
 /**
  * Builds a font-awesome icon
@@ -73,14 +29,10 @@ export default class Icon extends TooltipMixin(Control) {
 		super(settings);
 
 		const self = this;
-		self.addClass(CORE_CLASSES + ' icon-lg');
+		self.addClass('icon icon-lg');
 
 		self.element(settings.element);
-		applySettings(self, settings);
-
-		self.onRemove(() => {
-			self.icon(null);
-		});
+		applySettings(self, settings, [], ['icon']);
 	}
 }
 
@@ -98,21 +50,69 @@ Object.assign(Icon.prototype, {
 	 */
 	icon: method.string({
 		before(oldValue) {
+			const self = this;
+
 			if (oldValue) {
-				if (oldValue.includes(MAIN_SEPARATOR)) {
-					dom.empty(this);
-				}
-				else if (oldValue.length === 1) {
-					dom.empty(this);
-				}
-				else {
-					this.removeClass(iconClass(oldValue));
-				}
+				self[CHILD_CONTROLS].each((control) => {
+					control.remove();
+				});
+				self.element().textContent = '';
+				self.removeClass('has-stack text');
 			}
 		},
-		set(newValue) {
-			if (newValue) {
-				buildIcon(this.element(), newValue);
+		set(icon) {
+			const self = this;
+
+			if (icon) {
+				const stackIndex = icon.indexOf(':');
+				const subIndex = icon.indexOf('[');
+				let main = icon;
+				let stack;
+				let sub;
+
+				if (subIndex !== -1 || stackIndex !== -1) {
+					if (subIndex === -1) {
+						main = icon.substring(0, stackIndex);
+						stack = icon.substring(stackIndex + 1);
+					}
+					else if (stackIndex === -1 || stackIndex > subIndex) {
+						main = icon.substring(0, subIndex);
+						sub = icon.substring(subIndex + 1, icon.length - 1);
+					}
+					else {
+						main = icon.substring(0, stackIndex);
+						stack = icon.substring(stackIndex + 1, subIndex);
+						sub = icon.substring(subIndex + 1, icon.length - 1);
+					}
+				}
+
+				if (main.length === 1) {
+					self.element().textContent = main;
+
+					if (/[a-zA-Z0-9]/.test(main)) {
+						self.addClass('text');
+					}
+				}
+				else {
+					self.addClass('fa-' + main);
+				}
+
+				if (stack) {
+					self.addClass('has-stack');
+
+					new Icon({
+						container: self,
+						icon: stack
+					});
+				}
+
+				if (sub) {
+					new Icon({
+						container: self,
+						icon: sub,
+						classes: 'sub-icon'
+					});
+				}
 			}
 		},
 		other: null
