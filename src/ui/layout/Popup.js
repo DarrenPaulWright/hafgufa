@@ -51,11 +51,7 @@ const CAN_SLIDE_VERTICAL = Symbol();
 const IS_MOUSE_OVER = Symbol();
 const MOUSE_LEAVE_TIMER = Symbol();
 const IS_MOUSE_POSITION_SET = Symbol();
-const FORCE_RESIZE = Symbol();
 const ARROW = Symbol();
-
-let windowWidth = 0;
-let windowHeight = 0;
 
 const getDockPointOffsetHeight = (dockPoint, element) => {
 	if (dockPoint.has(POINTS.BOTTOM)) {
@@ -193,18 +189,11 @@ class Popup extends Container {
 			})
 			.onResize((width, height) => {
 				const isMouseAnchor = self.anchor() === Popup.MOUSE;
+				self[CURRENT_WIDTH] = width;
+				self[CURRENT_HEIGHT] = height;
 
-				if (windowWidth !== windowResize.width || windowHeight !== windowResize.height ||
-					self[CURRENT_WIDTH] !== self.borderWidth() || self[CURRENT_HEIGHT] !== self.borderHeight() || self[FORCE_RESIZE]) {
-					windowWidth = windowResize.width;
-					windowHeight = windowResize.height;
-					self[CURRENT_WIDTH] = width;
-					self[CURRENT_HEIGHT] = height;
-
-					if ((!isMouseAnchor) || (isMouseAnchor && self.canTrackMouse()) || (isMouseAnchor && !self[IS_MOUSE_POSITION_SET]) || self[FORCE_RESIZE]) {
-						self[FORCE_RESIZE] = false;
-						self[positionPopup]();
-					}
+				if ((!isMouseAnchor) || (isMouseAnchor && self.canTrackMouse()) || (isMouseAnchor && !self[IS_MOUSE_POSITION_SET])) {
+					self[positionPopup]();
 				}
 			})
 			.onPreRemove(() => {
@@ -344,21 +333,21 @@ class Popup extends Container {
 
 		if (!self.anchor()) {
 			if (self.width().isPercent && !self.maxWidth()) {
-				popupWidth = Math.ceil((windowWidth - marginsHorizontal) * (self.width().value / 100));
+				popupWidth = Math.ceil((windowResize.width - marginsHorizontal) * (self.width().value / 100));
 			}
 			else {
-				popupWidth = Math.min(popupWidth, windowWidth - marginsHorizontal);
+				popupWidth = Math.min(popupWidth, windowResize.width - marginsHorizontal);
 			}
 
 			if (self.height().isPercent && !self.maxHeight()) {
-				popupHeight = Math.ceil((windowHeight - marginsVertical) * (self.height().value() / 100));
+				popupHeight = Math.ceil((windowResize.height - marginsVertical) * (self.height().value() / 100));
 			}
 			else {
-				popupHeight = Math.min(popupHeight, windowHeight - marginsVertical);
+				popupHeight = Math.min(popupHeight, windowResize.height - marginsVertical);
 			}
 
-			popupLeft = Math.max(0, ((windowWidth - popupWidth - marginsHorizontal) / 2));
-			popupTop = Math.max(0, ((windowHeight - popupHeight - marginsVertical) / 2));
+			popupLeft = Math.max(0, ((windowResize.width - popupWidth - marginsHorizontal) / 2));
+			popupTop = Math.max(0, ((windowResize.height - popupHeight - marginsVertical) / 2));
 		}
 		else {
 			if (isElement(self.anchor())) {
@@ -388,7 +377,7 @@ class Popup extends Container {
 				anchorOffset: anchorTop,
 				anchorSize: anchorHeight,
 				anchorDockSize: anchorDockHeight,
-				maxSize: windowHeight,
+				maxSize: windowResize.height,
 				canSlide: self[CAN_SLIDE_VERTICAL]
 			});
 			popupTop = optimizedLayout.offset;
@@ -404,7 +393,7 @@ class Popup extends Container {
 				anchorOffset: anchorLeft,
 				anchorSize: anchorWidth,
 				anchorDockSize: anchorDockWidth,
-				maxSize: windowWidth,
+				maxSize: windowResize.width,
 				canSlide: self[CAN_SLIDE_HORIZONTAL]
 			});
 			popupLeft = optimizedLayout.offset;
@@ -451,13 +440,6 @@ class Popup extends Container {
 				.classes(BOTTOM, direction === BOTTOM)
 				.classes(LEFT, direction === LEFT);
 		}
-	}
-
-	resize(isForced) {
-		if (isForced) {
-			this[FORCE_RESIZE] = true;
-		}
-		super.resize(isForced);
 	}
 }
 

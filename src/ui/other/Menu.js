@@ -67,6 +67,7 @@ const setAddButton = Symbol();
 const addItemButtons = Symbol();
 const getFilteredContent = Symbol();
 const filterItems = Symbol();
+let currentMenu;
 
 const HAS_IDENTICAL_FILTERED_ITEM = Symbol();
 const ARE_ALL_SELECTED = Symbol();
@@ -82,6 +83,10 @@ const ARE_ALL_SELECTED = Symbol();
  */
 export default class Menu extends Popup {
 	constructor(settings = {}) {
+		if (currentMenu) {
+			currentMenu.remove();
+		}
+
 		let tree = new Tree({
 			ID: TREE_ID,
 			width: AUTO
@@ -108,6 +113,8 @@ export default class Menu extends Popup {
 		const self = this;
 		self.addClass(MENU_CLASS);
 		self.width(AUTO);
+
+		currentMenu = self;
 
 		applySettings(tree, {
 			onSelect(item) {
@@ -148,7 +155,10 @@ export default class Menu extends Popup {
 			self.get(TREE_ID).isFocused(true);
 		}
 
-		self.resize();
+		self.onRemove(() => {
+				currentMenu = null;
+			})
+			.resize();
 	}
 
 	[buildHeader]() {
