@@ -67,18 +67,6 @@ describe('dom', () => {
 		});
 	};
 
-	describe('.prependNewTo', () => {
-		runAppendNew_DefaultTests('prependNewTo');
-
-		it('should build a new DOM element and add it as the first child of the container', () => {
-			const container = testUtil.container;
-			dom.prependNewTo(container);
-			const span = dom.prependNewTo(container, undefined, 'span');
-
-			assert.equal(container.children[0], span);
-		});
-	});
-
 	describe('.appendNewTo', () => {
 		runAppendNew_DefaultTests('appendNewTo');
 
@@ -91,41 +79,7 @@ describe('dom', () => {
 		});
 	});
 
-	describe('.appendNewBefore', () => {
-		runAppendNew_DefaultTests('appendNewBefore');
-
-		it('should build a new DOM element and add it before another element', () => {
-			const container = testUtil.container;
-			const div = dom.appendNewTo(container);
-			const div2 = dom.appendNewBefore(div);
-
-			assert.equal(container.children[0], div2);
-		});
-	});
-
-	describe('.appendNewAfter', () => {
-		runAppendNew_DefaultTests('appendNewAfter');
-
-		it('should build a new DOM element and add it after another element', () => {
-			const container = testUtil.container;
-			const div = dom.appendNewTo(container);
-			const div2 = dom.appendNewAfter(div);
-
-			assert.equal(container.children[1], div2);
-		});
-	});
-
 	describe('.prependTo', () => {
-		it('should prepend an element if the first argument is an element and the second argument is an element', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
-			const element = dom.buildNew('test_class', 'div', true);
-
-			dom.prependNewTo(container);
-			dom.prependTo(container, element);
-
-			assert.equal(container.childNodes[0], element);
-		});
-
 		it('should NOT prepend an element if the first argument is a string', () => {
 			const element = dom.buildNew('test_class', 'div');
 
@@ -144,16 +98,6 @@ describe('dom', () => {
 	});
 
 	describe('.appendTo', () => {
-		it('should append an element if the first argument is an element and the second argument is an element', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.prependNewTo(container);
-			dom.appendTo(container, element);
-
-			assert.equal(container.childNodes[1], element);
-		});
-
 		it('should NOT append an element if the first argument is a string', () => {
 			const element = dom.buildNew('test_class', 'div');
 
@@ -172,16 +116,6 @@ describe('dom', () => {
 	});
 
 	describe('.appendBefore', () => {
-		it('should append an element if the first argument is an element and the second argument is an element', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.prependNewTo(container);
-			dom.appendBefore(container, element);
-
-			assert.equal(container.parentElement.childNodes[0], element);
-		});
-
 		it('should NOT append an element if the first argument is a string', () => {
 			const element = dom.buildNew('test_class', 'div');
 
@@ -200,16 +134,6 @@ describe('dom', () => {
 	});
 
 	describe('.appendAfter', () => {
-		it('should append an element if the first argument is an element and the second argument is an element', () => {
-			const container = dom.appendNewTo(testUtil.container);
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.prependNewTo(container);
-			dom.appendAfter(container, element);
-
-			assert.equal(container.parentElement.childNodes[1], element);
-		});
-
 		it('should NOT append an element if the first argument is a string', () => {
 			const element = dom.buildNew('test_class', 'div');
 
@@ -233,32 +157,6 @@ describe('dom', () => {
 			const preppedIdString = 'TestId1234567890-.:_';
 
 			assert.equal(dom.prepDomIDString(idString), preppedIdString);
-		});
-	});
-
-	describe('.isHTML', () => {
-		it('should return true if null is passed in', () => {
-			const idString = null;
-
-			assert.isTrue(dom.isHTML(idString));
-		});
-
-		it('should false if a normal string is passed in', () => {
-			const idString = 'TestId1234567890 -=.,/\;:"_+';
-
-			assert.isNotTrue(dom.isHTML(idString));
-		});
-
-		it('should return true if a string with html elements is passed in.', () => {
-			const idString = '<span>Test</span>';
-
-			assert.isTrue(dom.isHTML(idString));
-		});
-
-		it('should return true if a string with html formatted characters is passed in.', () => {
-			const idString = '&nbsp;';
-
-			assert.isTrue(dom.isHTML(idString));
 		});
 	});
 

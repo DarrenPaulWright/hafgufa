@@ -1,5 +1,4 @@
 import { applySettings, isFunction, isNumber } from 'type-enforcer';
-import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -88,7 +87,6 @@ export default class Toolbar extends Control {
 			button.remove();
 		});
 		this[BUTTONS].length = 0;
-		dom.empty(this);
 
 		return this;
 	}

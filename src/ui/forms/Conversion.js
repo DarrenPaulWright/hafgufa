@@ -1,5 +1,4 @@
 import { applySettings, enforceInteger, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { TAB_INDEX, TAB_INDEX_DISABLED } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import round from '../../utility/math/round';
@@ -52,7 +51,7 @@ export default class Conversion extends FocusMixin(FormControl) {
 				self.triggerChange();
 			}
 		});
-		dom.attr(toTextInput.getInput(), TAB_INDEX, TAB_INDEX_DISABLED);
+		toTextInput.getInput().attr(TAB_INDEX, TAB_INDEX_DISABLED);
 
 		settings.type = settings.type || controlTypes.CONVERSION;
 		settings.changeDelay = enforceInteger(settings.changeDelay, ON_CHANGE_DELAY);

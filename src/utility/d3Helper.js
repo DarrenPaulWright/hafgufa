@@ -1,7 +1,6 @@
 import { easeQuadIn, interpolateNumber, max, select, selection } from 'd3';
 import { isElement, isString } from 'type-enforcer';
-import dom from './dom';
-import { OPACITY, WINDOW } from './domConstants';
+import { DOCUMENT, OPACITY, WINDOW } from './domConstants';
 
 const EASE = easeQuadIn;
 const ANIMATION_DURATION = 200;
@@ -24,7 +23,7 @@ const getElement = (element, isContainer = false) => {
 		return select(element.element());
 	}
 	else if (isString(element)) {
-		return select(dom.find(element));
+		return select(DOCUMENT.querySelector(element));
 	}
 
 	return null;
@@ -33,14 +32,6 @@ const getElement = (element, isContainer = false) => {
 const d3Helper = {
 	ANIMATION_DURATION: ANIMATION_DURATION,
 	SLOW_ANIMATION_DURATION: SLOW_ANIMATION_DURATION,
-	appendNewTo(container, className, element) {
-		if (!(container instanceof selection)) {
-			container = getElement(container, true);
-		}
-		return container
-			.append(element || 'div')
-			.classed(className, true);
-	},
 	linearGradient(ID, svg, point1, point2, stops) {
 		let gradient = svg.append('defs')
 			.append('linearGradient')

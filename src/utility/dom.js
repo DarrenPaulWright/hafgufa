@@ -87,7 +87,7 @@ const dom = {
 			return element.element();
 		}
 		else if (isString(element)) {
-			return dom.find(element);
+			return DOCUMENT.querySelector(element);
 		}
 
 		return null;
@@ -121,22 +121,6 @@ const dom = {
 		return newElement;
 	},
 	/**
-	 * Build a new element, apply a css class, and prepend the element INSIDE the specified container.
-	 *
-	 * @method prependNewTo
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object} container - DOM element to prepend the new element to.
-	 * @arg {String} [className] - A css class to apply to the new element.
-	 * @arg {String} [element=div] - The name of an HTML element.
-	 *
-	 * @returns {Object} - Reference to an element in the DOM.
-	 */
-	prependNewTo(container, className, element) {
-		return dom.prependTo(container, dom.buildNew(className, element));
-	},
-	/**
 	 * Build a new element, apply a css class, and append the element INSIDE the specified container.
 	 *
 	 * @method appendNewTo
@@ -152,38 +136,7 @@ const dom = {
 	appendNewTo(container, className, element) {
 		return dom.appendTo(container, dom.buildNew(className, element));
 	},
-	/**
-	 * Build a new element, apply a css class, and append the element BEFORE the specified container.
-	 *
-	 * @method appendNewBefore
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object} container - DOM element to append to the new element to.
-	 * @arg {String} [className] - A css class to apply to the new element.
-	 * @arg {String} [element=div] - The name of an HTML element.
-	 *
-	 * @returns {Object} - Reference to an element in the DOM.
-	 */
-	appendNewBefore(container, className, element) {
-		return dom.appendBefore(container, dom.buildNew(className, element));
-	},
-	/**
-	 * Build a new element, apply a css class, and append the element AFTER the specified container.
-	 *
-	 * @method appendNewAfter
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object} container - DOM element to append to the new element to.
-	 * @arg {String} [className] - A css class to apply to the new element.
-	 * @arg {String} [element=div] - The name of an HTML element.
-	 *
-	 * @returns {Object} - Reference to an element in the DOM.
-	 */
-	appendNewAfter(container, className, element) {
-		return dom.appendAfter(container, dom.buildNew(className, element));
-	},
+
 	/**
 	 * Add an element to the DOM as the first child of another element
 	 *
@@ -261,20 +214,6 @@ const dom = {
 		return element;
 	},
 	/**
-	 * Query the DOM for an element
-	 *
-	 * @method find
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {string} query
-	 *
-	 * @returns {element}
-	 */
-	find(query) {
-		return DOCUMENT.querySelector(query);
-	},
-	/**
 	 * Determines if an element has focus
 	 *
 	 * @method isActive
@@ -303,16 +242,6 @@ const dom = {
 		return isElement(element) ? element.contains(DOCUMENT.activeElement) : false;
 	},
 	/**
-	 * Blurs the currently focused element.
-	 *
-	 * @method blur
-	 * @member module:dom
-	 * @static
-	 */
-	blur() {
-		DOCUMENT.activeElement.blur();
-	},
-	/**
 	 * Prepares a string to be used as a valid element ID.
 	 *
 	 * @method prepDomIDString
@@ -326,20 +255,6 @@ const dom = {
 	prepDomIDString(input) {
 		return (isString(input)) ? input.replace(SPACE, EMPTY_STRING)
 			.replace(/[^A-Za-z0-9_:\.-]/g, EMPTY_STRING) : EMPTY_STRING;
-	},
-	/**
-	 * Tests to see if a string has content that should be processed as HTML
-	 *
-	 * @method isHTML
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {String} input
-	 *
-	 * @returns {boolean}
-	 */
-	isHTML(input) {
-		return /<[a-z][\s\S]*>|\&|null/i.test(input);
 	},
 	/**
 	 * Adds string content to an element. If the string has HTML in it, then innerHTML is used.

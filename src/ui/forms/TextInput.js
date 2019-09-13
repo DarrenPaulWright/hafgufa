@@ -491,7 +491,7 @@ Object.assign(TextInput.prototype, {
 	 * @instance
 	 */
 	getInput() {
-		return this[INPUT].element();
+		return this[INPUT];
 	},
 
 	/**
