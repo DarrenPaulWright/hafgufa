@@ -14,7 +14,6 @@ import Control from './../Control';
 export default class Div extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.DIV;
-		settings.element = 'div';
 
 		super(settings);
 

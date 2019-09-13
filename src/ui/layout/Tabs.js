@@ -5,17 +5,18 @@ import { IS_DESKTOP } from '../../utility/browser';
 import dom from '../../utility/dom';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
-import Div from '../elements/Div';
+import Control from '../Control';
 import GroupedButtons from '../forms/GroupedButtons';
 import { COLLAPSE_LEFT_ICON, UN_COLLAPSE_RIGHT_ICON } from '../icons';
 import Toolbar from '../layout/Toolbar';
 import { ORIENTATION } from '../uiConstants';
 import Container from './Container';
 import './Tabs.less';
+import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 
 const TAB_CONTAINER = Symbol();
 const TOOLBAR = Symbol();
-const CONTENT_CONTAINER = Symbol();
 const TABS = Symbol();
 const GROUPS = Symbol();
 const CURRENT_TAB = Symbol();
@@ -30,20 +31,6 @@ const setGroupOrientation = Symbol();
 const onTabClick = Symbol();
 const clickTab = Symbol();
 
-const methodPass = (options = {}) => {
-	return function(...args) {
-		if (args.length) {
-			if (this[options.class]) {
-				this[options.class][options.method](...args);
-			}
-
-			return this;
-		}
-
-		return this[options.class][options.method]();
-	};
-};
-
 /**
  * Displays a tabbed content control.
  *
@@ -53,7 +40,7 @@ const methodPass = (options = {}) => {
  *
  * @args {object} [settings]
  */
-export default class Tabs extends Div {
+export default class Tabs extends MergeContentContainerMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.TABS;
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
@@ -321,40 +308,6 @@ Object.assign(Tabs.prototype, {
 	currentTab() {
 		return this[CURRENT_TAB] ? this[CURRENT_TAB].ID : undefined;
 	},
-
-	get(id) {
-		return this[CONTENT_CONTAINER].get(id);
-	},
-
-	each: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'each'
-	}),
-
-	content: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'content'
-	}),
-
-	append: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'append'
-	}),
-
-	prepend: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'prepend'
-	}),
-
-	removeContent: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'removeContent'
-	}),
-
-	isWorking: methodPass({
-		class: CONTENT_CONTAINER,
-		method: 'isWorking'
-	})
 });
 
 Tabs.ORIENTATION = ORIENTATION;
