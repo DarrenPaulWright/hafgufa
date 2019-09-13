@@ -20,7 +20,6 @@ const FILTER_THRESHOLD = 8;
 const RANK_KEY = 'rank';
 const GROUP_KEY = 'group';
 
-const GROUPED_BUTTONS = Symbol();
 const MENU = Symbol();
 const POPUP_BUTTON = Symbol();
 const HAS_MULTI_SELECT = Symbol();
@@ -35,7 +34,6 @@ const MAX_BUTTON_WIDTH = Symbol();
 const POTENTIAL_NEW_VALUE = Symbol();
 const DIALOG = Symbol();
 
-const resize = Symbol();
 const areValuesEqual = Symbol();
 const updateSelectedItems = Symbol();
 const buildPreferredItemsList = Symbol();
@@ -75,10 +73,11 @@ export default class Picker extends FocusMixin(FormControl) {
 		});
 
 		settings.type = settings.type || controlTypes.PICKER;
+		settings.contentContainer = groupedButtons;
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = groupedButtons;
 		settings.FocusMixin.getFocus = () => {
-			return (!!self[GROUPED_BUTTONS] && self[GROUPED_BUTTONS].isFocused()) || (self[MENU] && self[MENU].isFocused()) || false;
+			return (!!self.contentContainer && self.contentContainer.isFocused()) || (self[MENU] && self[MENU].isFocused()) || false;
 		};
 
 		super(settings);
@@ -91,14 +90,21 @@ export default class Picker extends FocusMixin(FormControl) {
 		self[ARE_ALL_SELECTED_ITEMS_ACCOUNTED_FOR] = true;
 		self[MAX_BUTTON_WIDTH] = 0;
 
-		self[GROUPED_BUTTONS] = groupedButtons;
-		self[GROUPED_BUTTONS].container(self);
-
 		self.defaultButtonText(locale.get('select'));
 		self.emptyButtonText(locale.get('empty'));
 
-		self.onResize(() => {
-			self[resize]();
+		self.onResize((width) => {
+			const newMaxButtonWidth = width - (self.singleLine() ? self.getHeading().borderWidth() : 0);
+
+			if (newMaxButtonWidth !== self[MAX_BUTTON_WIDTH] || self[MAX_BUTTON_WIDTH] === 0) {
+				self[MAX_BUTTON_WIDTH] = newMaxButtonWidth;
+				if (!self.width().isAuto) {
+					if (self[POPUP_BUTTON]) {
+						self[POPUP_BUTTON].maxWidth(self[MAX_BUTTON_WIDTH]);
+					}
+				}
+				self[updateGroupedButtonsLayout]();
+			}
 		});
 
 		applySettings(self, settings, ['changeDelay']);
@@ -110,8 +116,6 @@ export default class Picker extends FocusMixin(FormControl) {
 			self[hideMenu]();
 
 			// self.dataSource({});
-			self[GROUPED_BUTTONS].remove();
-			self[GROUPED_BUTTONS] = null;
 			self[PREFERRED_ITEMS_LIST].length = 0;
 			self.options([]);
 		});
@@ -177,21 +181,6 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 
 		return true;
-	}
-
-	[resize]() {
-		const self = this;
-		const newMaxButtonWidth = self.borderWidth() - (self.singleLine() ? self.getHeading().borderWidth() : 0);
-
-		if (newMaxButtonWidth !== self[MAX_BUTTON_WIDTH] || self[MAX_BUTTON_WIDTH] === 0) {
-			self[MAX_BUTTON_WIDTH] = newMaxButtonWidth;
-			if (self.width().isAuto) {
-				if (self[POPUP_BUTTON]) {
-					self[POPUP_BUTTON].maxWidth(self[MAX_BUTTON_WIDTH]);
-				}
-			}
-			self[updateGroupedButtonsLayout]();
-		}
 	}
 
 	/**
@@ -339,25 +328,25 @@ export default class Picker extends FocusMixin(FormControl) {
 			for (itemCount = 0; itemCount < itemsToMeasure; itemCount++) {
 				preferredItem = self[PREFERRED_ITEMS_LIST][itemCount];
 
-				self[GROUPED_BUTTONS].addButton({
+				self.contentContainer.addButton({
 					ID: preferredItem.ID,
 					onClick(...args) {
 						self[onButtonClick](...args);
 					}
 				});
-				currentButton = self[GROUPED_BUTTONS].getButton(preferredItem.ID);
+				currentButton = self.contentContainer.getButton(preferredItem.ID);
 				self[prepPreferredItemButton](currentButton, preferredItem);
 			}
 
 			for (itemCount = 0; itemCount < itemsToMeasure; itemCount++) {
 				preferredItem = self[PREFERRED_ITEMS_LIST][itemCount];
-				currentButton = self[GROUPED_BUTTONS].getButton(preferredItem.ID);
+				currentButton = self.contentContainer.getButton(preferredItem.ID);
 				preferredItem.renderWidth = currentButton.borderWidth();
 			}
 
-			self[GROUPED_BUTTONS].removeAllButtons();
+			self.contentContainer.removeAllButtons();
 			self[MAX_BUTTON_WIDTH] = 0;
-			self[resize]();
+			self.resize(true);
 		}
 	}
 
@@ -391,20 +380,20 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		const addPopupButton = () => {
 			if (!self[POPUP_BUTTON]) {
-				self[GROUPED_BUTTONS].addButton({
+				self.contentContainer.addButton({
 					ID: POPUP_BUTTON_ID,
 					classes: POPUP_BUTTON_CLASS,
 					onClick(...args) {
 						self[onButtonClick](...args);
 					}
 				});
-				self[POPUP_BUTTON] = self[GROUPED_BUTTONS].getButton(POPUP_BUTTON_ID);
+				self[POPUP_BUTTON] = self.contentContainer.getButton(POPUP_BUTTON_ID);
 				self[POPUP_BUTTON].removeClass('multi-select');
 			}
 
 			self[POPUP_BUTTON].isEnabled(true);
 
-			if (self[GROUPED_BUTTONS].isFocused()) {
+			if (self.contentContainer.isFocused()) {
 				self[POPUP_BUTTON].isFocused(true);
 			}
 
@@ -468,12 +457,12 @@ export default class Picker extends FocusMixin(FormControl) {
 		};
 
 		const removeButton = (id, width) => {
-			self[GROUPED_BUTTONS].removeButton(id);
+			self.contentContainer.removeButton(id);
 			totalButtonWidth -= width;
 		};
 
 		const canRemovePopupButton = () => {
-			return self[GROUPED_BUTTONS].totalButtons() > self[FLATTENED_ITEMS_LIST].length &&
+			return self.contentContainer.totalButtons() > self[FLATTENED_ITEMS_LIST].length &&
 				totalButtonWidth - self[POPUP_BUTTON_WIDTH] <= self[MAX_BUTTON_WIDTH];
 		};
 
@@ -489,14 +478,14 @@ export default class Picker extends FocusMixin(FormControl) {
 		};
 
 		const buildPreferredButton = (settings, index) => {
-			self[GROUPED_BUTTONS].addButton({
+			self.contentContainer.addButton({
 				ID: settings.ID,
 				onClick(...args) {
 					self[onButtonClick](...args);
 				}
 			}, index);
 
-			currentButton = self[GROUPED_BUTTONS].getButton(settings.ID);
+			currentButton = self.contentContainer.getButton(settings.ID);
 			isSelected = self[prepPreferredItemButton](currentButton, settings);
 
 			if (!settings.renderWidth) {
@@ -528,7 +517,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				else {
 					removeButton(preferredItem.ID, preferredItem.renderWidth);
 
-					if (self[GROUPED_BUTTONS].totalButtons() === 0) {
+					if (self.contentContainer.totalButtons() === 0) {
 						if (self[SELECTED_ITEMS].length) {
 							registerSelectedButton();
 						}
@@ -543,7 +532,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		};
 
 		if (!self.isRemoved) {
-			self[GROUPED_BUTTONS].removeAllButtons();
+			self.contentContainer.removeAllButtons();
 			self[POPUP_BUTTON] = null;
 
 			addPopupButton();
@@ -556,7 +545,7 @@ export default class Picker extends FocusMixin(FormControl) {
 						self[POPUP_BUTTON].isEnabled(false);
 					}
 				}
-				else if (self[GROUPED_BUTTONS].totalButtons() > self[FLATTENED_ITEMS_LIST].length) {
+				else if (self.contentContainer.totalButtons() > self[FLATTENED_ITEMS_LIST].length) {
 					removePopupButton();
 				}
 			}
@@ -566,7 +555,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			if (!(self[POPUP_BUTTON] && !self[MENU] && !isPopupButtonSelected)) {
 				values.push(POPUP_BUTTON_ID);
 			}
-			self[GROUPED_BUTTONS].value(values);
+			self.contentContainer.value(values);
 
 			if (self[MENU]) {
 				self[MENU].menuItems(self[mapMenuItems]());
@@ -602,7 +591,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				self[SELECTED_ITEMS].forEach((item, count) => {
 					if (item.ID === itemToUnselect.ID) {
 						self[SELECTED_ITEMS].splice(count, 1);
-						button = self[GROUPED_BUTTONS].getButton(item.ID);
+						button = self.contentContainer.getButton(item.ID);
 						if (button) {
 							button.isSelected(false);
 						}
@@ -1107,7 +1096,7 @@ Object.assign(Picker.prototype, {
 	 * @instance
 	 */
 	getContentWidth() {
-		return this[GROUPED_BUTTONS].borderWidth();
+		return this.contentContainer.borderWidth();
 	},
 
 	/**

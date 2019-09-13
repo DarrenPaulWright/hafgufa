@@ -41,6 +41,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			classes: 'grouped-buttons-wrapper'
 		});
 		settings.type = settings.type || controlTypes.GROUPED_BUTTONS;
+		settings.contentContainer = buttonContainer;
 		settings.width = enforce.cssSize(settings.width, AUTO, true);
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = buttonContainer;
@@ -54,16 +55,12 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		const self = this;
 		self.addClass('grouped-buttons');
 
-		self[BUTTON_CONTAINER] = buttonContainer;
-		self[BUTTON_CONTAINER].container(self);
-		buttonContainer = null;
-
 		self[SHADOW_CONTAINER] = new Div({
-			container: self[BUTTON_CONTAINER],
+			container: self.contentContainer,
 			classes: 'shadows'
 		});
 
-		self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self[BUTTON_CONTAINER].element())
+		self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self.contentContainer.element())
 			.onSetFocus((index) => {
 				self[setFocusIndex](index);
 			});
@@ -93,12 +90,12 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 				const CURRENT_ORIENTATION_READ = (CURRENT_ORIENTATION === WIDTH) ? 'borderWidth' : 'borderHeight';
 				let maxSize = 0;
 
-				self[BUTTON_CONTAINER].css(CURRENT_ORIENTATION, AUTO);
+				self.contentContainer.css(CURRENT_ORIENTATION, AUTO);
 				self[BUTTON_RECYCLER].each((control) => {
 					maxSize = Math.max(maxSize, control[CURRENT_ORIENTATION_READ]());
 				});
-				maxSize += dom.get.paddings[CURRENT_ORIENTATION](self[BUTTON_CONTAINER]);
-				self[BUTTON_CONTAINER].css(CURRENT_ORIENTATION, maxSize);
+				maxSize += dom.get.paddings[CURRENT_ORIENTATION](self.contentContainer);
+				self.contentContainer.css(CURRENT_ORIENTATION, maxSize);
 				self[setGroupShadows]();
 			});
 	}
@@ -166,7 +163,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 
 		applySettings(button, {
 			...settings,
-			container: self[BUTTON_CONTAINER],
+			container: self.contentContainer,
 			isSelectable: self.isSelectable(),
 			width: self[getButtonWidthSetting](),
 			onClick(button) {
@@ -177,10 +174,10 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		insertIndex = Math.min(enforceInteger(insertIndex, currentButtons.length), currentButtons.length);
 
 		if (insertIndex < currentButtons.length) {
-			dom.appendBefore(self[BUTTON_CONTAINER].element().children[insertIndex + 1], button);
+			dom.appendBefore(self.contentContainer.element().children[insertIndex + 1], button);
 		}
 		else {
-			dom.appendTo(self[BUTTON_CONTAINER], button);
+			dom.appendTo(self.contentContainer, button);
 		}
 
 		if (doSaveData) {
@@ -202,7 +199,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			button.attr(TAB_INDEX, index === 0 ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		});
 
-		self.resize();
+		self.resize(true);
 	}
 
 	[setGroupShadows]() {
