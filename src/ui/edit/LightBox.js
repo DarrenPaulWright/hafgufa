@@ -99,7 +99,7 @@ export default class LightBox extends Control {
 		const self = this;
 
 		self[INTERACTION_LAYER].append(new Toolbar({
-			ID: LIGHT_BOX_TOOLBAR_ID,
+			id: LIGHT_BOX_TOOLBAR_ID,
 			classes: TOOLBAR_CLASS,
 			content: [{
 				icon: CLEAR_ICON,
@@ -167,7 +167,7 @@ export default class LightBox extends Control {
 
 		if (self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)) {
 			self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID).getRenderedControls().forEach((control) => {
-				control.isSelected(selectedItems.includes(control.ID()));
+				control.isSelected(selectedItems.includes(control.id()));
 			});
 		}
 	}
@@ -178,11 +178,11 @@ export default class LightBox extends Control {
 			self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)
 				.slideData(self.files()
 					.map((file) => file ? {
-						ID: file.name,
+						id: file.name,
 						source: file.thumbSource || file.source || file.fileData,
 						data: file
 					} : {
-						ID: file.name,
+						id: file.name,
 						data: file
 					})
 					.filter(Boolean));
@@ -198,19 +198,19 @@ export default class LightBox extends Control {
 		if (files.length > 1) {
 			if (!self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID)) {
 				self[INTERACTION_LAYER].append(new Carousel({
-					ID: LIGHT_BOX_CAROUSEL_ID,
+					id: LIGHT_BOX_CAROUSEL_ID,
 					classes: ABSOLUTE_CLASS,
 					showButtons: true,
 					slideControl: FileThumbnail,
 					slideDefaultSettings: {
 						padding: THUMB_MARGIN + PIXELS,
 						onEdit(fileThumbnail) {
-							self.selectedItems([fileThumbnail.ID()]);
+							self.selectedItems([fileThumbnail.id()]);
 						},
 						onDelete(fileThumbnail) {
-							self.files(this.files().filter((file) => file.name !== fileThumbnail.ID()), true);
+							self.files(this.files().filter((file) => file.name !== fileThumbnail.id()), true);
 							if (self.onDelete()) {
-								self.onDelete()(fileThumbnail.ID());
+								self.onDelete()(fileThumbnail.id());
 							}
 						}
 					},
@@ -218,7 +218,7 @@ export default class LightBox extends Control {
 						thumb
 							.imageSource(item.source)
 							.fileExtension(item.data.extension)
-							.isSelected(self.selectedItems().includes(item.ID));
+							.isSelected(self.selectedItems().includes(item.id));
 					},
 					padding: THUMB_MARGIN + PIXELS,
 					height: AUTO
@@ -239,7 +239,7 @@ export default class LightBox extends Control {
 					});
 
 				self[INTERACTION_LAYER].append(new Button({
-					ID: LIGHT_BOX_CAROUSEL_BUTTON_ID,
+					id: LIGHT_BOX_CAROUSEL_BUTTON_ID,
 					icon: UP_ARROW_ICON,
 					iconSize: ICON_SIZES.TWO_TIMES,
 					classes: 'icon-button ' + CAROUSEL_BUTTON_CLASS

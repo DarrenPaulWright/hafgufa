@@ -76,7 +76,7 @@ Object.assign(TimeSpan.prototype, {
 					self[TICK_RECYCLER]
 						.getRecycledControl()
 						.container(self[HEADING])
-						.ID(`tick_${index}`)
+						.id(`tick_${index}`)
 						.classes('sub', !!index)
 						.css(LEFT, (tickWidth * index) + PERCENT);
 				}

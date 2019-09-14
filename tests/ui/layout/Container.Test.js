@@ -13,7 +13,7 @@ describe('Container', () => {
 		it('should find a control inside the container', () => {
 			const buttonId = 'testId';
 			const button = new Button({
-				ID: buttonId
+				id: buttonId
 			});
 			testUtil.control = new Container({
 				container: testUtil.container,
@@ -26,7 +26,7 @@ describe('Container', () => {
 		it('should find a control inside another container', () => {
 			const buttonId = 'testId';
 			const button = new Button({
-				ID: buttonId
+				id: buttonId
 			});
 			testUtil.control = new Container({
 				container: testUtil.container,
@@ -45,10 +45,10 @@ describe('Container', () => {
 			const buttonId = 'testId';
 			const buttonId2 = 'testId2';
 			const button = new Button({
-				ID: buttonId
+				id: buttonId
 			});
 			const button2 = new Button({
-				ID: buttonId2
+				id: buttonId2
 			});
 			testUtil.control = new Container({
 				container: testUtil.container,
@@ -66,10 +66,10 @@ describe('Container', () => {
 			const buttonId = 'testId';
 			const buttonId2 = 'testId2';
 			const button = new Button({
-				ID: buttonId
+				id: buttonId
 			});
 			const button2 = new Button({
-				ID: buttonId2
+				id: buttonId2
 			});
 			testUtil.control = new Container({
 				container: testUtil.container,

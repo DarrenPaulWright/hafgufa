@@ -11,5 +11,5 @@ describe('Popup', () => {
 		focusableElement: '.popup'
 	});
 
-	controlTests.run(['container', 'ID', 'stopPropagation'], ['focus']);
+	controlTests.run(['container', 'id', 'stopPropagation'], ['focus']);
 });

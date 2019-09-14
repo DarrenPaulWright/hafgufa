@@ -11,7 +11,7 @@ describe('Tree', () => {
 		mainCssClass: 'tree',
 		extraSettings: {
 			branches: [{
-				ID: '1',
+				id: '1',
 				title: 'test',
 				isMultiSelect: false
 			}]
@@ -22,35 +22,35 @@ describe('Tree', () => {
 
 	describe('Branches', () => {
 		const flatBranches = [{
-			ID: '1',
+			id: '1',
 			title: 'Item 1',
 			isMultiSelect: false
 		}, {
-			ID: '2',
+			id: '2',
 			title: 'Item 2',
 			isMultiSelect: false
 		}, {
-			ID: '3',
+			id: '3',
 			title: 'Item 3',
 			isMultiSelect: false
 		}];
 		const nestedBranches = [{
-			ID: '1',
+			id: '1',
 			title: 'Item 1'
 		}, {
-			ID: '2',
+			id: '2',
 			title: 'Item 2'
 		}, {
-			ID: '3',
+			id: '3',
 			title: 'Item 3',
 			children: [{
-				ID: '4',
+				id: '4',
 				title: 'Item 4'
 			}, {
-				ID: '5',
+				id: '5',
 				title: 'Item 5'
 			}, {
-				ID: '6',
+				id: '6',
 				title: 'Item 6'
 			}]
 		}];
@@ -62,7 +62,7 @@ describe('Tree', () => {
 			},
 			defaultValue: [],
 			testValue: [{
-				ID: '1',
+				id: '1',
 				title: 'test 1'
 			}]
 		});
@@ -142,7 +142,7 @@ describe('Tree', () => {
 			});
 
 			testUtil.control.branches([{
-				ID: '1',
+				id: '1',
 				title: 'Item 1',
 				isMultiSelect: false
 			}]);
@@ -156,30 +156,30 @@ describe('Tree', () => {
 
 	describe('Selection', () => {
 		const flatBranches = [{
-			ID: '1',
+			id: '1',
 			title: 'Item 1',
 			isMultiSelect: false
 		}, {
-			ID: '2',
+			id: '2',
 			title: 'Item 2',
 			isMultiSelect: false
 		}, {
-			ID: '3',
+			id: '3',
 			title: 'Item 3',
 			isMultiSelect: false
 		}];
 		const branches = [{
-			ID: '1',
+			id: '1',
 			title: 'Item 1'
 		}, {
-			ID: '2',
+			id: '2',
 			title: 'Item 2'
 		}, {
-			ID: '3',
+			id: '3',
 			title: 'Item 3'
 		}];
 
-		it('should have a value of "1" if the branch with ID of 1 is clicked', () => {
+		it('should have a value of "1" if the branch with id of 1 is clicked', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
 				branches: branches
@@ -190,7 +190,7 @@ describe('Tree', () => {
 			assert.equal(testUtil.control.value()[0], 1);
 		});
 
-		it('should have a value of "1" if the branch with ID of 1 is clicked and the branch doesn\'t have a checkbox', () => {
+		it('should have a value of "1" if the branch with id of 1 is clicked and the branch doesn\'t have a checkbox', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
 				branches: flatBranches
@@ -262,19 +262,19 @@ describe('Tree', () => {
 
 	describe('Height', () => {
 		const branches = [{
-			ID: '1',
+			id: '1',
 			title: 'Item 1'
 		}, {
-			ID: '2',
+			id: '2',
 			title: 'Item 2'
 		}, {
-			ID: '3',
+			id: '3',
 			title: 'Item 3'
 		}];
 		const longSetOfBranches = [];
 		for (let index = 0; index < 10; index++) {
 			longSetOfBranches.push({
-				ID: index + '',
+				id: index + '',
 				title: 'Item ' + index
 			});
 		}

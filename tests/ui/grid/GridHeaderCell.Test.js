@@ -574,7 +574,7 @@ describe('GridHeaderCell', () => {
 			methodName: 'selectableColumns',
 			defaultValue: [],
 			testValue: [{
-				ID: 'test',
+				id: 'test',
 				title: 'test title'
 			}]
 		});
@@ -617,10 +617,10 @@ describe('GridHeaderCell', () => {
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}]
 			});
@@ -639,12 +639,12 @@ describe('GridHeaderCell', () => {
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2'
+					id: 'test2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -663,15 +663,15 @@ describe('GridHeaderCell', () => {
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test',
 					isHidden: true
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					isHidden: false
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3',
 					isHidden: true
 				}]
@@ -692,19 +692,19 @@ describe('GridHeaderCell', () => {
 				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
-				onColumnChange(itemID) {
-					testVar = itemID;
+				onColumnChange(itemId) {
+					testVar = itemId;
 				},
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test',
 					isHidden: true
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					isHidden: false
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3',
 					isHidden: true
 				}]

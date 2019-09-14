@@ -55,7 +55,7 @@ describe('ControlRecycler', () => {
 			assert.isTrue(!!testUtil.control.getRecycledControl());
 		});
 
-		it('should not discard a control if no ID is provided', () => {
+		it('should not discard a control if no id is provided', () => {
 			testUtil.control = new ControlRecycler({
 				control: Button,
 				defaultSettings: {
@@ -106,7 +106,7 @@ describe('ControlRecycler', () => {
 			testUtil.control.getRecycledControl();
 			secondControl = testUtil.control.getRecycledControl();
 
-			secondControl.ID('test');
+			secondControl.id('test');
 
 			thirdControl = testUtil.control.getControl('test');
 
@@ -127,7 +127,7 @@ describe('ControlRecycler', () => {
 			secondControl = testUtil.control.getRecycledControl();
 			testUtil.control.getRecycledControl();
 
-			secondControl.ID('test');
+			secondControl.id('test');
 
 			testUtil.control.discardControl('test');
 
@@ -148,7 +148,7 @@ describe('ControlRecycler', () => {
 			secondControl = testUtil.control.getRecycledControl();
 			testUtil.control.getRecycledControl();
 
-			secondControl.ID('test');
+			secondControl.id('test');
 
 			testUtil.control.discardControl('test');
 

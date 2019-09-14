@@ -335,8 +335,8 @@ export default class TestUtil {
 		this.getTextInput().value = text;
 	}
 
-	getComputedTranslateXY(query) {
-		const style = getComputedStyle(this.first(query, true));
+	getComputedTranslateXY(selector) {
+		const style = getComputedStyle(this.first(selector, true));
 		const transform = style.transform || style.webkitTransform || style.mozTransform;
 
 		let matrix = transform.match(/^matrix3d\((.+)\)$/);

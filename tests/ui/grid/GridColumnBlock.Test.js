@@ -18,11 +18,11 @@ describe('GridColumnBlock', () => {
 			methodName: 'columns',
 			defaultValue: [],
 			testValue: [{
-				ID: '0',
+				id: '0',
 				title: 'test'
 			}],
 			secondTestValue: [{
-				ID: '1',
+				id: '1',
 				title: 'test 2'
 			}]
 		});
@@ -44,20 +44,20 @@ describe('GridColumnBlock', () => {
 			testUtil.control = new GridColumnBlock({
 				container: testUtil.container,
 				columns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					canSort: true,
 					type: gridConstants.COLUMN_TYPES.TEXT
 				}],
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}]
 			});
@@ -128,7 +128,7 @@ describe('GridColumnBlock', () => {
 				testVar = rowData.something;
 			};
 			const onTrashClick = (rowData) => {
-				testVar = rowData.rowID + '_trash';
+				testVar = rowData.rowId + '_trash';
 			};
 
 			testUtil.control = new GridColumnBlock({
@@ -140,11 +140,11 @@ describe('GridColumnBlock', () => {
 			})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.TEXT,
-					ID: '0'
+					id: '0'
 				}, {
 					type: gridConstants.COLUMN_TYPES.ACTIONS,
 					currentWidth: 120,
-					ID: '1',
+					id: '1',
 					buttons: [{
 						icon: 'circle',
 						onClick: onRowClick
@@ -155,15 +155,15 @@ describe('GridColumnBlock', () => {
 				}]);
 
 			testUtil.control.rows([{
-				ID: shortid.generate(),
-				rowID: '1',
+				id: shortid.generate(),
+				rowId: '1',
 				cells: [{
 					text: 'text 1'
 				}, {}],
 				something: 'else'
 			}, {
-				ID: shortid.generate(),
-				rowID: '2',
+				id: shortid.generate(),
+				rowId: '2',
 				cells: [{
 					text: 'text 1'
 				}, {}],
@@ -173,36 +173,36 @@ describe('GridColumnBlock', () => {
 			testUtil.control.rows([]);
 
 			testUtil.control.rows([{
-				ID: shortid.generate(),
-				rowID: '1',
+				id: shortid.generate(),
+				rowId: '1',
 				cells: [{
 					text: 'text 1'
 				}, {}],
 				something: 'else'
 			}, {
-				ID: shortid.generate(),
-				rowID: '2',
+				id: shortid.generate(),
+				rowId: '2',
 				cells: [{
 					text: 'text 2'
 				}, {}],
 				something: 'another'
 			}, {
-				ID: shortid.generate(),
-				rowID: '3',
+				id: shortid.generate(),
+				rowId: '3',
 				cells: [{
 					text: 'text 3'
 				}, {}],
 				something: 'meh'
 			}, {
-				ID: shortid.generate(),
-				rowID: '4',
+				id: shortid.generate(),
+				rowId: '4',
 				cells: [{
 					text: 'text 4'
 				}, {}],
 				something: 'stone'
 			}, {
-				ID: shortid.generate(),
-				rowID: '5',
+				id: shortid.generate(),
+				rowId: '5',
 				cells: [{
 					text: 'text 5'
 				}, {}],

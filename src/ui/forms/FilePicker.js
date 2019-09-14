@@ -112,7 +112,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 	[buildThumbnail](data, skipOnChange) {
 		const self = this;
 		let thumb = new FileThumbnail({
-			ID: data.name,
+			id: data.name,
 			container: self,
 			previewSize: self.previewSize(),
 			fileExtension: data.extension,
@@ -157,7 +157,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 	}
 
 	[editFile](control) {
-		this[buildLightbox](control.ID());
+		this[buildLightbox](control.id());
 	}
 
 	[deleteFile](fileThumbnail) {
@@ -171,10 +171,10 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		}
 
 		remove(self[FILES], {
-			name: fileThumbnail.ID()
+			name: fileThumbnail.id()
 		});
 
-		self[FILE_THUMBNAILS].remove(fileThumbnail.ID());
+		self[FILE_THUMBNAILS].remove(fileThumbnail.id());
 
 		if (!self.isMulti() && self[FILES].length <= 1) {
 			self.error(EMPTY_STRING);

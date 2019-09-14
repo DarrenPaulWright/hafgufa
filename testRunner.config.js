@@ -10,7 +10,6 @@ module.exports = [{
 	type: 'helper',
 	files: [
 		'tests/TestUtil.js',
-		'tests/query.js',
 		'tests/**/*Tests.js',
 		'src/**/*.less'
 	]

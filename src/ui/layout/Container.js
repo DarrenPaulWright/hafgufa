@@ -92,18 +92,18 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	}
 
 	/**
-	 * Get a control in the content container that matches the provided ID
+	 * Get a control in the content container that matches the provided id
 	 *
 	 * @method get
 	 * @member module:Container
 	 * @instance
 	 *
-	 * @arg {String} ID
+	 * @arg {String} id
 	 *
 	 * @returns {Object}
 	 */
-	get(ID) {
-		return this[CHILD_CONTROLS].get(ID);
+	get(id) {
+		return this[CHILD_CONTROLS].get(id);
 	}
 
 	/**
@@ -195,10 +195,10 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @member module:Container
 	 * @instance
 	 *
-	 * @arg {string} ID
+	 * @arg {string} id
 	 */
-	removeContent(ID) {
-		this[CHILD_CONTROLS].remove(ID);
+	removeContent(id) {
+		this[CHILD_CONTROLS].remove(id);
 	}
 }
 

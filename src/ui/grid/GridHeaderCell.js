@@ -102,7 +102,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			container: self.element(),
 			defaultButtonText: 'Filter',
 			onChange(newValue) {
-				self[applyOrFilter](newValue.map((item) => item.ID));
+				self[applyOrFilter](newValue.map((item) => item.id));
 			}
 		});
 
@@ -179,7 +179,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 	[applyOrFilter](values) {
 		const self = this;
 
-		self.filter(values.join(OR_SEPARATOR), self.ID(), self.dataType());
+		self.filter(values.join(OR_SEPARATOR), self.id(), self.dataType());
 	}
 
 	[applyMinMaxFilter]() {
@@ -238,19 +238,19 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 		if (self.canSort()) {
 			menuOptions = [{
-				ID: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.ASC,
+				id: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.ASC,
 				title: 'Sort ' + self.label() + ' ascending',
 				icon: SORT_AMOUNT_ASC_ICON,
 				isSelectable: false,
 				classes: ''
 			}, {
-				ID: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.DESC,
+				id: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.DESC,
 				title: 'Sort ' + self.label() + ' descending',
 				icon: SORT_AMOUNT_DESC_ICON,
 				isSelectable: false,
 				classes: ''
 			}, {
-				ID: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.NONE,
+				id: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.NONE,
 				title: 'No sort',
 				icon: NONE_ICON,
 				isSelectable: false,
@@ -261,7 +261,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		menuOptions = menuOptions.concat(
 			self.selectableColumns()
 				.map((column) => !column.title ? null : {
-					ID: CONTEXT_MENU_COLUMN_PREFIX + column.ID,
+					id: CONTEXT_MENU_COLUMN_PREFIX + column.id,
 					title: column.title,
 					isSelectable: true,
 					isSelected: !column.isHidden,
@@ -274,16 +274,16 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		self.contextMenu(menuOptions);
 	}
 
-	[onContextMenuChange](itemID) {
+	[onContextMenuChange](itemId) {
 		const self = this;
 
-		if (itemID.includes(CONTEXT_MENU_SORT_PREFIX)) {
-			itemID = itemID.replace(CONTEXT_MENU_SORT_PREFIX, '');
-			self.sortDirection(itemID);
+		if (itemId.includes(CONTEXT_MENU_SORT_PREFIX)) {
+			itemId = itemId.replace(CONTEXT_MENU_SORT_PREFIX, '');
+			self.sortDirection(itemId);
 		}
 		else {
-			itemID = itemID.replace(CONTEXT_MENU_COLUMN_PREFIX, '');
-			self.onColumnChange()(itemID);
+			itemId = itemId.replace(CONTEXT_MENU_COLUMN_PREFIX, '');
+			self.onColumnChange()(itemId);
 		}
 	}
 
@@ -447,7 +447,7 @@ Object.assign(GridHeaderCell.prototype, {
 			}
 
 			if (self.onFilter()) {
-				self.onFilter()(newValue, self.ID());
+				self.onFilter()(newValue, self.id());
 			}
 		}
 	}),
@@ -507,7 +507,7 @@ Object.assign(GridHeaderCell.prototype, {
 		if (self.onGetFilterOptions()) {
 			switch (self.filterType()) {
 				case FILTER_TYPES.AUTO_COMPLETE:
-					self.onGetFilterOptions()(self.filterType(), self.ID(), (items) => {
+					self.onGetFilterOptions()(self.filterType(), self.id(), (items) => {
 						self[FILTER_CONTROL].suggestions(items.reduce((result, value) => {
 							return result.concat(value.split(' '));
 						}, []));
@@ -515,11 +515,11 @@ Object.assign(GridHeaderCell.prototype, {
 					break;
 				case FILTER_TYPES.DROPDOWN:
 				case FILTER_TYPES.DATE:
-					self.onGetFilterOptions()(self.filterType(), self.ID(), (items) => {
+					self.onGetFilterOptions()(self.filterType(), self.id(), (items) => {
 						self[FILTER_CONTROL].options({
 							isMultiSelect: self.filterType() !== FILTER_TYPES.DATE,
 							children: items.map((value) => ({
-								ID: value || 'undefined',
+								id: value || 'undefined',
 								title: value || '-'
 							}))
 						});

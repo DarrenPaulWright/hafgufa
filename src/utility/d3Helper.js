@@ -32,10 +32,10 @@ const getElement = (element, isContainer = false) => {
 const d3Helper = {
 	ANIMATION_DURATION: ANIMATION_DURATION,
 	SLOW_ANIMATION_DURATION: SLOW_ANIMATION_DURATION,
-	linearGradient(ID, svg, point1, point2, stops) {
+	linearGradient(id, svg, point1, point2, stops) {
 		let gradient = svg.append('defs')
 			.append('linearGradient')
-			.attr('id', ID)
+			.attr('id', id)
 			.attr('x1', point1.x)
 			.attr('y1', point1.y)
 			.attr('x2', point2.x)

@@ -60,13 +60,13 @@ export default class GridHeader extends Control {
 
 		if (headerCellControl.sortDirection() !== SORT_TYPES.NONE) {
 			self[CELL_RECYCLER].each((control) => {
-				if (control.ID() !== headerCellControl.ID()) {
+				if (control.id() !== headerCellControl.id()) {
 					control.sortDirection(SORT_TYPES.NONE);
 				}
 			});
 		}
 		if (self.onSort()) {
-			self.onSort()(headerCellControl.sortDirection(), headerCellControl.ID());
+			self.onSort()(headerCellControl.sortDirection(), headerCellControl.id());
 		}
 	}
 }
@@ -121,7 +121,7 @@ Object.assign(GridHeader.prototype, {
 
 				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
 					container: self.element(),
-					ID: column.ID,
+					id: column.id,
 					label: column.title,
 					canSort: column.canSort,
 					filter: column.filter || '',
@@ -198,7 +198,7 @@ Object.assign(GridHeader.prototype, {
 				extraWidth = self.scrollbarWidth();
 			}
 
-			self[CELL_RECYCLER].getControl(column.ID)
+			self[CELL_RECYCLER].getControl(column.id)
 				.minWidth(column.currentWidth + extraWidth)
 				.width(column.currentWidth + extraWidth)
 				.maxWidth(column.currentWidth + extraWidth)

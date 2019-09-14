@@ -8,10 +8,10 @@ let windowHeight = 0;
 const queue = new Queue();
 
 /**
- * Executes a callback on ID only.
+ * Executes a callback on id only.
  * @function trigger
  */
-const trigger = (ID) => queue.trigger(ID);
+const trigger = (id) => queue.trigger(id);
 
 /**
  * Executes all callbacks.
@@ -45,14 +45,14 @@ export default {
 	 * @arg {Element} element - If provided then a resize event will be triggered when the element is added to the DOM
 	 * @arg {string} type
 	 *
-	 * @returns {Number} - An unique ID for this callback.
+	 * @returns {Number} - An unique id for this callback.
 	 */
 	add(callback, type) {
-		const newID = queue.add(callback, {
+		const newId = queue.add(callback, {
 			type: type
 		});
 
-		return newID;
+		return newId;
 	},
 
 	/**
@@ -62,10 +62,10 @@ export default {
 	 * @member module:windowResize
 	 * @instance
 	 *
-	 * @arg {Number} ID - The ID returned by windowResize.add().
+	 * @arg {Number} id - The id returned by windowResize.add().
 	 */
-	discard(ID) {
-		queue.discard(ID);
+	discard(id) {
+		queue.discard(id);
 	},
 
 	/**
@@ -82,12 +82,12 @@ export default {
 	 * @method trigger
 	 * @member module:windowResize
 	 * @instance
-	 * @arg {Number} [ID] - To trigger only a specific callback, provide the ID returned by windowResize.add().
+	 * @arg {Number} [id] - To trigger only a specific callback, provide the id returned by windowResize.add().
 	 *     Otherwise all callbacks are called.
 	 */
-	trigger(ID) {
-		if (ID) {
-			trigger(ID);
+	trigger(id) {
+		if (id) {
+			trigger(id);
 		}
 		else {
 			triggerAll();

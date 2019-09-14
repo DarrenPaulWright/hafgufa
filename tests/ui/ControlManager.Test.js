@@ -44,7 +44,7 @@ describe('ControlManager', () => {
 
 	it('should get a control by id', () => {
 		const div = new Div({
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(div);
@@ -56,7 +56,7 @@ describe('ControlManager', () => {
 		const container = new Container();
 		const div = new Div({
 			container: container,
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(container);
@@ -68,7 +68,7 @@ describe('ControlManager', () => {
 		const container = new Container();
 		new Div({
 			container: container,
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(container);
@@ -96,10 +96,10 @@ describe('ControlManager', () => {
 
 	it('should call a callback for each control and return an array', () => {
 		const div1 = new Div({
-			ID: '4'
+			id: '4'
 		});
 		const div2 = new Div({
-			ID: '7'
+			id: '7'
 		});
 		let count = 0;
 		let countTotal = 0;
@@ -111,7 +111,7 @@ describe('ControlManager', () => {
 				count++;
 			}
 
-			return control.ID();
+			return control.id();
 		});
 
 		assert.equal(countTotal, 2);
@@ -123,7 +123,7 @@ describe('ControlManager', () => {
 		const div = new Div();
 
 		manager.add(div);
-		div.ID('test');
+		div.id('test');
 		manager.update(div);
 
 		assert.equal(manager.get('test'), div);
@@ -131,11 +131,11 @@ describe('ControlManager', () => {
 
 	it('should get a control by id after the id is updated', () => {
 		const div = new Div({
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(div);
-		div.ID('test2');
+		div.id('test2');
 		manager.update(div);
 
 		assert.equal(manager.get('test2'), div);
@@ -143,7 +143,7 @@ describe('ControlManager', () => {
 
 	it('should NOT get a control by id after the control is discarded', () => {
 		const div = new Div({
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(div);
@@ -158,7 +158,7 @@ describe('ControlManager', () => {
 
 	it('should NOT get a control by id after the control is discarded (fade)', () => {
 		const div = new IsWorking({
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(div);
@@ -173,7 +173,7 @@ describe('ControlManager', () => {
 
 	it('should NOT get a control by id after the control is discarded (by id)', () => {
 		const div = new Div({
-			ID: 'test'
+			id: 'test'
 		});
 
 		manager.add(div);
@@ -187,10 +187,10 @@ describe('ControlManager', () => {
 
 	it('should remove a control by id', () => {
 		const div1 = new Div({
-			ID: '1'
+			id: '1'
 		});
 		const div2 = new Div({
-			ID: '2'
+			id: '2'
 		});
 		const div3 = new Div();
 
@@ -207,15 +207,15 @@ describe('ControlManager', () => {
 
 	it('should remove a control by reference', () => {
 		const div1 = new Div({
-			ID: '1'
+			id: '1'
 		});
 		const div2 = new Div({
-			ID: '2'
+			id: '2'
 		});
 		const div3 = new Container({
 			content: {
 				control: Div,
-				ID: 'test4'
+				id: 'test4'
 			}
 		});
 
@@ -247,10 +247,10 @@ describe('ControlManager', () => {
 
 	it('should remove a control when the control is removed externally', () => {
 		const div1 = new Div({
-			ID: '1'
+			id: '1'
 		});
 		const div2 = new Div({
-			ID: '2'
+			id: '2'
 		});
 		const div3 = new Div();
 
@@ -273,10 +273,10 @@ describe('ControlManager', () => {
 
 	it('should remove a control with fade', () => {
 		const div1 = new Div({
-			ID: '1'
+			id: '1'
 		});
 		const div2 = new IsWorking({
-			ID: '2'
+			id: '2'
 		});
 
 		manager.add([div1, div2]);

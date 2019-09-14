@@ -136,7 +136,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			return false;
 		}
 		for (let itemIndex = 0; itemIndex < values1.length; itemIndex++) {
-			if (values1[itemIndex].ID !== values2[itemIndex].ID) {
+			if (values1[itemIndex].id !== values2[itemIndex].id) {
 				return false;
 			}
 		}
@@ -173,7 +173,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 			else {
 				if (!options2.children[childIndex] ||
-					options1.children[childIndex].ID !== options2.children[childIndex].ID ||
+					options1.children[childIndex].id !== options2.children[childIndex].id ||
 					options1.children[childIndex].isEnabled !== options2.children[childIndex].isEnabled) {
 					return false;
 				}
@@ -196,18 +196,18 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		if (isArray(newValue) && (newValue[0] || newValue[0] === 0) && newValue[0] !== '') {
 			for (let valueIndex = 0; valueIndex < newValue.length; valueIndex++) {
-				newItem = self[getItem](newValue[valueIndex].ID || newValue[valueIndex]);
+				newItem = self[getItem](newValue[valueIndex].id || newValue[valueIndex]);
 
-				if (newItem.ID) {
+				if (newItem.id) {
 					newItems.push(newItem);
 				}
 				else {
-					if (newValue[valueIndex].ID) {
+					if (newValue[valueIndex].id) {
 						newItems.push(newValue[valueIndex]);
 					}
 					else {
 						newItems.push({
-							ID: newValue[valueIndex]
+							id: newValue[valueIndex]
 						});
 					}
 					self[ARE_ALL_SELECTED_ITEMS_ACCOUNTED_FOR] = false;
@@ -224,7 +224,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		self[PREFERRED_ITEMS_LIST].length = 0;
 
 		self.preferred().forEach((preferredItem) => {
-			newItem = self[getItem](preferredItem.ID, preferredItem.title);
+			newItem = self[getItem](preferredItem.id, preferredItem.title);
 			if (newItem && !isEmpty(newItem)) {
 				self[PREFERRED_ITEMS_LIST].push(newItem);
 			}
@@ -232,7 +232,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		if (self.showAll()) {
 			self[FLATTENED_ITEMS_LIST].forEach((item) => {
-				if (!self[PREFERRED_ITEMS_LIST].find((preferredItem) => preferredItem.ID === item.ID)) {
+				if (!self[PREFERRED_ITEMS_LIST].find((preferredItem) => preferredItem.id === item.id)) {
 					self[PREFERRED_ITEMS_LIST].push(item);
 				}
 			});
@@ -261,10 +261,10 @@ export default class Picker extends FocusMixin(FormControl) {
 				self[HAS_VISIBLE_MULTI_SELECT] = true;
 			}
 			item.isMultiSelect = self[HAS_MULTI_SELECT];
-			item.ID = item.ID ? item.ID.toString() : (self[FLATTENED_ITEMS_LIST].length + 1).toString();
+			item.id = item.id ? item.id.toString() : (self[FLATTENED_ITEMS_LIST].length + 1).toString();
 			item.group = item.group || '';
 			self[FLATTENED_ITEMS_LIST].push(item);
-			self[FLATTENED_ITEMS_OBJECT][item.ID] = item;
+			self[FLATTENED_ITEMS_OBJECT][item.id] = item;
 		}, {
 			onEachParent(parent) {
 				if (parent.isMultiSelect) {
@@ -293,15 +293,15 @@ export default class Picker extends FocusMixin(FormControl) {
 	/**
 	 * Check to see if a particular option is selected
 	 * @function checkSelected
-	 * @arg {String} ID - An option's ID value
+	 * @arg {String} id - An option's id value
 	 */
-	[checkSelected](ID) {
-		return !!this[SELECTED_ITEMS].find((item) => item.ID === ID);
+	[checkSelected](id) {
+		return !!this[SELECTED_ITEMS].find((item) => item.id === id);
 	}
 
 	[prepPreferredItemButton](button, settings) {
 		const self = this;
-		const isSelected = self[checkSelected](settings.ID);
+		const isSelected = self[checkSelected](settings.id);
 		let label = settings.title || '';
 		label += settings.subTitle ? ' ' + settings.subTitle : '';
 
@@ -329,18 +329,18 @@ export default class Picker extends FocusMixin(FormControl) {
 				preferredItem = self[PREFERRED_ITEMS_LIST][itemCount];
 
 				self.contentContainer.addButton({
-					ID: preferredItem.ID,
+					id: preferredItem.id,
 					onClick(...args) {
 						self[onButtonClick](...args);
 					}
 				});
-				currentButton = self.contentContainer.getButton(preferredItem.ID);
+				currentButton = self.contentContainer.getButton(preferredItem.id);
 				self[prepPreferredItemButton](currentButton, preferredItem);
 			}
 
 			for (itemCount = 0; itemCount < itemsToMeasure; itemCount++) {
 				preferredItem = self[PREFERRED_ITEMS_LIST][itemCount];
-				currentButton = self.contentContainer.getButton(preferredItem.ID);
+				currentButton = self.contentContainer.getButton(preferredItem.id);
 				preferredItem.renderWidth = currentButton.borderWidth();
 			}
 
@@ -352,13 +352,13 @@ export default class Picker extends FocusMixin(FormControl) {
 
 	[onButtonClick](button) {
 		const self = this;
-		const buttonID = button.ID();
+		const buttonId = button.id();
 
-		if (buttonID === POPUP_BUTTON_ID) {
+		if (buttonId === POPUP_BUTTON_ID) {
 			self[toggleMenu]();
 		}
 		else {
-			self[toggleSelectedItem](buttonID);
+			self[toggleSelectedItem](buttonId);
 			select(WINDOW).dispatch(CLICK_EVENT);
 		}
 	}
@@ -381,7 +381,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		const addPopupButton = () => {
 			if (!self[POPUP_BUTTON]) {
 				self.contentContainer.addButton({
-					ID: POPUP_BUTTON_ID,
+					id: POPUP_BUTTON_ID,
 					classes: POPUP_BUTTON_CLASS,
 					onClick(...args) {
 						self[onButtonClick](...args);
@@ -417,7 +417,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			self[SELECTED_ITEMS].forEach((item) => {
 				if (visibleSelectedItems.length === 0 || findIndex(visibleSelectedItems, {
-					ID: item.ID
+					id: item.id
 				}) === -1) {
 					isPopupButtonSelected = true;
 					if (popupText.length > 0) {
@@ -479,13 +479,13 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		const buildPreferredButton = (settings, index) => {
 			self.contentContainer.addButton({
-				ID: settings.ID,
+				id: settings.id,
 				onClick(...args) {
 					self[onButtonClick](...args);
 				}
 			}, index);
 
-			currentButton = self.contentContainer.getButton(settings.ID);
+			currentButton = self.contentContainer.getButton(settings.id);
 			isSelected = self[prepPreferredItemButton](currentButton, settings);
 
 			if (!settings.renderWidth) {
@@ -515,7 +515,7 @@ export default class Picker extends FocusMixin(FormControl) {
 					removePopupButton();
 				}
 				else {
-					removeButton(preferredItem.ID, preferredItem.renderWidth);
+					removeButton(preferredItem.id, preferredItem.renderWidth);
 
 					if (self.contentContainer.totalButtons() === 0) {
 						if (self[SELECTED_ITEMS].length) {
@@ -550,7 +550,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				}
 			}
 
-			values = visibleSelectedItems.map((item) => item.ID);
+			values = visibleSelectedItems.map((item) => item.id);
 
 			if (!(self[POPUP_BUTTON] && !self[MENU] && !isPopupButtonSelected)) {
 				values.push(POPUP_BUTTON_ID);
@@ -567,9 +567,9 @@ export default class Picker extends FocusMixin(FormControl) {
 	 * Saves an item to the selected items list, removes any other items that aren't within a multiselect area.
 	 * @function toggleSelectedItem
 	 */
-	[toggleSelectedItem](itemID, skipUpdate = false) {
+	[toggleSelectedItem](itemId, skipUpdate = false) {
 		const self = this;
-		const toggleItem = self[getItem](itemID);
+		const toggleItem = self[getItem](itemId);
 		let isSelected = false;
 
 		const unselectItem = (itemToUnselect, itemToSkip) => {
@@ -589,9 +589,9 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 			else {
 				self[SELECTED_ITEMS].forEach((item, count) => {
-					if (item.ID === itemToUnselect.ID) {
+					if (item.id === itemToUnselect.id) {
 						self[SELECTED_ITEMS].splice(count, 1);
-						button = self.contentContainer.getButton(item.ID);
+						button = self.contentContainer.getButton(item.id);
 						if (button) {
 							button.isSelected(false);
 						}
@@ -616,8 +616,8 @@ export default class Picker extends FocusMixin(FormControl) {
 				});
 			}
 			else {
-				if (item.ID === toggleItem.ID) {
-					if (self[checkSelected](item.ID)) {
+				if (item.id === toggleItem.id) {
+					if (self[checkSelected](item.id)) {
 						isSelected = true;
 						if (self.canUnselect()) {
 							unselectItem(item);
@@ -654,18 +654,18 @@ export default class Picker extends FocusMixin(FormControl) {
 	}
 
 	/**
-	 * Finds an option given that option's ID
+	 * Finds an option given that option's id
 	 * @function getItem
-	 * @arg {String} itemID - The ID of an option
+	 * @arg {String} itemId - The id of an option
 	 * @arg {String} itemTitle - The title property of an option
 	 * @returns {Object} - An option.
 	 */
-	[getItem](itemID, itemTitle) {
+	[getItem](itemId, itemTitle) {
 		const self = this;
 		let output;
 
-		if (itemID !== undefined) {
-			output = self[FLATTENED_ITEMS_OBJECT][itemID];
+		if (itemId !== undefined) {
+			output = self[FLATTENED_ITEMS_OBJECT][itemId];
 		}
 		else {
 			output = self[FLATTENED_ITEMS_LIST].find((item) => item.title === itemTitle);
@@ -681,7 +681,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 		const hasSelectedItems = (group) => {
 			for (let index = 0; index < group.length; index++) {
-				if (self[checkSelected](group[index].ID)) {
+				if (self[checkSelected](group[index].id)) {
 					return true;
 				}
 			}
@@ -702,7 +702,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				}
 				else {
 					item.isSelectable = optionsParent.isMultiSelect;
-					item.isSelected = self[checkSelected](item.ID);
+					item.isSelected = self[checkSelected](item.id);
 					item.isEnabled = item.isSelected || item.isEnabled;
 					rows.push(item);
 				}
@@ -715,7 +715,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			forOwn(groups, (group, key) => {
 				rows.push({
-					ID: key,
+					id: key,
 					title: key,
 					isSelectable: false,
 					children: group,
@@ -725,7 +725,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 
 		return rows.map((row) => ({
-			ID: row.ID,
+			id: row.id,
 			title: row.title,
 			subTitle: row.subTitle,
 			isSelected: row.isSelected,
@@ -770,14 +770,14 @@ export default class Picker extends FocusMixin(FormControl) {
 				onAdd: self.onAdd() ? (...args) => self[addNewItem](...args) : null,
 				onEdit: self.onEdit(),
 				onDelete: self.onDelete() ? (...args) => self[deleteItem](...args) : null,
-				onSelect(itemID) {
-					if (isArray(itemID)) {
-						itemID.forEach((ID, index) => {
-							self[toggleSelectedItem](ID, index < itemID.length - 1);
+				onSelect(itemId) {
+					if (isArray(itemId)) {
+						itemId.forEach((id, index) => {
+							self[toggleSelectedItem](id, index < itemId.length - 1);
 						});
 					}
 					else {
-						self[toggleSelectedItem](itemID);
+						self[toggleSelectedItem](itemId);
 					}
 					if (!self[HAS_MULTI_SELECT]) {
 						self[hideMenu]();
@@ -814,7 +814,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		if (!self.onBuildDialogContents()) {
 			const options = self.options();
 			options.children.push({
-				ID: newItem,
+				id: newItem,
 				title: newItem
 			});
 			self.options(options, true)
@@ -836,12 +836,12 @@ export default class Picker extends FocusMixin(FormControl) {
 			onDo() {
 				self[hideMenu]();
 
-				if (self[checkSelected](item.ID)) {
+				if (self[checkSelected](item.id)) {
 					wasSelected = true;
-					self[toggleSelectedItem](options.children[0].ID);
+					self[toggleSelectedItem](options.children[0].id);
 				}
 
-				remove(options.children, (option) => option.ID === item.ID);
+				remove(options.children, (option) => option.id === item.id);
 
 				self.options(options, true);
 			},
@@ -861,11 +861,11 @@ export default class Picker extends FocusMixin(FormControl) {
 	 * Show the dialog when the add/edit button is clicked
 	 * @function showDialog
 	 */
-	[showDialog](itemID, newTitle) {
+	[showDialog](itemId, newTitle) {
 		const self = this;
 
 		self[DIALOG] = new Dialog({
-			title: (itemID ? locale.get('edit') : locale.get('add')) + ' ' + self.title(),
+			title: (itemId ? locale.get('edit') : locale.get('add')) + ' ' + self.title(),
 			width: '40rem',
 			footer: {
 				buttons: [{
@@ -880,7 +880,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 		});
 
-		self.onBuildDialogContents().call(self, self[DIALOG], itemID, newTitle);
+		self.onBuildDialogContents().call(self, self[DIALOG], itemId, newTitle);
 		self[DIALOG].resize();
 	}
 }
@@ -890,9 +890,9 @@ Object.assign(Picker.prototype, {
 	// 	init: {},
 	// 	before(oldValue) {
 	// 		if (oldValue) {
-	// 			if (dataSourceOnChangeID) {
-	// 				oldValue.store.offChange(dataSourceOnChangeID);
-	// 				dataSourceOnChangeID = null;
+	// 			if (dataSourceOnChangeId) {
+	// 				oldValue.store.offChange(dataSourceOnChangeId);
+	// 				dataSourceOnChangeId = null;
 	// 			}
 	// 			if (disableItemsOnChangeId) {
 	// 				oldValue.disableItemsStore.offChange(disableItemsOnChangeId);
@@ -911,12 +911,12 @@ Object.assign(Picker.prototype, {
 	//
 	// 			if (disabledItems) {
 	// 				newOptions = newOptions.map((item) => {
-	// 					item.isEnabled = !disabledItems.includes(item.ID);
+	// 					item.isEnabled = !disabledItems.includes(item.id);
 	// 					return item;
 	// 				});
 	// 				if (newPreferred) {
 	// 					newPreferred = newPreferred.map((item) => {
-	// 						item.isEnabled = !disabledItems.includes(item.ID);
+	// 						item.isEnabled = !disabledItems.includes(item.id);
 	// 						return item;
 	// 					});
 	// 				}
@@ -933,13 +933,13 @@ Object.assign(Picker.prototype, {
 	//
 	// 		if (newValue.store) {
 	// 			if (newValue.key) {
-	// 				dataSourceOnChangeID = dataSource.uniqueBy(newValue, (options) => {
+	// 				dataSourceOnChangeId = dataSource.uniqueBy(newValue, (options) => {
 	// 					optionsStore = options;
 	// 					mapOptions();
 	// 				});
 	// 			}
 	// 			else {
-	// 				dataSourceOnChangeID = dataSource.optionsAndPreferred(newValue, (options, preferred) => {
+	// 				dataSourceOnChangeId = dataSource.optionsAndPreferred(newValue, (options, preferred) => {
 	// 					optionsStore = options;
 	// 					preferredStore = preferred;
 	// 					mapOptions();
@@ -1019,7 +1019,7 @@ Object.assign(Picker.prototype, {
 	 * @method preferred
 	 * @member module:Picker
 	 * @instance
-	 * @arg {Array} preferred - Prioritized array of option ID's.
+	 * @arg {Array} preferred - Prioritized array of option id's.
 	 * @returns {Array|this}
 	 */
 	preferred: method.array({

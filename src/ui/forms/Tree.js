@@ -94,7 +94,7 @@ export default class Tree extends FocusMixin(FormControl) {
 
 		applySettings(heading, branchData);
 
-		heading.isSelected(this.value().includes(branchData.ID), true)
+		heading.isSelected(this.value().includes(branchData.id), true)
 			.showExpander((!branchData.isExpandable && this[SHOW_CHECKBOXES_ON_GROUPS]) || (branchData.isExpandable && this[SHOW_EXPANDERS]))
 			.showCheckbox((branchData.isExpandable && this[SHOW_CHECKBOXES_ON_GROUPS]) || (!branchData.isExpandable && this[SHOW_CHECKBOXES]));
 	}
@@ -115,7 +115,7 @@ export default class Tree extends FocusMixin(FormControl) {
 
 			for (let index = 0; index < branches.length; index++) {
 				if (branches[index].isExpanded) {
-					self[EXPANDED_BRANCHES].push(branches[index].ID);
+					self[EXPANDED_BRANCHES].push(branches[index].id);
 					delete branches[index].isExpanded;
 				}
 
@@ -125,7 +125,7 @@ export default class Tree extends FocusMixin(FormControl) {
 					css: set({}, PADDING_LEFT, depth ? ((depth * INDENT_PIXELS) + PIXELS) : EMPTY_STRING),
 					isSelectable: self.isMultiSelect() || enforce.boolean(branches[index].isSelectable, false),
 					isExpandable: !!branches[index].children,
-					isExpanded: self[EXPANDED_BRANCHES].includes(branches[index].ID)
+					isExpanded: self[EXPANDED_BRANCHES].includes(branches[index].id)
 				};
 
 				if (branchData.isExpandable) {
@@ -199,19 +199,19 @@ export default class Tree extends FocusMixin(FormControl) {
 		const self = this;
 
 		if (self.onSelect()) {
-			self.onSelect()(heading.ID());
+			self.onSelect()(heading.id());
 		}
 		else {
 			if (heading.showCheckbox() && heading.isSelectable()) {
-				if (self.value().includes(heading.ID())) {
-					self.value(self.value().filter((item) => item !== heading.ID()), true);
+				if (self.value().includes(heading.id())) {
+					self.value(self.value().filter((item) => item !== heading.id()), true);
 				}
 				else {
-					self.value(self.value().concat(heading.ID()), true);
+					self.value(self.value().concat(heading.id()), true);
 				}
 			}
 			else {
-				self.value([heading.ID()]);
+				self.value([heading.id()]);
 			}
 			self.triggerChange();
 			if (self[VIRTUAL_LIST]) {
@@ -227,11 +227,11 @@ export default class Tree extends FocusMixin(FormControl) {
 	[toggleExpanded](heading) {
 		const self = this;
 
-		if (self[EXPANDED_BRANCHES].includes(heading.ID())) {
-			self[EXPANDED_BRANCHES] = self[EXPANDED_BRANCHES].filter((item) => item === heading.ID());
+		if (self[EXPANDED_BRANCHES].includes(heading.id())) {
+			self[EXPANDED_BRANCHES] = self[EXPANDED_BRANCHES].filter((item) => item === heading.id());
 		}
 		else {
-			self[EXPANDED_BRANCHES].push(heading.ID());
+			self[EXPANDED_BRANCHES].push(heading.id());
 		}
 		self[processBranches]();
 		if (self.onLayoutChange()) {

@@ -1,5 +1,5 @@
+import shortid from 'shortid';
 import { applySettings, AUTO, enforce, enforceInteger, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
-import uuid from 'uuid/v4';
 import dom from '../../utility/dom';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../../utility/domConstants';
 import MultiItemFocus from '../../utility/MultiItemFocus';
@@ -14,7 +14,6 @@ import './GroupedButtons.less';
 
 const BUTTON_RECYCLER = Symbol();
 const SHADOW_RECYCLER = Symbol();
-const BUTTON_CONTAINER = Symbol();
 const SHADOW_CONTAINER = Symbol();
 const MULTI_ITEM_FOCUS = Symbol();
 
@@ -106,23 +105,23 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 	 */
 	[onButtonClick](button) {
 		const self = this;
-		let buttonData = self.buttons().find((item) => item.ID === button.ID());
+		let buttonData = self.buttons().find((item) => item.id === button.id());
 		let currentValue;
 
 		self[MULTI_ITEM_FOCUS].current(buttonData);
 
 		if (!self.isMultiSelect()) {
-			self.value(button.ID());
+			self.value(button.id());
 			self[setAllButtonToggles]();
 		}
 		else {
 			self.value(enforce.array(self.value(), []));
 			currentValue = self.value();
 			if (button.isSelected()) {
-				currentValue.push(button.ID());
+				currentValue.push(button.id());
 			}
 			else {
-				currentValue.splice(currentValue.indexOf(button.ID()), 1);
+				currentValue.splice(currentValue.indexOf(button.id()), 1);
 			}
 			self.value(currentValue.reduce((result, item) => {
 				if (!result.includes(item)) {
@@ -155,11 +154,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		const button = self[BUTTON_RECYCLER].getRecycledControl();
 		const currentButtons = self.buttons();
 
-		if (!settings.ID) {
-			settings.ID = settings.id || uuid();
-			delete settings.id;
-		}
-		settings.ID = settings.ID.toString();
+		settings.id = settings.id ? settings.id.toString() : shortid.generate();
 
 		applySettings(button, {
 			...settings,
@@ -195,7 +190,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		const currentValue = self.value();
 
 		self[BUTTON_RECYCLER].each((button, index) => {
-			button.isSelected(self.isMultiSelect() ? (currentValue && currentValue.includes(button.ID())) : (currentValue === button.ID()));
+			button.isSelected(self.isMultiSelect() ? (currentValue && currentValue.includes(button.id())) : (currentValue === button.id()));
 			button.attr(TAB_INDEX, index === 0 ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		});
 
@@ -210,7 +205,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		const CURRENT_ORIENTATION_READ = (CURRENT_ORIENTATION === WIDTH) ? 'borderHeight' : 'borderWidth';
 
 		self.buttons().forEach((buttonData) => {
-			control = self[BUTTON_RECYCLER].getControl(buttonData.ID);
+			control = self[BUTTON_RECYCLER].getControl(buttonData.id);
 			const isSelected = control.isSelected();
 
 			if (!shadows.length || shadows[shadows.length - 1].isSelected !== isSelected) {
@@ -240,7 +235,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 	 */
 	[setFocusIndex](index) {
 		if (this.buttons().length >= index + 1) {
-			this[BUTTON_RECYCLER].getControl(this.buttons()[index].ID)
+			this[BUTTON_RECYCLER].getControl(this.buttons()[index].id)
 				.isFocused(true);
 		}
 	}
@@ -296,15 +291,15 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method removeButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {String} ID
+	 * @arg {String} id
 	 * @returns {this}
 	 */
-	removeButton(ID) {
+	removeButton(id) {
 		const self = this;
 		const buttons = self.buttons();
 
-		self[BUTTON_RECYCLER].discardControl(ID);
-		buttons.splice(buttons.findIndex((button) => button.ID === ID), 1);
+		self[BUTTON_RECYCLER].discardControl(id);
+		buttons.splice(buttons.findIndex((button) => button.id === id), 1);
 		self[setAllButtonToggles]();
 
 		return self;
@@ -323,16 +318,16 @@ Object.assign(GroupedButtons.prototype, {
 	},
 
 	/**
-	 * Get a previously added button by ID
+	 * Get a previously added button by id
 	 *
 	 * @method getButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {String}    ID
+	 * @arg {String}    id
 	 * @returns {Object}
 	 */
-	getButton(ID) {
-		return this[BUTTON_RECYCLER].getControl(ID);
+	getButton(id) {
+		return this[BUTTON_RECYCLER].getControl(id);
 	},
 
 	/**

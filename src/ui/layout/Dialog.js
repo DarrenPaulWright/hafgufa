@@ -167,8 +167,8 @@ Object.assign(Dialog.prototype, {
 		this[POPUP].resize(true);
 	},
 
-	get(ID) {
-		return this[CONTENT_CONTAINER].get(ID);
+	get(id) {
+		return this[CONTENT_CONTAINER].get(id);
 	},
 
 	disableButton(button) {

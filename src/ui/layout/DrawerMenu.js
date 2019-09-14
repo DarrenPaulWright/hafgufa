@@ -105,7 +105,7 @@ export default class DrawerMenu extends Control {
 					const onSelect = self.onSelect();
 
 					if (onSelect) {
-						item = self.menuItems().find((menuItem) => menuItem.ID === item);
+						item = self.menuItems().find((menuItem) => menuItem.id === item);
 						onSelect(item);
 					}
 
@@ -248,7 +248,7 @@ Object.assign(DrawerMenu.prototype, {
 		set(menuItems) {
 			const self = this;
 			collectionHelper.eachChild(menuItems, (item) => {
-				item.ID = item.ID || uuid();
+				item.id = item.id || uuid();
 			});
 
 			if (self[DRAWER] && self[DRAWER].isOpen()) {

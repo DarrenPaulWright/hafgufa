@@ -1,6 +1,7 @@
 import { clear, defer, delay } from 'async-agent';
 import { event, select } from 'd3';
 import keyCodes from 'keycodes';
+import shortid from 'shortid';
 import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
@@ -159,7 +160,7 @@ class Popup extends Container {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.POPUP;
 		settings.container = enforce.element(settings.container, BODY);
-		settings.ID = settings.ID || 'popup_' + Math.round(Math.random() * 10000);
+		settings.id = settings.id || 'popup_' + shortid.generate();
 		settings.isSticky = enforce.boolean(settings.isSticky, false);
 		settings.fade = settings.zoom || settings.fade;
 
@@ -512,7 +513,7 @@ Object.assign(Popup.prototype, {
 		init: true,
 		set(newValue) {
 			const self = this;
-			const suffix = '.' + self.ID();
+			const suffix = '.' + self.id();
 
 			const onWindowClick = () => {
 				if (!self[IS_ACTIVE]) {

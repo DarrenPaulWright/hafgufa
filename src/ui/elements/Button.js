@@ -107,7 +107,7 @@ Object.assign(Button.prototype, {
 				if (!this[CONTROLS].get(LABEL_ID)) {
 					this[CONTROLS].add(new Span({
 						container: this,
-						ID: LABEL_ID
+						id: LABEL_ID
 					}));
 				}
 				this[CONTROLS].get(LABEL_ID).text(label || DEFAULT_LABEL);
@@ -153,7 +153,7 @@ Object.assign(Button.prototype, {
 				if (!this[CONTROLS].get(ICON_ID)) {
 					this[CONTROLS].add(new Icon({
 						container: this,
-						ID: ICON_ID,
+						id: ICON_ID,
 						size: this.iconSize()
 					}));
 				}
@@ -233,7 +233,7 @@ Object.assign(Button.prototype, {
 				if (!this[CONTROLS].get(IMAGE_ID)) {
 					this[CONTROLS].add(new Image({
 						container: this,
-						ID: IMAGE_ID
+						id: IMAGE_ID
 					}));
 				}
 				this[CONTROLS].get(IMAGE_ID).source(image);

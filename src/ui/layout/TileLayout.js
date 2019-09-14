@@ -23,7 +23,7 @@ import './TileLayout.less';
 
 const COLUMN_SPAN = 'columnSpan';
 const CONTROL_INDEX_ATTR = 'tileIndex';
-const NO_ITEM_ID_ERROR_MESSAGE = 'All items in a tile layout must have a unique ID.';
+const NO_ITEM_ID_ERROR_MESSAGE = 'All items in a tile layout must have a unique id.';
 export const TILE_COLUMN_ALIGN = new Enum({
 	LEFT: 'left',
 	CENTER: 'center',
@@ -420,7 +420,7 @@ export default class TileLayout extends Container {
 			};
 
 			if (itemData) {
-				if (!itemData.ID) {
+				if (!itemData.id) {
 					throw (NO_ITEM_ID_ERROR_MESSAGE);
 				}
 
@@ -430,7 +430,7 @@ export default class TileLayout extends Container {
 					const columnSpan = Math.min(itemData.columnSpan || 1, self[COLUMN_COUNT]);
 
 					control
-						.ID(itemData.ID)
+						.id(itemData.id)
 						.attr(COLUMN_SPAN, columnSpan)
 						.css(POSITION, ABSOLUTE)
 						.width(self[calculateControlWidth](columnSpan))
@@ -454,12 +454,12 @@ export default class TileLayout extends Container {
 
 	[discardTile](index) {
 		const self = this;
-		let control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].ID);
+		let control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].id);
 
 		if (control) {
 			self[TILE_OFFSETS][index].removed = true;
 			self[fadeControl](control, false);
-			self[CONTROL_RECYCLER].discardControl(control.ID());
+			self[CONTROL_RECYCLER].discardControl(control.id());
 			self[RENDERED_CONTROLS][index] = false;
 			control = null;
 		}
@@ -695,7 +695,7 @@ export default class TileLayout extends Container {
 					for (let index = startIndex; index < self[TILE_OFFSETS].length; index++) {
 						self[findNextOffset](null, index, true);
 
-						let control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].ID);
+						let control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].id);
 						if (control) {
 							self[placeControl](control, index);
 						}

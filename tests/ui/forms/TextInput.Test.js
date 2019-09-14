@@ -224,7 +224,7 @@ describe('TextInput', () => {
 				rows: 1
 			});
 
-			assert.equal(window.control.getInput().element(), query.first('input'));
+			assert.equal(testUtil.control.getInput().element(), testUtil.first('input'));
 		});
 
 		it('should return a textarea element when getItnput is called and rows is more than 1', () => {

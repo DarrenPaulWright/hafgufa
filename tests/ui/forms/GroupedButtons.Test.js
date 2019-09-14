@@ -9,10 +9,10 @@ describe('GroupedButtons', () => {
 		mainCssClass: 'grouped-buttons',
 		extraSettings: {
 			buttons: [{
-				ID: '1',
+				id: '1',
 				label: 'test'
 			}, {
-				ID: '2',
+				id: '2',
 				label: 'test2'
 			}]
 		},
@@ -25,10 +25,10 @@ describe('GroupedButtons', () => {
 		it('should add a button to the DOM when addButton is called', () => {
 			testUtil.control = new GroupedButtons({
 				container: testUtil.container,
-				ID: 'first'
+				id: 'first'
 			})
 				.addButton({
-					ID: 'one',
+					id: 'one',
 					label: 'test'
 				});
 
@@ -38,15 +38,15 @@ describe('GroupedButtons', () => {
 		it('should add two buttons to the DOM when addButton is called twice', () => {
 			const control2 = new GroupedButtons({
 				container: testUtil.container,
-				ID: 'second'
+				id: 'second'
 			});
 			control2
 				.addButton({
-					ID: 'two',
+					id: 'two',
 					label: 'test 1'
 				})
 				.addButton({
-					ID: 'three',
+					id: 'three',
 					label: 'test 2'
 				});
 

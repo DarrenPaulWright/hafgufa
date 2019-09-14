@@ -11,7 +11,7 @@ describe('VirtualList', () => {
 		extraSettings: {
 			itemControl: Button,
 			itemData: [{
-				ID: '1',
+				id: '1',
 				text: 'test'
 			}]
 		},
@@ -23,11 +23,11 @@ describe('VirtualList', () => {
 	const EMPTY_CONTENT_CLASS = '.empty-content-message';
 
 	const testRows = [{
-		ID: '1'
+		id: '1'
 	}, {
-		ID: '2'
+		id: '2'
 	}, {
-		ID: '3'
+		id: '3'
 	}];
 
 	controlTests.run(['stopPropagation'], ['focus']);
@@ -86,7 +86,7 @@ describe('VirtualList', () => {
 				.itemData(testRows);
 
 			testUtil.control.itemData([{
-				ID: '1'
+				id: '1'
 			}]);
 
 			return wait()
@@ -269,7 +269,7 @@ describe('VirtualList', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(testValue.ID, '3');
+					assert.equal(testValue.id, '3');
 				});
 		});
 	});
@@ -288,7 +288,7 @@ describe('VirtualList', () => {
 				isVirtualized: false,
 				onItemRender(button, rowData) {
 					let newLabel = 'test';
-					for (let index = 0; index < rowData.ID; index++) {
+					for (let index = 0; index < rowData.id; index++) {
 						newLabel += '<br>test ' + index;
 					}
 					button.label(newLabel);
@@ -312,7 +312,7 @@ describe('VirtualList', () => {
 				isVirtualized: true,
 				onItemRender(button, rowData) {
 					let newLabel = 'test';
-					for (let index = 0; index < rowData.ID; index++) {
+					for (let index = 0; index < rowData.id; index++) {
 						newLabel += '<br>test ' + index;
 					}
 					button.label(newLabel);
@@ -337,7 +337,7 @@ describe('VirtualList', () => {
 				isVirtualized: false,
 				onItemRender(button, rowData) {
 					let newLabel = 'test';
-					for (let index = 0; index < rowData.ID; index++) {
+					for (let index = 0; index < rowData.id; index++) {
 						newLabel += '<br>test ' + index;
 					}
 					button.label(newLabel);
@@ -355,7 +355,7 @@ describe('VirtualList', () => {
 
 		for (let index = 1; index < 30; index++) {
 			longList.push({
-				ID: index + '',
+				id: index + '',
 				text: 'test: ' + index
 			});
 		}

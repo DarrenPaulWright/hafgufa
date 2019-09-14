@@ -364,40 +364,40 @@ describe('Tags', () => {
 			assert.deepEqual(testUtil.control.value(), ['test 1 title', 'test 2 title', 'test 3 title']);
 		});
 
-		it('should accept an array of objects with ID and title as a value', () => {
+		it('should accept an array of objects with id and title as a value', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container
 			});
 
 			testUtil.control.value([{
-				ID: 'test1',
+				id: 'test1',
 				title: 'test 1 title'
 			}, {
-				ID: 'test2',
+				id: 'test2',
 				title: 'test 2 title'
 			}, {
-				ID: 'test3',
+				id: 'test3',
 				title: 'test 3 title'
 			}]);
 
 			assert.equal(getRenderedTags().length, 3);
 		});
 
-		it('should accept an array of objects with ID, title, and subTitle as a value', () => {
+		it('should accept an array of objects with id, title, and subTitle as a value', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container
 			});
 
 			testUtil.control.value([{
-				ID: 'test1',
+				id: 'test1',
 				title: 'test 1 title',
 				subTitle: 'sub title 1'
 			}, {
-				ID: 'test2',
+				id: 'test2',
 				title: 'test 2 title',
 				subTitle: 'sub title 2'
 			}, {
-				ID: 'test3',
+				id: 'test3',
 				title: 'test 3 title',
 				subTitle: 'sub title 3'
 			}]);
@@ -411,21 +411,21 @@ describe('Tags', () => {
 			});
 
 			testUtil.control.value([{
-				ID: 'test1',
+				id: 'test1',
 				title: 'test 1 title',
 				subTitle: 'sub title 1'
 			}, {
-				ID: 'test2',
+				id: 'test2',
 				title: 'test 2 title',
 				subTitle: 'sub title 2'
 			}, {
-				ID: 'test3',
+				id: 'test3',
 				title: 'test 3 title',
 				subTitle: 'sub title 3'
 			}]);
 
 			testUtil.control.value([{
-				ID: 'test1',
+				id: 'test1',
 				title: 'test 1 title',
 				subTitle: 'sub title 1'
 			}]);
@@ -443,7 +443,7 @@ describe('Tags', () => {
 			addTag('test3');
 
 			testUtil.control.value([{
-				ID: 'test1',
+				id: 'test1',
 				title: 'test 1 title',
 				subTitle: 'sub title 1'
 			}]);
@@ -459,25 +459,25 @@ describe('Tags', () => {
 			'test 3'
 		];
 		const suggestionsWithTitles = [{
-			ID: 'test1',
+			id: 'test1',
 			title: 'test 1'
 		}, {
-			ID: 'test2',
+			id: 'test2',
 			title: 'test 2'
 		}, {
-			ID: 'test3',
+			id: 'test3',
 			title: 'test 3'
 		}];
 		const suggestionsWithSubTitles = [{
-			ID: 'test1',
+			id: 'test1',
 			title: 'test 1',
 			subTitle: 'subTitle 1'
 		}, {
-			ID: 'test2',
+			id: 'test2',
 			title: 'test 2',
 			subTitle: 'subTitle 2'
 		}, {
-			ID: 'test3',
+			id: 'test3',
 			title: 'test 3',
 			subTitle: 'subTitle 3 is longer'
 		}];
@@ -489,11 +489,11 @@ describe('Tags', () => {
 			},
 			defaultValue: [],
 			testValue: [{
-				ID: 1,
+				id: 1,
 				title: 'test 1'
 			}],
 			secondTestValue: [{
-				ID: 2,
+				id: 2,
 				title: 'test 2'
 			}]
 		});
@@ -553,7 +553,7 @@ describe('Tags', () => {
 				});
 		});
 
-		it('should accept an array of objects with ID and title as suggestions', () => {
+		it('should accept an array of objects with id and title as suggestions', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container,
 				suggestions: suggestionsWithTitles
@@ -567,7 +567,7 @@ describe('Tags', () => {
 				});
 		});
 
-		it('should accept an array of objects with ID, title, and subTitle as suggestions', () => {
+		it('should accept an array of objects with id, title, and subTitle as suggestions', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container,
 				suggestions: suggestionsWithSubTitles
@@ -605,10 +605,10 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('2');
 
-			return wait()
+			return wait(1)
 				.then(() => {
 					setInputValue('');
-					return wait();
+					return wait(1);
 				})
 				.then(() => {
 					assert.equal(getRenderedSuggestions().length, 3);

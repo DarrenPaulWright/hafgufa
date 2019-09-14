@@ -269,7 +269,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 			const title = currentValue.format(format);
 
 			slides.push({
-				ID: 'span_' + title,
+				id: 'span_' + title,
 				title: title,
 				events: [],
 				start: exporter(moment(currentValue).startOf(self[SPAN].incUnit)),

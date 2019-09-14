@@ -242,9 +242,9 @@ const dom = {
 		return isElement(element) ? element.contains(DOCUMENT.activeElement) : false;
 	},
 	/**
-	 * Prepares a string to be used as a valid element ID.
+	 * Prepares a string to be used as a valid element id.
 	 *
-	 * @method prepDomIDString
+	 * @method prepDomIdString
 	 * @member module:dom
 	 * @static
 	 *
@@ -252,7 +252,7 @@ const dom = {
 	 *
 	 * @returns {string}
 	 */
-	prepDomIDString(input) {
+	prepDomIdString(input) {
 		return (isString(input)) ? input.replace(SPACE, EMPTY_STRING)
 			.replace(/[^A-Za-z0-9_:\.-]/g, EMPTY_STRING) : EMPTY_STRING;
 	},

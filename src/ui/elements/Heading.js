@@ -157,12 +157,12 @@ export default class Heading extends FocusMixin(Control) {
 		});
 
 		self[CONTROLS].add(new Container({
-			ID: TITLE_CONTAINER,
+			id: TITLE_CONTAINER,
 			container: self,
 			removeClass: 'container',
 			classes: 'title-container',
 			content: new Span({
-				ID: TITLE_ID
+				id: TITLE_ID
 			})
 		}));
 
@@ -243,7 +243,7 @@ Object.assign(Heading.prototype, {
 			if (subTitle !== '') {
 				if (!this[CONTROLS].get(TITLE_CONTAINER).get(SUB_TITLE_ID)) {
 					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
-						ID: SUB_TITLE_ID,
+						id: SUB_TITLE_ID,
 						classes: 'subtitle'
 					}));
 				}
@@ -271,7 +271,7 @@ Object.assign(Heading.prototype, {
 			if (error !== '') {
 				if (!this[CONTROLS].get(TITLE_CONTAINER).get(ERROR_ID)) {
 					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
-						ID: ERROR_ID,
+						id: ERROR_ID,
 						classes: 'error'
 					}));
 				}
@@ -302,7 +302,7 @@ Object.assign(Heading.prototype, {
 			else {
 				if (!this[CONTROLS].get(ICON_CONTROL)) {
 					this[CONTROLS].add(new Icon({
-						ID: ICON_CONTROL
+						id: ICON_CONTROL
 					}));
 				}
 
@@ -347,7 +347,7 @@ Object.assign(Heading.prototype, {
 			else {
 				if (!this[CONTROLS].get(IMAGE_CONTROL)) {
 					this[CONTROLS].add(new Image({
-						ID: IMAGE_CONTROL
+						id: IMAGE_CONTROL
 					})
 						.css(DISPLAY, INLINE_BLOCK));
 					dom.appendBefore(this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(IMAGE_CONTROL));
@@ -372,7 +372,7 @@ Object.assign(Heading.prototype, {
 			if (newValue.length) {
 				if (!this[CONTROLS].get(TOOLBAR)) {
 					this[CONTROLS].add(new Toolbar({
-						ID: TOOLBAR,
+						id: TOOLBAR,
 						container: self.element(),
 						stopPropagation: true
 					}));
@@ -512,7 +512,7 @@ Object.assign(Heading.prototype, {
 
 			if (newValue) {
 				this[CONTROLS].add(new Button({
-					ID: EXPANDER,
+					id: EXPANDER,
 					classes: 'icon-button',
 					onClick() {
 						toggleIsExpanded.call(self);
@@ -542,7 +542,7 @@ Object.assign(Heading.prototype, {
 
 			if (showCheckbox) {
 				this[CONTROLS].add(new CheckBox({
-					ID: CHECKBOX,
+					id: CHECKBOX,
 					container: this.element(),
 					isVisible: this.isSelectable(),
 					onChange() {

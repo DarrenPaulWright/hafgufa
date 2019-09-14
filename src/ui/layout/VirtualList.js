@@ -67,7 +67,7 @@ const forRangeRight = (first, last, callback) => {
 };
 
 const SCROLL_BUFFER = 8;
-const NO_ITEM_ID_ERROR_MESSAGE = 'All items in a virtual list control must have a unique ID.';
+const NO_ITEM_ID_ERROR_MESSAGE = 'All items in a virtual list control must have a unique id.';
 const VIRTUAL_LIST_CLASS = 'virtual-list';
 const VIRTUAL_ITEM_CLASS = 'virtual-item';
 const EMPTY_CONTENT_CLASS = 'empty-content-message';
@@ -333,13 +333,13 @@ export default class VirtualList extends FocusMixin(Control) {
 			const item = self.itemData()[index];
 
 			if (item) {
-				let control = self[CONTROL_RECYCLER].getControl(item.ID);
+				let control = self[CONTROL_RECYCLER].getControl(item.id);
 
 				if (control && !control.isRemoved) {
 					if (control.isFocused()) {
 						self.element().focus();
 					}
-					self[CONTROL_RECYCLER].discardControl(control.ID());
+					self[CONTROL_RECYCLER].discardControl(control.id());
 					control = null;
 				}
 			}
@@ -422,7 +422,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		let newPosition;
 		const itemData = self.itemData()[index] || {};
 
-		if (!itemData.ID) {
+		if (!itemData.id) {
 			throw (NO_ITEM_ID_ERROR_MESSAGE);
 		}
 
@@ -450,7 +450,7 @@ export default class VirtualList extends FocusMixin(Control) {
 					.css(self[ALT_POSITION_ORIGIN], ZERO_PIXELS)
 					.css(self[EXTENT], newSize)
 					.css(self[ALT_EXTENT], self[ALT_EXTENT_VALUE])
-					.ID(itemData.ID);
+					.id(itemData.id);
 
 				if (doPrepend) {
 					self[CONTENT_CONTAINER].prepend(control);

@@ -20,16 +20,16 @@ const FormRelationshipHandler = function() {
 	 * @arg {Object}           [newData]
 	 * @arg {Object}           newData.control                            - A valid js reference back to the control
 	 *     adding this relationship
-	 * @arg {String}           newData.controlID                          - unique ID of the control adding this
+	 * @arg {String}           newData.controlId                          - unique id of the control adding this
 	 *     relationship
 	 * @arg {Object[]}         newData.relationships
-	 * @arg {String}           newData.relationships.targetID
-	 * @arg {String[]}         newData.relationships.targetIDs
+	 * @arg {String}           newData.relationships.targetId
+	 * @arg {String[]}         newData.relationships.targetIds
 	 * @arg {Number|String}    newData.relationships.type                 - 'int' | 'text'
 	 * @arg {String}           newData.relationships.condition            - 'equals|anyEquals|greaterThan'
 	 * @arg {Array.<Object[]>} newData.relationships.ranges               - Only use this if caseThen.value or
 	 *     caseElse.value is sumRange. Each inner array corresponds to one of the target controls in the same order
-	 *     provided in targetIDs
+	 *     provided in targetIds
 	 * @arg {Number}           newData.relationships.ranges.bottom
 	 * @arg {Number}           newData.relationships.ranges.top
 	 * @arg {Number}           newData.relationships.ranges.score
@@ -39,7 +39,7 @@ const FormRelationshipHandler = function() {
 	 * @arg {Object}           newData.relationships.caseElse
 	 * @arg {Boolean}          newData.relationships.caseElse.isEnabled
 	 * @arg {String}           newData.relationships.caseElse. value      - 'value|sum|sumRange|null' | literal
-	 * @returns {Number} - A unique ID that should be used to reference this relationship in the future
+	 * @returns {Number} - A unique id that should be used to reference this relationship in the future
 	 */
 	self.add = (newData) => {
 		newData.relationships = newData.relationships || [];
@@ -57,7 +57,7 @@ const FormRelationshipHandler = function() {
 	 * @method remove
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} id - The formRelationshipID passed back when the relationship is first added.
+	 * @arg {Number} id - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.remove = (id) => {
 		relationships = relationships.filter((item) => item.id !== id);
@@ -68,7 +68,7 @@ const FormRelationshipHandler = function() {
 	 * @method trigger
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} [id] - The formRelationshipID passed back when the relationship is first added.
+	 * @arg {Number} [id] - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.trigger = (id) => {
 		if (id) {
@@ -84,7 +84,7 @@ const FormRelationshipHandler = function() {
 	 * @method update
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} id                    - The formRelationshipID passed back when the relationship is first added.
+	 * @arg {Number} id                    - The formRelationshipId passed back when the relationship is first added.
 	 * @arg {Object} updateObject
 	 * @arg {String} updateObject.name     - The name of the relationship to be updated
 	 * @arg {String} updateObject.property - The property to be updated
@@ -116,9 +116,9 @@ const FormRelationshipHandler = function() {
 	 */
 	const processRelationships = (data) => {
 		data.relationships.forEach((relationship) => {
-			if (relationship.targetID) {
+			if (relationship.targetId) {
 				if (!relationship.target) {
-					relationship.target = getControlByID(relationship.targetID);
+					relationship.target = getControlById(relationship.targetId);
 				}
 
 				if (relationship.type === 'int') {
@@ -128,11 +128,11 @@ const FormRelationshipHandler = function() {
 					relationship.targetValues = [getValue(relationship.target)];
 				}
 			}
-			else if (relationship.targetIDs) {
+			else if (relationship.targetIds) {
 				if (!relationship.targets) {
 					relationship.targets = [];
-					for (let idCount = 0, idTotal = relationship.targetIDs.length; idCount < idTotal; idCount++) {
-						relationship.targets.push(getControlByID(relationship.targetIDs[idCount]));
+					for (let idCount = 0, idTotal = relationship.targetIds.length; idCount < idTotal; idCount++) {
+						relationship.targets.push(getControlById(relationship.targetIds[idCount]));
 					}
 				}
 
@@ -239,7 +239,7 @@ const FormRelationshipHandler = function() {
 	 * @function getIntValue
 	 * @arg {Object} target - A reference to a control
 	 * @returns {Number} - If the control returns an array of values then only get the first value. If the control
-	 *     returns an object with an ID property, use the ID property. If the value is a string with at least one '.',
+	 *     returns an object with an id property, use the id property. If the value is a string with at least one '.',
 	 *     then return everything after the last '.'. (eg. 'myControl.10.3' will return 3)
 	 */
 	const getIntValue = (target) => {
@@ -249,8 +249,8 @@ const FormRelationshipHandler = function() {
 			targetValue = targetValue[0];
 		}
 
-		if (targetValue && targetValue.ID) {
-			targetValue = targetValue.ID;
+		if (targetValue && targetValue.id) {
+			targetValue = targetValue.id;
 		}
 
 		if (targetValue && !parseInt(targetValue, 10) && typeof targetValue === 'string') {
@@ -274,7 +274,7 @@ const FormRelationshipHandler = function() {
 	 * @returns {Boolean}
 	 */
 	const simpleEquals = (relationship) => {
-		const target = result(relationship.targetValues.find((item) => item.ID), 'ID');
+		const target = result(relationship.targetValues.find((item) => item.id), 'id');
 
 		return (typeof target === 'undefined' || target === relationship.options);
 	};
@@ -287,7 +287,7 @@ const FormRelationshipHandler = function() {
 	const simpleInArray = (relationship) => {
 		let inArray = false;
 
-		const target = result(relationship.targetValues.find((item) => item.ID), 'ID');
+		const target = result(relationship.targetValues.find((item) => item.id), 'id');
 		if (relationship.options) {
 			relationship.options.forEach((option) => {
 				if (typeof target !== 'undefined' && target === option) {
@@ -345,8 +345,8 @@ const FormRelationshipHandler = function() {
 					allEquals = false;
 					return false;
 				}
-				else if (relationship.options[targetCount].ID) {
-					if (targetValue.ID !== relationship.options[targetCount].ID) {
+				else if (relationship.options[targetCount].id) {
+					if (targetValue.id !== relationship.options[targetCount].id) {
 						allEquals = false;
 						return false;
 					}
@@ -448,7 +448,7 @@ const FormRelationshipHandler = function() {
 		if (isNested) {
 			processRelationships({
 				control: data.control,
-				controlID: data.controlID,
+				controlId: data.controlId,
 				relationships: caseThen
 			});
 		}
@@ -500,15 +500,15 @@ const FormRelationshipHandler = function() {
 	};
 
 	/**
-	 * Gets a reference to a control given that controls ID
-	 * @function getControlByID
-	 * @arg {String} controlID
-	 * @return {Object|Boolean} - If no control is found that matches the provided ID then return false.
+	 * Gets a reference to a control given that controls id
+	 * @function getControlById
+	 * @arg {String} controlId
+	 * @return {Object|Boolean} - If no control is found that matches the provided id then return false.
 	 */
-	const getControlByID = (controlID) => {
-		if (controlID) {
+	const getControlById = (controlId) => {
+		if (controlId) {
 			for (let relationshipCount = 0, relationshipTotal = relationships.length; relationshipCount < relationshipTotal; relationshipCount++) {
-				if (relationships[relationshipCount].data.controlID === controlID) {
+				if (relationships[relationshipCount].data.controlId === controlId) {
 					return relationships[relationshipCount].data.control;
 				}
 			}

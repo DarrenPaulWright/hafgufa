@@ -20,8 +20,8 @@ export default class ControlManager {
 	}
 
 	[indexControl](control) {
-		if (control.ID && control.ID()) {
-			_(this).ids[control.ID()] = control;
+		if (control.id && control.id()) {
+			_(this).ids[control.id()] = control;
 		}
 	}
 
@@ -38,8 +38,8 @@ export default class ControlManager {
 
 			_self.controls.splice(index, 1);
 
-			if (control.ID()) {
-				delete _self.ids[control.ID()];
+			if (control.id()) {
+				delete _self.ids[control.id()];
 			}
 		}
 	}
@@ -72,9 +72,9 @@ export default class ControlManager {
 		const _self = _(this);
 		const self = this;
 
-		forOwn(_self.ids, (thisControl, ID) => {
+		forOwn(_self.ids, (thisControl, id) => {
 			if (thisControl === control) {
-				delete _self.ids[ID];
+				delete _self.ids[id];
 				return true;
 			}
 		});
@@ -82,13 +82,13 @@ export default class ControlManager {
 		self[indexControl](control);
 	}
 
-	get(ID) {
+	get(id) {
 		const _self = _(this);
-		let output = _self.ids[ID];
+		let output = _self.ids[id];
 
 		if (!output) {
 			_self.controls.some((data) => {
-				return data.control.get ? Boolean(output = data.control.get(ID)) : false;
+				return data.control.get ? Boolean(output = data.control.get(id)) : false;
 			});
 		}
 
@@ -117,7 +117,7 @@ export default class ControlManager {
 		const controls = _self.controls;
 
 		if (input) {
-			if (!input.ID) {
+			if (!input.id) {
 				input = _self.ids[input];
 			}
 			if (input) {

@@ -32,8 +32,8 @@ const IS_EDITING = Symbol();
 const CURRENT_PREFILL_VALUES = Symbol();
 
 const deleteItem = Symbol();
-const getCurrentValueWithNewRowID = Symbol();
-const getUniqueNewRowID = Symbol();
+const getCurrentValueWithNewRowId = Symbol();
+const getUniqueNewRowId = Symbol();
 const updateDialogControls = Symbol();
 const updateGrid = Symbol();
 const onEditControlChange = Symbol();
@@ -55,7 +55,7 @@ const showDialog = Symbol();
  * @arg {Array}    [settings.columns[]]     - Grid control columns
  * @arg {Array}    [settings.columns[].showDescriptionOnEdit]
  * @arg {Function} [settings.onDelete]      - Callback for when an item is deleted. If not provided, onChange will be triggered.
- * @arg {boolean} [settings.autoGenerateIDs=true]
+ * @arg {boolean} [settings.autoGenerateIds=true]
  * @arg {boolean} [settings.showAddAnother=true]
  * @arg {String}   [settings.dialogWidth=34rem]
  */
@@ -118,14 +118,14 @@ export default class EditableGrid extends FormControl {
 	[deleteItem](rowData) {
 		const self = this;
 		let isDeleted = true;
-		let rowValue = self[CURRENT_VALUE].find((item) => item.rowID === rowData.rowID);
+		let rowValue = self[CURRENT_VALUE].find((item) => item.rowId === rowData.rowId);
 
 		self[GRID].clearSelected();
 		self[GRID].removeRow({
-			rowID: rowData.rowID
+			rowId: rowData.rowId
 		});
 		remove(self[CURRENT_VALUE], {
-			rowID: rowData.rowID
+			rowId: rowData.rowId
 		});
 		self.triggerChange();
 
@@ -147,9 +147,9 @@ export default class EditableGrid extends FormControl {
 				if (isDeleted) {
 					if (self.onDelete()) {
 						self.onDelete().call(self, {
-							id: self.ID(),
+							id: self.id(),
 							control: self,
-							value: rowData.rowID
+							value: rowData.rowId
 						});
 					}
 					else {
@@ -160,12 +160,12 @@ export default class EditableGrid extends FormControl {
 		});
 	}
 
-	[getCurrentValueWithNewRowID]() {
+	[getCurrentValueWithNewRowId]() {
 		const self = this;
 		let newGridRow;
 
 		self[CURRENT_VALUE].forEach((gridRow) => {
-			if (gridRow.rowID === NEW_ROW_ID) {
+			if (gridRow.rowId === NEW_ROW_ID) {
 				newGridRow = gridRow;
 				return false;
 			}
@@ -175,26 +175,26 @@ export default class EditableGrid extends FormControl {
 		return newGridRow;
 	}
 
-	[getUniqueNewRowID](newValue) {
+	[getUniqueNewRowId](newValue) {
 		const self = this;
-		const currentRowIDs = self[CURRENT_VALUE].map((item) => item.rowID);
-		const returnedRowIDs = newValue.map((item) => item.rowID);
-		const uniqueRowIDs = difference(returnedRowIDs, currentRowIDs);
-		let newRowID;
+		const currentRowIds = self[CURRENT_VALUE].map((item) => item.rowId);
+		const returnedRowIds = newValue.map((item) => item.rowId);
+		const uniqueRowIds = difference(returnedRowIds, currentRowIds);
+		let newRowId;
 
-		if (uniqueRowIDs.length) {
-			newRowID = uniqueRowIDs[0];
+		if (uniqueRowIds.length) {
+			newRowId = uniqueRowIds[0];
 		}
 
-		return newRowID;
+		return newRowId;
 	}
 
-	[updateDialogControls](rowID, newValueRow) {
+	[updateDialogControls](rowId, newValueRow) {
 		const self = this;
 
 		if (self[ADD_NEW_DIALOG]) {
 			self[ADD_NEW_DIALOG].each((control, index) => {
-				control.rowID = rowID;
+				control.rowId = rowId;
 				control.value(newValueRow.values[index].text);
 			});
 		}
@@ -208,10 +208,10 @@ export default class EditableGrid extends FormControl {
 				cells: row.values.map((cell) => {
 					return {
 						...cell,
-						rowID: row.rowID
+						rowId: row.rowId
 					};
 				}),
-				rowID: row.rowID,
+				rowId: row.rowId,
 				originalData: row,
 				edited: row.edited || self[CURRENT_VALUE].edited,
 				values: row.values
@@ -219,16 +219,16 @@ export default class EditableGrid extends FormControl {
 		}));
 	}
 
-	[onEditControlChange](cellData, rowID, columnIndex) {
+	[onEditControlChange](cellData, rowId, columnIndex) {
 		const self = this;
 
 		const setRowIdAndUpdateCellData = () => {
 			let rowFound = false;
 
-			cellData.rowID = rowID;
+			cellData.rowId = rowId;
 
 			self[CURRENT_VALUE].forEach((row) => {
-				if (row.rowID === cellData.rowID) {
+				if (row.rowId === cellData.rowId) {
 					rowFound = true;
 					row.values[columnIndex] = cellData;
 					row.edited = true;
@@ -239,7 +239,7 @@ export default class EditableGrid extends FormControl {
 			if (!rowFound) {
 				self[CURRENT_VALUE].push({
 					values: initializeNewCells(),
-					rowID: rowID,
+					rowId: rowId,
 					edited: true
 				});
 			}
@@ -256,7 +256,7 @@ export default class EditableGrid extends FormControl {
 				}
 				else {
 					newRowCells[stubColumnIndex] = {
-						rowID: rowID,
+						rowId: rowId,
 						text: ''
 					};
 				}
@@ -270,12 +270,12 @@ export default class EditableGrid extends FormControl {
 			setRowIdAndUpdateCellData();
 		}
 		else {
-			if (rowID === NEW_ROW_ID) {
+			if (rowId === NEW_ROW_ID) {
 				self[IS_WAITING_FOR_ROW_ID] = true;
-				cellData.rowID = NEW_ROW_ID;
+				cellData.rowId = NEW_ROW_ID;
 				self[CURRENT_VALUE].push({
 					values: initializeNewCells(),
-					rowID: NEW_ROW_ID,
+					rowId: NEW_ROW_ID,
 					edited: true
 				});
 				self[updateGrid]();
@@ -306,40 +306,39 @@ export default class EditableGrid extends FormControl {
 		return output;
 	}
 
-	[prefill](editOptions, newValue) {
+	[prefill](editOptions, changedControl, newValue) {
 		const self = this;
-		let control;
 
-		const hasOverRideableValue = (control, prefillID) => {
+		const hasOverRideableValue = (control, prefillId) => {
 			const controlValue = control.value();
 
 			if (isArray(controlValue)) {
-				return (controlValue.length === 0 || (controlValue.length === 1 && controlValue[0].ID === self[CURRENT_PREFILL_VALUES][prefillID]));
+				return (controlValue.length === 0 || (controlValue.length === 1 && controlValue[0].id === self[CURRENT_PREFILL_VALUES][prefillId]));
 			}
 			else {
-				return (!controlValue || controlValue === self[CURRENT_PREFILL_VALUES][prefillID]);
+				return (!controlValue || controlValue === self[CURRENT_PREFILL_VALUES][prefillId]);
 			}
 		};
 
-		const prefillControl = (control, ID, value) => {
+		const prefillControl = (control, id, value) => {
 			control.value(value);
 			control.triggerChange(true);
-			self[CURRENT_PREFILL_VALUES][ID] = value;
+			self[CURRENT_PREFILL_VALUES][id] = value;
 		};
 
 		if (editOptions) {
-			forOwn(editOptions.prefill, (prefillValue, prefillID) => {
-				control = self[ADD_NEW_DIALOG].get(prefillID);
+			forOwn(editOptions.prefill, (prefillValue, prefillId) => {
+				const control = self[ADD_NEW_DIALOG].get(prefillId);
 
-				if (control && hasOverRideableValue(control, prefillID)) {
+				if (control && hasOverRideableValue(control, prefillId)) {
 					if (prefillValue === null) {
-						prefillControl(control, prefillID, newValue.title);
+						prefillControl(control, prefillId, newValue);
 					}
 					else if (prefillValue.store && editOptions.dataSource) {
-						editOptions.dataSource.store.get(newValue.ID)
+						editOptions.dataSource.store.get(changedControl.id())
 							.then((localItem) => prefillValue.store.getTitle(localItem[prefillValue.key]))
 							.then((title) => {
-								prefillControl(control, prefillID, title.ID);
+								prefillControl(control, prefillId, title.id);
 							});
 					}
 				}
@@ -370,8 +369,8 @@ export default class EditableGrid extends FormControl {
 					textWidth: editOptions.textWidth || '14rem',
 					onChange(newValue) {
 						cellData.text = newValue;
-						self[prefill](column.editOptions, newValue);
-						self[onEditControlChange](cellData, rowData.rowID, columnCount, newValue);
+						self[prefill](column.editOptions, this, newValue);
+						self[onEditControlChange](cellData, rowData.rowId, columnCount, newValue);
 					},
 					value: cellData.text || editOptions.defaultValue
 				});
@@ -390,8 +389,8 @@ export default class EditableGrid extends FormControl {
 					control: Conversion,
 					onChange(newValue) {
 						cellData.text = newValue;
-						self[prefill](column.editOptions, newValue);
-						self[onEditControlChange](cellData, rowData.rowID, columnCount, newValue);
+						self[prefill](column.editOptions, this, newValue);
+						self[onEditControlChange](cellData, rowData.rowId, columnCount, newValue);
 					},
 					value: cellData.text || editOptions.defaultValue
 				});
@@ -409,9 +408,9 @@ export default class EditableGrid extends FormControl {
 							cellData.text = '';
 						}
 						if (newValue.length) {
-							self[prefill](column.editOptions, newValue[0]);
+							self[prefill](column.editOptions, this, newValue[0]);
 						}
-						self[onEditControlChange](cellData, rowData.rowID, columnCount);
+						self[onEditControlChange](cellData, rowData.rowId, columnCount);
 					},
 					value: cellData.text || editOptions.defaultValue
 				});
@@ -463,7 +462,7 @@ export default class EditableGrid extends FormControl {
 
 		rowData.originalData = rowData.originalData || {};
 		rowData.originalData.values = rowData.originalData.values || [];
-		rowData.rowID = rowData.rowID || (self.autoGenerateIDs() ? shortid.generate() : NEW_ROW_ID);
+		rowData.rowId = rowData.rowId || (self.autoGenerateIds() ? shortid.generate() : NEW_ROW_ID);
 		self[CURRENT_PREFILL_VALUES] = {};
 
 		if (self[GRID].columns()) {
@@ -536,7 +535,7 @@ export default class EditableGrid extends FormControl {
 
 	[showDialog](rowId) {
 		const self = this;
-		const rowData = self[CURRENT_VALUE].find((row) => row.rowID === rowId);
+		const rowData = self[CURRENT_VALUE].find((row) => row.rowId === rowId);
 
 		self[IS_EDITING] = !!rowData;
 
@@ -561,7 +560,7 @@ export default class EditableGrid extends FormControl {
 
 	value(newValue) {
 		const self = this;
-		let newRowID;
+		let newRowId;
 		let newGridRow;
 		let output = [];
 
@@ -572,11 +571,11 @@ export default class EditableGrid extends FormControl {
 
 			if (isArray(newValue)) {
 				if (self[IS_WAITING_FOR_ROW_ID]) {
-					newRowID = self[getUniqueNewRowID](newValue);
-					if (newRowID) {
-						newGridRow = self[getCurrentValueWithNewRowID]();
+					newRowId = self[getUniqueNewRowId](newValue);
+					if (newRowId) {
+						newGridRow = self[getCurrentValueWithNewRowId]();
 						if (newGridRow) {
-							self[updateDialogControls](newRowID, newGridRow);
+							self[updateDialogControls](newRowId, newGridRow);
 						}
 					}
 					self[IS_WAITING_FOR_ROW_ID] = false;
@@ -591,8 +590,8 @@ export default class EditableGrid extends FormControl {
 
 				self[updateGrid]();
 
-				if (newRowID) {
-					self[GRID].selectRow(newRowID);
+				if (newRowId) {
+					self[GRID].selectRow(newRowId);
 				}
 
 				if (self[IS_DATA_DIRTY]) {
@@ -615,7 +614,7 @@ export default class EditableGrid extends FormControl {
 		if (!(self.mapDataOut() || self.processDataOut())) {
 			self[CURRENT_VALUE].forEach((row) => {
 				const rowOutput = {
-					rowID: row.rowID === NEW_ROW_ID ? '' : row.rowID,
+					rowId: row.rowId === NEW_ROW_ID ? '' : row.rowId,
 					edited: row.edited || false,
 					values: []
 				};
@@ -623,7 +622,7 @@ export default class EditableGrid extends FormControl {
 				row.values.forEach((cell, count) => {
 					if (count < self[GRID].columns().length) {
 						rowOutput.values.push({
-							rowID: cell.rowID === NEW_ROW_ID ? '' : cell.rowID,
+							rowId: cell.rowId === NEW_ROW_ID ? '' : cell.rowId,
 							text: cell.text || ''
 						});
 					}
@@ -662,7 +661,7 @@ Object.assign(EditableGrid.prototype, {
 		init: true
 	}),
 
-	autoGenerateIDs: method.boolean({
+	autoGenerateIds: method.boolean({
 		init: true
 	}),
 

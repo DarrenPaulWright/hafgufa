@@ -453,7 +453,7 @@ describe('GridRow', () => {
 				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.CHECKBOX,
-					ID: 0,
+					id: 0,
 					order: 0
 				}])
 				.isSelected(true);
@@ -714,7 +714,7 @@ describe('GridRow', () => {
 				})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.ACTIONS,
-					ID: 0,
+					id: 0,
 					buttons: [{
 						icon: 'circle',
 						onClick: onRowClick
@@ -760,7 +760,7 @@ describe('GridRow', () => {
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.ACTIONS,
 					currentWidth: 120,
-					ID: 0,
+					id: 0,
 					buttons: [{
 						icon: 'circle',
 						onClick: onRowClick

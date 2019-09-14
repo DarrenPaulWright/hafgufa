@@ -8,22 +8,22 @@ import FormControlTests from './FormControlTests';
 describe('Picker', () => {
 	const testUtil = new TestUtil(Picker);
 
-	const testValue = [{
-		ID: '1'
-	}];
-	const testValue2 = [{
-		ID: '2'
-	}];
-	const testOptions = [{
-		ID: '1',
-		title: 'first'
-	}, {
-		ID: '2',
-		title: 'second'
-	}, {
-		ID: '3',
-		title: 'third'
-	}];
+const testValue = [{
+	id: '1'
+}];
+const testValue2 = [{
+	id: '2'
+}];
+const testOptions = [{
+	id: '1',
+	title: 'first'
+}, {
+	id: '2',
+	title: 'second'
+}, {
+	id: '3',
+	title: 'third'
+}];
 
 	const formControlTests = new FormControlTests(Picker, testUtil, {
 		extraSettings: {
@@ -116,7 +116,7 @@ describe('Picker', () => {
 				preferred: testValue
 			});
 
-			assert.deepEqual(testUtil.control.preferred()[0].ID, '1');
+			assert.deepEqual(testUtil.control.preferred()[0].id, '1');
 		});
 
 		it('should return an array of objects when the preferred method is set twice and options are set', () => {
@@ -127,7 +127,7 @@ describe('Picker', () => {
 			});
 			testUtil.control.preferred(testValue2);
 
-			assert.deepEqual(testUtil.control.preferred()[0].ID, '2');
+			assert.deepEqual(testUtil.control.preferred()[0].id, '2');
 		});
 	});
 });

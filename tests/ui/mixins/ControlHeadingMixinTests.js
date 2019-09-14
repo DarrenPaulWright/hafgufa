@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import ControlTests from '../ControlTests';
 
-const TEST_ID = 'testID';
+const TEST_ID = 'testId';
 const TEST_ICON_FA = 'trash';
 const TEST_TITLE = 'Test Title';
 const SUB_TITLE = 'Test Sub Title';
@@ -20,7 +20,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 		describe('ControlHeadingAddon .icon', () => {
 			it('should show a font-awesome icon as provided', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: 'Test Title',
 					headingIcon: TEST_ICON_FA,
 					container: testUtil.container
@@ -31,7 +31,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 			it('should NOT have an icon element if icon is set to an empty string', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					headingIcon: '',
 					container: testUtil.container
 				});
@@ -45,7 +45,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 		describe('ControlHeadingAddon .title', () => {
 			it('should show a title as provided', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: TEST_TITLE,
 					container: testUtil.container
 				});
@@ -55,7 +55,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 			it('should have an empty title element if the title is set to an empty string', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: '',
 					container: testUtil.container
 				});
@@ -69,7 +69,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 		describe('ControlHeadingAddon .subTitle', () => {
 			it('should show a subTitle as provided if a title is also provided', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: TEST_TITLE,
 					subTitle: SUB_TITLE,
 					container: testUtil.container
@@ -95,7 +95,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 			it('should NOT show an error message if "error" is not called', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container,
 					title: TEST_TITLE
 				});
@@ -105,7 +105,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 			it('should show an error message when "error" is called', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container,
 					title: TEST_TITLE
 				})
@@ -116,7 +116,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 			it('should NOT show an error message when error is set to "" after "error"', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container,
 					title: TEST_TITLE
 				})

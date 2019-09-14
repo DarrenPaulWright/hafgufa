@@ -121,7 +121,7 @@ export default class Calendar extends Control {
 		const self = this;
 
 		return Array.from({length: MONTHS_IN_A_YEAR}, (x, month) => ({
-			ID: month.toString(),
+			id: month.toString(),
 			title: new Moment().month(parseInt(month, 10)).format(self.monthFormat())
 		}));
 	}
@@ -136,7 +136,7 @@ export default class Calendar extends Control {
 		return Array.from({length: (self.yearRangePast() + self.yearRangeFuture() + 1)}, (x, yearOffset) => {
 			const year = (self.year() + (self.yearRangeFuture() - yearOffset)).toString();
 			return {
-				ID: year,
+				id: year,
 				title: year
 			};
 		});
@@ -169,23 +169,23 @@ export default class Calendar extends Control {
 					classes: 'icon-button next-button'
 				}, {
 					control: Picker,
-					ID: MONTH_PICKER_ID,
+					id: MONTH_PICKER_ID,
 					width: AUTO,
 					options: self[buildMonthOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
-							self.month(parseInt(newValue[0].ID, 10));
+						self.month(parseInt(newValue[0].id, 10));
 						}
 					},
 					value: self.month()
 				}, {
 					control: Picker,
-					ID: YEAR_PICKER_ID,
+					id: YEAR_PICKER_ID,
 					width: AUTO,
 					options: self[buildYearOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
-							self.year(parseInt(newValue[0].ID, 10));
+						self.year(parseInt(newValue[0].id, 10));
 						}
 					},
 					value: self.year()

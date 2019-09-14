@@ -35,7 +35,7 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 
 		self[RELATIONSHIP_ID] = formRelationships.add({
 			control: self,
-			controlID: self.ID(),
+			controlId: self.id(),
 			relationships: settings.relationships
 		});
 

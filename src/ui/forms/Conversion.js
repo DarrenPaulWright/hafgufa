@@ -101,9 +101,9 @@ export default class Conversion extends FocusMixin(FormControl) {
 	}
 
 	[getSuffix](typeString) {
-		const localizationID = this[SUFFIXES][this[TYPES].key(typeString)];
+		const localizationId = this[SUFFIXES][this[TYPES].key(typeString)];
 
-		return locale.get(localizationID);
+		return locale.get(localizationId);
 	}
 
 	[setValue](newValue, isFrom) {

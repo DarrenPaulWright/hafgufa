@@ -10,7 +10,7 @@ describe('Menu', () => {
 		mainCssClass: 'menu',
 		extraSettings: {
 			menuItems: [{
-				ID: '1',
+				id: '1',
 				title: 'test'
 			}],
 			delay: 0,
@@ -19,18 +19,18 @@ describe('Menu', () => {
 		autoFocus: true
 	});
 
-	controlTests.run(['container', 'element', 'ID', 'height', 'width', 'onResize', 'stopPropagation']);
+	controlTests.run(['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation']);
 
 	describe('MenuItems', () => {
 		testUtil.testMethod({
 			methodName: 'menuItems',
 			defaultValue: [],
 			testValue: [{
-				ID: 'test',
+				id: 'test',
 				title: 'test'
 			}],
 			secondTestValue: [{
-				ID: 'test 2',
+				id: 'test 2',
 				title: 'test 2'
 			}]
 		});
@@ -38,7 +38,7 @@ describe('Menu', () => {
 		it('should have one menu item if one is provided', () => {
 			testUtil.control = new Menu({
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}]
 			});
@@ -52,13 +52,13 @@ describe('Menu', () => {
 		it('should have three menu items if three are provided', () => {
 			testUtil.control = new Menu({
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -72,15 +72,15 @@ describe('Menu', () => {
 		it('should have a selected item if one is set to isSelected', () => {
 			testUtil.control = new Menu({
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					isSelectable: true,
 					isSelected: true
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -99,13 +99,13 @@ describe('Menu', () => {
 					testVar = item;
 				},
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -123,13 +123,13 @@ describe('Menu', () => {
 				onSelect() {
 				},
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -148,13 +148,13 @@ describe('Menu', () => {
 				},
 				keepMenuOpen: true,
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});
@@ -172,14 +172,14 @@ describe('Menu', () => {
 				onSelect() {
 				},
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					keepMenuOpen: true
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});

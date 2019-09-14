@@ -9,7 +9,7 @@ import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import './toast.less';
 
 let wrapper;
-let currentID = 1;
+let currentId = 1;
 const slices = new List().sorter(List.sorter.id.asc);
 const REMOVE_THIS = 'removeThis';
 const REMOVE_ALL = 'removeAll';
@@ -102,7 +102,7 @@ const addSlice = (settings) => {
 		});
 	}
 
-	settings.id = currentID++;
+	settings.id = currentId++;
 
 	slices.add({
 		id: settings.id,
@@ -110,9 +110,9 @@ const addSlice = (settings) => {
 	});
 };
 
-const removeSlice = (sliceID) => {
+const removeSlice = (sliceId) => {
 	slices.discard({
-		id: sliceID
+		id: sliceId
 	});
 
 	if (!slices.length) {

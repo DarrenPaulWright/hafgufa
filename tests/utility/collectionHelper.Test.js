@@ -488,51 +488,51 @@ describe('collectionHelper', () => {
 
 		it('should return properly nested data', () => {
 			const testCollection = [{
-				ID: 1,
+				id: 1,
 				prop: 'test 1'
 			}, {
-				ID: 2,
+				id: 2,
 				prop: 'test 2'
 			}, {
-				ID: 3,
+				id: 3,
 				prop: 'test 3',
 				parent: 2
 			}, {
-				ID: 4,
+				id: 4,
 				prop: 'test 4',
 				another: 'something',
 				parent: 2
 			}, {
-				ID: 5,
+				id: 5,
 				prop: 'test 5',
 				parent: 4
 			}, {
-				ID: 6,
+				id: 6,
 				prop: 'test 6',
 				parent: 2
 			}];
 			const output = [{
-				ID: 1,
+				id: 1,
 				prop: 'test 1'
 			}, {
-				ID: 2,
+				id: 2,
 				prop: 'test 2',
 				children: [{
-					ID: 3,
+					id: 3,
 					prop: 'test 3',
 					parent: 2
 				}, {
-					ID: 4,
+					id: 4,
 					prop: 'test 4',
 					another: 'something',
 					children: [{
-						ID: 5,
+						id: 5,
 						prop: 'test 5',
 						parent: 4
 					}],
 					parent: 2
 				}, {
-					ID: 6,
+					id: 6,
 					prop: 'test 6',
 					parent: 2
 				}]
@@ -543,48 +543,48 @@ describe('collectionHelper', () => {
 
 		it('should remove the parent property from items if deleteParentProperty = true', () => {
 			const testCollection = [{
-				ID: 1,
+				id: 1,
 				prop: 'test 1'
 			}, {
-				ID: 2,
+				id: 2,
 				prop: 'test 2'
 			}, {
-				ID: 3,
+				id: 3,
 				prop: 'test 3',
 				parent: 2
 			}, {
-				ID: 4,
+				id: 4,
 				prop: 'test 4',
 				another: 'something',
 				parent: 2
 			}, {
-				ID: 5,
+				id: 5,
 				prop: 'test 5',
 				parent: 4
 			}, {
-				ID: 6,
+				id: 6,
 				prop: 'test 6',
 				parent: 2
 			}];
 			const output = [{
-				ID: 1,
+				id: 1,
 				prop: 'test 1'
 			}, {
-				ID: 2,
+				id: 2,
 				prop: 'test 2',
 				children: [{
-					ID: 3,
+					id: 3,
 					prop: 'test 3'
 				}, {
-					ID: 4,
+					id: 4,
 					prop: 'test 4',
 					another: 'something',
 					children: [{
-						ID: 5,
+						id: 5,
 						prop: 'test 5'
 					}]
 				}, {
-					ID: 6,
+					id: 6,
 					prop: 'test 6'
 				}]
 			}];
@@ -794,23 +794,23 @@ describe('collectionHelper', () => {
 	describe('.zipById', () => {
 		it('should return a new collection with zipped data from two arrays', () => {
 			const testCollection1 = [{
-				ID: 2,
+				id: 2,
 				value: 'test 2'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 3'
 			}, {
-				ID: 1,
+				id: 1,
 				value: 'test 1'
 			}];
 			const testCollection2 = [{
-				ID: 1,
+				id: 1,
 				value: 'test 4'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 6'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 5'
 			}];
 			const testOutput = [{
@@ -824,7 +824,7 @@ describe('collectionHelper', () => {
 				y: 'test 6'
 			}];
 
-			const output = collectionHelper.zipById([testCollection1, testCollection2], 'ID', (x, y) => ({
+			const output = collectionHelper.zipById([testCollection1, testCollection2], 'id', (x, y) => ({
 				x: x.value,
 				y: y.value
 			}));
@@ -834,33 +834,33 @@ describe('collectionHelper', () => {
 
 		it('should return a new collection with zipped data from three arrays', () => {
 			const testCollection1 = [{
-				ID: 2,
+				id: 2,
 				value: 'test 2'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 3'
 			}, {
-				ID: 1,
+				id: 1,
 				value: 'test 1'
 			}];
 			const testCollection2 = [{
-				ID: 1,
+				id: 1,
 				value: 'test 4'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 6'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 5'
 			}];
 			const testCollection3 = [{
-				ID: 1,
+				id: 1,
 				value: 'test 7'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 9'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 8'
 			}];
 			const testOutput = [{
@@ -879,7 +879,7 @@ describe('collectionHelper', () => {
 
 			const output = collectionHelper.zipById([testCollection1,
 				testCollection2,
-				testCollection3], 'ID', (x, y, z) => ({
+				testCollection3], 'id', (x, y, z) => ({
 				x: x.value,
 				y: y.value,
 				z: z.value
@@ -890,39 +890,39 @@ describe('collectionHelper', () => {
 
 		it('should return a new collection with zipped data from three arrays with multiples of some IDs', () => {
 			const testCollection1 = [{
-				ID: 2,
+				id: 2,
 				value: 'test 2'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 3'
 			}, {
-				ID: 1,
+				id: 1,
 				value: 'test 1'
 			}];
 			const testCollection2 = [{
-				ID: 1,
+				id: 1,
 				value: 'test 4'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 6'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 5'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 11'
 			}];
 			const testCollection3 = [{
-				ID: 1,
+				id: 1,
 				value: 'test 7'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 9'
 			}, {
-				ID: 3,
+				id: 3,
 				value: 'test 10'
 			}, {
-				ID: 2,
+				id: 2,
 				value: 'test 8'
 			}];
 			const testOutput = [{
@@ -949,7 +949,7 @@ describe('collectionHelper', () => {
 
 			const output = collectionHelper.zipById([testCollection1,
 				testCollection2,
-				testCollection3], 'ID', (x, y, z) => ({
+				testCollection3], 'id', (x, y, z) => ({
 				x: x.value,
 				y: y.value,
 				z: z.value

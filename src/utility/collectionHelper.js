@@ -53,7 +53,7 @@ const collectionHelper = {
 	 * @arg {Object[]} collection
 	 * @arg {Object}   settings
 	 * @arg {String}   [settings.childProperty=children]
-	 * @arg {String}   [settings.idProperty] - if set, then saves the parent's ID to each child
+	 * @arg {String}   [settings.idProperty] - if set, then saves the parent's id to each child
 	 * @arg {Boolean}  [settings.saveDepth=false] - if true appends a property "depth" to each returned object with
 	 *     the nested depth of the original object
 	 * @arg {String}   [settings.ignoreChildrenProperty] - If this key is present and truthy on a parent then don't
@@ -122,19 +122,19 @@ const collectionHelper = {
 	 *
 	 * @arg {Object[]} collection
 	 * @arg {Object}   settings
-	 * @arg {String}   [settings.idProperty=ID]
+	 * @arg {String}   [settings.idProperty=id]
 	 * @arg {String}   [settings.parentProperty=parent]
 	 * @arg {String}   [settings.childProperty=children]
 	 * @arg {String}   [settings.deleteParentProperty=false]
 	 */
 	nest(collection, settings = {}) {
-		const idKey = settings.idProperty || 'ID';
+		const idKey = settings.idProperty || 'id';
 		const parentKey = settings.parentProperty || 'parent';
 		const childKey = settings.childProperty || 'children';
 
-		const innerNest = (parentID) => {
+		const innerNest = (parentId) => {
 			let output = collection.filter((item) => {
-				return item[parentKey] === parentID || item[parentKey] === '';
+				return item[parentKey] === parentId || item[parentKey] === '';
 			});
 			collection = collection.filter((item) => !output.includes(item));
 
@@ -230,7 +230,7 @@ const collectionHelper = {
 		let matchInnerIndex;
 		let matchesMax;
 		let zipObjects;
-		let zippedIDs = [];
+		let zippedIds = [];
 
 		for (valuesIndex = 0; valuesIndex < values.length; valuesIndex++) {
 			values[valuesIndex].sort(byKey(idKey));
@@ -240,7 +240,7 @@ const collectionHelper = {
 			for (itemIndex = 0; itemIndex < values[valuesIndex].length; itemIndex++) {
 				findObject[idKey] = values[valuesIndex][itemIndex][idKey];
 
-				if (findObject[idKey] && !zippedIDs.includes(findObject[idKey])) {
+				if (findObject[idKey] && !zippedIds.includes(findObject[idKey])) {
 					matches = [];
 					matchesMax = 0;
 
@@ -260,7 +260,7 @@ const collectionHelper = {
 						output.push(zipFunction.apply(null, zipObjects));
 					}
 
-					zippedIDs.push(findObject[idKey]);
+					zippedIds.push(findObject[idKey]);
 				}
 			}
 		}

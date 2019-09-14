@@ -104,9 +104,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		self[LIST_CONTAINER] = listContainer;
 		self[LIST_CONTAINER].container(self);
 		self[TEXT_INPUT] = textInput;
-		self[onChangeTextInput]({
-			value: ''
-		});
+		self[onChangeTextInput]('');
 
 		self.onFocus(() => {
 			self[LIST_CONTAINER].addClass('focused');
@@ -190,7 +188,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		let totalIndex = 0;
 		const setTag = (item, index) => {
 			const newValue = {
-				ID: item,
+				id: item,
 				title: item
 			};
 
@@ -255,7 +253,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			const heading = new Heading({
 				container: self[LIST_CONTAINER],
 				width: AUTO,
-				ID: value.ID,
+				id: value.id,
 				maxWidth: self[MAX_TAG_WIDTH],
 				title: value.title,
 				showExpander: false,
@@ -275,14 +273,12 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 
 			self[CURRENT_TAGS].push({
 				heading: heading,
-				ID: value.ID,
+				id: value.id,
 				typedInput: typedInput
 			});
 
 			self[moveTextInputTo](self[CURRENT_TAGS].length - 1);
-			self[onChangeTextInput]({
-				value: ''
-			});
+			self[onChangeTextInput]('');
 
 			self.triggerChange(true, skipCallback, isHardTrigger);
 			heading.resize();
@@ -329,10 +325,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	 */
 	[updateTag](newValue, typedInput) {
 		const self = this;
-		self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].ID = newValue.ID;
+		self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].id = newValue.id;
 		self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].typedInput = typedInput;
 		self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].heading
-			.ID(newValue.ID)
+			.id(newValue.id)
 			.title(newValue.title)
 			.subTitle(newValue.subTitle)
 			.isVisible(true)
@@ -447,7 +443,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		const self = this;
 		let filteredSuggestions = self.suggestions();
 		const currentTypedInput = self[TEXT_INPUT].value();
-		const tags = self[CURRENT_TAGS].map((item) => item.ID);
+		const tags = self[CURRENT_TAGS].map((item) => item.id);
 
 		if (!self.isRemoved && filteredSuggestions.length) {
 			if (self[CURRENT_EDIT_OFFSET] !== null) {
@@ -455,7 +451,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			}
 
 			filteredSuggestions = filteredSuggestions.filter((suggestion) => {
-				return !tags.includes(suggestion.ID);
+				return !tags.includes(suggestion.id);
 			});
 
 			if (currentTypedInput) {
@@ -482,9 +478,9 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	 * When a suggestion is clicked save it's value as a tag
 	 * @function selectSuggestion
 	 */
-	[selectSuggestion](suggestionID) {
+	[selectSuggestion](suggestionId) {
 		const self = this;
-		const newValue = self.suggestions().find((item) => item.ID === suggestionID);
+		const newValue = self.suggestions().find((item) => item.id === suggestionId);
 
 		if (self[CURRENT_EDIT_OFFSET] !== null) {
 			self[updateTag](newValue, self[TEXT_INPUT].value());
@@ -524,21 +520,21 @@ Object.assign(Tags.prototype, {
 
 			if (isString(newValue[0])) {
 				newValue = newValue.filter(Boolean).map((value) => ({
-					ID: value,
+					id: value,
 					title: value
 				}));
 			}
 
 			newValue.forEach((value) => {
-				if (!value.ID) {
-					value.ID = value.title;
+				if (!value.id) {
+					value.id = value.title;
 				}
 				self[addTag](value, null, true, false);
 			});
 			self.triggerChange(true, true, false);
 		},
 		get() {
-			return this[CURRENT_TAGS].map((item) => item.ID);
+			return this[CURRENT_TAGS].map((item) => item.id);
 		},
 		other: String
 	}),
@@ -549,7 +545,7 @@ Object.assign(Tags.prototype, {
 	 * @member module:Tags
 	 * @instance
 	 * @arg {Array} [suggestions] - Can be an array of strings or objects
-	 * @arg {Array} suggestions.ID - Must be a unique id
+	 * @arg {Array} suggestions.id - Must be a unique id
 	 * @arg {Array} suggestions.title - The main string to display
 	 * @arg {Array} [suggestions.subTitle] - A subTitle or alternate text to display
 	 * @returns {Array|this}
@@ -562,7 +558,7 @@ Object.assign(Tags.prototype, {
 				if (isString(suggestion)) {
 					suggestion = suggestion.replace(/[^0-9a-z]/gi, '');
 					return {
-						ID: suggestion.trim(),
+						id: suggestion.trim(),
 						title: suggestion.trim()
 					};
 				}
@@ -594,16 +590,16 @@ Object.assign(Tags.prototype, {
 	// 	init: {},
 	// 	before(oldValue) {
 	// 		if (oldValue) {
-	// 			if (suggestionsDataSourceOnChangeID) {
-	// 				oldValue.store.offChange(suggestionsDataSourceOnChangeID);
-	// 				suggestionsDataSourceOnChangeID = null;
+	// 			if (suggestionsDataSourceOnChangeId) {
+	// 				oldValue.store.offChange(suggestionsDataSourceOnChangeId);
+	// 				suggestionsDataSourceOnChangeId = null;
 	// 			}
 	// 		}
 	// 	},
 	// 	set(newValue) {
 	// 		if (newValue.store) {
 	// 			if (newValue.key) {
-	// 				suggestionsDataSourceOnChangeID = dataSource.uniqueBy(newValue, self.suggestions);
+	// 				suggestionsDataSourceOnChangeId = dataSource.uniqueBy(newValue, self.suggestions);
 	// 			}
 	// 		}
 	// 	}

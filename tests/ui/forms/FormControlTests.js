@@ -3,7 +3,7 @@ import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
 export default function FormControlTests(Control, testUtil, settings) {
 	const self = this;
-	const TEST_ID = 'testID';
+	const TEST_ID = 'testId';
 	const TEST_TITLE = 'Test <br> Title &nbsp;';
 
 	ControlHeadingMixinTests.call(self, Control, testUtil, settings);
@@ -12,7 +12,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 		describe('FormControl .isRequired', () => {
 			it('should default to false', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container
 				});
 
@@ -21,7 +21,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 
 			it('should have a required class if set to true and a title is provided', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: TEST_TITLE,
 					container: testUtil.container
 				})
@@ -32,7 +32,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 
 			it('should be true if it was set to true in the options', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					title: TEST_TITLE,
 					container: testUtil.container,
 					isRequired: true
@@ -43,7 +43,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 
 			it('should NOT have a required class if set to false', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container
 				})
 					.isRequired(false);
@@ -53,7 +53,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 
 			it('should be false if it was set to false in the options', () => {
 				testUtil.control = new Control({
-					ID: TEST_ID,
+					id: TEST_ID,
 					container: testUtil.container,
 					isRequired: false
 				});

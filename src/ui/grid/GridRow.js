@@ -58,7 +58,7 @@ export default class GridRow extends Control {
 				onSelect() {
 					if (self.onSelect()) {
 						self.isSelected(!self.isSelected());
-						self.onSelect()(self.ID(), self.isSelected());
+						self.onSelect()(self.id(), self.isSelected());
 					}
 				}
 			});
@@ -81,7 +81,7 @@ export default class GridRow extends Control {
 
 		if (self.rowData().cells) {
 			self.columns().forEach((column, index) => {
-				const cellData = self.rowData().cells[column.ID] || {};
+				const cellData = self.rowData().cells[column.id] || {};
 
 				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
 					container: self,
@@ -211,7 +211,7 @@ export default class GridRow extends Control {
 				self.on(CLICK_EVENT, () => {
 					if (self.onSelect()) {
 						self.isSelected(!self.isSelected());
-						self.onSelect()(self.ID(), self.isSelected());
+						self.onSelect()(self.id(), self.isSelected());
 					}
 				});
 				self.on(MOUSE_DOWN_EVENT, () => event.preventDefault());
@@ -284,9 +284,9 @@ Object.assign(GridRow.prototype, {
 		}
 	}),
 
-	rowID: method.string({
-		set(rowID) {
-			this[IS_GROUP_HEADER] = !rowID;
+	rowId: method.string({
+		set(rowId) {
+			this[IS_GROUP_HEADER] = !rowId;
 			this[refresh]();
 		}
 	}),

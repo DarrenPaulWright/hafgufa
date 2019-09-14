@@ -84,15 +84,15 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Get a visible control with a specific ID
+	 * Get a visible control with a specific id
 	 * @method getControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {String} [ID]
+	 * @arg {String} [id]
 	 * @returns {Object}
 	 */
-	getControl(ID) {
-		return this[VISIBLE_CONTROLS].find((control) => control.ID() === ID);
+	getControl(id) {
+		return this[VISIBLE_CONTROLS].find((control) => control.id() === id);
 	},
 
 	/**
@@ -134,14 +134,14 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Discard a control that matches a specific ID
+	 * Discard a control that matches a specific id
 	 * @method discardControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {String} [ID]
+	 * @arg {String} [id]
 	 */
-	discardControl(ID) {
-		this[DISCARD](this[VISIBLE_CONTROLS].findIndex((control) => control.ID() === ID));
+	discardControl(id) {
+		this[DISCARD](this[VISIBLE_CONTROLS].findIndex((control) => control.id() === id));
 	},
 
 	/**

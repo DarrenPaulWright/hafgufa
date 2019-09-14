@@ -109,7 +109,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 			self[GROUPS].push({
 				title: groupTitle,
 				control: new GroupedButtons({
-					ID: groupTitle + '_tab',
+					id: groupTitle + '_tab',
 					container: self[TAB_CONTAINER],
 					title: groupTitle,
 					width: HUNDRED_PERCENT,
@@ -147,7 +147,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 			self.removeContent();
 		}
 
-		self[CURRENT_TAB] = self[TABS].find((item) => item.ID === Button.ID());
+		self[CURRENT_TAB] = self[TABS].find((item) => item.id === Button.id());
 
 		if (previousTab && previousTab.group !== self[CURRENT_TAB].group) {
 			previousTab.group.value([]);
@@ -158,7 +158,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 				self.content(clone(self[CURRENT_TAB].data.content));
 			}
 			if (self[CURRENT_TAB].data.onClick) {
-				self[CURRENT_TAB].data.onClick(self[CONTENT_CONTAINER], self[CURRENT_TAB].data.data, self[CURRENT_TAB].ID);
+				self[CURRENT_TAB].data.onClick(self[CONTENT_CONTAINER], self[CURRENT_TAB].data.data, self[CURRENT_TAB].id);
 			}
 		}
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = false;
@@ -167,13 +167,13 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 }
 
 Object.assign(Tabs.prototype, {
-	[clickTab](ID) {
+	[clickTab](id) {
 		const self = this;
 
 		if (self[TABS].length > 0) {
-			const tab = self[TABS].find((item) => item.ID === ID);
+			const tab = self[TABS].find((item) => item.id === id);
 			if (tab) {
-				tab.group.getButton(ID).click();
+				tab.group.getButton(id).click();
 			}
 		}
 	},
@@ -245,7 +245,7 @@ Object.assign(Tabs.prototype, {
 	 * @instance
 	 *
 	 * @arg {Array}    [newTabs]
-	 * @arg {string}   [newTabs.ID]
+	 * @arg {string}   [newTabs.id]
 	 * @arg {string}   [newTabs.title]
 	 * @arg {string}   [newTabs.icon]
 	 * @arg {string}   [newTabs.group]
@@ -269,11 +269,11 @@ Object.assign(Tabs.prototype, {
 			const self = this;
 
 			newTabs.forEach((tab, index) => {
-				const tabId = (tab.ID !== undefined) ? tab.ID : ('tab' + index);
+				const tabId = (tab.id !== undefined) ? tab.id : ('tab' + index);
 				const group = self[getGroup](tab.group);
 
 				group.addButton({
-					ID: tabId,
+					id: tabId,
 					icon: tab.icon,
 					label: tab.title,
 					onClick(button) {
@@ -283,7 +283,7 @@ Object.assign(Tabs.prototype, {
 
 				self[TABS].push({
 					group: group,
-					ID: tabId,
+					id: tabId,
 					order: index,
 					data: tab
 				});
@@ -291,12 +291,12 @@ Object.assign(Tabs.prototype, {
 		}
 	}),
 
-	selectTab(ID, skipOnClick) {
+	selectTab(id, skipOnClick) {
 		const self = this;
 
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = skipOnClick;
 
-		self[clickTab](ID);
+		self[clickTab](id);
 
 		return self;
 	},
@@ -306,7 +306,7 @@ Object.assign(Tabs.prototype, {
 	},
 
 	currentTab() {
-		return this[CURRENT_TAB] ? this[CURRENT_TAB].ID : undefined;
+		return this[CURRENT_TAB] ? this[CURRENT_TAB].id : undefined;
 	},
 });
 

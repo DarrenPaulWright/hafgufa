@@ -5,8 +5,8 @@ import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
 import { CLICK_EVENT, Container, windowResize } from '../../src';
 
-const TEST_ID = 'testID';
-const TEST_ID_SUFFIX = 'testIDSuffix';
+const TEST_ID = 'testId';
+const TEST_ID_SUFFIX = 'testIdSuffix';
 const extraTests = ['focus', 'onChange'];
 
 export default function ControlTests(Control, testUtil, settings = {}) {
@@ -14,7 +14,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 	const buildSettings = (localSettings) => {
 		return {
-			ID: TEST_ID,
+			id: TEST_ID,
 			container: testUtil.container,
 			delay: 0,
 			fade: false,
@@ -153,10 +153,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 		});
 	};
 
-	self.ID = () => {
-		describe('Control .ID', () => {
+	self.id = () => {
+		describe('Control .id', () => {
 			testUtil.testMethod({
-				methodName: 'ID',
+				methodName: 'id',
 				defaultSettings: {
 					container: testUtil.container
 				},
@@ -164,27 +164,27 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testValue: TEST_ID
 			});
 
-			it('should have an element with the id property set if the ID setting was set', () => {
+			it('should have an element with the id property set if the id setting was set', () => {
 				testUtil.control = new Control(buildSettings());
 
 				assert.equal(testUtil.count('#' + TEST_ID, true), 1);
 			});
 
-			it('should have an element with the id property set if the ID method was set', () => {
+			it('should have an element with the id property set if the id method was set', () => {
 				testUtil.control = new Control(buildSettings({
-					ID: null
+					id: null
 				}))
-					.ID(TEST_ID);
+					.id(TEST_ID);
 
 				assert.equal(testUtil.count('#' + TEST_ID, true), 1);
 			});
 		});
 	};
 
-	self.IDSuffix = () => {
-		describe('Control IDSuffix', () => {
+	self.idSuffix = () => {
+		describe('Control idSuffix', () => {
 			testUtil.testMethod({
-				methodName: 'IDSuffix',
+				methodName: 'idSuffix',
 				defaultSettings: {
 					container: testUtil.container
 				},
@@ -192,26 +192,26 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testValue: TEST_ID_SUFFIX
 			});
 
-			it('shouldnt have an IDSuffix value if no IDSuffix setting or method was set', () => {
+			it('shouldnt have an idSuffix value if no idSuffix setting or method was set', () => {
 				testUtil.control = new Control(buildSettings({
-					ID: null,
-					IDSuffix: TEST_ID_SUFFIX
+					id: null,
+					idSuffix: TEST_ID_SUFFIX
 				}));
 
 				assert.equal(testUtil.count('#' + TEST_ID_SUFFIX, true), 0);
 			});
 
-			it('should have a container element with an id of the control ID and IDSuffix concatenated if both are provided as settings', () => {
+			it('should have a container element with an id of the control id and idSuffix concatenated if both are provided as settings', () => {
 				testUtil.control = new Control(buildSettings({
-					IDSuffix: TEST_ID_SUFFIX
+					idSuffix: TEST_ID_SUFFIX
 				}));
 
 				assert.equal(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
 			});
 
-			it('should have a container element with an id of the control ID and IDSuffix concatenated if the id was set and the IDSuffix method was set', () => {
+			it('should have a container element with an id of the control id and idSuffix concatenated if the id was set and the idSuffix method was set', () => {
 				testUtil.control = new Control(buildSettings())
-					.IDSuffix(TEST_ID_SUFFIX);
+					.idSuffix(TEST_ID_SUFFIX);
 
 				assert.equal(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
 			});

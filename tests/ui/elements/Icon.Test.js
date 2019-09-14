@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 import { Icon, ICON_SIZES } from '../../../src';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -108,15 +107,15 @@ describe('Icon', () => {
 			assert.equal(mainIcon.textContent, '');
 			assert.equal(mainIcon.children[0].textContent, '');
 
-			window.control.icon('');
+			testUtil.control.icon('');
 
 			assert.equal(mainIcon.textContent, '');
-			assert.isNotTrue(query.hasClass(mainIcon, 'has-stack'));
+			assert.isNotTrue(testUtil.hasClass(mainIcon, 'has-stack'));
 		});
 
 		it('should render "[]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: '[]'
 			});
 
@@ -128,8 +127,8 @@ describe('Icon', () => {
 		});
 
 		it('should render "[:]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: '[:]'
 			});
 
@@ -145,8 +144,8 @@ describe('Icon', () => {
 		});
 
 		it('should render ":[:]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: ':[:]'
 			});
 

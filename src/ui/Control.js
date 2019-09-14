@@ -86,7 +86,7 @@ const propagationClickEvent = () => {
 };
 
 const registerControl = Symbol();
-const updateElementID = Symbol();
+const updateElementId = Symbol();
 const setPropagationClickEvent = Symbol();
 const setCssSizeElement = Symbol();
 const percentHeightOverride = Symbol();
@@ -121,8 +121,8 @@ export default class Control extends Removable {
 
 		self.element(settings.element || 'div');
 		delete settings.element;
-		self.ID(settings.ID);
-		delete settings.ID;
+		self.id(settings.id);
+		delete settings.id;
 		self.container(settings.container);
 		delete settings.container;
 
@@ -140,12 +140,13 @@ export default class Control extends Removable {
 	}
 
 	/**
-	 * Update the elements id attribute with the current ID and IDSuffix.
-	 * @function updateElementID
+	 * Update the elements id attribute with the current id and idSuffix.
+	 * @function updateElementId
 	 */
-	[updateElementID]() {
+	[updateElementId]() {
 		const self = this;
-		self.attr('id', self.ID() ? (self.ID() + (self.IDSuffix() || '')) : null);
+
+		self.attr('id', self.id() ? `${self.id()}${self.idSuffix()}`.replace(/[^A-Za-z0-9_:\.-]/g, '') : null);
 	}
 
 	/**
@@ -298,10 +299,15 @@ Object.assign(Control.prototype, {
 					const index = newValue.indexOf(':');
 
 					if (index !== -1) {
+
 						newValue = DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substr(0, index)}`, newValue.substr(index + 1));
+
 					}
+
 					else {
+
 						newValue = DOCUMENT.createElement(newValue);
+
 					}
 
 					return newValue;
@@ -356,19 +362,19 @@ Object.assign(Control.prototype, {
 	/**
 	 * Set the id attribute.
 	 *
-	 * @method ID
+	 * @method id
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newID] - A unique ID
+	 * @arg {String} [newId] - A unique id
 	 *
 	 * @returns {String|this}
 	 */
-	ID: method.string({
+	id: method.string({
 		set(id) {
 			const self = this;
 
-			self[updateElementID]();
+			self[updateElementId]();
 
 			if (id && self.container() && self.container()[CONTROL_PROP]) {
 				self.container()[CONTROL_PROP][CHILD_CONTROLS].update(self);
@@ -378,19 +384,19 @@ Object.assign(Control.prototype, {
 	}),
 
 	/**
-	 * A string to append to the end of the ID.
+	 * A string to append to the end of the id.
 	 *
-	 * @method IDSuffix
+	 * @method idSuffix
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newIDSuffix]
+	 * @arg {String} [newIdSuffix]
 	 *
 	 * @returns {String|this}
 	 */
-	IDSuffix: method.string({
+	idSuffix: method.string({
 		set() {
-			this[updateElementID]();
+			this[updateElementId]();
 		}
 	}),
 
@@ -542,12 +548,17 @@ Object.assign(Control.prototype, {
 				}
 				else {
 					this.removeClass(classes);
+
 				}
 
 				_(this).currentClasses = _(this).element.classList ? _(this).element.classList.value : _(this).element.className.baseVal || _(this).element.className;
+
 			}
+
 			else if (!_(this).currentClasses) {
+
 				_(this).currentClasses = classes;
+
 			}
 
 			return this;

@@ -9,19 +9,19 @@ describe('ContextMenu', () => {
 		mainCssClass: 'context-menu'
 	});
 
-	controlTests.run(['container', 'element', 'ID', 'height', 'width', 'onResize', 'stopPropagation']);
+	controlTests.run(['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation']);
 
 	describe('MenuItems', () => {
 		it('should remove itself if a context menu is envoked elsewhere in the DOM', () => {
 			testUtil.control = new ContextMenu({
 				menuItems: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}, {
-					ID: 'test3',
+					id: 'test3',
 					title: 'test 3'
 				}]
 			});

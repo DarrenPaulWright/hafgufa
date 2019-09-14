@@ -54,11 +54,11 @@ const eachChild = function(collection, onEachChild, settings = {}) {
 
 const MENU_CLASS = 'menu';
 const FILTER_CONTAINER_CLASS = 'popup-header';
-const HEADER_ID = 'menuHeaderID';
-const TREE_ID = 'menuTreeID';
-const FILTER_ID = 'menuFilterID';
-const SELECTED_ONLY_ID = 'menuSelectedOnlyID';
-const SELECT_ALL_ID = 'selectAllID';
+const HEADER_ID = 'menuHeaderId';
+const TREE_ID = 'menuTreeId';
+const FILTER_ID = 'menuFilterId';
+const SELECTED_ONLY_ID = 'menuSelectedOnlyId';
+const SELECT_ALL_ID = 'selectAllId';
 const SELECT_ALL_VALUE = 'selectAll';
 
 const buildHeader = Symbol();
@@ -88,7 +88,7 @@ export default class Menu extends Popup {
 		}
 
 		let tree = new Tree({
-			ID: TREE_ID,
+			id: TREE_ID,
 			width: AUTO
 		});
 
@@ -121,7 +121,7 @@ export default class Menu extends Popup {
 				if (self.onSelect()) {
 					self.onSelect()(item);
 				}
-				item = self.menuItems().find((menuItem) => menuItem.ID === item);
+				item = self.menuItems().find((menuItem) => menuItem.id === item);
 				if (!item || !(settings.keepMenuOpen || item.keepMenuOpen)) {
 					self.remove();
 				}
@@ -164,7 +164,7 @@ export default class Menu extends Popup {
 	[buildHeader]() {
 		if (!this.get(HEADER_ID)) {
 			this.prepend({
-				ID: HEADER_ID,
+				id: HEADER_ID,
 				control: Container,
 				classes: FILTER_CONTAINER_CLASS
 			});
@@ -206,7 +206,7 @@ export default class Menu extends Popup {
 
 		if (self.onEdit()) {
 			item.data = {
-				ID: item.ID,
+				id: item.id,
 				title: item.title
 			};
 			item.buttons.push({
@@ -220,7 +220,7 @@ export default class Menu extends Popup {
 
 		if (self.onDelete()) {
 			item.data = {
-				ID: item.ID,
+				id: item.id,
 				title: item.title
 			};
 			item.buttons.push({
@@ -288,7 +288,7 @@ export default class Menu extends Popup {
 
 		self.get(TREE_ID)
 			.branches(menuItems)
-			.value(menuItems.map((item) => item.isSelected ? item.ID : null).filter(Boolean));
+			.value(menuItems.map((item) => item.isSelected ? item.id : null).filter(Boolean));
 
 		if (self.canSelectAll()) {
 			self.get(SELECT_ALL_ID).value(self[ARE_ALL_SELECTED] ? SELECT_ALL_VALUE : '');
@@ -310,8 +310,8 @@ Object.assign(Menu.prototype, {
 			}
 
 			newValue.forEach((value) => {
-				if (!value.ID) {
-					value.ID = uuid();
+				if (!value.id) {
+					value.id = uuid();
 				}
 			});
 
@@ -338,7 +338,7 @@ Object.assign(Menu.prototype, {
 				self[buildHeader]();
 
 				self.get(HEADER_ID).prepend({
-					ID: FILTER_ID,
+					id: FILTER_ID,
 					control: TextInput,
 					width: HUNDRED_PERCENT,
 					placeholder: locale.get('filter'),
@@ -381,7 +381,7 @@ Object.assign(Menu.prototype, {
 				self[buildHeader]();
 
 				self.get(HEADER_ID).append({
-					ID: SELECTED_ONLY_ID,
+					id: SELECTED_ONLY_ID,
 					control: CheckBox,
 					width: HUNDRED_PERCENT,
 					isChecked: self.isFilteredSelectedOnly(),
@@ -414,7 +414,7 @@ Object.assign(Menu.prototype, {
 				self[buildHeader]();
 
 				self.get(HEADER_ID).append({
-					ID: SELECT_ALL_ID,
+					id: SELECT_ALL_ID,
 					control: CheckBox,
 					width: HUNDRED_PERCENT,
 					isChecked: self[ARE_ALL_SELECTED],
@@ -424,7 +424,7 @@ Object.assign(Menu.prototype, {
 						eachChild(self.menuItems(), (item) => {
 							if (item.isSelectable && item.isSelected !== isChecked) {
 								item.isSelected = isChecked;
-								changedItems.push(item.ID);
+								changedItems.push(item.id);
 							}
 						});
 

@@ -72,17 +72,17 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '0',
+					id: '0',
 					title: 'test 1',
 					size: '3*',
 					minWidth: '0'
 				}, {
-					ID: '1',
+					id: '1',
 					title: 'test 2',
 					size: '1*',
 					minWidth: '0'
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '20px'
 				}]
@@ -103,15 +103,15 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '0',
+					id: '0',
 					title: 'test 1',
 					size: '3%'
 				}, {
-					ID: '1',
+					id: '1',
 					title: 'test 2',
 					size: '1*'
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '20px'
 				}]
@@ -132,15 +132,15 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '0',
+					id: '0',
 					title: 'test 1',
 					size: '3%'
 				}, {
-					ID: '1',
+					id: '1',
 					title: 'test 2',
 					size: '*'
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '20px'
 				}]
@@ -158,11 +158,11 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '0',
+					id: '0',
 					title: 'test 1',
 					size: '*'
 				}, {
-					ID: '1',
+					id: '1',
 					title: 'test 2',
 					size: '*'
 				}],
@@ -179,17 +179,17 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '1',
+					id: '1',
 					title: 'test 1',
 					size: '*',
 					minWidth: 60
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '*',
 					minWidth: 49
 				}, {
-					ID: '3',
+					id: '3',
 					title: 'test 3',
 					size: '2*',
 					minWidth: 230
@@ -206,12 +206,12 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: 0,
+					id: 0,
 					title: 'test 1',
 					size: '*',
 					canSort: true
 				}, {
-					ID: 1,
+					id: 1,
 					title: 'test 2',
 					size: '*',
 					canSort: true
@@ -407,12 +407,12 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '1',
+					id: '1',
 					title: 'test 1',
 					size: '*',
 					canSort: true
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '*',
 					canSort: true
@@ -502,20 +502,20 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2',
 					canSort: true,
 					type: gridConstants.COLUMN_TYPES.TEXT
 				}],
 				selectableColumns: [{
-					ID: 'test',
+					id: 'test',
 					title: 'test'
 				}, {
-					ID: 'test2',
+					id: 'test2',
 					title: 'test 2'
 				}]
 			});
@@ -593,15 +593,15 @@ describe('GridHeader', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
-					ID: '0',
+					id: '0',
 					title: 'test 1',
 					size: '3%'
 				}, {
-					ID: '1',
+					id: '1',
 					title: 'test 2',
 					size: '*'
 				}, {
-					ID: '2',
+					id: '2',
 					title: 'test 2',
 					size: '20px'
 				}]

@@ -35,7 +35,7 @@ describe('EditableGrid', () => {
 			});
 
 			testUtil.control.value([{
-				rowID: '1',
+				rowId: '1',
 				values: [{
 					text: 'asdf'
 				}]
@@ -60,17 +60,17 @@ describe('EditableGrid', () => {
 			});
 
 			testUtil.control.value([{
-				rowID: '1',
+				rowId: '1',
 				values: [{
 					text: 'text 1'
 				}]
 			}, {
-				rowID: '2',
+				rowId: '2',
 				values: [{
 					text: 'text 2'
 				}]
 			}, {
-				rowID: '3',
+				rowId: '3',
 				values: [{
 					text: 'text 3'
 				}]
@@ -99,17 +99,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: false,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}]
@@ -142,17 +142,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: true,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}]
@@ -185,17 +185,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: false,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}, {
@@ -207,17 +207,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: true,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}]
@@ -250,17 +250,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: false,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}, {
@@ -272,17 +272,17 @@ describe('EditableGrid', () => {
 						options: {
 							isMultiSelect: true,
 							children: [{
-								ID: '0',
+								id: '0',
 								title: 'test option'
 							}, {
-								ID: '1',
+								id: '1',
 								title: 'test option 2'
 							}]
 						},
 						preferred: [{
-							ID: '0'
+							id: '0'
 						}, {
-							ID: '1'
+							id: '1'
 						}]
 					}
 				}]
