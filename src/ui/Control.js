@@ -298,7 +298,7 @@ Object.assign(Control.prototype, {
 					const index = newValue.indexOf(':');
 
 					if (index !== -1) {
-						newValue = DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substring(0, index)}`, newValue.substring(index + 1));
+						newValue = DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substr(0, index)}`, newValue.substr(index + 1));
 					}
 					else {
 						newValue = DOCUMENT.createElement(newValue);
