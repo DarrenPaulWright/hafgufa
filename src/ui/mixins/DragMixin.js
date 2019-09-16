@@ -441,6 +441,43 @@ export default (Base) => {
 			return self;
 		}
 
+		top(value) {
+			const self = this;
+
+			if (value !== undefined) {
+				self.position(self[DRAG_OFFSET].x, value);
+
+				return self;
+			}
+
+			return self[DRAG_OFFSET].y;
+		}
+
+		left(value) {
+			const self = this;
+
+			if (value !== undefined) {
+				self.position(value, self[DRAG_OFFSET].y);
+
+				return self;
+			}
+
+			return self[DRAG_OFFSET].x;
+		}
+
+		position(x, y) {
+			const self = this;
+
+			if (arguments.length) {
+				self[updateBounds]();
+				self[setPosition](x, y);
+
+				return self;
+			}
+
+			return {...self[DRAG_OFFSET]};
+		}
+
 		get isDragging() {
 			return this[IS_DRAGGING] || this[IS_THROWING] || this[IS_BOUNCING];
 		}
@@ -524,12 +561,7 @@ export default (Base) => {
 
 		onDrag: method.queue(),
 
-		onDragDone: method.queue(),
-
-		position(x, y) {
-			this[updateBounds]();
-			this[setPosition](x, y);
-		}
+		onDragDone: method.queue()
 	});
 
 	return DragMixin;
