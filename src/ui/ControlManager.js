@@ -27,29 +27,29 @@ export default class ControlManager {
 
 	[discardControl](control, removeOnRemove = false) {
 		const self = this;
-		const _priv = _(self);
-		const index = _priv.controls.findIndex((data) => data.control === control);
+		const _self = _(self);
+		const index = _self.controls.findIndex((data) => data.control === control);
 
 		if (index !== -1) {
 			if (removeOnRemove) {
-				const data = _priv.controls[index];
+				const data = _self.controls[index];
 				data.control.onPreRemove().discard(data.onPreRemoveId);
 			}
 
-			_priv.controls.splice(index, 1);
+			_self.controls.splice(index, 1);
 
 			if (control.ID()) {
-				delete _priv.ids[control.ID()];
+				delete _self.ids[control.ID()];
 			}
 		}
 	}
 
 	add(input) {
 		const self = this;
-		const _priv = _(self);
+		const _self = _(self);
 
 		castArray(input).forEach((control) => {
-			_priv.controls.push({
+			_self.controls.push({
 				control,
 				onPreRemoveId: control.onPreRemove().add(function() {
 					self[discardControl](this);
@@ -69,12 +69,12 @@ export default class ControlManager {
 	}
 
 	update(control) {
-		const _priv = _(this);
+		const _self = _(this);
 		const self = this;
 
-		forOwn(_priv.ids, (thisControl, ID) => {
+		forOwn(_self.ids, (thisControl, ID) => {
 			if (thisControl === control) {
-				delete _priv.ids[ID];
+				delete _self.ids[ID];
 				return true;
 			}
 		});
@@ -83,11 +83,11 @@ export default class ControlManager {
 	}
 
 	get(ID) {
-		const _priv = _(this);
-		let output = _priv.ids[ID];
+		const _self = _(this);
+		let output = _self.ids[ID];
 
 		if (!output) {
-			_priv.controls.some((data) => {
+			_self.controls.some((data) => {
 				return data.control.get ? Boolean(output = data.control.get(ID)) : false;
 			});
 		}
@@ -113,12 +113,12 @@ export default class ControlManager {
 
 	remove(input) {
 		const self = this;
-		const _priv = _(self);
-		const controls = _priv.controls;
+		const _self = _(self);
+		const controls = _self.controls;
 
 		if (input) {
 			if (!input.ID) {
-				input = _priv.ids[input];
+				input = _self.ids[input];
 			}
 			if (input) {
 				input.remove();

@@ -226,52 +226,52 @@ Object.assign(Control.prototype, {
 		other: null,
 		before(container) {
 			const self = this;
-			const _priv = _(self);
+			const _self = _(self);
 
-			if (container && _priv.element && container.contains(_priv.element)) {
-				container.removeChild(_priv.element);
+			if (container && _self.element && container.contains(_self.element)) {
+				container.removeChild(_self.element);
 				if (container[CONTROL_PROP]) {
 					container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
 				}
 			}
 
-			if (_priv.windowResizeId) {
-				windowResize.discard(_priv.windowResizeId);
-				_priv.windowResizeId = null;
+			if (_self.windowResizeId) {
+				windowResize.discard(_self.windowResizeId);
+				_self.windowResizeId = null;
 			}
 		},
 		set(container) {
 			const self = this;
-			const _priv = _(self);
+			const _self = _(self);
 
-			if (container && _priv.element) {
-				if (_priv.append) {
-					if (isElement(_priv.append)) {
-						container.insertBefore(_priv.element, _priv.append.nextSibling);
+			if (container && _self.element) {
+				if (_self.append) {
+					if (isElement(_self.append)) {
+						container.insertBefore(_self.element, _self.append.nextSibling);
 					}
 					else {
-						container.appendChild(_priv.element);
+						container.appendChild(_self.element);
 					}
-					delete _priv.append;
+					delete _self.append;
 				}
-				else if (_priv.prepend) {
-					if (isElement(_priv.prepend)) {
-						container.insertBefore(_priv.element, _priv.prepend);
+				else if (_self.prepend) {
+					if (isElement(_self.prepend)) {
+						container.insertBefore(_self.element, _self.prepend);
 					}
 					else {
-						container.insertBefore(_priv.element, container.firstChild);
+						container.insertBefore(_self.element, container.firstChild);
 					}
-					delete _priv.prepend;
+					delete _self.prepend;
 				}
 				else {
-					container.appendChild(_priv.element);
+					container.appendChild(_self.element);
 				}
 
 				if (container[CONTROL_PROP]) {
 					container[CONTROL_PROP][registerControl](self);
 				}
 				else {
-					_priv.windowResizeId = windowResize.add(() => {
+					_self.windowResizeId = windowResize.add(() => {
 						self.resize(true);
 					}, self.type);
 				}
@@ -312,38 +312,38 @@ Object.assign(Control.prototype, {
 		},
 		before(element) {
 			const self = this;
-			const _priv = _(self);
+			const _self = _(self);
 
 			if (element) {
-				_priv.oldElement = element;
+				_self.oldElement = element;
 
 				self[setCssSizeElement](null);
 
-				_priv.element = null;
-				_priv.elementD3 = null;
+				_self.element = null;
+				_self.elementD3 = null;
 			}
 		},
 		set(newElement) {
 			const self = this;
-			const _priv = _(self);
+			const _self = _(self);
 
 			if (newElement) {
-				_priv.element = newElement;
-				_priv.elementD3 = select(newElement);
-				_priv.element[CONTROL_PROP] = self;
+				_self.element = newElement;
+				_self.elementD3 = select(newElement);
+				_self.element[CONTROL_PROP] = self;
 
-				if (_priv.oldElement) {
-					replaceElement(_priv.oldElement, newElement);
+				if (_self.oldElement) {
+					replaceElement(_self.oldElement, newElement);
 				}
 
-				self[setCssSizeElement](_priv.element);
+				self[setCssSizeElement](_self.element);
 				self[setPropagationClickEvent]();
 			}
 
-			if (_priv.oldElement) {
-				_priv.oldElement[CONTROL_PROP] = null;
-				dom.remove(_priv.oldElement);
-				_priv.oldElement = null;
+			if (_self.oldElement) {
+				_self.oldElement[CONTROL_PROP] = null;
+				dom.remove(_self.oldElement);
+				_self.oldElement = null;
 			}
 		},
 		other: null
@@ -951,27 +951,27 @@ Object.assign(Control.prototype, {
 	 */
 	resize(isForced) {
 		const self = this;
-		const _priv = _(self);
+		const _self = _(self);
 
-		if (!self.isRemoved && !_priv.isResizing) {
-			_priv.isResizing = true;
+		if (!self.isRemoved && !_self.isResizing) {
+			_self.isResizing = true;
 			self[percentHeightOverride]();
 
 			const newWidth = self.borderWidth();
 			const newHeight = self.borderHeight();
 
-			if (isForced || _priv.currentWidth !== newWidth || _priv.currentHeight !== newHeight) {
-				_priv.currentWidth = newWidth;
-				_priv.currentHeight = newHeight;
+			if (isForced || _self.currentWidth !== newWidth || _self.currentHeight !== newHeight) {
+				_self.currentWidth = newWidth;
+				_self.currentHeight = newHeight;
 
-				self.onResize().trigger(null, [_priv.currentWidth, _priv.currentHeight], self);
+				self.onResize().trigger(null, [_self.currentWidth, _self.currentHeight], self);
 			}
 
 			self[CHILD_CONTROLS].each((control) => {
 				control.resize();
 			});
 
-			_priv.isResizing = false;
+			_self.isResizing = false;
 		}
 
 		return self;
