@@ -3,10 +3,6 @@ import { isElement, isString } from 'type-enforcer';
 import dom from './dom';
 import { OPACITY, WINDOW } from './domConstants';
 
-export const DRAG_START_EVENT = 'start';
-export const DRAG_MOVE_EVENT = 'drag';
-export const DRAG_END_EVENT = 'end';
-
 const EASE = easeQuadIn;
 const ANIMATION_DURATION = 200;
 const SLOW_ANIMATION_DURATION = 500;

@@ -1,6 +1,5 @@
 import { event } from 'd3';
 import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
-import { DRAG_START_EVENT } from '../../utility/d3Helper';
 import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
@@ -78,7 +77,6 @@ export default class Slider extends FormControl {
 					});
 
 					self[THUMBS][position].position(mouseOffset, 0);
-					self[THUMBS][position].elementD3().dispatch(DRAG_START_EVENT);
 					self[OFFSETS][position] = mouseOffset;
 					self[positionRange]();
 					self[saveNewValue]();

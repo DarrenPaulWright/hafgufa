@@ -1,27 +1,16 @@
 import { clear, delay } from 'async-agent';
-import { drag, event } from 'd3';
+import { event } from 'd3';
 import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
-import { DRAG_END_EVENT, DRAG_MOVE_EVENT, DRAG_START_EVENT } from '../../utility/d3Helper';
 import {
-	ABSOLUTE,
-	BOTTOM,
-	LEFT,
-	MOUSE_WHEEL_EVENT,
-	PADDING,
-	POSITION,
-	RIGHT,
-	SCALE_CHANGE_EVENT,
-	SCROLL_LEFT,
-	SCROLL_TOP,
-	TOP,
-	TRANSFORM,
-	WINDOW
+	ABSOLUTE, BODY, BOTTOM, LEFT, MOUSE_WHEEL_EVENT, POSITION, RIGHT, SCALE_CHANGE_EVENT, SCROLL_LEFT, SCROLL_TOP, TOP, TRANSFORM
 } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
+import { CONTROL_PROP } from '../Control';
 
 const FRICTION = 0.85;
 const ELASTICITY = 0.75;
 
+const IS_REGISTERED_RESIZE = Symbol();
 const DRAGGABLE_RECT = Symbol();
 const AVAILABLE_WIDTH = Symbol();
 const AVAILABLE_HEIGHT = Symbol();
@@ -64,6 +53,8 @@ export default (Base) => {
 
 			const self = this;
 			self[IGNORE_PADDING] = settings.ignorePadding;
+			self[AVAILABLE_WIDTH] = 0;
+			self[AVAILABLE_HEIGHT] = 0;
 
 			self.onResize(() => {
 					if (self.canDrag()) {
@@ -279,14 +270,28 @@ export default (Base) => {
 
 			if (self.container()) {
 				const scale = self.scale();
-				const padding = new Thickness(WINDOW.getComputedStyle(self.container())
-					.getPropertyValue(PADDING) || 0);
+
+				if (!self[IS_REGISTERED_RESIZE]) {
+					self[IS_REGISTERED_RESIZE] = true;
+
+					if (self.container()[CONTROL_PROP]) {
+						self.container()[CONTROL_PROP]
+							.onResize(function(width, height) {
+								const padding = new Thickness(this.css('padding') || 0);
+
+								self[AVAILABLE_WIDTH] = width - (IGNORE_PADDING ? 0 : padding.horizontal);
+								self[AVAILABLE_HEIGHT] = height - (IGNORE_PADDING ? 0 : padding.vertical);
+							})
+							.resize(true);
+					}
+					else {
+						const bounds = self.container().getBoundingClientRect();
+						self[AVAILABLE_WIDTH] = bounds.width;
+						self[AVAILABLE_HEIGHT] = bounds.height;
+					}
+				}
 
 				self[DRAGGABLE_RECT] = self.element().getBoundingClientRect();
-				const outerRect = self.container().getBoundingClientRect();
-
-				self[AVAILABLE_WIDTH] = outerRect.width - (IGNORE_PADDING ? 0 : padding.horizontal);
-				self[AVAILABLE_HEIGHT] = outerRect.height - (IGNORE_PADDING ? 0 : padding.vertical);
 
 				if (self[DRAGGABLE_RECT].width < self[AVAILABLE_WIDTH]) {
 					self[DRAG_BOUNDS].left = 0;
@@ -350,10 +355,10 @@ export default (Base) => {
 			}
 		}
 
-		[onDrag](dx, dy) {
+		[onDrag](x, y) {
 			const self = this;
 
-			this[setPosition](self[DRAG_OFFSET].x + dx, self[DRAG_OFFSET].y + dy);
+			this[setPosition](x, y);
 
 			clear(self[DRAG_DELAY]);
 			self[DRAG_DELAY] = delay(() => {
@@ -361,7 +366,7 @@ export default (Base) => {
 				self[VELOCITY_OFFSET].y = 0;
 			}, 100);
 
-			if (dx || dy) {
+			if (self.canThrow()) {
 				self[VELOCITY_OFFSET].x = self[DRAG_OFFSET].x - self[DRAG_OFFSET_PREVIOUS].x;
 				self[VELOCITY_OFFSET].y = self[DRAG_OFFSET].y - self[DRAG_OFFSET_PREVIOUS].y;
 				self[DRAG_OFFSET_PREVIOUS].x = self[DRAG_OFFSET].x;
@@ -507,23 +512,42 @@ export default (Base) => {
 					self[BOUNCE_VECTOR] = new Vector();
 					self[BOUNCE_DESTINATION] = new Point();
 
-					self.elementD3()
-						.style(POSITION, ABSOLUTE)
-						.style('transform-origin', 'top left')
-						.call(drag()
-							.on(DRAG_START_EVENT, () => {
-								self[startDrag]();
-							})
-							.on(DRAG_MOVE_EVENT, () => {
-								self[onDrag](event.dx, event.dy);
-							})
-							.on(DRAG_END_EVENT, () => {
-								self[stopDrag]();
-							}));
+					self.css(POSITION, ABSOLUTE)
+						.css('transform-origin', 'top left')
+						.on('mousedown touchstart', () => {
+							event.stopPropagation();
 
-					self.on(MOUSE_WHEEL_EVENT, () => {
-						self[setZoom](self.scale() * (1 - (event.deltaY / 1000)), event.x - self[DRAG_OFFSET].x, event.y - self[DRAG_OFFSET].y);
-					});
+							const bounds = self.container().getBoundingClientRect();
+							const localOffset = new Point(event.offsetX + bounds.left, event.offsetY + bounds.top);
+							const moveHandler = (event) => {
+								event.stopPropagation();
+
+								self[onDrag](event.clientX - localOffset.x, event.clientY - localOffset.y);
+							};
+							const endHandler = (event) => {
+								event.stopPropagation();
+
+								BODY.removeEventListener('mousemove', moveHandler);
+								BODY.removeEventListener('touchmove', moveHandler);
+								BODY.removeEventListener('mouseup', endHandler);
+								BODY.removeEventListener('touchend', endHandler);
+
+								self[stopDrag]();
+							};
+
+							self[startDrag]();
+
+							BODY.addEventListener('mousemove', moveHandler);
+							BODY.addEventListener('touchmove', moveHandler);
+							BODY.addEventListener('mouseup', endHandler);
+							BODY.addEventListener('touchend', endHandler);
+						})
+						.on(MOUSE_WHEEL_EVENT, () => {
+							self[setZoom](self.scale() * (1 - (event.deltaY / 1000)),
+								event.x - self[DRAG_OFFSET].x,
+								event.y - self[DRAG_OFFSET].y
+							);
+						});
 
 					self[updateBounds]();
 				}
