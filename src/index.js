@@ -43,6 +43,8 @@ export { default as Tags } from './ui/forms/Tags';
 export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
+export { default as LightBox } from './ui/edit/LightBox';
+
 export { default as Bar } from './ui/graphs/Bar';
 export { default as Donut } from './ui/graphs/Donut';
 export { default as GraphAxisBase } from './ui/graphs/GraphAxisBase';
@@ -73,7 +75,6 @@ export { default as ProgressBar } from './ui/display/ProgressBar';
 export { default as toast } from './ui/display/toast';
 
 export { default as ContextMenu } from './ui/other/ContextMenu';
-export { default as LightBox } from './ui/other/LightBox';
 export { default as Menu } from './ui/other/Menu';
 export { default as SearchBar } from './ui/other/SearchBar';
 
