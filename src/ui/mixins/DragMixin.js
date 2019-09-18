@@ -203,7 +203,7 @@ export default (Base) => {
 				self[IS_BOUNCING] = false;
 				self[setPosition](Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
 
-				self.onDragDone().trigger(null, [{...self[DRAG_OFFSET]}], self);
+				self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}], self);
 			}
 		}
 
@@ -392,7 +392,7 @@ export default (Base) => {
 					});
 				}
 				else {
-					self.onDragDone().trigger(null, [{...self[DRAG_OFFSET]}], self);
+					self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}], self);
 				}
 			}
 		}
@@ -585,7 +585,7 @@ export default (Base) => {
 
 		onDrag: method.queue(),
 
-		onDragDone: method.queue()
+		onDragEnd: method.queue()
 	});
 
 	return DragMixin;

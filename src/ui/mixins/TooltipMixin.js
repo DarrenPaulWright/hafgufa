@@ -6,7 +6,7 @@ const EVENT_SUFFIX = '.tooltip';
 
 const TOOLTIP = Symbol();
 const ON_DRAG_ID = Symbol();
-const ON_DRAG_DONE_ID = Symbol();
+const ON_DRAG_END_ID = Symbol();
 
 const showTooltip = Symbol();
 const removeTooltip = Symbol();
@@ -75,7 +75,7 @@ export default (Base) => {
 
 					if (self.onDrag) {
 						self[ON_DRAG_ID] = self.onDrag(self[showTooltip]);
-						self[ON_DRAG_DONE_ID] = self.onDragDone(self[removeTooltip]);
+						self[ON_DRAG_END_ID] = self.onDragEnd(self[removeTooltip]);
 					}
 
 					if (self[TOOLTIP]) {
@@ -88,7 +88,7 @@ export default (Base) => {
 
 					if (self.onDrag) {
 						self.onDrag().discard(self[ON_DRAG_ID]);
-						self.onDragDone().discard(self[ON_DRAG_DONE_ID]);
+						self.onDragEnd().discard(self[ON_DRAG_END_ID]);
 					}
 
 					remove();

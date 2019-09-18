@@ -134,7 +134,7 @@ export default class Slider extends FormControl {
 				self[IS_DRAGGING] = true;
 			},
 			onDrag: saveOffset,
-			onDragDone(offset) {
+			onDragEnd(offset) {
 				self[IS_DRAGGING] = false;
 				saveOffset.call(this, offset);
 				self[saveNewValue]();

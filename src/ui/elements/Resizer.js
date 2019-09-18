@@ -101,7 +101,7 @@ export default class Resizer extends DragMixin(Control) {
 					self.onOffsetChange()(self[SPLIT_OFFSET], offset, self[AVAILABLE_SIZE]);
 				}
 			})
-			.onDragDone((offset) => {
+			.onDragEnd((offset) => {
 				self[setSplitOffset](offset[self[DIRECTION]]);
 
 				if (self.onOffsetChangeDone()) {
