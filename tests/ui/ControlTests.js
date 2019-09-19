@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { select } from 'd3';
 import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
-import { CLICK_EVENT, Container, windowResize } from '../../src/';
+import { CLICK_EVENT, Container, windowResize } from '../../src';
 
 const TEST_ID = 'testID';
 const TEST_ID_SUFFIX = 'testIDSuffix';

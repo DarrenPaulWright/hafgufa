@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import toast from '../../../src/ui/display/toast';
+import { toast } from '../../../src';
 import TestUtil from '../../TestUtil';
 
 new TestUtil(toast);

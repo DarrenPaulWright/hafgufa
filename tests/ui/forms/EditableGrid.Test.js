@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { HUNDRED_PERCENT } from 'type-enforcer';
-import { EditableGrid } from '../../../src/';
+import { EditableGrid } from '../../../src';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';

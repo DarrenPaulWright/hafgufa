@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import { event } from 'd3';
+import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../../src';
 import GridCell from '../../../src/ui/grid/GridCell';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
-import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../../src/utility/domConstants';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

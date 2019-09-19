@@ -1,7 +1,7 @@
 import { assert } from 'chai';
+import { CONTEXT_MENU_EVENT } from '../../../src';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import GridHeaderCell from '../../../src/ui/grid/GridHeaderCell';
-import { CONTEXT_MENU_EVENT } from '../../../src/utility/domConstants';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';

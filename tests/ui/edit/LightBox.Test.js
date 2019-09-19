@@ -1,4 +1,4 @@
-import LightBox from '../../../src/ui/other/LightBox';
+import { LightBox } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

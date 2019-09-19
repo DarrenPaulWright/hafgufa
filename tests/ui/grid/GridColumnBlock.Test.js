@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 import shortid from 'shortid';
+import { CONTEXT_MENU_EVENT } from '../../../src';
 import GridColumnBlock from '../../../src/ui/grid/GridColumnBlock';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
-import { CONTEXT_MENU_EVENT } from '../../../src/utility/domConstants';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';

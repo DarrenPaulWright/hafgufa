@@ -1,6 +1,5 @@
 import { assert } from 'chai';
-import { Image } from '../../../src';
-import dom from '../../../src/utility/dom';
+import { dom, Image } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

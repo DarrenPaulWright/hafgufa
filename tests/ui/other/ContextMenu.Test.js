@@ -1,6 +1,5 @@
 import { assert } from 'chai';
-import { ContextMenu } from '../../../src';
-import { CONTEXT_MENU_EVENT } from '../../../src/utility/domConstants';
+import { CONTEXT_MENU_EVENT, ContextMenu } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

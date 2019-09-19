@@ -1,4 +1,4 @@
-import { DrawerMenu } from '../../../src/';
+import { DrawerMenu } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from './../ControlTests';
 

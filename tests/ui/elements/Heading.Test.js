@@ -1,6 +1,5 @@
 import { assert } from 'chai';
-import { Heading, HEADING_LEVELS } from '../../../src';
-import { MOUSE_ENTER_EVENT } from '../../../src/utility/domConstants';
+import { Heading, HEADING_LEVELS, MOUSE_ENTER_EVENT } from '../../../src';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';

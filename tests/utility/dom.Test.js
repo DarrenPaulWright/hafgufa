@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 import { INITIAL, isElement } from 'type-enforcer';
-import dom from '../../src/utility/dom';
-import { ABSOLUTE, BODY, BORDER_BOX } from '../../src/utility/domConstants';
+import { ABSOLUTE, BODY, BORDER_BOX, dom } from '../../src';
 import TestUtil from '../TestUtil';
 
 new TestUtil(dom);

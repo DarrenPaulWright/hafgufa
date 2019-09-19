@@ -1,4 +1,4 @@
-import { Tabs } from '../../../src/';
+import { Tabs } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

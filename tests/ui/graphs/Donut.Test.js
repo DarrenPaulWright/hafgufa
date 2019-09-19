@@ -1,4 +1,4 @@
-import { Donut } from '../../../src/';
+import { Donut } from '../../../src';
 import TestUtil from '../../TestUtil';
 import GraphBaseTests from './GraphBaseTests';
 

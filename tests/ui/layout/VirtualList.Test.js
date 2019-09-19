@@ -1,8 +1,6 @@
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer';
-import { Button, Heading, VirtualList } from '../../../src';
-import dom from '../../../src/utility/dom';
-import { SCROLL_EVENT } from '../../../src/utility/domConstants';
+import { Button, dom, Heading, SCROLL_EVENT, VirtualList } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 

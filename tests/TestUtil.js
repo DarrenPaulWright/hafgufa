@@ -4,8 +4,7 @@ import displayValue from 'display-value';
 import keyCodes from 'keycodes';
 import simulant from 'simulant';
 import { isArray, isString } from 'type-enforcer';
-import { CLICK_EVENT, KEY_UP_EVENT } from '../src/utility/domConstants';
-import windowResize from '../src/utility/windowResize';
+import { CLICK_EVENT, KEY_UP_EVENT, windowResize } from '../src';
 
 /**
  * basic tests for a getter/setter method on controls.

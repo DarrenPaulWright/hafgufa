@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { accuracy } from '../../../src/';
+import { accuracy } from '../../../src';
 import TestUtil from '../../TestUtil';
 
 new TestUtil(accuracy);

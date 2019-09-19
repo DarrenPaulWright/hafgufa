@@ -1,8 +1,6 @@
 import { assert } from 'chai';
 import keyCodes from 'keycodes';
-import { Tags } from '../../../src';
-import dom from '../../../src/utility/dom';
-import { KEY_DOWN_EVENT } from '../../../src/utility/domConstants';
+import { dom, KEY_DOWN_EVENT, Tags } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 

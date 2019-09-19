@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Radios } from '../../../src/';
+import { Radios } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 

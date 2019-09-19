@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { ProgressBar } from '../../../src/';
+import { ProgressBar } from '../../../src';
 import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { event } from 'd3';
-import { CheckBoxes } from '../../../src/';
+import { CheckBoxes } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 

@@ -1,4 +1,4 @@
-import Carousel from '../../../src/ui/layout/Carousel';
+import { Carousel } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
