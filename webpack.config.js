@@ -5,6 +5,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ThemesPlugin = require('less-themes-webpack-plugin');
 const WebpackMildCompile = require('webpack-mild-compile').Plugin;
 
+const themeStructure = {
+	include: 'light',
+	light: {
+		mobile: [],
+		desktop: ['desktop']
+	},
+	dark: {
+		include: 'dark',
+		mobile: [],
+		desktop: ['desktop']
+	}
+};
+
 const config = {
 	entry: {
 		main: ['babel-polyfill', './src/toolkit/toolkit.js']
@@ -27,16 +40,13 @@ const config = {
 	},
 	stats: 'minimal',
 	plugins: [
-		new CopyWebpackPlugin([
-			{
-				context: './',
-				from: 'images/**/*.*'
-			},
-			{
-				context: './',
-				from: 'localization/*.json'
-			}
-		]),
+		new CopyWebpackPlugin([{
+			context: './',
+			from: 'images/**/*.*'
+		}, {
+			context: './',
+			from: 'localization/*.json'
+		}]),
 		new HtmlWebpackPlugin({
 			title: 'Hafgufa',
 			minify: {
@@ -51,136 +61,24 @@ const config = {
 			sourceMap: true,
 			themes: {
 				simple: {
-					light: {
-						mobile: [
-							'simple/light.less'
-						],
-						desktop: [
-							'simple/light.less',
-							'simple/desktop.less'
-						]
-					},
-					dark: {
-						mobile: [
-							'simple/light.less',
-							'simple/dark.less'
-						],
-						desktop: [
-							'simple/light.less',
-							'simple/dark.less',
-							'simple/desktop.less'
-						]
-					}
+					...themeStructure,
+					path: 'simple'
 				},
 				electron: {
-					light: {
-						mobile: [
-							'electron/light.less'
-						],
-						desktop: [
-							'electron/light.less',
-							'electron/desktop.less'
-						]
-					},
-					dark: {
-						mobile: [
-							'electron/light.less',
-							'electron/dark.less'
-						],
-						desktop: [
-							'electron/light.less',
-							'electron/dark.less',
-							'electron/desktop.less'
-						]
-					}
+					...themeStructure,
+					path: 'electron'
 				},
 				hud_01: {
-					light: {
-						mobile: [
-							'hud_01/light.less'
-						],
-						desktop: [
-							'hud_01/light.less',
-							'hud_01/desktop.less'
-						]
-					},
-					dark: {
-						mobile: [
-							'hud_01/light.less',
-							'hud_01/dark.less'
-						],
-						desktop: [
-							'hud_01/light.less',
-							'hud_01/dark.less',
-							'hud_01/desktop.less'
-						]
-					}
+					...themeStructure,
+					path: 'hud_01'
 				},
 				moonBeam: {
-					light: {
-						mobile: [
-							'moonBeam/light.less'
-						],
-						desktop: [
-							'moonBeam/light.less',
-							'moonBeam/desktop.less'
-						]
-					},
-					dark: {
-						mobile: [
-							'moonBeam/light.less',
-							'moonBeam/dark.less'
-						],
-						desktop: [
-							'moonBeam/light.less',
-							'moonBeam/dark.less',
-							'moonBeam/desktop.less'
-						]
-					}
+					...themeStructure,
+					path: 'moonBeam'
 				},
 				vintage: {
-					light: {
-						mobile: [
-							'vintage/light.less'
-						],
-						desktop: [
-							'vintage/light.less',
-							'vintage/desktop.less'
-						]
-					},
-					dark: {
-						mobile: [
-							'vintage/light.less',
-							'vintage/dark.less'
-						],
-						desktop: [
-							'vintage/light.less',
-							'vintage/dark.less',
-							'vintage/desktop.less'
-						]
-					}
-				},
-				cigar: {
-					claro: {
-						mobile: [
-							'cigar/claro.less'
-						],
-						desktop: [
-							'cigar/claro.less',
-							'cigar/desktop.less'
-						]
-					},
-					maduro: {
-						mobile: [
-							'cigar/claro.less',
-							'cigar/maduro.less'
-						],
-						desktop: [
-							'cigar/claro.less',
-							'cigar/maduro.less',
-							'cigar/desktop.less'
-						]
-					}
+					...themeStructure,
+					path: 'vintage'
 				}
 			}
 		}),
@@ -191,16 +89,14 @@ const config = {
 			test: /\.js$/,
 			enforce: 'pre',
 			exclude: /node_modules/,
-			use: [
-				{
-					loader: 'eslint-loader',
-					options: {
-						configFile: '.eslintrc.json',
-						cache: true,
-						emitWarning: true
-					}
+			use: [{
+				loader: 'eslint-loader',
+				options: {
+					configFile: '.eslintrc.json',
+					cache: true,
+					emitWarning: true
 				}
-			]
+			}]
 		}, {
 			test: /\.js$/,
 			exclude: /node_modules/,
