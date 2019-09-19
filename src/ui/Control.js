@@ -629,16 +629,7 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderWidth() {
-		if (_(this).element) {
-			if (_(this).element instanceof SVGElement) {
-				return _(this).element.getBBox().width;
-			}
-			else {
-				return _(this).element.offsetWidth;
-			}
-		}
-
-		return 0;
+		return _(this).element ? _(this).element.offsetWidth : 0;
 	},
 
 	innerWidth() {
@@ -704,16 +695,7 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderHeight() {
-		if (_(this).element) {
-			if (_(this).element instanceof SVGElement) {
-				return _(this).element.getBBox().height;
-			}
-			else {
-				return _(this).element.offsetHeight;
-			}
-		}
-
-		return 0;
+		return _(this).element ? _(this).element.offsetHeight : 0;
 	},
 
 	innerHeight() {

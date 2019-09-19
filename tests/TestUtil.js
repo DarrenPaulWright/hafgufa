@@ -11,7 +11,7 @@ import { CLICK_EVENT, KEY_UP_EVENT, windowResize } from '../src';
  * @function testMethod
  * @arg {Object} Control
  */
-export default function TestUtil(Control) {
+export default function TestUtil(Control, isSvg) {
 	const self = this;
 
 	const addEventListenerOverRides = () => {
@@ -109,7 +109,14 @@ export default function TestUtil(Control) {
 
 	beforeEach(function() {
 		window.eventListeners = [];
-		window.testContainer = document.createElement('div');
+
+		if (isSvg) {
+			window.testContainer = document.createElementNS(`http://www.w3.org/2000/svg`, 'svg');
+		}
+		else {
+			window.testContainer = document.createElement('div');
+		}
+
 		document.body.appendChild(window.testContainer);
 	});
 

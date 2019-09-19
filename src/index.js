@@ -80,6 +80,11 @@ export { default as SearchBar } from './ui/other/SearchBar';
 
 export { default as Grid } from './ui/grid/Grid';
 
+export { default as SvgControl } from './ui/svg/SvgControl';
+export { default as G } from './ui/svg/G';
+export { default as Rect } from './ui/svg/Rect';
+export { default as Svg } from './ui/svg/Svg';
+
 export { default as ActionButtonMixin } from './ui/mixins/ActionButtonMixin';
 export { default as ContextMenuMixin } from './ui/mixins/ContextMenuMixin';
 export { default as ControlHeadingMixin } from './ui/mixins/ControlHeadingMixin';
