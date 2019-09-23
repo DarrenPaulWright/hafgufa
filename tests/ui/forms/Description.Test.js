@@ -4,12 +4,11 @@ import { Description, dom, TEXT_ALIGN, WIDTH } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(Description);
-const formControlTests = new FormControlTests(Description, testUtil, {
-	mainCssClass: 'description'
-});
-
 describe('Description', () => {
+	const testUtil = new TestUtil(Description);
+	const formControlTests = new FormControlTests(Description, testUtil, {
+		mainCssClass: 'description'
+	});
 
 	formControlTests.run();
 
@@ -31,8 +30,8 @@ describe('Description', () => {
 		});
 
 		it('should set the width of the content div to whatever is passed in to the textWidth option', () => {
-			window.control = new Description({
-				container: window.testContainer,
+			testUtil.control = new Description({
+				container: testUtil.container,
 				title: 'Test Title',
 				textWidth: '100px',
 				description: 'sample'
@@ -51,8 +50,8 @@ describe('Description', () => {
 		});
 
 		it('should set the text-align css property of the content div to whatever is passed in to the align option', () => {
-			window.control = new Description({
-				container: window.testContainer,
+			testUtil.control = new Description({
+				container: testUtil.container,
 				align: 'center'
 			});
 
@@ -62,9 +61,9 @@ describe('Description', () => {
 
 	describe('Focused', () => {
 		it('should return false when the isFocused method is called', () => {
-			window.control = new Description();
+			testUtil.control = new Description();
 
-			assert.equal(window.control.isFocused(), false);
+			assert.equal(testUtil.control.isFocused(), false);
 		});
 	});
 });

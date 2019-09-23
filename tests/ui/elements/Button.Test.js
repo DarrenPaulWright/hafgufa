@@ -3,12 +3,11 @@ import { Button } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Button);
-const controlTests = new ControlTests(Button, testUtil, {
-	focusableElement: 'button'
-});
-
 describe('Button', () => {
+	const testUtil = new TestUtil(Button);
+	const controlTests = new ControlTests(Button, testUtil, {
+		focusableElement: 'button'
+	});
 
 	controlTests.run([], ['focus']);
 
@@ -16,16 +15,16 @@ describe('Button', () => {
 		const TEXT_LABEL = 'This is a button!@#$%^&*()';
 
 		it('should have a label if no label is provided', () => {
-			window.control = new Button({
-				container: window.testContainer
+			testUtil.control = new Button({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelector('button>span').innerHTML, '&nbsp;');
 		});
 
 		it('should have a label if the label option is set', () => {
-			window.control = new Button({
-				container: window.testContainer,
+			testUtil.control = new Button({
+				container: testUtil.container,
 				label: TEXT_LABEL
 			});
 
@@ -33,8 +32,8 @@ describe('Button', () => {
 		});
 
 		it('should have a label if the setLabel method is called', () => {
-			window.control = new Button({
-				container: window.testContainer
+			testUtil.control = new Button({
+				container: testUtil.container
 			})
 				.label(TEXT_LABEL);
 
@@ -42,8 +41,8 @@ describe('Button', () => {
 		});
 
 		it('should have an "alt" property that is the same as the label if the label is set', () => {
-			window.control = new Button({
-				container: window.testContainer,
+			testUtil.control = new Button({
+				container: testUtil.container,
 				label: TEXT_LABEL
 			});
 
@@ -51,8 +50,8 @@ describe('Button', () => {
 		});
 
 		it('should have a "title" property that is the same as the label if the label is set', () => {
-			window.control = new Button({
-				container: window.testContainer,
+			testUtil.control = new Button({
+				container: testUtil.container,
 				label: TEXT_LABEL
 			});
 
@@ -64,16 +63,16 @@ describe('Button', () => {
 		const SELECTED_CLASS = '.selected';
 
 		it('should NOT have a toggled css class when the isSelectable and isSelected options are not set', () => {
-			window.control = new Button({
-				container: window.testContainer
+			testUtil.control = new Button({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 0);
 		});
 
 		it('should NOT have a toggled css class when the isSelectable option is NOT set and the isSelected method is called', () => {
-			window.control = new Button({
-				container: window.testContainer
+			testUtil.control = new Button({
+				container: testUtil.container
 			})
 				.isSelected(true);
 
@@ -81,8 +80,8 @@ describe('Button', () => {
 		});
 
 		it('should have a toggled css class when the isSelectable and isSelected options are set', () => {
-			window.control = new Button({
-				container: window.testContainer,
+			testUtil.control = new Button({
+				container: testUtil.container,
 				isSelectable: true,
 				isSelected: true
 			});
@@ -91,8 +90,8 @@ describe('Button', () => {
 		});
 
 		it('should have a toggled css class when the isSelectable option is set and the isSelected method is called', () => {
-			window.control = new Button({
-				container: window.testContainer,
+			testUtil.control = new Button({
+				container: testUtil.container,
 				isSelectable: true
 			})
 				.isSelected(true);
@@ -101,8 +100,8 @@ describe('Button', () => {
 		});
 
 		it('should have a toggled css class when the isSelectable method is called and the isSelected method is called', () => {
-			window.control = new Button({
-				container: window.testContainer
+			testUtil.control = new Button({
+				container: testUtil.container
 			})
 				.isSelectable(true)
 				.isSelected(true);

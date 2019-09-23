@@ -9,11 +9,11 @@ export default function GraphBaseTests(Control, testUtil, settings) {
 
 	self.svgElement = () => {
 		it('should return an svg element when svgElement is called', () => {
-			window.control = new Control({
-				container: window.testContainer
+			testUtil.control = new Control({
+				container: testUtil.container
 			});
 
-			assert.isTrue(window.control.svgElement() instanceof SVGElement);
+			assert.isTrue(testUtil.control.svgElement() instanceof SVGElement);
 		});
 	};
 
@@ -21,7 +21,7 @@ export default function GraphBaseTests(Control, testUtil, settings) {
 		testUtil.testMethod({
 			methodName: 'graphPadding',
 			defaultSettings: {
-				container: window.testContainer
+				container: testUtil.container
 			},
 			defaultValue: new Thickness(12),
 			testValue: new Thickness(30),
@@ -33,7 +33,7 @@ export default function GraphBaseTests(Control, testUtil, settings) {
 		testUtil.testMethod({
 			methodName: 'color',
 			defaultSettings: {
-				container: window.testContainer
+				container: testUtil.container
 			},
 			defaultValue: '#b24f26',
 			testValue: '#ffffff',
@@ -45,7 +45,7 @@ export default function GraphBaseTests(Control, testUtil, settings) {
 		testUtil.testMethod({
 			methodName: 'data',
 			defaultSettings: {
-				container: window.testContainer
+				container: testUtil.container
 			},
 			defaultValue: [],
 			testValue: [{}],

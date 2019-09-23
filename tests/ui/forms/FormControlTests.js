@@ -11,19 +11,19 @@ export default function FormControlTests(Control, testUtil, settings) {
 	self.isRequired = () => {
 		describe('FormControl .isRequired', () => {
 			it('should default to false', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer
+					container: testUtil.container
 				});
 
-				assert.equal(window.control.isRequired(), false);
+				assert.equal(testUtil.control.isRequired(), false);
 			});
 
 			it('should have a required class if set to true and a title is provided', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: window.testContainer
+					container: testUtil.container
 				})
 					.isRequired(true);
 
@@ -31,20 +31,20 @@ export default function FormControlTests(Control, testUtil, settings) {
 			});
 
 			it('should be true if it was set to true in the options', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: window.testContainer,
+					container: testUtil.container,
 					isRequired: true
 				});
 
-				assert.equal(window.control.isRequired(), true);
+				assert.equal(testUtil.control.isRequired(), true);
 			});
 
 			it('should NOT have a required class if set to false', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer
+					container: testUtil.container
 				})
 					.isRequired(false);
 
@@ -52,13 +52,13 @@ export default function FormControlTests(Control, testUtil, settings) {
 			});
 
 			it('should be false if it was set to false in the options', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
+					container: testUtil.container,
 					isRequired: false
 				});
 
-				assert.equal(window.control.isRequired(), false);
+				assert.equal(testUtil.control.isRequired(), false);
 			});
 		});
 	};
@@ -68,7 +68,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			testUtil.testMethod({
 				methodName: 'newline',
 				defaultSettings: {
-					container: window.testContainer
+					container: testUtil.container
 				},
 				defaultValue: false,
 				testValue: true,
@@ -84,12 +84,12 @@ export default function FormControlTests(Control, testUtil, settings) {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					window.control.onChange(() => {
+					testUtil.control.onChange(() => {
 						testVar++;
 					});
 
-					window.control.changeDelay(0);
-					window.control.value(settings.onChange.validValue);
+					testUtil.control.changeDelay(0);
+					testUtil.control.value(settings.onChange.validValue);
 
 					assert.equal(testVar, 0);
 				});
@@ -98,12 +98,12 @@ export default function FormControlTests(Control, testUtil, settings) {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					window.control.onChange(() => {
+					testUtil.control.onChange(() => {
 						testVar++;
 					});
 
-					window.control.value(settings.onChange.validValue);
-					window.control.triggerChange(true);
+					testUtil.control.value(settings.onChange.validValue);
+					testUtil.control.triggerChange(true);
 
 					assert.equal(testVar, 1);
 				});
@@ -112,11 +112,11 @@ export default function FormControlTests(Control, testUtil, settings) {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					window.control.onChange(() => {
+					testUtil.control.onChange(() => {
 						testVar++;
 					});
 
-					window.control.changeDelay(0);
+					testUtil.control.changeDelay(0);
 					settings.onChange.setValueViaDom();
 
 					assert.equal(testVar, 1);
@@ -126,13 +126,13 @@ export default function FormControlTests(Control, testUtil, settings) {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					window.control.onChange(() => {
+					testUtil.control.onChange(() => {
 						testVar++;
 					});
 
-					window.control.changeDelay(0);
+					testUtil.control.changeDelay(0);
 					settings.onChange.setValueViaDom();
-					window.control.triggerChange(true);
+					testUtil.control.triggerChange(true);
 
 					assert.equal(testVar, 2);
 				});
@@ -142,12 +142,12 @@ export default function FormControlTests(Control, testUtil, settings) {
 						let testVar = 0;
 
 						settings.onChange.buildControl();
-						window.control.onChange(() => {
+						testUtil.control.onChange(() => {
 							testVar++;
 						});
 
-						window.control.changeDelay(0);
-						window.control.value(settings.onChange.validValue);
+						testUtil.control.changeDelay(0);
+						testUtil.control.value(settings.onChange.validValue);
 						settings.onChange.setValueViaDom();
 
 						assert.equal(testVar, 1);
@@ -158,11 +158,11 @@ export default function FormControlTests(Control, testUtil, settings) {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					window.control.onChange(() => {
+					testUtil.control.onChange(() => {
 						testVar++;
 					});
 
-					window.control.triggerChange(true);
+					testUtil.control.triggerChange(true);
 
 					assert.equal(testVar, 1);
 				});
@@ -175,7 +175,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 			testUtil.testMethod({
 				methodName: 'changeDelay',
 				defaultSettings: {
-					container: window.testContainer
+					container: testUtil.container
 				},
 				defaultValue: 0,
 				testValue: 200

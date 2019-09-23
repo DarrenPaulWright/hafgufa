@@ -2,12 +2,11 @@ import { FilePicker } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(FilePicker);
-const formControlTests = new FormControlTests(FilePicker, testUtil, {
-	mainCssClass: 'file-picker'
-});
-
 describe('FilePicker', () => {
+	const testUtil = new TestUtil(FilePicker);
+	const formControlTests = new FormControlTests(FilePicker, testUtil, {
+		mainCssClass: 'file-picker'
+	});
 
 	formControlTests.run();
 

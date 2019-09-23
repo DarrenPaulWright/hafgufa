@@ -2,9 +2,9 @@ import { Timeline } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Timeline);
-const controlBaseTests = new ControlTests(Timeline, testUtil);
-
 describe('Timeline', () => {
+	const testUtil = new TestUtil(Timeline);
+	const controlBaseTests = new ControlTests(Timeline, testUtil);
+
 	controlBaseTests.run();
 });

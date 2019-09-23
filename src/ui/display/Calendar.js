@@ -168,14 +168,14 @@ export default class Calendar extends Control {
 					},
 					classes: 'icon-button next-button'
 				}, {
-					// control: Container,
-					// content: [{
 					control: Picker,
 					ID: MONTH_PICKER_ID,
 					width: AUTO,
 					options: self[buildMonthOptions](),
 					onChange(newValue) {
-						self.month(parseInt(newValue[0].ID, 10));
+						if (newValue.length) {
+							self.month(parseInt(newValue[0].ID, 10));
+						}
 					},
 					value: self.month()
 				}, {
@@ -184,10 +184,11 @@ export default class Calendar extends Control {
 					width: AUTO,
 					options: self[buildYearOptions](),
 					onChange(newValue) {
-						self.year(parseInt(newValue[0].ID, 10));
+						if (newValue.length) {
+							self.year(parseInt(newValue[0].ID, 10));
+						}
 					},
 					value: self.year()
-					// }]
 				}]
 			});
 		}

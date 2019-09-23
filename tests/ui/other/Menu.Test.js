@@ -1,23 +1,23 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { Menu } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Menu);
-const controlTests = new ControlTests(Menu, testUtil, {
-	mainCssClass: 'menu',
-	extraSettings: {
-		menuItems: [{
-			ID: '1',
-			title: 'test'
-		}],
-		delay: 0,
-		fade: false
-	},
-	autoFocus: true
-});
-
 describe('Menu', () => {
+	const testUtil = new TestUtil(Menu);
+	const controlTests = new ControlTests(Menu, testUtil, {
+		mainCssClass: 'menu',
+		extraSettings: {
+			menuItems: [{
+				ID: '1',
+				title: 'test'
+			}],
+			delay: 0,
+			fade: false
+		},
+		autoFocus: true
+	});
 
 	controlTests.run(['container', 'element', 'ID', 'height', 'width', 'onResize', 'stopPropagation']);
 
@@ -36,21 +36,21 @@ describe('Menu', () => {
 		});
 
 		it('should have one menu item if one is provided', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				menuItems: [{
 					ID: 'test',
 					title: 'test'
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading').length, 1);
 				});
 		});
 
 		it('should have three menu items if three are provided', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				menuItems: [{
 					ID: 'test',
 					title: 'test'
@@ -63,14 +63,14 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading').length, 3);
 				});
 		});
 
 		it('should have a selected item if one is set to isSelected', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				menuItems: [{
 					ID: 'test',
 					title: 'test'
@@ -85,7 +85,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.checkbox.checked').length, 1);
 				});
@@ -94,7 +94,7 @@ describe('Menu', () => {
 		it('should call settings.onSelect if a menuItem is clicked', () => {
 			let testVar = '';
 
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				onSelect(item) {
 					testVar = item;
 				},
@@ -110,7 +110,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
 
@@ -119,7 +119,7 @@ describe('Menu', () => {
 		});
 
 		it('should remove itself when a menu item is clicked', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				onSelect() {
 				},
 				menuItems: [{
@@ -134,7 +134,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
 
@@ -143,7 +143,7 @@ describe('Menu', () => {
 		});
 
 		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				onSelect() {
 				},
 				keepMenuOpen: true,
@@ -159,7 +159,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
 
@@ -168,7 +168,7 @@ describe('Menu', () => {
 		});
 
 		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
-			window.control = new Menu({
+			testUtil.control = new Menu({
 				onSelect() {
 				},
 				menuItems: [{
@@ -184,7 +184,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
 

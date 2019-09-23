@@ -1,22 +1,21 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { CONTEXT_MENU_EVENT } from '../../../src';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import GridHeaderCell from '../../../src/ui/grid/GridHeaderCell';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(GridHeaderCell);
-const controlBaseTests = new ControlTests(GridHeaderCell, testUtil, {
-	mainCssClass: 'grid-header-cell'
-});
-
-const addTag = (text) => {
-	document.querySelector('input').value = text;
-	testUtil.hitEnter();
-};
-
 describe('GridHeaderCell', () => {
+	const testUtil = new TestUtil(GridHeaderCell);
+	const controlBaseTests = new ControlTests(GridHeaderCell, testUtil, {
+		mainCssClass: 'grid-header-cell'
+	});
+
+	const addTag = (text) => {
+		document.querySelector('input').value = text;
+		testUtil.hitEnter();
+	};
 
 	controlBaseTests.run();
 
@@ -29,16 +28,16 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have a heading element', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.heading').length, 1);
 		});
 
 		it('should have a label element with label text in it', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'title'
 			});
 
@@ -55,8 +54,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should build a checkbox if dataType is set to checkbox', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
 			});
 
@@ -64,12 +63,12 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should remove the checkbox if dataType is set back to none', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
 			});
 
-			window.control.dataType(gridConstants.COLUMN_TYPES.NONE);
+			testUtil.control.dataType(gridConstants.COLUMN_TYPES.NONE);
 
 			assert.equal(document.querySelectorAll('input[type=checkbox]').length, 0);
 		});
@@ -77,8 +76,8 @@ describe('GridHeaderCell', () => {
 		it('should call the onSelect callback with true when a checkbox is clicked', () => {
 			let testVar;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
 					testVar = newValue;
@@ -93,8 +92,8 @@ describe('GridHeaderCell', () => {
 		it('should call the onSelect callback with false when a checkbox is clicked a second time', () => {
 			let testVar;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
 					testVar = newValue;
@@ -116,8 +115,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have class "sortable" if canSort is true', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true
 			});
 
@@ -125,42 +124,42 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should NOT have class "sortable" if canSort is set back to false', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true
 			});
 
-			window.control.canSort(false);
+			testUtil.control.canSort(false);
 
 			assert.equal(document.querySelectorAll('label.sortable').length, 0);
 		});
 
 		it('should set sortDirection to ASC when the label is clicked once', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true
 			});
 
 			testUtil.simulateClick(document.querySelector('.heading'));
 
-			assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to DESC when the label is clicked twice', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true
 			});
 
 			testUtil.simulateClick(document.querySelector('.heading'));
 			testUtil.simulateClick(document.querySelector('.heading'));
 
-			assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection back to NONE when the label is clicked thrice', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true
 			});
 
@@ -168,7 +167,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(document.querySelector('label'));
 			testUtil.simulateClick(document.querySelector('label'));
 
-			assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
 		});
 	});
 
@@ -181,8 +180,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should NOT have class "sort-asc" if sortDirection is set to asc and canSort is false', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: false,
 				sortDirection: gridConstants.SORT_TYPES.ASC
 			});
@@ -191,8 +190,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have class "sort-asc" if sortDirection is set to asc', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true,
 				sortDirection: gridConstants.SORT_TYPES.ASC
 			});
@@ -201,8 +200,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have class "sort-desc" if sortDirection is set to desc', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true,
 				sortDirection: gridConstants.SORT_TYPES.DESC
 			});
@@ -213,15 +212,15 @@ describe('GridHeaderCell', () => {
 		it('should call the onSort callback when sortDirection is set and the label is clicked', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				canSort: true,
 				onSort() {
 					testVar = 'test';
 				}
 			});
 
-			window.control.sortDirection(gridConstants.SORT_TYPES.ASC);
+			testUtil.control.sortDirection(gridConstants.SORT_TYPES.ASC);
 			testUtil.simulateClick(document.querySelector('.heading'));
 
 			assert.equal(testVar, 'test');
@@ -237,8 +236,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should build a tag control when filterType is set to AUTO_COMPLETE', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE
 			});
 
@@ -248,8 +247,8 @@ describe('GridHeaderCell', () => {
 		it('should call the onGetFilterOptions callback when filterType is set to AUTO_COMPLETE', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
 					testVar = 'test';
 					callback(['test']);
@@ -263,8 +262,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should build a picker control when filterType is set to DROPDOWN', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.DROPDOWN
 			});
 
@@ -274,8 +273,8 @@ describe('GridHeaderCell', () => {
 		it('should call the onGetFilterOptions callback when filterType is set to DROPDOWN', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
 					testVar = 'test';
 					callback([]);
@@ -287,8 +286,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should build a picker control when filterType is set to DATE', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.DATE
 			});
 
@@ -296,31 +295,31 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should set the width of a picker control when filterType is set to DATE and resize is called', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.DATE,
 				width: '100px'
 			});
 
-			window.control.resize();
+			testUtil.control.resize();
 
 			assert.equal(getComputedStyle(document.querySelector('.grouped-buttons')).width, '100px');
 		});
 
 		it('should remove all filter controls when filterType is set back to NONE', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.DATE
 			});
 
-			window.control.filterType(gridConstants.FILTER_TYPES.NONE);
+			testUtil.control.filterType(gridConstants.FILTER_TYPES.NONE);
 
 			assert.equal(document.querySelectorAll('.form-control').length, 0);
 		});
 
 		it('should build two text controls when filterType is set to NUMBER', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.NUMBER,
 				filterType: gridConstants.FILTER_TYPES.NUMBER
 			});
@@ -329,8 +328,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have default widths set on the two filters when filterType is set to NUMBER', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.NUMBER,
 				filterType: gridConstants.FILTER_TYPES.NUMBER,
 				width: '100px'
@@ -341,14 +340,14 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have equal widths set on the two NUMBER filters after resize is called when filterType is set to NUMBER', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.NUMBER,
 				filterType: gridConstants.FILTER_TYPES.NUMBER,
 				width: '200px'
 			});
 
-			window.control.resize(true);
+			testUtil.control.resize(true);
 
 			assert.equal(getComputedStyle(document.querySelectorAll('.text-input')[0]).width, '98px');
 			assert.equal(getComputedStyle(document.querySelectorAll('.text-input')[1]).width, '98px');
@@ -359,7 +358,7 @@ describe('GridHeaderCell', () => {
 		testUtil.testMethod({
 			methodName: 'filter',
 			defaultSettings: {
-				container: window.testContainer
+				container: testUtil.container
 			},
 			defaultValue: '',
 			testValue: 'test',
@@ -369,14 +368,14 @@ describe('GridHeaderCell', () => {
 		it('should call the onFilter callback once when the filter method is set', () => {
 			let testVar = 0;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onFilter() {
 					testVar++;
 				}
 			});
 
-			window.control.filter('asdf');
+			testUtil.control.filter('asdf');
 
 			assert.equal(testVar, 1);
 		});
@@ -384,22 +383,22 @@ describe('GridHeaderCell', () => {
 		it('should call the onFilter callback once when the filter method is set and filterType is AUTO_COMPLETE', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
 			});
 
-			window.control.filter('asdf');
+			testUtil.control.filter('asdf');
 
 			assert.equal(testVar, 'asdf');
 		});
 
 		it('should return a filter when an AUTO_COMPLETE filter control is set', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
 				onFilter() {
 				}
@@ -408,14 +407,14 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(document.querySelector('.tags-list-container'));
 			addTag('test1');
 
-			assert.equal(window.control.filter(), 'test1');
+			assert.equal(testUtil.control.filter(), 'test1');
 		});
 
 		it('should call the onFilter callback when an AUTO_COMPLETE filter control is set', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
 				onFilter() {
 					testVar = 'test';
@@ -431,22 +430,22 @@ describe('GridHeaderCell', () => {
 		it('should call the onFilter callback once when the filter method is set and filterType is DROPDOWN', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.DROPDOWN,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
 			});
 
-			window.control.filter('asdf');
+			testUtil.control.filter('asdf');
 
 			assert.equal(testVar, 'asdf');
 		});
 
 		it('should return a filter value when a DROPDOWN filter control is set', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
 					callback(['test']);
 				}
@@ -456,14 +455,14 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(document.querySelector('.popup-button'));
 			testUtil.simulateClick(document.querySelector('.menu .heading'));
 
-			assert.equal(window.control.filter(), 'test');
+			assert.equal(testUtil.control.filter(), 'test');
 		});
 
 		it('should call the onFilter callback when a DROPDOWN filter control is set', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onFilter() {
 					testVar = 'test';
 				},
@@ -482,15 +481,15 @@ describe('GridHeaderCell', () => {
 		it('should call the onFilter callback once when the filter method is set and filterType is NUMBER', () => {
 			let testVar = 0;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				filterType: gridConstants.FILTER_TYPES.NUMBER,
 				onFilter() {
 					testVar++;
 				}
 			});
 
-			window.control.filter('asdf');
+			testUtil.control.filter('asdf');
 
 			assert.equal(testVar, 1);
 		});
@@ -498,12 +497,12 @@ describe('GridHeaderCell', () => {
 		it('should return a filter value when a NUMBER filter control is set', () => {
 			let inputs;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container
 			})
 				.filterType(gridConstants.FILTER_TYPES.NUMBER);
 
-			inputs = query.all('input');
+			inputs = testUtil.all('input');
 
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
@@ -511,9 +510,9 @@ describe('GridHeaderCell', () => {
 			inputs[1].value = '10';
 			testUtil.trigger(inputs[1], 'change');
 
-			return testUtil.delay(210)
+			return wait(210)
 				.then(() => {
-					assert.equal(window.control.filter(), '5,10');
+					assert.equal(testUtil.control.filter(), '5,10');
 				});
 		});
 
@@ -521,15 +520,15 @@ describe('GridHeaderCell', () => {
 			let testVar = '';
 			let inputs;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
 			})
 				.filterType(gridConstants.FILTER_TYPES.NUMBER);
 
-			inputs = query.all('input');
+			inputs = testUtil.all('input');
 
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
@@ -537,7 +536,7 @@ describe('GridHeaderCell', () => {
 			inputs[1].value = '10';
 			testUtil.trigger(inputs[1], 'change');
 
-			return testUtil.delay(210)
+			return wait(210)
 				.then(() => {
 					assert.equal(testVar, '5,10');
 				});
@@ -547,20 +546,20 @@ describe('GridHeaderCell', () => {
 			let testVar = '';
 			let inputs;
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
 			})
 				.filterType(gridConstants.FILTER_TYPES.NUMBER);
 
-			inputs = query.all('input');
+			inputs = testUtil.all('input');
 
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					inputs[0].value = '';
 					testUtil.trigger(inputs[0], 'change');
@@ -581,40 +580,40 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should NOT have a contextmenu if selectableColumns is not set and canSort is false', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: false,
 				selectableColumns: []
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.context-menu').length, 0);
 				});
 		});
 
 		it('should have three options in the contextmenu if selectableColumns is not set and canSort is true', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				selectableColumns: []
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading').length, 3);
 				});
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to two columns', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
@@ -626,17 +625,17 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
 				});
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to three columns but one doesn\'t have a title', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
@@ -650,17 +649,17 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
 				});
 		});
 
 		it('should have a checked checkbox in the contextmenu if one of the selectableColumns has isHidden set to false', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				selectableColumns: [{
@@ -678,9 +677,9 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading.selected').length, 1);
 				});
@@ -689,8 +688,8 @@ describe('GridHeaderCell', () => {
 		it('should call settings.onColumnChange when the fourth option in the context menu is clicked', () => {
 			let testVar = '';
 
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				onColumnChange(itemID) {
@@ -711,9 +710,9 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.menu .heading')[3]);
 
@@ -722,53 +721,53 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.ASC when the first option in the context menu is clicked', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.menu .heading')[0]);
 
-					assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
 				});
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.DESC when the second option in the context menu is clicked', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.menu .heading')[1]);
 
-					assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
 				});
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.NONE when the third option in the context menu is clicked', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				label: 'column label',
 				canSort: true
 			});
 
-			testUtil.trigger(window.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.menu .heading')[2]);
 
-					assert.equal(window.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
 				});
 		});
 	});
@@ -781,8 +780,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have a checked checkbox if dataType is set to checkbox and isAllRowsSelected is true', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
 				isAllRowsSelected: true
 			});
@@ -791,33 +790,33 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have an unchecked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
 				isAllRowsSelected: true
 			});
 
-			window.control.isAllRowsSelected(false);
+			testUtil.control.isAllRowsSelected(false);
 
 			assert.equal(document.querySelector('input[type=checkbox]').checked, false);
 		});
 
 		it('should have a checked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false then true', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
 			});
 
-			window.control.isAllRowsSelected(true);
-			window.control.isAllRowsSelected(false);
-			window.control.isAllRowsSelected(true);
+			testUtil.control.isAllRowsSelected(true);
+			testUtil.control.isAllRowsSelected(false);
+			testUtil.control.isAllRowsSelected(true);
 
 			assert.equal(document.querySelector('input[type=checkbox]').checked, true);
 		});
 
 		it('should not throw an error if isAllRowsSelected is set when the datatype is something other than checkbox', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.NUMBER,
 				isAllRowsSelected: true
 			});
@@ -834,8 +833,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should have a checkbox with indeterminate set to true if dataType is set to checkbox and isSomeRowsSelected is true', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
 				isSomeRowsSelected: true
 			});
@@ -844,8 +843,8 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should not throw an error if isSomeRowsSelected is set when the datatype is something other than checkbox', () => {
-			window.control = new GridHeaderCell({
-				container: window.testContainer,
+			testUtil.control = new GridHeaderCell({
+				container: testUtil.container,
 				dataType: gridConstants.COLUMN_TYPES.NUMBER,
 				isSomeRowsSelected: true
 			});

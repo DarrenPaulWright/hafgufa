@@ -4,18 +4,17 @@ import { CheckBoxes } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(CheckBoxes);
-const formControlTests = new FormControlTests(CheckBoxes, testUtil, {
-	mainCssClass: 'checkboxes'
-});
-
 describe('CheckBoxes', () => {
+	const testUtil = new TestUtil(CheckBoxes);
+	const formControlTests = new FormControlTests(CheckBoxes, testUtil, {
+		mainCssClass: 'checkboxes'
+	});
 
 	formControlTests.run(undefined, undefined, {
 		onChange: {
 			buildControl: function() {
-				window.control = new CheckBoxes({
-					container: window.testContainer,
+				testUtil.control = new CheckBoxes({
+					container: testUtil.container,
 					values: [{
 						content: 'option1',
 						value: '1',
@@ -32,16 +31,16 @@ describe('CheckBoxes', () => {
 
 	describe('Values', () => {
 		it('should have a default value of an empty array', () => {
-			window.control = new CheckBoxes({
-				container: window.testContainer
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container
 			});
 
-			assert.deepEqual(window.control.value(), []);
+			assert.deepEqual(testUtil.control.value(), []);
 		});
 
 		it('should have a value that matches the checked items provided when instantiated', () => {
-			window.control = new CheckBoxes({
-				container: window.testContainer,
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -61,14 +60,14 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			assert.deepEqual(window.control.value(), ['1', '3']);
+			assert.deepEqual(testUtil.control.value(), ['1', '3']);
 		});
 
 		it('should call the onChange callback when a checkbox is clicked', () => {
 			let testVar = '';
 
-			window.control = new CheckBoxes({
-				container: window.testContainer,
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -87,8 +86,8 @@ describe('CheckBoxes', () => {
 		it('should call the onChecked callback when a checkbox is clicked', () => {
 			let testVar = '';
 
-			window.control = new CheckBoxes({
-				container: window.testContainer,
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -107,8 +106,8 @@ describe('CheckBoxes', () => {
 		it('should call the onUnChecked callback when a checkbox is clicked twice', () => {
 			let testVar = '';
 
-			window.control = new CheckBoxes({
-				container: window.testContainer,
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -128,8 +127,8 @@ describe('CheckBoxes', () => {
 		it('should call the onChecked callback with an event when a checkbox is clicked', () => {
 			let testVar = '';
 
-			window.control = new CheckBoxes({
-				container: window.testContainer,
+			testUtil.control = new CheckBoxes({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',

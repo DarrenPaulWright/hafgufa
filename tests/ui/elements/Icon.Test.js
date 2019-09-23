@@ -3,24 +3,24 @@ import { Icon, ICON_SIZES } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Icon);
-const controlTests = new ControlTests(Icon, testUtil);
-
 describe('Icon', () => {
+	const testUtil = new TestUtil(Icon);
+	const controlTests = new ControlTests(Icon, testUtil);
+
 	controlTests.run(['width', 'height']);
 
 	describe('.icon', () => {
 		it('should have a span with classes "fa" and "fa-fw" if no icon is set', () => {
-			window.control = new Icon({
-				container: window.testContainer
+			testUtil.control = new Icon({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.icon').length, 1);
 		});
 
 		it('should have a span with class "fa-cog" if icon is set to "cog"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: 'cog'
 			});
 
@@ -28,8 +28,8 @@ describe('Icon', () => {
 		});
 
 		it('should have a span with class "fa-stack" and two inner spans with respective classes "fa-circle" and "fa-plus" if icon is set to "circle;plus"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: 'circle;plus'
 			});
 
@@ -41,8 +41,8 @@ describe('Icon', () => {
 		});
 
 		it('should have appropriate spans if icon is set to "cog;[plus-circle]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: 'cog;[plus-circle]'
 			});
 
@@ -54,8 +54,8 @@ describe('Icon', () => {
 		});
 
 		it('should have appropriate spans if icon is set to "cog;[circle:plus-circle]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: 'cog;[circle:plus-circle]'
 			});
 
@@ -73,8 +73,8 @@ describe('Icon', () => {
 
 	describe('.icon unicode', () => {
 		it('should have a span with the proper unicode char if icon is set to ""', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: ''
 			});
 
@@ -82,8 +82,8 @@ describe('Icon', () => {
 		});
 
 		it('should have a span with class "fa-stack" and two inner spans with respective text "" and "" if icon is set to ";"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: ';'
 			});
 
@@ -95,8 +95,8 @@ describe('Icon', () => {
 		});
 
 		it('should have appropriate spans if icon is set to ";[]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: ';[]'
 			});
 
@@ -108,8 +108,8 @@ describe('Icon', () => {
 		});
 
 		it('should have appropriate spans if icon is set to ";[:]"', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				icon: ';[:]'
 			});
 
@@ -127,16 +127,16 @@ describe('Icon', () => {
 
 	describe('.size', () => {
 		it('should have a span with class "fa-lg"', () => {
-			window.control = new Icon({
-				container: window.testContainer
+			testUtil.control = new Icon({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.icon-lg').length, 1);
 		});
 
 		it('should have a span with class "fa-4x" if size is set to ICON_SIZES.FOUR_TIMES', () => {
-			window.control = new Icon({
-				container: window.testContainer,
+			testUtil.control = new Icon({
+				container: testUtil.container,
 				size: ICON_SIZES.FOUR_TIMES
 			});
 

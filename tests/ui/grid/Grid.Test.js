@@ -4,17 +4,16 @@ import { Grid } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Grid);
-const controlBaseTests = new ControlTests(Grid, testUtil);
-
 describe('Grid', () => {
+	const testUtil = new TestUtil(Grid);
+	const controlBaseTests = new ControlTests(Grid, testUtil);
 
 	controlBaseTests.run();
 
 	describe('AddRow', () => {
 		it('should be able to add a simple row without column definitions', () => {
 			const options = {
-				container: window.testContainer
+				container: testUtil.container
 			};
 			const rows = [];
 			const rowData = {
@@ -26,15 +25,15 @@ describe('Grid', () => {
 			});
 			rows.push(rowData);
 
-			window.control = new Grid(options);
+			testUtil.control = new Grid(options);
 
-			window.control.addRow(rowData);
-			assert.equal(window.control.getRows().length, rows.length);
+			testUtil.control.addRow(rowData);
+			assert.equal(testUtil.control.getRows().length, rows.length);
 		});
 
 		it('should ', () => {
 			const options = {
-				container: window.testContainer,
+				container: testUtil.container,
 				columns: [{
 					title: 'test',
 					type: 'text',
@@ -50,17 +49,17 @@ describe('Grid', () => {
 				}]
 			};
 
-			window.control = new Grid(options);
+			testUtil.control = new Grid(options);
 
-			window.control.addRow(rowData);
-			const row = window.control.getRows();
+			testUtil.control.addRow(rowData);
+			const row = testUtil.control.getRows();
 
 			assert.equal(row[0].cells[0].text, 'test');
 		});
 
 		it('runAddRow_DateColumn_FormattedDate', () => {
 			const options = {
-				container: window.testContainer,
+				container: testUtil.container,
 				columns: [{
 					type: 'date'
 				}]
@@ -74,16 +73,16 @@ describe('Grid', () => {
 				text: '2013-02-08'
 			});
 
-			window.control = new Grid(options);
+			testUtil.control = new Grid(options);
 
-			window.control.addRow(rowData);
-			const row = window.control.getRows();
+			testUtil.control.addRow(rowData);
+			const row = testUtil.control.getRows();
 			assert.equal(row[0].cells[0].text, '02/08/2013');
 		});
 
 		it('runAddRow_DateColumn_FormattedDateTime', () => {
 			const options = {
-				container: window.testContainer,
+				container: testUtil.container,
 				columns: [{
 					type: 'datetime'
 				}]
@@ -96,10 +95,10 @@ describe('Grid', () => {
 				text: '2013-02-08'
 			});
 
-			window.control = new Grid(options);
+			testUtil.control = new Grid(options);
 
-			window.control.addRow(rowData);
-			const row = window.control.getRows();
+			testUtil.control.addRow(rowData);
+			const row = testUtil.control.getRows();
 			assert.equal(row[0].cells[0].text, '02/08/2013');
 		});
 	});
@@ -107,7 +106,7 @@ describe('Grid', () => {
 	describe('AddRows', () => {
 		it('runAddRows', () => {
 			const options = {
-				container: window.testContainer
+				container: testUtil.container
 			};
 
 			const rows = [];
@@ -123,10 +122,10 @@ describe('Grid', () => {
 				rows.push(rowData);
 			}
 
-			window.control = new Grid(options);
-			window.control.addRows(rows);
+			testUtil.control = new Grid(options);
+			testUtil.control.addRows(rows);
 
-			assert.equal(window.control.getRows().length, rows.length);
+			assert.equal(testUtil.control.getRows().length, rows.length);
 		});
 	});
 });

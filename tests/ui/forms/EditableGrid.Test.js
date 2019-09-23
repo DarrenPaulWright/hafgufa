@@ -1,3 +1,4 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { HUNDRED_PERCENT } from 'type-enforcer';
 import { EditableGrid } from '../../../src';
@@ -5,17 +6,16 @@ import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(EditableGrid);
-const formControlTests = new FormControlTests(EditableGrid, testUtil);
-
 describe('EditableGrid', () => {
+	const testUtil = new TestUtil(EditableGrid);
+	const formControlTests = new FormControlTests(EditableGrid, testUtil);
 
 	formControlTests.run(['width']);
 
 	describe('Dialogs', () => {
 		it('should display a dialog when the "Add New" button is clicked', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer
+			testUtil.control = new EditableGrid({
+				container: testUtil.container
 			});
 
 			testUtil.simulateClick(document.querySelector('.add-new-button'));
@@ -24,8 +24,8 @@ describe('EditableGrid', () => {
 		});
 
 		it('should display a dialog when a row is clicked', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				width: HUNDRED_PERCENT,
 				columns: [{
 					title: 'test',
@@ -34,14 +34,14 @@ describe('EditableGrid', () => {
 				}]
 			});
 
-			window.control.value([{
+			testUtil.control.value([{
 				rowID: '1',
 				values: [{
 					text: 'asdf'
 				}]
 			}]);
 
-			return testUtil.delay(1)
+			return wait(1)
 				.then(() => {
 					testUtil.simulateClick(document.querySelector('.clickable'));
 
@@ -50,8 +50,8 @@ describe('EditableGrid', () => {
 		});
 
 		it('should edit the same row that is clicked', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				width: HUNDRED_PERCENT,
 				columns: [{
 					type: gridConstants.COLUMN_TYPES.TEXT,
@@ -59,7 +59,7 @@ describe('EditableGrid', () => {
 				}]
 			});
 
-			window.control.value([{
+			testUtil.control.value([{
 				rowID: '1',
 				values: [{
 					text: 'text 1'
@@ -76,7 +76,7 @@ describe('EditableGrid', () => {
 				}]
 			}]);
 
-			return testUtil.delay(1)
+			return wait(1)
 				.then(() => {
 					testUtil.simulateClick(document.querySelectorAll('.grid-row')[2]);
 
@@ -88,8 +88,8 @@ describe('EditableGrid', () => {
 
 	describe('SingleAndMultiOptionPickers', () => {
 		it('should be able to save values from single select pickers', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				columns: [{
 					title: 'test',
 					type: 'text',
@@ -118,7 +118,7 @@ describe('EditableGrid', () => {
 			// open the "add new" dialog
 			document.querySelector('.add-new-button').click();
 
-			return testUtil.delay(100)
+			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
 					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
@@ -126,13 +126,13 @@ describe('EditableGrid', () => {
 					//close the dialog
 					document.querySelector('.action-button').click();
 
-					assert.equal(window.control.value()[0].values[0].text, 'test option 2');
+					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
 		});
 
 		it('should be able to save values from multi select pickers', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				columns: [{
 					title: 'test',
 					type: 'text',
@@ -161,7 +161,7 @@ describe('EditableGrid', () => {
 			// open the "add new" dialog
 			document.querySelector('.add-new-button').click();
 
-			return testUtil.delay(100)
+			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
 					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
@@ -169,13 +169,13 @@ describe('EditableGrid', () => {
 					//close the dialog
 					document.querySelector('.action-button').click();
 
-					assert.equal(window.control.value()[0].values[0].text, 'test option, test option 2');
+					assert.equal(testUtil.control.value()[0].values[0].text, 'test option, test option 2');
 				});
 		});
 
 		it('should be able to save values from single select pickers when single and multi select pickers are in different columns', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				columns: [{
 					title: 'test',
 					type: 'text',
@@ -226,7 +226,7 @@ describe('EditableGrid', () => {
 			// open the "add new" dialog
 			document.querySelector('.add-new-button').click();
 
-			return testUtil.delay(100)
+			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
 					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
@@ -234,13 +234,13 @@ describe('EditableGrid', () => {
 					//close the dialog
 					document.querySelector('.action-button').click();
 
-					assert.equal(window.control.value()[0].values[0].text, 'test option 2');
+					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
 		});
 
 		it('should be able to save values from multi select pickers when single and multi select pickers are in different columns', () => {
-			window.control = new EditableGrid({
-				container: window.testContainer,
+			testUtil.control = new EditableGrid({
+				container: testUtil.container,
 				columns: [{
 					title: 'test',
 					type: 'text',
@@ -291,7 +291,7 @@ describe('EditableGrid', () => {
 			// open the "add new" dialog
 			document.querySelector('.add-new-button').click();
 
-			return testUtil.delay(100)
+			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
 					document.querySelectorAll('.grouped-buttons button')[2].click();
@@ -299,7 +299,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					document.querySelector('.action-button').click();
 
-					assert.equal(window.control.value()[0].values[1].text, 'test option, test option 2');
+					assert.equal(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
 				});
 		});
 	});

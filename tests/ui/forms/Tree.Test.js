@@ -1,22 +1,22 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { PIXELS } from 'type-enforcer';
 import { Tree } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(Tree);
-const formControlTests = new FormControlTests(Tree, testUtil, {
-	mainCssClass: 'tree',
-	extraSettings: {
-		branches: [{
-			ID: '1',
-			title: 'test',
-			isMultiSelect: false
-		}]
-	}
-});
-
 describe('Tree', () => {
+	const testUtil = new TestUtil(Tree);
+	const formControlTests = new FormControlTests(Tree, testUtil, {
+		mainCssClass: 'tree',
+		extraSettings: {
+			branches: [{
+				ID: '1',
+				title: 'test',
+				isMultiSelect: false
+			}]
+		}
+	});
 
 	formControlTests.run(['stopPropagation'], ['focus']);
 
@@ -58,7 +58,7 @@ describe('Tree', () => {
 		testUtil.testMethod({
 			methodName: 'branches',
 			defaultSettings: {
-				container: window.testContainer
+				container: testUtil.container
 			},
 			defaultValue: [],
 			testValue: [{
@@ -68,28 +68,28 @@ describe('Tree', () => {
 		});
 
 		it('should have an "expander" div if there are nested branches', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: nestedBranches
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading button').length, 1);
 				});
 		});
 
 		it('should display child branches when an expandable branch is expanded', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: nestedBranches
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					testUtil.simulateClick(document.querySelector('.heading button'));
 
-					return testUtil.defer();
+					return wait();
 				})
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading').length, 6);
@@ -97,57 +97,57 @@ describe('Tree', () => {
 		});
 
 		it('should NOT display child branches when an expandable branch is expanded and contracted', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: nestedBranches
 			});
 
 			testUtil.simulateClick(document.querySelector('.heading .expander.expandable'));
 			testUtil.simulateClick(document.querySelector('.heading .expander.expandable'));
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading').length, 3);
 				});
 		});
 
 		it('should hide all expanders if none of the branches have children', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: flatBranches
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading .expander').length, 0);
 				});
 		});
 
 		it('should hide all checkboxes if none of the branches are multi select', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: flatBranches
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading .checkboxes').length, 0);
 				});
 		});
 
 		it('should only have one heading if branches are updated to one branch after more', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: flatBranches
 			});
 
-			window.control.branches([{
+			testUtil.control.branches([{
 				ID: '1',
 				title: 'Item 1',
 				isMultiSelect: false
 			}]);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.heading').length, 1);
 				});
@@ -180,30 +180,30 @@ describe('Tree', () => {
 		}];
 
 		it('should have a value of "1" if the branch with ID of 1 is clicked', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
 			testUtil.simulateClick(document.querySelector('.heading'));
 
-			assert.equal(window.control.value()[0], 1);
+			assert.equal(testUtil.control.value()[0], 1);
 		});
 
 		it('should have a value of "1" if the branch with ID of 1 is clicked and the branch doesn\'t have a checkbox', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: flatBranches
 			});
 
 			testUtil.simulateClick(document.querySelector('.heading'));
 
-			assert.equal(window.control.value()[0], 1);
+			assert.equal(testUtil.control.value()[0], 1);
 		});
 
 		it('should NOT have a value if a branch is clicked twice', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				isMultiSelect: true,
 				branches: branches
 			});
@@ -211,52 +211,52 @@ describe('Tree', () => {
 			testUtil.simulateClick(document.querySelector('.heading'));
 			testUtil.simulateClick(document.querySelector('.heading'));
 
-			assert.equal(window.control.value().length, 0);
+			assert.equal(testUtil.control.value().length, 0);
 		});
 
 		it('should have a value of [1] if the value is set to [1]', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
-			window.control.value([1]);
+			testUtil.control.value([1]);
 
-			assert.equal(window.control.value()[0], 1);
+			assert.equal(testUtil.control.value()[0], 1);
 		});
 
 		it('should have a value of [1] if the value is set to the number 1', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
-			window.control.value(1);
+			testUtil.control.value(1);
 
-			assert.equal(window.control.value()[0], 1);
+			assert.equal(testUtil.control.value()[0], 1);
 		});
 
 		it('should have a value of [1,2] if the value is set to a string "1,2"', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
-			window.control.value('1,2');
+			testUtil.control.value('1,2');
 
-			assert.isTrue(window.control.value()[0] === '1' && window.control.value()[1] === '2');
+			assert.isTrue(testUtil.control.value()[0] === '1' && testUtil.control.value()[1] === '2');
 		});
 
 		it('should have a value of [] if the value is set to the number 1 and then an empty string', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
-			window.control.value(1);
-			window.control.value('');
+			testUtil.control.value(1);
+			testUtil.control.value('');
 
-			assert.deepEqual(window.control.value(), []);
+			assert.deepEqual(testUtil.control.value(), []);
 		});
 	});
 
@@ -282,27 +282,28 @@ describe('Tree', () => {
 		it('should have a height three times that of a branch if there are three branches', () => {
 			let rowHeight;
 
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					rowHeight = parseFloat(document.querySelector('.heading').style.height, 10);
 
-					assert.equal(Math.round(parseFloat(getComputedStyle(document.querySelector('.virtual-list')).height)), Math.round(rowHeight * 3));
+					assert.equal(Math.round(parseFloat(getComputedStyle(document.querySelector('.virtual-list')).height)), Math.round(rowHeight *
+						3));
 				});
 		});
 
 		it('should have a height 50px if the height is set to 50px even if there are more rows than fit', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches,
 				height: '50px'
 			});
 
-			window.control.resize();
+			testUtil.control.resize();
 
 			assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, '50px');
 		});
@@ -310,14 +311,14 @@ describe('Tree', () => {
 		it('should have a height three times that of a branch if the height is set to 50px and then fitHeightToContents is called', () => {
 			let rowHeight;
 
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: branches,
 				height: '50px'
 			});
 
-			window.control.fitHeightToContents();
-			return testUtil.defer()
+			testUtil.control.fitHeightToContents();
+			return wait()
 				.then(() => {
 					rowHeight = parseFloat(document.querySelector('.heading').style.height);
 
@@ -326,8 +327,8 @@ describe('Tree', () => {
 		});
 
 		it('should set the height of the virtual list control to the same as itself if there are more rows than fit in the height provided', () => {
-			window.control = new Tree({
-				container: window.testContainer,
+			testUtil.control = new Tree({
+				container: testUtil.container,
 				branches: longSetOfBranches,
 				height: '50px'
 			});

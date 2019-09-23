@@ -3,20 +3,20 @@ import { DragContainer } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(DragContainer);
-const controlTests = new ControlTests(DragContainer, testUtil);
-
 describe('DragContainer', () => {
+	const testUtil = new TestUtil(DragContainer);
+	const controlTests = new ControlTests(DragContainer, testUtil);
+
 	controlTests.run([], ['focus']);
 
 	describe('.stretch', () => {
 		it('should not blow up', () => {
-			window.control = new DragContainer({
-				container: window.testContainer,
+			testUtil.control = new DragContainer({
+				container: testUtil.container,
 				canDrag: true
 			});
 
-			assert.isOk(window.control.stretch('fit'));
+			assert.isOk(testUtil.control.stretch('fit'));
 		});
 	});
 });

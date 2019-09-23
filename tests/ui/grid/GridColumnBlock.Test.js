@@ -1,16 +1,15 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import shortid from 'shortid';
 import { CONTEXT_MENU_EVENT } from '../../../src';
 import GridColumnBlock from '../../../src/ui/grid/GridColumnBlock';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(GridColumnBlock);
-const controlBaseTests = new ControlTests(GridColumnBlock, testUtil);
-
 describe('GridColumnBlock', () => {
+	const testUtil = new TestUtil(GridColumnBlock);
+	const controlBaseTests = new ControlTests(GridColumnBlock, testUtil);
 
 	controlBaseTests.run();
 
@@ -42,8 +41,8 @@ describe('GridColumnBlock', () => {
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to two columns', () => {
-			window.control = new GridColumnBlock({
-				container: window.testContainer,
+			testUtil.control = new GridColumnBlock({
+				container: testUtil.container,
 				columns: [{
 					ID: 'test',
 					title: 'test',
@@ -65,7 +64,7 @@ describe('GridColumnBlock', () => {
 
 			testUtil.trigger(document.querySelectorAll('.grid-header-cell')[1], CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
 				});
@@ -81,8 +80,8 @@ describe('GridColumnBlock', () => {
 		});
 
 		it('should have a checked checkbox if a column has a dataType set to checkbox and isAllRowsSelected is true', () => {
-			window.control = new GridColumnBlock({
-				container: window.testContainer,
+			testUtil.control = new GridColumnBlock({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
@@ -106,8 +105,8 @@ describe('GridColumnBlock', () => {
 		});
 
 		it('should have a checkbox with indeterminate set to true if one column has a dataType set to checkbox and isSomeRowsSelected is true', () => {
-			window.control = new GridColumnBlock({
-				container: window.testContainer,
+			testUtil.control = new GridColumnBlock({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
@@ -132,8 +131,8 @@ describe('GridColumnBlock', () => {
 				testVar = rowData.rowID + '_trash';
 			};
 
-			window.control = new GridColumnBlock({
-				container: window.testContainer,
+			testUtil.control = new GridColumnBlock({
+				container: testUtil.container,
 				onSelectRow() {
 				},
 				isSelectable: true,
@@ -155,7 +154,7 @@ describe('GridColumnBlock', () => {
 					}]
 				}]);
 
-			window.control.rows([{
+			testUtil.control.rows([{
 				ID: shortid.generate(),
 				rowID: '1',
 				cells: [{
@@ -171,9 +170,9 @@ describe('GridColumnBlock', () => {
 				something: 'another'
 			}]);
 
-			window.control.rows([]);
+			testUtil.control.rows([]);
 
-			window.control.rows([{
+			testUtil.control.rows([{
 				ID: shortid.generate(),
 				rowID: '1',
 				cells: [{
@@ -210,9 +209,9 @@ describe('GridColumnBlock', () => {
 				something: 'mini'
 			}]);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					testUtil.simulateClick(query.all('button')[5]);
+					testUtil.simulateClick(testUtil.all('button')[5]);
 
 					assert.equal(testVar, '3_trash');
 				});

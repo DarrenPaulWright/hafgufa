@@ -3,27 +3,26 @@ import GridFooter from '../../../src/ui/grid/GridFooter';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(GridFooter);
-const controlBaseTests = new ControlTests(GridFooter, testUtil, {
-	mainCssClass: 'grid-footer'
-});
-
 describe('GridFooter', () => {
+	const testUtil = new TestUtil(GridFooter);
+	const controlBaseTests = new ControlTests(GridFooter, testUtil, {
+		mainCssClass: 'grid-footer'
+	});
 
 	controlBaseTests.run();
 
 	describe('Init', () => {
 		it('should have a div with class grid-footer-left', () => {
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.grid-footer-left').length, 1);
 		});
 
 		it('should have a div with class grid-footer-right', () => {
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll('.grid-footer-right').length, 1);
@@ -39,8 +38,8 @@ describe('GridFooter', () => {
 		});
 
 		it('should have a string "9 things" when countSuffix is set to "things" and count is 9', () => {
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				count: 9,
 				countSuffix: 'things'
 			});
@@ -58,16 +57,16 @@ describe('GridFooter', () => {
 		});
 
 		it('should have a string "0 items" when count is not set', () => {
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelector('.grid-footer-right').textContent, '0 items');
 		});
 
 		it('should have a string "9 items" when count is set to 9', () => {
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				count: 9
 			});
 
@@ -84,8 +83,8 @@ describe('GridFooter', () => {
 		});
 
 		it('should have a string "0 groups" when groupSuffixes is set to "groups"', () => {
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				groupSuffixes: ['groups']
 			});
 
@@ -102,8 +101,8 @@ describe('GridFooter', () => {
 		});
 
 		it('should have a string "9 groups" when groupSuffixes is set to "groups" and groupCounts is 9', () => {
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				groupSuffixes: ['groups'],
 				groupCounts: [9]
 			});
@@ -125,22 +124,22 @@ describe('GridFooter', () => {
 		});
 
 		it('should have two buttons when showExpandCollapseButtons is called', () => {
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 
 			assert.equal(document.querySelectorAll('.icon-button').length, 2);
 		});
 
 		it('should have two buttons when showExpandCollapseButtons is called twice', () => {
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
-			window.control.showExpandCollapseButtons();
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 
 			assert.equal(document.querySelectorAll('.icon-button').length, 2);
 		});
@@ -148,14 +147,14 @@ describe('GridFooter', () => {
 		it('should call onCollapseAllGroups with false when the expand all button is clicked', () => {
 			let testVar;
 
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				onCollapseAllGroups(doCollapse) {
 					testVar = doCollapse;
 				}
 			});
 
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(document.querySelectorAll('.icon-button')[0]);
 
 			assert.isTrue(testVar === false);
@@ -164,14 +163,14 @@ describe('GridFooter', () => {
 		it('should call onCollapseAllGroups with true when the collapse all button is clicked', () => {
 			let testVar;
 
-			window.control = new GridFooter({
-				container: window.testContainer,
+			testUtil.control = new GridFooter({
+				container: testUtil.container,
 				onCollapseAllGroups(doCollapse) {
 					testVar = doCollapse;
 				}
 			});
 
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(document.querySelectorAll('.icon-button')[1]);
 
 			assert.isTrue(testVar === true);
@@ -180,11 +179,11 @@ describe('GridFooter', () => {
 		it('should not throw an error when the expand all button is clicked', () => {
 			let testVar;
 
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(document.querySelectorAll('.icon-button')[0]);
 
 			assert.isTrue(testVar === undefined);
@@ -193,11 +192,11 @@ describe('GridFooter', () => {
 		it('should not throw an error when the collapse all button is clicked', () => {
 			let testVar;
 
-			window.control = new GridFooter({
-				container: window.testContainer
+			testUtil.control = new GridFooter({
+				container: testUtil.container
 			});
 
-			window.control.showExpandCollapseButtons();
+			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(document.querySelectorAll('.icon-button')[1]);
 
 			assert.isTrue(testVar === undefined);

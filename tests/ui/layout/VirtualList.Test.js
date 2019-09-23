@@ -1,41 +1,41 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer';
 import { Button, dom, Heading, SCROLL_EVENT, VirtualList } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(VirtualList);
-const controlTests = new ControlTests(VirtualList, testUtil, {
-	extraSettings: {
-		itemControl: Button,
-		itemData: [{
-			ID: '1',
-			text: 'test'
-		}]
-	},
-	focusableElement: 'button'
-});
-
-const VIRTUAL_LIST_CLASS = '.virtual-list';
-const VIRTUAL_ITEM_CLASS = '.virtual-item';
-const EMPTY_CONTENT_CLASS = '.empty-content-message';
-
-const testRows = [{
-	ID: '1'
-}, {
-	ID: '2'
-}, {
-	ID: '3'
-}];
-
 describe('VirtualList', () => {
+	const testUtil = new TestUtil(VirtualList);
+	const controlTests = new ControlTests(VirtualList, testUtil, {
+		extraSettings: {
+			itemControl: Button,
+			itemData: [{
+				ID: '1',
+				text: 'test'
+			}]
+		},
+		focusableElement: 'button'
+	});
+
+	const VIRTUAL_LIST_CLASS = '.virtual-list';
+	const VIRTUAL_ITEM_CLASS = '.virtual-item';
+	const EMPTY_CONTENT_CLASS = '.empty-content-message';
+
+	const testRows = [{
+		ID: '1'
+	}, {
+		ID: '2'
+	}, {
+		ID: '3'
+	}];
 
 	controlTests.run(['stopPropagation'], ['focus']);
 
 	describe('InitialLayout', () => {
 		it('should have a css class called ' + VIRTUAL_LIST_CLASS, () => {
-			window.control = new VirtualList({
-				container: window.testContainer
+			testUtil.control = new VirtualList({
+				container: testUtil.container
 			});
 
 			assert.equal(document.querySelectorAll(VIRTUAL_LIST_CLASS).length, 1);
@@ -50,54 +50,54 @@ describe('VirtualList', () => {
 		});
 
 		it('should display the same items that are passed in to the items options', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				height: '100px',
 				itemData: testRows
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 3);
 				});
 		});
 
 		it('should display the same items that are passed in to the items method', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px'
 			})
 				.itemControl(Button)
 				.itemData(testRows);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 3);
 				});
 		});
 
 		it('should display the same items that are passed in to the items method after previous rows', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px'
 			})
 				.itemControl(Button)
 				.itemData(testRows);
 
-			window.control.itemData([{
+			testUtil.control.itemData([{
 				ID: '1'
 			}]);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 1);
 				});
 		});
 
 		it('should display an "empty content" message when there are no items', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				emptyContentMessage: 'No Content'
 			});
 
@@ -105,8 +105,8 @@ describe('VirtualList', () => {
 		});
 
 		it('should NOT display an "empty content" message when there are items', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				emptyContentMessage: 'No Content',
 				height: '100px'
 			})
@@ -119,24 +119,24 @@ describe('VirtualList', () => {
 
 	describe('GetRenderedControls', () => {
 		it('should return three items when getRenderedControls is called', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px',
 				itemControl: Button
 			})
 				.itemData(testRows);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					assert.equal(window.control.getRenderedControls().length, 3);
+					assert.equal(testUtil.control.getRenderedControls().length, 3);
 				});
 		});
 	});
 
 	describe('FitHeightToContents', () => {
 		it('should set the height of the control to the combined height of the items when fitHeightToContents is called', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px',
 				itemSize: '20px',
 				itemControl: Button
@@ -144,19 +144,19 @@ describe('VirtualList', () => {
 				.itemData(testRows)
 				.fitHeightToContents();
 
-			assert.equal(dom.get.height(window.testContainer), 60);
+			assert.equal(dom.get.height(testUtil.container), 60);
 		});
 
 		it('should set the height of the control to the combined height of the items when the height is set to auto', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: AUTO,
 				itemSize: '30px',
 				itemControl: Button
 			})
 				.itemData(testRows);
 
-			assert.equal(dom.get.height(window.testContainer), 90);
+			assert.equal(dom.get.height(testUtil.container), 90);
 		});
 	});
 
@@ -177,12 +177,12 @@ describe('VirtualList', () => {
 		});
 
 		it('should return 0 when extraRenderedItemsRatio is set to something lower than 0', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				extraRenderedItemsRatio: -1
 			});
 
-			assert.equal(window.control.extraRenderedItemsRatio(), 0);
+			assert.equal(testUtil.control.extraRenderedItemsRatio(), 0);
 		});
 	});
 
@@ -196,16 +196,16 @@ describe('VirtualList', () => {
 		});
 
 		it('should return undefined when the itemDefaultSettings is set back to undefined', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemDefaultSettings: {
 					title: 'test'
 				}
 			});
 
-			window.control.itemDefaultSettings(undefined);
+			testUtil.control.itemDefaultSettings(undefined);
 
-			assert.equal(window.control.itemDefaultSettings(), undefined);
+			assert.equal(testUtil.control.itemDefaultSettings(), undefined);
 		});
 	});
 
@@ -222,8 +222,8 @@ describe('VirtualList', () => {
 		it('should execute the onItemRender callback when items are rendered', () => {
 			let testValue = 0;
 
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px',
 				itemControl: Button,
 				onItemRender() {
@@ -239,8 +239,8 @@ describe('VirtualList', () => {
 			let testValue = 0;
 			const button = new Button();
 
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px',
 				itemControl: Button,
 				onItemRender(control) {
@@ -257,8 +257,8 @@ describe('VirtualList', () => {
 		it('should return the row data when the onItemRender callback is executed', () => {
 			let testValue = 0;
 
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				height: '100px',
 				itemControl: Button,
 				onItemRender(control, rowData) {
@@ -267,7 +267,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(testValue.ID, '3');
 				});
@@ -282,8 +282,8 @@ describe('VirtualList', () => {
 		});
 
 		it('should be able to display items of varying height if isVirtualized is set to false', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				isVirtualized: false,
 				onItemRender(button, rowData) {
@@ -297,17 +297,17 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isBelow(renderedControls[0].borderHeight(), renderedControls[2].borderHeight());
 				});
 		});
 
 		it('should NOT be able to display items of varying height if isVirtualized is set to true', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				isVirtualized: true,
 				onItemRender(button, rowData) {
@@ -322,17 +322,17 @@ describe('VirtualList', () => {
 			})
 				.updateItemPositions();
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isTrue(renderedControls[0].borderHeight() === renderedControls[2].borderHeight());
 				});
 		});
 
 		it('should set the height of the control if height is "auto" and isVirtualized is set to false', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				isVirtualized: false,
 				onItemRender(button, rowData) {
@@ -346,7 +346,7 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			assert.isTrue(window.control.borderHeight() > 0);
+			assert.isTrue(testUtil.control.borderHeight() > 0);
 		});
 	});
 
@@ -361,8 +361,8 @@ describe('VirtualList', () => {
 		}
 
 		it('should render no more than two more items than fit in the height of the list', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				onItemRender(button, rowData) {
 					button.label(rowData.text);
@@ -372,17 +372,17 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isBelow(renderedControls.length, 9);
 				});
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				onItemRender(button, rowData) {
 					button.label(rowData.text);
@@ -392,20 +392,20 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			window.control.element().scrollTop = 57;
-			testUtil.trigger(window.control.element(), SCROLL_EVENT);
+			testUtil.control.element().scrollTop = 57;
+			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isBelow(renderedControls.length, 9);
 				});
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a little', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				onItemRender(button, rowData) {
 					button.label(rowData.text);
@@ -415,21 +415,21 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			window.control.element().scrollTop = 357;
-			window.control.element().scrollTop = 300;
-			testUtil.trigger(window.control.element(), SCROLL_EVENT);
+			testUtil.control.element().scrollTop = 357;
+			testUtil.control.element().scrollTop = 300;
+			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isBelow(renderedControls.length, 9);
 				});
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a lot', () => {
-			window.control = new VirtualList({
-				container: window.testContainer,
+			testUtil.control = new VirtualList({
+				container: testUtil.container,
 				itemControl: Button,
 				onItemRender(button, rowData) {
 					button.label(rowData.text);
@@ -439,13 +439,13 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			window.control.element().scrollTop = 357;
-			window.control.element().scrollTop = 100;
-			testUtil.trigger(window.control.element(), SCROLL_EVENT);
+			testUtil.control.element().scrollTop = 357;
+			testUtil.control.element().scrollTop = 100;
+			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
-					const renderedControls = window.control.getRenderedControls();
+					const renderedControls = testUtil.control.getRenderedControls();
 
 					assert.isBelow(renderedControls.length, 9);
 				});

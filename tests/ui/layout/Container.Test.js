@@ -3,10 +3,10 @@ import { Button, Container } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Container);
-const controlTests = new ControlTests(Container, testUtil);
-
 describe('Container', () => {
+	const testUtil = new TestUtil(Container);
+	const controlTests = new ControlTests(Container, testUtil);
+
 	controlTests.run([], ['focus']);
 
 	describe('.get', () => {
@@ -15,12 +15,12 @@ describe('Container', () => {
 			const button = new Button({
 				ID: buttonId
 			});
-			window.control = new Container({
-				container: window.testContainer,
+			testUtil.control = new Container({
+				container: testUtil.container,
 				content: button
 			});
 
-			assert.equal(window.control.get(buttonId), button);
+			assert.equal(testUtil.control.get(buttonId), button);
 		});
 
 		it('should find a control inside another container', () => {
@@ -28,15 +28,15 @@ describe('Container', () => {
 			const button = new Button({
 				ID: buttonId
 			});
-			window.control = new Container({
-				container: window.testContainer,
+			testUtil.control = new Container({
+				container: testUtil.container,
 				content: {
 					control: Container,
 					content: button
 				}
 			});
 
-			assert.equal(window.control.get(buttonId), button);
+			assert.equal(testUtil.control.get(buttonId), button);
 		});
 	});
 
@@ -50,12 +50,12 @@ describe('Container', () => {
 			const button2 = new Button({
 				ID: buttonId2
 			});
-			window.control = new Container({
-				container: window.testContainer,
+			testUtil.control = new Container({
+				container: testUtil.container,
 				content: button
 			});
 
-			window.control.append(button2);
+			testUtil.control.append(button2);
 
 			assert.equal(document.querySelectorAll('button')[1], button2.element());
 		});
@@ -71,12 +71,12 @@ describe('Container', () => {
 			const button2 = new Button({
 				ID: buttonId2
 			});
-			window.control = new Container({
-				container: window.testContainer,
+			testUtil.control = new Container({
+				container: testUtil.container,
 				content: button
 			});
 
-			window.control.prepend(button2);
+			testUtil.control.prepend(button2);
 
 			assert.equal(document.querySelectorAll('button')[0], button2.element());
 		});

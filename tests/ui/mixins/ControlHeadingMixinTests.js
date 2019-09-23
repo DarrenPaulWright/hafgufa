@@ -1,5 +1,4 @@
 import { assert } from 'chai';
-import query from '../../query';
 import ControlTests from '../ControlTests';
 
 const TEST_ID = 'testID';
@@ -20,21 +19,21 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.icon = () => {
 		describe('ControlHeadingAddon .icon', () => {
 			it('should show a font-awesome icon as provided', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: 'Test Title',
 					headingIcon: TEST_ICON_FA,
-					container: window.testContainer
+					container: testUtil.container
 				});
 
 				assert.equal(document.querySelectorAll('.fa-' + TEST_ICON_FA).length, 1);
 			});
 
 			it('should NOT have an icon element if icon is set to an empty string', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					headingIcon: '',
-					container: window.testContainer
+					container: testUtil.container
 				});
 
 				assert.equal(document.querySelectorAll('.fa-' + TEST_ICON_FA).length, 0);
@@ -45,20 +44,20 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.title = () => {
 		describe('ControlHeadingAddon .title', () => {
 			it('should show a title as provided', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
-					container: window.testContainer
+					container: testUtil.container
 				});
 
 				assert.equal(document.querySelector(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
 			});
 
 			it('should have an empty title element if the title is set to an empty string', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: '',
-					container: window.testContainer
+					container: testUtil.container
 				});
 
 				assert.equal(document.querySelectorAll('.heading').length, 0);
@@ -69,11 +68,11 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 	self.subTitle = () => {
 		describe('ControlHeadingAddon .subTitle', () => {
 			it('should show a subTitle as provided if a title is also provided', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
 					title: TEST_TITLE,
 					subTitle: SUB_TITLE,
-					container: window.testContainer
+					container: testUtil.container
 				});
 
 				assert.equal(document.querySelector(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
@@ -86,7 +85,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'error',
 				defaultSettings: {
-					container: window.testContainer,
+					container: testUtil.container,
 					title: TEST_TITLE
 				},
 				defaultValue: '',
@@ -95,36 +94,36 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT show an error message if "error" is not called', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
+					container: testUtil.container,
 					title: TEST_TITLE
 				});
 
-				assert.equal(query.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.equal(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 
 			it('should show an error message when "error" is called', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
+					container: testUtil.container,
 					title: TEST_TITLE
 				})
 					.error(ERROR_MESSAGE);
 
-				assert.equal(query.first(ERROR_MESSAGE_ELEMENT_CLASS).textContent, ERROR_MESSAGE_ICON + ERROR_MESSAGE);
+				assert.equal(testUtil.first(ERROR_MESSAGE_ELEMENT_CLASS).textContent, ERROR_MESSAGE_ICON + ERROR_MESSAGE);
 			});
 
 			it('should NOT show an error message when error is set to "" after "error"', () => {
-				window.control = new Control({
+				testUtil.control = new Control({
 					ID: TEST_ID,
-					container: window.testContainer,
+					container: testUtil.container,
 					title: TEST_TITLE
 				})
 					.error(ERROR_MESSAGE)
 					.error('');
 
-				assert.equal(query.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.equal(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 		});
 	};
@@ -136,7 +135,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'singleLine',
 				defaultSettings: {
-					container: window.testContainer
+					container: testUtil.container
 				},
 				defaultValue: false,
 				testValue: true,
@@ -160,8 +159,8 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should have a toolbar in the header if the button option is set', () => {
-				window.control = new Control({
-					container: window.testContainer,
+				testUtil.control = new Control({
+					container: testUtil.container,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
@@ -170,32 +169,32 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to empty array', () => {
-				window.control = new Control({
-					container: window.testContainer,
+				testUtil.control = new Control({
+					container: testUtil.container,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
 
-				window.control.headingButtons([]);
+				testUtil.control.headingButtons([]);
 
 				assert.equal(document.querySelectorAll('.' + TOOLBAR_BASE_CLASS).length, 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to an empty array', () => {
-				window.control = new Control({
-					container: window.testContainer,
+				testUtil.control = new Control({
+					container: testUtil.container,
 					title: 'Test For Buttons',
 					headingButtons: testButton
 				});
 
-				window.control.headingButtons([]);
+				testUtil.control.headingButtons([]);
 
 				assert.equal(document.querySelectorAll('.' + TOOLBAR_BASE_CLASS).length, 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set to an empty array', () => {
-				window.control = new Control({
-					container: window.testContainer,
+				testUtil.control = new Control({
+					container: testUtil.container,
 					title: 'Test For Buttons',
 					headingButtons: []
 				});
@@ -210,7 +209,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'canCollapse',
 				defaultSettings: {
-					container: window.testContainer
+					container: testUtil.container
 				},
 				defaultValue: false,
 				testValue: true
@@ -223,7 +222,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			testUtil.testMethod({
 				methodName: 'isCollapsed',
 				defaultSettings: {
-					container: window.testContainer,
+					container: testUtil.container,
 					canCollapse: true
 				},
 				defaultValue: false,

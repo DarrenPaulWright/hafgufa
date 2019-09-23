@@ -3,23 +3,23 @@ import { Drawer } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Drawer);
-const controlBaseTests = new ControlTests(Drawer, testUtil, {
-	mainCssClass: 'drawer'
-});
-
 describe('Drawer', () => {
+	const testUtil = new TestUtil(Drawer);
+	const controlBaseTests = new ControlTests(Drawer, testUtil, {
+		mainCssClass: 'drawer'
+	});
+
 	controlBaseTests.run();
 
 	beforeEach(() => {
-		window.testContainer.style.width = '1000px';
-		window.testContainer.style.height = '1000px';
+		testUtil.container.style.width = '1000px';
+		testUtil.container.style.height = '1000px';
 	});
 
 	describe('.dock', () => {
 		it('should have a class "top" if set to top', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'top'
 			});
 
@@ -27,8 +27,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a class "right" if set to right', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'right'
 			});
 
@@ -36,8 +36,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a class "bottom" if set to bottom', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'bottom'
 			});
 
@@ -45,8 +45,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a class "left" if set to left', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'left'
 			});
 
@@ -56,8 +56,8 @@ describe('Drawer', () => {
 
 	describe('.canResize', () => {
 		it('should NOT have a resizer if canResize is false', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'top',
 				canResize: false
 			});
@@ -66,8 +66,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "top"', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'top',
 				height: '4rem',
 				canResize: true
@@ -78,8 +78,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "right"', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'right',
 				width: '4rem',
 				canResize: true
@@ -90,8 +90,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "bottom"', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'bottom',
 				height: '4rem',
 				canResize: true
@@ -102,8 +102,8 @@ describe('Drawer', () => {
 		});
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "left"', () => {
-			window.control = new Drawer({
-				container: window.testContainer,
+			testUtil.control = new Drawer({
+				container: testUtil.container,
 				dock: 'left',
 				width: '4rem',
 				canResize: true

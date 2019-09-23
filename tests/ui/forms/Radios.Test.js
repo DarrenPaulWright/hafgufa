@@ -3,10 +3,9 @@ import { Radios } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
-const testUtil = new TestUtil(Radios);
-const formControlTests = new FormControlTests(Radios, testUtil);
-
 describe('Radios', () => {
+	const testUtil = new TestUtil(Radios);
+	const formControlTests = new FormControlTests(Radios, testUtil);
 
 	formControlTests.run();
 
@@ -14,7 +13,7 @@ describe('Radios', () => {
 		testUtil.testMethod({
 			methodName: 'value',
 			defaultSettings: {
-				container: window.testContainer,
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -39,16 +38,16 @@ describe('Radios', () => {
 		});
 
 		it('should have a default value of an empty string', () => {
-			window.control = new Radios({
-				container: window.testContainer
+			testUtil.control = new Radios({
+				container: testUtil.container
 			});
 
-			assert.deepEqual(window.control.value(), '');
+			assert.deepEqual(testUtil.control.value(), '');
 		});
 
 		it('should have a value of 3 when an item of value 3 is checked', () => {
-			window.control = new Radios({
-				container: window.testContainer,
+			testUtil.control = new Radios({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -68,14 +67,14 @@ describe('Radios', () => {
 				}]
 			});
 
-			assert.deepEqual(window.control.value(), '3');
+			assert.deepEqual(testUtil.control.value(), '3');
 		});
 
 		it('should call the onChange callback when a radio is clicked', () => {
 			let testVar = '';
 
-			window.control = new Radios({
-				container: window.testContainer,
+			testUtil.control = new Radios({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',
@@ -94,8 +93,8 @@ describe('Radios', () => {
 		it('should call the onChecked callback when a radio is clicked', () => {
 			let testVar = '';
 
-			window.control = new Radios({
-				container: window.testContainer,
+			testUtil.control = new Radios({
+				container: testUtil.container,
 				values: [{
 					content: 'option1',
 					value: '1',

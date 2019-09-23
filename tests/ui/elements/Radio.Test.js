@@ -1,15 +1,13 @@
 import { assert } from 'chai';
 import { Radio } from '../../../src';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Radio);
-const controlTests = new ControlTests(Radio, testUtil, {
-	mainCssClass: 'radio'
-});
-
 describe('Radio', () => {
+	const testUtil = new TestUtil(Radio);
+	const controlTests = new ControlTests(Radio, testUtil, {
+		mainCssClass: 'radio'
+	});
 
 	controlTests.run(['width', 'height']);
 
@@ -22,12 +20,12 @@ describe('Radio', () => {
 		});
 
 		it('should have an input with attr name', () => {
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				name: 'test'
 			});
 
-			assert.deepEqual(query.first('input').getAttribute('name'), 'test');
+			assert.deepEqual(testUtil.first('input').getAttribute('name'), 'test');
 		});
 	});
 
@@ -40,31 +38,31 @@ describe('Radio', () => {
 		});
 
 		it('should have an input with attr value', () => {
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				value: 'test'
 			});
 
-			assert.deepEqual(query.first('input').getAttribute('value'), 'test');
+			assert.deepEqual(testUtil.first('input').getAttribute('value'), 'test');
 		});
 	});
 
 	describe('.content', () => {
 		it('should NOT have a span if label is not set', () => {
-			window.control = new Radio({
-				container: window.testContainer
+			testUtil.control = new Radio({
+				container: testUtil.container
 			});
 
-			assert.deepEqual(query.count('div'), 0);
+			assert.deepEqual(testUtil.count('div'), 0);
 		});
 
 		it('should have a span with text', () => {
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				content: 'test'
 			});
 
-			assert.deepEqual(query.first('div').textContent, 'test');
+			assert.deepEqual(testUtil.first('div').textContent, 'test');
 		});
 	});
 
@@ -78,12 +76,12 @@ describe('Radio', () => {
 		});
 
 		it('should have an inout with property checked=true', () => {
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				isChecked: true
 			});
 
-			assert.deepEqual(query.first('input').checked, true);
+			assert.deepEqual(testUtil.first('input').checked, true);
 		});
 	});
 
@@ -92,8 +90,8 @@ describe('Radio', () => {
 			let context;
 			let value;
 
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -103,7 +101,7 @@ describe('Radio', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			window.control.isChecked(true);
+			testUtil.control.isChecked(true);
 
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
@@ -113,8 +111,8 @@ describe('Radio', () => {
 			let context;
 			let value;
 
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -124,8 +122,8 @@ describe('Radio', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			window.control.isChecked(true);
-			window.control.isChecked(false);
+			testUtil.control.isChecked(true);
+			testUtil.control.isChecked(false);
 
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
@@ -135,8 +133,8 @@ describe('Radio', () => {
 			let context;
 			let value;
 
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -148,12 +146,12 @@ describe('Radio', () => {
 
 			testUtil.simulateClick(document.querySelector('label'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
 			testUtil.simulateClick(document.querySelector('label'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, false);
 		});
 
@@ -161,8 +159,8 @@ describe('Radio', () => {
 			let context;
 			let value;
 
-			window.control = new Radio({
-				container: window.testContainer,
+			testUtil.control = new Radio({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -174,12 +172,12 @@ describe('Radio', () => {
 
 			testUtil.simulateClick(document.querySelector('input'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
 			testUtil.simulateClick(document.querySelector('input'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, false);
 		});
 	});

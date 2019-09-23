@@ -1,14 +1,12 @@
 import { assert } from 'chai';
 import Moment from 'moment';
 import { Calendar } from '../../../src';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Calendar);
-const controlBaseTests = new ControlTests(Calendar, testUtil);
-
 describe('Calendar', () => {
+	const testUtil = new TestUtil(Calendar);
+	const controlBaseTests = new ControlTests(Calendar, testUtil);
 
 	controlBaseTests.run();
 
@@ -21,122 +19,122 @@ describe('Calendar', () => {
 		});
 
 		it('should return 11 when month is set to anything higher than 11', () => {
-			window.control = new Calendar()
+			testUtil.control = new Calendar()
 				.month(20);
 
-			assert.equal(window.control.month(), 11);
+			assert.equal(testUtil.control.month(), 11);
 		});
 
 		it('should return 0 when month is set to anything lower than 0', () => {
-			window.control = new Calendar()
+			testUtil.control = new Calendar()
 				.month(-3);
 
-			assert.equal(window.control.month(), 0);
+			assert.equal(testUtil.control.month(), 0);
 		});
 
 		it('should change the selected value of the month picker when month is set', () => {
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			window.control.month(0);
+			testUtil.control.month(0);
 
-			assert.equal(query.first('.grouped-buttons .form-button > span').textContent, 'Jan');
+			assert.equal(testUtil.first('.grouped-buttons .form-button > span').textContent, 'Jan');
 		});
 
 		it('should display a different number of buttons with class "different-month" when month is changed to a month with a different length', () => {
 			let initialLength;
 
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			window.control.month(0);
-			initialLength = query.count('.different-month');
+			testUtil.control.month(0);
+			initialLength = testUtil.count('.different-month');
 
-			window.control.month(1);
+			testUtil.control.month(1);
 
-			assert.notEqual(query.count('.different-month'), initialLength);
+			assert.notEqual(testUtil.count('.different-month'), initialLength);
 		});
 
 		it('should select the same month when the user de-selects the current month in the month picker', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 3
 			});
 
-			testUtil.simulateClick(query.first('.grouped-buttons .form-button'));
-			testUtil.simulateClick(query.nth('.popup .heading', 3));
+			testUtil.simulateClick(testUtil.first('.grouped-buttons .form-button'));
+			testUtil.simulateClick(testUtil.nth('.popup .heading', 3));
 
-			assert.equal(window.control.month(), 3);
+			assert.equal(testUtil.control.month(), 3);
 		});
 
 		it('should set the month to the next month when the next month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 6
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .next-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(window.control.month(), 7);
+			assert.equal(testUtil.control.month(), 7);
 		});
 
 		it('should set the month to the previous month when the previous month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 6
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .prev-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(window.control.month(), 5);
+			assert.equal(testUtil.control.month(), 5);
 		});
 
 		it('should set the month to january when the month is already december and the next month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 11
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .next-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(window.control.month(), 0);
+			assert.equal(testUtil.control.month(), 0);
 		});
 
 		it('should set the month to december when the month is already january and the previous month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 0
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .prev-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(window.control.month(), 11);
+			assert.equal(testUtil.control.month(), 11);
 		});
 
 		it('should set the year to the next year when the month is already december and the next month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 11,
 				year: 2000
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .next-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(window.control.year(), 2001);
+			assert.equal(testUtil.control.year(), 2001);
 		});
 
 		it('should set the year to the previous year when the month is already january and the previous month button is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				month: 0,
 				year: 2000
 			});
 
-			testUtil.simulateClick(query.first('.calendar-header .prev-button'));
+			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(window.control.year(), 1999);
+			assert.equal(testUtil.control.year(), 1999);
 		});
 	});
 
@@ -149,25 +147,25 @@ describe('Calendar', () => {
 		});
 
 		it('should change the selected value of the year picker when year is set', () => {
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			window.control.year(2000);
+			testUtil.control.year(2000);
 
-			assert.equal(query.last('.grouped-buttons .form-button > span').textContent, '2000');
+			assert.equal(testUtil.last('.grouped-buttons .form-button > span').textContent, '2000');
 		});
 
 		it('should select the same year when the user de-selects the current year in the year picker', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				year: 2018
 			});
 
-			testUtil.simulateClick(query.last('.grouped-buttons .form-button'));
-			testUtil.simulateClick(query.first('.popup .heading.selected'));
+			testUtil.simulateClick(testUtil.last('.grouped-buttons .form-button'));
+			testUtil.simulateClick(testUtil.first('.popup .heading.selected'));
 
-			assert.equal(window.control.year(), 2018);
+			assert.equal(testUtil.control.year(), 2018);
 		});
 	});
 
@@ -184,8 +182,8 @@ describe('Calendar', () => {
 		it('should execute the onDateSelected callback when a day is clicked', () => {
 			let testVar = '';
 
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				onDateSelected() {
 					testVar = 'test';
 				}
@@ -193,19 +191,19 @@ describe('Calendar', () => {
 
 			assert.equal(testVar, '');
 
-			testUtil.simulateClick(query.nth('.day-button', 10));
+			testUtil.simulateClick(testUtil.nth('.day-button', 10));
 
 			assert.equal(testVar, 'test');
 		});
 
 		it('should show the next month when a day on the next month is clicked', () => {
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			testUtil.simulateClick(query.nth('.day-button', 40));
+			testUtil.simulateClick(testUtil.nth('.day-button', 40));
 
-			assert.isTrue((window.control.month() === Moment().month() + 1) || (window.control.month() === 0));
+			assert.isTrue((testUtil.control.month() === Moment().month() + 1) || (testUtil.control.month() === 0));
 		});
 	});
 
@@ -220,12 +218,12 @@ describe('Calendar', () => {
 		it('should have a div with class "selected" when selectedDate is set to a date in the current month', () => {
 			const testDate = new Moment();
 
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			})
 				.selectedDate(testDate.toDate());
 
-			assert.equal(query.count('.day-button.selected'), 1);
+			assert.equal(testUtil.count('.day-button.selected'), 1);
 		});
 
 		it('should NOT have a div with class "selected" when selectedDate is set to a date in a different month', () => {
@@ -233,26 +231,26 @@ describe('Calendar', () => {
 
 			testDate.year(testDate.year() + 1);
 
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			})
 				.selectedDate(testDate.toDate());
 
-			assert.equal(query.count('.day-button.selected'), 0);
+			assert.equal(testUtil.count('.day-button.selected'), 0);
 		});
 
 		it('should remember the selected date after navigating to a different month and back', () => {
 			const testDate = new Moment();
 
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			})
 				.selectedDate(testDate.toDate());
 
-			window.control.year(window.control.year() + 1);
-			window.control.year(window.control.year() - 1);
+			testUtil.control.year(testUtil.control.year() + 1);
+			testUtil.control.year(testUtil.control.year() - 1);
 
-			assert.equal(query.count('.day-button.selected'), 1);
+			assert.equal(testUtil.count('.day-button.selected'), 1);
 		});
 	});
 
@@ -265,28 +263,28 @@ describe('Calendar', () => {
 		});
 
 		it('should have seven divs with class "weekday"', () => {
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			assert.equal(query.count('.heading'), 7);
+			assert.equal(testUtil.count('.heading'), 7);
 		});
 
 		it('should have "weekday" div with the text "Sun" in the first div', () => {
-			window.control = new Calendar({
-				container: window.testContainer
+			testUtil.control = new Calendar({
+				container: testUtil.container
 			});
 
-			assert.equal(query.first('.heading').textContent, 'Sun');
+			assert.equal(testUtil.first('.heading').textContent, 'Sun');
 		});
 
 		it('should change the format of weekdays when weekdayFormat is set', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				weekdayFormat: 'dd'
 			});
 
-			assert.equal(query.first('.heading').textContent, 'Su');
+			assert.equal(testUtil.first('.heading').textContent, 'Su');
 		});
 	});
 
@@ -299,13 +297,13 @@ describe('Calendar', () => {
 		});
 
 		it('should change the format of the months in the month picker when monthFormat is set', () => {
-			window.control = new Calendar({
-				container: window.testContainer,
+			testUtil.control = new Calendar({
+				container: testUtil.container,
 				monthFormat: 'MMMM'
 			});
-			window.control.month(0);
+			testUtil.control.month(0);
 
-			assert.equal(query.first('.grouped-buttons .form-button > span').textContent, 'January');
+			assert.equal(testUtil.first('.grouped-buttons .form-button > span').textContent, 'January');
 		});
 	});
 
@@ -318,11 +316,11 @@ describe('Calendar', () => {
 		});
 
 		it('should not allow yearRangePast to be set to negative numbers', () => {
-			window.control = new Calendar({
+			testUtil.control = new Calendar({
 				yearRangePast: -20
 			});
 
-			assert.equal(window.control.yearRangePast(), 0);
+			assert.equal(testUtil.control.yearRangePast(), 0);
 		});
 
 		it('should change the year to whatever past year is selected in the year picker');
@@ -337,40 +335,40 @@ describe('Calendar', () => {
 		});
 
 		it('should not allow yearRangeFuture to be set to negative numbers', () => {
-			window.control = new Calendar({
+			testUtil.control = new Calendar({
 				yearRangeFuture: -20
 			});
 
-			assert.equal(window.control.yearRangeFuture(), 0);
+			assert.equal(testUtil.control.yearRangeFuture(), 0);
 		});
 
 		it('should have the correct number of range years in the year picker when yearRangeFuture is set', () => {
-			// window.control = new Calendar({
-			// 	container: window.testContainer,
+			// testUtil.control = new Calendar({
+			// 	container: testUtil.container,
 			// 	yearRangeFuture: 20
 			// });
 			//
-			// query.last('.grouped-buttons .form-button').focus();
-			// query.last('.grouped-buttons .form-button').click();
+			// testUtil.last('.grouped-buttons .form-button').focus();
+			// testUtil.last('.grouped-buttons .form-button').click();
 			//
-			// return testUtil.delay(1000)
+			// return wait(1000)
 			// 	.then(() => {
-			// 		assert.equal(query.count('.popup'), 1);
-			// 		assert.equal(query.count('.popup .form-button'), window.control.yearRangePast() + 21);
+			// 		assert.equal(testUtil.count('.popup'), 1);
+			// 		assert.equal(testUtil.count('.popup .form-button'), testUtil.control.yearRangePast() + 21);
 			// 	});
 		});
 
 		it('should set the last year in the year picker to the current year plus yearRangeFuture', () => {
-			// window.control = new Calendar({
-			// 	container: window.testContainer,
+			// testUtil.control = new Calendar({
+			// 	container: testUtil.container,
 			// 	yearRangeFuture: 20
 			// });
 			//
-			// query.last('.grouped-buttons').click();
+			// testUtil.last('.grouped-buttons').click();
 			//
-			// return testUtil.delay(1000)
+			// return wait(1000)
 			// 	.then(() => {
-			// 		assert.equal(query.last('.popup .form-button span').text(), window.control.year() + 20);
+			// 		assert.equal(testUtil.last('.popup .form-button span').text(), testUtil.control.year() + 20);
 			// 	});
 		});
 

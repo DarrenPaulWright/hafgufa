@@ -3,12 +3,11 @@ import { FileThumbnail } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(FileThumbnail);
-const controlBaseTests = new ControlTests(FileThumbnail, testUtil, {
-	mainCssClass: 'file-thumbnail'
-});
-
 describe('FileThumbnail', () => {
+	const testUtil = new TestUtil(FileThumbnail);
+	const controlBaseTests = new ControlTests(FileThumbnail, testUtil, {
+		mainCssClass: 'file-thumbnail'
+	});
 
 	controlBaseTests.run();
 
@@ -21,8 +20,8 @@ describe('FileThumbnail', () => {
 		});
 
 		it('should have an image element when imageSource is set', () => {
-			window.control = new FileThumbnail({
-				container: window.testContainer,
+			testUtil.control = new FileThumbnail({
+				container: testUtil.container,
 				imageSource: 'http://www.examle.com/test.jpg'
 			});
 

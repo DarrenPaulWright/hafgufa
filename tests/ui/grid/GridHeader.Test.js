@@ -1,22 +1,21 @@
+import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { CONTEXT_MENU_EVENT } from '../../../src';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
 import GridHeader from '../../../src/ui/grid/GridHeader';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(GridHeader);
-const controlBaseTests = new ControlTests(GridHeader, testUtil, {
-	mainCssClass: 'grid-header'
-});
-
-const addTag = (text) => {
-	document.querySelector('input').value = text;
-	testUtil.hitEnter();
-};
-
 describe('GridHeader', () => {
+	const testUtil = new TestUtil(GridHeader);
+	const controlBaseTests = new ControlTests(GridHeader, testUtil, {
+		mainCssClass: 'grid-header'
+	});
+
+	const addTag = (text) => {
+		document.querySelector('input').value = text;
+		testUtil.hitEnter();
+	};
 
 	controlBaseTests.run();
 
@@ -33,8 +32,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should add a cell control for each column added', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1'
 				}, {
@@ -46,8 +45,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should remove previous columns when new columns are set', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1'
 				}, {
@@ -57,7 +56,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			window.control.columns([{
+			testUtil.control.columns([{
 				title: 'test 3'
 			}, {
 				title: 'test 4'
@@ -70,8 +69,8 @@ describe('GridHeader', () => {
 			let firstCellWidth;
 			let secondCellWidth;
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '0',
 					title: 'test 1',
@@ -89,7 +88,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			window.control.desiredWidth(400);
+			testUtil.control.desiredWidth(400);
 
 			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
 			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
@@ -101,8 +100,8 @@ describe('GridHeader', () => {
 			let firstCellWidth;
 			let secondCellWidth;
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '0',
 					title: 'test 1',
@@ -118,7 +117,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			window.control.desiredWidth(400);
+			testUtil.control.desiredWidth(400);
 
 			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
 			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
@@ -130,8 +129,8 @@ describe('GridHeader', () => {
 			let firstCellWidth;
 			let secondCellWidth;
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '0',
 					title: 'test 1',
@@ -147,7 +146,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			window.control.desiredWidth(400);
+			testUtil.control.desiredWidth(400);
 
 			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
 			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
@@ -156,8 +155,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should resize flexible width columns when the header width changes', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '0',
 					title: 'test 1',
@@ -170,15 +169,15 @@ describe('GridHeader', () => {
 				width: '400px'
 			});
 
-			window.control.width(200);
-			window.control.desiredWidth(200);
+			testUtil.control.width(200);
+			testUtil.control.desiredWidth(200);
 
 			assert.equal(document.querySelectorAll('.grid-header-cell')[0].offsetWidth, 100);
 		});
 
 		it('should resize flexible width columns to the minWidth when the header width changes', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '1',
 					title: 'test 1',
@@ -198,14 +197,14 @@ describe('GridHeader', () => {
 				width: '200px'
 			});
 
-			window.control.desiredWidth(200);
+			testUtil.control.desiredWidth(200);
 
 			assert.equal(document.querySelectorAll('.grid-header-cell')[1].offsetWidth, 49);
 		});
 
 		it('should only have one sorted column after two different columns are sorted', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: 0,
 					title: 'test 1',
@@ -228,8 +227,8 @@ describe('GridHeader', () => {
 
 	describe('FilterTypes', () => {
 		it('should set a default filter type of autocomplete if canFilter is true and column type is text', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -242,8 +241,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set a default filter type of autocomplete if canFilter is true and column type is email', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -256,8 +255,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is date', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -270,8 +269,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should NOT set a default filter type of date if canFilter is false and column type is date', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -284,8 +283,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is datetime', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -298,8 +297,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is time', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -312,8 +311,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set a default filter type of number if canFilter is true and column type is number', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -326,8 +325,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should NOT set a default filter type of number if canFilter is false and column type is number', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -344,8 +343,8 @@ describe('GridHeader', () => {
 		it('should call the onSort callback when a column is sorted', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -364,8 +363,8 @@ describe('GridHeader', () => {
 		it('should call the onSort callback when a column is sorted twice', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -385,8 +384,8 @@ describe('GridHeader', () => {
 		it('should call the onSort callback when a column is sorted three times', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
@@ -405,8 +404,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should set the first column sort direction to none when a second column is sorted', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '1',
 					title: 'test 1',
@@ -423,14 +422,14 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(document.querySelectorAll('label')[0]);
 			testUtil.simulateClick(document.querySelectorAll('label')[1]);
 
-			assert.isNotTrue(query.hasClass(document.querySelectorAll('label')[0], 'sort-asc'));
+			assert.isNotTrue(testUtil.hasClass(document.querySelectorAll('label')[0], 'sort-asc'));
 		});
 
 		it('should call the onSelectAllGroups callback when a checkbox is clicked', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
@@ -448,8 +447,8 @@ describe('GridHeader', () => {
 		it('should call the onGetFilterData callback when a filter control is built', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.TEXT,
@@ -467,8 +466,8 @@ describe('GridHeader', () => {
 		it('should call the onFilter callback when a filter is set', () => {
 			let testVal = '';
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.TEXT,
@@ -500,8 +499,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to two columns', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: 'test',
 					title: 'test',
@@ -523,7 +522,7 @@ describe('GridHeader', () => {
 
 			testUtil.trigger(document.querySelectorAll('.grid-header-cell')[1], CONTEXT_MENU_EVENT);
 
-			return testUtil.defer()
+			return wait()
 				.then(() => {
 					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
 				});
@@ -539,8 +538,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should have a checked checkbox if a column has a dataType set to checkbox and isAllRowsSelected is true', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
@@ -564,8 +563,8 @@ describe('GridHeader', () => {
 		});
 
 		it('should have a checkbox with indeterminate set to true if one column has a dataType set to checkbox and isSomeRowsSelected is true', () => {
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					type: gridConstants.COLUMN_TYPES.CHECKBOX
@@ -591,8 +590,8 @@ describe('GridHeader', () => {
 		it('should add scrollbarWidth to the width of the last column control', () => {
 			let lastCellWidth;
 
-			window.control = new GridHeader({
-				container: window.testContainer,
+			testUtil.control = new GridHeader({
+				container: testUtil.container,
 				columns: [{
 					ID: '0',
 					title: 'test 1',
@@ -608,8 +607,8 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			window.control.scrollbarWidth(17);
-			window.control.desiredWidth(200);
+			testUtil.control.scrollbarWidth(17);
+			testUtil.control.desiredWidth(200);
 
 			lastCellWidth = document.querySelectorAll('.grid-header-cell')[2].offsetWidth;
 

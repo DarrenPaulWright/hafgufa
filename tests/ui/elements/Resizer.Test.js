@@ -5,11 +5,6 @@ import { offsetToPixels, pixelsToOffset } from '../../../src/ui/elements/Resizer
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(Resizer);
-const controlTests = new ControlTests(Resizer, testUtil, {
-	mainCssClass: 'resizer'
-});
-
 describe('offsetToPixels', () => {
 	it('should return 0 if no offset is provided', () => {
 		assert.equal(offsetToPixels(undefined, 1000), 0);
@@ -55,11 +50,16 @@ describe('pixelsToOffset', () => {
 });
 
 describe('Resizer', () => {
+	const testUtil = new TestUtil(Resizer);
+	const controlTests = new ControlTests(Resizer, testUtil, {
+		mainCssClass: 'resizer'
+	});
+
 	controlTests.run(['height', 'width']);
 
 	beforeEach(() => {
-		window.testContainer.style.width = '1000px';
-		window.testContainer.style.height = '800px';
+		testUtil.container.style.width = '1000px';
+		testUtil.container.style.height = '800px';
 	});
 
 	describe('.orientation', () => {
@@ -80,8 +80,8 @@ describe('Resizer', () => {
 	describe('orientation Horizontal', () => {
 		describe('.splitOffset', () => {
 			it('should render at offset 0 be default', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL
 				});
 
@@ -89,8 +89,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '2rem'
 				});
@@ -99,8 +99,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-2rem'
 				});
@@ -109,8 +109,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '30%'
 				});
@@ -119,8 +119,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-30%'
 				});
@@ -129,15 +129,15 @@ describe('Resizer', () => {
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-30%'
 				});
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 560]);
 
-				window.control.splitOffset('2rem');
+				testUtil.control.splitOffset('2rem');
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 32]);
 			});
@@ -145,8 +145,8 @@ describe('Resizer', () => {
 
 		describe('.minOffset .maxOffset', () => {
 			it('should render at minOffset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					minOffset: '1rem'
 				});
@@ -155,8 +155,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '2rem',
 					minOffset: '3rem'
@@ -166,8 +166,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-2rem',
 					maxOffset: '-3rem'
@@ -177,8 +177,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '30%',
 					minOffset: '40%'
@@ -188,8 +188,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-30%',
 					maxOffset: '-40%'
@@ -199,8 +199,8 @@ describe('Resizer', () => {
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.HORIZONTAL,
 					splitOffset: '-30%',
 					minOffset: '3rem',
@@ -209,7 +209,7 @@ describe('Resizer', () => {
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 480]);
 
-				window.control.splitOffset('2rem');
+				testUtil.control.splitOffset('2rem');
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 48]);
 			});
@@ -219,8 +219,8 @@ describe('Resizer', () => {
 	describe('orientation Vertical', () => {
 		describe('.splitOffset', () => {
 			it('should render at offset 0 be default', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL
 				});
 
@@ -228,8 +228,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '2rem'
 				});
@@ -238,8 +238,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-2rem'
 				});
@@ -248,8 +248,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '30%'
 				});
@@ -258,8 +258,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-30%'
 				});
@@ -268,15 +268,15 @@ describe('Resizer', () => {
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-30%'
 				});
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [700, 0]);
 
-				window.control.splitOffset('2rem');
+				testUtil.control.splitOffset('2rem');
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [32, 0]);
 			});
@@ -284,8 +284,8 @@ describe('Resizer', () => {
 
 		describe('.minOffset .maxOffset', () => {
 			it('should render at minOffset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					minOffset: '1rem'
 				});
@@ -294,8 +294,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '2rem',
 					minOffset: '3rem'
@@ -305,8 +305,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative pixel offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-2rem',
 					maxOffset: '-3rem'
@@ -316,8 +316,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a positive percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '30%',
 					minOffset: '40%'
@@ -327,8 +327,8 @@ describe('Resizer', () => {
 			});
 
 			it('should render at a negative percent offset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-30%',
 					maxOffset: '-40%'
@@ -338,8 +338,8 @@ describe('Resizer', () => {
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
-				window.control = new Resizer({
-					container: window.testContainer,
+				testUtil.control = new Resizer({
+					container: testUtil.container,
 					orientation: ORIENTATION.VERTICAL,
 					splitOffset: '-30%',
 					minOffset: '3rem',
@@ -348,7 +348,7 @@ describe('Resizer', () => {
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [600, 0]);
 
-				window.control.splitOffset('2rem');
+				testUtil.control.splitOffset('2rem');
 
 				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [48, 0]);
 			});

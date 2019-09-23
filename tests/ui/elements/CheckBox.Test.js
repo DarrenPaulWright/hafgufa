@@ -1,15 +1,13 @@
 import { assert } from 'chai';
 import { CheckBox } from '../../../src';
-import query from '../../query';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
-const testUtil = new TestUtil(CheckBox);
-const controlTests = new ControlTests(CheckBox, testUtil, {
-	mainCssClass: 'checkbox'
-});
-
 describe('CheckBox', () => {
+	const testUtil = new TestUtil(CheckBox);
+	const controlTests = new ControlTests(CheckBox, testUtil, {
+		mainCssClass: 'checkbox'
+	});
 
 	controlTests.run(['width', 'height']);
 
@@ -22,12 +20,12 @@ describe('CheckBox', () => {
 		});
 
 		it('should have an input with attr name', () => {
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				name: 'test'
 			});
 
-			assert.deepEqual(query.first('input').getAttribute('name'), 'test');
+			assert.deepEqual(testUtil.first('input').getAttribute('name'), 'test');
 		});
 	});
 
@@ -40,31 +38,31 @@ describe('CheckBox', () => {
 		});
 
 		it('should have an input with attr value', () => {
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				value: 'test'
 			});
 
-			assert.deepEqual(query.first('input').getAttribute('value'), 'test');
+			assert.deepEqual(testUtil.first('input').getAttribute('value'), 'test');
 		});
 	});
 
 	describe('.content', () => {
 		it('should NOT have a span if label is not set', () => {
-			window.control = new CheckBox({
-				container: window.testContainer
+			testUtil.control = new CheckBox({
+				container: testUtil.container
 			});
 
-			assert.deepEqual(query.count('div'), 0);
+			assert.deepEqual(testUtil.count('div'), 0);
 		});
 
 		it('should have a span with text', () => {
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				content: 'test'
 			});
 
-			assert.deepEqual(query.first('div').textContent, 'test');
+			assert.deepEqual(testUtil.first('div').textContent, 'test');
 		});
 	});
 
@@ -78,12 +76,12 @@ describe('CheckBox', () => {
 		});
 
 		it('should have an inout with property checked=true', () => {
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				isChecked: true
 			});
 
-			assert.deepEqual(query.first('input').checked, true);
+			assert.deepEqual(testUtil.first('input').checked, true);
 		});
 	});
 
@@ -97,12 +95,12 @@ describe('CheckBox', () => {
 		});
 
 		it('should have an inout with property checked=true', () => {
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				isIndeterminate: true
 			});
 
-			assert.deepEqual(query.first('input').indeterminate, true);
+			assert.deepEqual(testUtil.first('input').indeterminate, true);
 		});
 	});
 
@@ -111,8 +109,8 @@ describe('CheckBox', () => {
 			let context;
 			let value;
 
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -122,7 +120,7 @@ describe('CheckBox', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			window.control.isChecked(true);
+			testUtil.control.isChecked(true);
 
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
@@ -132,8 +130,8 @@ describe('CheckBox', () => {
 			let context;
 			let value;
 
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -143,8 +141,8 @@ describe('CheckBox', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			window.control.isChecked(true);
-			window.control.isChecked(false);
+			testUtil.control.isChecked(true);
+			testUtil.control.isChecked(false);
 
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
@@ -154,8 +152,8 @@ describe('CheckBox', () => {
 			let context;
 			let value;
 
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -167,12 +165,12 @@ describe('CheckBox', () => {
 
 			testUtil.simulateClick(document.querySelector('label'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
 			testUtil.simulateClick(document.querySelector('label'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, false);
 		});
 
@@ -180,8 +178,8 @@ describe('CheckBox', () => {
 			let context;
 			let value;
 
-			window.control = new CheckBox({
-				container: window.testContainer,
+			testUtil.control = new CheckBox({
+				container: testUtil.container,
 				onChange(isChecked) {
 					context = this;
 					value = isChecked;
@@ -193,12 +191,12 @@ describe('CheckBox', () => {
 
 			testUtil.simulateClick(document.querySelector('input'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
 			testUtil.simulateClick(document.querySelector('input'));
 
-			assert.equal(context, window.control);
+			assert.equal(context, testUtil.control);
 			assert.equal(value, false);
 		});
 	});
@@ -211,16 +209,16 @@ describe('CheckBox', () => {
 	// 	});
 	//
 	// 	it('should have a default value of an empty array', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container
 	// 		});
 	//
-	// 		assert.deepEqual(window.control.value(), []);
+	// 		assert.deepEqual(testUtil.control.value(), []);
 	// 	});
 	//
 	// 	it('should have a value that matches the checked items provided when instantiated', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': 1,
@@ -240,14 +238,14 @@ describe('CheckBox', () => {
 	// 			}]
 	// 		});
 	//
-	// 		assert.deepEqual(window.control.value(), [1, 3]);
+	// 		assert.deepEqual(testUtil.control.value(), [1, 3]);
 	// 	});
 	//
 	// 	it('should call the onChange callback when a checkbox is clicked', () => {
 	// 		let testVar = '';
 	//
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -266,8 +264,8 @@ describe('CheckBox', () => {
 	// 	it('should call the onChecked callback when a checkbox is clicked', () => {
 	// 		let testVar = '';
 	//
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -286,8 +284,8 @@ describe('CheckBox', () => {
 	// 	it('should call the onUnChecked callback when a checkbox is clicked twice', () => {
 	// 		let testVar = '';
 	//
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -307,8 +305,8 @@ describe('CheckBox', () => {
 	// 	it('should call the onChecked callback with an event when a checkbox is clicked', () => {
 	// 		let testVar = '';
 	//
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -327,8 +325,8 @@ describe('CheckBox', () => {
 	// 	it('should call the onUnChecked callback with an event when a checkbox is clicked twice', () => {
 	// 		let testVar = '';
 	//
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -348,8 +346,8 @@ describe('CheckBox', () => {
 	//
 	// describe('IsChecked', () => {
 	// 	it('should return false for an option that is set to false', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -369,12 +367,12 @@ describe('CheckBox', () => {
 	// 			}]
 	// 		});
 	//
-	// 		assert.equal(window.control.isChecked('2'), false);
+	// 		assert.equal(testUtil.control.isChecked('2'), false);
 	// 	});
 	//
 	// 	it('should return true for an option that is set to true', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -394,12 +392,12 @@ describe('CheckBox', () => {
 	// 			}]
 	// 		});
 	//
-	// 		assert.equal(window.control.isChecked('1'), true);
+	// 		assert.equal(testUtil.control.isChecked('1'), true);
 	// 	});
 	//
 	// 	it('should return false for an option that is set to true and clicked', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -409,12 +407,12 @@ describe('CheckBox', () => {
 	//
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	//
-	// 		assert.equal(window.control.isChecked('1'), false);
+	// 		assert.equal(testUtil.control.isChecked('1'), false);
 	// 	});
 	//
 	// 	it('should return true for an option that is set to false and then clicked', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -424,12 +422,12 @@ describe('CheckBox', () => {
 	//
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	//
-	// 		assert.equal(window.control.isChecked('1'), true);
+	// 		assert.equal(testUtil.control.isChecked('1'), true);
 	// 	});
 	//
 	// 	it('should return true for an option that is set to true and clicked twice', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -440,12 +438,12 @@ describe('CheckBox', () => {
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	//
-	// 		assert.equal(window.control.isChecked('1'), true);
+	// 		assert.equal(testUtil.control.isChecked('1'), true);
 	// 	});
 	//
 	// 	it('should return false for an option that is set to false and then clicked twice', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -456,14 +454,14 @@ describe('CheckBox', () => {
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	// 		testUtil.simulateClick(document.querySelector('.checkbox-label'));
 	//
-	// 		assert.equal(window.control.isChecked('1'), false);
+	// 		assert.equal(testUtil.control.isChecked('1'), false);
 	// 	});
 	// });
 	//
 	// describe('SetIndeterminate', () => {
 	// 	it('should have a class "indeterminate" if setIsDeterminate is set', () => {
-	// 		window.control = new CheckBox({
-	// 			container: window.testContainer,
+	// 		testUtil.control = new CheckBox({
+	// 			container: testUtil.container,
 	// 			values: [{
 	// 				'label': 'option1',
 	// 				'value': '1',
@@ -471,7 +469,7 @@ describe('CheckBox', () => {
 	// 			}]
 	// 		});
 	//
-	// 		window.control.setIndeterminate('1');
+	// 		testUtil.control.setIndeterminate('1');
 	//
 	// 		assert.deepEqual(document.querySelectorAll('.indeterminate').length, 1);
 	// 	});
