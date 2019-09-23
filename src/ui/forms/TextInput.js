@@ -19,6 +19,7 @@ import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
 import Span from '../elements/Span';
 import TextArea from '../elements/TextArea';
+import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
 import FormControl from './FormControl';
 import './TextInput.less';
@@ -57,6 +58,10 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 				return self[INPUT];
 			}
 		};
+		settings.actionButtonOnClick = settings.actionButtonOnClick || function() {
+			self.value('').triggerChange().isFocused(true);
+		};
+		settings.actionButtonIcon = enforce.string(settings.actionButtonIcon, CLEAR_ICON);
 
 		super(settings);
 
@@ -473,7 +478,6 @@ Object.assign(TextInput.prototype, {
 		if (arguments.length) {
 			if (!self.isFocused()) {
 				self[INPUT].value(newValue);
-				self.refreshActionButton();
 				self.triggerChange(true, true, false);
 				self[maxRowCallback]();
 			}
@@ -553,7 +557,7 @@ Object.assign(TextInput.prototype, {
 
 				self[INPUT].on(FOCUS_EVENT, () => {
 					if (!self.isRemoved) {
-						self.onFocus().trigger(null, [self]);
+						self.onFocus().trigger(null, [], self);
 					}
 				});
 			}
@@ -575,7 +579,7 @@ Object.assign(TextInput.prototype, {
 
 				self[INPUT].on(BLUR_EVENT, () => {
 					if (!self.isRemoved) {
-						self.onBlur().trigger(null, [self]);
+						self.onBlur().trigger(null, [], self);
 					}
 				});
 			}
@@ -598,7 +602,7 @@ Object.assign(TextInput.prototype, {
 				self.onFocus(() => {
 					self[INPUT].on(KEY_UP_EVENT, () => {
 						if (event.keyCode === keyCodes('enter')) {
-							self.onEnter().trigger(null, [self]);
+							self.onEnter().trigger(null, [], self);
 						}
 					});
 				});

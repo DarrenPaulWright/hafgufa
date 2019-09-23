@@ -16,12 +16,11 @@ import Container from '../layout/Container';
 import './ActionButtonMixin.less';
 
 const RIGHT_CONTAINER = Symbol();
-const RIGHT_CONTAINER_WIDTH = Symbol();
 const ACTION_BUTTON = Symbol();
 const COUNT_CONTROL = Symbol();
 
+const refreshActionButton = Symbol();
 const addRightContainer = Symbol();
-const measureRightContainerWidth = Symbol();
 
 /**
  * Adds an action button and count text.
@@ -36,87 +35,84 @@ export default function(Base) {
 			super(settings);
 
 			const self = this;
-			self[RIGHT_CONTAINER_WIDTH] = 0;
+
+			self[refreshActionButton] = debounce(() => {
+				const isIconButton = self.actionButtonIcon() === CLEAR_ICON && self.actionButtonLabel() === '';
+
+				if ((self.actionButtonIcon() || self.actionButtonLabel()) && self.borderWidth() > 40 && (!self.rows || self.rows() === 1)) {
+					if (!self[ACTION_BUTTON]) {
+						self[ACTION_BUTTON] = new Button({
+							isDisplayed: false,
+							classes: 'icon-button',
+							iconSize: Button.ICON_SIZES.NORMAL
+						});
+						self[addRightContainer]().append(self[ACTION_BUTTON]);
+					}
+
+					self[ACTION_BUTTON]
+						.isDisplayed(!self.isActionButtonAutoHide() || !!self.value().length)
+						.isEnabled(self.isActionButtonEnabled())
+						.icon(self.actionButtonIcon())
+						.label(self.actionButtonLabel())
+						.onClick(self.actionButtonOnClick())
+						.attr(TAB_INDEX, TAB_INDEX_DISABLED)
+						.classes('form-button', !isIconButton)
+						.classes('icon-button', isIconButton);
+				}
+				else if (self[ACTION_BUTTON]) {
+					self[ACTION_BUTTON].remove();
+					self[ACTION_BUTTON] = null;
+				}
+
+				self.resize(true);
+			});
 
 			self.css(POSITION, RELATIVE)
 				.onChange(() => {
-					self.refreshActionButton();
+					self[refreshActionButton]();
 				})
-				.onResize(() => {
+				.onResize((width) => {
 					const container = containerCallback();
 
 					if (container) {
-						const height = container.borderHeight();
-						const width = container.borderWidth();
+						const containerHeight = container.borderHeight();
+						const containerWidth = container.borderWidth();
+						let rightContainerWidth = 0;
 
 						if (self[RIGHT_CONTAINER]) {
 							self[RIGHT_CONTAINER].css({
 								top: container.element().offsetTop,
-								height: height,
-								right: self.borderWidth() - width - dom.get.left(container.element())
+								height: containerHeight,
+								right: Math.max(0, width - containerWidth - dom.get.left(container.element()))
 							});
+							rightContainerWidth = self[RIGHT_CONTAINER].borderWidth();
+
+							if (self[COUNT_CONTROL]) {
+								self[COUNT_CONTROL].css(LINE_HEIGHT, containerHeight);
+							}
 						}
 
-						if (self[COUNT_CONTROL]) {
-							self[COUNT_CONTROL].css(LINE_HEIGHT, height);
-						}
-
-						container.css(PADDING_RIGHT, self[RIGHT_CONTAINER_WIDTH]);
+						container.css(PADDING_RIGHT, rightContainerWidth);
 					}
 				});
 		}
 
 		[addRightContainer]() {
-			if (!this[RIGHT_CONTAINER]) {
-				this[RIGHT_CONTAINER] = new Container({
-					container: this,
+			const self = this;
+
+			if (!self[RIGHT_CONTAINER]) {
+				self[RIGHT_CONTAINER] = new Container({
+					container: self,
 					classes: 'action-button-container',
 					removeClass: 'container'
 				});
 			}
-			return this[RIGHT_CONTAINER];
-		}
 
-		[measureRightContainerWidth]() {
-			this[RIGHT_CONTAINER_WIDTH] = this[RIGHT_CONTAINER] ? this[RIGHT_CONTAINER].borderWidth() : 0;
-			this.resize();
+			return self[RIGHT_CONTAINER];
 		}
 	}
 
 	Object.assign(ActionButtonMixin.prototype, {
-
-		refreshActionButton: debounce(function() {
-			const self = this;
-			const isIconButton = self.actionButtonIcon() === CLEAR_ICON && self.actionButtonLabel() === '';
-
-			if ((self.actionButtonIcon() || self.actionButtonLabel()) && self.borderWidth() > 40 && (!self.rows || self.rows() === 1)) {
-				if (!self[ACTION_BUTTON]) {
-					self[ACTION_BUTTON] = new Button({
-						isDisplayed: false,
-						classes: 'icon-button',
-						iconSize: Button.ICON_SIZES.NORMAL
-					});
-					self[addRightContainer]().append(self[ACTION_BUTTON]);
-				}
-
-				self[ACTION_BUTTON]
-					.isDisplayed(!self.isActionButtonAutoHide() || !!self.value().length)
-					.isEnabled(self.isActionButtonEnabled())
-					.icon(self.actionButtonIcon())
-					.label(self.actionButtonLabel())
-					.onClick(self.actionButtonOnClick())
-					.attr(TAB_INDEX, TAB_INDEX_DISABLED)
-					.classes('action-button', !isIconButton)
-					.classes('icon-button', isIconButton);
-				self.resize();
-			}
-			else if (self[ACTION_BUTTON]) {
-				self[ACTION_BUTTON].remove();
-				self[ACTION_BUTTON] = null;
-			}
-			self[measureRightContainerWidth]();
-		}),
-
 		/**
 		 * @method actionButtonIcon
 		 * @member module:ActionButtonAddon
@@ -127,9 +123,8 @@ export default function(Base) {
 		 * @returns {String|this}
 		 */
 		actionButtonIcon: method.string({
-			init: CLEAR_ICON,
 			set() {
-				this.refreshActionButton();
+				this[refreshActionButton]();
 			}
 		}),
 
@@ -144,7 +139,7 @@ export default function(Base) {
 		 */
 		actionButtonLabel: method.string({
 			set() {
-				this.refreshActionButton();
+				this[refreshActionButton]();
 			}
 		}),
 
@@ -158,11 +153,8 @@ export default function(Base) {
 		 * @returns {Function|this}
 		 */
 		actionButtonOnClick: method.function({
-			init() {
-				this.value('').triggerChange();
-			},
 			set() {
-				this.refreshActionButton();
+				this[refreshActionButton]();
 			}
 		}),
 
@@ -178,7 +170,7 @@ export default function(Base) {
 		isActionButtonAutoHide: method.boolean({
 			init: true,
 			set() {
-				this.refreshActionButton();
+				this[refreshActionButton]();
 			}
 		}),
 
@@ -194,7 +186,7 @@ export default function(Base) {
 		isActionButtonEnabled: method.boolean({
 			init: true,
 			set() {
-				this.refreshActionButton();
+				this[refreshActionButton]();
 			}
 		}),
 
@@ -226,7 +218,8 @@ export default function(Base) {
 					self[COUNT_CONTROL].remove();
 					self[COUNT_CONTROL] = null;
 				}
-				self[measureRightContainerWidth]();
+
+				self.resize(true);
 			}
 		})
 
