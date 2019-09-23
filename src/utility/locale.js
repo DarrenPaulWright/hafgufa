@@ -123,8 +123,8 @@ const locale = {
 		let output = strings[key] || '';
 
 		if (replacer && output) {
-			forOwn(replacer, (replaceItem) => {
-				output = output.replace('<' + replaceItem + '>', replacer[replaceItem]);
+			forOwn(replacer, (value, key) => {
+				output = output.replace('<' + key + '>', value);
 			});
 		}
 
