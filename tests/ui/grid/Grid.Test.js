@@ -28,7 +28,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 
 			testUtil.control.addRow(rowData);
-			assert.equal(testUtil.control.getRows().length, rows.length);
+			assert.equal(testUtil.control.rows().length, rows.length);
 		});
 
 		it('should ', () => {
@@ -52,7 +52,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 
 			testUtil.control.addRow(rowData);
-			const row = testUtil.control.getRows();
+			const row = testUtil.control.rows();
 
 			assert.equal(row[0].cells[0].text, 'test');
 		});
@@ -76,7 +76,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 
 			testUtil.control.addRow(rowData);
-			const row = testUtil.control.getRows();
+			const row = testUtil.control.rows();
 			assert.equal(row[0].cells[0].text, '02/08/2013');
 		});
 
@@ -98,7 +98,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 
 			testUtil.control.addRow(rowData);
-			const row = testUtil.control.getRows();
+			const row = testUtil.control.rows();
 			assert.equal(row[0].cells[0].text, '02/08/2013');
 		});
 	});
@@ -125,7 +125,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 			testUtil.control.addRows(rows);
 
-			assert.equal(testUtil.control.getRows().length, rows.length);
+			assert.equal(testUtil.control.rows().length, rows.length);
 		});
 	});
 });

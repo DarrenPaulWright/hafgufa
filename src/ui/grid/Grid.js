@@ -383,10 +383,10 @@ export default class Grid extends Control {
 
 		self[filter]();
 		if (self.onSelect() && self[SELECTED_ROWS].length === 1) {
-			self.onSelect()(self[SELECTED_ROWS][0]);
+			self.onSelect().call(self, self[SELECTED_ROWS][0]);
 		}
 		if (self.onMultiSelect() && self[SELECTED_ROWS].length > 1) {
-			self.onMultiSelect()(self[SELECTED_ROWS]);
+			self.onMultiSelect().call(self, self[SELECTED_ROWS]);
 		}
 
 		self[GRID_COLUMN_BLOCK].isAllRowsSelected(self[TOTAL_FILTERED_ROWS] === self[SELECTED_ROWS].length);
@@ -849,17 +849,6 @@ export default class Grid extends Control {
 	}
 
 	/**
-	 * Get a clone of all the rows in the grid
-	 * @method getRows
-	 * @member module:Grid
-	 * @instance
-	 * @return {Object[]}
-	 */
-	getRows() {
-		return clone(this[ROWS], {isCircular: true});
-	}
-
-	/**
 	 * Add a row to the grid without affecting the other rows
 	 * @method addRow
 	 * @member module:Grid
@@ -973,7 +962,11 @@ export default class Grid extends Control {
 					rowIndex--;
 				}
 			}
+
+			return self;
 		}
+
+		return clone(this[ROWS], {isCircular: true});
 	}
 
 	/**
@@ -985,19 +978,19 @@ export default class Grid extends Control {
 	 * @arg   {Number} columnIndex - column index of the cell being updated
 	 * @arg   {String|Number|Object} newValue    - the new value to save
 	 */
-	updateCellData(editId, columnIndex, newValue) {
+	updateCellData(rowId, columnIndex, newValue) {
 		const self = this;
 
-		if (editId && columnIndex !== undefined && newValue !== undefined) {
+		if (rowId && columnIndex !== undefined && newValue !== undefined) {
 			self[eachChild](self[FILTERED_ROWS], (row) => {
-				if (row.rowId === editId) {
+				if (row.rowId === rowId) {
 					row.cells[columnIndex] = newValue;
 					return true;
 				}
 			});
 
 			self[ROWS].forEach((row) => {
-				if (row.rowId === editId) {
+				if (row.rowId === rowId) {
 					row.cells[columnIndex] = newValue;
 					return false;
 				}
