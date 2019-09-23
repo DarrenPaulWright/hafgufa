@@ -69,14 +69,6 @@ export default class DateInput extends FormControl {
 		});
 
 		applySettings(self, settings);
-
-		self.onRemove(() => {
-			self[DATE_INPUT].remove();
-
-			if (self[NOW_BUTTON]) {
-				self[NOW_BUTTON].remove();
-			}
-		});
 	}
 
 	[buildDatePicker]() {

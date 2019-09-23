@@ -27,10 +27,6 @@ export default class CheckBoxes extends FormControl {
 		self.addClass('checkboxes');
 
 		applySettings(self, settings, [], ['value']);
-
-		self.onRemove(() => {
-			self.values([]);
-		});
 	}
 }
 

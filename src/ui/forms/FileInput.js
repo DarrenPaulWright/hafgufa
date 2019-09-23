@@ -119,8 +119,6 @@ export default class FileInput extends Control {
 
 		self.onRemove(() => {
 			self[INPUT_CONTROL].remove();
-			self[ICON].remove();
-			self[LABEL].remove();
 		});
 	}
 

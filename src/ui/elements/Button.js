@@ -60,10 +60,6 @@ export default class Button extends FocusMixin(OnClickMixin(Control)) {
 		self.attr(INPUT_TYPE, 'button');
 
 		applySettings(self, settings);
-
-		self.onRemove(() => {
-			self[CONTROLS].remove();
-		});
 	}
 
 	iconClasses(classes, performAdd) {

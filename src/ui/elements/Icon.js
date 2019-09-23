@@ -31,7 +31,6 @@ export default class Icon extends TooltipMixin(Control) {
 		const self = this;
 		self.addClass('icon icon-lg');
 
-		self.element(settings.element);
 		applySettings(self, settings, [], ['icon']);
 	}
 }

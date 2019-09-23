@@ -105,13 +105,9 @@ export default class EditableGrid extends FormControl {
 				}
 			})
 			.onRemove(() => {
-				self[ADD_NEW_BUTTON].remove();
-
 				if (self[ADD_NEW_DIALOG]) {
 					self[ADD_NEW_DIALOG].remove();
 				}
-
-				self[GRID].remove();
 			});
 	}
 

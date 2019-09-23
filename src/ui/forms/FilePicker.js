@@ -22,7 +22,6 @@ const LIGHTBOX = Symbol();
 const LOAD_COUNT = Symbol();
 
 const buildFileInput = Symbol();
-const removeFileInput = Symbol();
 const preloadFiles = Symbol();
 const buildThumbnail = Symbol();
 const editFile = Symbol();
@@ -57,11 +56,6 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		applySettings(self, settings);
 
 		self[buildFileInput]();
-
-		self.onRemove(() => {
-			self[removeFileInput]();
-			self[FILE_THUMBNAILS].remove();
-		});
 	}
 
 	[buildFileInput]() {
@@ -82,14 +76,6 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 				isVideo: self.isVideo(),
 				mimeTypes: self.mimeTypes().length ? self.mimeTypes() : undefined
 			});
-		}
-	}
-
-	[removeFileInput]() {
-		const self = this;
-		if (self[FILE_INPUT]) {
-			self[FILE_INPUT].remove();
-			self[FILE_INPUT] = null;
 		}
 	}
 
@@ -141,7 +127,10 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 			self[FILE_INPUT].container(self);
 		}
 		else {
-			self[removeFileInput]();
+			if (self[FILE_INPUT]) {
+				self[FILE_INPUT].remove();
+				self[FILE_INPUT] = null;
+			}
 		}
 
 		if (!self.canEdit()) {

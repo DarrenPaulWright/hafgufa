@@ -31,10 +31,6 @@ export default class Radios extends FormControl {
 		self.addClass('radios');
 
 		applySettings(self, settings, [], ['value']);
-
-		self.onRemove(() => {
-			self.values([]);
-		});
 	}
 }
 
