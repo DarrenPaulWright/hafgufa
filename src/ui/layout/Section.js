@@ -26,9 +26,7 @@ export default class Section extends MergeContentContainerMixin(ControlHeadingMi
 
 		super(settings);
 
-		this
-			.addClass('section')
-			.removeClass('container');
+		this.addClass('section');
 
 		applySettings(this, settings, ['canCollapse']);
 	}

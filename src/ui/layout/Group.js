@@ -26,7 +26,6 @@ export default class Group extends MergeContentContainerMixin(ControlHeadingMixi
 
 		this
 			.addClass('group clearfix')
-			.removeClass('container')
 			.css(MIN_WIDTH, AUTO);
 
 		applySettings(this, settings);

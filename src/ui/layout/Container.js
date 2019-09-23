@@ -2,7 +2,6 @@ import { applySettings, castArray, isArray, isJson, isObject, isString, method }
 import dom from '../../utility/dom';
 import { CONTENT_CHANGE_EVENT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../../utility/domConstants';
 import Control, { CHILD_CONTROLS } from '../Control';
-import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
@@ -27,7 +26,6 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 		super(settings);
 
 		const self = this;
-		self[CHILD_CONTROLS] = new ControlManager();
 		self.addClass('container');
 
 		if (self.type === controlTypes.CONTAINER) {
@@ -160,7 +158,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 * @arg {function} callback
 	 * @arg {boolean}  [skipDeep=false] - if true then only iterate on immediate children
 	 */
-	each(callback, skipDeep) {
+	each(callback, skipDeep = false) {
 		return this[CHILD_CONTROLS].each((control, index) => {
 			if (callback(control, index)) {
 				return true;
