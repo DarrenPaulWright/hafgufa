@@ -174,7 +174,7 @@ export default class Calendar extends Control {
 					options: self[buildMonthOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
-						self.month(parseInt(newValue[0].id, 10));
+							self.month(parseInt(newValue[0].id, 10));
 						}
 					},
 					value: self.month()
@@ -185,7 +185,7 @@ export default class Calendar extends Control {
 					options: self[buildYearOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
-						self.year(parseInt(newValue[0].id, 10));
+							self.year(parseInt(newValue[0].id, 10));
 						}
 					},
 					value: self.year()

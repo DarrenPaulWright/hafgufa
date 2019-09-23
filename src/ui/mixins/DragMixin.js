@@ -2,7 +2,18 @@ import { clear, delay } from 'async-agent';
 import { event } from 'd3';
 import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
 import {
-	ABSOLUTE, BODY, BOTTOM, LEFT, MOUSE_WHEEL_EVENT, POSITION, RIGHT, SCALE_CHANGE_EVENT, SCROLL_LEFT, SCROLL_TOP, TOP, TRANSFORM
+	ABSOLUTE,
+	BODY,
+	BOTTOM,
+	LEFT,
+	MOUSE_WHEEL_EVENT,
+	POSITION,
+	RIGHT,
+	SCALE_CHANGE_EVENT,
+	SCROLL_LEFT,
+	SCROLL_TOP,
+	TOP,
+	TRANSFORM
 } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import { CONTROL_PROP } from '../Control';

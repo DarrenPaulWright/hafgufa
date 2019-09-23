@@ -3,17 +3,17 @@ import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
 import dom from '../../utility/dom';
+import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
-import Control from '../Control';
 import GroupedButtons from '../forms/GroupedButtons';
 import { COLLAPSE_LEFT_ICON, UN_COLLAPSE_RIGHT_ICON } from '../icons';
 import Toolbar from '../layout/Toolbar';
+import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import { ORIENTATION } from '../uiConstants';
 import Container from './Container';
 import './Tabs.less';
-import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
-import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 
 const TAB_CONTAINER = Symbol();
 const TOOLBAR = Symbol();
@@ -307,7 +307,7 @@ Object.assign(Tabs.prototype, {
 
 	currentTab() {
 		return this[CURRENT_TAB] ? this[CURRENT_TAB].id : undefined;
-	},
+	}
 });
 
 Tabs.ORIENTATION = ORIENTATION;
