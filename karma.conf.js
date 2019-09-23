@@ -1,7 +1,8 @@
 const singleRun = process.argv.includes('--single-run');
 
-const reporters = ['brief', 'coverage'];
+const reporters = ['mocha'];
 if (singleRun) {
+	reporters.push('coverage');
 	reporters.push('coveralls');
 }
 
@@ -20,8 +21,9 @@ module.exports = function(config) {
 			'tests/index.js': ['webpack']
 		},
 		reporters: reporters,
-		briefReporter: {
-			renderOnRunCompleteOnly: singleRun
+		mochaReporter: {
+			output: 'minimal',
+			showDiff: true
 		},
 		coverageReporter: {
 			type: 'lcov',
