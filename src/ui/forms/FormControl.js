@@ -74,6 +74,8 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 
 			formRelationships.trigger();
 		}
+
+		return self;
 	}
 
 	/**

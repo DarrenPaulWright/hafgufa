@@ -49,7 +49,7 @@ Object.assign(CheckBoxes.prototype, {
 		init: [],
 		set(value) {
 			this[CHECK_BOXES].forEach((checkbox) => {
-				checkbox.isChecked(value.includes(checkbox.name()));
+				checkbox.isChecked(value.includes(checkbox.value()));
 			});
 		},
 		get() {
