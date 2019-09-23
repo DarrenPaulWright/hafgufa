@@ -124,7 +124,9 @@ Object.assign(Dialog.prototype, {
 					if (!self[POPUP].anchor()) {
 						self[HEADING].buttons([{
 							icon: CLEAR_ICON,
-							onClick: self.remove
+							onClick() {
+								self.remove();
+							}
 						}]);
 					}
 				}
