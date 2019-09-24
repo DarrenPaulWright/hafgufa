@@ -74,10 +74,11 @@ export default class Tree extends FocusMixin(FormControl) {
 		self[SHOW_CHECKBOXES] = false;
 		self[SHOW_CHECKBOXES_ON_GROUPS] = false;
 
-		self.onResize(() => {
+		self.onResize((width, height) => {
 			virtualList
 				.minWidth(self.minWidth())
-				.maxWidth(self.maxWidth());
+				.maxWidth(self.maxWidth())
+				.maxHeight(height);
 		});
 
 		applySettings(self, settings, ['width']);

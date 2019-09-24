@@ -2,7 +2,6 @@ import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
-import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import search from '../../utility/search';
@@ -140,9 +139,11 @@ export default class Menu extends Popup {
 			.onResize(() => {
 				self
 					.width(self.get(TREE_ID).borderWidth())
+					.css('height', 'auto')
 					.get(TREE_ID)
 					.fitHeightToContents()
-					.height(self.borderHeight() - (self.get(HEADER_ID) ? dom.get.height(self.get(HEADER_ID)) : 0));
+					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0))
+					.resize(true);
 			});
 		tree = null;
 
@@ -156,9 +157,8 @@ export default class Menu extends Popup {
 		}
 
 		self.onRemove(() => {
-				currentMenu = null;
-			})
-			.resize();
+			currentMenu = null;
+		});
 	}
 
 	[buildHeader]() {
