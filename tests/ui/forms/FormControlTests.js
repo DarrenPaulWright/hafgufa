@@ -27,7 +27,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				})
 					.isRequired(true);
 
-				assert.equal(document.querySelectorAll('.required').length, 1);
+				assert.equal(testUtil.count('.required'), 1);
 			});
 
 			it('should be true if it was set to true in the options', () => {
@@ -48,7 +48,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				})
 					.isRequired(false);
 
-				assert.equal(document.querySelectorAll('.required').length, 0);
+				assert.equal(testUtil.count('.required'), 0);
 			});
 
 			it('should be false if it was set to false in the options', () => {

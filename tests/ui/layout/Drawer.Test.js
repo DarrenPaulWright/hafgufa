@@ -23,7 +23,7 @@ describe('Drawer', () => {
 				dock: 'top'
 			});
 
-			assert.equal(document.querySelectorAll('.drawer.top').length, 1);
+			assert.equal(testUtil.count('.drawer.top'), 1);
 		});
 
 		it('should have a class "right" if set to right', () => {
@@ -32,7 +32,7 @@ describe('Drawer', () => {
 				dock: 'right'
 			});
 
-			assert.equal(document.querySelectorAll('.drawer.right').length, 1);
+			assert.equal(testUtil.count('.drawer.right'), 1);
 		});
 
 		it('should have a class "bottom" if set to bottom', () => {
@@ -41,7 +41,7 @@ describe('Drawer', () => {
 				dock: 'bottom'
 			});
 
-			assert.equal(document.querySelectorAll('.drawer.bottom').length, 1);
+			assert.equal(testUtil.count('.drawer.bottom'), 1);
 		});
 
 		it('should have a class "left" if set to left', () => {
@@ -50,7 +50,7 @@ describe('Drawer', () => {
 				dock: 'left'
 			});
 
-			assert.equal(document.querySelectorAll('.drawer.left').length, 1);
+			assert.equal(testUtil.count('.drawer.left'), 1);
 		});
 	});
 
@@ -62,7 +62,7 @@ describe('Drawer', () => {
 				canResize: false
 			});
 
-			assert.equal(document.querySelectorAll('.resizer').length, 0);
+			assert.equal(testUtil.count('.resizer'), 0);
 		});
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "top"', () => {
@@ -73,7 +73,7 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(document.querySelectorAll('.resizer.horizontal').length, 1);
+			assert.equal(testUtil.count('.resizer.horizontal'), 1);
 			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 64]);
 		});
 
@@ -85,7 +85,7 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(document.querySelectorAll('.resizer.vertical').length, 1);
+			assert.equal(testUtil.count('.resizer.vertical'), 1);
 			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [936, 0]);
 		});
 
@@ -97,7 +97,7 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(document.querySelectorAll('.resizer.horizontal').length, 1);
+			assert.equal(testUtil.count('.resizer.horizontal'), 1);
 			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 936]);
 		});
 
@@ -109,7 +109,7 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(document.querySelectorAll('.resizer.vertical').length, 1);
+			assert.equal(testUtil.count('.resizer.vertical'), 1);
 			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [64, 0]);
 		});
 	});

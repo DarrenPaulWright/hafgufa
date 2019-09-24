@@ -62,11 +62,11 @@ describe('GridColumnBlock', () => {
 				}]
 			});
 
-			testUtil.trigger(document.querySelectorAll('.grid-header-cell')[1], CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
+					assert.equal(testUtil.count('.menu .heading', true), 5);
 				});
 		});
 	});
@@ -92,7 +92,7 @@ describe('GridColumnBlock', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(document.querySelector('input[type=checkbox]').checked, true);
+			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
 		});
 	});
 
@@ -117,7 +117,7 @@ describe('GridColumnBlock', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(document.querySelector('input[type=checkbox]').indeterminate, true);
+			assert.equal(testUtil.first('input[type=checkbox]').indeterminate, true);
 		});
 	});
 

@@ -56,14 +56,14 @@ describe('dom', () => {
 			const div = dom.appendNewTo(testUtil.container);
 			dom[methodName](div, 'test-class');
 
-			assert.equal(document.querySelectorAll('.test-class').length, 1);
+			assert.equal(testUtil.count('.test-class'), 1);
 		});
 
 		it('should build an element with a class of a specific element type', () => {
 			const div = dom.appendNewTo(testUtil.container);
 			dom[methodName](div, 'test-class', 'button');
 
-			assert.equal(document.querySelectorAll('button.test-class').length, 1);
+			assert.equal(testUtil.count('button.test-class'), 1);
 		});
 	};
 
@@ -166,21 +166,21 @@ describe('dom', () => {
 			dom.addClass(div, 'test1');
 			dom.addClass(div);
 
-			assert.equal(testUtil.container.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should add a class to an element', () => {
 			const div = dom.appendNewTo(testUtil.container);
 			dom.addClass(div, 'test1');
 
-			assert.equal(testUtil.container.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should add a class to an SVG element', () => {
 			const div = dom.appendNewTo(testUtil.container, null, 'svg:svg');
 			dom.addClass(div, 'test1');
 
-			assert.equal(testUtil.container.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should add a class to an element that already has a class', () => {
@@ -188,14 +188,14 @@ describe('dom', () => {
 			dom.addClass(div, 'test1');
 			dom.addClass(div, 'test2');
 
-			assert.equal(testUtil.container.querySelectorAll('.test1.test2').length, 1);
+			assert.equal(testUtil.count('.test1.test2'), 1);
 		});
 
 		it('should add two classes to an element if two are provided', () => {
 			const div = dom.appendNewTo(testUtil.container);
 			dom.addClass(div, 'test1 test2');
 
-			assert.equal(testUtil.container.querySelectorAll('.test1.test2').length, 1);
+			assert.equal(testUtil.count('.test1.test2'), 1);
 		});
 	});
 
@@ -206,7 +206,7 @@ describe('dom', () => {
 			dom.addClass(div, 'test1');
 			dom.removeClass(div);
 
-			assert.equal(document.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should remove a class from an element', () => {
@@ -215,7 +215,7 @@ describe('dom', () => {
 			dom.addClass(div, 'test1');
 			dom.removeClass(div, 'test1');
 
-			assert.equal(document.querySelectorAll('.test1').length, 0);
+			assert.equal(testUtil.count('.test1'), 0);
 		});
 
 		it('should remove a class from an SVG element', () => {
@@ -224,7 +224,7 @@ describe('dom', () => {
 			dom.addClass(div, 'test1');
 			dom.removeClass(div, 'test1');
 
-			assert.equal(document.querySelectorAll('.test1').length, 0);
+			assert.equal(testUtil.count('.test1'), 0);
 		});
 
 		it('should remove a class from an element that has more than one class', () => {
@@ -233,7 +233,7 @@ describe('dom', () => {
 			dom.addClass(div, 'test1 test2');
 			dom.removeClass(div, 'test1');
 
-			assert.equal(document.querySelectorAll('.test2').length, 1);
+			assert.equal(testUtil.count('.test2'), 1);
 		});
 
 		it('should remove two classes from an element if two are provided', () => {
@@ -242,7 +242,7 @@ describe('dom', () => {
 			dom.addClass(div, 'test1 test2');
 			dom.removeClass(div, 'test1 test2');
 
-			assert.equal(document.querySelectorAll('.test1.test2').length, 0);
+			assert.equal(testUtil.count('.test1.test2'), 0);
 		});
 	});
 
@@ -252,7 +252,7 @@ describe('dom', () => {
 			const div = dom.appendNewTo(body);
 			dom.classes(div, 'test1');
 
-			assert.equal(document.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should add a class to an element if the third argument is true', () => {
@@ -260,7 +260,7 @@ describe('dom', () => {
 			const div = dom.appendNewTo(body);
 			dom.classes(div, 'test1', true);
 
-			assert.equal(document.querySelectorAll('.test1').length, 1);
+			assert.equal(testUtil.count('.test1'), 1);
 		});
 
 		it('should add a class to an element that already has a class', () => {
@@ -269,7 +269,7 @@ describe('dom', () => {
 			dom.classes(div, 'test1');
 			dom.classes(div, 'test2');
 
-			assert.equal(document.querySelectorAll('.test1.test2').length, 1);
+			assert.equal(testUtil.count('.test1.test2'), 1);
 		});
 
 		it('should remove a class from an element if the third argument is false', () => {
@@ -278,7 +278,7 @@ describe('dom', () => {
 			dom.classes(div, 'test1', true);
 			dom.classes(div, 'test1', false);
 
-			assert.equal(document.querySelectorAll('.test1').length, 0);
+			assert.equal(testUtil.count('.test1'), 0);
 		});
 	});
 

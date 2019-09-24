@@ -2,10 +2,10 @@ import { assert } from 'chai';
 import { toast } from '../../../src';
 import TestUtil from '../../TestUtil';
 
-new TestUtil(toast);
-
 describe('toast', () => {
 	afterEach(() => toast.clear());
+
+	const testUtil = new TestUtil(toast);
 
 	it('should add a div with class "toast-info" when toast.info is called', () => {
 		toast.info({
@@ -13,9 +13,9 @@ describe('toast', () => {
 			duration: 0
 		});
 
-		assert.equal(document.querySelectorAll('.toast-wrapper .toast.toast-info').length, 1);
-		assert.equal(document.querySelectorAll('span').length, 1);
-		assert.equal(document.querySelectorAll('.subtitle').length, 0);
+		assert.equal(testUtil.count('.toast-wrapper .toast.toast-info', true), 1);
+		assert.equal(testUtil.count('span', true), 1);
+		assert.equal(testUtil.count('.subtitle', true), 0);
 	});
 
 	it('should add a div with class "toast-success" when toast.success is called', () => {
@@ -24,7 +24,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(document.querySelectorAll('.toast-wrapper .toast.toast-success').length, 1);
+		assert.equal(testUtil.count('.toast-wrapper .toast.toast-success', true), 1);
 	});
 
 	it('should add a div with class "toast-warning" when toast.warning is called', () => {
@@ -33,7 +33,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(document.querySelectorAll('.toast-wrapper .toast.toast-warning').length, 1);
+		assert.equal(testUtil.count('.toast-wrapper .toast.toast-warning', true), 1);
 	});
 
 	it('should add a div with class "toast-error" when toast.error is called', () => {
@@ -42,7 +42,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(document.querySelectorAll('.toast-wrapper .toast.toast-error').length, 1);
+		assert.equal(testUtil.count('.toast-wrapper .toast.toast-error', true), 1);
 	});
 
 	it('should add two divs with class "toast-error" when toast.error is called twice', () => {
@@ -56,6 +56,6 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(document.querySelectorAll('.toast-wrapper .toast.toast-error').length, 2);
+		assert.equal(testUtil.count('.toast-wrapper .toast.toast-error', true), 2);
 	});
 });

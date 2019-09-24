@@ -24,7 +24,7 @@ describe('CheckBoxes', () => {
 			},
 			validValue: '1',
 			setValueViaDom: function() {
-				testUtil.simulateClick(document.querySelector('.checkbox'));
+				testUtil.simulateClick(testUtil.first('.checkbox'));
 			}
 		}
 	});
@@ -78,7 +78,7 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
 
 			assert.equal(testVar, 'test');
 		});
@@ -98,7 +98,7 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
 
 			assert.equal(testVar, 'test');
 		});
@@ -118,8 +118,8 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.checkbox'));
-			testUtil.simulateClick(document.querySelector('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
 
 			assert.equal(testVar, 'test');
 		});
@@ -139,7 +139,7 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
 
 			assert.equal(typeof testVar, 'object');
 		});

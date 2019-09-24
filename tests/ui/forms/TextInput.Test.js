@@ -31,7 +31,7 @@ describe('TextInput', () => {
 			},
 			validValue: 'test',
 			setValueViaDom() {
-				const input = document.querySelector('input[type=text]');
+				const input = testUtil.first('input[type=text]');
 				input.value = '4';
 				testUtil.trigger(input, 'change');
 			}

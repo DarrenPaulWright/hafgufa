@@ -15,7 +15,7 @@ describe('Score', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelectorAll('div.score-text').length, 1);
+			assert.equal(testUtil.count('div.score-text'), 1);
 		});
 	});
 });

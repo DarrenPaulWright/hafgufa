@@ -45,7 +45,7 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading').length, 1);
+					assert.equal(testUtil.count('.heading', true), 1);
 				});
 		});
 
@@ -65,7 +65,7 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading').length, 3);
+					assert.equal(testUtil.count('.heading', true), 3);
 				});
 		});
 
@@ -87,7 +87,7 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.checkbox.checked').length, 1);
+					assert.equal(testUtil.count('.checkbox.checked', true), 1);
 				});
 		});
 
@@ -112,7 +112,7 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
 					assert.equal(testVar, 'test2');
 				});
@@ -136,9 +136,9 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(document.querySelectorAll('.context-menu').length, 0);
+					assert.equal(testUtil.count('.context-menu'), 0);
 				});
 		});
 
@@ -161,9 +161,9 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(document.querySelectorAll('.menu').length, 1);
+					assert.equal(testUtil.count('.menu'), 1);
 				});
 		});
 
@@ -186,9 +186,9 @@ describe('Menu', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(document.querySelectorAll('.menu').length, 1);
+					assert.equal(testUtil.count('.menu'), 1);
 				});
 		});
 	});

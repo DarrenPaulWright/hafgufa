@@ -29,7 +29,7 @@ describe('ContextMenu', () => {
 			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
 			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
 
-			assert.equal(document.querySelectorAll('.context-menu').length, 0);
+			assert.equal(testUtil.count('.context-menu'), 0);
 		});
 	});
 });

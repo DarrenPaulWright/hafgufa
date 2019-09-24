@@ -57,7 +57,7 @@ describe('Div', () => {
 
 			testUtil.control.append(button2);
 
-			assert.equal(document.querySelectorAll('button')[1], button2.element());
+			assert.equal(testUtil.nth('button', 1), button2.element());
 		});
 	});
 
@@ -78,7 +78,7 @@ describe('Div', () => {
 
 			testUtil.control.prepend(button2);
 
-			assert.equal(document.querySelectorAll('button')[0], button2.element());
+			assert.equal(testUtil.nth('button', 0), button2.element());
 		});
 	});
 });

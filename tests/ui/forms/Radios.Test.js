@@ -85,7 +85,7 @@ describe('Radios', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.radio'));
+			testUtil.simulateClick(testUtil.first('.radio'));
 
 			assert.equal(testVar, 'test');
 		});
@@ -109,7 +109,7 @@ describe('Radios', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelector('.radio'));
+			testUtil.simulateClick(testUtil.first('.radio'));
 
 			assert.equal(testVar, 'test');
 		});

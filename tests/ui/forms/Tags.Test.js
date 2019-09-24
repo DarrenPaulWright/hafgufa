@@ -27,18 +27,18 @@ describe('Tags', () => {
 	};
 
 	const clickOption = (index) => {
-		testUtil.simulateClick(document.querySelectorAll('.popup .heading')[index]);
+		testUtil.simulateClick(testUtil.nth('.popup .heading', index, true));
 	};
 
 	const clickDeleteButton = (index) => {
-		testUtil.simulateClick(document.querySelectorAll('.icon-button')[index]);
+		testUtil.simulateClick(testUtil.nth('.icon-button', index));
 	};
 
-	const getRenderedTags = () => document.querySelectorAll('.tags-list-container .heading');
+	const getRenderedTags = () => testUtil.all('.tags-list-container .heading', true);
 
-	const getRenderedSuggestions = () => document.querySelectorAll('.popup .heading');
+	const getRenderedSuggestions = () => testUtil.all('.popup .heading', true);
 
-	const isPopupRendered = () => document.querySelectorAll('.popup').length === 1;
+	const isPopupRendered = () => testUtil.count('.popup', true) === 1;
 
 	formControlTests.run([], ['focus'], {
 		onChange: {
@@ -61,7 +61,7 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelectorAll('.tags').length, 1);
+			assert.equal(testUtil.count('.tags'), 1);
 		});
 
 		it('should have an input element', () => {
@@ -69,7 +69,7 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelectorAll('input').length, 1);
+			assert.equal(testUtil.count('input'), 1);
 		});
 
 		it('should set focus when the list container is clicked', () => {
@@ -77,7 +77,7 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			testUtil.simulateClick(document.querySelector('.tags-list-container'));
+			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
 			assert.isTrue(testUtil.control.isFocused());
 		});
@@ -126,8 +126,8 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			inputElement = document.querySelector('.text-input');
-			fakeInputElement = document.querySelector('.fake-input');
+			inputElement = testUtil.first('.text-input');
+			fakeInputElement = testUtil.first('.fake-input');
 
 			testUtil.control.isFocused(true);
 			setInputValue('test string that is really long');
@@ -201,7 +201,7 @@ describe('Tags', () => {
 			addTag('test2');
 			clickTag(0);
 
-			assert.equal(document.querySelectorAll('.heading.hidden').length, 1);
+			assert.equal(testUtil.count('.heading.hidden'), 1);
 		});
 
 		it('should add a tag when text is entered and another tag is clicked', () => {
@@ -255,7 +255,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickTag(1);
 
-			assert.deepEqual(document.querySelector('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
+			assert.deepEqual(testUtil.first('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
 		});
 
 		it('should maintain the order of tags when the first tag is edited', () => {
@@ -720,7 +720,7 @@ describe('Tags', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelector('.tags-list-container'));
+					testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
 					return wait();
 				})
@@ -764,7 +764,7 @@ describe('Tags', () => {
 			clickTag(1);
 			clickTag(0);
 			clickTag(3);
-			testUtil.simulateClick(document.querySelector('.tags-list-container'));
+			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
 			return wait()
 				.then(() => {
@@ -798,7 +798,7 @@ describe('Tags', () => {
 				.then(() => {
 					clickOption(1);
 
-					assert.equal(document.querySelectorAll('.heading').length, 1);
+					assert.equal(testUtil.count('.heading'), 1);
 				});
 		});
 
@@ -814,7 +814,7 @@ describe('Tags', () => {
 				.then(() => {
 					clickOption(1);
 
-					assert.equal(document.querySelectorAll('.heading').length, 1);
+					assert.equal(testUtil.count('.heading'), 1);
 				});
 		});
 

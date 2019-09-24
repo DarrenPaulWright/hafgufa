@@ -108,7 +108,7 @@ describe('IsWorking', () => {
 				label: testLabel
 			});
 
-			assert.equal(document.querySelector('label').textContent, testLabel);
+			assert.equal(testUtil.first('label').textContent, testLabel);
 		});
 
 		it('should have a label in the DOM when a label method is called', () => {
@@ -117,7 +117,7 @@ describe('IsWorking', () => {
 			})
 				.label(testLabel);
 
-			assert.equal(document.querySelector('label').textContent, testLabel);
+			assert.equal(testUtil.first('label').textContent, testLabel);
 		});
 
 		it('should update the label when the label method is called', () => {
@@ -128,7 +128,7 @@ describe('IsWorking', () => {
 
 			testUtil.control.label(testLabel2);
 
-			assert.equal(document.querySelector('label').textContent, testLabel2);
+			assert.equal(testUtil.first('label').textContent, testLabel2);
 		});
 
 		it('should not have a label if the label is set to an empty string', () => {
@@ -138,7 +138,7 @@ describe('IsWorking', () => {
 			})
 				.label('');
 
-			assert.equal(document.querySelectorAll('label').length, 0);
+			assert.equal(testUtil.count('label'), 0);
 		});
 	});
 });

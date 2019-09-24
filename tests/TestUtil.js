@@ -235,7 +235,7 @@ export default class TestUtil {
 						' method is NOT set', () => {
 						self.control = new Control(buildOptions());
 
-						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 0);
+						assert.equal(self.count('body > div > .' + settings.testValueClass), 0);
 					});
 
 					it('should have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
@@ -243,7 +243,7 @@ export default class TestUtil {
 						self.control = new Control(buildOptions());
 						self.control[settings.methodName](settings.testValue);
 
-						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 1);
+						assert.equal(self.count('body > div > .' + settings.testValueClass), 1);
 					});
 
 					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
@@ -253,7 +253,7 @@ export default class TestUtil {
 						self.control[settings.methodName](settings.testValue);
 						self.control[settings.methodName](settings.defaultValue);
 
-						assert.equal(document.querySelectorAll('body > div > .' + settings.testValueClass).length, 0);
+						assert.equal(self.count('body > div > .' + settings.testValueClass), 0);
 					});
 				}
 				else {
@@ -263,7 +263,7 @@ export default class TestUtil {
 								' method is NOT set', () => {
 								self.control = new Control(buildOptions());
 
-								assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
+								assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
 							});
 						}
 
@@ -274,7 +274,7 @@ export default class TestUtil {
 									self.control = new Control(buildOptions());
 									self.control[settings.methodName](mainClassOptions.testValue);
 
-									assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 1);
+									assert.equal(self.count('body > div > .' + mainClassOptions.class), 1);
 								});
 
 								if (settings.defaultValue !== mainClassOptions.testValue) {
@@ -285,7 +285,7 @@ export default class TestUtil {
 										self.control[settings.methodName](mainClassOptions.testValue);
 										self.control[settings.methodName](settings.defaultValue);
 
-										assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
+										assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
 									});
 								}
 							}
@@ -295,7 +295,7 @@ export default class TestUtil {
 									self.control = new Control(buildOptions());
 									self.control[settings.methodName](otherClassOptions.testValue);
 
-									assert.equal(document.querySelectorAll('body > div > .' + mainClassOptions.class).length, 0);
+									assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
 								});
 							}
 						});
@@ -324,7 +324,7 @@ export default class TestUtil {
 	}
 
 	getTextInput() {
-		return document.querySelector('input[type=text]');
+		return this.first('input[type=text]');
 	}
 
 	hitEnter() {

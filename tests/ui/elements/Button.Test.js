@@ -19,7 +19,7 @@ describe('Button', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelector('button>span').innerHTML, '&nbsp;');
+			assert.equal(testUtil.first('button>span').innerHTML, '&nbsp;');
 		});
 
 		it('should have a label if the label option is set', () => {
@@ -28,7 +28,7 @@ describe('Button', () => {
 				label: TEXT_LABEL
 			});
 
-			assert.equal(document.querySelector('button>span').textContent, TEXT_LABEL);
+			assert.equal(testUtil.first('button>span').textContent, TEXT_LABEL);
 		});
 
 		it('should have a label if the setLabel method is called', () => {
@@ -37,7 +37,7 @@ describe('Button', () => {
 			})
 				.label(TEXT_LABEL);
 
-			assert.equal(document.querySelector('button').textContent, TEXT_LABEL);
+			assert.equal(testUtil.first('button').textContent, TEXT_LABEL);
 		});
 
 		it('should have an "alt" property that is the same as the label if the label is set', () => {
@@ -46,7 +46,7 @@ describe('Button', () => {
 				label: TEXT_LABEL
 			});
 
-			assert.equal(document.querySelector('button').getAttribute('alt'), TEXT_LABEL);
+			assert.equal(testUtil.first('button').getAttribute('alt'), TEXT_LABEL);
 		});
 
 		it('should have a "title" property that is the same as the label if the label is set', () => {
@@ -55,7 +55,7 @@ describe('Button', () => {
 				label: TEXT_LABEL
 			});
 
-			assert.equal(document.querySelector('button').getAttribute('title'), TEXT_LABEL);
+			assert.equal(testUtil.first('button').getAttribute('title'), TEXT_LABEL);
 		});
 	});
 
@@ -67,7 +67,7 @@ describe('Button', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 0);
+			assert.equal(testUtil.count(SELECTED_CLASS), 0);
 		});
 
 		it('should NOT have a toggled css class when the isSelectable option is NOT set and the isSelected method is called', () => {
@@ -76,7 +76,7 @@ describe('Button', () => {
 			})
 				.isSelected(true);
 
-			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 0);
+			assert.equal(testUtil.count(SELECTED_CLASS), 0);
 		});
 
 		it('should have a toggled css class when the isSelectable and isSelected options are set', () => {
@@ -86,7 +86,7 @@ describe('Button', () => {
 				isSelected: true
 			});
 
-			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 1);
+			assert.equal(testUtil.count(SELECTED_CLASS), 1);
 		});
 
 		it('should have a toggled css class when the isSelectable option is set and the isSelected method is called', () => {
@@ -96,7 +96,7 @@ describe('Button', () => {
 			})
 				.isSelected(true);
 
-			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 1);
+			assert.equal(testUtil.count(SELECTED_CLASS), 1);
 		});
 
 		it('should have a toggled css class when the isSelectable method is called and the isSelected method is called', () => {
@@ -106,7 +106,7 @@ describe('Button', () => {
 				.isSelectable(true)
 				.isSelected(true);
 
-			assert.equal(document.querySelectorAll(SELECTED_CLASS).length, 1);
+			assert.equal(testUtil.count(SELECTED_CLASS), 1);
 		});
 	});
 });

@@ -37,7 +37,7 @@ describe('Description', () => {
 				description: 'sample'
 			});
 
-			assert.equal(dom.css(document.querySelector('.form-control > div:first-of-type'), WIDTH), '100px');
+			assert.equal(dom.css(testUtil.first('.form-control > div:first-of-type'), WIDTH), '100px');
 		});
 	});
 
@@ -55,7 +55,7 @@ describe('Description', () => {
 				align: 'center'
 			});
 
-			assert.equal(dom.css(document.querySelector('.description > div'), TEXT_ALIGN), 'center');
+			assert.equal(dom.css(testUtil.first('.description > div'), TEXT_ALIGN), 'center');
 		});
 	});
 

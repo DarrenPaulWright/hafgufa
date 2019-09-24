@@ -25,7 +25,7 @@ describe('FileThumbnail', () => {
 				imageSource: 'http://www.examle.com/test.jpg'
 			});
 
-			assert.equal(document.querySelector('img').getAttribute('src'), 'http://www.examle.com/test.jpg');
+			assert.equal(testUtil.first('img').getAttribute('src'), 'http://www.examle.com/test.jpg');
 		});
 	});
 

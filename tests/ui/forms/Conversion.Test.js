@@ -56,7 +56,7 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(document.querySelectorAll('.input-suffix')[0].textContent, 'ft');
+			assert.equal(testUtil.nth('.input-suffix', 0).textContent, 'ft');
 		});
 
 		it('should show a label after the \'to\' text box', () => {
@@ -66,7 +66,7 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(document.querySelectorAll('.input-suffix')[1].textContent, 'm');
+			assert.equal(testUtil.nth('.input-suffix', 1).textContent, 'm');
 		});
 
 		it('should show two labels, one for each type', () => {
@@ -76,8 +76,8 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(document.querySelectorAll('.input-suffix')[0].textContent, 'ft');
-			assert.equal(document.querySelectorAll('.input-suffix')[1].textContent, 'm');
+			assert.equal(testUtil.nth('.input-suffix', 0).textContent, 'ft');
+			assert.equal(testUtil.nth('.input-suffix', 1).textContent, 'm');
 		});
 	});
 

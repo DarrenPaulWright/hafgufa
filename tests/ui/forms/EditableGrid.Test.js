@@ -18,9 +18,9 @@ describe('EditableGrid', () => {
 				container: testUtil.container
 			});
 
-			testUtil.simulateClick(document.querySelector('.add-new-button'));
+			testUtil.simulateClick(testUtil.first('.add-new-button'));
 
-			assert.equal(document.querySelectorAll('.dialog').length, 1);
+			assert.equal(testUtil.count('.dialog', true), 1);
 		});
 
 		it('should display a dialog when a row is clicked', () => {
@@ -43,9 +43,9 @@ describe('EditableGrid', () => {
 
 			return wait(1)
 				.then(() => {
-					testUtil.simulateClick(document.querySelector('.clickable'));
+					testUtil.simulateClick(testUtil.first('.clickable'));
 
-					assert.equal(document.querySelectorAll('.dialog').length, 1);
+					assert.equal(testUtil.count('.dialog', true), 1);
 				});
 		});
 
@@ -78,10 +78,10 @@ describe('EditableGrid', () => {
 
 			return wait(1)
 				.then(() => {
-					testUtil.simulateClick(document.querySelectorAll('.grid-row')[2]);
+					testUtil.simulateClick(testUtil.nth('.grid-row', 2));
 
-					assert.equal(document.querySelectorAll('.dialog').length, 1);
-					assert.equal(document.querySelector('input[type=text]').value, 'text 3');
+					assert.equal(testUtil.count('.dialog', true), 1);
+					assert.equal(testUtil.first('input[type=text]', true).value, 'text 3');
 				});
 		});
 	});
@@ -116,15 +116,15 @@ describe('EditableGrid', () => {
 			});
 
 			// open the "add new" dialog
-			document.querySelector('.add-new-button').click();
+			testUtil.first('.add-new-button').click();
 
 			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
-					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
-					document.querySelectorAll('.grouped-buttons .form-button')[1].click();
+					testUtil.nth('.grouped-buttons .form-button', 0, true).click();
+					testUtil.nth('.grouped-buttons .form-button', 1, true).click();
 					//close the dialog
-					document.querySelector('.action-button').click();
+					testUtil.first('.action-button', true).click();
 
 					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
@@ -159,15 +159,15 @@ describe('EditableGrid', () => {
 			});
 
 			// open the "add new" dialog
-			document.querySelector('.add-new-button').click();
+			testUtil.first('.add-new-button').click();
 
 			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
-					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
-					document.querySelectorAll('.grouped-buttons .form-button')[1].click();
+					testUtil.nth('.grouped-buttons .form-button', 0, true).click();
+					testUtil.nth('.grouped-buttons .form-button', 1, true).click();
 					//close the dialog
-					document.querySelector('.action-button').click();
+					testUtil.first('.action-button', true).click();
 
 					assert.equal(testUtil.control.value()[0].values[0].text, 'test option, test option 2');
 				});
@@ -224,15 +224,15 @@ describe('EditableGrid', () => {
 			});
 
 			// open the "add new" dialog
-			document.querySelector('.add-new-button').click();
+			testUtil.first('.add-new-button').click();
 
 			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
-					document.querySelectorAll('.grouped-buttons .form-button')[0].click();
-					document.querySelectorAll('.grouped-buttons .form-button')[1].click();
+					testUtil.nth('.grouped-buttons .form-button', 0, true).click();
+					testUtil.nth('.grouped-buttons .form-button', 1, true).click();
 					//close the dialog
-					document.querySelector('.action-button').click();
+					testUtil.first('.action-button', true).click();
 
 					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
@@ -289,15 +289,15 @@ describe('EditableGrid', () => {
 			});
 
 			// open the "add new" dialog
-			document.querySelector('.add-new-button').click();
+			testUtil.first('.add-new-button').click();
 
 			return wait(100)
 				.then(() => {
 					//select the preferred item from the picker
-					document.querySelectorAll('.grouped-buttons button')[2].click();
-					document.querySelectorAll('.grouped-buttons button')[3].click();
+					testUtil.nth('.grouped-buttons button', 2, true).click();
+					testUtil.nth('.grouped-buttons button', 3, true).click();
 					//close the dialog
-					document.querySelector('.action-button').click();
+					testUtil.first('.action-button', true).click();
 
 					assert.equal(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
 				});

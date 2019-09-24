@@ -75,7 +75,7 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading button').length, 1);
+					assert.equal(testUtil.count('.heading button'), 1);
 				});
 		});
 
@@ -87,12 +87,12 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					testUtil.simulateClick(document.querySelector('.heading button'));
+					testUtil.simulateClick(testUtil.first('.heading button'));
 
 					return wait();
 				})
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading').length, 6);
+					assert.equal(testUtil.count('.heading'), 6);
 				});
 		});
 
@@ -102,12 +102,12 @@ describe('Tree', () => {
 				branches: nestedBranches
 			});
 
-			testUtil.simulateClick(document.querySelector('.heading .expander.expandable'));
-			testUtil.simulateClick(document.querySelector('.heading .expander.expandable'));
+			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
+			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading').length, 3);
+					assert.equal(testUtil.count('.heading'), 3);
 				});
 		});
 
@@ -119,7 +119,7 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading .expander').length, 0);
+					assert.equal(testUtil.count('.heading .expander'), 0);
 				});
 		});
 
@@ -131,7 +131,7 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading .checkboxes').length, 0);
+					assert.equal(testUtil.count('.heading .checkboxes'), 0);
 				});
 		});
 
@@ -149,7 +149,7 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.heading').length, 1);
+					assert.equal(testUtil.count('.heading'), 1);
 				});
 		});
 	});
@@ -185,7 +185,7 @@ describe('Tree', () => {
 				branches: branches
 			});
 
-			testUtil.simulateClick(document.querySelector('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
 
 			assert.equal(testUtil.control.value()[0], 1);
 		});
@@ -196,7 +196,7 @@ describe('Tree', () => {
 				branches: flatBranches
 			});
 
-			testUtil.simulateClick(document.querySelector('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
 
 			assert.equal(testUtil.control.value()[0], 1);
 		});
@@ -208,8 +208,8 @@ describe('Tree', () => {
 				branches: branches
 			});
 
-			testUtil.simulateClick(document.querySelector('.heading'));
-			testUtil.simulateClick(document.querySelector('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
 
 			assert.equal(testUtil.control.value().length, 0);
 		});
@@ -289,9 +289,9 @@ describe('Tree', () => {
 
 			return wait()
 				.then(() => {
-					rowHeight = parseFloat(document.querySelector('.heading').style.height, 10);
+					rowHeight = parseFloat(testUtil.first('.heading').style.height, 10);
 
-					assert.equal(Math.round(parseFloat(getComputedStyle(document.querySelector('.virtual-list')).height)), Math.round(rowHeight *
+					assert.equal(Math.round(parseFloat(getComputedStyle(testUtil.first('.virtual-list')).height)), Math.round(rowHeight *
 						3));
 				});
 		});
@@ -305,7 +305,7 @@ describe('Tree', () => {
 
 			testUtil.control.resize();
 
-			assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, '50px');
+			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
 		});
 
 		it('should have a height three times that of a branch if the height is set to 50px and then fitHeightToContents is called', () => {
@@ -320,9 +320,9 @@ describe('Tree', () => {
 			testUtil.control.fitHeightToContents();
 			return wait()
 				.then(() => {
-					rowHeight = parseFloat(document.querySelector('.heading').style.height);
+					rowHeight = parseFloat(testUtil.first('.heading').style.height);
 
-					assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
+					assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
 				});
 		});
 
@@ -333,7 +333,7 @@ describe('Tree', () => {
 				height: '50px'
 			});
 
-			assert.equal(getComputedStyle(document.querySelector('.virtual-list')).height, '50px');
+			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
 		});
 	});
 });

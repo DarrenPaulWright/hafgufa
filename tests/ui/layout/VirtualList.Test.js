@@ -38,7 +38,7 @@ describe('VirtualList', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(document.querySelectorAll(VIRTUAL_LIST_CLASS).length, 1);
+			assert.equal(testUtil.count(VIRTUAL_LIST_CLASS), 1);
 		});
 	});
 
@@ -59,7 +59,7 @@ describe('VirtualList', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 3);
+					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 				});
 		});
 
@@ -73,7 +73,7 @@ describe('VirtualList', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 3);
+					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 				});
 		});
 
@@ -91,7 +91,7 @@ describe('VirtualList', () => {
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll(VIRTUAL_ITEM_CLASS).length, 1);
+					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 1);
 				});
 		});
 
@@ -101,7 +101,7 @@ describe('VirtualList', () => {
 				emptyContentMessage: 'No Content'
 			});
 
-			assert.equal(document.querySelectorAll(EMPTY_CONTENT_CLASS).length, 1);
+			assert.equal(testUtil.count(EMPTY_CONTENT_CLASS), 1);
 		});
 
 		it('should NOT display an "empty content" message when there are items', () => {
@@ -113,7 +113,7 @@ describe('VirtualList', () => {
 				.itemControl(Button)
 				.itemData(testRows);
 
-			assert.equal(document.querySelectorAll(EMPTY_CONTENT_CLASS).length, 0);
+			assert.equal(testUtil.count(EMPTY_CONTENT_CLASS), 0);
 		});
 	});
 

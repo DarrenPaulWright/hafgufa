@@ -140,7 +140,7 @@ describe('Heading', () => {
 
 			return wait(210)
 				.then(() => {
-					assert.equal(document.querySelectorAll('.tooltip').length, 1);
+					assert.equal(testUtil.count('.tooltip', true), 1);
 				});
 		});
 	});

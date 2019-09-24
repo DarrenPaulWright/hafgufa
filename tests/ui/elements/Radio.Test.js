@@ -144,12 +144,12 @@ describe('Radio', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			testUtil.simulateClick(document.querySelector('label'));
+			testUtil.simulateClick(testUtil.first('label'));
 
 			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
-			testUtil.simulateClick(document.querySelector('label'));
+			testUtil.simulateClick(testUtil.first('label'));
 
 			assert.equal(context, testUtil.control);
 			assert.equal(value, false);
@@ -170,12 +170,12 @@ describe('Radio', () => {
 			assert.equal(context, undefined);
 			assert.equal(value, undefined);
 
-			testUtil.simulateClick(document.querySelector('input'));
+			testUtil.simulateClick(testUtil.first('input'));
 
 			assert.equal(context, testUtil.control);
 			assert.equal(value, true);
 
-			testUtil.simulateClick(document.querySelector('input'));
+			testUtil.simulateClick(testUtil.first('input'));
 
 			assert.equal(context, testUtil.control);
 			assert.equal(value, false);

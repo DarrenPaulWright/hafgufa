@@ -13,7 +13,7 @@ describe('GridHeader', () => {
 	});
 
 	const addTag = (text) => {
-		document.querySelector('input').value = text;
+		testUtil.first('input').value = text;
 		testUtil.hitEnter();
 	};
 
@@ -41,7 +41,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.grid-header-cell').length, 2);
+			assert.equal(testUtil.count('.grid-header-cell'), 2);
 		});
 
 		it('should remove previous columns when new columns are set', () => {
@@ -62,7 +62,7 @@ describe('GridHeader', () => {
 				title: 'test 4'
 			}]);
 
-			assert.equal(document.querySelectorAll('.grid-header-cell').length, 2);
+			assert.equal(testUtil.count('.grid-header-cell'), 2);
 		});
 
 		it('should set the width of flexible width columns proportionally', () => {
@@ -90,8 +90,8 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
-			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
+			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.equal(firstCellWidth, secondCellWidth * 3);
 		});
@@ -119,8 +119,8 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
-			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
+			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.equal(firstCellWidth, secondCellWidth * 3);
 		});
@@ -148,8 +148,8 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = document.querySelectorAll('.grid-header-cell')[0].offsetWidth;
-			secondCellWidth = document.querySelectorAll('.grid-header-cell')[1].offsetWidth;
+			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.equal(firstCellWidth, secondCellWidth * 3);
 		});
@@ -172,7 +172,7 @@ describe('GridHeader', () => {
 			testUtil.control.width(200);
 			testUtil.control.desiredWidth(200);
 
-			assert.equal(document.querySelectorAll('.grid-header-cell')[0].offsetWidth, 100);
+			assert.equal(testUtil.nth('.grid-header-cell', 0).offsetWidth, 100);
 		});
 
 		it('should resize flexible width columns to the minWidth when the header width changes', () => {
@@ -199,7 +199,7 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(200);
 
-			assert.equal(document.querySelectorAll('.grid-header-cell')[1].offsetWidth, 49);
+			assert.equal(testUtil.nth('.grid-header-cell', 1).offsetWidth, 49);
 		});
 
 		it('should only have one sorted column after two different columns are sorted', () => {
@@ -218,10 +218,10 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
-			testUtil.simulateClick(document.querySelectorAll('.heading')[1]);
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
+			testUtil.simulateClick(testUtil.nth('.heading', 1));
 
-			assert.equal(document.querySelectorAll('.sort-asc').length, 1);
+			assert.equal(testUtil.count('.sort-asc'), 1);
 		});
 	});
 
@@ -237,7 +237,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.tags').length, 1);
+			assert.equal(testUtil.count('.tags'), 1);
 		});
 
 		it('should set a default filter type of autocomplete if canFilter is true and column type is email', () => {
@@ -251,7 +251,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.tags').length, 1);
+			assert.equal(testUtil.count('.tags'), 1);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is date', () => {
@@ -265,7 +265,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.grouped-buttons').length, 1);
+			assert.equal(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should NOT set a default filter type of date if canFilter is false and column type is date', () => {
@@ -279,7 +279,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.grouped-buttons').length, 0);
+			assert.equal(testUtil.count('.grouped-buttons'), 0);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is datetime', () => {
@@ -293,7 +293,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.grouped-buttons').length, 1);
+			assert.equal(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is time', () => {
@@ -307,7 +307,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('.grouped-buttons').length, 1);
+			assert.equal(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should set a default filter type of number if canFilter is true and column type is number', () => {
@@ -321,7 +321,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('input[type=text]').length, 2);
+			assert.equal(testUtil.count('input[type=text]'), 2);
 		});
 
 		it('should NOT set a default filter type of number if canFilter is false and column type is number', () => {
@@ -335,7 +335,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(document.querySelectorAll('input[type=text]').length, 0);
+			assert.equal(testUtil.count('input[type=text]'), 0);
 		});
 	});
 
@@ -355,7 +355,7 @@ describe('GridHeader', () => {
 				}
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
 			assert.equal(testVal, gridConstants.SORT_TYPES.ASC);
 		});
@@ -375,8 +375,8 @@ describe('GridHeader', () => {
 				}
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
 			assert.equal(testVal, gridConstants.SORT_TYPES.DESC);
 		});
@@ -396,9 +396,9 @@ describe('GridHeader', () => {
 				}
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
-			testUtil.simulateClick(document.querySelectorAll('.heading')[0]);
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
 			assert.equal(testVal, gridConstants.SORT_TYPES.NONE);
 		});
@@ -419,10 +419,10 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			testUtil.simulateClick(document.querySelectorAll('label')[0]);
-			testUtil.simulateClick(document.querySelectorAll('label')[1]);
+			testUtil.simulateClick(testUtil.nth('label', 0));
+			testUtil.simulateClick(testUtil.nth('label', 1));
 
-			assert.isNotTrue(testUtil.hasClass(document.querySelectorAll('label')[0], 'sort-asc'));
+			assert.isNotTrue(testUtil.hasClass(testUtil.nth('label', 0), 'sort-asc'));
 		});
 
 		it('should call the onSelectAllGroups callback when a checkbox is clicked', () => {
@@ -439,7 +439,7 @@ describe('GridHeader', () => {
 				}
 			});
 
-			testUtil.simulateClick(document.querySelector('.checkbox'));
+			testUtil.simulateClick(testUtil.first('.checkbox'));
 
 			assert.equal(testVal, 'test');
 		});
@@ -479,7 +479,7 @@ describe('GridHeader', () => {
 				}
 			});
 
-			testUtil.simulateClick(document.querySelector('.tags-list-container'));
+			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
 			assert.equal(testVal, 'test');
@@ -520,11 +520,11 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			testUtil.trigger(document.querySelectorAll('.grid-header-cell')[1], CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
 			return wait()
 				.then(() => {
-					assert.equal(document.querySelectorAll('.menu .heading').length, 5);
+					assert.equal(testUtil.count('.menu .heading', true), 5);
 				});
 		});
 	});
@@ -550,7 +550,7 @@ describe('GridHeader', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(document.querySelector('input[type=checkbox]').checked, true);
+			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
 		});
 	});
 
@@ -575,7 +575,7 @@ describe('GridHeader', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(document.querySelector('input[type=checkbox]').indeterminate, true);
+			assert.equal(testUtil.first('input[type=checkbox]').indeterminate, true);
 		});
 	});
 
@@ -610,7 +610,7 @@ describe('GridHeader', () => {
 			testUtil.control.scrollbarWidth(17);
 			testUtil.control.desiredWidth(200);
 
-			lastCellWidth = document.querySelectorAll('.grid-header-cell')[2].offsetWidth;
+			lastCellWidth = testUtil.nth('.grid-header-cell', 2).offsetWidth;
 
 			assert.equal(lastCellWidth, 37);
 		});
