@@ -5,6 +5,7 @@ import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
+import Container from './Container';
 import './Section.less';
 
 /**
@@ -23,6 +24,7 @@ export default class Section extends MergeContentContainerMixin(ControlHeadingMi
 		settings.headingLevel = enforce.enum(settings.headingLevel, HEADING_LEVELS, HEADING_LEVELS.TWO);
 		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.canCollapse = enforce.boolean(settings.canCollapse, true);
+		settings.contentContainer = new Container();
 
 		super(settings);
 

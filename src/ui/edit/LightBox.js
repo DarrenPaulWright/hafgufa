@@ -12,6 +12,7 @@ import {
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
+import Div from '../elements/Div';
 import { ICON_SIZES } from '../elements/Icon';
 import Image from '../elements/Image';
 import FileThumbnail from '../forms/FileThumbnail';
@@ -79,7 +80,7 @@ export default class LightBox extends Control {
 			isWorking: true,
 			height: HUNDRED_PERCENT
 		});
-		self[INTERACTION_LAYER] = new Container({
+		self[INTERACTION_LAYER] = new Div({
 			container: self,
 			classes: INTERACTION_LAYER_CLASS,
 			height: HUNDRED_PERCENT

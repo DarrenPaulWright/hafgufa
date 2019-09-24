@@ -8,10 +8,10 @@ import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
+import Div from '../elements/Div';
 import TextInput from '../forms/TextInput';
 import Tree from '../forms/Tree';
 import { ADD_ICON, DELETE_ICON, EDIT_ICON } from '../icons';
-import Container from '../layout/Container';
 import Popup from '../layout/Popup';
 import './Menu.less';
 
@@ -165,7 +165,7 @@ export default class Menu extends Popup {
 		if (!this.get(HEADER_ID)) {
 			this.prepend({
 				id: HEADER_ID,
-				control: Container,
+				control: Div,
 				classes: FILTER_CONTAINER_CLASS
 			});
 		}

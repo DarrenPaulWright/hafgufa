@@ -6,9 +6,9 @@ import round from '../../utility/math/round';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
+import Div from '../elements/Div';
 import Heading from '../elements/Heading';
 import { CIRCLE_ICON } from '../icons';
-import Container from '../layout/Container';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import './ProgressBar.less';
 
@@ -55,12 +55,12 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 			}
 		});
 
-		self[BAR_CONTAINER] = new Container({
+		self[BAR_CONTAINER] = new Div({
 			container: self,
 			classes: 'bar-container'
 		});
 
-		self[BAR] = new Container({
+		self[BAR] = new Div({
 			container: self[BAR_CONTAINER],
 			classes: 'bar',
 			width: ZERO_PIXELS

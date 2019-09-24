@@ -9,7 +9,6 @@ import Div from '../elements/Div';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
 import Picker from '../forms/Picker';
 import { NEXT_ICON, PREVIOUS_ICON } from '../icons';
-import Container from '../layout/Container';
 import './Calendar.less';
 
 const DAYS_IN_A_WEEK = 7;
@@ -150,7 +149,7 @@ export default class Calendar extends Control {
 		const self = this;
 
 		if (!self[HEADER]) {
-			self[HEADER] = new Container({
+			self[HEADER] = new Div({
 				container: self,
 				classes: 'calendar-header',
 				content: [{

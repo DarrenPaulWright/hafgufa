@@ -1,7 +1,7 @@
 import { applySettings, AUTO, enforce, method } from 'type-enforcer';
 import controlTypes from '../controlTypes';
+import Div from '../elements/Div';
 import Label from '../elements/Label';
-import Container from '../layout/Container';
 import FormControl from './FormControl';
 import './Score.less';
 
@@ -27,7 +27,7 @@ export default class Score extends FormControl {
 		const self = this;
 		self.addClass('score');
 
-		self[TEXT_DISPLAY] = new Container({
+		self[TEXT_DISPLAY] = new Div({
 			container: self,
 			classes: 'score-text',
 			removeClass: 'container',

@@ -1,8 +1,8 @@
 import { event } from 'd3';
 import { applySettings, method } from 'type-enforcer';
+import { Div } from '../../index';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
-import Container from '../layout/Container';
 import Input from './Input';
 import Label from './Label';
 import './Radio.less';
@@ -47,7 +47,7 @@ export default class Radio extends Label {
 	content(content) {
 		if (arguments.length) {
 			if (!this[CONTAINER]) {
-				this[CONTAINER] = new Container({
+				this[CONTAINER] = new Div({
 					container: this
 				});
 			}

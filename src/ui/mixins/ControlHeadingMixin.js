@@ -1,7 +1,7 @@
 import { AUTO, HUNDRED_PERCENT, method, NONE } from 'type-enforcer';
 import { DISPLAY } from '../../utility/domConstants';
+import Div from '../elements/Div';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
-import Container from '../layout/Container';
 
 const SINGLE_LINE_CLASS = 'single-line';
 const CAN_COLLAPSE_CLASS = 'can-collapse';
@@ -27,7 +27,7 @@ export default (Base) => {
 			self.title(settings.title || '');
 			delete settings.title;
 
-			self[CONTENT_CONTAINER] = settings.contentContainer || new Container();
+			self[CONTENT_CONTAINER] = settings.contentContainer || new Div();
 			self[CONTENT_CONTAINER].container(self.element());
 			self[CONTENT_CONTAINER].removeClass('container');
 			delete settings.contentContainer;

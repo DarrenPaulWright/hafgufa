@@ -2,6 +2,7 @@ import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { Div } from '../../index';
 import dom from '../../utility/dom';
 import {
 	CLICK_EVENT,
@@ -18,7 +19,6 @@ import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
-import Container from '../layout/Container';
 import Toolbar from '../layout/Toolbar';
 import FocusMixin from '../mixins/FocusMixin';
 import Button from './Button';
@@ -156,10 +156,9 @@ export default class Heading extends FocusMixin(Control) {
 			mainClickEvent.call(self);
 		});
 
-		self[CONTROLS].add(new Container({
+		self[CONTROLS].add(new Div({
 			id: TITLE_CONTAINER,
 			container: self,
-			removeClass: 'container',
 			classes: 'title-container',
 			content: new Span({
 				id: TITLE_ID

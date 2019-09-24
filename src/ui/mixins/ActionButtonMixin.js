@@ -10,9 +10,9 @@ import {
 	TAB_INDEX_DISABLED
 } from '../../utility/domConstants';
 import Button from '../elements/Button';
+import Div from '../elements/Div';
 import Span from '../elements/Span';
 import { CLEAR_ICON } from '../icons';
-import Container from '../layout/Container';
 import './ActionButtonMixin.less';
 
 const RIGHT_CONTAINER = Symbol();
@@ -101,10 +101,9 @@ export default function(Base) {
 			const self = this;
 
 			if (!self[RIGHT_CONTAINER]) {
-				self[RIGHT_CONTAINER] = new Container({
+				self[RIGHT_CONTAINER] = new Div({
 					container: self,
-					classes: 'action-button-container',
-					removeClass: 'container'
+					classes: 'action-button-container'
 				});
 			}
 

@@ -5,9 +5,9 @@ import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
+import Div from '../elements/Div';
 import Tags from '../forms/Tags';
 import { SEARCH_ICON } from '../icons';
-import Container from '../layout/Container';
 import './SearchBar.less';
 
 const MENU_BUTTON = Symbol();
@@ -94,7 +94,7 @@ export default class SearchBar extends Control {
 		const self = this;
 
 		if (!self[IS_SEARCH_BAR_OPEN]) {
-			self[SEARCH_BAR_CONTAINER] = new Container({
+			self[SEARCH_BAR_CONTAINER] = new Div({
 				classes: 'search-bar-container',
 				css: {
 					top: dom.get.outerHeight(self.container())
@@ -102,7 +102,7 @@ export default class SearchBar extends Control {
 			});
 			dom.appendBefore(self.container(), self[SEARCH_BAR_CONTAINER]);
 
-			self[SEARCH_BAR] = new Container({
+			self[SEARCH_BAR] = new Div({
 				container: self[SEARCH_BAR_CONTAINER],
 				classes: 'search-bar'
 			});

@@ -7,10 +7,10 @@ import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';
 import controlTypes from '../controlTypes';
+import Div from '../elements/Div';
 import Heading from '../elements/Heading';
 import TextInput from '../forms/TextInput';
 import { CLEAR_ICON } from '../icons';
-import Container from '../layout/Container';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
 import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
@@ -50,9 +50,8 @@ const selectSuggestion = Symbol();
 export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	constructor(settings = {}) {
 		let self;
-		let listContainer = new Container({
+		let listContainer = new Div({
 			classes: 'tags-list-container clearfix',
-			removeClass: 'container',
 			on: {
 				click() {
 					if (self[TEXT_INPUT].isFocused()) {
