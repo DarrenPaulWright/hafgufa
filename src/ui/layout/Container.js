@@ -197,6 +197,8 @@ export default class Container extends IsWorkingMixin(FocusMixin(Control)) {
 	 */
 	removeContent(id) {
 		this[CHILD_CONTROLS].remove(id);
+
+		return this;
 	}
 }
 
