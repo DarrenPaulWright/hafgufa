@@ -85,7 +85,6 @@ const propagationClickEvent = () => {
 	event.stopPropagation();
 };
 
-const registerControl = Symbol();
 const updateElementId = Symbol();
 const setPropagationClickEvent = Symbol();
 const setCssSizeElement = Symbol();
@@ -131,12 +130,6 @@ export default class Control extends Removable {
 			self.container(null);
 			self.element(null);
 		});
-	}
-
-	[registerControl](control) {
-		this[CHILD_CONTROLS].add(control);
-
-		return this;
 	}
 
 	/**
@@ -269,7 +262,7 @@ Object.assign(Control.prototype, {
 				}
 
 				if (container[CONTROL_PROP]) {
-					container[CONTROL_PROP][registerControl](self);
+					container[CONTROL_PROP][CHILD_CONTROLS].add(self);
 				}
 				else {
 					_self.windowResizeId = windowResize.add(() => {
