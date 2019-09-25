@@ -5,6 +5,7 @@ import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
+import Container from './Container';
 import './Group.less';
 
 /**
@@ -21,6 +22,7 @@ export default class Group extends MergeContentContainerMixin(ControlHeadingMixi
 		settings.type = settings.type || controlTypes.GROUP;
 		settings.element = 'fieldset';
 		settings.headingLevel = HEADING_LEVELS.FOUR;
+		settings.contentContainer = new Container();
 
 		super(settings);
 
