@@ -2,7 +2,7 @@ import { throttle } from 'async-agent';
 import { event } from 'd3';
 import moment from 'moment';
 import { repeat } from 'object-agent';
-import { applySettings, CssSize, enforceBoolean, Enum, method, PIXELS, Thickness } from 'type-enforcer';
+import { applySettings, CssSize, enforceBoolean, Enum, isInteger, method, PIXELS, Thickness } from 'type-enforcer';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import Control from '../Control';
@@ -72,7 +72,7 @@ const SPANS = [{
 	max: MONTHS_IN_YEAR * 30,
 	type: SPAN_TYPES.MONTH,
 	length: MILLISECONDS_IN_YEAR / MONTHS_IN_YEAR,
-	subSpans: [4, 2],
+	subSpans: [30, 4, 2],
 	format: 'MMM YYYY',
 	incUnit: 'M'
 }, {
@@ -88,7 +88,7 @@ const SPANS = [{
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR,
 	type: SPAN_TYPES.HOUR,
 	length: MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
-	subSpans: [6, 4, 2],
+	subSpans: [60, 30, 12, 6, 4, 2],
 	format: 'ha, D MMM YYYY',
 	incUnit: 'h'
 }, {
@@ -96,7 +96,7 @@ const SPANS = [{
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE,
 	type: SPAN_TYPES.MINUTE,
 	length: SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
-	subSpans: [6, 4, 2],
+	subSpans: [60, 30, 12, 6, 4, 2],
 	format: 'h:mma, D MMM YYYY',
 	incUnit: 'm'
 }, {
@@ -104,17 +104,27 @@ const SPANS = [{
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	type: SPAN_TYPES.SECOND,
 	length: MILLISECONDS_IN_SECOND,
-	subSpans: [10, 5, 2],
+	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
 	format: 'h:mm:ssa, D MMM YYYY',
 	incUnit: 's'
+}, {
+	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
+	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND * 1000,
+	type: SPAN_TYPES.MILLISECOND,
+	length: 1,
+	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
+	format: 'h:mm:ssa, D MMM YYYY',
+	incUnit: 'ms'
 }];
 
 const minSpanWidth = new CssSize('8rem');
+const minDurationSpanWidth = new CssSize('6rem');
 const minSubSpanWidth = new CssSize('0.5rem');
 
 const LINE = Symbol();
 const VIRTUAL_LIST = Symbol();
 const MIN_SPAN_WIDTH = Symbol();
+const MIN_DURATION_SPAN_WIDTH = Symbol();
 const MIN_SUB_SPAN_WIDTH = Symbol();
 const INNER_WIDTH = Symbol();
 const START = Symbol();
@@ -124,6 +134,9 @@ const ZOOM = Symbol();
 const MIN_ZOOM = Symbol();
 const MAX_ZOOM = Symbol();
 const SPAN = Symbol();
+const PARENT_SPAN = Symbol();
+const PARENT_SUB_SPAN = Symbol();
+const PARENT_MULTIPLIER = Symbol();
 const SUB_SPANS = Symbol();
 
 const reset = Symbol();
@@ -184,18 +197,20 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		});
 
 		self.onResize(() => {
-				self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
-				self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
+			self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
+			self[MIN_DURATION_SPAN_WIDTH] = minDurationSpanWidth.toPixels(true);
+			self[MIN_SUB_SPAN_WIDTH] = minSubSpanWidth.toPixels(true);
 
-				const innerWidth = self[VIRTUAL_LIST].innerWidth();
-				if (innerWidth !== self[INNER_WIDTH]) {
-					self[INNER_WIDTH] = innerWidth;
-					self[reset]();
-				}
-			})
-			.resize();
+			const innerWidth = self[VIRTUAL_LIST].innerWidth();
+			if (innerWidth !== self[INNER_WIDTH]) {
+				self[INNER_WIDTH] = innerWidth;
+				self[reset]();
+			}
+		});
 
 		applySettings(self, settings);
+
+		self.resize(true);
 	}
 
 	[setZoom](newZoom) {
@@ -206,37 +221,85 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		if (newZoom !== self[ZOOM] || (self.data().length && !self[VIRTUAL_LIST].itemSize())) {
 			self[ZOOM] = newZoom;
 			self[calcSpans]();
+			self.resize(true);
 		}
 	}
 
 	[getSpanOffset](span, date) {
-		const start = moment(date).startOf(span.incUnit).toDate();
-		const end = moment(date).endOf(span.incUnit).toDate();
+		if (!span.incUnit) {
+			return 1;
+		}
+
+		const start = moment(date)
+			.startOf(span.incUnit)
+			.toDate();
+		const end = moment(date)
+			.endOf(span.incUnit)
+			.toDate();
 
 		return (date - start) / (end - start);
 	}
 
 	[calcSpans]() {
 		const self = this;
+		const prevSpan = self[SPAN];
+		const minSpanWidth = self.duration() === undefined ? self[MIN_SPAN_WIDTH] : self[MIN_DURATION_SPAN_WIDTH];
+
+		self[PARENT_SPAN] = null;
+		self[PARENT_SUB_SPAN] = 1;
+		self[PARENT_MULTIPLIER] = 1;
 
 		SPANS.some((span) => {
-			if (span.min <= self[ZOOM] && span.max >= self[ZOOM]) {
+			if ((span.min <= self[ZOOM] && span.max >= self[ZOOM]) || self[PARENT_SPAN]) {
 				let slides;
+				let subSpans;
 
 				if (self[SPAN] !== span) {
 					self[SPAN] = span;
+				}
+
+				let slideWidth = self[ZOOM] * minSpanWidth * (self[SPAN].length / MILLISECONDS_IN_YEAR);
+
+				if (self[PARENT_SPAN]) {
+					self[PARENT_MULTIPLIER] = self[PARENT_SPAN].length / self[SPAN].length / self[PARENT_SUB_SPAN];
+					slideWidth = slideWidth * self[PARENT_MULTIPLIER]
+				}
+				else {
+					self[SPAN].subSpans.some((subSpan) => {
+						if (slideWidth / subSpan > minSpanWidth) {
+							self[PARENT_SPAN] = span;
+							self[PARENT_SUB_SPAN] = subSpan;
+							return true;
+						}
+					});
+				}
+
+				if (self[PARENT_SPAN] && self[PARENT_SPAN] === self[SPAN]) {
+					return false;
+				}
+				else {
 					slides = self[buildSlides]();
 				}
 
-				let slideWidth = self[ZOOM] * self[MIN_SPAN_WIDTH] * (self[SPAN].length / MILLISECONDS_IN_YEAR);
+				if (self[PARENT_SPAN]) {
+					subSpans = self[SPAN].subSpans
+						.map((subSpan) => subSpan * self[PARENT_SPAN].subSpans[0])
+						.concat(self[PARENT_SPAN].subSpans)
+						.map((subSpan) => subSpan / self[PARENT_SUB_SPAN])
+						.filter(isInteger);
+				}
+				else {
+					subSpans = self[SPAN].subSpans;
+				}
 
-				self[SPAN].subSpans.some((subSpan) => {
+				subSpans.some((subSpan) => {
 					if (slideWidth / subSpan > self[MIN_SUB_SPAN_WIDTH]) {
 						self[SUB_SPANS] = subSpan;
 						if (!slides) {
-							self[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
-								control.subSpans(self[SUB_SPANS]);
-							});
+							self[VIRTUAL_LIST].getRenderedControls()
+								.forEach((control) => {
+									control.subSpans(self[SUB_SPANS]);
+								});
 						}
 						return true;
 					}
@@ -260,10 +323,12 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		const self = this;
 		const slides = [];
 		const isDuration = self.duration() !== undefined;
-		const totalSlides = Math.ceil(self[LENGTH] / self[SPAN].length) + 1;
+		const spanLength = self[SPAN].length * self[PARENT_MULTIPLIER];
+		const totalSlides = Math.ceil(self[LENGTH] / spanLength) + 1;
 		const currentValue = isDuration ? moment.utc(0) : moment(self[START]);
-		const format = isDuration ? 'HH:mm:ss' : self[SPAN].format;
-		const exporter = isDuration ? ((value) => value.toDate().valueOf()) : ((value) => value.toDate());
+		const format = isDuration ? (self[SPAN].incUnit !== 'ms' ? 'HH:mm:ss' : 'HH:mm:ss.SSS') : self[SPAN].format;
+		const exporter = isDuration ? ((value) => value.toDate()
+			.valueOf()) : ((value) => value.toDate());
 
 		repeat(totalSlides, () => {
 			const title = currentValue.format(format);
@@ -272,23 +337,26 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 				id: 'span_' + title,
 				title: title,
 				events: [],
-				start: exporter(moment(currentValue).startOf(self[SPAN].incUnit)),
-				end: exporter(moment(currentValue).endOf(self[SPAN].incUnit))
+				start: exporter(moment(currentValue)
+					.startOf(self[SPAN].incUnit)),
+				end: exporter(moment(currentValue)
+					.endOf(self[SPAN].incUnit))
 			});
 
-			currentValue.add(self[SPAN].length);
+			currentValue.add(spanLength);
 		});
 
 		const start = slides[0].start;
 
-		self.data().forEach((item) => {
-			if (!isNaN(item.date)) {
-				const diff = Math.floor((item.date - start) / self[SPAN].length);
-				if (slides[diff]) {
-					slides[diff].events.push(item);
+		self.data()
+			.forEach((item) => {
+				if (!isNaN(item.date)) {
+					const diff = Math.floor((item.date - start) / spanLength);
+					if (slides[diff]) {
+						slides[diff].events.push(item);
+					}
 				}
-			}
-		});
+			});
 
 		return slides;
 	}
@@ -317,10 +385,11 @@ Object.assign(Timeline.prototype, {
 	},
 	[setLayout]: throttle(function() {
 		const self = this;
+		const minSpanWidth = self.duration() === undefined ? self[MIN_SPAN_WIDTH] : self[MIN_DURATION_SPAN_WIDTH];
 
 		self[LENGTH] = self[END] - self[START];
 
-		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / self[MIN_SPAN_WIDTH];
+		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / minSpanWidth;
 		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self[INNER_WIDTH]);
 
 		if (minZoom !== self[MIN_ZOOM]) {
