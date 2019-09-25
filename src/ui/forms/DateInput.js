@@ -42,8 +42,8 @@ export default class DateInput extends FormControl {
 		self[DATE_INPUT] = new TextInput({
 			container: self,
 			width: '7.4rem',
-			onChange() {
-				return self[onDateInputChange];
+			onChange(value) {
+				self[onDateInputChange](value);
 			},
 			onFocus() {
 				self[IS_FOCUSED] = true;
@@ -83,20 +83,19 @@ export default class DateInput extends FormControl {
 			}
 
 			self[POPUP] = new Popup({
-				classes: 'date-input-popup',
-				anchor: self[DATE_INPUT].element(),
+				anchor: self[DATE_INPUT].getInput().element(),
 				anchorDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 				popupDockPoint: DockPoint.POINTS.TOP_CENTER,
 				content: [{
 					control: Calendar,
+					margin: '0.25rem',
 					month: newDate.month(),
 					year: newDate.year(),
 					width: CALENDAR_WIDTH,
 					height: CALENDAR_HEIGHT,
-					onDateSelected(newValue) {
-						self[DATE_INPUT].value(newValue.format(DATE_FORMAT));
-						self.triggerChange();
-						self[POPUP].remove();
+					onDateSelected(value) {
+						self[DATE_INPUT].value(value.format(DATE_FORMAT));
+						self[onDateInputChange](value);
 					},
 					navButtonClass: 'icon-button',
 					selectedDate: newDate.toDate()
@@ -109,11 +108,11 @@ export default class DateInput extends FormControl {
 		}
 	}
 
-	[onDateInputChange](newValue) {
+	[onDateInputChange](value) {
 		const self = this;
-		const newDate = moment(new Date(newValue));
+		const newDate = moment(new Date(value));
 
-		if (newDate.isValid() || newValue === '') {
+		if (newDate.isValid() || value === '') {
 			if (self[POPUP]) {
 				self[POPUP].remove();
 			}
