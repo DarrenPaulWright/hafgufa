@@ -252,7 +252,7 @@ export default class Slider extends FormControl {
 			.map(self[getOffsetAtValue], self);
 
 		self[THUMBS].forEach((thumb, index) => {
-			thumb.position(self[OFFSETS][index], 0);
+			thumb.resize(true).position(self[OFFSETS][index], 0);
 		});
 
 		self[positionRange]();
