@@ -22,7 +22,6 @@ const FRICTION = 0.85;
 const ELASTICITY = 0.75;
 
 const IS_REGISTERED_RESIZE = Symbol();
-const DRAGGABLE_RECT = Symbol();
 const AVAILABLE_WIDTH = Symbol();
 const AVAILABLE_HEIGHT = Symbol();
 const IGNORE_PADDING = Symbol();
@@ -51,7 +50,6 @@ const animateThrow = Symbol();
 const calculateBounce = Symbol();
 const animateBounce = Symbol();
 const setPosition = Symbol();
-const updateBounds = Symbol();
 const setZoom = Symbol();
 const startDrag = Symbol();
 const onDrag = Symbol();
@@ -67,11 +65,54 @@ export default (Base) => {
 			self[AVAILABLE_WIDTH] = 0;
 			self[AVAILABLE_HEIGHT] = 0;
 
-			self.onResize(() => {
-					if (self.canDrag()) {
-						self[updateBounds]();
+			self.onResize((width, height) => {
+				if (self.canDrag()) {
+					if (self.container()) {
+						if (!self[IS_REGISTERED_RESIZE]) {
+							self[IS_REGISTERED_RESIZE] = true;
+
+							if (self.container()[CONTROL_PROP]) {
+								self.container()[CONTROL_PROP]
+									.onResize(function(width, height) {
+										self[AVAILABLE_WIDTH] = width;
+										self[AVAILABLE_HEIGHT] = height;
+
+										if (!IGNORE_PADDING) {
+											const padding = new Thickness(this.css('padding') || 0);
+
+											self[AVAILABLE_WIDTH] -= padding.horizontal;
+											self[AVAILABLE_HEIGHT] -= padding.vertical;
+										}
+									})
+									.resize(true);
+							}
+							else {
+								const bounds = self.container().getBoundingClientRect();
+								self[AVAILABLE_WIDTH] = bounds.width;
+								self[AVAILABLE_HEIGHT] = bounds.height;
+							}
+						}
 					}
-				})
+
+					if (width < self[AVAILABLE_WIDTH]) {
+						self[DRAG_BOUNDS].left = 0;
+						self[DRAG_BOUNDS].right = self[AVAILABLE_WIDTH] - width;
+					}
+					else {
+						self[DRAG_BOUNDS].left = self[AVAILABLE_WIDTH] - width;
+						self[DRAG_BOUNDS].right = 0;
+					}
+
+					if (height < self[AVAILABLE_HEIGHT]) {
+						self[DRAG_BOUNDS].top = 0;
+						self[DRAG_BOUNDS].bottom = self[AVAILABLE_HEIGHT] - height;
+					}
+					else {
+						self[DRAG_BOUNDS].top = self[AVAILABLE_HEIGHT] - height;
+						self[DRAG_BOUNDS].bottom = 0;
+					}
+				}
+			})
 				.onRemove(() => {
 					clear(self[DRAG_DELAY]);
 					self[stopThrow]();
@@ -206,9 +247,7 @@ export default (Base) => {
 
 				self[setPosition](self[BOUNCE_VECTOR].end().x, self[BOUNCE_VECTOR].end().y);
 
-				self[BOUNCE_FRAME] = requestAnimationFrame(() => {
-					self[animateBounce]();
-				});
+				self[BOUNCE_FRAME] = requestAnimationFrame(() => self[animateBounce]());
 			}
 			else {
 				self[IS_BOUNCING] = false;
@@ -276,63 +315,6 @@ export default (Base) => {
 			}
 		}
 
-		[updateBounds]() {
-			const self = this;
-
-			if (self.container()) {
-				const scale = self.scale();
-
-				if (!self[IS_REGISTERED_RESIZE]) {
-					self[IS_REGISTERED_RESIZE] = true;
-
-					if (self.container()[CONTROL_PROP]) {
-						self.container()[CONTROL_PROP]
-							.onResize(function(width, height) {
-								const padding = new Thickness(this.css('padding') || 0);
-
-								self[AVAILABLE_WIDTH] = width - (IGNORE_PADDING ? 0 : padding.horizontal);
-								self[AVAILABLE_HEIGHT] = height - (IGNORE_PADDING ? 0 : padding.vertical);
-							})
-							.resize(true);
-					}
-					else {
-						const bounds = self.container().getBoundingClientRect();
-						self[AVAILABLE_WIDTH] = bounds.width;
-						self[AVAILABLE_HEIGHT] = bounds.height;
-					}
-				}
-
-				self[DRAGGABLE_RECT] = self.element().getBoundingClientRect();
-
-				if (self[DRAGGABLE_RECT].width < self[AVAILABLE_WIDTH]) {
-					self[DRAG_BOUNDS].left = 0;
-					self[DRAG_BOUNDS].right = self[AVAILABLE_WIDTH] - self[DRAGGABLE_RECT].width;
-				}
-				else {
-					self[DRAG_BOUNDS].left = self[AVAILABLE_WIDTH] - self[DRAGGABLE_RECT].width;
-					self[DRAG_BOUNDS].right = 0;
-				}
-
-				if (self[DRAGGABLE_RECT].height < self[AVAILABLE_HEIGHT]) {
-					self[DRAG_BOUNDS].top = 0;
-					self[DRAG_BOUNDS].bottom = self[AVAILABLE_HEIGHT] - self[DRAGGABLE_RECT].height;
-				}
-				else {
-					self[DRAG_BOUNDS].top = self[AVAILABLE_HEIGHT] - self[DRAGGABLE_RECT].height;
-					self[DRAG_BOUNDS].bottom = 0;
-				}
-
-				if (self.element() instanceof SVGElement) {
-					const bBox = self.element().getBBox();
-
-					self[DRAG_BOUNDS].left -= bBox.x * scale;
-					self[DRAG_BOUNDS].top -= bBox.y * scale;
-					self[DRAG_BOUNDS].right -= bBox.x * scale;
-					self[DRAG_BOUNDS].bottom -= bBox.y * scale;
-				}
-			}
-		}
-
 		[setZoom](newScaleLevel, offsetX = 0, offsetY = 0) {
 			const self = this;
 			let scaleChange;
@@ -348,8 +330,6 @@ export default (Base) => {
 
 		[startDrag]() {
 			const self = this;
-
-			self[updateBounds]();
 
 			self[stopDrag]();
 			self[stopThrow]();
@@ -369,15 +349,15 @@ export default (Base) => {
 		[onDrag](x, y) {
 			const self = this;
 
-			this[setPosition](x, y);
-
-			clear(self[DRAG_DELAY]);
-			self[DRAG_DELAY] = delay(() => {
-				self[VELOCITY_OFFSET].x = 0;
-				self[VELOCITY_OFFSET].y = 0;
-			}, 100);
+			self[setPosition](x, y);
 
 			if (self.canThrow()) {
+				clear(self[DRAG_DELAY]);
+				self[DRAG_DELAY] = delay(() => {
+					self[VELOCITY_OFFSET].x = 0;
+					self[VELOCITY_OFFSET].y = 0;
+				}, 100);
+
 				self[VELOCITY_OFFSET].x = self[DRAG_OFFSET].x - self[DRAG_OFFSET_PREVIOUS].x;
 				self[VELOCITY_OFFSET].y = self[DRAG_OFFSET].y - self[DRAG_OFFSET_PREVIOUS].y;
 				self[DRAG_OFFSET_PREVIOUS].x = self[DRAG_OFFSET].x;
@@ -389,18 +369,14 @@ export default (Base) => {
 			const self = this;
 
 			if (self[IS_DRAGGING]) {
-				clear(self[DRAG_DELAY]);
-
 				self[IS_DRAGGING] = false;
 
 				if (self.canThrow()) {
 					self[IS_THROWING] = true;
 
+					clear(self[DRAG_DELAY]);
 					self[THROW_VELOCITY].end(self[VELOCITY_OFFSET]);
-
-					self[THROW_FRAME] = requestAnimationFrame(() => {
-						self[animateThrow]();
-					});
+					self[THROW_FRAME] = requestAnimationFrame(() => self[animateThrow]());
 				}
 				else {
 					self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}], self);
@@ -411,19 +387,19 @@ export default (Base) => {
 		stretch(format) {
 			const self = this;
 
-			self[updateBounds]();
-
-			const horizontalScale = self[AVAILABLE_WIDTH] / (self[DRAGGABLE_RECT].width / self.scale());
-			const verticalScale = self[AVAILABLE_HEIGHT] / (self[DRAGGABLE_RECT].height / self.scale());
-
-			if (format === 'fit') {
-				self[setZoom](Math.min(horizontalScale, verticalScale));
-			}
-			else if (format === 'fill') {
-				self[setZoom](Math.max(horizontalScale, verticalScale));
-			}
-			else if (format === 'none') {
+			if (format === 'none') {
 				self[setZoom](1);
+			}
+			else {
+				const horizontalScale = self[AVAILABLE_WIDTH] / (self.borderWidth() / self.scale());
+				const verticalScale = self[AVAILABLE_HEIGHT] / (self.borderHeight() / self.scale());
+
+				if (format === 'fit') {
+					self[setZoom](Math.min(horizontalScale, verticalScale));
+				}
+				else if (format === 'fill') {
+					self[setZoom](Math.max(horizontalScale, verticalScale));
+				}
 			}
 
 			return self;
@@ -432,8 +408,6 @@ export default (Base) => {
 		center() {
 			const self = this;
 
-			self[updateBounds]();
-
 			self[setPosition](self[DRAG_BOUNDS].horizontal / 2, self[DRAG_BOUNDS].vertical / 2);
 
 			return self;
@@ -441,9 +415,6 @@ export default (Base) => {
 
 		scaleToBounds(newX, newY, newWidth, newHeight) {
 			const self = this;
-
-			self[updateBounds]();
-
 			const newScale = Math.min(self[AVAILABLE_WIDTH] / newWidth, self[AVAILABLE_HEIGHT] / newHeight);
 
 			newX = (self[AVAILABLE_WIDTH] - newWidth * newScale) / 2 - (newX * newScale);
@@ -461,7 +432,7 @@ export default (Base) => {
 			const self = this;
 
 			if (value !== undefined) {
-				self.position(self[DRAG_OFFSET].x, value);
+				self[setPosition](self[DRAG_OFFSET].x, value);
 
 				return self;
 			}
@@ -473,7 +444,7 @@ export default (Base) => {
 			const self = this;
 
 			if (value !== undefined) {
-				self.position(value, self[DRAG_OFFSET].y);
+				self[setPosition](value, self[DRAG_OFFSET].y);
 
 				return self;
 			}
@@ -485,13 +456,12 @@ export default (Base) => {
 			const self = this;
 
 			if (arguments.length) {
-				self[updateBounds]();
 				self[setPosition](x, y);
 
 				return self;
 			}
 
-			return {...self[DRAG_OFFSET]};
+			return new Point(self[DRAG_OFFSET]);
 		}
 
 		get isDragging() {
@@ -524,12 +494,12 @@ export default (Base) => {
 					self[BOUNCE_DESTINATION] = new Point();
 
 					self.css(POSITION, ABSOLUTE)
-						.css('transform-origin', 'top left')
+						.css('transform-origin', '0 0')
 						.on('mousedown touchstart', () => {
 							event.stopPropagation();
 
-							const bounds = self.container().getBoundingClientRect();
-							const localOffset = new Point(event.offsetX + bounds.left, event.offsetY + bounds.top);
+							const localOffset = new Point(event.clientX - self[DRAG_OFFSET].x, event.clientY - self[DRAG_OFFSET].y);
+
 							const moveHandler = (event) => {
 								event.stopPropagation();
 
@@ -560,7 +530,7 @@ export default (Base) => {
 							);
 						});
 
-					self[updateBounds]();
+					self.resize(true);
 				}
 			}
 		}),

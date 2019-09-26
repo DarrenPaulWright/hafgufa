@@ -1,0 +1,18 @@
+
+.shape {
+	stroke: @highlightColor;
+	stroke-width: 0.06rem;
+	fill: fade(@highlightColor, 10%);
+	opacity: 0.5;
+	transition: opacity @animationDuration @easing;
+	cursor: move;
+
+	&.ignore {
+		pointer-events: none;
+	}
+
+	&:focus, &:hover {
+		opacity: 1;
+		outline: none;
+	}
+}

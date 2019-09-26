@@ -14,4 +14,24 @@ export default class Rect extends SvgControl {
 			applySettings(self, settings);
 		}
 	}
+
+	x(x) {
+		if (arguments.length) {
+			this.attr('x', x);
+
+			return this;
+		}
+
+		return this.attr('x');
+	}
+
+	y(y) {
+		if (arguments.length) {
+			this.attr('y', y);
+
+			return this;
+		}
+
+		return this.attr('y');
+	}
 }

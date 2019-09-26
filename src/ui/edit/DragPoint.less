@@ -1,0 +1,24 @@
+@dragPointSize: 0.33rem;
+@dragPointHitSize: 1.5rem;
+
+.drag-point {
+	.point {
+		width: @dragPointSize;
+		height: @dragPointSize;
+		fill: @highlightColor;
+		transform: translate(-@dragPointSize / 2, -@dragPointSize / 2)
+	}
+
+	.hit-area {
+		width: @dragPointHitSize;
+		height: @dragPointHitSize;
+		fill: transparent;
+		transform: translate(-@dragPointHitSize / 2, -@dragPointHitSize / 2)
+	}
+
+	&.circle {
+		.point {
+			rx: @dragPointSize / 2;
+		}
+	}
+}

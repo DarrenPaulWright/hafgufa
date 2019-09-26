@@ -242,7 +242,6 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 
 	[calcSpans]() {
 		const self = this;
-		const prevSpan = self[SPAN];
 		const minSpanWidth = self.duration() === undefined ? self[MIN_SPAN_WIDTH] : self[MIN_DURATION_SPAN_WIDTH];
 
 		self[PARENT_SPAN] = null;

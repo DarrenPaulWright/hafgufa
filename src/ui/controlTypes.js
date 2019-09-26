@@ -15,6 +15,7 @@ const controlTypes = {
 	DESCRIPTION: 'description',
 	DIV: 'div',
 	DONUT: 'donut',
+	DRAG_POINT: 'dragPoint',
 	DRAWER: 'drawer',
 	DRAWER_MENU: 'drawerMenu',
 	EDITABLE_GRID: 'editableGrid',
@@ -47,6 +48,7 @@ const controlTypes = {
 	PROGRESS: 'progress',
 	RADIO: 'radio',
 	RECT: 'svg:rect',
+	EDIT_RECTANGLE: 'editRectangle',
 	RESIZER: 'resizer',
 	SCATTER: 'scatter',
 	SCORE: 'score',
@@ -64,6 +66,7 @@ const controlTypes = {
 	TILE_LAYOUT: 'tileLayout',
 	TOOLBAR: 'toolbar',
 	TREE: 'tree',
+	VECTOR_EDITOR: 'vectorEditor',
 	VIDEO: 'video',
 	VIRTUAL_LIST: 'virtualList'
 };

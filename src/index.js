@@ -44,6 +44,9 @@ export { default as TextInput } from './ui/forms/TextInput';
 export { default as Tree } from './ui/forms/Tree';
 
 export { default as LightBox } from './ui/edit/LightBox';
+export { default as DragPoint } from './ui/edit/DragPoint';
+export { default as VectorEditor } from './ui/edit/VectorEditor';
+export { default as EditRectangle } from './ui/edit/EditRectangle';
 
 export { default as Bar } from './ui/graphs/Bar';
 export { default as Donut } from './ui/graphs/Donut';
