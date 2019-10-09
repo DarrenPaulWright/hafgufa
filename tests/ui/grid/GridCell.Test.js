@@ -31,16 +31,6 @@ describe('GridCell', () => {
 	});
 
 	describe('.onSelect', () => {
-		testUtil.testMethod({
-			methodName: 'onSelect',
-			defaultSettings: {
-				container: testUtil.container
-			},
-			defaultValue: undefined,
-			testValue() {
-				return 'test';
-			}
-		});
 	});
 
 	describe('DataType', () => {

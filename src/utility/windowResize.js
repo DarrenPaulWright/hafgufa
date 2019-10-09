@@ -75,7 +75,9 @@ export default {
 	 * @member module:windowResize
 	 * @instance
 	 */
-	discardAll: queue.discardAll,
+	discardAll() {
+		queue.discardAll();
+	},
 
 	/**
 	 * Triggers one or all callbacks.

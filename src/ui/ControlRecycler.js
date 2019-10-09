@@ -44,7 +44,9 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {constructor} [newControl]
 	 * @returns {constructor|this}
 	 */
-	control: method.function(),
+	control: method.function({
+		bind: false
+	}),
 
 	/**
 	 * @method defaultSettings

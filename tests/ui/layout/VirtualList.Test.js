@@ -210,15 +210,6 @@ describe('VirtualList', () => {
 	});
 
 	describe('onItemRender', () => {
-		const testCallback = () => {
-		};
-
-		testUtil.testMethod({
-			methodName: 'onItemRender',
-			defaultValue: undefined,
-			testValue: testCallback
-		});
-
 		it('should execute the onItemRender callback when items are rendered', () => {
 			let testValue = 0;
 

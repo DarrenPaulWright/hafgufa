@@ -112,17 +112,6 @@ describe('GridFooter', () => {
 	});
 
 	describe('OnCollapseAllGroups', () => {
-		testUtil.testMethod({
-			methodName: 'onCollapseAllGroups',
-			defaultValue: undefined,
-			testValue() {
-				return 1;
-			},
-			secondTestValue() {
-				return 2;
-			}
-		});
-
 		it('should have two buttons when showExpandCollapseButtons is called', () => {
 			testUtil.control = new GridFooter({
 				container: testUtil.container

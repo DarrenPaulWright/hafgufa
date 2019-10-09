@@ -1,5 +1,5 @@
 import { event, select } from 'd3';
-import { CssSize, enforce, isElement, isString, method, PIXELS, Thickness } from 'type-enforcer';
+import { CssSize, enforce, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
 import replaceElement from '../utility/dom/replaceElement';
 import {
@@ -31,7 +31,6 @@ import {
 	WIDTH,
 	WINDOW
 } from '../utility/domConstants';
-import PrivateVars from '../utility/PrivateVars';
 import windowResize from '../utility/windowResize';
 import './Control.less';
 import ControlManager from './ControlManager';

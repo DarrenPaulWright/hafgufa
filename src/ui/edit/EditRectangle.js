@@ -1,5 +1,4 @@
-import { applySettings } from 'type-enforcer';
-import PrivateVars from '../../utility/PrivateVars';
+import { applySettings, PrivateVars } from 'type-enforcer';
 import controlTypes from '../controlTypes';
 import Rect from '../svg/Rect';
 import Shape, { initDragPoint } from './Shape';

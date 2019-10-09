@@ -1,6 +1,5 @@
 import { forOwn } from 'object-agent';
-import { castArray, isString } from 'type-enforcer';
-import PrivateVars from '../utility/PrivateVars';
+import { castArray, isString, PrivateVars } from 'type-enforcer';
 
 const _ = new PrivateVars();
 

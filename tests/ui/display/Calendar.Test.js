@@ -170,15 +170,6 @@ describe('Calendar', () => {
 	});
 
 	describe('OnDateSelected', () => {
-		testUtil.testMethod({
-			methodName: 'onDateSelected',
-			defaultValue: undefined,
-			testValue() {
-			},
-			secondTestValue() {
-			}
-		});
-
 		it('should execute the onDateSelected callback when a day is clicked', () => {
 			let testVar = '';
 

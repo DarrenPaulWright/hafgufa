@@ -494,13 +494,6 @@ describe('Heading', () => {
 	});
 
 	describe('.onSelect', () => {
-		testUtil.testMethod({
-			methodName: 'onSelect',
-			defaultValue: undefined,
-			testValue() {
-			}
-		});
-
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
 			let testVar = 1;
 
@@ -531,13 +524,6 @@ describe('Heading', () => {
 	});
 
 	describe('.onExpand', () => {
-		testUtil.testMethod({
-			methodName: 'onExpand',
-			defaultValue: undefined,
-			testValue() {
-			}
-		});
-
 		it('should NOT execute the onExpand callback when the expander is clicked if isExpandable is false', () => {
 			let testVar = 1;
 

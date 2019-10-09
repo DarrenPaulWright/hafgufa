@@ -796,6 +796,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Object|this}
 	 */
 	itemControl: method.function({
+		bind: false,
 		set(newValue) {
 			if (this[CONTROL_RECYCLER]) {
 				this[CONTROL_RECYCLER].control(newValue);
