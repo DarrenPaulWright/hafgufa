@@ -406,8 +406,10 @@ Object.assign(Control.prototype, {
 	 */
 	attr: method.keyValue({
 		set(attribute, value) {
-			if (_(this).element) {
-				_(this).element.setAttribute(attribute, value);
+			const _self = _(this);
+
+			if (_self.element) {
+				_self.element.setAttribute(attribute, value);
 			}
 		},
 		get(attribute) {
@@ -428,12 +430,14 @@ Object.assign(Control.prototype, {
 	 */
 	css: method.keyValue({
 		set(property, value) {
-			if (_(this).element) {
+			const _self = _(this);
+
+			if (_self.element) {
 				if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 					value = value + PIXELS;
 				}
 
-				_(this).element.style[property] = value;
+				_self.element.style[property] = value;
 			}
 		},
 		get(property) {
@@ -453,19 +457,21 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	addClass(className) {
-		if (_(this).element && isString(className) && className !== EMPTY_STRING) {
+		const _self = _(this);
+
+		if (_self.element && isString(className) && className !== EMPTY_STRING) {
 			let classArray = className.trim().split(SPACE);
 
 			for (let index = 0; index < classArray.length; index++) {
-				if (_(this).element.classList) {
-					_(this).element.classList.add(classArray[index]);
+				if (_self.element.classList) {
+					_self.element.classList.add(classArray[index]);
 				}
 				else {
-					if (_(this).element.className.baseVal) {
-						_(this).element.className.baseVal += SPACE + classArray[index];
+					if (_self.element.className.baseVal) {
+						_self.element.className.baseVal += SPACE + classArray[index];
 					}
 					else {
-						_(this).element.className += SPACE + classArray[index];
+						_self.element.className += SPACE + classArray[index];
 					}
 				}
 			}
@@ -486,21 +492,22 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	removeClass(className) {
+		const _self = _(this);
 		const BASE_PREFIX = '(^|\\b)';
 		const BASE_SUFFIX = '(\\b|$)';
 		const FLAGS = 'gi';
 		let classArray;
 
-		if (_(this).element && isString(className) && className !== EMPTY_STRING) {
+		if (_self.element && isString(className) && className !== EMPTY_STRING) {
 			classArray = className.trim().split(SPACE);
 
 			for (let index = 0; index < classArray.length; index++) {
-				if (_(this).element.classList) {
-					_(this).element.classList.remove(classArray[index]);
+				if (_self.element.classList) {
+					_self.element.classList.remove(classArray[index]);
 				}
 				else {
-					if (_(this).element.className.baseVal !== undefined) {
-						_(this).element.className.baseVal = _(this)
+					if (_self.element.className.baseVal !== undefined) {
+						_self.element.className.baseVal = _self
 							.element
 							.className
 							.baseVal
@@ -508,7 +515,7 @@ Object.assign(Control.prototype, {
 								.join('|') + BASE_SUFFIX, FLAGS), SPACE);
 					}
 					else {
-						_(this).element.className = _(this)
+						_self.element.className = _self
 							.element
 							.className
 							.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
@@ -534,8 +541,10 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	classes(classes, performAdd) {
+		const _self = _(this);
+
 		if (arguments.length) {
-			if (_(this).element) {
+			if (_self.element) {
 				if (enforce.boolean(performAdd, true)) {
 					this.addClass(classes);
 				}
@@ -544,20 +553,20 @@ Object.assign(Control.prototype, {
 
 				}
 
-				_(this).currentClasses = _(this).element.classList ? _(this).element.classList.value : _(this).element.className.baseVal || _(this).element.className;
+				_self.currentClasses = _self.element.classList ? _self.element.classList.value : _self.element.className.baseVal || _self.element.className;
 
 			}
 
-			else if (!_(this).currentClasses) {
+			else if (!_self.currentClasses) {
 
-				_(this).currentClasses = classes;
+				_self.currentClasses = classes;
 
 			}
 
 			return this;
 		}
 
-		return _(this).currentClasses;
+		return _self.currentClasses;
 	},
 
 	/**
@@ -633,12 +642,16 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderWidth() {
-		return _(this).element ? _(this).element.offsetWidth : 0;
+		const _self = _(this);
+
+		return _self.element ? _self.element.offsetWidth : 0;
 	},
 
 	innerWidth() {
-		if (_(this).element) {
-			return (_(this).element.clientWidth || 0) - dom.get.paddings.width(_(this).element);
+		const _self = _(this);
+
+		if (_self.element) {
+			return (_self.element.clientWidth || 0) - dom.get.paddings.width(_self.element);
 		}
 
 		return 0;
@@ -699,12 +712,16 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderHeight() {
-		return _(this).element ? _(this).element.offsetHeight : 0;
+		const _self = _(this);
+
+		return _self.element ? _self.element.offsetHeight : 0;
 	},
 
 	innerHeight() {
-		if (_(this).element) {
-			return (_(this).element.clientHeight || 0) - dom.get.paddings.height(_(this).element);
+		const _self = _(this);
+
+		if (_self.element) {
+			return (_self.element.clientHeight || 0) - dom.get.paddings.height(_self.element);
 		}
 
 		return 0;
@@ -841,8 +858,10 @@ Object.assign(Control.prototype, {
 	 */
 	on: method.keyValue({
 		set(eventName, handler) {
-			if (_(this).elementD3) {
-				_(this).elementD3.on(eventName, handler);
+			const _self = _(this);
+
+			if (_self.elementD3) {
+				_self.elementD3.on(eventName, handler);
 			}
 		}
 	}),
@@ -950,12 +969,12 @@ Object.assign(Control.prototype, {
 				_self.currentWidth = newWidth;
 				_self.currentHeight = newHeight;
 
-				self.onResize().trigger(null, [_self.currentWidth, _self.currentHeight], self);
-			}
+				self.onResize().trigger(null, [newWidth, newHeight], self);
 
-			self[CHILD_CONTROLS].each((control) => {
-				control.resize();
-			});
+				self[CHILD_CONTROLS].each((control) => {
+					control.resize();
+				});
+			}
 
 			_self.isResizing = false;
 		}

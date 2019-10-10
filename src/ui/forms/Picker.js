@@ -980,16 +980,12 @@ Object.assign(Picker.prototype, {
 		},
 		enforce(newOptions, oldOptions) {
 			if (isArray(newOptions)) {
-				newOptions = {
+				return {
 					isMultiSelect: false,
 					children: newOptions
 				};
-				return newOptions;
 			}
-			if (isObject(newOptions)) {
-				return newOptions;
-			}
-			return oldOptions;
+			return isObject(newOptions) ? newOptions : oldOptions;
 		},
 		compare(newOptions, oldOptions) {
 			return !Picker[areOptionsEqual](newOptions, oldOptions);

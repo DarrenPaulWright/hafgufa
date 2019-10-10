@@ -168,19 +168,20 @@ export default class Heading extends FocusMixin(Control) {
 		applySettings(self, settings);
 
 		self.onResize(() => {
-				if (!self.width().isAuto) {
+				if (self.width().isAuto) {
+					self[CONTROLS].get(TITLE_CONTAINER)
+						.width(AUTO)
+						.css(PADDING_RIGHT, self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
+							.borderWidth() : ZERO_PIXELS);
+				}
+				else {
 					self[CONTROLS].get(TITLE_CONTAINER)
 						.width(HUNDRED_PERCENT)
 						.width(self.innerWidth() - dom.get.left(self[CONTROLS].get(TITLE_CONTAINER)) - (self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
 							.borderWidth() : ZERO_PIXELS))
 						.css(PADDING_RIGHT, ZERO_PIXELS);
 				}
-				else {
-					self[CONTROLS].get(TITLE_CONTAINER)
-						.width(AUTO)
-						.css(PADDING_RIGHT, self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
-							.borderWidth() : ZERO_PIXELS);
-				}
+
 				self[CONTROLS].get(TITLE_CONTAINER)
 					.classes(LARGE_SINGLE_LINE_CLASS, !self.subTitle() && !self.isInline());
 			})
@@ -203,6 +204,8 @@ Object.assign(Heading.prototype, {
 		init: true,
 		set(isInline) {
 			this.classes('not-inline', !isInline);
+
+			this.resize(true);
 		}
 	}),
 
@@ -240,17 +243,20 @@ Object.assign(Heading.prototype, {
 	subTitle: method.string({
 		set(subTitle) {
 			if (subTitle !== '') {
-				if (!this[CONTROLS].get(TITLE_CONTAINER).get(SUB_TITLE_ID)) {
-					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
-						id: SUB_TITLE_ID,
-						classes: 'subtitle'
-					}));
+				if (!this[CONTROLS].get(SUB_TITLE_ID)) {
+					this[CONTROLS].get(TITLE_CONTAINER)
+						.append(new Span({
+							id: SUB_TITLE_ID,
+							classes: 'subtitle'
+						}));
 				}
-				this[CONTROLS].get(TITLE_CONTAINER).get(SUB_TITLE_ID).text(subTitle);
+				this[CONTROLS].get(SUB_TITLE_ID).text(subTitle);
 			}
 			else {
 				this[CONTROLS].get(TITLE_CONTAINER).removeContent(SUB_TITLE_ID);
 			}
+
+			this.resize(true);
 		}
 	}),
 

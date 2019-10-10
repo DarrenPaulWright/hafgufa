@@ -472,6 +472,8 @@ export default class VirtualList extends FocusMixin(Control) {
 				if (doSetSize) {
 					self[setItemSize](control);
 				}
+
+				control.resize();
 			}
 		}
 	}
@@ -774,9 +776,9 @@ Object.assign(VirtualList.prototype, {
 	 * @param {string} [newItemSize]
 	 * @returns {string|this}
 	 */
-	itemSize: method.string({
+	itemSize: method.cssSize({
 		set(newValue) {
-			this[ITEM_SIZE] = parseFloat(newValue) || 1;
+			this[ITEM_SIZE] = newValue.toPixels(true) || 1;
 			this.refresh();
 		}
 	}),
