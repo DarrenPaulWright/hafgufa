@@ -16,11 +16,15 @@
 		top: 0;
 		width: 0.07rem;
 		height: 0.75rem;
-		background: @disabledFontColor;
+		background: @secondaryFontColor;
 
 		&.sub {
 			height: 0.25rem;
 			background: @disabledFontColor;
 		}
+	}
+
+	&:nth-of-type(even) {
+		background: linear-gradient(fade(@fontColor, 5%), transparent);
 	}
 }
