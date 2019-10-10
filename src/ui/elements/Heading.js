@@ -42,86 +42,6 @@ export const HEADING_LEVELS = new Enum({
 	SIX: 'h6'
 });
 
-const setFocus = function() {
-	if (this.isFocusable()) {
-		this.element().focus();
-	}
-};
-
-const updateExpander = function() {
-	if (this[CONTROLS].get(EXPANDER)) {
-		this[CONTROLS].get(EXPANDER)
-			.icon(this.isExpandable() ? (this.isExpanded() ? CARET_DOWN_ICON : CARET_RIGHT_ICON) : '');
-	}
-};
-
-/**
- * Toggle the selected state of this heading and fire the onSelect callback
- * @function mainClickEvent
- */
-const mainClickEvent = function() {
-	if (this.isExpandable() && (!this.isSelectable() || this.shouldMainClickExpand())) {
-		toggleIsExpanded.call(this);
-	}
-	else {
-		toggleChecked.call(this);
-	}
-};
-
-const setClickable = function() {
-	this.classes(IS_CLICKABLE_CLASS, (this.isExpandable() || this.isSelectable() || this.showCheckbox() || this.onSelect()));
-};
-
-const keyDownEvent = function() {
-	if (event.keyCode === keyCodes('enter')) {
-		event.preventDefault();
-		toggleChecked.call(this);
-	}
-};
-
-/**
- * Toggle the selected state of this heading and fire the onSelect callback
- * @function toggleChecked
- */
-const toggleChecked = function() {
-	if (event && (this.isSelectable() || this.isExpandable())) {
-		event.stopPropagation();
-	}
-
-	if (!this[IGNORE_EVENTS]) {
-		this.isSelected(!this.isSelected());
-		if (this.onSelect()) {
-			this.onSelect().call(this);
-		}
-	}
-};
-
-/**
- * Toggle the expanded state of this heading and fire the onExpand callback
- * @function toggleIsExpanded
- */
-const toggleIsExpanded = function() {
-	event.stopPropagation();
-
-	this.isExpanded(!this.isExpanded());
-	if (this.onExpand()) {
-		this.onExpand().call(this);
-	}
-};
-
-const setCheckBoxValue = function() {
-	this[IGNORE_EVENTS] = true;
-	if (this[CONTROLS].get(CHECKBOX)) {
-		if (this.isIndeterminate()) {
-			this[CONTROLS].get(CHECKBOX).isIndeterminate(true);
-		}
-		else {
-			this[CONTROLS].get(CHECKBOX).isChecked(this.isSelected());
-		}
-	}
-	this[IGNORE_EVENTS] = false;
-};
-
 const CONTROLS = Symbol();
 const EXPANDER = 'expander';
 const CHECKBOX = 'checkbox';
@@ -130,6 +50,15 @@ const ICON_CONTROL = 'icon';
 const IMAGE_CONTROL = 'image';
 const TOOLBAR = 'toolbar';
 const IGNORE_EVENTS = Symbol();
+
+const setFocus = Symbol();
+const setClickable = Symbol();
+const mainClickEvent = Symbol();
+const toggleChecked = Symbol();
+const setCheckBoxValue = Symbol();
+const toggleIsExpanded = Symbol();
+const updateExpander = Symbol();
+const keyDownEvent = Symbol();
 
 /**
  * A generic header control.
@@ -145,7 +74,7 @@ export default class Heading extends FocusMixin(Control) {
 		settings.type = settings.type || controlTypes.HEADING;
 		settings.element = enforce.enum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX);
 		settings.FocusMixin = {};
-		settings.FocusMixin.setFocus = setFocus;
+		settings.FocusMixin.setFocus = () => self[setFocus]();
 
 		super(settings);
 
@@ -153,7 +82,7 @@ export default class Heading extends FocusMixin(Control) {
 		self[CONTROLS] = new ControlManager();
 		self.classes('heading');
 		self.on(CLICK_EVENT, () => {
-			mainClickEvent.call(self);
+			self[mainClickEvent]();
 		});
 
 		self[CONTROLS].add(new Div({
@@ -189,6 +118,87 @@ export default class Heading extends FocusMixin(Control) {
 				self[CONTROLS].remove();
 			});
 	}
+
+	[setFocus]() {
+		if (this.isFocusable()) {
+			this.element().focus();
+		}
+	}
+
+	[setClickable]() {
+		this.classes(IS_CLICKABLE_CLASS, (this.isExpandable() || this.isSelectable() || this.showCheckbox() || this.onSelect()));
+	}
+
+	/**
+	 * Toggle the selected state of this heading and fire the onSelect callback
+	 * @function mainClickEvent
+	 */
+	[mainClickEvent]() {
+		if (this.isExpandable() && (!this.isSelectable() || this.shouldMainClickExpand())) {
+			this[toggleIsExpanded]();
+		}
+		else {
+			this[toggleChecked]();
+		}
+	};
+
+	/**
+	 * Toggle the selected state of this heading and fire the onSelect callback
+	 * @function toggleChecked
+	 */
+	[toggleChecked]() {
+		if (event && (this.isSelectable() || this.isExpandable())) {
+			event.stopPropagation();
+		}
+
+		if (!this[IGNORE_EVENTS]) {
+			this.isSelected(!this.isSelected());
+			if (this.onSelect()) {
+				this.onSelect()();
+			}
+		}
+	}
+
+	[setCheckBoxValue]() {
+		this[IGNORE_EVENTS] = true;
+		if (this[CONTROLS].get(CHECKBOX)) {
+			if (this.isIndeterminate()) {
+				this[CONTROLS].get(CHECKBOX).isIndeterminate(true);
+			}
+			else {
+				this[CONTROLS].get(CHECKBOX).isChecked(this.isSelected());
+			}
+		}
+		this[IGNORE_EVENTS] = false;
+	}
+
+	/**
+	 * Toggle the expanded state of this heading and fire the onExpand callback
+	 * @function toggleIsExpanded
+	 */
+	[toggleIsExpanded]() {
+		event.stopPropagation();
+
+		this.isExpanded(!this.isExpanded());
+		if (this.onExpand()) {
+			this.onExpand()();
+		}
+	}
+
+	[updateExpander]() {
+		if (this[CONTROLS].get(EXPANDER)) {
+			this[CONTROLS].get(EXPANDER)
+				.icon(this.isExpandable() ? (this.isExpanded() ? CARET_DOWN_ICON : CARET_RIGHT_ICON) : '');
+		}
+	}
+
+	[keyDownEvent]() {
+		if (event.keyCode === keyCodes('enter')) {
+			event.preventDefault();
+			this[toggleChecked]();
+		}
+	}
+
 }
 
 Object.assign(Heading.prototype, {
@@ -426,7 +436,7 @@ Object.assign(Heading.prototype, {
 			if (this[CONTROLS].get(CHECKBOX)) {
 				this[CONTROLS].get(CHECKBOX).isVisible(newValue);
 			}
-			setClickable.call(this);
+			this[setClickable]();
 		}
 	}),
 
@@ -443,7 +453,7 @@ Object.assign(Heading.prototype, {
 			if (newValue) {
 				this.isIndeterminate(false);
 			}
-			setCheckBoxValue.call(this);
+			this[setCheckBoxValue]();
 			this.classes('selected', newValue);
 		}
 	}),
@@ -461,7 +471,7 @@ Object.assign(Heading.prototype, {
 			if (isIndeterminate) {
 				this.isSelected(false);
 			}
-			setCheckBoxValue.call(this);
+			this[setCheckBoxValue]();
 		}
 	}),
 
@@ -475,8 +485,8 @@ Object.assign(Heading.prototype, {
 	 */
 	isExpandable: method.boolean({
 		set() {
-			updateExpander.call(this);
-			setClickable.call(this);
+			this[updateExpander]();
+			this[setClickable]();
 		}
 	}),
 
@@ -489,7 +499,9 @@ Object.assign(Heading.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isExpanded: method.boolean({
-		set: updateExpander
+		set() {
+			this[updateExpander]();
+		}
 	}),
 
 	/**
@@ -520,7 +532,7 @@ Object.assign(Heading.prototype, {
 					id: EXPANDER,
 					classes: 'icon-button',
 					onClick() {
-						toggleIsExpanded.call(self);
+						self[toggleIsExpanded]();
 					}
 				}));
 				dom.prependTo(this, this[CONTROLS].get(EXPANDER));
@@ -529,7 +541,7 @@ Object.assign(Heading.prototype, {
 				this[CONTROLS].remove(EXPANDER);
 			}
 
-			updateExpander.call(this);
+			this[updateExpander]();
 		}
 	}),
 
@@ -551,7 +563,7 @@ Object.assign(Heading.prototype, {
 					container: this.element(),
 					isVisible: this.isSelectable(),
 					onChange() {
-						toggleChecked.call(self);
+						self[toggleChecked]();
 					}
 				}));
 				dom.appendBefore(this[CONTROLS].get(IMAGE_CONTROL) || this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(CHECKBOX));
@@ -559,7 +571,7 @@ Object.assign(Heading.prototype, {
 			else {
 				this[CONTROLS].remove(CHECKBOX);
 			}
-			setClickable.call(this);
+			this[setClickable]();
 		}
 	}),
 
@@ -573,7 +585,7 @@ Object.assign(Heading.prototype, {
 	 */
 	onSelect: method.function({
 		set() {
-			setClickable.call(this);
+			this[setClickable]();
 		},
 		other: undefined
 	}),
@@ -604,12 +616,14 @@ Object.assign(Heading.prototype, {
 
 	isFocusable: method.boolean({
 		set(newValue) {
+			const self = this;
+
 			if (newValue) {
-				this.attr(TAB_INDEX, TAB_INDEX_ENABLED)
-					.on(KEY_DOWN_EVENT, keyDownEvent);
+				self.attr(TAB_INDEX, TAB_INDEX_ENABLED)
+					.on(KEY_DOWN_EVENT, () => self[keyDownEvent]());
 			}
 			else {
-				this.attr(TAB_INDEX, TAB_INDEX_DISABLED)
+				self.attr(TAB_INDEX, TAB_INDEX_DISABLED)
 					.on(KEY_DOWN_EVENT, null);
 			}
 		}

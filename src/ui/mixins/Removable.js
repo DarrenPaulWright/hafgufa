@@ -1,13 +1,12 @@
 import { clear, delay } from 'async-agent';
-import { isFunction, method } from 'type-enforcer';
+import { isFunction, method, PrivateVars } from 'type-enforcer';
 
 const isTest = isFunction(global.it);
 const FADE_INITIAL_CLASS = 'fade-initial';
 const FADE_IN_CLASS = 'fade-in';
 const FADE_DURATION = 200;
 
-const IS_REMOVED = Symbol();
-const REMOVE_DELAY = Symbol();
+const _ = new PrivateVars();
 
 /**
  * Adds remove methods to a module.
@@ -16,7 +15,9 @@ const REMOVE_DELAY = Symbol();
  */
 export default class Removable {
 	constructor() {
-		this[IS_REMOVED] = false;
+		_.set(this, {
+			isRemoved: false
+		});
 	}
 
 	/**
@@ -26,7 +27,7 @@ export default class Removable {
 	 * @instance
 	 */
 	get isRemoved() {
-		return this[IS_REMOVED];
+		return _(this).isRemoved;
 	}
 }
 
@@ -55,10 +56,11 @@ Object.assign(Removable.prototype, {
 	 */
 	remove() {
 		const self = this;
+		const _self = _(self);
 
 		const removeFinal = () => {
 			if (self.onRemove()) {
-				self.onRemove().trigger(null, null, self)
+				self.onRemove().trigger()
 					.discardAll();
 			}
 			if (self.onPreRemove()) {
@@ -66,16 +68,16 @@ Object.assign(Removable.prototype, {
 			}
 		};
 
-		if (self && !self.isRemoved) {
-			self[IS_REMOVED] = true;
+		if (self && !_self.isRemoved) {
+			_self.isRemoved = true;
 
 			if (self.onPreRemove()) {
-				self.onPreRemove().trigger(null, null, self);
+				self.onPreRemove().trigger();
 			}
 
 			if (self.fade() && !isTest) {
 				self.removeClass(FADE_IN_CLASS);
-				self[REMOVE_DELAY] = delay(removeFinal, FADE_DURATION);
+				_self.removeDelay = delay(removeFinal, FADE_DURATION);
 			}
 			else {
 				removeFinal();
@@ -85,10 +87,11 @@ Object.assign(Removable.prototype, {
 
 	revive() {
 		const self = this;
+		const _self = _(self);
 
 		if (self.fade()) {
-			self[IS_REMOVED] = false;
-			clear(self[REMOVE_DELAY]);
+			_self.isRemoved = false;
+			clear(_self.removeDelay);
 			self.addClass(FADE_IN_CLASS);
 		}
 

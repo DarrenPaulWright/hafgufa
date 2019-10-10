@@ -1,5 +1,5 @@
 import { debounce } from 'async-agent';
-import { method } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
 	LINE_HEIGHT,
@@ -15,9 +15,7 @@ import Span from '../elements/Span';
 import { CLEAR_ICON } from '../icons';
 import './ActionButtonMixin.less';
 
-const RIGHT_CONTAINER = Symbol();
-const ACTION_BUTTON = Symbol();
-const COUNT_CONTROL = Symbol();
+const _ = new PrivateVars();
 
 const refreshActionButton = Symbol();
 const addRightContainer = Symbol();
@@ -35,21 +33,22 @@ export default function(Base) {
 			super(settings);
 
 			const self = this;
+			const _self = _.set(this);
 
 			self[refreshActionButton] = debounce(() => {
 				const isIconButton = self.actionButtonIcon() === CLEAR_ICON && self.actionButtonLabel() === '';
 
 				if ((self.actionButtonIcon() || self.actionButtonLabel()) && self.borderWidth() > 40 && (!self.rows || self.rows() === 1)) {
-					if (!self[ACTION_BUTTON]) {
-						self[ACTION_BUTTON] = new Button({
+					if (!_self.actionButton) {
+						_self.actionButton = new Button({
 							isDisplayed: false,
 							classes: 'icon-button',
 							iconSize: Button.ICON_SIZES.NORMAL
 						});
-						self[addRightContainer]().append(self[ACTION_BUTTON]);
+						self[addRightContainer]().append(_self.actionButton);
 					}
 
-					self[ACTION_BUTTON]
+					_self.actionButton
 						.isDisplayed(!self.isActionButtonAutoHide() || !!self.value().length)
 						.isEnabled(self.isActionButtonEnabled())
 						.icon(self.actionButtonIcon())
@@ -59,9 +58,9 @@ export default function(Base) {
 						.classes('form-button', !isIconButton)
 						.classes('icon-button', isIconButton);
 				}
-				else if (self[ACTION_BUTTON]) {
-					self[ACTION_BUTTON].remove();
-					self[ACTION_BUTTON] = null;
+				else if (_self.actionButton) {
+					_self.actionButton.remove();
+					_self.actionButton = null;
 				}
 
 				self.resize(true);
@@ -79,16 +78,16 @@ export default function(Base) {
 						const containerWidth = container.borderWidth();
 						let rightContainerWidth = 0;
 
-						if (self[RIGHT_CONTAINER]) {
-							self[RIGHT_CONTAINER].css({
+						if (_self.rightContainer) {
+							_self.rightContainer.css({
 								top: container.element().offsetTop,
 								height: containerHeight,
 								right: Math.max(0, width - containerWidth - dom.get.left(container.element()))
 							});
-							rightContainerWidth = self[RIGHT_CONTAINER].borderWidth();
+							rightContainerWidth = _self.rightContainer.borderWidth();
 
-							if (self[COUNT_CONTROL]) {
-								self[COUNT_CONTROL].css(LINE_HEIGHT, containerHeight);
+							if (_self.countControl) {
+								_self.countControl.css(LINE_HEIGHT, containerHeight);
 							}
 						}
 
@@ -98,16 +97,16 @@ export default function(Base) {
 		}
 
 		[addRightContainer]() {
-			const self = this;
+			const _self = _.set(this);
 
-			if (!self[RIGHT_CONTAINER]) {
-				self[RIGHT_CONTAINER] = new Div({
-					container: self,
+			if (!_self.rightContainer) {
+				_self.rightContainer = new Div({
+					container: this,
 					classes: 'action-button-container'
 				});
 			}
 
-			return self[RIGHT_CONTAINER];
+			return _self.rightContainer;
 		}
 	}
 
@@ -203,19 +202,20 @@ export default function(Base) {
 		countText: method.string({
 			set(countText) {
 				const self = this;
+				const _self = _(self);
 
 				if (countText) {
-					if (!self[COUNT_CONTROL]) {
-						self[COUNT_CONTROL] = new Span({
+					if (!_self.countControl) {
+						_self.countControl = new Span({
 							classes: 'text-input-count'
 						});
-						self[addRightContainer]().prepend(self[COUNT_CONTROL]);
+						self[addRightContainer]().prepend(_self.countControl);
 					}
-					self[COUNT_CONTROL].text(countText);
+					_self.countControl.text(countText);
 				}
-				else if (self[COUNT_CONTROL]) {
-					self[COUNT_CONTROL].remove();
-					self[COUNT_CONTROL] = null;
+				else if (_self.countControl) {
+					_self.countControl.remove();
+					_self.countControl = null;
 				}
 
 				self.resize(true);

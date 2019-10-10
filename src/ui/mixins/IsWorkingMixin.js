@@ -1,7 +1,7 @@
-import { method } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer';
 import IsWorking from '../display/IsWorking';
 
-const IS_WORKING = Symbol();
+const _ = new PrivateVars();
 
 /**
  * @module IsWorkingAddon
@@ -12,9 +12,10 @@ export default (Base) => {
 		constructor(settings) {
 			super(settings);
 
-			const self = this;
-			self.onRemove(() => {
-				self.isWorking(false);
+			_.set(this);
+
+			this.onRemove(function() {
+				this.isWorking(false);
 			});
 		}
 	}
@@ -33,23 +34,24 @@ export default (Base) => {
 		 */
 		isWorking: method.boolean({
 			set(isWorking) {
+				const _self = _(this);
+
 				if (isWorking) {
-					if (!this[IS_WORKING]) {
-						this[IS_WORKING] = new IsWorking({
+					if (!_self.isWorking) {
+						_self.isWorking = new IsWorking({
 							container: this.element(),
 							label: this.isWorkingLabel(),
 							onRemove() {
-								this[IS_WORKING] = null;
+								_self.isWorking = null;
 							}
 						});
 					}
 					else {
-						this[IS_WORKING].revive();
+						_self.isWorking.revive();
 					}
 				}
-				else {
-					this[IS_WORKING].remove();
-					this[IS_WORKING] = null;
+				else if (_self.isWorking) {
+					_self.isWorking.remove();
 				}
 			}
 		}),
@@ -66,9 +68,11 @@ export default (Base) => {
 		 * @returns {string|this}
 		 */
 		isWorkingLabel: method.string({
-			set(newValue) {
-				if (this[IS_WORKING]) {
-					this[IS_WORKING].label(newValue);
+			set(isWorkingLabel) {
+				const _self = _(this);
+
+				if (_self.isWorking) {
+					_self.isWorking.label(isWorkingLabel);
 				}
 			}
 		})

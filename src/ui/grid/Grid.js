@@ -383,10 +383,10 @@ export default class Grid extends Control {
 
 		self[filter]();
 		if (self.onSelect() && self[SELECTED_ROWS].length === 1) {
-			self.onSelect().call(self, self[SELECTED_ROWS][0]);
+			self.onSelect()(self[SELECTED_ROWS][0]);
 		}
 		if (self.onMultiSelect() && self[SELECTED_ROWS].length > 1) {
-			self.onMultiSelect().call(self, self[SELECTED_ROWS]);
+			self.onMultiSelect()(self[SELECTED_ROWS]);
 		}
 
 		self[GRID_COLUMN_BLOCK].isAllRowsSelected(self[TOTAL_FILTERED_ROWS] === self[SELECTED_ROWS].length);

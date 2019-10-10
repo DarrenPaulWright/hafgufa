@@ -66,53 +66,53 @@ export default (Base) => {
 			self[AVAILABLE_HEIGHT] = 0;
 
 			self.onResize((width, height) => {
-				if (self.canDrag()) {
-					if (self.container()) {
-						if (!self[IS_REGISTERED_RESIZE]) {
-							self[IS_REGISTERED_RESIZE] = true;
+					if (self.canDrag()) {
+						if (self.container()) {
+							if (!self[IS_REGISTERED_RESIZE]) {
+								self[IS_REGISTERED_RESIZE] = true;
 
-							if (self.container()[CONTROL_PROP]) {
-								self.container()[CONTROL_PROP]
-									.onResize(function(width, height) {
-										self[AVAILABLE_WIDTH] = width;
-										self[AVAILABLE_HEIGHT] = height;
+								if (self.container()[CONTROL_PROP]) {
+									self.container()[CONTROL_PROP]
+										.onResize(function(width, height) {
+											self[AVAILABLE_WIDTH] = width;
+											self[AVAILABLE_HEIGHT] = height;
 
-										if (!IGNORE_PADDING) {
-											const padding = new Thickness(this.css('padding') || 0);
+											if (!IGNORE_PADDING) {
+												const padding = new Thickness(this.css('padding') || 0);
 
-											self[AVAILABLE_WIDTH] -= padding.horizontal;
-											self[AVAILABLE_HEIGHT] -= padding.vertical;
-										}
-									})
-									.resize(true);
-							}
-							else {
-								const bounds = self.container().getBoundingClientRect();
-								self[AVAILABLE_WIDTH] = bounds.width;
-								self[AVAILABLE_HEIGHT] = bounds.height;
+												self[AVAILABLE_WIDTH] -= padding.horizontal;
+												self[AVAILABLE_HEIGHT] -= padding.vertical;
+											}
+										})
+										.resize(true);
+								}
+								else {
+									const bounds = self.container().getBoundingClientRect();
+									self[AVAILABLE_WIDTH] = bounds.width;
+									self[AVAILABLE_HEIGHT] = bounds.height;
+								}
 							}
 						}
-					}
 
-					if (width < self[AVAILABLE_WIDTH]) {
-						self[DRAG_BOUNDS].left = 0;
-						self[DRAG_BOUNDS].right = self[AVAILABLE_WIDTH] - width;
-					}
-					else {
-						self[DRAG_BOUNDS].left = self[AVAILABLE_WIDTH] - width;
-						self[DRAG_BOUNDS].right = 0;
-					}
+						if (width < self[AVAILABLE_WIDTH]) {
+							self[DRAG_BOUNDS].left = 0;
+							self[DRAG_BOUNDS].right = self[AVAILABLE_WIDTH] - width;
+						}
+						else {
+							self[DRAG_BOUNDS].left = self[AVAILABLE_WIDTH] - width;
+							self[DRAG_BOUNDS].right = 0;
+						}
 
-					if (height < self[AVAILABLE_HEIGHT]) {
-						self[DRAG_BOUNDS].top = 0;
-						self[DRAG_BOUNDS].bottom = self[AVAILABLE_HEIGHT] - height;
+						if (height < self[AVAILABLE_HEIGHT]) {
+							self[DRAG_BOUNDS].top = 0;
+							self[DRAG_BOUNDS].bottom = self[AVAILABLE_HEIGHT] - height;
+						}
+						else {
+							self[DRAG_BOUNDS].top = self[AVAILABLE_HEIGHT] - height;
+							self[DRAG_BOUNDS].bottom = 0;
+						}
 					}
-					else {
-						self[DRAG_BOUNDS].top = self[AVAILABLE_HEIGHT] - height;
-						self[DRAG_BOUNDS].bottom = 0;
-					}
-				}
-			})
+				})
 				.onRemove(() => {
 					clear(self[DRAG_DELAY]);
 					self[stopThrow]();
@@ -253,7 +253,7 @@ export default (Base) => {
 				self[IS_BOUNCING] = false;
 				self[setPosition](Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
 
-				self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}], self);
+				self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}]);
 			}
 		}
 
@@ -310,7 +310,7 @@ export default (Base) => {
 				self.css(TRANSFORM, transform);
 
 				if (self.isDragging) {
-					self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}], self);
+					self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}]);
 				}
 			}
 		}
@@ -379,7 +379,7 @@ export default (Base) => {
 					self[THROW_FRAME] = requestAnimationFrame(() => self[animateThrow]());
 				}
 				else {
-					self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}], self);
+					self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}]);
 				}
 			}
 		}

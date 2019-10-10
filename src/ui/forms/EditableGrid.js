@@ -142,7 +142,7 @@ export default class EditableGrid extends FormControl {
 				rowValue = null;
 				if (isDeleted) {
 					if (self.onDelete()) {
-						self.onDelete().call(self, {
+						self.onDelete()({
 							id: self.id(),
 							control: self,
 							value: rowData.rowId

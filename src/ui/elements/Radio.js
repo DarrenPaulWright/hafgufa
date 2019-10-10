@@ -78,7 +78,7 @@ Object.assign(Radio.prototype, {
 
 			if (self[IS_MANUAL] && self.onChange()) {
 				self[IS_MANUAL] = false;
-				self.onChange().trigger(null, [isChecked], self);
+				self.onChange().trigger(null, [isChecked]);
 			}
 
 			if (self.isIndeterminate && isChecked) {

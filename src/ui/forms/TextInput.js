@@ -557,7 +557,7 @@ Object.assign(TextInput.prototype, {
 
 				self[INPUT].on(FOCUS_EVENT, () => {
 					if (!self.isRemoved) {
-						self.onFocus().trigger(null, [], self);
+						self.onFocus().trigger();
 					}
 				});
 			}
@@ -579,7 +579,7 @@ Object.assign(TextInput.prototype, {
 
 				self[INPUT].on(BLUR_EVENT, () => {
 					if (!self.isRemoved) {
-						self.onBlur().trigger(null, [], self);
+						self.onBlur().trigger();
 					}
 				});
 			}
@@ -602,7 +602,7 @@ Object.assign(TextInput.prototype, {
 				self.onFocus(() => {
 					self[INPUT].on(KEY_UP_EVENT, () => {
 						if (event.keyCode === keyCodes('enter')) {
-							self.onEnter().trigger(null, [], self);
+							self.onEnter().trigger();
 						}
 					});
 				});

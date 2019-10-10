@@ -129,10 +129,10 @@ Object.assign(Legend.prototype, {
 					.append('g')
 					.attr('transform', (d, index) => 'translate(' + PADDING + ',' + getY(d, index) + ')')
 					.on(MOUSE_OVER_EVENT, function(d) {
-						self.onMouseOverItem().trigger(null, [d], this);
+						self.onMouseOverItem().trigger(null, [d]);
 					})
 					.on(MOUSE_OUT_EVENT, function(d) {
-						self.onMouseOutItem().trigger(null, [d], this);
+						self.onMouseOutItem().trigger(null, [d]);
 					})
 					.on(CLICK_EVENT, () => {
 						self[toggleItem]();

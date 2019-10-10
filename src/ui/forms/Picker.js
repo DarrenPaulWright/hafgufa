@@ -852,7 +852,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				}
 			},
 			onCommit() {
-				self.onDelete().call(self, item);
+				self.onDelete()(item);
 			}
 		});
 	}
@@ -880,7 +880,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 		});
 
-		self.onBuildDialogContents().call(self, self[DIALOG], itemId, newTitle);
+		self.onBuildDialogContents()(self[DIALOG], itemId, newTitle);
 		self[DIALOG].resize();
 	}
 }

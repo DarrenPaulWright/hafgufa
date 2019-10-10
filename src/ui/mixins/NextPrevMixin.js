@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { HUNDRED_PERCENT, method } from 'type-enforcer';
+import { HUNDRED_PERCENT, method, PrivateVars } from 'type-enforcer';
 import { ABSOLUTE, ICON_SIZES } from '../..';
 import ControlManager from '../ControlManager';
 import Button from '../elements/Button';
@@ -9,13 +9,7 @@ const PREV_BUTTON_ID = 'carouselPrevButton';
 const NEXT_BUTTON_ID = 'carouselNextButton';
 const BUTTON_CLASS = 'icon-button';
 
-const CONTROLS = Symbol();
-const ON_SHOW_BUTTONS = Symbol();
-const ON_HIDE_BUTTONS = Symbol();
-const IS_AT_START = Symbol();
-const IS_AT_END = Symbol();
-const ON_PREV = Symbol();
-const ON_NEXT = Symbol();
+const _ = new PrivateVars();
 
 const updateButtons = Symbol();
 const onShowButtons = Symbol();
@@ -36,17 +30,18 @@ export default (Base) => {
 			settings = settings.NextPrevMixin || {};
 
 			const self = this;
-			self[ON_SHOW_BUTTONS] = settings.onShowButtons;
-			self[ON_HIDE_BUTTONS] = settings.onHideButtons;
-			self[IS_AT_START] = settings.isAtStart;
-			self[IS_AT_END] = settings.isAtEnd;
-			self[ON_PREV] = settings.onPrev;
-			self[ON_NEXT] = settings.onNext;
-
-			self[CONTROLS] = new ControlManager();
+			_.set(self, {
+				onShowButtons: settings.onShowButtons,
+				onHideButtons: settings.onHideButtons,
+				isAtStart: settings.isAtStart,
+				isAtEnd: settings.isAtEnd,
+				onPrev: settings.onPrev,
+				onNext: settings.onNext,
+				controls: new ControlManager()
+			});
 
 			self.onResize(() => self[updateButtons]())
-				.onRemove(() => self[CONTROLS].remove());
+				.onRemove(() => _(self).controls.remove());
 		}
 
 		/**
@@ -55,18 +50,20 @@ export default (Base) => {
 		 */
 		[updateButtons]() {
 			const self = this;
+			const _self = _(self);
 
 			if (self.showButtons()) {
-				self[CONTROLS].get(PREV_BUTTON_ID).isVisible(!self[IS_AT_START]());
-				self[CONTROLS].get(NEXT_BUTTON_ID).isVisible(!self[IS_AT_END]());
+				_self.controls.get(PREV_BUTTON_ID).isVisible(!_self.isAtStart());
+				_self.controls.get(NEXT_BUTTON_ID).isVisible(!_self.isAtEnd());
 			}
 		}
 
 		[onShowButtons]() {
 			const self = this;
+			const _self = _(self);
 			const update = () => self[updateButtons]();
 
-			self[ON_SHOW_BUTTONS](update, self[CONTROLS].get(PREV_BUTTON_ID).borderWidth());
+			_self.onShowButtons(update, _self.controls.get(PREV_BUTTON_ID).borderWidth());
 		}
 
 		/**
@@ -77,7 +74,7 @@ export default (Base) => {
 		 * @instance
 		 */
 		prev() {
-			this[ON_PREV]();
+			_(this).onPrev();
 		}
 
 		/**
@@ -88,7 +85,7 @@ export default (Base) => {
 		 * @instance
 		 */
 		next() {
-			this[ON_NEXT]();
+			_(this).onNext();
 		}
 	}
 
@@ -107,10 +104,11 @@ export default (Base) => {
 		showButtons: method.boolean({
 			set(newValue) {
 				const self = this;
+				const _self = _(self);
 
 				if (newValue) {
-					if (!self[CONTROLS].get(PREV_BUTTON_ID)) {
-						self[CONTROLS].add(new Button({
+					if (!_self.controls.get(PREV_BUTTON_ID)) {
+						_self.controls.add(new Button({
 							id: PREV_BUTTON_ID,
 							container: self.element(),
 							classes: BUTTON_CLASS,
@@ -126,7 +124,7 @@ export default (Base) => {
 								left: '0'
 							}
 						}));
-						self[CONTROLS].add(new Button({
+						_self.controls.add(new Button({
 							id: NEXT_BUTTON_ID,
 							container: self.element(),
 							classes: BUTTON_CLASS,
@@ -149,10 +147,10 @@ export default (Base) => {
 					}
 				}
 				else {
-					self[CONTROLS].remove(PREV_BUTTON_ID);
-					self[CONTROLS].remove(NEXT_BUTTON_ID);
+					_self.controls.remove(PREV_BUTTON_ID);
+					_self.controls.remove(NEXT_BUTTON_ID);
 
-					self[ON_HIDE_BUTTONS]();
+					_self.onHideButtons();
 				}
 			}
 		}),
@@ -173,10 +171,11 @@ export default (Base) => {
 			enum: ICON_SIZES,
 			set(buttonIconSize) {
 				const self = this;
+				const _self = _(self);
 
 				if (self.showButtons()) {
-					self[CONTROLS].get(PREV_BUTTON_ID).iconSize(buttonIconSize);
-					self[CONTROLS].get(NEXT_BUTTON_ID).iconSize(buttonIconSize);
+					_self.controls.get(PREV_BUTTON_ID).iconSize(buttonIconSize);
+					_self.controls.get(NEXT_BUTTON_ID).iconSize(buttonIconSize);
 
 					self[onShowButtons]();
 				}

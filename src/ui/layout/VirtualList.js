@@ -180,6 +180,27 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[IS_RENDERING] = false;
 		self[IS_RENDERING_REQUESTED] = false;
 
+		self[setVirtualContentAltExtent] = throttle(function() {
+			const self = this;
+			let maxAltExtent = 0;
+
+			if (!self.isRemoved && ((self.isHorizontal() && self.height().isAuto) || self.width().isAuto)) {
+				const scrollBuffer = self[VIEWPORT_SIZE] - SCROLL_BUFFER;
+
+				self[CONTROL_RECYCLER].each((control) => {
+					const controlOffset = parseInt(control.css(self[POSITION_ORIGIN]), 10);
+
+					if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
+						controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
+						maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
+					}
+				});
+
+				d3Helper.animate(self[CONTENT_CONTAINER])
+					.style(self[ALT_EXTENT], maxAltExtent + PIXELS);
+			}
+		}, 100);
+
 		self[CONTENT_CONTAINER] = new DragContainer({
 			container: self,
 			canThrow: true
@@ -679,27 +700,6 @@ export default class VirtualList extends FocusMixin(Control) {
 }
 
 Object.assign(VirtualList.prototype, {
-	[setVirtualContentAltExtent]: throttle(function() {
-		const self = this;
-		let maxAltExtent = 0;
-
-		if (!self.isRemoved && ((self.isHorizontal() && self.height().isAuto) || self.width().isAuto)) {
-			const scrollBuffer = self[VIEWPORT_SIZE] - SCROLL_BUFFER;
-
-			self[CONTROL_RECYCLER].each((control) => {
-				const controlOffset = parseInt(control.css(self[POSITION_ORIGIN]), 10);
-
-				if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
-					controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
-					maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
-				}
-			});
-
-			d3Helper.animate(self[CONTENT_CONTAINER])
-				.style(self[ALT_EXTENT], maxAltExtent + PIXELS);
-		}
-	}, 100),
-
 	/**
 	 * A callback that gets called whenever the layout changes
 	 *

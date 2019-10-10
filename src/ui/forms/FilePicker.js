@@ -134,7 +134,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		}
 
 		if (!self.canEdit()) {
-			self.onSave().call(self, data);
+			self.onSave()(data);
 		}
 
 		self[FILE_THUMBNAILS].add(thumb);

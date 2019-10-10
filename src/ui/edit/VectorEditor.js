@@ -38,7 +38,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			defaultSettings: {
 				container: self,
 				onChange() {
-					self.onChange().call(self, this.id(), self[pixelsToRatios](this.bounds()));
+					self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
 				}
 			}
 		});
@@ -48,7 +48,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			title: 'Delete all',
 			icon: DELETE_ALL_ICON,
 			onSelect() {
-				self.onDeleteAllShapes().call(self);
+				self.onDeleteAllShapes()();
 			}
 		}]);
 
@@ -167,7 +167,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 					title: 'Delete',
 					icon: DELETE_ICON,
 					onSelect() {
-						self.onDeleteShape().call(self, shape.id);
+						self.onDeleteShape()(shape.id);
 					}
 				}])
 				.originalBounds = shape.bounds;

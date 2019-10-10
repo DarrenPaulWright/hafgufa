@@ -64,7 +64,7 @@ export default (Base) => {
 							menuItems: self.contextMenu(),
 							onSelect(item) {
 								if (self.onContextMenuChange()) {
-									self.onContextMenuChange().call(self, item);
+									self.onContextMenuChange()(item);
 								}
 							},
 							onRemove() {

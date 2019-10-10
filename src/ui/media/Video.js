@@ -31,17 +31,17 @@ export default class Video extends Control {
 
 		self.on({
 			loadedmetadata() {
-				self.onReady().trigger(null, [self.duration()], self);
+				self.onReady().trigger(null, [self.duration()]);
 			},
 			timeupdate() {
-				self.onTimeUpdate().trigger(null, [self.currentTime()], self);
+				self.onTimeUpdate().trigger(null, [self.currentTime()]);
 			},
 			ended() {
 				self[IS_PLAYING] = false;
-				self.onPause().trigger(null, [], self);
+				self.onPause().trigger();
 			},
 			error() {
-				self.onError().trigger(null, [self.element().error], self);
+				self.onError().trigger(null, [self.element().error]);
 			}
 		});
 	}
@@ -51,7 +51,7 @@ export default class Video extends Control {
 
 		self[IS_PLAYING] = true;
 		self.element().play();
-		self.onPlay().trigger(null, [], self);
+		self.onPlay().trigger();
 	}
 
 	pause() {
@@ -59,7 +59,7 @@ export default class Video extends Control {
 
 		self[IS_PLAYING] = false;
 		self.element().pause();
-		self.onPause().trigger(null, [], self);
+		self.onPause().trigger();
 	}
 
 	nextFrame() {

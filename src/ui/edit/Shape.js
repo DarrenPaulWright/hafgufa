@@ -37,7 +37,7 @@ export default class Shape extends FocusMixin(DragMixin(ContextMenuMixin(G))) {
 			})
 			.onDragEnd(() => {
 				self.resize(true)
-					.onChange().call(self);
+					.onChange()();
 			})
 			.on(KEY_DOWN_EVENT, () => {
 				let edited = false;
@@ -81,7 +81,7 @@ export default class Shape extends FocusMixin(DragMixin(ContextMenuMixin(G))) {
 			onDrag: onDrag,
 			onDragEnd() {
 				self[IS_RESIZING] = false;
-				self.onChange().call(self);
+				self.onChange()();
 				self.isFocused(true);
 			}
 		});
@@ -112,7 +112,7 @@ Object.assign(Shape.prototype, {
 	onSelect: method.queue(),
 	isSelected: method.boolean({
 		set(isSelected) {
-			this.onSelect().trigger(null, [isSelected], this);
+			this.onSelect().trigger(null, [isSelected]);
 		}
 	}),
 	ignore: method.boolean({

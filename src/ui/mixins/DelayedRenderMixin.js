@@ -1,22 +1,23 @@
 import { clear, delay } from 'async-agent';
-import { method } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer';
 
 /**
  * @function start
  */
 const start = function() {
-	this[DELAY_TIMER] = delay(this[ON_RENDER], this.delay() * 1000);
+	const _self = _(this);
+
+	_self.delayTimer = delay(_self.onRender, this.delay() * 1000);
 };
 
 /**
  * @function stop
  */
 const stop = function() {
-	clear(this[DELAY_TIMER]);
+	clear(_(this).delayTimer);
 };
 
-const ON_RENDER = Symbol();
-const DELAY_TIMER = Symbol();
+const _ = new PrivateVars();
 
 /**
  * Delays the rendering of a control
@@ -29,7 +30,9 @@ export default (Base) => {
 		constructor(settings = {}) {
 			super(settings);
 
-			this[ON_RENDER] = settings.onRender;
+			_.set(this, {
+				onRender: settings.onRender.bind(this)
+			});
 			start.call(this);
 			this.onRemove(stop);
 		}
@@ -53,7 +56,7 @@ export default (Base) => {
 					start.call(this);
 				}
 				else {
-					this[ON_RENDER].call(this);
+					_(this).onRender();
 				}
 			}
 		})

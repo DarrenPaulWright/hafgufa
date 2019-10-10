@@ -53,7 +53,7 @@ const locale = {
 	language: method.string({
 		set(language) {
 			document.querySelector('html').setAttribute('lang', language);
-			locale.onLanguageChange().trigger(null, [language], locale);
+			locale.onLanguageChange().trigger(null, [language]);
 		}
 	}),
 	/**

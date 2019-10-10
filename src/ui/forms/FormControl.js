@@ -65,7 +65,7 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 			isHardTrigger = enforce.boolean(isHardTrigger, true);
 
 			if ((isHardTrigger || (self.value && !deepEqual(self[CURRENT_VALUE], self.value()))) && self.onChange().length) {
-				self[ON_CHANGE].call(self, skipCallback);
+				self[ON_CHANGE](skipCallback);
 
 				if (ignoreDelay || !self.changeDelay()) {
 					self[ON_CHANGE].flush();
@@ -137,7 +137,7 @@ Object.assign(FormControl.prototype, {
 
 				if (!skipCallback) {
 					self.onChange()
-						.trigger(null, [self[CURRENT_VALUE]], self);
+						.trigger(null, [self[CURRENT_VALUE]]);
 				}
 			}, changeDelay, {
 				maxWait: 15000

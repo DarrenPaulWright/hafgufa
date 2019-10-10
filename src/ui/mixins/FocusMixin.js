@@ -11,12 +11,6 @@ const HAS_CHILDREN = Symbol();
 const IS_FOCUSED = Symbol();
 const IS_ALL_BLURRED = Symbol();
 
-const triggerCallback = function(queue) {
-	if (queue) {
-		queue.trigger(null, [], this);
-	}
-};
-
 /**
  * Callback that is called when the control gets focus
  *
@@ -28,11 +22,15 @@ const onFocusCallback = function() {
 
 		if (this[IS_ALL_BLURRED]) {
 			this[IS_ALL_BLURRED] = false;
-			triggerCallback.call(this, this.onFocus());
+			if (this.onFocus()) {
+				this.onFocus().trigger();
+			}
 		}
 	}
 	else {
-		triggerCallback.call(this, this.onFocus());
+		if (this.onFocus()) {
+			this.onFocus().trigger();
+		}
 	}
 };
 
@@ -48,12 +46,16 @@ const onBlurCallback = function() {
 		defer(() => {
 			if (!this[IS_FOCUSED]) {
 				this[IS_ALL_BLURRED] = true;
-				triggerCallback.call(this, this.onBlur());
+				if (this.onBlur()) {
+					this.onBlur().trigger();
+				}
 			}
 		});
 	}
 	else {
-		triggerCallback.call(this, this.onBlur());
+		if (this.onBlur()) {
+			this.onBlur().trigger();
+		}
 	}
 };
 

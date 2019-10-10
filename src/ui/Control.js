@@ -265,7 +265,7 @@ Object.assign(Control.prototype, {
 				}
 				else {
 					_self.windowResizeId = windowResize.add(() => {
-						self.resize(true);
+						self.resize();
 					}, self.type);
 				}
 			}
@@ -968,7 +968,7 @@ Object.assign(Control.prototype, {
 				_self.currentWidth = newWidth;
 				_self.currentHeight = newHeight;
 
-				self.onResize().trigger(null, [newWidth, newHeight], self);
+				self.onResize().trigger(null, [newWidth, newHeight]);
 
 				self[CHILD_CONTROLS].each((control) => {
 					control.resize();
