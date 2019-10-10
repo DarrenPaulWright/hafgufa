@@ -1,8 +1,8 @@
 
 .shape {
 	stroke: @highlightColor;
-	stroke-width: 0.06rem;
-	fill: fade(@highlightColor, 10%);
+	stroke-width: 0.07rem;
+	fill: fade(@highlightColor, 20%);
 	opacity: 0.5;
 	transition: opacity @animationDuration @easing;
 	cursor: move;
@@ -11,8 +11,12 @@
 		pointer-events: none;
 	}
 
-	&:focus, &:hover {
+	&.highlight, &:focus, &:hover {
 		opacity: 1;
 		outline: none;
+	}
+
+	&.faded {
+		opacity: 0.3
 	}
 }

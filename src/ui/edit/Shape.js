@@ -39,12 +39,6 @@ export default class Shape extends FocusMixin(DragMixin(ContextMenuMixin(G))) {
 				self.resize(true)
 					.onChange().call(self);
 			})
-			.on('mouseenter', () => {
-				self.css('z-index', '1');
-			})
-			.on('mouseleave', () => {
-				self.css('z-index', null);
-			})
 			.on(KEY_DOWN_EVENT, () => {
 				let edited = false;
 

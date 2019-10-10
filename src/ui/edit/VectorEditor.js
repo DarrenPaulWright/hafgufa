@@ -53,25 +53,25 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 		}]);
 
 		self.onResize((width, height) => {
-			self[HEIGHT] = height;
-			self[WIDTH] = width;
+				self[HEIGHT] = height;
+				self[WIDTH] = width;
 
-			self[CONTROLS].each((control) => {
-				if (control.originalBounds) {
-					control.bounds(self[ratiosToPixels](control.originalBounds));
-				}
-			});
-		})
+				self[CONTROLS].each((control) => {
+					if (control.originalBounds) {
+						control.bounds(self[ratiosToPixels](control.originalBounds));
+					}
+				});
+			})
 			.on('mousedown', () => {
 				event.preventDefault();
 				event.stopPropagation();
 				self[startDrawing]();
 
 				self.on('mousemove', () => {
-					event.preventDefault();
-					event.stopPropagation();
-					self[updateDrawing]();
-				})
+						event.preventDefault();
+						event.stopPropagation();
+						self[updateDrawing]();
+					})
 					.on('mouseup', () => {
 						event.preventDefault();
 						event.stopPropagation();
@@ -169,7 +169,19 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 					onSelect() {
 						self.onDeleteShape().call(self, shape.id);
 					}
-				}]).originalBounds = shape.bounds;
+				}])
+				.originalBounds = shape.bounds;
+		});
+	}
+
+	highlight(id) {
+		const isFade = id === null;
+
+		this[CONTROLS].each((control) => {
+			const isHighlight = control.id() === id;
+			control
+				.classes('highlight', isHighlight)
+				.classes('faded', !isHighlight && !isFade);
 		});
 	}
 }
