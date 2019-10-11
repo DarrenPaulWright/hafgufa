@@ -1,6 +1,5 @@
 import { debounce, forRange, throttle } from 'async-agent';
-import { max, min } from 'lodash';
-import { clone } from 'object-agent';
+import { clone, fill } from 'object-agent';
 import { applySettings, AUTO, CssSize, enforce, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
 import dom from '../../utility/dom';
 import {
@@ -217,7 +216,7 @@ export default class TileLayout extends Container {
 				}
 
 				if (self.height().isAuto) {
-					const newHeight = max(self[COLUMN_OFFSETS]) || 0;
+					const newHeight = Math.max(...self[COLUMN_OFFSETS]);
 					self.minHeight(newHeight + dom.get.paddings.height(self))
 						.css(OVERFLOW_Y, HIDDEN);
 				}
@@ -249,7 +248,7 @@ export default class TileLayout extends Container {
 		self[GAPS].length = 0;
 
 		const paddingTop = parseInt(self.css(PADDING_TOP), 10);
-		self[COLUMN_OFFSETS] = Array.from({length: self[COLUMN_COUNT]}, () => paddingTop);
+		self[COLUMN_OFFSETS] = fill(self[COLUMN_COUNT], () => paddingTop);
 	}
 
 	[onNewContent]() {
@@ -387,7 +386,7 @@ export default class TileLayout extends Container {
 		}
 
 		if (!doPrepend) {
-			self[CUTOFF_HEIGHT] = min(self[COLUMN_OFFSETS]);
+			self[CUTOFF_HEIGHT] = Math.min(...self[COLUMN_OFFSETS]);
 			self[CUTOFF_INDEX_BOTTOM] = index;
 			self[CUTOFF_MAX] = Math.max(index, self[CUTOFF_MAX]);
 		}
@@ -475,7 +474,7 @@ export default class TileLayout extends Container {
 		const total = self.tileData().length;
 
 		const cleanUp = () => {
-			const bottom = max(self[COLUMN_OFFSETS]);
+			const bottom = Math.max(...self[COLUMN_OFFSETS]);
 			const isLast = (self.total() || self.tileData().length) === self[CUTOFF_INDEX_BOTTOM] + 1;
 
 			if (bottom > self[CURRENT_SCROLL_HEIGHT] || isLast) {

@@ -261,7 +261,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 
 				if (self[PARENT_SPAN]) {
 					self[PARENT_MULTIPLIER] = self[PARENT_SPAN].length / self[SPAN].length / self[PARENT_SUB_SPAN];
-					slideWidth = slideWidth * self[PARENT_MULTIPLIER]
+					slideWidth = slideWidth * self[PARENT_MULTIPLIER];
 				}
 				else {
 					self[SPAN].subSpans.some((subSpan) => {

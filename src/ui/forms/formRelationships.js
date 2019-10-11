@@ -1,6 +1,5 @@
 import { debounce } from 'async-agent';
-import { result, sum } from 'lodash';
-import { deepEqual } from 'object-agent';
+import { deepEqual, get } from 'object-agent';
 
 /**
  * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
@@ -274,7 +273,7 @@ const FormRelationshipHandler = function() {
 	 * @returns {Boolean}
 	 */
 	const simpleEquals = (relationship) => {
-		const target = result(relationship.targetValues.find((item) => item.id), 'id');
+		const target = get(relationship.targetValues.find((item) => item.id), 'id');
 
 		return (typeof target === 'undefined' || target === relationship.options);
 	};
@@ -287,7 +286,7 @@ const FormRelationshipHandler = function() {
 	const simpleInArray = (relationship) => {
 		let inArray = false;
 
-		const target = result(relationship.targetValues.find((item) => item.id), 'id');
+		const target = get(relationship.targetValues.find((item) => item.id), 'id');
 		if (relationship.options) {
 			relationship.options.forEach((option) => {
 				if (typeof target !== 'undefined' && target === option) {
@@ -426,7 +425,7 @@ const FormRelationshipHandler = function() {
 				control.value(relationship.targetValues[0]);
 			}
 			else if (caseThen.value === 'sum') {
-				control.value(sum(relationship.targetValues));
+				control.value(relationship.targetValues.reduce((result, value) => result + value, 0));
 			}
 			else if (caseThen.value === 'sumRange') {
 				control.value(sumRange(relationship.ranges, relationship.targetValues));

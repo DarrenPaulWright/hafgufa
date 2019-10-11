@@ -1,6 +1,6 @@
 import { select } from 'd3';
-import { findIndex, groupBy, remove, union } from 'lodash';
-import { clone, forOwn, isEmpty } from 'object-agent';
+import { Collection } from 'hord';
+import { clone, isEmpty } from 'object-agent';
 import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
 import { byKey } from '../../../src/utility/sortBy';
 import collectionHelper from '../../utility/collectionHelper';
@@ -416,9 +416,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			let popupText = '';
 
 			self[SELECTED_ITEMS].forEach((item) => {
-				if (visibleSelectedItems.length === 0 || findIndex(visibleSelectedItems, {
-					id: item.id
-				}) === -1) {
+				if (visibleSelectedItems.length === 0 || visibleSelectedItems.findIndex((selectedItem) => selectedItem.id === item.id) === -1) {
 					isPopupButtonSelected = true;
 					if (popupText.length > 0) {
 						popupText += ', ';
@@ -676,7 +674,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 	[mapMenuItems](optionsParent, level = 0) {
 		const self = this;
-		let groups = false;
+		let isGrouped = false;
 		let rows = [];
 
 		const hasSelectedItems = (group) => {
@@ -694,11 +692,15 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			optionsParent.children.forEach((item) => {
 				if (item.group) {
-					groups = true;
+					isGrouped = true;
 				}
 
 				if (item.children) {
-					rows = union(rows, self[mapMenuItems](item, level + 1));
+					self[mapMenuItems](item, level + 1).forEach((subItem) => {
+						if (rows.findIndex((row) => row.id === subItem.id) === -1) {
+							rows.push(subItem);
+						}
+					});
 				}
 				else {
 					item.isSelectable = optionsParent.isMultiSelect;
@@ -709,18 +711,14 @@ export default class Picker extends FocusMixin(FormControl) {
 			});
 		}
 
-		if (groups && !level) {
-			groups = groupBy(rows, GROUP_KEY);
-			rows = [];
-
-			forOwn(groups, (group, key) => {
-				rows.push({
-					id: key,
-					title: key,
-					isSelectable: false,
-					children: group,
-					isExpanded: hasSelectedItems(group)
-				});
+		if (isGrouped && !level) {
+			rows = new Collection(rows).nest({parentKey: GROUP_KEY});
+			rows.eachChild(() => {
+			}, {
+				onParent(group) {
+					group.isSelected = false;
+					group.isExpanded = hasSelectedItems(group.children);
+				}
 			});
 		}
 
@@ -841,7 +839,7 @@ export default class Picker extends FocusMixin(FormControl) {
 					self[toggleSelectedItem](options.children[0].id);
 				}
 
-				remove(options.children, (option) => option.id === item.id);
+				options.children = options.children.filter((option) => option.id === item.id);
 
 				self.options(options, true);
 			},

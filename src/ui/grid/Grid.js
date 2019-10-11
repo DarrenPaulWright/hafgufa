@@ -1,6 +1,6 @@
 import { debounce } from 'async-agent';
 import { event } from 'd3';
-import { findIndex } from 'lodash';
+import { Collection } from 'hord';
 import Moment from 'moment';
 import { clone, deepEqual } from 'object-agent';
 import shortid from 'shortid';
@@ -80,7 +80,7 @@ export default class Grid extends Control {
 		super(settings);
 
 		const self = this;
-		self[ROWS] = [];
+		self[ROWS] = new Collection();
 		self[HAS_GROUPS] = false;
 		self[GROUPED_ROWS] = [];
 		self[FILTERED_ROWS] = [];
@@ -269,7 +269,7 @@ export default class Grid extends Control {
 	 * @function removeRow
 	 */
 	[removeRow](rowIndex) {
-		if (rowIndex >= 0) {
+		if (rowIndex !== -1) {
 			this[ROWS].splice(rowIndex, 1);
 			this[group]();
 		}
@@ -841,7 +841,7 @@ export default class Grid extends Control {
 	 * @method getRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches a row; See _.findIndex for details.
+	 * @arg {Object} search - An object that matches a row
 	 * @return {Object}
 	 */
 	getRow(search) {
@@ -908,11 +908,10 @@ export default class Grid extends Control {
 	 * @method removeRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches a row; See _.findIndex for details.
+	 * @arg {Object} search - An object that matches a row
 	 */
 	removeRow(search) {
-		const rowIndex = findIndex(this[ROWS], search);
-		this[removeRow](rowIndex);
+		this[removeRow](this[ROWS].findIndex(search));
 	}
 
 	/**
@@ -920,15 +919,14 @@ export default class Grid extends Control {
 	 * @method removeRows
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches rows; See _.findIndex for details.
+	 * @arg {Object} search - An object that matches rows
 	 */
 	removeRows(search) {
 		const self = this;
+		let rowIndex;
 
-		let rowIndex = findIndex(self[ROWS], search);
-		while (rowIndex >= 0) {
+		while ((rowIndex = self[ROWS].findIndex(search)) !== -1) {
 			self[removeRow](rowIndex);
-			rowIndex = findIndex(self[ROWS], search);
 		}
 	}
 
@@ -1166,15 +1164,14 @@ export default class Grid extends Control {
 	 * @method focus
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} focusObject - must be an object that matches the row data in some way. See _.findIndex for
-	 *    details.
+	 * @arg {Object} focusObject - must be an object that matches the row data in some way
 	 */
 	focus(focusObject) {
 		const self = this;
 
 		if (focusObject) {
 			self[whenDoneRendering](() => {
-				const rowIndex = findIndex(self[ROWS], focusObject);
+				const rowIndex = self[ROWS].findIndex(focusObject);
 
 				self[expandGroupOfRow](self[ROWS][rowIndex]);
 				self[GRID_COLUMN_BLOCK].scrollToRowIndex(rowIndex);

@@ -1,4 +1,3 @@
-import { max } from 'lodash';
 import { applySettings, AUTO, HUNDRED_PERCENT, method, PERCENT, ZERO_PIXELS } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
 import { WIDTH } from '../../utility/domConstants';
@@ -108,12 +107,13 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 		const self = this;
 		let cumulativeWidth = 0;
 		const arrowWidth = self[getArrowWidth]() * 0.4;
-		const maxHeight = max(self[CONTROLS].map((step) => {
-			step.height(AUTO);
-			const actualHeight = step.height();
-			step.height(HUNDRED_PERCENT);
-			return actualHeight;
-		}));
+		const maxHeight = self[CONTROLS].getRenderedControls()
+			.reduce((result, step) => {
+				step.height(AUTO);
+				result = Math.max(step.borderHeight(), maxHeight);
+				step.height(HUNDRED_PERCENT);
+				return result;
+			}, 0);
 
 		if (self[TOTAL_STEPS] > 0) {
 			self[BAR_CONTAINER].height(maxHeight);

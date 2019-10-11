@@ -1,4 +1,3 @@
-import { difference, remove } from 'lodash';
 import { clone, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
@@ -120,9 +119,7 @@ export default class EditableGrid extends FormControl {
 		self[GRID].removeRow({
 			rowId: rowData.rowId
 		});
-		remove(self[CURRENT_VALUE], {
-			rowId: rowData.rowId
-		});
+		self[CURRENT_VALUE] = self[CURRENT_VALUE].filter((value) => value.rowId !== rowData.rowId);
 		self.triggerChange();
 
 		if (self[ADD_NEW_DIALOG]) {
@@ -174,13 +171,14 @@ export default class EditableGrid extends FormControl {
 	[getUniqueNewRowId](newValue) {
 		const self = this;
 		const currentRowIds = self[CURRENT_VALUE].map((item) => item.rowId);
-		const returnedRowIds = newValue.map((item) => item.rowId);
-		const uniqueRowIds = difference(returnedRowIds, currentRowIds);
 		let newRowId;
 
-		if (uniqueRowIds.length) {
-			newRowId = uniqueRowIds[0];
-		}
+		newValue.some((value) => {
+			if (!currentRowIds.includes(value.rowId)) {
+				newRowId = value.rowId;
+				return true;
+			}
+		});
 
 		return newRowId;
 	}

@@ -1,5 +1,5 @@
 import Moment from 'moment';
-import { repeat } from 'object-agent';
+import { fill, repeat } from 'object-agent';
 import { applySettings, AUTO, method } from 'type-enforcer';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
@@ -119,7 +119,7 @@ export default class Calendar extends Control {
 	[buildMonthOptions]() {
 		const self = this;
 
-		return Array.from({length: MONTHS_IN_A_YEAR}, (x, month) => ({
+		return fill(MONTHS_IN_A_YEAR, (month) => ({
 			id: month.toString(),
 			title: new Moment().month(parseInt(month, 10)).format(self.monthFormat())
 		}));
@@ -132,7 +132,7 @@ export default class Calendar extends Control {
 	[buildYearOptions]() {
 		const self = this;
 
-		return Array.from({length: (self.yearRangePast() + self.yearRangeFuture() + 1)}, (x, yearOffset) => {
+		return fill(self.yearRangePast() + self.yearRangeFuture() + 1, (yearOffset) => {
 			const year = (self.year() + (self.yearRangeFuture() - yearOffset)).toString();
 			return {
 				id: year,

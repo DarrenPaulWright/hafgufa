@@ -1,5 +1,4 @@
 import { delay } from 'async-agent';
-import { remove } from 'lodash';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, method } from 'type-enforcer';
 import { EMPTY_STRING } from '../../utility/domConstants';
@@ -159,9 +158,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 			});
 		}
 
-		remove(self[FILES], {
-			name: fileThumbnail.id()
-		});
+		self[FILES] = self[FILES].filter((file) => file.name !== fileThumbnail.id());
 
 		self[FILE_THUMBNAILS].remove(fileThumbnail.id());
 

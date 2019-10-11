@@ -140,7 +140,7 @@ export default class Heading extends FocusMixin(Control) {
 		else {
 			this[toggleChecked]();
 		}
-	};
+	}
 
 	/**
 	 * Toggle the selected state of this heading and fire the onSelect callback
