@@ -129,7 +129,8 @@ Object.assign(Carousel.prototype, {
 	slideControl: method.function({
 		set(slideControl) {
 			this[VIRTUAL_LIST].itemControl(slideControl);
-		}
+		},
+		bind: false
 	}),
 
 	/**
