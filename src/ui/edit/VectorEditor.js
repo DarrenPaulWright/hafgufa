@@ -170,6 +170,12 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 						self.onDeleteShape()(shape.id);
 					}
 				}])
+				.onMouseEnter(function() {
+					self.onHighlight()(this.id());
+				})
+				.onMouseLeave(function() {
+					self.onHighlight()();
+				})
 				.originalBounds = shape.bounds;
 		});
 	}
@@ -190,5 +196,6 @@ Object.assign(VectorEditor.prototype, {
 	onChange: method.function(),
 	onAdd: method.function(),
 	onDeleteShape: method.function(),
-	onDeleteAllShapes: method.function()
+	onDeleteAllShapes: method.function(),
+	onHighlight: method.function()
 });
