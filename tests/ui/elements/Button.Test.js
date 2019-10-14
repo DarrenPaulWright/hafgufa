@@ -109,4 +109,42 @@ describe('Button', () => {
 			assert.equal(testUtil.count(SELECTED_CLASS), 1);
 		});
 	});
+
+	describe('.onMouseEnter', () => {
+		it('should call the callback when the mouse enters the button', () => {
+			let testVar = '';
+
+			testUtil.control = new Button({
+				container: testUtil.container,
+				onMouseEnter() {
+					testVar = this;
+				}
+			});
+
+			testUtil.trigger(testUtil.control.element(), 'mouseenter');
+
+			assert.equal(testUtil.control, testVar);
+		});
+	});
+
+	describe('.onMouseLeave', () => {
+		it('should call the callback when the mouse leaves the button', () => {
+			let testVar = '';
+
+			testUtil.control = new Button({
+				container: testUtil.container,
+				onMouseEnter() {
+					testVar = 'fail';
+				},
+				onMouseLeave() {
+					testVar = this;
+				}
+			});
+
+			testUtil.trigger(testUtil.control.element(), 'mouseenter');
+			testUtil.trigger(testUtil.control.element(), 'mouseleave');
+
+			assert.equal(testUtil.control, testVar);
+		});
+	});
 });

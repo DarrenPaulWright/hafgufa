@@ -1,10 +1,11 @@
 import { applySettings, enforce, Enum, method } from 'type-enforcer';
 import dom from '../../utility/dom';
-import { ALT, INPUT_TYPE, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, TITLE } from '../../utility/domConstants';
+import { ALT, INPUT_TYPE, TITLE } from '../../utility/domConstants';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
+import MouseMixin from '../mixins/MouseMixin';
 import OnClickMixin from '../mixins/OnClickMixin';
 import './Button.less';
 import Icon, { ICON_SIZES } from './Icon';
@@ -27,14 +28,6 @@ const ICON_POSITIONS = new Enum({
 	LEFT: 'left'
 });
 
-const mouseEnterHandler = function() {
-	this.onMouseEnter()(this);
-};
-
-const mouseLeaveHandler = function() {
-	this.onMouseLeave()(this);
-};
-
 /**
  * Display a button.
  *
@@ -44,7 +37,7 @@ const mouseLeaveHandler = function() {
  *
  * @arg {Object} settings
  */
-export default class Button extends FocusMixin(OnClickMixin(Control)) {
+export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.BUTTON;
 		settings.label = enforce.string(settings.label, '');
@@ -77,7 +70,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 * @arg {anything} [value]
-	 * @returns {anything|this}
+	 * @returns {*|this}
 	 */
 	value: method.any(),
 
@@ -284,35 +277,5 @@ Object.assign(Button.prototype, {
 				this.classes(SELECTED_CLASS, newValue);
 			}
 		}
-	}),
-
-	/**
-	 * Sets or gets the current onMouseEnter callback.
-	 * @method onMouseEnter
-	 * @member module:Button
-	 * @instance
-	 * @arg {Function} [callback]
-	 * @returns {Function|this}
-	 */
-	onMouseEnter: method.function({
-		set(newValue) {
-			this.on(MOUSE_ENTER_EVENT, (newValue !== null) ? mouseEnterHandler : null);
-		},
-		other: null
-	}),
-
-	/**
-	 * Sets or gets the current onMouseLeave callback.
-	 * @method onMouseLeave
-	 * @member module:Button
-	 * @instance
-	 * @arg {Function} [callback]
-	 * @returns {Function|this}
-	 */
-	onMouseLeave: method.function({
-		set(newValue) {
-			this.on(MOUSE_LEAVE_EVENT, (newValue !== null) ? mouseLeaveHandler : null);
-		},
-		other: null
 	})
 });

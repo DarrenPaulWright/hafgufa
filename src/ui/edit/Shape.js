@@ -5,6 +5,7 @@ import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../../index';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';
+import MouseMixin from '../mixins/MouseMixin';
 import G from '../svg/G';
 import DragPoint from './DragPoint';
 import './Shape.less';
@@ -13,7 +14,7 @@ const IS_RESIZING = Symbol();
 
 export const initDragPoint = Symbol();
 
-export default class Shape extends FocusMixin(DragMixin(ContextMenuMixin(G))) {
+export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMixin(G)))) {
 	constructor(settings) {
 		settings.canDrag = true;
 		settings.restrictVerticalDrag = true;
