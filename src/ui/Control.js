@@ -946,8 +946,8 @@ Object.assign(Control.prototype, {
 		if (!self.isRemoved && !_self.isResizing) {
 			_self.isResizing = true;
 
-			const newWidth = element.offsetWidth;
-			let newHeight = element.offsetHeight;
+			const newWidth = self.borderWidth();
+			let newHeight = self.borderHeight();
 
 			if (self.height().isPercent && self.container()) {
 				let calculatedHeight = parseStyle(self.container(), 'height') * (self.height().value / 100);
