@@ -1,3 +1,4 @@
+import { repeat } from 'object-agent';
 import { applySettings, method, PERCENT, PIXELS } from 'type-enforcer';
 import { BOTTOM, LEFT, TOP } from '../../utility/domConstants';
 import ControlRecycler from '../ControlRecycler';
@@ -67,19 +68,23 @@ Object.assign(TimeSpan.prototype, {
 		min: 1,
 		set(subSpans) {
 			const self = this;
-			const tickWidth = 100 / subSpans;
 
 			if (!self.isRemoved) {
+				const tickWidth = 100 / subSpans;
+				const isEven = subSpans % 2 === 0;
+				const secondaryIndex = isEven ? Math.ceil(subSpans / 2) : subSpans + 1;
+
 				self[TICK_RECYCLER].discardAllControls();
 
-				for (let index = 0; index < subSpans; index++) {
+				repeat(subSpans, (index) => {
 					self[TICK_RECYCLER]
 						.getRecycledControl()
 						.container(self[HEADING])
 						.id(`tick_${index}`)
-						.classes('sub', !!index)
+						.classes('primary', index === 0)
+						.classes('secondary', index === secondaryIndex)
 						.css(LEFT, (tickWidth * index) + PERCENT);
-				}
+				});
 			}
 		}
 	}),

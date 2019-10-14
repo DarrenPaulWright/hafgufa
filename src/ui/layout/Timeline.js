@@ -209,8 +209,6 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		});
 
 		applySettings(self, settings);
-
-		self.resize(true);
 	}
 
 	[setZoom](newZoom) {
@@ -221,7 +219,6 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		if (newZoom !== self[ZOOM] || (self.data().length && !self[VIRTUAL_LIST].itemSize())) {
 			self[ZOOM] = newZoom;
 			self[calcSpans]();
-			self.resize(true);
 		}
 	}
 
