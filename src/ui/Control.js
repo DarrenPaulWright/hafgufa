@@ -84,10 +84,12 @@ const propagationClickEvent = () => {
 	event.stopPropagation();
 };
 
+const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyValue(styleName)) || 0;
+const parseStyle = (element, styleName) => parseElementStyle(getComputedStyle(element), styleName);
+
 const updateElementId = Symbol();
 const setPropagationClickEvent = Symbol();
 const setCssSizeElement = Symbol();
-const percentHeightOverride = Symbol();
 const resizeContainer = Symbol();
 
 /**
@@ -157,23 +159,6 @@ export default class Control extends Removable {
 
 	[setCssSizeElement](value) {
 		cssSizeMethods.forEach((method) => this[method]().element(value));
-	}
-
-	[percentHeightOverride]() {
-		const self = this;
-
-		if (self.height().isPercent && self.container()) {
-			const element = _(self).element;
-			let containerHeight = dom.get.height(self.container()) * (self.height().value / 100);
-			containerHeight -= dom.get.paddings.height(self.container());
-
-			containerHeight -= dom.get.margins.height(element);
-			if (WINDOW.getComputedStyle(element).boxSizing !== BORDER_BOX) {
-				containerHeight -= dom.get.paddings.height(element);
-			}
-
-			self.css(HEIGHT, Math.floor(containerHeight));
-		}
 	}
 
 	[resizeContainer]() {
@@ -650,7 +635,7 @@ Object.assign(Control.prototype, {
 		const _self = _(this);
 
 		if (_self.element) {
-			return (_self.element.clientWidth || 0) - dom.get.paddings.width(_self.element);
+			return parseStyle(_self.element, 'width');
 		}
 
 		return 0;
@@ -720,7 +705,7 @@ Object.assign(Control.prototype, {
 		const _self = _(this);
 
 		if (_self.element) {
-			return (_self.element.clientHeight || 0) - dom.get.paddings.height(_self.element);
+			return parseStyle(_self.element, 'height');
 		}
 
 		return 0;
@@ -956,13 +941,29 @@ Object.assign(Control.prototype, {
 	resize(isForced) {
 		const self = this;
 		const _self = _(self);
+		const element = _self.element;
 
 		if (!self.isRemoved && !_self.isResizing) {
 			_self.isResizing = true;
-			self[percentHeightOverride]();
 
-			const newWidth = self.borderWidth();
-			const newHeight = self.borderHeight();
+			const newWidth = element.offsetWidth;
+			let newHeight = element.offsetHeight;
+
+			if (self.height().isPercent && self.container()) {
+				let calculatedHeight = parseStyle(self.container(), 'height') * (self.height().value / 100);
+
+				const styles = getComputedStyle(element);
+
+				calculatedHeight -= (parseElementStyle(styles, MARGIN_TOP) + parseElementStyle(styles, MARGIN_BOTTOM));
+				if (styles.boxSizing !== BORDER_BOX) {
+					calculatedHeight -= (parseElementStyle(styles, PADDING_TOP) + parseElementStyle(styles, PADDING_BOTTOM));
+				}
+
+				if (_self.currentHeight !== calculatedHeight) {
+					element.style.height = newHeight = calculatedHeight + PIXELS;
+					isForced = true;
+				}
+			}
 
 			if (isForced || _self.currentWidth !== newWidth || _self.currentHeight !== newHeight) {
 				_self.currentWidth = newWidth;
