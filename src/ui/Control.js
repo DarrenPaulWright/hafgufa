@@ -960,7 +960,8 @@ Object.assign(Control.prototype, {
 				}
 
 				if (_self.currentHeight !== calculatedHeight) {
-					element.style.height = newHeight = calculatedHeight + PIXELS;
+					newHeight = calculatedHeight;
+					element.style.height = calculatedHeight + PIXELS;
 					isForced = true;
 				}
 			}
