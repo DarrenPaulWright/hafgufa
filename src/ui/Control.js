@@ -109,7 +109,6 @@ export default class Control extends Removable {
 		self[CHILD_CONTROLS] = new ControlManager();
 
 		_.set(self, {
-			currentClasses: '',
 			type: settings.type,
 			append: settings.append,
 			prepend: settings.prepend
@@ -129,7 +128,7 @@ export default class Control extends Removable {
 		self.onRemove(() => {
 			self[CHILD_CONTROLS].remove();
 			self.container(null);
-			self.element(null);
+			dom.remove(self.element());
 		});
 	}
 
@@ -276,18 +275,11 @@ Object.assign(Control.prototype, {
 					const index = newValue.indexOf(':');
 
 					if (index !== -1) {
-
-						newValue = DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substr(0, index)}`, newValue.substr(index + 1));
-
+						return DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substr(0, index)}`, newValue.substr(index + 1));
 					}
-
 					else {
-
-						newValue = DOCUMENT.createElement(newValue);
-
+						return DOCUMENT.createElement(newValue);
 					}
-
-					return newValue;
 				}
 			}
 
@@ -297,39 +289,34 @@ Object.assign(Control.prototype, {
 			const self = this;
 			const _self = _(self);
 
-			if (element) {
-				_self.oldElement = element;
+			_self.oldElement = element;
 
-				self[setCssSizeElement](null);
+			self[setCssSizeElement](null);
 
-				_self.element = null;
-				_self.elementD3 = null;
-			}
+			_self.element = null;
+			_self.elementD3 = null;
 		},
 		set(newElement) {
 			const self = this;
 			const _self = _(self);
 
-			if (newElement) {
-				_self.element = newElement;
-				_self.elementD3 = select(newElement);
-				_self.element[CONTROL_PROP] = self;
+			_self.element = newElement;
+			_self.elementD3 = select(newElement);
+			_self.element[CONTROL_PROP] = self;
 
-				if (_self.oldElement) {
-					replaceElement(_self.oldElement, newElement);
-				}
-
-				self[setCssSizeElement](_self.element);
-				self[setPropagationClickEvent]();
+			if (_self.oldElement) {
+				replaceElement(_self.oldElement, newElement);
 			}
+
+			self[setCssSizeElement](_self.element);
+			self[setPropagationClickEvent]();
 
 			if (_self.oldElement) {
 				_self.oldElement[CONTROL_PROP] = null;
 				dom.remove(_self.oldElement);
 				_self.oldElement = null;
 			}
-		},
-		other: null
+		}
 	}),
 
 	elementD3() {
@@ -390,11 +377,7 @@ Object.assign(Control.prototype, {
 	 */
 	attr: method.keyValue({
 		set(attribute, value) {
-			const _self = _(this);
-
-			if (_self.element) {
-				_self.element.setAttribute(attribute, value);
-			}
+			_(this).element.setAttribute(attribute, value);
 		},
 		get(attribute) {
 			return _(this).element.getAttribute(attribute);
@@ -416,13 +399,11 @@ Object.assign(Control.prototype, {
 		set(property, value) {
 			const _self = _(this);
 
-			if (_self.element) {
-				if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
-					value = value + PIXELS;
-				}
-
-				_self.element.style[property] = value;
+			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
+				value = value + PIXELS;
 			}
+
+			_self.element.style[property] = value;
 		},
 		get(property) {
 			return _(this).element.style[property];
@@ -528,29 +509,17 @@ Object.assign(Control.prototype, {
 		const _self = _(this);
 
 		if (arguments.length) {
-			if (_self.element) {
-				if (enforce.boolean(performAdd, true)) {
-					this.addClass(classes);
-				}
-				else {
-					this.removeClass(classes);
-
-				}
-
-				_self.currentClasses = _self.element.classList ? _self.element.classList.value : _self.element.className.baseVal || _self.element.className;
-
+			if (enforce.boolean(performAdd, true)) {
+				this.addClass(classes);
 			}
-
-			else if (!_self.currentClasses) {
-
-				_self.currentClasses = classes;
-
+			else {
+				this.removeClass(classes);
 			}
 
 			return this;
 		}
 
-		return _self.currentClasses;
+		return _self.element.classList.value;
 	},
 
 	/**
@@ -626,19 +595,11 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderWidth() {
-		const _self = _(this);
-
-		return _self.element ? _self.element.offsetWidth : 0;
+		return _(this).element.offsetWidth;
 	},
 
 	innerWidth() {
-		const _self = _(this);
-
-		if (_self.element) {
-			return parseStyle(_self.element, 'width');
-		}
-
-		return 0;
+		return parseStyle(_(this).element, 'width');
 	},
 
 	/**
@@ -696,19 +657,11 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderHeight() {
-		const _self = _(this);
-
-		return _self.element ? _self.element.offsetHeight : 0;
+		return _(this).element.offsetHeight;
 	},
 
 	innerHeight() {
-		const _self = _(this);
-
-		if (_self.element) {
-			return parseStyle(_self.element, 'height');
-		}
-
-		return 0;
+		return parseStyle(_(this).element, 'height');
 	},
 
 	/**
@@ -842,11 +795,7 @@ Object.assign(Control.prototype, {
 	 */
 	on: method.keyValue({
 		set(eventName, handler) {
-			const _self = _(this);
-
-			if (_self.elementD3) {
-				_self.elementD3.on(eventName, handler);
-			}
+			_(this).elementD3.on(eventName, handler);
 		}
 	}),
 
