@@ -49,6 +49,8 @@ import MultiItemFocus from '../../utility/MultiItemFocus';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
+import Div from '../elements/Div';
+import Span from '../elements/Span';
 import FocusMixin from '../mixins/FocusMixin';
 import DragContainer from './DragContainer';
 import './VirtualList.less';
@@ -561,10 +563,14 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		if (self.emptyContentMessage() && !self[EMPTY_CONTENT_CONTAINER]) {
-			self[EMPTY_CONTENT_CONTAINER] = dom.appendNewTo(self[CONTENT_CONTAINER], EMPTY_CONTENT_CLASS);
-
-			dom.appendNewTo(self[EMPTY_CONTENT_CONTAINER], '', 'span')
-				.textContent = self.emptyContentMessage();
+			self[EMPTY_CONTENT_CONTAINER] = new Div({
+				container: self[CONTENT_CONTAINER],
+				classes: EMPTY_CONTENT_CLASS,
+				content: {
+					control: Span,
+					text: self.emptyContentMessage()
+				}
+			});
 
 			self[updateEmptyContentSize]();
 		}
@@ -574,7 +580,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		if (self[EMPTY_CONTENT_CONTAINER]) {
-			const newSize = dom.get.height(self[EMPTY_CONTENT_CONTAINER]);
+			const newSize = self[EMPTY_CONTENT_CONTAINER].borderHeight();
 			self[CONTENT_CONTAINER].css(HEIGHT, newSize);
 			self.css(MIN_HEIGHT, newSize);
 		}
@@ -588,7 +594,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		if (self[EMPTY_CONTENT_CONTAINER]) {
-			dom.remove(self[EMPTY_CONTENT_CONTAINER]);
+			self[EMPTY_CONTENT_CONTAINER].remove();
 			self[EMPTY_CONTENT_CONTAINER] = null;
 		}
 	}

@@ -9,6 +9,7 @@ import { filteredTitle } from '../../utility/sortBy';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
+import Span from '../elements/Span';
 import TextInput from '../forms/TextInput';
 import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
@@ -99,7 +100,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 
 		self.addClass('tags');
 
-		self[FAKE_INPUT] = dom.appendNewTo(self, 'fake-input', 'span');
+		self[FAKE_INPUT] = new Span({
+			container: self,
+			classes: 'fake-input'
+		});
 		self[LIST_CONTAINER] = listContainer;
 		self[LIST_CONTAINER].container(self);
 		self[TEXT_INPUT] = textInput;
@@ -163,10 +167,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 	[onChangeTextInput](newValue) {
 		const self = this;
 
-		self[FAKE_INPUT].textContent = newValue;
+		self[FAKE_INPUT].text(newValue);
 
 		if (self[CURRENT_TAGS].length || newValue.length) {
-			self[TEXT_INPUT].width(dom.get.width(self[FAKE_INPUT]) + dom.get.paddings.width(self[TEXT_INPUT]) + 8);
+			self[TEXT_INPUT].width(self[FAKE_INPUT].borderWidth() + dom.get.paddings.width(self[TEXT_INPUT]) + 8);
 		}
 		else {
 			self[TEXT_INPUT].width(HUNDRED_PERCENT);

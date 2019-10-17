@@ -79,22 +79,6 @@ const dom = {
 
 		return newElement;
 	},
-	/**
-	 * Build a new element, apply a css class, and append the element INSIDE the specified container.
-	 *
-	 * @method appendNewTo
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object} container - DOM element to append to the new element to.
-	 * @arg {String} [className] - A css class to apply to the new element.
-	 * @arg {String} [element=div] - The name of an HTML element.
-	 *
-	 * @returns {Object} - Reference to an element in the DOM.
-	 */
-	appendNewTo(container, className, element) {
-		return dom.appendTo(container, dom.buildNew(className, element));
-	},
 
 	/**
 	 * Add an element to the DOM as the first child of another element

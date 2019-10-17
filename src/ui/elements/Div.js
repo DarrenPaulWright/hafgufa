@@ -109,6 +109,7 @@ export default class Div extends Control {
 	 */
 	content(content) {
 		this[CHILD_CONTROLS].remove();
+		this.element().textContent = '';
 		this[addContent](content, false);
 		return this;
 	}

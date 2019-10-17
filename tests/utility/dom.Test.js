@@ -45,41 +45,6 @@ describe('dom', () => {
 		});
 	});
 
-	const runAppendNew_DefaultTests = (methodName) => {
-		it('should return a DOM element', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			const div2 = dom[methodName](div);
-
-			assert.isTrue(isElement(div2));
-		});
-
-		it('should build an element with a class', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom[methodName](div, 'test-class');
-
-			assert.equal(testUtil.count('.test-class'), 1);
-		});
-
-		it('should build an element with a class of a specific element type', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom[methodName](div, 'test-class', 'button');
-
-			assert.equal(testUtil.count('button.test-class'), 1);
-		});
-	};
-
-	describe('.appendNewTo', () => {
-		runAppendNew_DefaultTests('appendNewTo');
-
-		it('should build a new DOM element and add it as the last child of the container', () => {
-			const container = testUtil.container;
-			dom.appendNewTo(container);
-			const span = dom.appendNewTo(container, undefined, 'span');
-
-			assert.equal(container.children[1], span);
-		});
-	});
-
 	describe('.prependTo', () => {
 		it('should NOT prepend an element if the first argument is a string', () => {
 			const element = dom.buildNew('test_class', 'div');
@@ -90,11 +55,9 @@ describe('dom', () => {
 		});
 
 		it('should NOT prepend an element if the second argument is a string', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
+			dom.prependTo(testUtil.container, '.test_class');
 
-			dom.prependTo(container, '.test_class');
-
-			assert.equal(container.childNodes.length, 0);
+			assert.equal(testUtil.container.childNodes.length, 0);
 		});
 	});
 
@@ -108,11 +71,9 @@ describe('dom', () => {
 		});
 
 		it('should NOT append an element if the second argument is a string', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
+			dom.appendTo(testUtil.container, '.test_class');
 
-			dom.appendTo(container, '.test_class');
-
-			assert.equal(container.childNodes.length, 0);
+			assert.equal(testUtil.container.childNodes.length, 0);
 		});
 	});
 
@@ -126,11 +87,9 @@ describe('dom', () => {
 		});
 
 		it('should NOT append an element if the second argument is a string', () => {
-			const container = dom.appendNewTo(testUtil.container, null, 'div');
+			dom.appendBefore(testUtil.container, '.test_class');
 
-			dom.appendBefore(container, '.test_class');
-
-			assert.equal(container.childNodes.length, 0);
+			assert.equal(testUtil.container.childNodes.length, 0);
 		});
 	});
 
@@ -144,133 +103,9 @@ describe('dom', () => {
 		});
 
 		it('should NOT append an element if the second argument is a string', () => {
-			const container = dom.appendNewTo(testUtil.container);
+			dom.appendAfter(testUtil.container, '.test_class');
 
-			dom.appendAfter(container, '.test_class');
-
-			assert.equal(container.childNodes.length, 0);
-		});
-	});
-
-	describe('.addClass', () => {
-		it('should do nothing if the second argument is not provided', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom.addClass(div, 'test1');
-			dom.addClass(div);
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should add a class to an element', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom.addClass(div, 'test1');
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should add a class to an SVG element', () => {
-			const div = dom.appendNewTo(testUtil.container, null, 'svg:svg');
-			dom.addClass(div, 'test1');
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should add a class to an element that already has a class', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom.addClass(div, 'test1');
-			dom.addClass(div, 'test2');
-
-			assert.equal(testUtil.count('.test1.test2'), 1);
-		});
-
-		it('should add two classes to an element if two are provided', () => {
-			const div = dom.appendNewTo(testUtil.container);
-			dom.addClass(div, 'test1 test2');
-
-			assert.equal(testUtil.count('.test1.test2'), 1);
-		});
-	});
-
-	describe('.removeClass', () => {
-		it('should do nothing if the second argument is not provided', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.addClass(div, 'test1');
-			dom.removeClass(div);
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should remove a class from an element', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.addClass(div, 'test1');
-			dom.removeClass(div, 'test1');
-
-			assert.equal(testUtil.count('.test1'), 0);
-		});
-
-		it('should remove a class from an SVG element', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body, null, 'svg:svg');
-			dom.addClass(div, 'test1');
-			dom.removeClass(div, 'test1');
-
-			assert.equal(testUtil.count('.test1'), 0);
-		});
-
-		it('should remove a class from an element that has more than one class', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.addClass(div, 'test1 test2');
-			dom.removeClass(div, 'test1');
-
-			assert.equal(testUtil.count('.test2'), 1);
-		});
-
-		it('should remove two classes from an element if two are provided', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.addClass(div, 'test1 test2');
-			dom.removeClass(div, 'test1 test2');
-
-			assert.equal(testUtil.count('.test1.test2'), 0);
-		});
-	});
-
-	describe('.classes', () => {
-		it('should add a class to an element if the third argument is not provided', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.classes(div, 'test1');
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should add a class to an element if the third argument is true', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.classes(div, 'test1', true);
-
-			assert.equal(testUtil.count('.test1'), 1);
-		});
-
-		it('should add a class to an element that already has a class', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.classes(div, 'test1');
-			dom.classes(div, 'test2');
-
-			assert.equal(testUtil.count('.test1.test2'), 1);
-		});
-
-		it('should remove a class from an element if the third argument is false', () => {
-			const body = testUtil.container;
-			const div = dom.appendNewTo(body);
-			dom.classes(div, 'test1', true);
-			dom.classes(div, 'test1', false);
-
-			assert.equal(testUtil.count('.test1'), 0);
+			assert.equal(testUtil.container.childNodes.length, 0);
 		});
 	});
 

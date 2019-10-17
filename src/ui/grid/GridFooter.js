@@ -1,9 +1,9 @@
 import { applySettings, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
+import Div from '../elements/Div';
 import { COMPRESS_ICON, EXPAND_ICON } from '../icons';
 import './GridFooter.less';
 
@@ -33,8 +33,14 @@ export default class GridFooter extends Control {
 		const self = this;
 		self.addClass('grid-footer');
 
-		self[FOOTER_LEFT] = dom.appendNewTo(self, 'grid-footer-left');
-		self[FOOTER_RIGHT] = dom.appendNewTo(self, 'grid-footer-right');
+		self[FOOTER_LEFT] = new Div({
+			container: self,
+			classes: 'grid-footer-left'
+		});
+		self[FOOTER_RIGHT] = new Div({
+			container: self,
+			classes: 'grid-footer-right'
+		});
 
 		applySettings(self, settings);
 
@@ -68,7 +74,7 @@ export default class GridFooter extends Control {
 
 		displayString += self.count() + ' ' + self.countSuffix();
 
-		self[FOOTER_RIGHT].textContent = displayString;
+		self[FOOTER_RIGHT].content(displayString);
 	}
 }
 
