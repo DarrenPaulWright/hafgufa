@@ -1,6 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { event } from 'd3';
+import { castArray, isString } from 'type-enforcer';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../../src';
 import GridCell from '../../../src/ui/grid/GridCell';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
@@ -86,14 +87,27 @@ describe('GridCell', () => {
 			content: {
 				text: 'test@example.com'
 			},
-			output: '<a href="mailto:test@example.com">test@example.com</a>',
+			output: {
+				tagName: 'A',
+				attrs: {
+					href: 'mailto:test@example.com'
+				},
+				content: 'test@example.com'
+			},
 			textAlign: 'NONE'
 		}, {
 			type: 'LINK',
 			content: {
 				text: 'http://www.example.com'
 			},
-			output: '<a href="http://www.example.com" target="_blank">http://www.example.com</a>',
+			output: {
+				tagName: 'A',
+				attrs: {
+					href: 'http://www.example.com',
+					target: '_blank'
+				},
+				content: 'http://www.example.com'
+			},
 			textAlign: 'NONE'
 		}, {
 			type: 'NUMBER',
@@ -128,14 +142,27 @@ describe('GridCell', () => {
 			content: {
 				src: 'test.png'
 			},
-			output: '<img src=\"test.png\" style=\"object-fit: contain; opacity: 1;\">',
+			output: {
+				tagName: 'IMG',
+				attrs: {
+					src: 'test.png',
+					style: 'object-fit: contain; opacity: 1;'
+				},
+				content: ''
+			},
 			textAlign: 'CENTER'
 		}, {
 			type: 'IMAGE',
 			content: {
 				icon: 'circle'
 			},
-			output: '<i class=\"icon icon-lg fa-circle\"></i>',
+			output: {
+				tagName: 'I',
+				attrs: {
+					class: 'icon icon-lg fa-circle'
+				},
+				content: ''
+			},
 			textAlign: 'CENTER'
 		}, {
 			type: 'ACTIONS',
@@ -144,19 +171,75 @@ describe('GridCell', () => {
 					icon: 'circle'
 				}]
 			},
-			output: '<div class=\"toolbar clearfix\"><button type=\"button\" class=\"icon-button\"><i id="buttonIcon" class=\"icon icon-lg fa-circle\"></i></button></div>',
+			output: {
+				tagName: 'DIV',
+				attrs: {
+					class: 'toolbar clearfix'
+				},
+				content: {
+					tagName: 'BUTTON',
+					attrs: {
+						type: 'button',
+						class: 'icon-button'
+					},
+					content: {
+						tagName: 'I',
+						attrs: {
+							id: 'buttonIcon',
+							class: 'icon icon-lg fa-circle'
+						},
+						content: ''
+					}
+				}
+			},
 			textAlign: 'NONE'
 		}, {
 			type: 'CHECKBOX',
 			content: {},
-			output: '<label class=\"checkbox\"><input type=\"checkbox\"></label>',
+			output: {
+				tagName: 'LABEL',
+				attrs: {
+					class: 'checkbox'
+				},
+				content: {
+					tagName: 'INPUT',
+					attrs: {
+						type: 'checkbox'
+					},
+					content: ''
+				}
+			},
 			textAlign: 'NONE'
 		}];
+
+		const getAttributes = (element) => {
+			return castArray(element.attributes).reduce((result, attr) => {
+				result[attr.name] = attr.value;
+				return result;
+			}, {});
+		};
+
+		const compareContent = (element, output) => {
+			if (isString(output)) {
+				assert.equal(element.innerHTML, output);
+			}
+			else {
+				assert.equal(element.children.length, 1);
+				assert.equal(element.children[0].tagName, output.tagName);
+				assert.deepEqual(getAttributes(element.children[0]), output.attrs);
+				if (isString(output.content)) {
+					assert.equal(element.children[0].textContent, output.content);
+				}
+				else {
+					compareContent(element.children[0], output.content);
+				}
+			}
+		};
 
 		const runSpecificContent = (
 			typeString,
 			inputContent,
-			outputText,
+			output,
 			textAlign
 		) => {
 			it('should render the content provided when dataType is ' + typeString, () => {
@@ -166,7 +249,7 @@ describe('GridCell', () => {
 				})
 					.content(inputContent);
 
-				assert.equal(testUtil.control.element().innerHTML, outputText);
+				compareContent(testUtil.control.element(), output);
 			});
 
 			it('should have textAlign of ' + textAlign + ' when dataType is ' + typeString, () => {
@@ -192,7 +275,7 @@ describe('GridCell', () => {
 						.dataType(gridConstants.COLUMN_TYPES[testType.type])
 						.content(testType.content);
 
-					assert.equal(testUtil.control.element().innerHTML, testType.output);
+					compareContent(testUtil.control.element(), testType.output);
 				});
 			});
 		};

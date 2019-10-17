@@ -7,7 +7,6 @@ import {
 	BORDER_RIGHT_WIDTH,
 	BORDER_TOP_WIDTH,
 	DOCUMENT,
-	EMPTY_STRING,
 	LINE_HEIGHT,
 	MARGIN_BOTTOM,
 	MARGIN_LEFT,
@@ -178,7 +177,7 @@ const dom = {
 
 		if (element) {
 			if (doPrepend === undefined) {
-				dom.empty(element);
+				element.textContent = '';
 			}
 			if (content === undefined) {
 				content = '';
@@ -200,26 +199,6 @@ const dom = {
 					element.insertAdjacentHTML(INSERT_HTML_END, content);
 				}
 			}
-		}
-
-		return dom;
-	},
-	/**
-	 * Remove the content of an element
-	 *
-	 * @method empty
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 *
-	 * @returns {dom}
-	 */
-	empty(element) {
-		element = dom.getElement(element, true);
-
-		if (element) {
-			element.textContent = EMPTY_STRING;
 		}
 
 		return dom;

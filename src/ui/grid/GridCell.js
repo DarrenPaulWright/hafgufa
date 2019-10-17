@@ -102,8 +102,8 @@ export default class GridCell extends Control {
 		const self = this;
 
 		if (isElement(displayText)) {
-			dom.empty(self)
-				.appendTo(self, displayText);
+			self.element().textContent = '';
+			dom.appendTo(self, displayText);
 		}
 		else {
 			dom.content(self, displayText);
@@ -119,7 +119,7 @@ export default class GridCell extends Control {
 	[addImage](content) {
 		const self = this;
 
-		dom.empty(self);
+		self.element().textContent = '';
 
 		if (!self[IMAGE_CONTROL]) {
 			self[IMAGE_CONTROL] = new Image({
@@ -151,7 +151,7 @@ export default class GridCell extends Control {
 
 		if (!self[ICON_CONTROL]) {
 			if (icon) {
-				dom.empty(self);
+				self.element().textContent = '';
 
 				self[ICON_CONTROL] = new Icon({
 					container: self
@@ -307,7 +307,7 @@ Object.assign(GridCell.prototype, {
 				self[CHECKBOX] = null;
 			}
 			self[CURRENT_CONTENT] = null;
-			dom.empty(self);
+			self.element().textContent = '';
 		}
 	}),
 
