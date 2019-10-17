@@ -203,46 +203,7 @@ const dom = {
 
 		return dom;
 	},
-	/**
-	 * Builds an email link.
-	 *
-	 * @method buildLink
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {String} link
-	 * @arg {String} [text] - Visible text, if not provided then link is used.
-	 *
-	 * @returns {element}
-	 */
-	buildLink(link, text) {
-		const anchor = dom.buildNew('', 'a');
 
-		if (link && !link.includes('http')) {
-			link = 'http://' + link;
-		}
-		anchor.href = link;
-		anchor.target = '_blank';
-		anchor.textContent = text || link;
-		return anchor;
-	},
-	/**
-	 * Builds an email link.
-	 *
-	 * @method buildEmailLink
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {String} email
-	 *
-	 * @returns {element}
-	 */
-	buildEmailLink(email) {
-		const link = dom.buildNew('', 'a');
-		link.href = 'mailto:' + email;
-		link.textContent = email;
-		return link;
-	},
 	/**
 	 * Removes an element from the DOM
 	 *

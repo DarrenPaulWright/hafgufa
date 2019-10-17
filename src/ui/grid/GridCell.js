@@ -5,6 +5,7 @@ import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../utility/domConstants
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
+import Hyperlink from '../elements/Hyperlink';
 import Icon from '../elements/Icon';
 import Image from '../elements/Image';
 import Toolbar from '../layout/Toolbar';
@@ -27,11 +28,13 @@ const CURRENT_CONTENT = Symbol();
 const CHECKBOX = Symbol();
 const ICON_CONTROL = Symbol();
 const IMAGE_CONTROL = Symbol();
+const LINK_CONTROL = Symbol();
 
 const checkOverflow = Symbol();
 const addHtml = Symbol();
 const addImage = Symbol();
 const addIcon = Symbol();
+const addLink = Symbol();
 const addCheckbox = Symbol();
 const addActionButtons = Symbol();
 const showTooltip = Symbol();
@@ -171,6 +174,26 @@ export default class GridCell extends Control {
 	}
 
 	/**
+	 * Add a hyperlink to the cell.
+	 * @function addLink
+	 */
+	[addLink](url) {
+		const self = this;
+
+		if (!self[LINK_CONTROL]) {
+			self.element().textContent = '';
+
+			self[LINK_CONTROL] = new Hyperlink({
+				container: self
+			});
+		}
+
+		self[LINK_CONTROL].url(url);
+
+		self[CURRENT_CONTENT] = url;
+	}
+
+	/**
 	 * Add a checkbox to the cell.
 	 * @function addCheckbox
 	 */
@@ -306,6 +329,10 @@ Object.assign(GridCell.prototype, {
 				self[CHECKBOX].remove();
 				self[CHECKBOX] = null;
 			}
+			if (self[LINK_CONTROL]) {
+				self[LINK_CONTROL].remove();
+				self[LINK_CONTROL] = null;
+			}
 			self[CURRENT_CONTENT] = null;
 			self.element().textContent = '';
 		}
@@ -330,11 +357,8 @@ Object.assign(GridCell.prototype, {
 					break;
 
 				case COLUMN_TYPES.EMAIL:
-					self[addHtml](dom.buildEmailLink(content.text));
-					break;
-
 				case COLUMN_TYPES.LINK:
-					self[addHtml](dom.buildLink(content.text));
+					self[addLink](content.text);
 					break;
 
 				case COLUMN_TYPES.NUMBER:

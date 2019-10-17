@@ -90,7 +90,8 @@ describe('GridCell', () => {
 			output: {
 				tagName: 'A',
 				attrs: {
-					href: 'mailto:test@example.com'
+					href: 'mailto:test@example.com',
+					target: ''
 				},
 				content: 'test@example.com'
 			},
