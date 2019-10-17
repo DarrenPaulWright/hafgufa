@@ -354,16 +354,8 @@ export default class TestUtil {
 	}
 
 	hasClass(element, className) {
-		const BASE_PREFIX = '(\\s|^)';
-		const BASE_SUFFIX = '(\\s|$)';
-
 		if (element) {
-			if (element.classList) {
-				return element.classList.contains(className);
-			}
-			else {
-				return new RegExp(BASE_PREFIX + className + BASE_SUFFIX).test(element.className);
-			}
+			return element.classList.contains(className);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import { event, select } from 'd3';
-import { CssSize, enforce, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
+import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
 import dom from '../utility/dom';
 import replaceElement from '../utility/dom/replaceElement';
 import {
@@ -7,7 +7,6 @@ import {
 	BOTTOM,
 	CLICK_EVENT,
 	DOCUMENT,
-	EMPTY_STRING,
 	HEIGHT,
 	LEFT,
 	LINE_HEIGHT,
@@ -205,7 +204,7 @@ Object.assign(Control.prototype, {
 			const self = this;
 			const _self = _(self);
 
-			if (container && _self.element && container.contains(_self.element)) {
+			if (container && container.contains(_self.element)) {
 				container.removeChild(_self.element);
 				if (container[CONTROL_PROP]) {
 					container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
@@ -221,7 +220,7 @@ Object.assign(Control.prototype, {
 			const self = this;
 			const _self = _(self);
 
-			if (container && _self.element) {
+			if (container) {
 				if (_self.append) {
 					if (isElement(_self.append)) {
 						container.insertBefore(_self.element, _self.append.nextSibling);
@@ -397,13 +396,11 @@ Object.assign(Control.prototype, {
 	 */
 	css: method.keyValue({
 		set(property, value) {
-			const _self = _(this);
-
 			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 				value = value + PIXELS;
 			}
 
-			_self.element.style[property] = value;
+			_(this).element.style[property] = value;
 		},
 		get(property) {
 			return _(this).element.style[property];
@@ -422,26 +419,7 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	addClass(className) {
-		const _self = _(this);
-
-		if (_self.element && isString(className) && className !== EMPTY_STRING) {
-			let classArray = className.trim().split(SPACE);
-
-			for (let index = 0; index < classArray.length; index++) {
-				if (_self.element.classList) {
-					_self.element.classList.add(classArray[index]);
-				}
-				else {
-					if (_self.element.className.baseVal) {
-						_self.element.className.baseVal += SPACE + classArray[index];
-					}
-					else {
-						_self.element.className += SPACE + classArray[index];
-					}
-				}
-			}
-		}
-
+		this.classes(className, true);
 		return this;
 	},
 
@@ -457,39 +435,7 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	removeClass(className) {
-		const _self = _(this);
-		const BASE_PREFIX = '(^|\\b)';
-		const BASE_SUFFIX = '(\\b|$)';
-		const FLAGS = 'gi';
-		let classArray;
-
-		if (_self.element && isString(className) && className !== EMPTY_STRING) {
-			classArray = className.trim().split(SPACE);
-
-			for (let index = 0; index < classArray.length; index++) {
-				if (_self.element.classList) {
-					_self.element.classList.remove(classArray[index]);
-				}
-				else {
-					if (_self.element.className.baseVal !== undefined) {
-						_self.element.className.baseVal = _self
-							.element
-							.className
-							.baseVal
-							.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-								.join('|') + BASE_SUFFIX, FLAGS), SPACE);
-					}
-					else {
-						_self.element.className = _self
-							.element
-							.className
-							.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-								.join('|') + BASE_SUFFIX, FLAGS), SPACE);
-					}
-				}
-			}
-		}
-
+		this.classes(className, false);
 		return this;
 	},
 
@@ -509,11 +455,16 @@ Object.assign(Control.prototype, {
 		const _self = _(this);
 
 		if (arguments.length) {
-			if (enforce.boolean(performAdd, true)) {
-				this.addClass(classes);
-			}
-			else {
-				this.removeClass(classes);
+			if (isString(classes)) {
+				classes = classes.trim();
+
+				if (classes) {
+					const action = enforceBoolean(performAdd, true) ? 'add' : 'remove';
+
+					classes.split(SPACE).forEach((name) => {
+						_self.element.classList[action](name);
+					});
+				}
 			}
 
 			return this;
