@@ -300,7 +300,7 @@ Object.assign(DrawerMenu.prototype, {
 				return self;
 			}
 
-			return self[MENU_BUTTON].isFocused() || (self[DRAWER] ? dom.hasActive(self[DRAWER]) : false);
+			return self[MENU_BUTTON].isFocused() || (self[DRAWER] ? self[DRAWER].isFocused() : false);
 		}
 	}
 });

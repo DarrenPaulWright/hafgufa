@@ -214,34 +214,6 @@ const dom = {
 		return element;
 	},
 	/**
-	 * Determines if an element has focus
-	 *
-	 * @method isActive
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 *
-	 * @returns {boolean}
-	 */
-	isActive(element) {
-		return isElement(element) ? element === DOCUMENT.activeElement : false;
-	},
-	/**
-	 * Determines if an element contains a focused element
-	 *
-	 * @method hasActive
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 *
-	 * @returns {boolean}
-	 */
-	hasActive(element) {
-		return isElement(element) ? element.contains(DOCUMENT.activeElement) : false;
-	},
-	/**
 	 * Prepares a string to be used as a valid element id.
 	 *
 	 * @method prepDomIdString

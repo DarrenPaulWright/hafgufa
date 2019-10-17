@@ -220,7 +220,7 @@ Object.assign(SearchBar.prototype, {
 	 * @returns {Boolean}
 	 */
 	isFocused() {
-		return dom.hasActive(this[SEARCH_BAR]) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;
+		return (this[SEARCH_BAR] ? this[SEARCH_BAR].isFocused() : false) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;
 	},
 
 	breakOnSpaces: method.boolean({

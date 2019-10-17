@@ -6,6 +6,7 @@ import dom from '../../utility/dom';
 import replaceElement from '../../utility/dom/replaceElement';
 import {
 	BLUR_EVENT,
+	DOCUMENT,
 	FOCUS_EVENT,
 	INPUT_TYPE_PASSWORD,
 	INPUT_TYPE_TEXT,
@@ -539,7 +540,7 @@ Object.assign(TextInput.prototype, {
 			return self;
 		}
 
-		return dom.isActive(self[INPUT].element());
+		return self[INPUT].element() === DOCUMENT.activeElement;
 	},
 
 	/**

@@ -21,6 +21,7 @@ import {
 	BOX_SIZING,
 	CONTENT_BOX,
 	DISPLAY,
+	DOCUMENT,
 	FONT_SIZE,
 	HEIGHT,
 	HIDDEN,
@@ -147,7 +148,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			}
 		};
 		settings.FocusMixin.getFocus = () => {
-			return self.isFocusable() ? dom.hasActive(self.element()) : false;
+			return self.isFocusable() ? self.element().contains(DOCUMENT.activeElement) : false;
 		};
 
 		super(settings);
