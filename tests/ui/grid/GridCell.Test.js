@@ -80,7 +80,13 @@ describe('GridCell', () => {
 			content: {
 				text: 'test text'
 			},
-			output: 'test text',
+			output: {
+				tagName: 'SPAN',
+				attrs: {
+					id: 'gridSpan'
+				},
+				content: 'test text'
+			},
 			textAlign: 'NONE'
 		}, {
 			type: 'EMAIL',
@@ -91,7 +97,8 @@ describe('GridCell', () => {
 				tagName: 'A',
 				attrs: {
 					href: 'mailto:test@example.com',
-					target: ''
+					target: '',
+					id: 'gridHyperlink'
 				},
 				content: 'test@example.com'
 			},
@@ -105,7 +112,8 @@ describe('GridCell', () => {
 				tagName: 'A',
 				attrs: {
 					href: 'http://www.example.com',
-					target: '_blank'
+					target: '_blank',
+					id: 'gridHyperlink'
 				},
 				content: 'http://www.example.com'
 			},
@@ -115,28 +123,52 @@ describe('GridCell', () => {
 			content: {
 				text: '23'
 			},
-			output: '23',
+			output: {
+				tagName: 'SPAN',
+				attrs: {
+					id: 'gridSpan'
+				},
+				content: '23'
+			},
 			textAlign: 'RIGHT'
 		}, {
 			type: 'DATE',
 			content: {
 				text: '11/30/1996'
 			},
-			output: '11/30/1996',
+			output: {
+				tagName: 'SPAN',
+				attrs: {
+					id: 'gridSpan'
+				},
+				content: '11/30/1996'
+			},
 			textAlign: 'CENTER'
 		}, {
 			type: 'DATE_TIME',
 			content: {
 				text: '11/30/1996 11:30AM'
 			},
-			output: '11/30/1996 11:30AM',
+			output: {
+				tagName: 'SPAN',
+				attrs: {
+					id: 'gridSpan'
+				},
+				content: '11/30/1996 11:30AM'
+			},
 			textAlign: 'CENTER'
 		}, {
 			type: 'TIME',
 			content: {
 				text: '11:32AM'
 			},
-			output: '11:32AM',
+			output: {
+				tagName: 'SPAN',
+				attrs: {
+					id: 'gridSpan'
+				},
+				content: '11:32AM'
+			},
 			textAlign: 'CENTER'
 		}, {
 			type: 'IMAGE',
@@ -147,7 +179,8 @@ describe('GridCell', () => {
 				tagName: 'IMG',
 				attrs: {
 					src: 'test.png',
-					style: 'object-fit: contain; opacity: 1;'
+					style: 'object-fit: contain; opacity: 1;',
+					id: 'gridImage'
 				},
 				content: ''
 			},
@@ -160,7 +193,8 @@ describe('GridCell', () => {
 			output: {
 				tagName: 'I',
 				attrs: {
-					class: 'icon icon-lg fa-circle'
+					class: 'icon icon-lg fa-circle',
+					id: 'gridIcon'
 				},
 				content: ''
 			},
@@ -175,7 +209,8 @@ describe('GridCell', () => {
 			output: {
 				tagName: 'DIV',
 				attrs: {
-					class: 'toolbar clearfix'
+					class: 'toolbar clearfix',
+					id: 'gridToolbar'
 				},
 				content: {
 					tagName: 'BUTTON',
@@ -200,7 +235,8 @@ describe('GridCell', () => {
 			output: {
 				tagName: 'LABEL',
 				attrs: {
-					class: 'checkbox'
+					class: 'checkbox',
+					id: 'gridCheckbox'
 				},
 				content: {
 					tagName: 'INPUT',

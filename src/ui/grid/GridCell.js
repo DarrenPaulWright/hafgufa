@@ -1,13 +1,13 @@
 import { repeat } from 'object-agent';
-import { applySettings, DockPoint, isElement, method } from 'type-enforcer';
-import dom from '../../utility/dom';
+import { applySettings, DockPoint, method } from 'type-enforcer';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../utility/domConstants';
-import Control from '../Control';
+import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import Hyperlink from '../elements/Hyperlink';
 import Icon from '../elements/Icon';
 import Image from '../elements/Image';
+import Span from '../elements/Span';
 import Toolbar from '../layout/Toolbar';
 import Tooltip from '../layout/Tooltip';
 import './GridCell.less';
@@ -21,21 +21,11 @@ const CELL_CLASS = 'grid-cell';
 const NO_WRAP_CLASS = 'can-wrap';
 const NO_PADDING_CLASS = 'no-padding';
 
-const TOOLBAR = Symbol();
 const TOOLTIP_CONTROL = Symbol();
 const DISPLAY_TYPE = Symbol();
-const CURRENT_CONTENT = Symbol();
-const CHECKBOX = Symbol();
-const ICON_CONTROL = Symbol();
-const IMAGE_CONTROL = Symbol();
-const LINK_CONTROL = Symbol();
 
 const checkOverflow = Symbol();
-const addHtml = Symbol();
-const addImage = Symbol();
-const addIcon = Symbol();
-const addLink = Symbol();
-const addCheckbox = Symbol();
+const getControl = Symbol();
 const addActionButtons = Symbol();
 const showTooltip = Symbol();
 const removeTooltip = Symbol();
@@ -80,11 +70,11 @@ export default class GridCell extends Control {
 	 */
 	[checkOverflow]() {
 		const self = this;
-		let displayText = self[CURRENT_CONTENT];
+		let displayText = self.element().textContent;
 
 		if (self[DISPLAY_TYPE] === DISPLAY_TYPES.TEXT &&
 			self.element() &&
-			dom.get.scrollWidth(self) > self.borderWidth()) {
+			self.element().scrollWidth > self.borderWidth()) {
 
 			if (displayText.length > MAX_TOOLTIP_LENGTH) {
 				displayText = displayText.substring(0, MAX_TOOLTIP_LENGTH) + ELLIPSIS;
@@ -97,121 +87,19 @@ export default class GridCell extends Control {
 		self.tooltip(displayText);
 	}
 
-	/**
-	 * Add HTML content to the cell.
-	 * @function addHtml
-	 */
-	[addHtml](displayText) {
+	[getControl](id, control, settings = {}) {
 		const self = this;
 
-		if (isElement(displayText)) {
-			self.element().textContent = '';
-			dom.appendTo(self, displayText);
-		}
-		else {
-			dom.content(self, displayText);
-		}
-
-		self[CURRENT_CONTENT] = displayText;
-	}
-
-	/**
-	 * Add an img element to the cell.
-	 * @function addImage
-	 */
-	[addImage](content) {
-		const self = this;
-
-		self.element().textContent = '';
-
-		if (!self[IMAGE_CONTROL]) {
-			self[IMAGE_CONTROL] = new Image({
-				container: self
-			});
-		}
-		else if (!content || !content.src) {
-			self[IMAGE_CONTROL].remove();
-			self[IMAGE_CONTROL] = null;
-		}
-
-		if (self[IMAGE_CONTROL]) {
-			self[IMAGE_CONTROL]
-				.source(content.src)
-				.height(content.height)
-				.width(content.width)
-				.margin(content.margin);
-		}
-
-		self[CURRENT_CONTENT] = content.src;
-	}
-
-	/**
-	 * Add an icon to the cell.
-	 * @function addIcon
-	 */
-	[addIcon](icon) {
-		const self = this;
-
-		if (!self[ICON_CONTROL]) {
-			if (icon) {
-				self.element().textContent = '';
-
-				self[ICON_CONTROL] = new Icon({
-					container: self
-				});
-			}
-		}
-		else if (!icon) {
-			self[ICON_CONTROL].remove();
-			self[ICON_CONTROL] = null;
-		}
-
-		if (self[ICON_CONTROL]) {
-			self[ICON_CONTROL].icon(icon);
-		}
-
-		self[CURRENT_CONTENT] = icon;
-	}
-
-	/**
-	 * Add a hyperlink to the cell.
-	 * @function addLink
-	 */
-	[addLink](url) {
-		const self = this;
-
-		if (!self[LINK_CONTROL]) {
-			self.element().textContent = '';
-
-			self[LINK_CONTROL] = new Hyperlink({
-				container: self
-			});
-		}
-
-		self[LINK_CONTROL].url(url);
-
-		self[CURRENT_CONTENT] = url;
-	}
-
-	/**
-	 * Add a checkbox to the cell.
-	 * @function addCheckbox
-	 */
-	[addCheckbox]() {
-		const self = this;
-
-		if (!self[CHECKBOX]) {
-			self[CHECKBOX] = new CheckBox({
+		if (!self[CHILD_CONTROLS].get(id)) {
+			self[CHILD_CONTROLS].remove();
+			new control({
 				container: self,
-				stopPropagation: true,
-				onChange(isChecked) {
-					if (self.onSelect()) {
-						self.onSelect()(isChecked);
-					}
-				}
+				id: id,
+				...settings
 			});
 		}
-		self[CHECKBOX].isChecked(self.isSelected(), true);
+
+		return self[CHILD_CONTROLS].get(id);
 	}
 
 	/**
@@ -221,47 +109,42 @@ export default class GridCell extends Control {
 	[addActionButtons](content) {
 		const self = this;
 
-		if (content.columnButtons) {
-			if (!self[TOOLBAR]) {
-				self[TOOLBAR] = new Toolbar({
-					container: self.element(),
-					stopPropagation: true,
-					content: content.columnButtons.map((settings) => {
-						return {
-							...settings,
-							classes: settings.classes || 'icon-button',
-							onClick() {
-								if (settings.onClick) {
-									settings.onClick(self.rowData());
-								}
-								if (self.onSelect()) {
-									self.onSelect()(true);
-								}
-							}
-						};
-					})
-				});
-			}
-
-			repeat(content.columnButtons.length, (buttonIndex) => {
-				const button = self[TOOLBAR].getButtonAtIndex(buttonIndex);
-				const buttonData = content.columnButtons[buttonIndex];
-
-				if (buttonData.disabled || !self.isEnabled() ||
-					(content.buttons && content.buttons[buttonIndex] && content.buttons[buttonIndex].disabled)) {
-
-					button.isEnabled(false);
-
-					if (buttonData.disabled && buttonData.disabled.title) {
-						button.label(buttonData.disabled.title);
+		self[getControl]('gridToolbar', Toolbar, {
+			stopPropagation: true,
+			content: content.columnButtons.map((settings) => {
+				return {
+					classes: 'icon-button',
+					...settings,
+					onClick() {
+						if (settings.onClick) {
+							settings.onClick(self.rowData());
+						}
+						if (self.onSelect()) {
+							self.onSelect()(true);
+						}
 					}
+				};
+			})
+		});
+
+		repeat(content.columnButtons.length, (buttonIndex) => {
+			const button = self[CHILD_CONTROLS].get('gridToolbar').getButtonAtIndex(buttonIndex);
+			const buttonData = content.columnButtons[buttonIndex];
+
+			if (buttonData.disabled || !self.isEnabled() ||
+				(content.buttons && content.buttons[buttonIndex] && content.buttons[buttonIndex].disabled)) {
+
+				button.isEnabled(false);
+
+				if (buttonData.disabled && buttonData.disabled.title) {
+					button.label(buttonData.disabled.title);
 				}
-				else {
-					button.isEnabled(true);
-					button.label(null);
-				}
-			});
-		}
+			}
+			else {
+				button.isEnabled(true);
+				button.label(null);
+			}
+		});
 	}
 
 	/**
@@ -321,20 +204,7 @@ Object.assign(GridCell.prototype, {
 			const self = this;
 
 			self.resetClasses();
-			if (self[TOOLBAR]) {
-				self[TOOLBAR].remove();
-				self[TOOLBAR] = null;
-			}
-			if (self[CHECKBOX]) {
-				self[CHECKBOX].remove();
-				self[CHECKBOX] = null;
-			}
-			if (self[LINK_CONTROL]) {
-				self[LINK_CONTROL].remove();
-				self[LINK_CONTROL] = null;
-			}
-			self[CURRENT_CONTENT] = null;
-			self.element().textContent = '';
+			self[CHILD_CONTROLS].remove();
 		}
 	}),
 
@@ -353,23 +223,27 @@ Object.assign(GridCell.prototype, {
 
 			switch (self.dataType()) {
 				case COLUMN_TYPES.TEXT:
-					self[addHtml](content.text || '');
+					self[getControl]('gridSpan', Span)
+						.text(content.text || '');
 					break;
 
 				case COLUMN_TYPES.EMAIL:
 				case COLUMN_TYPES.LINK:
-					self[addLink](content.text);
+					self[getControl]('gridHyperlink', Hyperlink)
+						.url(content.text);
 					break;
 
 				case COLUMN_TYPES.NUMBER:
-					self[addHtml](content.text);
+					self[getControl]('gridSpan', Span)
+						.text(content.text || '');
 					align = CELL_ALIGNMENT.RIGHT;
 					break;
 
 				case COLUMN_TYPES.DATE:
 				case COLUMN_TYPES.DATE_TIME:
 				case COLUMN_TYPES.TIME:
-					self[addHtml](content.text);
+					self[getControl]('gridSpan', Span)
+						.text(content.text || '');
 					align = CELL_ALIGNMENT.CENTER;
 					break;
 
@@ -377,16 +251,23 @@ Object.assign(GridCell.prototype, {
 					self[DISPLAY_TYPE] = DISPLAY_TYPES.IMAGE;
 
 					if (content.src) {
-						self[addImage](content);
+						self[getControl]('gridImage', Image)
+							.isDisplayed(Boolean(content && content.src))
+							.source(content.src)
+							.height(content.height)
+							.width(content.width)
+							.margin(content.margin);
 					}
 					else {
-						self[addIcon](content.icon);
+						self[getControl]('gridIcon', Icon)
+							.icon(content.icon);
 					}
 					align = CELL_ALIGNMENT.CENTER;
 					break;
 
 				case COLUMN_TYPES.ACTIONS:
 					self[DISPLAY_TYPE] = DISPLAY_TYPES.BUTTONS;
+					content.columnButtons = content.columnButtons || [];
 
 					self[addActionButtons](content);
 					break;
@@ -394,7 +275,14 @@ Object.assign(GridCell.prototype, {
 				case COLUMN_TYPES.CHECKBOX:
 					self[DISPLAY_TYPE] = DISPLAY_TYPES.CHECKBOX;
 
-					self[addCheckbox]();
+					self[getControl]('gridCheckbox', CheckBox, {
+						stopPropagation: true,
+						onChange(isChecked) {
+							if (self.onSelect()) {
+								self.onSelect()(isChecked);
+							}
+						}
+					}).isChecked(self.isSelected(), true);
 					break;
 			}
 
@@ -428,8 +316,8 @@ Object.assign(GridCell.prototype, {
 		set(isSelected) {
 			const self = this;
 
-			if (self[CHECKBOX]) {
-				self[CHECKBOX].isChecked(isSelected, true);
+			if (self[CHILD_CONTROLS].get('gridCheckbox')) {
+				self[CHILD_CONTROLS].get('gridCheckbox').isChecked(isSelected, true);
 			}
 		}
 	}),
