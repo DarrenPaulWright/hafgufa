@@ -1,6 +1,6 @@
 import { select } from 'd3';
 import { clone } from 'object-agent';
-import { castArray, enforce, isElement, isString } from 'type-enforcer';
+import { castArray, isElement, isString } from 'type-enforcer';
 import {
 	BORDER_BOTTOM_WIDTH,
 	BORDER_LEFT_WIDTH,
@@ -69,12 +69,16 @@ const dom = {
 		if (element && element.includes(SVG_SEPARATOR)) {
 			element = element.split(SVG_SEPARATOR);
 			newElement = DOCUMENT.createElementNS('http://www.w3.org/2000/' + element[0], element[1]);
-			dom.addClass(newElement, className);
 
 		}
 		else {
 			newElement = DOCUMENT.createElement(element || 'div');
-			dom.addClass(newElement, className);
+		}
+
+		if (className) {
+			className.trim().split(SPACE).forEach((name) => {
+				newElement.classList.add(name);
+			});
 		}
 
 		return newElement;
@@ -259,110 +263,6 @@ const dom = {
 		link.href = 'mailto:' + email;
 		link.textContent = email;
 		return link;
-	},
-	/**
-	 * Add a class to an element
-	 *
-	 * @method addClass
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 * @arg {String} className
-	 *
-	 * @returns {dom}
-	 */
-	addClass(element, className) {
-		element = dom.getElement(element);
-
-		if (element && isString(className) && className !== EMPTY_STRING) {
-			let classArray = className.trim().split(SPACE);
-
-			for (let index = 0; index < classArray.length; index++) {
-				if (element.classList) {
-					element.classList.add(classArray[index]);
-				}
-				else {
-					if (element.className.baseVal !== undefined) {
-						element.className.baseVal += SPACE + classArray[index];
-					}
-					else {
-						element.className += SPACE + classArray[index];
-					}
-				}
-			}
-		}
-
-		return dom;
-	},
-	/**
-	 * Remove a class from an element
-	 *
-	 * @method removeClass
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 * @arg {String} className
-	 *
-	 * @returns {dom}
-	 */
-	removeClass(element, className) {
-		const BASE_PREFIX = '(^|\\b)';
-		const BASE_SUFFIX = '(\\b|$)';
-		const FLAGS = 'gi';
-		let classArray;
-
-		element = dom.getElement(element);
-
-		if (element && isString(className) && className !== EMPTY_STRING) {
-			classArray = className.trim().split(SPACE);
-			for (let index = 0; index < classArray.length; index++) {
-				if (element.classList) {
-					element.classList.remove(classArray[index]);
-				}
-				else {
-					if (element.className.baseVal !== undefined) {
-						element.className.baseVal = element.className.baseVal.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-							.join('|') + BASE_SUFFIX, FLAGS), SPACE);
-					}
-					else {
-						element.className = element.className.replace(new RegExp(BASE_PREFIX + classArray[index].split(SPACE)
-							.join('|') + BASE_SUFFIX, FLAGS), SPACE);
-					}
-				}
-			}
-		}
-
-		return dom;
-	},
-	/**
-	 * Add or remove classes from an element
-	 *
-	 * @method classes
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {Object}  element
-	 * @arg {String}  className
-	 * @arg {Boolean} [performAdd=true] - True will add the provided classes to the element, false will remove the
-	 *     classes.
-	 */
-	classes(element, className, performAdd) {
-		element = dom.getElement(element);
-
-		if (element) {
-			if (arguments.length > 1) {
-				if (enforce.boolean(performAdd, true)) {
-					dom.addClass(element, className);
-				}
-				else {
-					dom.removeClass(element, className);
-				}
-			}
-
-			return element.classList ? element.classList.value : element.className.baseVal || element.className;
-		}
 	},
 	/**
 	 * Removes an element from the DOM

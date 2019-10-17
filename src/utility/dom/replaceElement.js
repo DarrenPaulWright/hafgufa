@@ -12,7 +12,11 @@ export default (from, to) => {
 		}
 	});
 
-	dom.classes(to, dom.classes(from));
+	if (from.classList.value) {
+		from.classList.forEach((name) => {
+			to.classList.add(name);
+		});
+	}
 
 	dom.applyD3Events(to, dom.getD3Events(from));
 
