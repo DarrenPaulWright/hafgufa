@@ -152,15 +152,6 @@ describe('dom', () => {
 		});
 	});
 
-	describe('.prepDomIdString', () => {
-		it('should strip characters that can\'t be in an elements id', () => {
-			const idString = 'TestId1234567890 -=.,/\;:"_+';
-			const preppedIdString = 'TestId1234567890-.:_';
-
-			assert.equal(dom.prepDomIdString(idString), preppedIdString);
-		});
-	});
-
 	describe('.addClass', () => {
 		it('should do nothing if the second argument is not provided', () => {
 			const div = dom.appendNewTo(testUtil.container);

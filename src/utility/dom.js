@@ -173,21 +173,6 @@ const dom = {
 		return element;
 	},
 	/**
-	 * Prepares a string to be used as a valid element id.
-	 *
-	 * @method prepDomIdString
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {String} input
-	 *
-	 * @returns {string}
-	 */
-	prepDomIdString(input) {
-		return (isString(input)) ? input.replace(SPACE, EMPTY_STRING)
-			.replace(/[^A-Za-z0-9_:\.-]/g, EMPTY_STRING) : EMPTY_STRING;
-	},
-	/**
 	 * Adds string content to an element. If the string has HTML in it, then innerHTML is used.
 	 *
 	 * @method content
