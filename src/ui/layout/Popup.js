@@ -475,12 +475,12 @@ Object.assign(Popup.prototype, {
 				select(BODY).on(MOUSE_MOVE_EVENT, null);
 			}
 		},
-		set(newValue) {
+		set(anchor) {
 			const self = this;
 
-			if (isElement(newValue)) {
-				self.css(Z_INDEX, dom.css(newValue, Z_INDEX) + 1);
-				select(newValue)
+			if (isElement(anchor)) {
+				self.css(Z_INDEX, (anchor.style[Z_INDEX] || 0) + 1);
+				select(anchor)
 					.on(MOUSE_ENTER_EVENT, () => {
 						self[onMouseEnter]();
 					})
@@ -488,7 +488,7 @@ Object.assign(Popup.prototype, {
 						self[onMouseLeave]();
 					});
 			}
-			else if (newValue === Popup.MOUSE) {
+			else if (anchor === Popup.MOUSE) {
 				select(BODY).on(MOUSE_MOVE_EVENT, () => self[onMouseMove]());
 			}
 		},

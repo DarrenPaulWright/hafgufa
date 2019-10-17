@@ -1,6 +1,5 @@
 import { delay } from 'async-agent';
 import { IS_DESKTOP, IS_TABLET } from '../../utility/browser';
-import dom from '../../utility/dom';
 import { BODY, FONT_SIZE, HEAD } from '../../utility/domConstants';
 import windowResize from '../../utility/windowResize';
 import IsWorking from '../display/IsWorking';
@@ -120,7 +119,7 @@ const setZoom = () => {
 		}
 	};
 
-	dom.css('html', FONT_SIZE, getBodyFontSize());
+	document.documentElement.style[FONT_SIZE] = getBodyFontSize();
 };
 
 const ENV = Symbol();
@@ -137,10 +136,10 @@ class Theme {
 		self[PATH] = '/styles/[name].[env].min.css';
 
 		if (!IS_DESKTOP) {
-			dom.attr(dom.appendNewTo(HEAD, '', 'meta'), {
-				name: 'viewport',
-				content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'
-			});
+			const tag = document.createElement('meta');
+			HEAD.appendChild(tag);
+			tag.setAttribute('name', 'viewport');
+			tag.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
 		}
 
 		window.addEventListener('orientationchange', setZoom);

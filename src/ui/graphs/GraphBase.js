@@ -57,8 +57,8 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 				renderHeight -= self.getHeading().height();
 			}
 
-			dom.attr(self.svgElement(), WIDTH, renderWidth + PIXELS);
-			dom.attr(self.svgElement(), HEIGHT, renderHeight + PIXELS);
+			self.svgElement().setAttribute(WIDTH, renderWidth + PIXELS);
+			self.svgElement().setAttribute(HEIGHT, renderHeight + PIXELS);
 
 			if (self[LEGEND]) {
 				legendWidth = self[LEGEND].width();

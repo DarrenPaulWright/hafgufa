@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import { forOwn } from 'object-agent';
 import { INITIAL, isElement } from 'type-enforcer';
 import { ABSOLUTE, BODY, BORDER_BOX, dom } from '../../src';
 import TestUtil from '../TestUtil';
@@ -283,19 +284,23 @@ describe('dom', () => {
 	});
 
 	describe('.get', () => {
-		const testWrapper = dom.appendNewTo(BODY);
-		const testElement = dom.appendNewTo(testWrapper);
+		const testWrapper = dom.buildNew();
+		dom.appendTo(BODY, testWrapper);
+		const testElement = dom.buildNew();
+		dom.appendTo(testWrapper, testElement);
 
-		dom.css(BODY, {
-			padding: '0'
-		});
-		dom.css(testWrapper, {
+		BODY.style.padding = '0';
+
+		forOwn({
 			position: ABSOLUTE,
 			'box-sizing': BORDER_BOX,
 			top: '300px',
 			left: '400px'
+		}, (value, key) => {
+			testWrapper.style[key] = value;
 		});
-		dom.css(testElement, {
+
+		forOwn({
 			position: ABSOLUTE,
 			'box-sizing': BORDER_BOX,
 			height: '100px',
@@ -317,6 +322,8 @@ describe('dom', () => {
 			'line-height': '67px',
 			top: '300px',
 			left: '400px'
+		}, (value, key) => {
+			testElement.style[key] = value;
 		});
 
 		beforeEach(() => {
@@ -324,9 +331,7 @@ describe('dom', () => {
 		});
 
 		afterEach(() => {
-			dom.css(BODY, {
-				padding: INITIAL
-			});
+			BODY.style.padding = INITIAL;
 		});
 
 		describe('.width', () => {

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { dom, Image } from '../../../src';
+import { Image } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -16,7 +16,7 @@ describe('Image', () => {
 				source: 'something'
 			});
 
-			assert.equal(dom.attr(testUtil.control.element(), 'src'), 'something');
+			assert.equal(testUtil.control.element().getAttribute('src'), 'something');
 		});
 
 		it('should set the src attribute of the img  to "#" when set to an empty string', () => {
@@ -27,7 +27,7 @@ describe('Image', () => {
 
 			testUtil.control.source('');
 
-			assert.equal(dom.attr(testUtil.control.element(), 'src'), ' ');
+			assert.equal(testUtil.control.element().getAttribute('src'), ' ');
 		});
 	});
 });

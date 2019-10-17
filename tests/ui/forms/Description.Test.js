@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer';
-import { Description, dom, TEXT_ALIGN, WIDTH } from '../../../src';
+import { Description, TEXT_ALIGN, WIDTH } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
@@ -37,7 +37,7 @@ describe('Description', () => {
 				description: 'sample'
 			});
 
-			assert.equal(dom.css(testUtil.first('.form-control > div:first-of-type'), WIDTH), '100px');
+			assert.equal(testUtil.first('.form-control > div:first-of-type').style[WIDTH], '100px');
 		});
 	});
 
@@ -55,7 +55,7 @@ describe('Description', () => {
 				align: 'center'
 			});
 
-			assert.equal(dom.css(testUtil.first('.description > div'), TEXT_ALIGN), 'center');
+			assert.equal(testUtil.first('.description > div').style[TEXT_ALIGN], 'center');
 		});
 	});
 

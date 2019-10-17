@@ -1,68 +1,27 @@
 import { select } from 'd3';
-import { clone, forOwn } from 'object-agent';
-import { castArray, enforce, isElement, isObject, isString, PIXELS } from 'type-enforcer';
+import { clone } from 'object-agent';
+import { castArray, enforce, isElement, isString } from 'type-enforcer';
 import {
 	BORDER_BOTTOM_WIDTH,
 	BORDER_LEFT_WIDTH,
 	BORDER_RIGHT_WIDTH,
 	BORDER_TOP_WIDTH,
-	BOTTOM,
 	DOCUMENT,
 	EMPTY_STRING,
-	HEIGHT,
-	LEFT,
 	LINE_HEIGHT,
-	MARGIN,
 	MARGIN_BOTTOM,
 	MARGIN_LEFT,
 	MARGIN_RIGHT,
 	MARGIN_TOP,
-	MAX_HEIGHT,
-	MAX_WIDTH,
-	MIN_HEIGHT,
-	MIN_WIDTH,
-	PADDING,
 	PADDING_BOTTOM,
 	PADDING_LEFT,
 	PADDING_RIGHT,
 	PADDING_TOP,
-	RIGHT,
 	SPACE,
-	TOP,
-	WIDTH,
 	WINDOW
 } from './domConstants';
 
 const SVG_SEPARATOR = ':';
-
-const cssPropertiesToApplyAttrWhenSvg = [
-	HEIGHT,
-	WIDTH
-];
-
-const cssPropertiesToParseAsInt = [
-	MIN_HEIGHT,
-	HEIGHT,
-	MAX_HEIGHT,
-	MIN_WIDTH,
-	WIDTH,
-	MAX_WIDTH,
-	TOP,
-	RIGHT,
-	BOTTOM,
-	LEFT,
-	LINE_HEIGHT,
-	MARGIN,
-	MARGIN_TOP,
-	MARGIN_RIGHT,
-	MARGIN_BOTTOM,
-	MARGIN_LEFT,
-	PADDING,
-	PADDING_TOP,
-	PADDING_RIGHT,
-	PADDING_BOTTOM,
-	PADDING_LEFT
-];
 
 const parseStyle = (element, styleName) => parseFloat(WINDOW.getComputedStyle(element)
 	.getPropertyValue(styleName) || 0);
@@ -435,85 +394,6 @@ const dom = {
 
 			return element.classList ? element.classList.value : element.className.baseVal || element.className;
 		}
-	},
-	/**
-	 * Get or set a css style on a DOM element
-	 *
-	 * @method css
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 * @arg {String} property - The style property to get or set
-	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
-	 *     the computed style.
-	 *
-	 * @returns {dom}
-	 */
-	css(element, property, value) {
-		const setProperty = (property, value) => {
-			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
-				value = value + PIXELS;
-			}
-
-			if (cssPropertiesToApplyAttrWhenSvg.includes(property) && element instanceof SVGElement) {
-				dom.attr(element, property, value);
-			}
-			else {
-				element.style[property] = value;
-			}
-		};
-
-		element = dom.getElement(element);
-
-		if (element) {
-			if (isObject(property)) {
-				forOwn(property, (value, key) => {
-					setProperty(key, value);
-				});
-			}
-			else if (value !== undefined) {
-				setProperty(property, value);
-			}
-			else {
-				return element.style[property];
-			}
-		}
-
-		return dom;
-	},
-	/**
-	 * Get or set the value of an attribute of a DOM element
-	 *
-	 * @method attr
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 * @arg {string|object} attributeName - The attribute to get or set. Can be an object with multiple values
-	 * @arg {string} [attributeValue]  - If provided then set this as the value of the attribute, if not provided
-	 *     then return the current value.
-	 *
-	 * @returns {dom}
-	 */
-	attr(element, attributeName, attributeValue) {
-		element = dom.getElement(element);
-
-		if (element) {
-			if (isObject(attributeName)) {
-				forOwn(attributeName, (value, key) => {
-					element.setAttribute(key, value);
-				});
-			}
-			else if (attributeValue) {
-				return element.setAttribute(attributeName, attributeValue);
-			}
-			else {
-				return element.getAttribute(attributeName);
-			}
-		}
-
-		return dom;
 	},
 	/**
 	 * Removes an element from the DOM
