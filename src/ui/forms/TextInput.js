@@ -130,7 +130,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 			if (lineHeight) {
 				self[INPUT].height('1px');
 
-				let actualRows = Math.floor(dom.get.scrollHeight(self[INPUT]) / lineHeight);
+				let actualRows = Math.floor(self[INPUT].element().scrollHeight / lineHeight);
 				actualRows = clamp(actualRows, minRows, maxRows);
 
 				self[INPUT].height((actualRows * lineHeight) + padding);

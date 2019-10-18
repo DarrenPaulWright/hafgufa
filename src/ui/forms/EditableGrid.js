@@ -99,7 +99,7 @@ export default class EditableGrid extends FormControl {
 		self.onResize(() => {
 				if (!self.height().isAuto) {
 					self[GRID]
-						.height(self.innerHeight() - dom.get.top(self.contentContainer) - dom.get.outerHeight(self[ADD_NEW_BUTTON]))
+						.height(self.innerHeight() - self.contentContainer.element().offsetTop - dom.get.outerHeight(self[ADD_NEW_BUTTON]))
 						.resize();
 				}
 			})

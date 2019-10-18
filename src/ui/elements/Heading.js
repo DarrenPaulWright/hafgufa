@@ -3,7 +3,6 @@ import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
 import { Div } from '../../index';
-import dom from '../../utility/dom';
 import {
 	CLICK_EVENT,
 	DISPLAY,
@@ -106,7 +105,8 @@ export default class Heading extends FocusMixin(Control) {
 				else {
 					self[CONTROLS].get(TITLE_CONTAINER)
 						.width(HUNDRED_PERCENT)
-						.width(self.innerWidth() - dom.get.left(self[CONTROLS].get(TITLE_CONTAINER)) - (self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
+						.width(self.innerWidth() - self[CONTROLS].get(TITLE_CONTAINER)
+							.element().offsetLeft - (self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
 							.borderWidth() : ZERO_PIXELS))
 						.css(PADDING_RIGHT, ZERO_PIXELS);
 				}

@@ -352,11 +352,13 @@ class Popup extends Container {
 		}
 		else {
 			if (isElement(self.anchor())) {
-				anchorLeft = dom.get.left(self.anchor(), true);
-				anchorTop = dom.get.top(self.anchor(), true);
+				const boundsRect = self.anchor().getBoundingClientRect();
 
-				anchorWidth = dom.get.width(self.anchor());
-				anchorHeight = dom.get.height(self.anchor());
+				anchorLeft = boundsRect.left;
+				anchorTop = boundsRect.top;
+
+				anchorWidth = self.anchor().offsetWidth;
+				anchorHeight = self.anchor().offsetHeight;
 				anchorDockWidth = getDockPointOffsetWidth(self.anchorDockPoint(), self.anchor());
 				anchorDockHeight = getDockPointOffsetHeight(self.anchorDockPoint(), self.anchor());
 			}

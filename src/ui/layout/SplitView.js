@@ -1,6 +1,5 @@
 import { set } from 'object-agent';
 import { applySettings, CssSize, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -83,12 +82,12 @@ export default class SplitView extends IsWorkingMixin(Control) {
 	[resize]() {
 		const self = this;
 		const setStackedSize = (localSize, scrollType) => {
-			self.css(localSize, Math.ceil(dom.get[scrollType](self[FIRST_VIEW]) + dom.get[scrollType](self[SECOND_VIEW])));
+			self.css(localSize, Math.ceil(self[FIRST_VIEW].element()[scrollType] + self[SECOND_VIEW].element()[scrollType]));
 		};
 		const setSingleSize = (localSize, scrollType) => {
 			self[FIRST_VIEW][localSize]('0');
 			self[SECOND_VIEW][localSize]('0');
-			self.css(localSize, Math.ceil(Math.max(dom.get[scrollType](self[FIRST_VIEW]), dom.get[scrollType](self[SECOND_VIEW]))));
+			self.css(localSize, Math.ceil(Math.max(self[FIRST_VIEW].element()[scrollType], self[SECOND_VIEW].element()[scrollType])));
 		};
 
 		if (self.height().isAuto) {

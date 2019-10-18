@@ -15,7 +15,6 @@ import {
 	ZERO_PIXELS
 } from 'type-enforcer';
 import d3Helper from '../../utility/d3Helper';
-import dom from '../../utility/dom';
 import {
 	ABSOLUTE,
 	BOX_SIZING,
@@ -28,8 +27,6 @@ import {
 	INLINE_BLOCK,
 	LEFT,
 	MIN_HEIGHT,
-	OUTER_HEIGHT,
-	OUTER_WIDTH,
 	OVERFLOW_X,
 	OVERFLOW_Y,
 	PADDING,
@@ -69,6 +66,15 @@ const forRangeRight = (first, last, callback) => {
 	}
 };
 
+const measure = {
+	width(control) {
+		return control.borderWidth();
+	},
+	height(control) {
+		return control.borderHeight();
+	}
+};
+
 const SCROLL_BUFFER = 8;
 const NO_ITEM_ID_ERROR_MESSAGE = 'All items in a virtual list control must have a unique id.';
 const VIRTUAL_LIST_CLASS = 'virtual-list';
@@ -85,7 +91,6 @@ const ALT_EXTENT_VALUE = Symbol();
 const POSITION_ORIGIN = Symbol();
 const ALT_POSITION_ORIGIN = Symbol();
 const EXTENT_SCROLL_ORIGIN = Symbol();
-const EXTENT_OUTER_SIZE = Symbol();
 const EXTENT_PADDING = Symbol();
 const EMPTY_CONTENT_CONTAINER = Symbol();
 const CONTENT_CONTAINER = Symbol();
@@ -163,7 +168,6 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[POSITION_ORIGIN] = TOP;
 		self[ALT_POSITION_ORIGIN] = LEFT;
 		self[EXTENT_SCROLL_ORIGIN] = SCROLL_TOP;
-		self[EXTENT_OUTER_SIZE] = OUTER_HEIGHT;
 		self[EXTENT_PADDING] = VERTICAL;
 		self[CONTROL_RECYCLER] = new ControlRecycler();
 
@@ -256,7 +260,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		if (!self.itemSize() && self.isVirtualized() && !self.isRemoved) {
 			control[self[EXTENT]](ZERO_PIXELS);
 			control[self[EXTENT]](AUTO);
-			self[ITEM_SIZE] = dom.get[self[EXTENT_OUTER_SIZE]](control);
+			self[ITEM_SIZE] = measure[self[EXTENT]](control);
 
 			if (self[ITEM_SIZE] > 0) {
 				self[setScrollSize]();
@@ -292,7 +296,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			self.css(HEIGHT, self[ITEM_SIZE] * self[TOTAL_ITEMS]);
 		}
 
-		self[VIEWPORT_SIZE] = dom.get[self[EXTENT]](self) - self[INNER_PADDING][self[EXTENT_PADDING]];
+		self[VIEWPORT_SIZE] = measure[self[EXTENT]](self) - self[INNER_PADDING][self[EXTENT_PADDING]];
 		self[VIEWPORT_ITEMS_LENGTH] = Math.ceil(self[VIEWPORT_SIZE] / self[ITEM_SIZE]);
 
 		self[PAGE_SIZE] = Math.max(self[VIEWPORT_ITEMS_LENGTH] - 1, 1) * self[ITEM_SIZE];
@@ -513,7 +517,7 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		control.css(self[POSITION_ORIGIN], self[CURRENT_ITEM_OFFSET] + PIXELS);
 
-		self[CURRENT_ITEM_OFFSET] += dom.get[self[EXTENT_OUTER_SIZE]](control);
+		self[CURRENT_ITEM_OFFSET] += measure[self[EXTENT]](control);
 	}
 
 	/**
@@ -682,7 +686,6 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[POSITION_ORIGIN] = LEFT;
 			self[ALT_POSITION_ORIGIN] = TOP;
 			self[EXTENT_SCROLL_ORIGIN] = SCROLL_LEFT;
-			self[EXTENT_OUTER_SIZE] = OUTER_WIDTH;
 			overflow = OVERFLOW_X;
 			altOverflow = OVERFLOW_Y;
 			self[EXTENT_PADDING] = HORIZONTAL;
@@ -693,7 +696,6 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[POSITION_ORIGIN] = TOP;
 			self[ALT_POSITION_ORIGIN] = LEFT;
 			self[EXTENT_SCROLL_ORIGIN] = SCROLL_TOP;
-			self[EXTENT_OUTER_SIZE] = OUTER_HEIGHT;
 			overflow = OVERFLOW_Y;
 			altOverflow = OVERFLOW_X;
 			self[EXTENT_PADDING] = VERTICAL;

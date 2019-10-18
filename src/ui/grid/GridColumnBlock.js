@@ -1,5 +1,4 @@
 import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import VirtualList from '../layout/VirtualList';
@@ -61,7 +60,7 @@ export default class GridColumnBlock extends Control {
 		applySettings(self, settings);
 
 		self.onResize((width, height) => {
-				self[GRID_HEADER].scrollbarWidth(dom.get.scrollbar.width(self[VIRTUAL_LIST]));
+				self[GRID_HEADER].scrollbarWidth(self[VIRTUAL_LIST].element().offsetWidth - self[VIRTUAL_LIST].element().clientWidth);
 				self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(width);
 				self[GRID_HEADER].width(self[RENDERED_WIDTH]);
 				self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);

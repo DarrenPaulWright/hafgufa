@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import keyCodes from 'keycodes';
-import { dom, KEY_DOWN_EVENT, Tags } from '../../../src';
+import { KEY_DOWN_EVENT, Tags } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
 
@@ -132,8 +132,8 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('test string that is really long');
 
-			assert.isAbove(dom.get.width(inputElement), (dom.get.width(fakeInputElement) - 2));
-			assert.isBelow(dom.get.width(inputElement), (dom.get.width(fakeInputElement) + 10));
+			assert.isAbove(inputElement.offsetWidth, fakeInputElement.offsetWidth - 2);
+			assert.isBelow(inputElement.offsetWidth, fakeInputElement.offsetWidth + 10);
 		});
 
 		it('should remove a tag when the delete button is clicked', () => {

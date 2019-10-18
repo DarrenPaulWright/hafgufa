@@ -1,6 +1,5 @@
 import { debounce } from 'async-agent';
 import { method, PrivateVars } from 'type-enforcer';
-import dom from '../../utility/dom';
 import {
 	LINE_HEIGHT,
 	PADDING_RIGHT,
@@ -82,7 +81,7 @@ export default function(Base) {
 							_self.rightContainer.css({
 								top: container.element().offsetTop,
 								height: containerHeight,
-								right: Math.max(0, width - containerWidth - dom.get.left(container.element()))
+								right: Math.max(0, width - containerWidth - container.element().offsetLeft)
 							});
 							rightContainerWidth = _self.rightContainer.borderWidth();
 

@@ -51,8 +51,8 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 
 		self.onResize(() => {
 			let legendWidth;
-			let renderWidth = self.innerWidth() || dom.get.width(self.element());
-			let renderHeight = self.innerHeight() || dom.get.height(self.element());
+			let renderWidth = self.innerWidth() || self.element().offsetWidth;
+			let renderHeight = self.innerHeight() || self.element().offsetHeight;
 
 			if (self.getHeading()) {
 				renderHeight -= self.getHeading().height();

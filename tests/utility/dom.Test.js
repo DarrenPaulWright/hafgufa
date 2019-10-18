@@ -55,36 +55,6 @@ describe('dom', () => {
 			BODY.style.padding = INITIAL;
 		});
 
-		describe('.width', () => {
-			it('should calculate properly', () => {
-				assert.equal(dom.get.width(testElement), 200);
-			});
-		});
-
-		describe('.height', () => {
-			it('should calculate properly', () => {
-				assert.equal(dom.get.height(testElement), 100);
-			});
-		});
-
-		describe('.top', () => {
-			it('should calculate properly', () => {
-				assert.equal(dom.get.top(testElement), 310);
-			});
-			it('should calculate properly if the second argument is true', () => {
-				assert.equal(dom.get.top(testElement, true), 610);
-			});
-		});
-
-		describe('.left', () => {
-			it('should calculate properly', () => {
-				assert.equal(dom.get.left(testElement), 440);
-			});
-			it('should calculate properly if the second argument is true', () => {
-				assert.equal(dom.get.left(testElement, true), 840);
-			});
-		});
-
 		describe('.outerWidth', () => {
 			it('should calculate properly', () => {
 				assert.equal(dom.get.outerWidth(testElement), 260);
@@ -94,20 +64,6 @@ describe('dom', () => {
 		describe('.outerHeight', () => {
 			it('should calculate properly', () => {
 				assert.equal(dom.get.outerHeight(testElement), 140);
-			});
-		});
-
-		describe('.borders', () => {
-			describe('.width', () => {
-				it('should calculate properly', () => {
-					assert.equal(dom.get.borders.width(testElement), 6);
-				});
-			});
-
-			describe('.height', () => {
-				it('should calculate properly', () => {
-					assert.equal(dom.get.borders.height(testElement), 4);
-				});
 			});
 		});
 

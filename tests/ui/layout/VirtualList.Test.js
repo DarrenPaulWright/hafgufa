@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer';
-import { Button, dom, Heading, SCROLL_EVENT, VirtualList } from '../../../src';
+import { Button, Heading, SCROLL_EVENT, VirtualList } from '../../../src';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -144,7 +144,7 @@ describe('VirtualList', () => {
 				.itemData(testRows)
 				.fitHeightToContents();
 
-			assert.equal(dom.get.height(testUtil.container), 60);
+			assert.equal(testUtil.container.offsetHeight, 60);
 		});
 
 		it('should set the height of the control to the combined height of the items when the height is set to auto', () => {
@@ -156,7 +156,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(dom.get.height(testUtil.container), 90);
+			assert.equal(testUtil.container.offsetHeight, 90);
 		});
 	});
 
