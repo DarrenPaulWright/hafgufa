@@ -11,6 +11,7 @@ import {
 	INPUT_TYPE_PASSWORD,
 	INPUT_TYPE_TEXT,
 	KEY_UP_EVENT,
+	LINE_HEIGHT,
 	MAX_LENGTH,
 	PLACE_HOLDER
 } from '../../utility/domConstants';
@@ -123,7 +124,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		const maxRows = self.maxRows();
 
 		if (maxRows && maxRows > minRows && minRows > 1) {
-			const lineHeight = dom.get.lineHeight(self[INPUT]);
+			const lineHeight = parseFloat(self[INPUT].css(LINE_HEIGHT));
 			const padding = dom.get.paddings.height(self[INPUT]);
 
 			if (lineHeight) {

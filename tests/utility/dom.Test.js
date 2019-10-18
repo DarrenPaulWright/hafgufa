@@ -138,11 +138,5 @@ describe('dom', () => {
 				});
 			});
 		});
-
-		describe('.lineHeight', () => {
-			it('should calculate properly', () => {
-				assert.equal(dom.get.lineHeight(testElement), 67);
-			});
-		});
 	});
 });

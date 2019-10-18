@@ -7,7 +7,6 @@ import {
 	BORDER_RIGHT_WIDTH,
 	BORDER_TOP_WIDTH,
 	DOCUMENT,
-	LINE_HEIGHT,
 	MARGIN_BOTTOM,
 	MARGIN_LEFT,
 	MARGIN_RIGHT,
@@ -282,21 +281,6 @@ const dom = {
 				element = dom.getElement(element);
 				return !element ? 0 : parseStyle(element, PADDING_TOP) + parseStyle(element, PADDING_BOTTOM);
 			}
-		},
-		/**
-		 * Gets the line-height of an element as an int
-		 *
-		 * @method lineHeight
-		 * @member module:dom.get
-		 * @static
-		 *
-		 * @arg {element} element
-		 *
-		 * @returns {Number}
-		 */
-		lineHeight(element) {
-			element = dom.getElement(element);
-			return !element ? 0 : parseStyle(element, LINE_HEIGHT);
 		},
 		/**
 		 * Gets the width or height of a scrollbar, if it exists
