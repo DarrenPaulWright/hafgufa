@@ -323,7 +323,7 @@ Object.assign(Control.prototype, {
 				}
 				else {
 					_self.windowResizeId = windowResize.add(() => {
-						self.resize();
+						self.resize(true);
 					}, self.type);
 				}
 			}
