@@ -39,7 +39,7 @@ Object.assign(Description.prototype, {
 	 */
 	value: method.string({
 		set(value) {
-			this.element().innerHTML = value;
+			this.contentContainer.element().innerHTML = value;
 		}
 	}),
 
