@@ -1,6 +1,15 @@
-import { applySettings, castArray, isArray, isJson, isObject, isString } from 'type-enforcer';
+import {
+	applySettings,
+	castArray,
+	isArray,
+	isElement,
+	isFunction,
+	isJson,
+	isNumber,
+	isObject,
+	isString
+} from 'type-enforcer';
 import { CONTENT_CHANGE_EVENT } from '../..';
-import dom from '../../utility/dom';
 import controlTypes from '../controlTypes';
 import Control, { CHILD_CONTROLS } from './../Control';
 
@@ -33,23 +42,17 @@ export default class Div extends Control {
 	 * @function addLayout
 	 *
 	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
-	 * @arg {String}   [doPrepend=false]
+	 * @arg {String}   [appendAt]
 	 */
-	[addLayout](content, doPrepend) {
+	[addLayout](content, appendAt) {
 		const self = this;
 
-		content = castArray(content);
-
-		if (doPrepend) {
-			content.reverse();
-		}
-
-		content.forEach((controlDefinition) => {
+		castArray(content).forEach((controlDefinition, index) => {
 			if (controlDefinition && controlDefinition.control) {
 				new controlDefinition.control({
 					...controlDefinition,
 					container: self,
-					prepend: doPrepend
+					appendAt: isNumber(appendAt) ? appendAt + index : null
 				});
 			}
 		});
@@ -61,24 +64,44 @@ export default class Div extends Control {
 	 * @function addContent
 	 *
 	 * @arg {Object[]} content    - Takes a JSON array of objects with control settings
-	 * @arg {String}   [doPrepend=false]
+	 * @arg {String}   [appendAt]
 	 */
-	[addContent](content, doPrepend) {
+	[addContent](content, appendAt) {
 		const self = this;
 
 		if (content) {
 			if (isArray(content) || isObject(content)) {
-				self[addLayout](content, doPrepend);
+				self[addLayout](content, appendAt);
 			}
 			else if (isJson(content) && isString(content) && (content.charAt(0) === '[' || content.charAt(0) === '{')) {
-				self[addLayout](JSON.parse(content), doPrepend);
+				self[addLayout](JSON.parse(content), appendAt);
 			}
 			else {
-				if (content.element) {
+				const parent = self.element();
+
+				if (isFunction(content.element)) {
 					content.container(self);
+					content = content.element();
 				}
-				dom.content(self, content, doPrepend);
+
+				if (isElement(content)) {
+					if (isNumber(appendAt)) {
+						parent.insertBefore(content, parent.children[appendAt]);
+					}
+					else {
+						parent.appendChild(content);
+					}
+				}
+				else {
+					if (isNumber(appendAt)) {
+						parent.children[appendAt].insertAdjacentHTML('beforebegin', content);
+					}
+					else {
+						parent.insertAdjacentHTML('beforeend', content);
+					}
+				}
 			}
+
 			self.elementD3().dispatch(CONTENT_CHANGE_EVENT);
 		}
 	}
@@ -110,7 +133,7 @@ export default class Div extends Control {
 	content(content) {
 		this[CHILD_CONTROLS].remove();
 		this.element().textContent = '';
-		this[addContent](content, false);
+		this[addContent](content);
 		return this;
 	}
 
@@ -124,7 +147,7 @@ export default class Div extends Control {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	append(content) {
-		this[addContent](content, false);
+		this[addContent](content);
 		return this;
 	}
 
@@ -138,8 +161,12 @@ export default class Div extends Control {
 	 * @arg {Object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	prepend(content) {
-		this[addContent](content, true);
+		this[addContent](content, 0);
+		return this;
+	}
 
+	insertAt(content, index = 0) {
+		this[addContent](content, index);
 		return this;
 	}
 

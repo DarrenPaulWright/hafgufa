@@ -110,12 +110,14 @@ export default class Control extends Removable {
 		_.set(self, {
 			type: settings.type,
 			append: settings.append,
-			prepend: settings.prepend
+			prepend: settings.prepend,
+			appendAt: settings.appendAt
 		});
 
+		delete settings.type;
 		delete settings.append;
 		delete settings.prepend;
-		delete settings.type;
+		delete settings.appendAt;
 
 		self.element(settings.element || 'div');
 		delete settings.element;
@@ -238,6 +240,11 @@ Object.assign(Control.prototype, {
 						container.insertBefore(_self.element, container.firstChild);
 					}
 					delete _self.prepend;
+				}
+				else if (_self.appendAt !== undefined) {
+					container.insertBefore(_self.element, container.children[_self.appendAt]);
+
+					delete _self.appendAt;
 				}
 				else {
 					container.appendChild(_self.element);
