@@ -207,7 +207,7 @@ Object.assign(Tabs.prototype, {
 			else {
 				self[TOOLBAR] = new Toolbar({
 					container: self.element(),
-					append: self[TAB_CONTAINER]
+					prepend: self[CONTENT_CONTAINER].element()
 				});
 			}
 		}
