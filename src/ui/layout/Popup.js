@@ -10,6 +10,7 @@ import {
 	BODY,
 	BOTTOM,
 	CLICK_EVENT,
+	CONTENT_CHANGE_EVENT,
 	DISPLAY,
 	HEIGHT,
 	KEY_UP_EVENT,
@@ -32,6 +33,8 @@ import * as mouse from '../../utility/mouse';
 import windowResize from '../../utility/windowResize';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
+import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import Container from './Container';
 import './Popup.less';
 
@@ -165,7 +168,7 @@ const positionArrow = Symbol();
  * @arg {Function}      [settings.onRemove] - Callback that gets executed when this.remove is called.
  * @arg {boolean}       skipFocusable
  */
-class Popup extends Container {
+class Popup extends MergeContentContainerMixin(Container) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.POPUP;
 		settings.container = enforce.element(settings.container, BODY);
@@ -187,9 +190,12 @@ class Popup extends Container {
 			.css(TOP, ZERO_PIXELS)
 			.css(LEFT, ZERO_PIXELS);
 
-		if (self.type === controlTypes.POPUP) {
-			applySettings(self, settings);
-		}
+		self[CONTENT_CONTAINER] = new Container({
+			container: self.element()
+		});
+		self[CONTENT_CONTAINER].on(CONTENT_CHANGE_EVENT, () => {
+			self.resize(true);
+		});
 
 		self.on(MOUSE_ENTER_EVENT, () => {
 				self[onMouseEnter]();
@@ -216,6 +222,10 @@ class Popup extends Container {
 					.isSticky(true)
 					.anchor(undefined);
 			});
+
+		if (self.type === controlTypes.POPUP) {
+			applySettings(self, settings);
+		}
 	}
 
 	[onMouseEnter]() {
