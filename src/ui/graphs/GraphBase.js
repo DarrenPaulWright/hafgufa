@@ -212,7 +212,7 @@ Object.assign(GraphBase.prototype, {
 	svgElement: method.element({
 		set(newValue) {
 			if (newValue) {
-				this.element().appendChild(newValue);
+				this.contentContainer.append(newValue);
 			}
 		},
 		other: null
