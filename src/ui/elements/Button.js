@@ -1,7 +1,6 @@
 import { applySettings, enforce, Enum, method } from 'type-enforcer';
 import { ALT, INPUT_TYPE, TITLE } from '../../utility/domConstants';
-import Control from '../Control';
-import ControlManager from '../ControlManager';
+import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import MouseMixin from '../mixins/MouseMixin';
@@ -10,8 +9,6 @@ import './Button.less';
 import Icon, { ICON_SIZES } from './Icon';
 import Image from './Image';
 import Span from './Span';
-
-const CONTROLS = Symbol();
 
 const SELECTED_CLASS = 'selected';
 const DEFAULT_CLASS = 'form-button';
@@ -47,15 +44,14 @@ export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))
 
 		const self = this;
 
-		self[CONTROLS] = new ControlManager();
-
 		self.attr(INPUT_TYPE, 'button');
 
 		applySettings(self, settings);
 	}
 
 	iconClasses(classes, performAdd) {
-		return this[CONTROLS].get(ICON_ID) ? this[CONTROLS].get(ICON_ID).classes(classes, performAdd) : this;
+		return this[CHILD_CONTROLS].get(ICON_ID) ? this[CHILD_CONTROLS].get(ICON_ID)
+			.classes(classes, performAdd) : this;
 	}
 }
 
@@ -84,21 +80,19 @@ Object.assign(Button.prototype, {
 	label: method.string({
 		init: undefined,
 		set(label) {
-			const hasOtherContent = !!(this.icon() || this.image());
-
-			if (hasOtherContent && !label) {
-				this[CONTROLS].remove(LABEL_ID);
+			if ((this.icon() || this.image()) && !label) {
+				this[CHILD_CONTROLS].remove(LABEL_ID);
 			}
 			else {
 				this.alt(label === DEFAULT_LABEL ? '' : label);
 
-				if (!this[CONTROLS].get(LABEL_ID)) {
-					this[CONTROLS].add(new Span({
+				if (!this[CHILD_CONTROLS].get(LABEL_ID)) {
+					new Span({
 						container: this,
 						id: LABEL_ID
-					}));
+					});
 				}
-				this[CONTROLS].get(LABEL_ID).text(label || DEFAULT_LABEL);
+				this[CHILD_CONTROLS].get(LABEL_ID).text(label || DEFAULT_LABEL);
 			}
 		}
 	}),
@@ -133,28 +127,28 @@ Object.assign(Button.prototype, {
 	icon: method.string({
 		set(newValue) {
 			if (!newValue) {
-				this[CONTROLS].remove(ICON_ID);
+				this[CHILD_CONTROLS].remove(ICON_ID);
 			}
 			else {
 				this.image('');
 
-				if (!this[CONTROLS].get(ICON_ID)) {
-					this[CONTROLS].add(new Icon({
+				if (!this[CHILD_CONTROLS].get(ICON_ID)) {
+					new Icon({
 						container: this,
 						id: ICON_ID,
 						size: this.iconSize()
-					}));
+					});
 				}
 
-				this[CONTROLS].get(ICON_ID).icon(newValue)
+				this[CHILD_CONTROLS].get(ICON_ID).icon(newValue)
 					.size(this.iconSize());
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					this.element().insertBefore(this[CONTROLS].get(ICON_ID).element(), this.element().firstChild);
+					this.element().insertBefore(this[CHILD_CONTROLS].get(ICON_ID).element(), this.element().firstChild);
 				}
 				else {
-					this.element().appendChild(this[CONTROLS].get(ICON_ID).element());
+					this.element().appendChild(this[CHILD_CONTROLS].get(ICON_ID).element());
 				}
 			}
 
@@ -173,8 +167,8 @@ Object.assign(Button.prototype, {
 		init: ICON_SIZES.LARGE,
 		enum: ICON_SIZES,
 		set(newValue) {
-			if (this[CONTROLS].get(ICON_ID)) {
-				this[CONTROLS].get(ICON_ID).size(newValue);
+			if (this[CHILD_CONTROLS].get(ICON_ID)) {
+				this[CHILD_CONTROLS].get(ICON_ID).size(newValue);
 			}
 		}
 	}),
@@ -213,25 +207,26 @@ Object.assign(Button.prototype, {
 	image: method.string({
 		set(image) {
 			if (!image) {
-				this[CONTROLS].remove(IMAGE_ID);
+				this[CHILD_CONTROLS].remove(IMAGE_ID);
 			}
 			else {
 				this.icon('');
 
-				if (!this[CONTROLS].get(IMAGE_ID)) {
-					this[CONTROLS].add(new Image({
+				if (!this[CHILD_CONTROLS].get(IMAGE_ID)) {
+					new Image({
 						container: this,
 						id: IMAGE_ID
-					}));
+					});
 				}
-				this[CONTROLS].get(IMAGE_ID).source(image);
+				this[CHILD_CONTROLS].get(IMAGE_ID).source(image);
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					this.element().insertBefore(this[CONTROLS].get(IMAGE_ID).element(), this.element().firstChild);
+					this.element()
+						.insertBefore(this[CHILD_CONTROLS].get(IMAGE_ID).element(), this.element().firstChild);
 				}
 				else {
-					this.element().appendChild(this[CONTROLS].get(IMAGE_ID).element());
+					this.element().appendChild(this[CHILD_CONTROLS].get(IMAGE_ID).element());
 				}
 			}
 
