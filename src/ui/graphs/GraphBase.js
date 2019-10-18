@@ -1,7 +1,6 @@
 import { defer } from 'async-agent';
 import { forOwn } from 'object-agent';
 import { DockPoint, enforce, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { HEIGHT, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';
 import Tooltip from '../layout/Tooltip';
@@ -211,11 +210,6 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 
 Object.assign(GraphBase.prototype, {
 	svgElement: method.element({
-		before(oldValue) {
-			if (oldValue) {
-				dom.remove(oldValue);
-			}
-		},
 		set(newValue) {
 			if (newValue) {
 				this.element().appendChild(newValue);

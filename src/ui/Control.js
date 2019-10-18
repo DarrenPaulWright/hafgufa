@@ -86,6 +86,17 @@ const propagationClickEvent = () => {
 const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyValue(styleName)) || 0;
 const parseStyle = (element, styleName) => parseElementStyle(getComputedStyle(element), styleName);
 
+const removeElement = (element) => {
+	dom.applyD3Events(element, dom.getD3Events(element), true);
+
+	if (element.remove) {
+		element.remove();
+	}
+	else if (element.parentNode) {
+		element.parentNode.removeChild(element);
+	}
+};
+
 const updateElementId = Symbol();
 const setPropagationClickEvent = Symbol();
 const setCssSizeElement = Symbol();
@@ -129,7 +140,7 @@ export default class Control extends Removable {
 		self.onRemove(() => {
 			self[CHILD_CONTROLS].remove();
 			self.container(null);
-			dom.remove(self.element());
+			removeElement(self.element());
 		});
 	}
 
@@ -356,7 +367,7 @@ Object.assign(Control.prototype, {
 
 			if (_self.oldElement) {
 				_self.oldElement[CONTROL_PROP] = null;
-				dom.remove(_self.oldElement);
+				removeElement(_self.oldElement);
 				_self.oldElement = null;
 			}
 		}

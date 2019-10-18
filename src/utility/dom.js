@@ -8,29 +8,6 @@ import { castArray } from 'type-enforcer';
  * @module dom
  */
 const dom = {
-	/**
-	 * Removes an element from the DOM
-	 *
-	 * @method remove
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element  - DOM element
-	 */
-	remove(element) {
-		if (element) {
-			dom.applyD3Events(element, dom.getD3Events(element), true);
-
-			if (element.remove) {
-				element.remove();
-			}
-			else if (element.parentNode) {
-				element.parentNode.removeChild(element);
-			}
-		}
-
-		element = null;
-	},
 	getD3Events(element) {
 		return element.__on;
 	},
