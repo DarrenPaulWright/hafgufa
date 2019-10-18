@@ -3,7 +3,6 @@ import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from
 import uuid from 'uuid/v4';
 import { IS_DESKTOP } from '../../utility/browser';
 import collectionHelper from '../../utility/collectionHelper';
-import dom from '../../utility/dom';
 import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -215,21 +214,21 @@ Object.assign(DrawerMenu.prototype, {
 				onResize(width, height) {
 					if (this.isOpen() && (self[TREE] || self[HEADER_CONTAINER])) {
 						if (self[TREE]) {
-							height -= dom.get.margins.height(self[TREE]);
+							height -= self[TREE].marginHeight;
 
 							if (self[HEADER_CONTAINER]) {
-								height -= dom.get.outerHeight(self[HEADER_CONTAINER]);
+								height -= self[HEADER_CONTAINER].outerHeight();
 							}
 						}
 						if (self[FOOTER]) {
-							height -= dom.get.outerHeight(self[FOOTER]);
+							height -= self[FOOTER].outerHeight();
 						}
 
 						if (self[TREE]) {
 							self[TREE].maxHeight(height);
 						}
 						else if (self[HEADER_CONTAINER]) {
-							self[HEADER_CONTAINER].height(height - dom.get.margins.height(self[HEADER_CONTAINER]));
+							self[HEADER_CONTAINER].height(height - self[HEADER_CONTAINER].marginHeight);
 						}
 					}
 				},

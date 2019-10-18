@@ -1,21 +1,7 @@
 import { select } from 'd3';
 import { clone } from 'object-agent';
 import { castArray, isElement, isString } from 'type-enforcer';
-import {
-	DOCUMENT,
-	MARGIN_BOTTOM,
-	MARGIN_LEFT,
-	MARGIN_RIGHT,
-	MARGIN_TOP,
-	PADDING_BOTTOM,
-	PADDING_LEFT,
-	PADDING_RIGHT,
-	PADDING_TOP,
-	WINDOW
-} from './domConstants';
-
-const parseStyle = (element, styleName) => parseFloat(WINDOW.getComputedStyle(element)
-	.getPropertyValue(styleName) || 0);
+import { DOCUMENT, WINDOW } from './domConstants';
 
 /**
  * Utility functions for adding new content to the DOM.
@@ -83,85 +69,6 @@ const dom = {
 					element.on(name, doRemove ? null : event.value);
 				}
 			});
-		}
-	},
-	/**
-	 * Gets various measurements of DOM elements
-	 *
-	 * @method get
-	 * @member module:dom
-	 * @static
-	 */
-	get: {
-		/**
-		 * Get the total width of an element with margins
-		 *
-		 * @method outerWidth
-		 * @member module:dom.get
-		 * @static
-		 *
-		 * @arg {element} element
-		 *
-		 * @returns {Number}
-		 */
-		outerWidth(element) {
-			return element.offsetWidth + dom.get.margins.width(element);
-		},
-		/**
-		 * Get the total height of an element with margins
-		 *
-		 * @method outerHeight
-		 * @member module:dom.get
-		 * @static
-		 *
-		 * @arg {element} element
-		 *
-		 * @returns {Number}
-		 */
-		outerHeight(element) {
-			return element.offsetHeight + dom.get.margins.height(element);
-		},
-		/**
-		 * Get the total size of opposite margins
-		 *
-		 * @method margins
-		 * @member module:dom.get
-		 * @static
-		 *
-		 * @arg {element} element
-		 *
-		 * @returns {Number}
-		 */
-		margins: {
-			width(element) {
-				element = dom.getElement(element);
-				return !element ? 0 : parseStyle(element, MARGIN_LEFT) + parseStyle(element, MARGIN_RIGHT);
-			},
-			height(element) {
-				element = dom.getElement(element);
-				return !element ? 0 : parseStyle(element, MARGIN_TOP) + parseStyle(element, MARGIN_BOTTOM);
-			}
-		},
-		/**
-		 * Get the total size of opposite paddings
-		 *
-		 * @method paddings
-		 * @member module:dom.get
-		 * @static
-		 *
-		 * @arg {element} element
-		 *
-		 * @returns {Number}
-		 */
-		paddings: {
-			width(element) {
-				element = dom.getElement(element);
-				return !element ? 0 : parseStyle(element, PADDING_LEFT) + parseStyle(element, PADDING_RIGHT);
-			},
-			height(element) {
-				element = dom.getElement(element);
-				return !element ? 0 : parseStyle(element, PADDING_TOP) + parseStyle(element, PADDING_BOTTOM);
-			}
 		}
 	}
 };

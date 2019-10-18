@@ -2,7 +2,6 @@ import { event } from 'd3';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
-import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -81,7 +80,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 					self[CONTENT_CONTAINER].height(availableHeight);
 				}
 				else if (self.height().isPercent) {
-					self[CONTENT_CONTAINER].height(availableHeight - dom.get.outerHeight(self[TAB_CONTAINER]) - (self[TOOLBAR] ? self[TOOLBAR].borderHeight() : 0));
+					self[CONTENT_CONTAINER].height(availableHeight - self[TAB_CONTAINER].outerHeight() - (self[TOOLBAR] ? self[TOOLBAR].borderHeight() : 0));
 				}
 
 				self[TAB_CONTAINER].resize(true);

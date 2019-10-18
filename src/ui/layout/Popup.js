@@ -3,7 +3,6 @@ import { event, select } from 'd3';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
 import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import {
 	ABSOLUTE,
 	BLOCK,
@@ -15,6 +14,10 @@ import {
 	HEIGHT,
 	KEY_UP_EVENT,
 	LEFT,
+	MARGIN_BOTTOM,
+	MARGIN_LEFT,
+	MARGIN_RIGHT,
+	MARGIN_TOP,
 	MOUSE_ENTER_EVENT,
 	MOUSE_LEAVE_EVENT,
 	MOUSE_MOVE_EVENT,
@@ -54,28 +57,34 @@ const MOUSE_LEAVE_TIMER = Symbol();
 const IS_MOUSE_POSITION_SET = Symbol();
 const ARROW = Symbol();
 
+const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyValue(styleName)) || 0;
+
 const getDockPointOffsetHeight = (dockPoint, element) => {
+	const styles = getComputedStyle(element);
+	const height = element.offsetHeight + parseElementStyle(styles, MARGIN_TOP) + parseElementStyle(styles, MARGIN_BOTTOM);
+
 	if (dockPoint.has(POINTS.BOTTOM)) {
-		return dom.get.outerHeight(element);
+		return height;
 	}
 	else if (dockPoint.primary() !== POINTS.TOP && dockPoint.secondary() === POINTS.CENTER) {
-		return dom.get.outerHeight(element) / 2;
+		return height / 2;
 	}
-	else {
-		return 0;
-	}
+
+	return 0;
 };
 
 const getDockPointOffsetWidth = (dockPoint, element) => {
+	const styles = getComputedStyle(element);
+	const width = element.offsetWidth + parseElementStyle(styles, MARGIN_LEFT) + parseElementStyle(styles, MARGIN_RIGHT);
+
 	if (dockPoint.has(POINTS.RIGHT)) {
-		return dom.get.outerWidth(element);
+		return width;
 	}
 	else if (dockPoint.primary() !== POINTS.LEFT && dockPoint.secondary() === POINTS.CENTER) {
-		return dom.get.outerWidth(element) / 2;
+		return width / 2;
 	}
-	else {
-		return 0;
-	}
+
+	return 0;
 };
 
 const optimizePosition = (pos) => {
@@ -302,8 +311,8 @@ class Popup extends Container {
 	[positionPopup]() {
 		const self = this;
 		const currentScrollOffset = self.element().scrollTop;
-		const marginsVertical = dom.get.margins.height(self);
-		const marginsHorizontal = dom.get.margins.width(self);
+		const marginsVertical = self.marginHeight;
+		const marginsHorizontal = self.marginWidth;
 		let popupTop = 0;
 		let popupLeft = 0;
 		let popupWidth;

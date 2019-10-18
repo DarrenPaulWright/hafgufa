@@ -2,7 +2,6 @@ import { delay } from 'async-agent';
 import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';
@@ -130,7 +129,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			})
 			.onResize(() => {
 				let padding = self[LIST_CONTAINER].width() - self[LIST_CONTAINER].innerWidth();
-				padding += dom.get.margins.width(self[TEXT_INPUT]);
+				padding += self[TEXT_INPUT].marginWidth;
 
 				self[MAX_TAG_WIDTH] = self.innerWidth() - padding;
 				self[TEXT_INPUT].maxWidth(self[MAX_TAG_WIDTH]);
@@ -170,7 +169,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		self[FAKE_INPUT].text(newValue);
 
 		if (self[CURRENT_TAGS].length || newValue.length) {
-			self[TEXT_INPUT].width(self[FAKE_INPUT].borderWidth() + dom.get.paddings.width(self[TEXT_INPUT]) + 8);
+			self[TEXT_INPUT].width(self[FAKE_INPUT].borderWidth() + self[TEXT_INPUT].paddingWidth + 8);
 		}
 		else {
 			self[TEXT_INPUT].width(HUNDRED_PERCENT);

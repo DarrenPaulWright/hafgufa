@@ -2,7 +2,6 @@ import { throttle } from 'async-agent';
 import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import replaceElement from '../../utility/dom/replaceElement';
 import {
 	BLUR_EVENT,
@@ -125,7 +124,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 
 		if (maxRows && maxRows > minRows && minRows > 1) {
 			const lineHeight = parseFloat(self[INPUT].css(LINE_HEIGHT));
-			const padding = dom.get.paddings.height(self[INPUT]);
+			const padding = self[INPUT].paddingHeight;
 
 			if (lineHeight) {
 				self[INPUT].height('1px');

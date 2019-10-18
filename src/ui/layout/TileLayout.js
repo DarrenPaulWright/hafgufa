@@ -1,7 +1,6 @@
 import { debounce, forRange, throttle } from 'async-agent';
 import { clone, fill } from 'object-agent';
 import { applySettings, AUTO, CssSize, enforce, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import {
 	ABSOLUTE,
 	CONTENT_CHANGE_EVENT,
@@ -217,7 +216,7 @@ export default class TileLayout extends Container {
 
 				if (self.height().isAuto) {
 					const newHeight = Math.max(...self[COLUMN_OFFSETS]);
-					self.minHeight(newHeight + dom.get.paddings.height(self))
+					self.minHeight(newHeight + self.paddingHeight)
 						.css(OVERFLOW_Y, HIDDEN);
 				}
 				else {

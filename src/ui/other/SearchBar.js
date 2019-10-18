@@ -1,6 +1,5 @@
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
-import dom from '../../utility/dom';
 import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -99,7 +98,7 @@ export default class SearchBar extends Control {
 				prepend: self.container(),
 				classes: 'search-bar-container',
 				css: {
-					top: dom.get.outerHeight(self.container())
+					top: self.container().offsetHeight
 				}
 			});
 

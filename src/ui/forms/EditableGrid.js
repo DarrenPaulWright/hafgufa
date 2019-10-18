@@ -1,7 +1,6 @@
 import { clone, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { MARGIN_TOP } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import controlTypes from '../controlTypes';
@@ -99,7 +98,7 @@ export default class EditableGrid extends FormControl {
 		self.onResize(() => {
 				if (!self.height().isAuto) {
 					self[GRID]
-						.height(self.innerHeight() - self.contentContainer.element().offsetTop - dom.get.outerHeight(self[ADD_NEW_BUTTON]))
+						.height(self.innerHeight() - self.contentContainer.element().offsetTop - self[ADD_NEW_BUTTON].outerHeight())
 						.resize();
 				}
 			})

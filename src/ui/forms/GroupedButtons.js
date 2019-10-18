@@ -1,6 +1,5 @@
 import shortid from 'shortid';
 import { applySettings, AUTO, enforce, enforceInteger, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../../utility/domConstants';
 import MultiItemFocus from '../../utility/MultiItemFocus';
 import ControlRecycler from '../ControlRecycler';
@@ -91,7 +90,12 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 				self[BUTTON_RECYCLER].each((control) => {
 					maxSize = Math.max(maxSize, control[CURRENT_ORIENTATION_READ]());
 				});
-				maxSize += dom.get.paddings[CURRENT_ORIENTATION](self.contentContainer);
+				if (CURRENT_ORIENTATION === WIDTH) {
+					maxSize += self.contentContainer.paddingWidth;
+				}
+				else {
+					maxSize += self.contentContainer.paddingHeight;
+				}
 				self.contentContainer.css(CURRENT_ORIENTATION, maxSize);
 				self[setGroupShadows]();
 			});

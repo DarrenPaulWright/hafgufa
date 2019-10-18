@@ -1,6 +1,5 @@
 import { event } from 'd3';
 import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import controlTypes from '../controlTypes';
@@ -99,7 +98,7 @@ export default class Slider extends FormControl {
 				if (self[TRACK_SIZE] === undefined) {
 					const thumbSize = self[THUMBS][0].borderWidth();
 					self[MOUSE_OFFSET] = thumbSize / 2;
-					self[TRACK_MARGINS] = dom.get.margins.width(self[TRACK]);
+					self[TRACK_MARGINS] = self[TRACK].marginWidth;
 					self[TRACK_SIZE] = thumbSize - self[TRACK_MARGINS];
 				}
 

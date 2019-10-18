@@ -183,6 +183,26 @@ export default class Control extends Removable {
 	get type() {
 		return _(this).type;
 	}
+
+	get paddingWidth() {
+		const styles = getComputedStyle(_(this).element);
+		return parseElementStyle(styles, PADDING_LEFT) + parseElementStyle(styles, PADDING_RIGHT);
+	}
+
+	get paddingHeight() {
+		const styles = getComputedStyle(_(this).element);
+		return parseElementStyle(styles, PADDING_TOP) + parseElementStyle(styles, PADDING_BOTTOM);
+	}
+
+	get marginWidth() {
+		const styles = getComputedStyle(_(this).element);
+		return parseElementStyle(styles, MARGIN_LEFT) + parseElementStyle(styles, MARGIN_RIGHT);
+	}
+
+	get marginHeight() {
+		const styles = getComputedStyle(_(this).element);
+		return parseElementStyle(styles, MARGIN_TOP) + parseElementStyle(styles, MARGIN_BOTTOM);
+	}
 }
 
 Object.assign(Control.prototype, {
@@ -404,7 +424,7 @@ Object.assign(Control.prototype, {
 	css: method.keyValue({
 		set(property, value) {
 			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
-				value = value + PIXELS;
+				value += PIXELS;
 			}
 
 			_(this).element.style[property] = value;
@@ -560,6 +580,10 @@ Object.assign(Control.prototype, {
 		return parseStyle(_(this).element, 'width');
 	},
 
+	outerWidth() {
+		return this.borderWidth() + this.marginWidth;
+	},
+
 	/**
 	 * Get or set the maxWidth of the main element (NOT including padding and borders).
 	 *
@@ -620,6 +644,10 @@ Object.assign(Control.prototype, {
 
 	innerHeight() {
 		return parseStyle(_(this).element, 'height');
+	},
+
+	outerHeight() {
+		return this.borderHeight() + this.marginHeight;
 	},
 
 	/**
@@ -859,11 +887,9 @@ Object.assign(Control.prototype, {
 			if (self.height().isPercent && self.container()) {
 				let calculatedHeight = parseStyle(self.container(), 'height') * (self.height().value / 100);
 
-				const styles = getComputedStyle(element);
-
-				calculatedHeight -= (parseElementStyle(styles, MARGIN_TOP) + parseElementStyle(styles, MARGIN_BOTTOM));
-				if (styles.boxSizing !== BORDER_BOX) {
-					calculatedHeight -= (parseElementStyle(styles, PADDING_TOP) + parseElementStyle(styles, PADDING_BOTTOM));
+				calculatedHeight -= self.marginHeight;
+				if (getComputedStyle(element).boxSizing !== BORDER_BOX) {
+					calculatedHeight -= self.paddingHeight;
 				}
 
 				if (_self.currentHeight !== calculatedHeight) {
