@@ -123,7 +123,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		const maxRows = self.maxRows();
 
 		if (maxRows && maxRows > minRows && minRows > 1) {
-			const lineHeight = parseFloat(self[INPUT].css(LINE_HEIGHT));
+			const lineHeight = parseFloat(getComputedStyle(self[INPUT].element()).getPropertyValue(LINE_HEIGHT)) || 0;
 			const padding = self[INPUT].paddingHeight;
 
 			if (lineHeight) {
