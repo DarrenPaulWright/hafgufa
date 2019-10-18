@@ -1,5 +1,4 @@
 import { applySettings, AUTO, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { LEFT, TEXT_ALIGN, WIDTH } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import './Description.less';
@@ -40,7 +39,7 @@ Object.assign(Description.prototype, {
 	 */
 	value: method.string({
 		set(value) {
-			dom.content(this, value);
+			this.element().innerHTML = value;
 		}
 	}),
 

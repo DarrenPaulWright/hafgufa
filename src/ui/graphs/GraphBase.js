@@ -7,6 +7,7 @@ import Control from '../Control';
 import Tooltip from '../layout/Tooltip';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import Svg from '../svg/Svg';
 import './GraphBase.less';
 import Legend from './Legend';
 
@@ -44,7 +45,7 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 
 		const self = this;
 		self.addClass('graph');
-		self.svgElement(dom.buildNew('', 'svg:svg'));
+		self.svgElement(new Svg().element());
 
 		// self[STORE_ON_CHANGE_IDS] = [];
 
@@ -217,7 +218,7 @@ Object.assign(GraphBase.prototype, {
 		},
 		set(newValue) {
 			if (newValue) {
-				dom.appendTo(this, newValue);
+				this.element().appendChild(newValue);
 			}
 		},
 		other: null

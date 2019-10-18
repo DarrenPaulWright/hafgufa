@@ -311,21 +311,23 @@ Object.assign(Heading.prototype, {
 	 */
 	icon: method.string({
 		set(newValue) {
+			const self = this;
+
 			if (newValue === '') {
-				this[CONTROLS].remove(ICON_CONTROL);
+				self[CONTROLS].remove(ICON_CONTROL);
 			}
 			else {
-				if (!this[CONTROLS].get(ICON_CONTROL)) {
-					this[CONTROLS].add(new Icon({
-						id: ICON_CONTROL
+				if (!self[CONTROLS].get(ICON_CONTROL)) {
+					self[CONTROLS].add(new Icon({
+						container: self,
+						id: ICON_CONTROL,
+						prepend: self[CONTROLS].get(TITLE_CONTAINER).element()
 					}));
 				}
 
-				this[CONTROLS].get(ICON_CONTROL)
+				self[CONTROLS].get(ICON_CONTROL)
 					.icon(newValue)
-					.tooltip(this.iconTooltip());
-
-				dom.appendBefore(this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(ICON_CONTROL));
+					.tooltip(self.iconTooltip());
 			}
 		}
 	}),
@@ -362,10 +364,11 @@ Object.assign(Heading.prototype, {
 			else {
 				if (!this[CONTROLS].get(IMAGE_CONTROL)) {
 					this[CONTROLS].add(new Image({
+						container: this,
+						prepend: this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER),
 						id: IMAGE_CONTROL
 					})
 						.css(DISPLAY, INLINE_BLOCK));
-					dom.appendBefore(this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(IMAGE_CONTROL));
 				}
 				this[CONTROLS].get(IMAGE_CONTROL).source(image);
 			}
@@ -529,13 +532,14 @@ Object.assign(Heading.prototype, {
 
 			if (newValue) {
 				this[CONTROLS].add(new Button({
+					container: this,
+					prepend: true,
 					id: EXPANDER,
 					classes: 'icon-button',
 					onClick() {
 						self[toggleIsExpanded]();
 					}
 				}));
-				dom.prependTo(this, this[CONTROLS].get(EXPANDER));
 			}
 			else {
 				this[CONTROLS].remove(EXPANDER);
@@ -561,12 +565,12 @@ Object.assign(Heading.prototype, {
 				this[CONTROLS].add(new CheckBox({
 					id: CHECKBOX,
 					container: this.element(),
+					prepend: this[CONTROLS].get(IMAGE_CONTROL) || this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER),
 					isVisible: this.isSelectable(),
 					onChange() {
 						self[toggleChecked]();
 					}
 				}));
-				dom.appendBefore(this[CONTROLS].get(IMAGE_CONTROL) || this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER), this[CONTROLS].get(CHECKBOX));
 			}
 			else {
 				this[CONTROLS].remove(CHECKBOX);

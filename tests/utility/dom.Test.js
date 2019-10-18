@@ -1,119 +1,14 @@
 import { assert } from 'chai';
 import { forOwn } from 'object-agent';
-import { INITIAL, isElement } from 'type-enforcer';
+import { INITIAL } from 'type-enforcer';
 import { ABSOLUTE, BODY, BORDER_BOX, dom } from '../../src';
-import TestUtil from '../TestUtil';
 
 describe('dom', () => {
-	const testUtil = new TestUtil(dom);
-
-	describe('.buildNew', () => {
-		it('should build a div when buildNew is called without any parameters', () => {
-			const div = dom.buildNew();
-
-			assert.equal(div.tagName, 'DIV');
-		});
-
-		it('should return a DOM element when buildNew is called without any parameters', () => {
-			const div = dom.buildNew();
-
-			assert.isTrue(isElement(div));
-		});
-
-		it('should build a span when buildNew is called with \'span\' provided as the element', () => {
-			const span = dom.buildNew('', 'span');
-
-			assert.equal(span.tagName, 'SPAN');
-		});
-
-		it('should build a div with two classes when buildNew is called with two classes provided', () => {
-			const div = dom.buildNew('test1 test2');
-
-			assert.isTrue(div.classList.contains('test1') && div.classList.contains('test2'));
-		});
-
-		it('should build a span with a class when buildNew is called with \'span\' provided as the element', () => {
-			const span = dom.buildNew('test1', 'span');
-
-			assert.isTrue(span.classList.contains('test1'));
-		});
-
-		it('should build an svg element when buildNew is called with \'svg:svg\' provided as the element', () => {
-			const svg = dom.buildNew('', 'svg:svg');
-
-			assert.equal(svg.tagName, 'svg');
-		});
-	});
-
-	describe('.prependTo', () => {
-		it('should NOT prepend an element if the first argument is a string', () => {
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.prependTo('.test_class', element);
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-
-		it('should NOT prepend an element if the second argument is a string', () => {
-			dom.prependTo(testUtil.container, '.test_class');
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-	});
-
-	describe('.appendTo', () => {
-		it('should NOT append an element if the first argument is a string', () => {
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.appendTo('.test_class', element);
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-
-		it('should NOT append an element if the second argument is a string', () => {
-			dom.appendTo(testUtil.container, '.test_class');
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-	});
-
-	describe('.appendBefore', () => {
-		it('should NOT append an element if the first argument is a string', () => {
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.appendBefore('.test_class', element);
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-
-		it('should NOT append an element if the second argument is a string', () => {
-			dom.appendBefore(testUtil.container, '.test_class');
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-	});
-
-	describe('.appendAfter', () => {
-		it('should NOT append an element if the first argument is a string', () => {
-			const element = dom.buildNew('test_class', 'div');
-
-			dom.appendAfter('.test_class', element);
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-
-		it('should NOT append an element if the second argument is a string', () => {
-			dom.appendAfter(testUtil.container, '.test_class');
-
-			assert.equal(testUtil.container.childNodes.length, 0);
-		});
-	});
-
 	describe('.get', () => {
-		const testWrapper = dom.buildNew();
-		dom.appendTo(BODY, testWrapper);
-		const testElement = dom.buildNew();
-		dom.appendTo(testWrapper, testElement);
+		const testWrapper = document.createElement('div');
+		BODY.appendChild(testWrapper);
+		const testElement = document.createElement('div');
+		testWrapper.appendChild(testElement);
 
 		BODY.style.padding = '0';
 
@@ -153,7 +48,7 @@ describe('dom', () => {
 		});
 
 		beforeEach(() => {
-			dom.appendTo(BODY, testWrapper);
+			BODY.appendChild(testWrapper);
 		});
 
 		afterEach(() => {

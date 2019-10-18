@@ -95,12 +95,13 @@ export default class SearchBar extends Control {
 
 		if (!self[IS_SEARCH_BAR_OPEN]) {
 			self[SEARCH_BAR_CONTAINER] = new Div({
+				container: self.container().parentNode,
+				prepend: self.container(),
 				classes: 'search-bar-container',
 				css: {
 					top: dom.get.outerHeight(self.container())
 				}
 			});
-			dom.appendBefore(self.container(), self[SEARCH_BAR_CONTAINER]);
 
 			self[SEARCH_BAR] = new Div({
 				container: self[SEARCH_BAR_CONTAINER],

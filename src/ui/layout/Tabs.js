@@ -207,9 +207,9 @@ Object.assign(Tabs.prototype, {
 			}
 			else {
 				self[TOOLBAR] = new Toolbar({
-					container: self.element()
+					container: self.element(),
+					append: self[TAB_CONTAINER]
 				});
-				dom.appendAfter(self[TAB_CONTAINER], self[TOOLBAR]);
 			}
 		}
 	}),
@@ -225,9 +225,9 @@ Object.assign(Tabs.prototype, {
 					classes: 'icon-button tabs-collapse-button',
 					onClick() {
 						self[toggleTabContainer]();
-					}
+					},
+					prepend: true
 				});
-				dom.prependTo(self[TAB_CONTAINER], self[COLLAPSE_BUTTON]);
 
 				if (!IS_DESKTOP) {
 					self[COLLAPSE_BUTTON].click();

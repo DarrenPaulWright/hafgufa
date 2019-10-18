@@ -16,17 +16,11 @@ import {
 	PADDING_LEFT,
 	PADDING_RIGHT,
 	PADDING_TOP,
-	SPACE,
 	WINDOW
 } from './domConstants';
 
-const SVG_SEPARATOR = ':';
-
 const parseStyle = (element, styleName) => parseFloat(WINDOW.getComputedStyle(element)
 	.getPropertyValue(styleName) || 0);
-
-const INSERT_HTML_BEGIN = 'afterbegin';
-const INSERT_HTML_END = 'beforeend';
 
 /**
  * Utility functions for adding new content to the DOM.
@@ -49,159 +43,6 @@ const dom = {
 		}
 
 		return null;
-	},
-	/**
-	 * Build a new element and apply a css class.
-	 *
-	 * @method buildNew
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {String}  [className] - A css class to apply to the new element.
-	 * @arg {String}  [element=div] - The name of an HTML element.
-	 *
-	 * @returns {Object} - Reference to an element NOT attached to the DOM.
-	 */
-	buildNew(className, element) {
-		let newElement;
-
-		if (element && element.includes(SVG_SEPARATOR)) {
-			element = element.split(SVG_SEPARATOR);
-			newElement = DOCUMENT.createElementNS('http://www.w3.org/2000/' + element[0], element[1]);
-
-		}
-		else {
-			newElement = DOCUMENT.createElement(element || 'div');
-		}
-
-		if (className) {
-			className.trim().split(SPACE).forEach((name) => {
-				newElement.classList.add(name);
-			});
-		}
-
-		return newElement;
-	},
-
-	/**
-	 * Add an element to the DOM as the first child of another element
-	 *
-	 * @method prependTo
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {object} container - The parent element
-	 * @arg {element} element   - The element to be prepended
-	 */
-	prependTo(container, element) {
-		container = dom.getElement(container, true);
-		element = dom.getElement(element);
-
-		if (container && element) {
-			container.insertBefore(element, container.firstChild);
-		}
-		return element;
-	},
-	/**
-	 * Add an element to the DOM as the last child of another element
-	 *
-	 * @method appendTo
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {object} container - The parent element
-	 * @arg {element} element   - The element to be prepended
-	 */
-	appendTo(container, element) {
-		container = dom.getElement(container, true);
-		element = dom.getElement(element);
-
-		if (container && element) {
-			container.appendChild(element);
-		}
-		return element;
-	},
-	/**
-	 * Add an element to the DOM as the previous sibling of another element
-	 *
-	 * @method appendBefore
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {object} container - The parent element
-	 * @arg {element} element   - The element to be prepended
-	 */
-	appendBefore(container, element) {
-		container = dom.getElement(container, true);
-		element = dom.getElement(element);
-
-		if (container && element && container.parentNode) {
-			container.parentNode.insertBefore(element, container);
-		}
-		return element;
-	},
-	/**
-	 * Add an element to the DOM as the next sibling of another element
-	 *
-	 * @method appendAfter
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {object} container - The parent element
-	 * @arg {element} element   - The element to be prepended
-	 */
-	appendAfter(container, element) {
-		container = dom.getElement(container, true);
-		element = dom.getElement(element);
-
-		if (container && element && container.parentNode) {
-			container.parentNode.insertBefore(element, container.nextSibling);
-		}
-		return element;
-	},
-	/**
-	 * Adds string content to an element. If the string has HTML in it, then innerHTML is used.
-	 *
-	 * @method content
-	 * @member module:dom
-	 * @static
-	 *
-	 * @arg {element} element
-	 * @arg {String} content
-	 * @arg {String} [doPrepend] - false will append, true will prepend, undefined will replace all
-	 *
-	 * @returns {dom}
-	 */
-	content(element, content, doPrepend) {
-		element = dom.getElement(element, true);
-
-		if (element) {
-			if (doPrepend === undefined) {
-				element.textContent = '';
-			}
-			if (content === undefined) {
-				content = '';
-			}
-
-			if (isElement(content) || (content && content.element)) {
-				if (doPrepend === true) {
-					dom.prependTo(element, content);
-				}
-				else {
-					dom.appendTo(element, content);
-				}
-			}
-			else {
-				if (doPrepend === true) {
-					element.insertAdjacentHTML(INSERT_HTML_BEGIN, content);
-				}
-				else {
-					element.insertAdjacentHTML(INSERT_HTML_END, content);
-				}
-			}
-		}
-
-		return dom;
 	},
 
 	/**

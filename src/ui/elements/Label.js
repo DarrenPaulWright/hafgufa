@@ -1,5 +1,4 @@
 import { applySettings, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -40,7 +39,7 @@ Object.assign(Label.prototype, {
 	 */
 	content: method.string({
 		set(text) {
-			dom.content(this, text);
+			this.element().innerHTML = text;
 		}
 	})
 });

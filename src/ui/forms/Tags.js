@@ -300,15 +300,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		self[TEXT_INPUT].value('', true);
 
 		if (self[CURRENT_TAGS].length > 1) {
-			if (offset === -1) {
-				dom.appendBefore(self[CURRENT_TAGS][1].heading, self[TEXT_INPUT]);
-			}
-			else {
-				dom.appendAfter(self[CURRENT_TAGS][offset].heading, self[TEXT_INPUT]);
-			}
+			self[LIST_CONTAINER].insertAt(self[TEXT_INPUT], Math.max(offset, 0) + 1);
 		}
 		else {
-			dom.appendTo(self[LIST_CONTAINER], self[TEXT_INPUT]);
+			self[LIST_CONTAINER].append(self[TEXT_INPUT]);
 		}
 
 		self[TEXT_INPUT].isFocused(false).value(newValue || '', true);

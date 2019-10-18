@@ -167,10 +167,10 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		insertIndex = Math.min(enforceInteger(insertIndex, currentButtons.length), currentButtons.length);
 
 		if (insertIndex < currentButtons.length) {
-			dom.appendBefore(self.contentContainer.element().children[insertIndex + 1], button);
+			self.contentContainer.insertAt(button, insertIndex);
 		}
 		else {
-			dom.appendTo(self.contentContainer, button);
+			self.contentContainer.append(button);
 		}
 
 		if (doSaveData) {

@@ -1,5 +1,4 @@
 import { applySettings, enforce, Enum, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import { ALT, INPUT_TYPE, TITLE } from '../../utility/domConstants';
 import Control from '../Control';
 import ControlManager from '../ControlManager';
@@ -152,10 +151,10 @@ Object.assign(Button.prototype, {
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					dom.prependTo(this, this[CONTROLS].get(ICON_ID));
+					this.element().insertBefore(this[CONTROLS].get(ICON_ID).element(), this.element().firstChild);
 				}
 				else {
-					dom.appendAfter(this[CONTROLS].get(LABEL_ID), this[CONTROLS].get(ICON_ID));
+					this.element().appendChild(this[CONTROLS].get(ICON_ID).element());
 				}
 			}
 
@@ -229,10 +228,10 @@ Object.assign(Button.prototype, {
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					dom.prependTo(this, this[CONTROLS].get(IMAGE_ID));
+					this.element().insertBefore(this[CONTROLS].get(IMAGE_ID).element(), this.element().firstChild);
 				}
 				else {
-					dom.appendAfter(this[CONTROLS].get(LABEL_ID), this[CONTROLS].get(IMAGE_ID));
+					this.element().appendChild(this[CONTROLS].get(IMAGE_ID).element());
 				}
 			}
 

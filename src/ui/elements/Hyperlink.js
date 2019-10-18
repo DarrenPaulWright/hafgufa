@@ -1,5 +1,4 @@
 import { applySettings, method } from 'type-enforcer';
-import dom from '../../utility/dom';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import OnClickMixin from '../mixins/OnClickMixin';
@@ -40,7 +39,7 @@ Object.assign(Hyperlink.prototype, {
 	 */
 	text: method.string({
 		set(text) {
-			dom.content(this, text || this.url());
+			this.element().innerHTML = text || this.url();
 		}
 	})
 });
