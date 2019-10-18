@@ -1,5 +1,6 @@
+import { select } from 'd3';
+import { clone } from 'object-agent';
 import { castArray } from 'type-enforcer';
-import dom from '../dom';
 
 export default (from, to) => {
 	const nextSibling = from.nextSibling;
@@ -18,7 +19,17 @@ export default (from, to) => {
 		});
 	}
 
-	dom.applyD3Events(to, dom.getD3Events(from));
+	if (from.__on) {
+		clone(castArray(from.__on)).forEach((event) => {
+			if (event) {
+				let name = event.type;
+				if (event.name) {
+					name += '.' + event.name;
+				}
+				select(to).on(name, event.value);
+			}
+		});
+	}
 
 	while (from.childNodes.length) {
 		if (from.childNodes[0] !== to) {

@@ -107,7 +107,6 @@ export { default as round } from './utility/math/round';
 export { default as ajax } from './utility/ajax';
 export * from './utility/browser';
 export * from './utility/domConstants';
-export { default as dom } from './utility/dom';
 export { default as locale } from './utility/locale';
 export { default as LocalHistory } from './utility/LocalHistory';
 export { default as search } from './utility/search';

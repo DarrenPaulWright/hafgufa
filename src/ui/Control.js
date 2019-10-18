@@ -1,6 +1,16 @@
 import { event, select } from 'd3';
-import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
-import dom from '../utility/dom';
+import { clone } from 'object-agent';
+import {
+	castArray,
+	CssSize,
+	enforceBoolean,
+	isElement,
+	isString,
+	method,
+	PIXELS,
+	PrivateVars,
+	Thickness
+} from 'type-enforcer';
 import replaceElement from '../utility/dom/replaceElement';
 import {
 	BORDER_BOX,
@@ -87,7 +97,17 @@ const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyVa
 const parseStyle = (element, styleName) => parseElementStyle(getComputedStyle(element), styleName);
 
 const removeElement = (element) => {
-	dom.applyD3Events(element, dom.getD3Events(element), true);
+	if (element.__on) {
+		clone(castArray(element.__on)).forEach((event) => {
+			if (event) {
+				let name = event.type;
+				if (event.name) {
+					name += '.' + event.name;
+				}
+				select(element).on(name, null);
+			}
+		});
+	}
 
 	if (element.remove) {
 		element.remove();
