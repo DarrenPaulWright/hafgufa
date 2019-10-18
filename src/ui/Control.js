@@ -219,7 +219,24 @@ Object.assign(Control.prototype, {
 	 */
 	container: method.element({
 		enforce(newValue, oldValue) {
-			return dom.getElement(newValue, true) || oldValue;
+			if (!newValue) {
+				return oldValue;
+			}
+
+			if (isElement(newValue) || newValue === WINDOW) {
+				return newValue;
+			}
+			if (newValue.contentContainer) {
+				return newValue.contentContainer.element();
+			}
+			if (newValue.element) {
+				return newValue.element();
+			}
+			if (isString(newValue)) {
+				return DOCUMENT.querySelector(newValue);
+			}
+
+			return oldValue;
 		},
 		other: null,
 		before(container) {
@@ -294,7 +311,7 @@ Object.assign(Control.prototype, {
 	element: method.element({
 		enforce(newValue, oldValue) {
 			if (newValue) {
-				if (isElement(newValue) || newValue === WINDOW) {
+				if (isElement(newValue)) {
 					return newValue;
 				}
 				if (isString(newValue)) {

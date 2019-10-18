@@ -1,7 +1,6 @@
 import { select } from 'd3';
 import { clone } from 'object-agent';
-import { castArray, isElement, isString } from 'type-enforcer';
-import { DOCUMENT, WINDOW } from './domConstants';
+import { castArray } from 'type-enforcer';
 
 /**
  * Utility functions for adding new content to the DOM.
@@ -9,23 +8,6 @@ import { DOCUMENT, WINDOW } from './domConstants';
  * @module dom
  */
 const dom = {
-	getElement(element, isContainer = false) {
-		if (isElement(element) || element === WINDOW) {
-			return element;
-		}
-		else if (isContainer && element && element.contentContainer) {
-			return element.contentContainer.element();
-		}
-		else if (element && element.element) {
-			return element.element();
-		}
-		else if (isString(element)) {
-			return DOCUMENT.querySelector(element);
-		}
-
-		return null;
-	},
-
 	/**
 	 * Removes an element from the DOM
 	 *
@@ -36,8 +18,6 @@ const dom = {
 	 * @arg {element} element  - DOM element
 	 */
 	remove(element) {
-		element = dom.getElement(element);
-
 		if (element) {
 			dom.applyD3Events(element, dom.getD3Events(element), true);
 
