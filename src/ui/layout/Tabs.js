@@ -1,4 +1,4 @@
-import { clone } from 'object-agent';
+import { clone, forOwn } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
 import Control from '../Control';
@@ -127,8 +127,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 		group.control
 			.orientation(self[IS_VERTICAL] ? GroupedButtons.ORIENTATION.VERTICAL : GroupedButtons.ORIENTATION.HORIZONTAL)
 			.width(self[IS_VERTICAL] ? HUNDRED_PERCENT : AUTO)
-			.height(AUTO)
-			.resize();
+			.height(AUTO);
 	}
 
 	[onTabClick](Button, event) {
@@ -265,12 +264,20 @@ Object.assign(Tabs.prototype, {
 		},
 		set(newTabs) {
 			const self = this;
+			const groups = {};
 
 			newTabs.forEach((tab, index) => {
 				const tabId = (tab.id !== undefined) ? tab.id : ('tab' + index);
 				const group = self[getGroup](tab.group);
 
-				group.addButton({
+				if (!groups[tab.group]) {
+					groups[tab.group] = {
+						group: self[getGroup](tab.group),
+						buttons: []
+					};
+				}
+
+				groups[tab.group].buttons.push({
 					id: tabId,
 					icon: tab.icon,
 					label: tab.title,
@@ -285,6 +292,10 @@ Object.assign(Tabs.prototype, {
 					order: index,
 					data: tab
 				});
+			});
+
+			forOwn(groups, (data) => {
+				data.group.buttons(data.buttons);
 			});
 		}
 	}),

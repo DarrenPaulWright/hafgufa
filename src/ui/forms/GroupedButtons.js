@@ -1,5 +1,14 @@
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, enforceInteger, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
+import {
+	applySettings,
+	AUTO,
+	castArray,
+	enforce,
+	enforceInteger,
+	HUNDRED_PERCENT,
+	isArray,
+	method
+} from 'type-enforcer';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../../utility/domConstants';
 import MultiItemFocus from '../../utility/MultiItemFocus';
 import ControlRecycler from '../ControlRecycler';
@@ -189,14 +198,29 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 	 */
 	[setAllButtonToggles]() {
 		const self = this;
-		const currentValue = self.value();
+		const currentValue = self.value() || [];
+		let isChanged = false;
+		let isSelected;
 
 		self[BUTTON_RECYCLER].each((button, index) => {
-			button.isSelected(self.isMultiSelect() ? (currentValue && currentValue.includes(button.id())) : (currentValue === button.id()));
+			if (self.isMultiSelect()) {
+				isSelected = currentValue.includes(button.id());
+			}
+			else {
+				isSelected = currentValue === button.id();
+			}
+
+			if (button.isSelected() !== isSelected) {
+				button.isSelected(isSelected);
+				isChanged = true;
+			}
+
 			button.attr(TAB_INDEX, index === 0 ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		});
 
-		self.resize(true);
+		if (isChanged) {
+			self.resize(true);
+		}
 	}
 
 	[setGroupShadows]() {
@@ -252,15 +276,15 @@ Object.assign(GroupedButtons.prototype, {
 	 * @returns {Array|String|this}
 	 */
 	value: method.any({
-		set(newValue) {
-			const self = this;
-			if (self.isMultiSelect()) {
-				self.value(enforce.array(newValue, [newValue]));
+		enforce(newValue) {
+			if (this.isMultiSelect()) {
+				return castArray(newValue);
 			}
-			else {
-				self.value(isArray(newValue) ? newValue[0] : newValue);
-			}
-			self[setAllButtonToggles]();
+
+			return isArray(newValue) ? newValue[0] : newValue;
+		},
+		set() {
+			this[setAllButtonToggles]();
 		}
 	}),
 
