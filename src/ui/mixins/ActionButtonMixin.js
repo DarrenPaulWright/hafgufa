@@ -96,7 +96,7 @@ export default function(Base) {
 		}
 
 		[addRightContainer]() {
-			const _self = _.set(this);
+			const _self = _(this);
 
 			if (!_self.rightContainer) {
 				_self.rightContainer = new Div({
