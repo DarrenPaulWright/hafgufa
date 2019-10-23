@@ -457,10 +457,6 @@ export default class VirtualList extends FocusMixin(Control) {
 			const control = self[CONTROL_RECYCLER].getRecycledControl(doPrepend);
 
 			if (!control.isRemoved) {
-				if (self.onItemRender()) {
-					self.onItemRender()(control, itemData);
-				}
-
 				if (self.isVirtualized()) {
 					newSize = self[ITEM_SIZE] > 1 ? self[ITEM_SIZE] : '';
 					newPosition = ((index * self[ITEM_SIZE]) - self[CURRENT_STEP_OFFSET]) + PIXELS;
@@ -486,6 +482,10 @@ export default class VirtualList extends FocusMixin(Control) {
 					self[CONTENT_CONTAINER].append(control);
 				}
 
+				if (self.onItemRender()) {
+					self.onItemRender()(control, itemData);
+				}
+
 				control.virtualIndex = index;
 
 				if (self.isFocusable() && control.isFocusable) {
@@ -499,8 +499,6 @@ export default class VirtualList extends FocusMixin(Control) {
 				if (doSetSize) {
 					self[setItemSize](control);
 				}
-
-				control.resize();
 			}
 		}
 	}
