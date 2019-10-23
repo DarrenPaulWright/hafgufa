@@ -332,6 +332,15 @@ describe('Heading', () => {
 			secondTestValue: false
 		});
 
+		it('should have class "clickable" if isExpandable is set', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				isExpandable: true
+			});
+
+			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+		});
+
 		it('should have a button when isExpandable is true', () => {
 			testUtil.control = new Heading({
 				container: testUtil.container,
@@ -403,6 +412,15 @@ describe('Heading', () => {
 			defaultValue: false,
 			testValue: true,
 			secondTestValue: false
+		});
+
+		it('should have class "clickable" if isSelectable is set', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				isSelectable: true
+			});
+
+			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
 		});
 	});
 
@@ -481,6 +499,15 @@ describe('Heading', () => {
 			secondTestValue: false
 		});
 
+		it('should have class "clickable" if showCheckbox is set', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true
+			});
+
+			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+		});
+
 		it('should NOT have a div with class \'checkboxes\' when showCheckbox is false', () => {
 			testUtil.control = new Heading({
 				container: testUtil.container,
@@ -494,6 +521,16 @@ describe('Heading', () => {
 	});
 
 	describe('.onSelect', () => {
+		it('should have class "clickable" if onSelect is set', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				onSelect() {
+				}
+			});
+
+			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+		});
+
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
 			let testVar = 1;
 
