@@ -11,6 +11,7 @@ import './Shape.less';
 
 const IS_RESIZING = Symbol();
 
+const detectChange = Symbol();
 export const initDragPoint = Symbol();
 
 export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMixin(G)))) {
@@ -22,6 +23,8 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 		super(settings);
 
 		const self = this;
+		let initialBounds;
+
 		self.addClass('shape')
 			.attr(TAB_INDEX, TAB_INDEX_ENABLED)
 			.onFocus(() => {
@@ -32,12 +35,15 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 					self.isSelected(false);
 				}
 			})
+			.onDragStart(() => {
+				initialBounds = self.bounds();
+			})
 			.onDrag(() => {
 				self.resize(true);
 			})
 			.onDragEnd(() => {
-				self.resize(true)
-					.onChange()();
+				self.resize(true);
+				self[detectChange](initialBounds);
 			})
 			.on(KEY_DOWN_EVENT, (event) => {
 				let edited = false;
@@ -68,8 +74,18 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 			});
 	}
 
+	[detectChange](initialBounds) {
+		const self = this;
+		const bounds = self.bounds();
+
+		if (!(bounds[0].isSame(initialBounds[0]) && bounds[1].isSame(initialBounds[1]))) {
+			self.onChange()();
+		}
+	}
+
 	[initDragPoint](cursor, onDrag, isCircle = false) {
 		const self = this;
+		let initialBounds;
 
 		return new DragPoint({
 			container: self.container(),
@@ -77,11 +93,12 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 			isCircle: isCircle,
 			onDragStart() {
 				self[IS_RESIZING] = true;
+				initialBounds = self.bounds();
 			},
 			onDrag: onDrag,
 			onDragEnd() {
 				self[IS_RESIZING] = false;
-				self.onChange()();
+				self[detectChange](initialBounds);
 				self.isFocused(true);
 			}
 		});
