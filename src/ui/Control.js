@@ -617,7 +617,7 @@ Object.assign(Control.prototype, {
 	},
 
 	innerWidth() {
-		return parseStyle(_(this).element, 'width');
+		return _(this).element.offsetWidth - this.paddingWidth;
 	},
 
 	outerWidth() {
@@ -683,7 +683,7 @@ Object.assign(Control.prototype, {
 	},
 
 	innerHeight() {
-		return parseStyle(_(this).element, 'height');
+		return _(this).element.offsetHeight - this.paddingHeight;
 	},
 
 	outerHeight() {
