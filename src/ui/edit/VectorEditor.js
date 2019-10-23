@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import shortid from 'shortid';
 import { applySettings, method, Point } from 'type-enforcer';
 import ControlRecycler from '../ControlRecycler';
@@ -62,17 +61,17 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 					}
 				});
 			})
-			.on('mousedown', () => {
+			.on('mousedown', (event) => {
 				event.preventDefault();
 				event.stopPropagation();
-				self[startDrawing]();
+				self[startDrawing](event);
 
-				self.on('mousemove', () => {
+				self.on('mousemove', (event) => {
 						event.preventDefault();
 						event.stopPropagation();
-						self[updateDrawing]();
+						self[updateDrawing](event);
 					})
-					.on('mouseup', () => {
+					.on('mouseup', (event) => {
 						event.preventDefault();
 						event.stopPropagation();
 						self[stopDrawing]();
@@ -101,7 +100,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			new Point(value[1].x * self[WIDTH], value[1].y * self[HEIGHT])];
 	}
 
-	[startDrawing]() {
+	[startDrawing](event) {
 		const self = this;
 
 		self[CONTROLS].each((control) => {
@@ -120,7 +119,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 		self[updateDrawing]();
 	}
 
-	[updateDrawing]() {
+	[updateDrawing](event) {
 		const self = this;
 
 		self[CURRENT_SHAPE]

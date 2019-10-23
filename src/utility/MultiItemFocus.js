@@ -1,4 +1,3 @@
-import { event, select } from 'd3';
 import keyCodes from 'keycodes';
 import { method } from 'type-enforcer';
 import { KEY_DOWN_EVENT } from './domConstants';
@@ -22,10 +21,10 @@ export default class MultiItemFocus {
 	constructor(container) {
 		const self = this;
 
-		self[CONTAINER] = select(container);
+		self[CONTAINER] = container;
 
-		self[CONTAINER].on(KEY_DOWN_EVENT, () => {
-			self[onKeyDown]();
+		self[CONTAINER].on(KEY_DOWN_EVENT, (event) => {
+			self[onKeyDown](event);
 		});
 	}
 
@@ -34,7 +33,7 @@ export default class MultiItemFocus {
 	 *
 	 * @function onKeyDown
 	 */
-	[onKeyDown]() {
+	[onKeyDown](event) {
 		switch (event.keyCode || event.which) {
 			case keyCodes('left'):
 			case keyCodes('up'):
@@ -98,7 +97,7 @@ export default class MultiItemFocus {
 	 * @instance
 	 */
 	remove() {
-		this[CONTAINER].on(KEY_DOWN_EVENT, null);
+		this[CONTAINER].off(KEY_DOWN_EVENT);
 	}
 }
 

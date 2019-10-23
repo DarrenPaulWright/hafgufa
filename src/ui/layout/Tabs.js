@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
@@ -132,7 +131,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 			.resize();
 	}
 
-	[onTabClick](Button) {
+	[onTabClick](Button, event) {
 		const self = this;
 		let previousTab;
 
@@ -275,8 +274,8 @@ Object.assign(Tabs.prototype, {
 					id: tabId,
 					icon: tab.icon,
 					label: tab.title,
-					onClick(button) {
-						self[onTabClick](button);
+					onClick(event) {
+						self[onTabClick](this, event);
 					}
 				});
 

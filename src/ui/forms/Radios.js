@@ -67,22 +67,20 @@ Object.assign(Radios.prototype, {
 			const self = this;
 
 			self[RADIOS] = values.map((settings) => {
-				const radio = new Radio({
+				return new Radio({
 					...settings,
 					container: self,
 					width: HUNDRED_PERCENT,
 					name: self[NAME]
-				});
-				radio.onChange(() => {
-					self[RADIOS].forEach((control) => {
-						if (control.value() !== settings.value) {
-							control.isChecked(false);
-						}
+				})
+					.onChange(() => {
+						self[RADIOS].forEach((control) => {
+							if (control.value() !== settings.value) {
+								control.isChecked(false);
+							}
+						});
+						self.triggerChange();
 					});
-					self.triggerChange();
-				});
-
-				return radio;
 			});
 		}
 	})

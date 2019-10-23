@@ -58,7 +58,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			classes: 'shadows'
 		});
 
-		self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self.contentContainer.element())
+		self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self.contentContainer)
 			.onSetFocus((index) => {
 				self[setFocusIndex](index);
 			});
@@ -105,7 +105,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 	 * Button click callback. Manages selection state.
 	 * @function onButtonClick
 	 */
-	[onButtonClick](button) {
+	[onButtonClick](button, event) {
 		const self = this;
 		let buttonData = self.buttons().find((item) => item.id === button.id());
 		let currentValue;
@@ -134,7 +134,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		}
 
 		if (buttonData.onClick) {
-			buttonData.onClick(button);
+			buttonData.onClick.call(button, event);
 		}
 		self.triggerChange();
 	}
@@ -163,8 +163,8 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			container: self.contentContainer,
 			isSelectable: self.isSelectable(),
 			width: self[getButtonWidthSetting](),
-			onClick(button) {
-				self[onButtonClick](button);
+			onClick(event) {
+				self[onButtonClick](this, event);
 			}
 		});
 

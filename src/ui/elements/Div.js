@@ -102,7 +102,7 @@ export default class Div extends Control {
 				}
 			}
 
-			self.elementD3().dispatch(CONTENT_CHANGE_EVENT);
+			self.trigger(CONTENT_CHANGE_EVENT);
 		}
 	}
 

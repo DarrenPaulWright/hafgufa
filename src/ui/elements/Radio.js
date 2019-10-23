@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { applySettings, method } from 'type-enforcer';
 import { Div } from '../../index';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../../utility/domConstants';
@@ -9,7 +8,6 @@ import './Radio.less';
 
 export const INPUT = Symbol();
 const CONTAINER = Symbol();
-const IS_MANUAL = Symbol();
 
 /**
  * A single radio button with label.
@@ -31,10 +29,12 @@ export default class Radio extends Label {
 		self[INPUT] = new Input({
 			container: self
 		})
-			.on(CLICK_EVENT, () => {
+			.on(CLICK_EVENT, (event) => {
 				event.stopPropagation();
-				self[IS_MANUAL] = true;
-				self.isChecked(!self.isChecked());
+				const isChecked = !self.isChecked();
+
+				self.isChecked(isChecked);
+				self.onChange().trigger(null, [isChecked, event]);
 			});
 
 		if (self.type === controlTypes.RADIO) {
@@ -75,11 +75,6 @@ Object.assign(Radio.prototype, {
 
 			self[INPUT].element().checked = isChecked;
 			self.classes('checked', isChecked);
-
-			if (self[IS_MANUAL] && self.onChange()) {
-				self[IS_MANUAL] = false;
-				self.onChange().trigger(null, [isChecked]);
-			}
 
 			if (self.isIndeterminate && isChecked) {
 				self.isIndeterminate(false);

@@ -1,4 +1,3 @@
-import { select } from 'd3';
 import { applySettings, DockPoint } from 'type-enforcer';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../../utility/domConstants';
 import Container from '../layout/Container';
@@ -35,7 +34,9 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 			const initialContent = settings.content;
 			delete settings.content;
 
-			select(WINDOW).on(MOUSE_WHEEL_EVENT, () => self.remove());
+			const windowScrollEvent = () => self.remove();
+
+			WINDOW.addEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
 
 			self[POPUP] = new Popup({
 				anchor: Popup.MOUSE,
@@ -51,7 +52,7 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 
 			self[POPUP]
 				.onRemove(() => {
-					select(WINDOW).on(MOUSE_WHEEL_EVENT, null);
+					WINDOW.removeEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
 				})
 				.resize();
 		};

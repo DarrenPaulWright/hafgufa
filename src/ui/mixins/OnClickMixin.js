@@ -34,7 +34,7 @@ const buildLink = (url) => {
 const addClickEvent = function() {
 	const self = this;
 
-	const clickHandler = () => {
+	const clickHandler = (event) => {
 		let url = self.url();
 
 		if (self.isSelectable && self.isSelectable()) {
@@ -42,7 +42,7 @@ const addClickEvent = function() {
 		}
 
 		if (self.onClick()) {
-			self.onClick()(self);
+			self.onClick()(event);
 		}
 
 		if (self.type !== controlTypes.HYPERLINK && url) {
@@ -76,7 +76,7 @@ export default (Base) => {
 		 * @returns {this}
 		 */
 		click() {
-			this.elementD3().dispatch(CLICK_EVENT);
+			this.trigger(CLICK_EVENT);
 
 			return this;
 		}

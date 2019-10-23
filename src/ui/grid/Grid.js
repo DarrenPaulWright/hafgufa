@@ -1,5 +1,4 @@
 import { debounce } from 'async-agent';
-import { event } from 'd3';
 import { Collection } from 'hord';
 import Moment from 'moment';
 import { clone, deepEqual } from 'object-agent';
@@ -1069,7 +1068,7 @@ export default class Grid extends Control {
 	 * @arg {boolean} isSelected
 	 * @arg {boolean} skipRender
 	 */
-	selectRow(rowId, isSelected, skipRender) {
+	selectRow(rowId, isSelected, skipRender, event) {
 		const self = this;
 		let selectedRow;
 		const thisEvent = event || {};

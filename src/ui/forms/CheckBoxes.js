@@ -68,16 +68,14 @@ Object.assign(CheckBoxes.prototype, {
 			const self = this;
 
 			self[CHECK_BOXES] = values.map((settings) => {
-				const checkbox = new CheckBox({
+				return new CheckBox({
 					...settings,
 					container: self,
 					width: HUNDRED_PERCENT
-				});
-				checkbox.onChange(() => {
-					self.triggerChange();
-				});
-
-				return checkbox;
+				})
+					.onChange(() => {
+						self.triggerChange();
+					});
 			});
 		}
 	})

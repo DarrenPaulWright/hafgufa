@@ -1,5 +1,3 @@
-import { select } from 'd3';
-import uuid from 'uuid/v4';
 import { BODY, CLICK_EVENT, CONTEXT_MENU_EVENT } from '../../utility/domConstants';
 import './ContextMenu.less';
 import Menu from './Menu';
@@ -17,7 +15,6 @@ const CONTEXT_MENU_CLASS = 'context-menu';
 export default class ContextMenu extends Menu {
 	constructor(settings = {}) {
 		let isInit = false;
-		const id = '.' + uuid();
 
 		settings.minWidth = settings.minWidth || 160;
 
@@ -30,14 +27,14 @@ export default class ContextMenu extends Menu {
 			}
 			isInit = true;
 		};
-		const setEvents = (callback) => {
-			select(BODY)
-				.on(CONTEXT_MENU_EVENT + id, callback)
-				.on(CLICK_EVENT + id, callback);
-		};
 
-		setEvents(onContextMenu);
+		BODY.addEventListener(CONTEXT_MENU_EVENT, onContextMenu);
+		BODY.addEventListener(CLICK_EVENT, onContextMenu);
+
 		self.addClass(CONTEXT_MENU_CLASS)
-			.onRemove(() => setEvents(null));
+			.onRemove(() => {
+				BODY.removeEventListener(CONTEXT_MENU_EVENT, onContextMenu);
+				BODY.removeEventListener(CLICK_EVENT, onContextMenu);
+			});
 	}
 }

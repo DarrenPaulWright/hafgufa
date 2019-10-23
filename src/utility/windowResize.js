@@ -1,5 +1,4 @@
 import { debounce, throttle } from 'async-agent';
-import { select } from 'd3';
 import { Queue } from 'type-enforcer';
 import { RESIZE_EVENT, WINDOW } from './domConstants';
 
@@ -25,7 +24,7 @@ const measureWindow = () => {
 	trigger();
 };
 
-select(WINDOW).on(RESIZE_EVENT, throttle(measureWindow, 100));
+WINDOW.addEventListener(RESIZE_EVENT, throttle(measureWindow, 100));
 
 measureWindow();
 

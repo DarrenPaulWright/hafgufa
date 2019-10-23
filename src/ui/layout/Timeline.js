@@ -1,5 +1,4 @@
 import { throttle } from 'async-agent';
-import { event } from 'd3';
 import moment from 'moment';
 import { repeat } from 'object-agent';
 import { applySettings, CssSize, enforceBoolean, Enum, isInteger, method, PIXELS, Thickness } from 'type-enforcer';
@@ -475,7 +474,7 @@ Object.assign(Timeline.prototype, {
 	canZoom: method.boolean({
 		set(canZoom) {
 			const self = this;
-			const onMouseWheel = () => {
+			const onMouseWheel = (event) => {
 				event.preventDefault();
 				event.stopPropagation();
 
@@ -483,7 +482,7 @@ Object.assign(Timeline.prototype, {
 			};
 
 			self[VIRTUAL_LIST]
-				.on(MOUSE_WHEEL_EVENT, canZoom ? onMouseWheel : null);
+				.set(MOUSE_WHEEL_EVENT, onMouseWheel, canZoom);
 
 		}
 	}),

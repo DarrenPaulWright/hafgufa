@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
 import uuid from 'uuid/v4';
@@ -349,7 +348,7 @@ Object.assign(Menu.prototype, {
 				});
 
 				self.get(FILTER_ID)
-					.on(KEY_DOWN_EVENT, () => {
+					.on(KEY_DOWN_EVENT, (event) => {
 						if (event.keyCode === keyCodes('down')) {
 							event.preventDefault();
 							self.get(TREE_ID).isFocused(true);

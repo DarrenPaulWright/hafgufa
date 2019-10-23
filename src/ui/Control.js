@@ -1,16 +1,6 @@
-import { event, select } from 'd3';
-import { clone } from 'object-agent';
-import {
-	castArray,
-	CssSize,
-	enforceBoolean,
-	isElement,
-	isString,
-	method,
-	PIXELS,
-	PrivateVars,
-	Thickness
-} from 'type-enforcer';
+import { clone, firstInPath, forOwn, walkPath } from 'object-agent';
+import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
+import getAttributes from '../utility/dom/getAttributes';
 import replaceElement from '../utility/dom/replaceElement';
 import {
 	BORDER_BOX,
@@ -89,7 +79,7 @@ const cssSizeMethods = [
 	'maxHeight'
 ];
 
-const propagationClickEvent = () => {
+const propagationClickEvent = (event) => {
 	event.stopPropagation();
 };
 
@@ -97,18 +87,6 @@ const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyVa
 const parseStyle = (element, styleName) => parseElementStyle(getComputedStyle(element), styleName);
 
 const removeElement = (element) => {
-	if (element.__on) {
-		clone(castArray(element.__on)).forEach((event) => {
-			if (event) {
-				let name = event.type;
-				if (event.name) {
-					name += '.' + event.name;
-				}
-				select(element).on(name, null);
-			}
-		});
-	}
-
 	if (element.remove) {
 		element.remove();
 	}
@@ -142,7 +120,8 @@ export default class Control extends Removable {
 			type: settings.type,
 			append: settings.append,
 			prepend: settings.prepend,
-			appendAt: settings.appendAt
+			appendAt: settings.appendAt,
+			events: {}
 		});
 
 		delete settings.type;
@@ -158,9 +137,16 @@ export default class Control extends Removable {
 		delete settings.container;
 
 		self.onRemove(() => {
+			const _self = _(self);
+
 			self[CHILD_CONTROLS].remove();
+
+			forOwn(_self.events, (handler, name) => {
+				self.off(name);
+			});
+
 			self.container(null);
-			removeElement(self.element());
+			removeElement(_self.element);
 		});
 	}
 
@@ -360,30 +346,35 @@ Object.assign(Control.prototype, {
 			return oldValue;
 		},
 		before(element) {
-			const self = this;
-			const _self = _(self);
+			if (element) {
+				const self = this;
+				const _self = _(self);
 
-			_self.oldElement = element;
-
-			self[setCssSizeElement](null);
-
-			_self.element = null;
-			_self.elementD3 = null;
+				_self.oldElement = element;
+				_self.oldElement.events = clone(_self.events);
+				forOwn(_self.events, (handler, name) => {
+					self.off(name);
+				});
+				_self.events = {};
+			}
 		},
 		set(newElement) {
 			const self = this;
 			const _self = _(self);
 
 			_self.element = newElement;
-			_self.elementD3 = select(newElement);
 			_self.element[CONTROL_PROP] = self;
 
 			if (_self.oldElement) {
+				self.attr(getAttributes(_self.oldElement));
+				forOwn(_self.oldElement.events, (handler, name) => {
+					self.on(name, handler);
+				});
+				_self.oldElement.events = null;
 				replaceElement(_self.oldElement, newElement);
 			}
 
 			self[setCssSizeElement](_self.element);
-			self[setPropagationClickEvent]();
 
 			if (_self.oldElement) {
 				_self.oldElement[CONTROL_PROP] = null;
@@ -392,10 +383,6 @@ Object.assign(Control.prototype, {
 			}
 		}
 	}),
-
-	elementD3() {
-		return _(this).elementD3;
-	},
 
 	/**
 	 * Set the id attribute.
@@ -454,7 +441,12 @@ Object.assign(Control.prototype, {
 			_(this).element.setAttribute(attribute, value);
 		},
 		get(attribute) {
-			return _(this).element.getAttribute(attribute);
+			if (attribute !== undefined) {
+				return _(this).element.getAttribute(attribute);
+			}
+			else {
+				return getAttributes(_(this).element);
+			}
 		}
 	}),
 
@@ -530,15 +522,15 @@ Object.assign(Control.prototype, {
 		const _self = _(this);
 
 		if (arguments.length) {
-			if (isString(classes)) {
+			if (isString(classes) && !this.isRemoved) {
 				classes = classes.trim();
 
 				if (classes) {
 					const action = enforceBoolean(performAdd, true) ? 'add' : 'remove';
 
-					classes.split(SPACE).forEach((name) => {
+					walkPath(classes, (name) => {
 						_self.element.classList[action](name);
-					});
+					}, SPACE);
 				}
 			}
 
@@ -829,7 +821,24 @@ Object.assign(Control.prototype, {
 	 */
 	on: method.keyValue({
 		set(eventName, handler) {
-			_(this).elementD3.on(eventName, handler);
+			const self = this;
+
+			if (!handler) {
+				self.off(eventName);
+			}
+			else {
+				const _self = _(self);
+
+				walkPath(eventName, (name) => {
+					if (_self.events[name]) {
+						_self.element.removeEventListener(firstInPath(name), _self.events[name], false);
+					}
+
+					_self.element.addEventListener(firstInPath(name), handler, false);
+
+					_self.events[name] = handler;
+				}, SPACE);
+			}
 		}
 	}),
 
@@ -845,7 +854,22 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	off(eventName) {
-		return this.on(eventName, null);
+		const self = this;
+
+		if (eventName) {
+			const _self = _(self);
+
+			walkPath(eventName, (name) => {
+				const handler = _self.events[name];
+
+				if (handler) {
+					_self.element.removeEventListener(firstInPath(name), handler, false);
+					delete _self.events[name];
+				}
+			}, SPACE);
+		}
+
+		return self;
 	},
 
 	/**
@@ -863,7 +887,27 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	set(eventName, handler, performAdd) {
-		return this.on(eventName, performAdd ? handler : null);
+		const self = this;
+
+		if (performAdd) {
+			self.on(eventName, handler);
+		}
+		else {
+			self.off(eventName);
+		}
+
+		return self;
+	},
+
+	trigger(eventName) {
+		const self = this;
+		const _self = _(self);
+
+		if (_self.element) {
+			_self.element.dispatchEvent(new Event(eventName));
+		}
+
+		return self;
 	},
 
 	/**

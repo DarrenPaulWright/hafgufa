@@ -1,6 +1,5 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { select } from 'd3';
 import { forOwn } from 'object-agent';
 import { castArray } from 'type-enforcer';
 import { CLICK_EVENT, Container, windowResize } from '../../src';
@@ -461,7 +460,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testItem = 0;
 
-				select(window).on(CLICK_EVENT, containerClick);
+				window.addEventListener(CLICK_EVENT, containerClick);
 
 				testUtil.control = new Control(buildSettings({
 					stopPropagation: stopPropagation
@@ -471,7 +470,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.simulateClick(testUtil.control.element());
 
-				select(window).on(CLICK_EVENT, null);
+				window.removeEventListener(CLICK_EVENT, containerClick);
 			};
 
 			it('should NOT prevent the propagation of an event if false', () => {

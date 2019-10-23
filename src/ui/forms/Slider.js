@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
@@ -58,7 +57,7 @@ export default class Slider extends FormControl {
 			container: self,
 			classes: 'track',
 			on: {
-				mousedown() {
+				mousedown(event) {
 					const mouseOffset = clamp(
 						event.clientX - self.element().getBoundingClientRect().x - self[MOUSE_OFFSET],
 						0,

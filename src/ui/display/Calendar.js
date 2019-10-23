@@ -266,8 +266,8 @@ export default class Calendar extends Control {
 					container: self,
 					classes: DAY_CLASS,
 					isSelectable: true,
-					onClick(button) {
-						self[onClickDay](button);
+					onClick() {
+						self[onClickDay](this);
 					}
 				});
 		}

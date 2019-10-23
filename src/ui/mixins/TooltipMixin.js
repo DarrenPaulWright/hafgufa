@@ -83,8 +83,8 @@ export default (Base) => {
 					}
 				}
 				else {
-					self.on(MOUSE_ENTER_EVENT + EVENT_SUFFIX, null)
-						.on(MOUSE_LEAVE_EVENT + EVENT_SUFFIX, null);
+					self.off(MOUSE_ENTER_EVENT + EVENT_SUFFIX)
+						.off(MOUSE_LEAVE_EVENT + EVENT_SUFFIX);
 
 					if (self.onDrag) {
 						self.onDrag().discard(self[ON_DRAG_ID]);

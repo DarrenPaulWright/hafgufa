@@ -1,5 +1,4 @@
 import { clear, delay } from 'async-agent';
-import { event } from 'd3';
 import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
 import {
 	ABSOLUTE,
@@ -325,7 +324,7 @@ export default (Base) => {
 
 			self[setPosition](self[DRAG_OFFSET].x + (offsetX * scaleChange), self[DRAG_OFFSET].y + (offsetY * scaleChange));
 
-			self.elementD3().dispatch(SCALE_CHANGE_EVENT);
+			self.trigger(SCALE_CHANGE_EVENT);
 		}
 
 		[startDrag]() {
@@ -495,7 +494,7 @@ export default (Base) => {
 
 					self.css(POSITION, ABSOLUTE)
 						.css('transform-origin', '0 0')
-						.on('mousedown touchstart', () => {
+						.on('mousedown touchstart', (event) => {
 							event.stopPropagation();
 
 							const localOffset = new Point(event.clientX - self[DRAG_OFFSET].x, event.clientY - self[DRAG_OFFSET].y);
@@ -523,7 +522,7 @@ export default (Base) => {
 							BODY.addEventListener('mouseup', endHandler);
 							BODY.addEventListener('touchend', endHandler);
 						})
-						.on(MOUSE_WHEEL_EVENT, () => {
+						.on(MOUSE_WHEEL_EVENT, (event) => {
 							self[setZoom](self.scale() * (1 - (event.deltaY / 1000)),
 								event.x - self[DRAG_OFFSET].x,
 								event.y - self[DRAG_OFFSET].y

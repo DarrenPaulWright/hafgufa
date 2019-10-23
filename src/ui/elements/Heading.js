@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
@@ -13,8 +12,7 @@ import {
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED
 } from '../../utility/domConstants';
-import Control from '../Control';
-import ControlManager from '../ControlManager';
+import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
@@ -41,7 +39,6 @@ export const HEADING_LEVELS = new Enum({
 	SIX: 'h6'
 });
 
-const CONTROLS = Symbol();
 const EXPANDER = 'expander';
 const CHECKBOX = 'checkbox';
 const TITLE_CONTAINER = 'title';
@@ -78,45 +75,41 @@ export default class Heading extends FocusMixin(Control) {
 		super(settings);
 
 		const self = this;
-		self[CONTROLS] = new ControlManager();
 		self.classes('heading');
-		self.on(CLICK_EVENT, () => {
-			self[mainClickEvent]();
+		self.on(CLICK_EVENT, (event) => {
+			self[mainClickEvent](event);
 		});
 
-		self[CONTROLS].add(new Div({
+		new Div({
 			id: TITLE_CONTAINER,
 			container: self,
 			classes: 'title-container',
 			content: new Span({
 				id: TITLE_ID
 			})
-		}));
+		});
 
 		applySettings(self, settings);
 
 		self.onResize(() => {
-				if (self.width().isAuto) {
-					self[CONTROLS].get(TITLE_CONTAINER)
-						.width(AUTO)
-						.css(PADDING_RIGHT, self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
-							.borderWidth() : ZERO_PIXELS);
-				}
-				else {
-					self[CONTROLS].get(TITLE_CONTAINER)
-						.width(HUNDRED_PERCENT)
-						.width(self.innerWidth() - self[CONTROLS].get(TITLE_CONTAINER)
-							.element().offsetLeft - (self[CONTROLS].get(TOOLBAR) ? self[CONTROLS].get(TOOLBAR)
-							.borderWidth() : ZERO_PIXELS))
-						.css(PADDING_RIGHT, ZERO_PIXELS);
-				}
+			if (self.width().isAuto) {
+				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
+					.width(AUTO)
+					.css(PADDING_RIGHT, self[CHILD_CONTROLS].get(TOOLBAR) ? self[CHILD_CONTROLS].get(TOOLBAR)
+						.borderWidth() : ZERO_PIXELS);
+			}
+			else {
+				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
+					.width(HUNDRED_PERCENT)
+					.width(self.innerWidth() - self[CHILD_CONTROLS].get(TITLE_CONTAINER)
+						.element().offsetLeft - (self[CHILD_CONTROLS].get(TOOLBAR) ? self[CHILD_CONTROLS].get(TOOLBAR)
+						.borderWidth() : ZERO_PIXELS))
+					.css(PADDING_RIGHT, ZERO_PIXELS);
+			}
 
-				self[CONTROLS].get(TITLE_CONTAINER)
-					.classes(LARGE_SINGLE_LINE_CLASS, !self.subTitle() && !self.isInline());
-			})
-			.onRemove(() => {
-				self[CONTROLS].remove();
-			});
+			self[CHILD_CONTROLS].get(TITLE_CONTAINER)
+				.classes(LARGE_SINGLE_LINE_CLASS, !self.subTitle() && !self.isInline());
+		});
 	}
 
 	[setFocus]() {
@@ -126,19 +119,23 @@ export default class Heading extends FocusMixin(Control) {
 	}
 
 	[setClickable]() {
-		this.classes(IS_CLICKABLE_CLASS, (this.isExpandable() || this.isSelectable() || this.showCheckbox() || this.onSelect()));
+		const self = this;
+
+		self.classes(IS_CLICKABLE_CLASS, (self.isExpandable() || self.isSelectable() || self.showCheckbox() || self.onSelect()));
 	}
 
 	/**
 	 * Toggle the selected state of this heading and fire the onSelect callback
 	 * @function mainClickEvent
 	 */
-	[mainClickEvent]() {
-		if (this.isExpandable() && (!this.isSelectable() || this.shouldMainClickExpand())) {
-			this[toggleIsExpanded]();
+	[mainClickEvent](event) {
+		const self = this;
+
+		if (self.isExpandable() && (!self.isSelectable() || self.shouldMainClickExpand())) {
+			self[toggleIsExpanded](event);
 		}
 		else {
-			this[toggleChecked]();
+			self[toggleChecked](event);
 		}
 	}
 
@@ -146,56 +143,64 @@ export default class Heading extends FocusMixin(Control) {
 	 * Toggle the selected state of this heading and fire the onSelect callback
 	 * @function toggleChecked
 	 */
-	[toggleChecked]() {
-		if (event && (this.isSelectable() || this.isExpandable())) {
+	[toggleChecked](event) {
+		const self = this;
+
+		if (event && (self.isSelectable() || self.isExpandable())) {
 			event.stopPropagation();
 		}
 
-		if (!this[IGNORE_EVENTS]) {
-			this.isSelected(!this.isSelected());
-			if (this.onSelect()) {
-				this.onSelect()();
+		if (!self[IGNORE_EVENTS]) {
+			self.isSelected(!self.isSelected());
+			if (self.onSelect()) {
+				self.onSelect()();
 			}
 		}
 	}
 
 	[setCheckBoxValue]() {
-		this[IGNORE_EVENTS] = true;
-		if (this[CONTROLS].get(CHECKBOX)) {
-			if (this.isIndeterminate()) {
-				this[CONTROLS].get(CHECKBOX).isIndeterminate(true);
+		const self = this;
+
+		self[IGNORE_EVENTS] = true;
+		if (self[CHILD_CONTROLS].get(CHECKBOX)) {
+			if (self.isIndeterminate()) {
+				self[CHILD_CONTROLS].get(CHECKBOX).isIndeterminate(true);
 			}
 			else {
-				this[CONTROLS].get(CHECKBOX).isChecked(this.isSelected());
+				self[CHILD_CONTROLS].get(CHECKBOX).isChecked(self.isSelected());
 			}
 		}
-		this[IGNORE_EVENTS] = false;
+		self[IGNORE_EVENTS] = false;
 	}
 
 	/**
 	 * Toggle the expanded state of this heading and fire the onExpand callback
 	 * @function toggleIsExpanded
 	 */
-	[toggleIsExpanded]() {
+	[toggleIsExpanded](event) {
+		const self = this;
+
 		event.stopPropagation();
 
-		this.isExpanded(!this.isExpanded());
-		if (this.onExpand()) {
-			this.onExpand()();
+		self.isExpanded(!self.isExpanded());
+		if (self.onExpand()) {
+			self.onExpand()();
 		}
 	}
 
 	[updateExpander]() {
-		if (this[CONTROLS].get(EXPANDER)) {
-			this[CONTROLS].get(EXPANDER)
-				.icon(this.isExpandable() ? (this.isExpanded() ? CARET_DOWN_ICON : CARET_RIGHT_ICON) : '');
+		const self = this;
+
+		if (self[CHILD_CONTROLS].get(EXPANDER)) {
+			self[CHILD_CONTROLS].get(EXPANDER)
+				.icon(self.isExpandable() ? (self.isExpanded() ? CARET_DOWN_ICON : CARET_RIGHT_ICON) : '');
 		}
 	}
 
-	[keyDownEvent]() {
+	[keyDownEvent](event) {
 		if (event.keyCode === keyCodes('enter')) {
 			event.preventDefault();
-			this[toggleChecked]();
+			this[toggleChecked](event);
 		}
 	}
 
@@ -235,7 +240,7 @@ Object.assign(Heading.prototype, {
 	 */
 	title: method.string({
 		set(title) {
-			this[CONTROLS].get(TITLE_CONTAINER).get(TITLE_ID).text(title);
+			this[CHILD_CONTROLS].get(TITLE_CONTAINER).get(TITLE_ID).text(title);
 		}
 	}),
 
@@ -252,21 +257,23 @@ Object.assign(Heading.prototype, {
 	 */
 	subTitle: method.string({
 		set(subTitle) {
+			const self = this;
+
 			if (subTitle !== '') {
-				if (!this[CONTROLS].get(SUB_TITLE_ID)) {
-					this[CONTROLS].get(TITLE_CONTAINER)
+				if (!self[CHILD_CONTROLS].get(SUB_TITLE_ID)) {
+					self[CHILD_CONTROLS].get(TITLE_CONTAINER)
 						.append(new Span({
 							id: SUB_TITLE_ID,
 							classes: 'subtitle'
 						}));
 				}
-				this[CONTROLS].get(SUB_TITLE_ID).text(subTitle);
+				self[CHILD_CONTROLS].get(SUB_TITLE_ID).text(subTitle);
 			}
 			else {
-				this[CONTROLS].get(TITLE_CONTAINER).removeContent(SUB_TITLE_ID);
+				self[CHILD_CONTROLS].get(TITLE_CONTAINER).removeContent(SUB_TITLE_ID);
 			}
 
-			this.resize(true);
+			self.resize(true);
 		}
 	}),
 
@@ -283,19 +290,21 @@ Object.assign(Heading.prototype, {
 	 */
 	error: method.string({
 		set(error) {
+			const self = this;
+
 			if (error !== '') {
-				if (!this[CONTROLS].get(TITLE_CONTAINER).get(ERROR_ID)) {
-					this[CONTROLS].get(TITLE_CONTAINER).append(new Span({
+				if (!self[CHILD_CONTROLS].get(TITLE_CONTAINER).get(ERROR_ID)) {
+					self[CHILD_CONTROLS].get(TITLE_CONTAINER).append(new Span({
 						id: ERROR_ID,
 						classes: 'error'
 					}));
 				}
-				this[CONTROLS].get(TITLE_CONTAINER)
+				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
 					.get(ERROR_ID)
 					.text(ERROR_ICON + error);
 			}
 			else {
-				this[CONTROLS].get(TITLE_CONTAINER)
+				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
 					.removeContent(ERROR_ID);
 			}
 		}
@@ -314,18 +323,18 @@ Object.assign(Heading.prototype, {
 			const self = this;
 
 			if (newValue === '') {
-				self[CONTROLS].remove(ICON_CONTROL);
+				self[CHILD_CONTROLS].remove(ICON_CONTROL);
 			}
 			else {
-				if (!self[CONTROLS].get(ICON_CONTROL)) {
-					self[CONTROLS].add(new Icon({
+				if (!self[CHILD_CONTROLS].get(ICON_CONTROL)) {
+					new Icon({
 						container: self,
 						id: ICON_CONTROL,
-						prepend: self[CONTROLS].get(TITLE_CONTAINER).element()
-					}));
+						prepend: self[CHILD_CONTROLS].get(TITLE_CONTAINER).element()
+					});
 				}
 
-				self[CONTROLS].get(ICON_CONTROL)
+				self[CHILD_CONTROLS].get(ICON_CONTROL)
 					.icon(newValue)
 					.tooltip(self.iconTooltip());
 			}
@@ -342,8 +351,8 @@ Object.assign(Heading.prototype, {
 	 */
 	iconTooltip: method.string({
 		set(iconTooltip) {
-			if (this[CONTROLS].get(ICON_CONTROL)) {
-				this[CONTROLS].get(ICON_CONTROL).tooltip(iconTooltip);
+			if (this[CHILD_CONTROLS].get(ICON_CONTROL)) {
+				this[CHILD_CONTROLS].get(ICON_CONTROL).tooltip(iconTooltip);
 			}
 		}
 	}),
@@ -358,19 +367,21 @@ Object.assign(Heading.prototype, {
 	 */
 	image: method.string({
 		set(image) {
+			const self = this;
+
 			if (image === '') {
-				this[CONTROLS].remove(IMAGE_CONTROL);
+				self[CHILD_CONTROLS].remove(IMAGE_CONTROL);
 			}
 			else {
-				if (!this[CONTROLS].get(IMAGE_CONTROL)) {
-					this[CONTROLS].add(new Image({
-						container: this,
-						prepend: this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER),
+				if (!self[CHILD_CONTROLS].get(IMAGE_CONTROL)) {
+					new Image({
+						container: self,
+						prepend: self[CHILD_CONTROLS].get(ICON_CONTROL) || self[CHILD_CONTROLS].get(TITLE_CONTAINER),
 						id: IMAGE_CONTROL
 					})
-						.css(DISPLAY, INLINE_BLOCK));
+						.css(DISPLAY, INLINE_BLOCK);
 				}
-				this[CONTROLS].get(IMAGE_CONTROL).source(image);
+				self[CHILD_CONTROLS].get(IMAGE_CONTROL).source(image);
 			}
 		}
 	}),
@@ -388,15 +399,15 @@ Object.assign(Heading.prototype, {
 			const self = this;
 
 			if (newValue.length) {
-				if (!this[CONTROLS].get(TOOLBAR)) {
-					this[CONTROLS].add(new Toolbar({
+				if (!self[CHILD_CONTROLS].get(TOOLBAR)) {
+					new Toolbar({
 						id: TOOLBAR,
-						container: self.element(),
+						container: self,
 						stopPropagation: true
-					}));
+					});
 				}
 
-				this[CONTROLS].get(TOOLBAR).empty();
+				self[CHILD_CONTROLS].get(TOOLBAR).empty();
 
 				newValue.forEach((button) => {
 					button = clone(button);
@@ -415,11 +426,11 @@ Object.assign(Heading.prototype, {
 						button.isEnabled = () => isEnabled(self.data());
 					}
 
-					this[CONTROLS].get(TOOLBAR).addButton(button);
+					self[CHILD_CONTROLS].get(TOOLBAR).addButton(button);
 				});
 			}
 			else {
-				this[CONTROLS].remove(TOOLBAR);
+				self[CHILD_CONTROLS].remove(TOOLBAR);
 			}
 
 			self.resize();
@@ -436,10 +447,12 @@ Object.assign(Heading.prototype, {
 	 */
 	isSelectable: method.boolean({
 		set(newValue) {
-			if (this[CONTROLS].get(CHECKBOX)) {
-				this[CONTROLS].get(CHECKBOX).isVisible(newValue);
+			const self = this;
+
+			if (self[CHILD_CONTROLS].get(CHECKBOX)) {
+				self[CHILD_CONTROLS].get(CHECKBOX).isVisible(newValue);
 			}
-			this[setClickable]();
+			self[setClickable]();
 		}
 	}),
 
@@ -453,11 +466,13 @@ Object.assign(Heading.prototype, {
 	 */
 	isSelected: method.boolean({
 		set(newValue) {
+			const self = this;
+
 			if (newValue) {
-				this.isIndeterminate(false);
+				self.isIndeterminate(false);
 			}
-			this[setCheckBoxValue]();
-			this.classes('selected', newValue);
+			self[setCheckBoxValue]();
+			self.classes('selected', newValue);
 		}
 	}),
 
@@ -471,10 +486,12 @@ Object.assign(Heading.prototype, {
 	 */
 	isIndeterminate: method.boolean({
 		set(isIndeterminate) {
+			const self = this;
+
 			if (isIndeterminate) {
-				this.isSelected(false);
+				self.isSelected(false);
 			}
-			this[setCheckBoxValue]();
+			self[setCheckBoxValue]();
 		}
 	}),
 
@@ -488,8 +505,10 @@ Object.assign(Heading.prototype, {
 	 */
 	isExpandable: method.boolean({
 		set() {
-			this[updateExpander]();
-			this[setClickable]();
+			const self = this;
+
+			self[updateExpander]();
+			self[setClickable]();
 		}
 	}),
 
@@ -531,21 +550,21 @@ Object.assign(Heading.prototype, {
 			const self = this;
 
 			if (newValue) {
-				this[CONTROLS].add(new Button({
-					container: this,
+				new Button({
+					container: self,
 					prepend: true,
 					id: EXPANDER,
 					classes: 'icon-button',
-					onClick() {
-						self[toggleIsExpanded]();
+					onClick(event) {
+						self[toggleIsExpanded](event);
 					}
-				}));
+				});
 			}
 			else {
-				this[CONTROLS].remove(EXPANDER);
+				self[CHILD_CONTROLS].remove(EXPANDER);
 			}
 
-			this[updateExpander]();
+			self[updateExpander]();
 		}
 	}),
 
@@ -562,20 +581,20 @@ Object.assign(Heading.prototype, {
 			const self = this;
 
 			if (showCheckbox) {
-				this[CONTROLS].add(new CheckBox({
+				new CheckBox({
 					id: CHECKBOX,
-					container: this.element(),
-					prepend: this[CONTROLS].get(IMAGE_CONTROL) || this[CONTROLS].get(ICON_CONTROL) || this[CONTROLS].get(TITLE_CONTAINER),
-					isVisible: this.isSelectable(),
-					onChange() {
-						self[toggleChecked]();
+					container: self,
+					prepend: self[CHILD_CONTROLS].get(IMAGE_CONTROL) || self[CHILD_CONTROLS].get(ICON_CONTROL) || self[CHILD_CONTROLS].get(TITLE_CONTAINER),
+					isVisible: self.isSelectable(),
+					onChange(isChecked, event) {
+						self[toggleChecked](event);
 					}
-				}));
+				});
 			}
 			else {
-				this[CONTROLS].remove(CHECKBOX);
+				self[CHILD_CONTROLS].remove(CHECKBOX);
 			}
-			this[setClickable]();
+			self[setClickable]();
 		}
 	}),
 
@@ -628,7 +647,7 @@ Object.assign(Heading.prototype, {
 			}
 			else {
 				self.attr(TAB_INDEX, TAB_INDEX_DISABLED)
-					.on(KEY_DOWN_EVENT, null);
+					.off(KEY_DOWN_EVENT);
 			}
 		}
 	})

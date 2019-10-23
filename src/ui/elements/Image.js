@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { applySettings, Enum, method } from 'type-enforcer';
 import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
@@ -6,7 +5,7 @@ import Control from './../Control';
 import './Image.less';
 
 const DEFAULT_IMAGE_SOURCE = ' ';
-const preventDefault = () => {
+const preventDefault = (event) => {
 	event.preventDefault();
 };
 

@@ -1,5 +1,4 @@
 import { delay } from 'async-agent';
-import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
@@ -111,7 +110,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		self.onFocus(() => {
 			self[LIST_CONTAINER].addClass('focused');
 			self[buildSuggestionPopup]();
-			self[TEXT_INPUT].on(KEY_DOWN_EVENT, () => {
+			self[TEXT_INPUT].on(KEY_DOWN_EVENT, (event) => {
 				if (event.keyCode === keyCodes('down')) {
 					event.preventDefault();
 					if (self[SUGGESTION_MENU] && !self[SUGGESTION_MENU].isFocused()) {

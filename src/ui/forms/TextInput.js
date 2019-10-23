@@ -1,7 +1,7 @@
 import { throttle } from 'async-agent';
-import { event } from 'd3';
 import keyCodes from 'keycodes';
 import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
+import getAttributes from '../../utility/dom/getAttributes';
 import replaceElement from '../../utility/dom/replaceElement';
 import {
 	BLUR_EVENT,
@@ -167,6 +167,7 @@ Object.assign(TextInput.prototype, {
 			}
 
 			if (oldInput) {
+				self[INPUT].attr(getAttributes(oldInput.element()));
 				replaceElement(oldInput.element(), self[INPUT].element());
 				oldInput.remove();
 				oldInput = null;
@@ -601,7 +602,7 @@ Object.assign(TextInput.prototype, {
 				const self = this;
 
 				self.onFocus(() => {
-					self[INPUT].on(KEY_UP_EVENT, () => {
+					self[INPUT].on(KEY_UP_EVENT, (event) => {
 						if (event.keyCode === keyCodes('enter')) {
 							self.onEnter().trigger();
 						}

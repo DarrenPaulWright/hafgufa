@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { applySettings, castArray, method } from 'type-enforcer';
 import { IS_DESKTOP } from '../../utility/browser';
 import {
@@ -30,7 +29,7 @@ const IMAGE_TYPE = 'image/*';
 const VIDEO_TYPE = 'video/*';
 const EXTENSION_SEPARATOR = '.';
 
-const stopEvent = () => {
+const stopEvent = (event) => {
 	event.stopPropagation();
 	event.preventDefault();
 };
@@ -96,20 +95,20 @@ export default class FileInput extends Control {
 			content: locale.get(IS_DESKTOP ? 'fileInputClickOrDrop' : 'fileInputClickToAdd')
 		});
 
-		self.on(CLICK_EVENT, () => {
-				stopEvent();
+		self.on(CLICK_EVENT, (event) => {
+				stopEvent(event);
 				self[INPUT_CONTROL].isFocused(true).click();
 			})
-			.on(DRAG_ENTER_EVENT, () => {
-				stopEvent();
+			.on(DRAG_ENTER_EVENT, (event) => {
+				stopEvent(event);
 				self.addClass(HOVER_CLASS);
 			})
-			.on(DRAG_LEAVE_EVENT, () => {
-				stopEvent();
+			.on(DRAG_LEAVE_EVENT, (event) => {
+				stopEvent(event);
 				self.removeClass(HOVER_CLASS);
 			})
-			.on(DRAG_DROP_EVENT, () => {
-				stopEvent();
+			.on(DRAG_DROP_EVENT, (event) => {
+				stopEvent(event);
 				if (event.dataTransfer.files.length > 0) {
 					self[loadFile](event.dataTransfer.files);
 				}

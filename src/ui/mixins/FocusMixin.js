@@ -1,5 +1,4 @@
 import { defer } from 'async-agent';
-import { event } from 'd3';
 import { method } from 'type-enforcer';
 import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../../utility/domConstants';
 
@@ -61,7 +60,7 @@ const onBlurCallback = function() {
 
 const setCallback = function(control, eventName, callback) {
 	const self = this;
-	const handler = () => {
+	const handler = (event) => {
 		event.stopPropagation();
 		callback.call(self);
 	};

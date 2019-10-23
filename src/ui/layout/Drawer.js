@@ -1,3 +1,4 @@
+import { select } from 'd3';
 import Hammer from 'hammerjs';
 import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
 import { IS_PHONE } from '../../utility/browser';
@@ -193,7 +194,7 @@ export default class Drawer extends Container {
 		let newMargin = 0;
 		let newOpacity = 1;
 		let containerPadding = self.isRemoved ? 0 : closedSize;
-		const element = (self.isAnimated() && !self.isRemoved) ? d3Helper.animate(self) : self.elementD3();
+		const element = (self.isAnimated() && !self.isRemoved) ? d3Helper.animate(self) : select(self.element());
 
 		if (self.isOpen() && !self.isRemoved) {
 			if (!self[OVERLAP]) {

@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import { method } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../utility/domConstants';
 import ContextMenu from '../other/ContextMenu';
@@ -51,7 +50,7 @@ export default (Base) => {
 				const self = this;
 				const hasMenu = menuItems && menuItems.length;
 
-				self.set(CONTEXT_MENU_EVENT, () => {
+				self.set(CONTEXT_MENU_EVENT, (event) => {
 					event.preventDefault();
 
 					self[removeMenu]();

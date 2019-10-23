@@ -1,4 +1,3 @@
-import { select } from 'd3';
 import { Collection } from 'hord';
 import { clone, isEmpty } from 'object-agent';
 import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
@@ -330,8 +329,8 @@ export default class Picker extends FocusMixin(FormControl) {
 
 				self.contentContainer.addButton({
 					id: preferredItem.id,
-					onClick(...args) {
-						self[onButtonClick](...args);
+					onClick() {
+						self[onButtonClick](this);
 					}
 				});
 				currentButton = self.contentContainer.getButton(preferredItem.id);
@@ -359,7 +358,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 		else {
 			self[toggleSelectedItem](buttonId);
-			select(WINDOW).dispatch(CLICK_EVENT);
+			WINDOW.dispatchEvent(new Event(CLICK_EVENT));
 		}
 	}
 
@@ -383,8 +382,8 @@ export default class Picker extends FocusMixin(FormControl) {
 				self.contentContainer.addButton({
 					id: POPUP_BUTTON_ID,
 					classes: POPUP_BUTTON_CLASS,
-					onClick(...args) {
-						self[onButtonClick](...args);
+					onClick() {
+						self[onButtonClick](this);
 					}
 				});
 				self[POPUP_BUTTON] = self.contentContainer.getButton(POPUP_BUTTON_ID);
@@ -478,8 +477,8 @@ export default class Picker extends FocusMixin(FormControl) {
 		const buildPreferredButton = (settings, index) => {
 			self.contentContainer.addButton({
 				id: settings.id,
-				onClick(...args) {
-					self[onButtonClick](...args);
+				onClick() {
+					self[onButtonClick](this);
 				}
 			}, index);
 

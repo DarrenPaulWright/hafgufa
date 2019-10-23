@@ -1,10 +1,10 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { event } from 'd3';
-import { castArray, isString } from 'type-enforcer';
+import { isString } from 'type-enforcer';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../../src';
 import GridCell from '../../../src/ui/grid/GridCell';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
+import getAttributes from '../../../src/utility/dom/getAttributes';
 import TestUtil from '../../TestUtil';
 import ControlTests from '../ControlTests';
 
@@ -248,13 +248,6 @@ describe('GridCell', () => {
 			},
 			textAlign: 'NONE'
 		}];
-
-		const getAttributes = (element) => {
-			return castArray(element.attributes).reduce((result, attr) => {
-				result[attr.name] = attr.value;
-				return result;
-			}, {});
-		};
 
 		const compareContent = (element, output) => {
 			if (isString(output)) {
@@ -761,7 +754,7 @@ describe('GridCell', () => {
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				onSelect() {
+				onSelect(isChecked, event) {
 					testVar = event;
 				}
 			})

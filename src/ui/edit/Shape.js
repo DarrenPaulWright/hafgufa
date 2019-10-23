@@ -1,4 +1,3 @@
-import { event } from 'd3';
 import keycodes from 'keycodes/index';
 import { method, Point } from 'type-enforcer';
 import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../../index';
@@ -40,7 +39,7 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 				self.resize(true)
 					.onChange()();
 			})
-			.on(KEY_DOWN_EVENT, () => {
+			.on(KEY_DOWN_EVENT, (event) => {
 				let edited = false;
 
 				switch (event.keyCode) {

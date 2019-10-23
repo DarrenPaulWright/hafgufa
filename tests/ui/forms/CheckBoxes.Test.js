@@ -1,5 +1,4 @@
 import { assert } from 'chai';
-import { event } from 'd3';
 import { CheckBoxes } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -133,7 +132,7 @@ describe('CheckBoxes', () => {
 					content: 'option1',
 					value: '1',
 					isChecked: false,
-					onChange() {
+					onChange(isChecked, event) {
 						testVar = event;
 					}
 				}]

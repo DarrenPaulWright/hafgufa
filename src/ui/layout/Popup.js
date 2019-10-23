@@ -1,5 +1,4 @@
 import { clear, defer, delay } from 'async-agent';
-import { event, select } from 'd3';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
 import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
@@ -145,6 +144,9 @@ const setSlidability = Symbol();
 const checkSlidability = Symbol();
 const positionPopup = Symbol();
 const positionArrow = Symbol();
+const onWindowClick = Symbol();
+const onWindowBlur = Symbol();
+const onEscapeKey = Symbol();
 
 /**
  * Adds a div to the top of the body and positions it relative to an anchor.
@@ -197,12 +199,48 @@ class Popup extends MergeContentContainerMixin(Container) {
 			self.resize(true);
 		});
 
-		self.on(MOUSE_ENTER_EVENT, () => {
-				self[onMouseEnter]();
-			})
-			.on(MOUSE_LEAVE_EVENT, () => {
-				self[onMouseLeave]();
-			})
+		self[onWindowClick] = () => {
+			if (!self[IS_ACTIVE]) {
+				self.remove();
+			}
+		};
+		self[onWindowBlur] = () => {
+			self.remove();
+		};
+		self[onMouseEnter] = (event) => {
+			if (event.target === self.element()) {
+				self[IS_ACTIVE] = true;
+			}
+			if (self.hideOnMouseLeave() && !self.isSticky()) {
+				self[IS_MOUSE_OVER] = true;
+				clear(self[MOUSE_LEAVE_TIMER]);
+			}
+		};
+		self[onMouseLeave] = (event) => {
+			if (event.target === self.element()) {
+				self[IS_ACTIVE] = false;
+			}
+			if (self.hideOnMouseLeave() && !self.isSticky()) {
+				self[IS_MOUSE_OVER] = false;
+				self[MOUSE_LEAVE_TIMER] = delay(() => {
+					if (!self[IS_MOUSE_OVER]) {
+						self.remove();
+					}
+				}, MOUSE_LEAVE_BUFFER);
+			}
+		};
+		self[onMouseMove] = (event) => {
+			self[IS_ACTIVE] = false;
+			self[positionPopup](event);
+		};
+		self[onEscapeKey] = (event) => {
+			if (event.keyCode === keyCodes('escape')) {
+				self.remove();
+			}
+		};
+
+		self.on(MOUSE_ENTER_EVENT, self[onMouseEnter])
+			.on(MOUSE_LEAVE_EVENT, self[onMouseLeave])
 			.onResize((width, height) => {
 				const isMouseAnchor = self.anchor() === Popup.MOUSE;
 				self[CURRENT_WIDTH] = width;
@@ -226,39 +264,6 @@ class Popup extends MergeContentContainerMixin(Container) {
 		if (self.type === controlTypes.POPUP) {
 			applySettings(self, settings);
 		}
-	}
-
-	[onMouseEnter]() {
-		const self = this;
-
-		if (event.target === self.element()) {
-			self[IS_ACTIVE] = true;
-		}
-		if (self.hideOnMouseLeave() && !self.isSticky()) {
-			self[IS_MOUSE_OVER] = true;
-			clear(self[MOUSE_LEAVE_TIMER]);
-		}
-	}
-
-	[onMouseLeave]() {
-		const self = this;
-
-		if (event.target === self.element()) {
-			self[IS_ACTIVE] = false;
-		}
-		if (self.hideOnMouseLeave() && !self.isSticky()) {
-			self[IS_MOUSE_OVER] = false;
-			self[MOUSE_LEAVE_TIMER] = delay(() => {
-				if (!self[IS_MOUSE_OVER]) {
-					self.remove();
-				}
-			}, MOUSE_LEAVE_BUFFER);
-		}
-	}
-
-	[onMouseMove]() {
-		this[IS_ACTIVE] = false;
-		this[positionPopup]();
 	}
 
 	[setAnimation]() {
@@ -318,7 +323,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			(anchorDockPoint.secondary() === dockOption2 && popupDockPoint.secondary() === dockOption1);
 	}
 
-	[positionPopup]() {
+	[positionPopup](event) {
 		const self = this;
 		const currentScrollOffset = self.element().scrollTop;
 		const marginsVertical = self.marginHeight;
@@ -446,7 +451,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 		if (event && self.anchor() === Popup.MOUSE && !self.canTrackMouse()) {
 			self[IS_MOUSE_POSITION_SET] = true;
-			select(BODY).on(MOUSE_MOVE_EVENT, null);
+			BODY.removeEventListener(MOUSE_MOVE_EVENT, self[onMouseMove]);
 		}
 	}
 
@@ -487,13 +492,14 @@ Object.assign(Popup.prototype, {
 
 	anchor: method.element({
 		before(oldValue) {
+			const self = this;
+
 			if (isElement(oldValue)) {
-				select(oldValue)
-					.on(MOUSE_ENTER_EVENT, null)
-					.on(MOUSE_LEAVE_EVENT, null);
+				oldValue.removeEventListener(MOUSE_ENTER_EVENT, self[onMouseEnter]);
+				oldValue.removeEventListener(MOUSE_LEAVE_EVENT, self[onMouseLeave]);
 			}
 			else if (oldValue === Popup.MOUSE) {
-				select(BODY).on(MOUSE_MOVE_EVENT, null);
+				BODY.removeEventListener(MOUSE_MOVE_EVENT, self[onMouseMove]);
 			}
 		},
 		set(anchor) {
@@ -501,16 +507,11 @@ Object.assign(Popup.prototype, {
 
 			if (isElement(anchor)) {
 				self.css(Z_INDEX, (anchor.style[Z_INDEX] || 0) + 1);
-				select(anchor)
-					.on(MOUSE_ENTER_EVENT, () => {
-						self[onMouseEnter]();
-					})
-					.on(MOUSE_LEAVE_EVENT, () => {
-						self[onMouseLeave]();
-					});
+				anchor.addEventListener(MOUSE_ENTER_EVENT, self[onMouseEnter]);
+				anchor.addEventListener(MOUSE_LEAVE_EVENT, self[onMouseLeave]);
 			}
 			else if (anchor === Popup.MOUSE) {
-				select(BODY).on(MOUSE_MOVE_EVENT, () => self[onMouseMove]());
+				BODY.addEventListener(MOUSE_MOVE_EVENT, self[onMouseMove]);
 			}
 		},
 		other: [undefined, Popup.MOUSE]
@@ -532,23 +533,17 @@ Object.assign(Popup.prototype, {
 
 	isSticky: method.boolean({
 		init: true,
-		set(newValue) {
+		set(isSticky) {
 			const self = this;
-			const suffix = '.' + self.id();
 
-			const onWindowClick = () => {
-				if (!self[IS_ACTIVE]) {
-					self.remove();
-				}
-			};
-
-			const onWindowBlur = () => {
-				self.remove();
-			};
-
-			select(WINDOW)
-				.on(CLICK_EVENT + suffix, !newValue ? onWindowClick : null)
-				.on(BLUR_EVENT + suffix, !newValue ? onWindowBlur : null);
+			if (isSticky) {
+				WINDOW.removeEventListener(CLICK_EVENT, self[onWindowClick]);
+				WINDOW.removeEventListener(BLUR_EVENT, self[onWindowBlur]);
+			}
+			else {
+				WINDOW.addEventListener(CLICK_EVENT, self[onWindowClick]);
+				WINDOW.addEventListener(BLUR_EVENT, self[onWindowBlur]);
+			}
 		}
 	}),
 
@@ -558,13 +553,12 @@ Object.assign(Popup.prototype, {
 		set(hideOnEscapeKey) {
 			const self = this;
 
-			const onEscapeKey = () => {
-				if (event.keyCode === keyCodes('escape')) {
-					self.remove();
-				}
-			};
-
-			select(WINDOW).on(KEY_UP_EVENT, hideOnEscapeKey ? onEscapeKey : null);
+			if (hideOnEscapeKey) {
+				WINDOW.addEventListener(KEY_UP_EVENT, self[onEscapeKey]);
+			}
+			else {
+				WINDOW.removeEventListener(KEY_UP_EVENT, self[onEscapeKey]);
+			}
 		}
 	}),
 

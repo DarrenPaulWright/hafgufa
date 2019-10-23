@@ -1,5 +1,4 @@
 import { defer } from 'async-agent';
-import { event } from 'd3';
 import { applySettings, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
 import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../../utility/domConstants';
 import Control from '../Control';
@@ -55,10 +54,10 @@ export default class GridRow extends Control {
 		self[CELL_RECYCLER] = new ControlRecycler()
 			.control(GridCell)
 			.defaultSettings({
-				onSelect() {
+				onSelect(isChecked, event) {
 					if (self.onSelect()) {
 						self.isSelected(!self.isSelected());
-						self.onSelect()(self.id(), self.isSelected());
+						self.onSelect()(self.id(), self.isSelected(), false, event);
 					}
 				}
 			});
@@ -208,19 +207,19 @@ export default class GridRow extends Control {
 
 		if (doSetClickEvent) {
 			if (!self[IS_CLICK_EVENT_SET]) {
-				self.on(CLICK_EVENT, () => {
-					if (self.onSelect()) {
-						self.isSelected(!self.isSelected());
-						self.onSelect()(self.id(), self.isSelected());
-					}
-				});
-				self.on(MOUSE_DOWN_EVENT, () => event.preventDefault());
+				self.on(CLICK_EVENT, (event) => {
+						if (self.onSelect()) {
+							self.isSelected(!self.isSelected());
+							self.onSelect()(self.id(), self.isSelected(), false, event);
+						}
+					})
+					.on(MOUSE_DOWN_EVENT, (event) => event.preventDefault());
 				self[IS_CLICK_EVENT_SET] = true;
 			}
 		}
 		else {
-			self.off(CLICK_EVENT);
-			self.off(MOUSE_DOWN_EVENT);
+			self.off(CLICK_EVENT)
+				.off(MOUSE_DOWN_EVENT);
 			self[IS_CLICK_EVENT_SET] = false;
 		}
 	}

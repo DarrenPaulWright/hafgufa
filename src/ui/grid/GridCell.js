@@ -115,12 +115,12 @@ export default class GridCell extends Control {
 				return {
 					classes: 'icon-button',
 					...settings,
-					onClick() {
+					onClick(event) {
 						if (settings.onClick) {
 							settings.onClick(self.rowData());
 						}
 						if (self.onSelect()) {
-							self.onSelect()(true);
+							self.onSelect()(true, event);
 						}
 					}
 				};
@@ -277,9 +277,9 @@ Object.assign(GridCell.prototype, {
 
 					self[getControl]('gridCheckbox', CheckBox, {
 						stopPropagation: true,
-						onChange(isChecked) {
+						onChange(isChecked, event) {
 							if (self.onSelect()) {
-								self.onSelect()(isChecked);
+								self.onSelect()(isChecked, event);
 							}
 						}
 					}).isChecked(self.isSelected(), true);

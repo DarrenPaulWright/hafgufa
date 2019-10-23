@@ -16,8 +16,8 @@ const getElement = (element, isContainer = false) => {
 	else if (isContainer && element && element.contentContainer) {
 		return select(element.contentContainer.element());
 	}
-	else if (element && element.elementD3) {
-		return element.elementD3();
+	else if (element && element.element) {
+		return select(element.element());
 	}
 	else if (element && element.element) {
 		return select(element.element());

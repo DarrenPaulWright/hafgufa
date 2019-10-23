@@ -1,5 +1,4 @@
 import { defer, throttle } from 'async-agent';
-import { event } from 'd3';
 import { clone } from 'object-agent';
 import {
 	applySettings,
@@ -220,7 +219,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			.css(LEFT, ZERO_PIXELS);
 
 		self.addClass(VIRTUAL_LIST_CLASS)
-			.on(SCROLL_EVENT, () => self[onScroll]())
+			.on(SCROLL_EVENT, (event) => self[onScroll](event))
 			.css(POSITION, RELATIVE)
 			.css(FONT_SIZE, ZERO_PIXELS)
 			.css(BOX_SIZING, CONTENT_BOX);
@@ -525,7 +524,7 @@ export default class VirtualList extends FocusMixin(Control) {
 	 * the viewport height.
 	 * @function onScroll
 	 */
-	[onScroll]() {
+	[onScroll](event) {
 		const self = this;
 
 		event.preventDefault();
@@ -640,7 +639,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[CURRENT_SCROLL_OFFSET] = clamp(offset, 0, (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE] + self.startOffset()
 			.toPixels(true) + self.endOffset().toPixels(true));
 
-		d3Helper.animate(self.elementD3())
+		d3Helper.animate(self)
 			.tween('scrollTween', d3Helper.propertyTween(self[EXTENT_SCROLL_ORIGIN], self[CURRENT_SCROLL_OFFSET]));
 	}
 
@@ -1115,7 +1114,7 @@ Object.assign(VirtualList.prototype, {
 
 			if (newValue) {
 				self.attr(TAB_INDEX, TAB_INDEX_ENABLED);
-				self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self.element())
+				self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self)
 					.onSetFocus((index) => self[focusItem](index))
 					.length(self[TOTAL_ITEMS]);
 
