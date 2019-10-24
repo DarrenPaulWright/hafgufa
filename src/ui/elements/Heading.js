@@ -386,7 +386,7 @@ Object.assign(Heading.prototype, {
 	}),
 
 	/**
-	 * Get or set the data array to build buttons on teh right side of the header.
+	 * Get or set the data array to build buttons on the right side of the header.
 	 * @method buttons
 	 * @member module:Heading
 	 * @instance
@@ -641,7 +641,7 @@ Object.assign(Heading.prototype, {
 
 			if (newValue) {
 				self.attr(TAB_INDEX, TAB_INDEX_ENABLED)
-					.on(KEY_DOWN_EVENT, () => self[keyDownEvent]());
+					.on(KEY_DOWN_EVENT, (event) => self[keyDownEvent](event));
 			}
 			else {
 				self.attr(TAB_INDEX, TAB_INDEX_DISABLED)
