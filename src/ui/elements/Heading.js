@@ -121,11 +121,10 @@ export default class Heading extends FocusMixin(Control) {
 	[setClickable]() {
 		const self = this;
 
-		self.classes(IS_CLICKABLE_CLASS, (self.isExpandable() || self.isSelectable() || self.showCheckbox() || self.onSelect()));
+		self.classes(IS_CLICKABLE_CLASS, (self.isExpandable() || self.isSelectable() || self.showCheckbox() || self.onSelect().length));
 	}
 
 	/**
-	 * Toggle the selected state of this heading and fire the onSelect callback
 	 * @function mainClickEvent
 	 */
 	[mainClickEvent](event) {
@@ -153,7 +152,7 @@ export default class Heading extends FocusMixin(Control) {
 		if (!self[IGNORE_EVENTS]) {
 			self.isSelected(!self.isSelected());
 			if (self.onSelect()) {
-				self.onSelect()();
+				self.onSelect().trigger();
 			}
 		}
 	}
@@ -606,11 +605,10 @@ Object.assign(Heading.prototype, {
 	 * @arg {Function} onSelect
 	 * @returns {Function|this}
 	 */
-	onSelect: method.function({
+	onSelect: method.queue({
 		set() {
 			this[setClickable]();
-		},
-		other: undefined
+		}
 	}),
 
 	/**
