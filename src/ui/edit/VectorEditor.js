@@ -116,7 +116,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			.isFocused(true)
 			.id(shortid.generate());
 
-		self[updateDrawing]();
+		self[updateDrawing](event);
 	}
 
 	[updateDrawing](event) {
