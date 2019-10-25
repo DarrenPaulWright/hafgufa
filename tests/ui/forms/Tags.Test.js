@@ -505,10 +505,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			return wait()
-				.then(() => {
-					assert.isTrue(!isPopupRendered());
-				});
+			assert.isTrue(!isPopupRendered());
 		});
 
 		it('should show a popup when the control is focused and suggestions are provided', () => {
@@ -519,10 +516,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			return wait()
-				.then(() => {
-					assert.isTrue(isPopupRendered());
-				});
+			assert.isTrue(isPopupRendered());
 		});
 
 		it('should remove the popup when the control loses focus', () => {
@@ -547,10 +541,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 3);
-				});
+			assert.equal(getRenderedSuggestions().length, 3);
 		});
 
 		it('should accept an array of objects with id and title as suggestions', () => {
@@ -561,10 +552,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 3);
-				});
+			assert.equal(getRenderedSuggestions().length, 3);
 		});
 
 		it('should accept an array of objects with id, title, and subTitle as suggestions', () => {
@@ -575,10 +563,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 3);
-				});
+			assert.equal(getRenderedSuggestions().length, 3);
 		});
 
 		it('should filter suggestions with titles when text is added to the text control', () => {
@@ -590,10 +575,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('2');
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 1);
-				});
+			assert.equal(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show all suggestions if the filter text is removed', () => {
@@ -605,11 +587,8 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('2');
 
+			setInputValue('');
 			return wait(1)
-				.then(() => {
-					setInputValue('');
-					return wait(1);
-				})
 				.then(() => {
 					assert.equal(getRenderedSuggestions().length, 3);
 				});
@@ -624,10 +603,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('nothing');
 
-			return wait()
-				.then(() => {
-					assert.isTrue(!isPopupRendered());
-				});
+			assert.isTrue(!isPopupRendered());
 		});
 
 		it('should filter suggestions with subtitles when text is added to the text control', () => {
@@ -639,10 +615,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('sub 2');
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 1);
-				});
+			assert.equal(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show suggestions when editing an existing tag', () => {
@@ -656,10 +629,7 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 1);
-				});
+			assert.equal(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show the typed text when editing a tag that was selected from the list', () => {
@@ -701,10 +671,7 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			return wait()
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 1);
-				});
+			assert.equal(getRenderedSuggestions().length, 1);
 		});
 
 		it('should update the suggestions if the background is clicked while editing a tag', () => {
@@ -718,15 +685,9 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.first('.tags-list-container'));
+			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-					return wait();
-				})
-				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 3);
-				});
+			assert.equal(getRenderedSuggestions().length, 3);
 		});
 
 		it('should not have multiple popups after several tags have been clicked', () => {
@@ -744,10 +705,7 @@ describe('Tags', () => {
 			clickTag(0);
 			clickTag(3);
 
-			return wait()
-				.then(() => {
-					assert.isTrue(isPopupRendered());
-				});
+			assert.isTrue(isPopupRendered());
 		});
 
 		it('should not have multiple popups after several tags have been clicked and the background is clicked', () => {
@@ -766,10 +724,7 @@ describe('Tags', () => {
 			clickTag(3);
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			return wait()
-				.then(() => {
-					assert.isTrue(isPopupRendered());
-				});
+			assert.isTrue(isPopupRendered());
 		});
 
 		it('should save a tag when a suggestion is clicked', () => {
@@ -779,12 +734,9 @@ describe('Tags', () => {
 			});
 
 			testUtil.control.isFocused(true);
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.deepEqual(testUtil.control.value(), ['test2']);
-				});
+			assert.deepEqual(testUtil.control.value(), ['test2']);
 		});
 
 		it('should have one rendered tag when a suggestion is clicked', () => {
@@ -794,12 +746,9 @@ describe('Tags', () => {
 			});
 
 			testUtil.control.isFocused(true);
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.equal(testUtil.count('.heading'), 1);
-				});
+			assert.equal(testUtil.count('.heading'), 1);
 		});
 
 		it('should have one rendered tag when a suggestion is clicked after some text is entered', () => {
@@ -810,12 +759,9 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 			setInputValue('te');
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.equal(testUtil.count('.heading'), 1);
-				});
+			assert.equal(testUtil.count('.heading'), 1);
 		});
 
 		it('should maintain the order of tags when the first tag is replaced with a suggestion', () => {
@@ -831,12 +777,9 @@ describe('Tags', () => {
 			addTag('typed4');
 			clickTag(0);
 			setInputValue('');
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.deepEqual(testUtil.control.value(), ['test2', 'typed2', 'typed3', 'typed4']);
-				});
+			assert.deepEqual(testUtil.control.value(), ['test2', 'typed2', 'typed3', 'typed4']);
 		});
 
 		it('should maintain the order of tags when a middle tag is replaced with a suggestion', () => {
@@ -852,12 +795,9 @@ describe('Tags', () => {
 			addTag('typed4');
 			clickTag(1);
 			setInputValue('');
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.deepEqual(testUtil.control.value(), ['typed1', 'test2', 'typed3', 'typed4']);
-				});
+			assert.deepEqual(testUtil.control.value(), ['typed1', 'test2', 'typed3', 'typed4']);
 		});
 
 		it('should maintain the order of tags when the last tag is replaced with a suggestion', () => {
@@ -873,12 +813,9 @@ describe('Tags', () => {
 			addTag('typed4');
 			clickTag(3);
 			setInputValue('');
-			return wait()
-				.then(() => {
-					clickOption(1);
+			clickOption(1);
 
-					assert.deepEqual(testUtil.control.value(), ['typed1', 'typed2', 'typed3', 'test2']);
-				});
+			assert.deepEqual(testUtil.control.value(), ['typed1', 'typed2', 'typed3', 'test2']);
 		});
 
 		it('should only add one tag if text is typed and an option is clicked', () => {
@@ -889,12 +826,9 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 			setInputValue('te 2');
-			return wait()
-				.then(() => {
-					clickOption(0);
+			clickOption(0);
 
-					assert.equal(getRenderedTags().length, 1);
-				});
+			assert.equal(getRenderedTags().length, 1);
 		});
 
 		it('should focus the first item in the popup when the down arrow is pressed', () => {
@@ -906,12 +840,9 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('te 2');
 
-			return wait()
-				.then(() => {
-					testUtil.simulateKeyEvent(testUtil.getTextInput(), keyCodes('down'), KEY_DOWN_EVENT);
+			testUtil.simulateKeyEvent(testUtil.getTextInput(), keyCodes('down'), KEY_DOWN_EVENT);
 
-					assert.equal(getRenderedSuggestions()[0], document.activeElement);
-				});
+			assert.equal(getRenderedSuggestions()[0], document.activeElement);
 		});
 	});
 

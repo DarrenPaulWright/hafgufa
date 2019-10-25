@@ -1,4 +1,3 @@
-import { wait } from 'async-agent';
 import { assert } from 'chai';
 import shortid from 'shortid';
 import { CONTEXT_MENU_EVENT } from '../../../src';
@@ -64,10 +63,7 @@ describe('GridColumnBlock', () => {
 
 			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading', true), 5);
-				});
+			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
 	});
 
@@ -209,12 +205,9 @@ describe('GridColumnBlock', () => {
 				something: 'mini'
 			}]);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.all('button')[5]);
+			testUtil.simulateClick(testUtil.all('button')[5]);
 
-					assert.equal(testVar, '3_trash');
-				});
+			assert.equal(testVar, '3_trash');
 		});
 	});
 

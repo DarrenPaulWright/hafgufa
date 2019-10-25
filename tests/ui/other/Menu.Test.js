@@ -1,4 +1,3 @@
-import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { Menu } from '../../../src';
 import TestUtil from '../../TestUtil';
@@ -43,10 +42,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading', true), 1);
-				});
+			assert.equal(testUtil.count('.heading', true), 1);
 		});
 
 		it('should have three menu items if three are provided', () => {
@@ -63,10 +59,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading', true), 3);
-				});
+			assert.equal(testUtil.count('.heading', true), 3);
 		});
 
 		it('should have a selected item if one is set to isSelected', () => {
@@ -85,10 +78,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.checkbox.checked', true), 1);
-				});
+			assert.equal(testUtil.count('.checkbox.checked', true), 1);
 		});
 
 		it('should call settings.onSelect if a menuItem is clicked', () => {
@@ -110,12 +100,9 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(testVar, 'test2');
-				});
+			assert.equal(testVar, 'test2');
 		});
 
 		it('should remove itself when a menu item is clicked', () => {
@@ -134,12 +121,9 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(testUtil.count('.context-menu'), 0);
-				});
+			assert.equal(testUtil.count('.context-menu'), 0);
 		});
 
 		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
@@ -159,12 +143,9 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(testUtil.count('.menu'), 1);
-				});
+			assert.equal(testUtil.count('.menu'), 1);
 		});
 
 		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
@@ -184,12 +165,9 @@ describe('Menu', () => {
 				}]
 			});
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-					assert.equal(testUtil.count('.menu'), 1);
-				});
+			assert.equal(testUtil.count('.menu'), 1);
 		});
 	});
 });

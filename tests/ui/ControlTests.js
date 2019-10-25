@@ -503,10 +503,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testItem2 = testItem;
 				testUtil.control.resize(true);
 
-				return wait()
-					.then(() => {
-						assert.isAbove(testItem, testItem2);
-					});
+				assert.isAbove(testItem, testItem2);
 			});
 
 			it('should NOT execute an onResize callback when resize is called after onRemove is called', () => {
@@ -523,10 +520,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testItem2 = testItem;
 				testUtil.control.resize(true);
 
-				return wait()
-					.then(() => {
-						assert.equal(testItem, testItem2);
-					});
+				assert.equal(testItem, testItem2);
 			});
 		});
 	};
@@ -590,10 +584,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							assert.equal(testItem, 1);
-						});
+					assert.equal(testItem, 1);
 				});
 			}
 
@@ -607,12 +598,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					}
 				}));
 
-				return wait()
-					.then(() => {
-						testUtil.control.isFocused(true);
+				testUtil.control.isFocused(true);
 
-						assert.equal(testItem, 2);
-					});
+				assert.equal(testItem, 2);
 			});
 
 			if (settings.focusableElement) {
@@ -626,12 +614,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							testUtil.first(settings.focusableElement).focus();
+					testUtil.first(settings.focusableElement).focus();
 
-							assert.equal(testItem, 2);
-						});
+					assert.equal(testItem, 2);
 				});
 
 				it('should call the onBlur callback once when a focusable element is blurred', () => {
@@ -644,14 +629,11 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							const element = testUtil.first(settings.focusableElement);
-							element.focus();
-							element.blur();
+					const element = testUtil.first(settings.focusableElement);
+					element.focus();
+					element.blur();
 
-							return wait(1);
-						})
+					return wait(1)
 						.then(() => {
 							assert.equal(testItem, 2);
 						});
@@ -669,13 +651,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							testUtil.nth(settings.focusableSubElement, 1).focus();
-							testUtil.nth(settings.focusableSubElement, 1).blur();
+					testUtil.nth(settings.focusableSubElement, 1).focus();
+					testUtil.nth(settings.focusableSubElement, 1).blur();
 
-							return wait(1);
-						})
+					return wait(1)
 						.then(() => {
 							assert.equal(testItem, 2);
 						});
@@ -691,12 +670,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							testUtil.nth(settings.focusableSubElement, 1).focus();
+					testUtil.nth(settings.focusableSubElement, 1).focus();
 
-							return wait(1);
-						})
+					return wait(1)
 						.then(() => {
 							assert.equal(testItem, 2);
 						});
@@ -713,13 +689,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 							}
 						}));
 
-						return wait()
-							.then(() => {
-								testUtil.first(settings.focusableElement).focus();
-								testUtil.nth(settings.focusableSubElement, 1).focus();
+						testUtil.first(settings.focusableElement).focus();
+						testUtil.nth(settings.focusableSubElement, 1).focus();
 
-								assert.equal(testItem, 1);
-							});
+						assert.equal(testItem, 1);
 					});
 
 					it('should NOT call the onBlur callback if the subControl is focused and then the main element is focused', () => {
@@ -732,13 +705,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 							}
 						}));
 
-						return wait()
-							.then(() => {
-								testUtil.nth(settings.focusableSubElement, 1).focus();
-								testUtil.first(settings.focusableElement).focus();
+						testUtil.nth(settings.focusableSubElement, 1).focus();
+						testUtil.first(settings.focusableElement).focus();
 
-								assert.equal(testItem, 1);
-							});
+						assert.equal(testItem, 1);
 					});
 				}
 			}
@@ -748,12 +718,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					isFocusable: true
 				}));
 
-				return wait()
-					.then(() => {
-						testUtil.control.isFocused(true);
+				testUtil.control.isFocused(true);
 
-						assert.equal(testUtil.control.isFocused(), true);
-					});
+				assert.equal(testUtil.control.isFocused(), true);
 			});
 
 			it('should not call the onBlur callback if the control is not focused', () => {
@@ -766,10 +733,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					}
 				}));
 
-				return wait()
-					.then(() => {
-						assert.equal(testItem, 1);
-					});
+				assert.equal(testItem, 1);
 			});
 
 			if (!settings.autoFocus) {
@@ -783,12 +747,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					return wait()
-						.then(() => {
-							testUtil.control.isFocused(false);
+					testUtil.control.isFocused(false);
 
-							assert.equal(testItem, 1);
-						});
+					assert.equal(testItem, 1);
 				});
 			}
 
@@ -802,12 +763,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					}
 				}));
 
-				return wait()
-					.then(() => {
-						testUtil.control.isFocused(true).isFocused(false);
+				testUtil.control.isFocused(true).isFocused(false);
 
-						return wait(1);
-					})
+				return wait(1)
 					.then(() => {
 						assert.equal(testItem, 2);
 					});
@@ -818,12 +776,9 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					isFocusable: true
 				}));
 
-				return wait()
-					.then(() => {
-						testUtil.control.isFocused(true).isFocused(false);
+				testUtil.control.isFocused(true).isFocused(false);
 
-						assert.equal(testUtil.control.isFocused(), false);
-					});
+				assert.equal(testUtil.control.isFocused(), false);
 			});
 
 			it('should not be focused after the active element is blurred', () => {
@@ -831,13 +786,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					isFocusable: true
 				}));
 
-				return wait()
-					.then(() => {
-						testUtil.control.isFocused(true);
-						document.activeElement.blur();
+				testUtil.control.isFocused(true);
+				document.activeElement.blur();
 
-						assert.equal(testUtil.control.isFocused(), false);
-					});
+				assert.equal(testUtil.control.isFocused(), false);
 			});
 		});
 	};

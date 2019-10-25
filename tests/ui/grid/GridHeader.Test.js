@@ -1,4 +1,3 @@
-import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { CONTEXT_MENU_EVENT } from '../../../src';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';
@@ -522,10 +521,7 @@ describe('GridHeader', () => {
 
 			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading', true), 5);
-				});
+			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
 	});
 

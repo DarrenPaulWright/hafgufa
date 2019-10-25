@@ -1,4 +1,3 @@
-import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer';
 import { Button, Heading, SCROLL_EVENT, VirtualList } from '../../../src';
@@ -57,10 +56,7 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
-				});
+			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 		});
 
 		it('should display the same items that are passed in to the items method', () => {
@@ -71,10 +67,7 @@ describe('VirtualList', () => {
 				.itemControl(Button)
 				.itemData(testRows);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
-				});
+			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 		});
 
 		it('should display the same items that are passed in to the items method after previous rows', () => {
@@ -89,10 +82,7 @@ describe('VirtualList', () => {
 				id: '1'
 			}]);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 1);
-				});
+			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 1);
 		});
 
 		it('should display an "empty content" message when there are no items', () => {
@@ -126,10 +116,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.control.getRenderedControls().length, 3);
-				});
+			assert.equal(testUtil.control.getRenderedControls().length, 3);
 		});
 	});
 
@@ -258,10 +245,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			return wait()
-				.then(() => {
-					assert.equal(testValue.id, '3');
-				});
+			assert.equal(testValue.id, '3');
 		});
 	});
 
@@ -288,12 +272,9 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isBelow(renderedControls[0].borderHeight(), renderedControls[2].borderHeight());
-				});
+			assert.isBelow(renderedControls[0].borderHeight(), renderedControls[2].borderHeight());
 		});
 
 		it('should NOT be able to display items of varying height if isVirtualized is set to true', () => {
@@ -313,12 +294,9 @@ describe('VirtualList', () => {
 			})
 				.updateItemPositions();
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isTrue(renderedControls[0].borderHeight() === renderedControls[2].borderHeight());
-				});
+			assert.isTrue(renderedControls[0].borderHeight() === renderedControls[2].borderHeight());
 		});
 
 		it('should set the height of the control if height is "auto" and isVirtualized is set to false', () => {
@@ -363,12 +341,9 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isBelow(renderedControls.length, 9);
-				});
+			assert.isBelow(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled', () => {
@@ -386,12 +361,9 @@ describe('VirtualList', () => {
 			testUtil.control.element().scrollTop = 57;
 			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isBelow(renderedControls.length, 9);
-				});
+			assert.isBelow(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a little', () => {
@@ -410,12 +382,9 @@ describe('VirtualList', () => {
 			testUtil.control.element().scrollTop = 300;
 			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isBelow(renderedControls.length, 9);
-				});
+			assert.isBelow(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a lot', () => {
@@ -434,12 +403,9 @@ describe('VirtualList', () => {
 			testUtil.control.element().scrollTop = 100;
 			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
 
-			return wait()
-				.then(() => {
-					const renderedControls = testUtil.control.getRenderedControls();
+			const renderedControls = testUtil.control.getRenderedControls();
 
-					assert.isBelow(renderedControls.length, 9);
-				});
+			assert.isBelow(renderedControls.length, 9);
 		});
 	});
 

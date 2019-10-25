@@ -1,4 +1,3 @@
-import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { PIXELS } from 'type-enforcer';
 import { Tree } from '../../../src';
@@ -73,10 +72,7 @@ describe('Tree', () => {
 				branches: nestedBranches
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading button'), 1);
-				});
+			assert.equal(testUtil.count('.heading button'), 1);
 		});
 
 		it('should display child branches when an expandable branch is expanded', () => {
@@ -85,15 +81,9 @@ describe('Tree', () => {
 				branches: nestedBranches
 			});
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.first('.heading button'));
+			testUtil.simulateClick(testUtil.first('.heading button'));
 
-					return wait();
-				})
-				.then(() => {
-					assert.equal(testUtil.count('.heading'), 6);
-				});
+			assert.equal(testUtil.count('.heading'), 6);
 		});
 
 		it('should NOT display child branches when an expandable branch is expanded and contracted', () => {
@@ -105,10 +95,7 @@ describe('Tree', () => {
 			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
 			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading'), 3);
-				});
+			assert.equal(testUtil.count('.heading'), 3);
 		});
 
 		it('should hide all expanders if none of the branches have children', () => {
@@ -117,10 +104,7 @@ describe('Tree', () => {
 				branches: flatBranches
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading .expander'), 0);
-				});
+			assert.equal(testUtil.count('.heading .expander'), 0);
 		});
 
 		it('should hide all checkboxes if none of the branches are multi select', () => {
@@ -129,10 +113,7 @@ describe('Tree', () => {
 				branches: flatBranches
 			});
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading .checkboxes'), 0);
-				});
+			assert.equal(testUtil.count('.heading .checkboxes'), 0);
 		});
 
 		it('should only have one heading if branches are updated to one branch after more', () => {
@@ -147,10 +128,7 @@ describe('Tree', () => {
 				isMultiSelect: false
 			}]);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.heading'), 1);
-				});
+			assert.equal(testUtil.count('.heading'), 1);
 		});
 	});
 
@@ -287,13 +265,10 @@ describe('Tree', () => {
 				branches: branches
 			});
 
-			return wait()
-				.then(() => {
-					rowHeight = parseFloat(testUtil.first('.heading').style.height, 10);
+			rowHeight = parseFloat(testUtil.first('.heading').style.height, 10);
 
-					assert.equal(Math.round(parseFloat(getComputedStyle(testUtil.first('.virtual-list')).height)), Math.round(rowHeight *
-						3));
-				});
+			assert.equal(Math.round(parseFloat(getComputedStyle(testUtil.first('.virtual-list')).height)), Math.round(rowHeight *
+				3));
 		});
 
 		it('should have a height 50px if the height is set to 50px even if there are more rows than fit', () => {
@@ -318,12 +293,9 @@ describe('Tree', () => {
 			});
 
 			testUtil.control.fitHeightToContents();
-			return wait()
-				.then(() => {
-					rowHeight = parseFloat(testUtil.first('.heading').style.height);
+			rowHeight = parseFloat(testUtil.first('.heading').style.height);
 
-					assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
-				});
+			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
 		});
 
 		it('should set the height of the virtual list control to the same as itself if there are more rows than fit in the height provided', () => {

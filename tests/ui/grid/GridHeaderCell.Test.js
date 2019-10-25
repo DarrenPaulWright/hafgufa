@@ -559,13 +559,10 @@ describe('GridHeaderCell', () => {
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
 
-			return wait()
-				.then(() => {
-					inputs[0].value = '';
-					testUtil.trigger(inputs[0], 'change');
+			inputs[0].value = '';
+			testUtil.trigger(inputs[0], 'change');
 
-					assert.equal(testVar, '');
-				});
+			assert.equal(testVar, '');
 		});
 	});
 
@@ -589,10 +586,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.context-menu'), 0);
-				});
+			assert.equal(testUtil.count('.context-menu'), 0);
 		});
 
 		it('should have three options in the contextmenu if selectableColumns is not set and canSort is true', () => {
@@ -605,10 +599,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading', true), 3);
-				});
+			assert.equal(testUtil.count('.menu .heading', true), 3);
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to two columns', () => {
@@ -627,10 +618,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading', true), 5);
-				});
+			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to three columns but one doesn\'t have a title', () => {
@@ -651,10 +639,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading', true), 5);
-				});
+			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
 
 		it('should have a checked checkbox in the contextmenu if one of the selectableColumns has isHidden set to false', () => {
@@ -679,10 +664,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					assert.equal(testUtil.count('.menu .heading.selected', true), 1);
-				});
+			assert.equal(testUtil.count('.menu .heading.selected', true), 1);
 		});
 
 		it('should call settings.onColumnChange when the fourth option in the context menu is clicked', () => {
@@ -712,12 +694,9 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.menu .heading', 3, true));
+			testUtil.simulateClick(testUtil.nth('.menu .heading', 3, true));
 
-					assert.equal(testVar, 'test');
-				});
+			assert.equal(testVar, 'test');
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.ASC when the first option in the context menu is clicked', () => {
@@ -729,12 +708,9 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.menu .heading', 0, true));
+			testUtil.simulateClick(testUtil.nth('.menu .heading', 0, true));
 
-					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
-				});
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.DESC when the second option in the context menu is clicked', () => {
@@ -746,12 +722,9 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.menu .heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.menu .heading', 1, true));
 
-					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
-				});
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.NONE when the third option in the context menu is clicked', () => {
@@ -763,12 +736,9 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
 
-			return wait()
-				.then(() => {
-					testUtil.simulateClick(testUtil.nth('.menu .heading', 2, true));
+			testUtil.simulateClick(testUtil.nth('.menu .heading', 2, true));
 
-					assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
-				});
+			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
 		});
 	});
 
