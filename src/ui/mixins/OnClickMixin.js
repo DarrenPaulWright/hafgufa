@@ -9,6 +9,8 @@ const HTTPS = 'https://';
 const NEW_TAB = '_blank';
 const MAIL_TO = 'mailto:';
 
+const addClickEvent = Symbol();
+
 const buildLink = (url) => {
 	const link = {
 		target: '',
@@ -31,32 +33,6 @@ const buildLink = (url) => {
 	return link;
 };
 
-const addClickEvent = function() {
-	const self = this;
-
-	const clickHandler = (event) => {
-		let url = self.url();
-
-		if (self.isSelectable && self.isSelectable()) {
-			self.isSelected(!self.isSelected());
-		}
-
-		if (self.onClick()) {
-			self.onClick()(event);
-		}
-
-		if (self.type !== controlTypes.HYPERLINK && url) {
-			const link = buildLink(url);
-			window.open(link.url, link.target);
-		}
-	};
-
-	if (!self[HAS_CLICK_EVENT]) {
-		self.on(CLICK_EVENT, clickHandler);
-		self[HAS_CLICK_EVENT] = true;
-	}
-};
-
 /**
  * Adds onClick, click, and url methods to a control
  *
@@ -65,6 +41,32 @@ const addClickEvent = function() {
  */
 export default (Base) => {
 	class OnClickMixin extends Base {
+
+		[addClickEvent]() {
+			const self = this;
+
+			const clickHandler = (event) => {
+				let url = self.url();
+
+				if (self.isSelectable && self.isSelectable()) {
+					self.isSelected(!self.isSelected());
+				}
+
+				if (self.onClick()) {
+					self.onClick()(event);
+				}
+
+				if (self.type !== controlTypes.HYPERLINK && url) {
+					const link = buildLink(url);
+					window.open(link.url, link.target);
+				}
+			};
+
+			if (!self[HAS_CLICK_EVENT]) {
+				self.on(CLICK_EVENT, clickHandler);
+				self[HAS_CLICK_EVENT] = true;
+			}
+		}
 
 		/**
 		 * Issue a click event on this control.
@@ -76,9 +78,7 @@ export default (Base) => {
 		 * @returns {this}
 		 */
 		click() {
-			this.trigger(CLICK_EVENT);
-
-			return this;
+			return this.trigger(CLICK_EVENT);
 		}
 	}
 
@@ -98,16 +98,18 @@ export default (Base) => {
 		 */
 		url: method.string({
 			set(url) {
-				addClickEvent.call(this);
-				if (this.text) {
-					this.text(this.text(), true);
+				const self = this;
+
+				self[addClickEvent]();
+				if (self.text) {
+					self.text(self.text(), true);
 				}
 
-				if (this.type === controlTypes.HYPERLINK) {
+				if (self.type === controlTypes.HYPERLINK) {
 					const link = buildLink(url);
 
-					this.element().target = link.target;
-					this.element().href = link.url;
+					self.element().target = link.target;
+					self.element().href = link.url;
 				}
 			}
 		}),
@@ -123,7 +125,7 @@ export default (Base) => {
 		 */
 		onClick: method.function({
 			set() {
-				addClickEvent.call(this);
+				self[addClickEvent]();
 			},
 			other: null
 		})

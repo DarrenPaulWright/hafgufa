@@ -1,72 +1,11 @@
 import { defer } from 'async-agent';
-import { method } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer';
 import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../../utility/domConstants';
 
-const MAIN_CONTROL = Symbol();
-const SUB_CONTROL = Symbol();
-const SET_FOCUS = Symbol();
-const GET_FOCUS = Symbol();
-const HAS_CHILDREN = Symbol();
-const IS_FOCUSED = Symbol();
-const IS_ALL_BLURRED = Symbol();
+const _ = new PrivateVars();
 
-/**
- * Callback that is called when the control gets focus
- *
- * @function onFocusCallback
- */
-const onFocusCallback = function() {
-	if (this[SUB_CONTROL] || this[HAS_CHILDREN]) {
-		this[IS_FOCUSED] = true;
-
-		if (this[IS_ALL_BLURRED]) {
-			this[IS_ALL_BLURRED] = false;
-			if (this.onFocus()) {
-				this.onFocus().trigger();
-			}
-		}
-	}
-	else {
-		if (this.onFocus()) {
-			this.onFocus().trigger();
-		}
-	}
-};
-
-/**
- * Callback that is called when the control loses focus
- *
- * @function onBlurCallback
- */
-const onBlurCallback = function() {
-	if (this[SUB_CONTROL] || this[HAS_CHILDREN]) {
-		this[IS_FOCUSED] = false;
-
-		defer(() => {
-			if (!this[IS_FOCUSED]) {
-				this[IS_ALL_BLURRED] = true;
-				if (this.onBlur()) {
-					this.onBlur().trigger();
-				}
-			}
-		});
-	}
-	else {
-		if (this.onBlur()) {
-			this.onBlur().trigger();
-		}
-	}
-};
-
-const setCallback = function(control, eventName, callback) {
-	const self = this;
-	const handler = (event) => {
-		event.stopPropagation();
-		callback.call(self);
-	};
-
-	control.on(eventName, handler);
-};
+const onFocusCallback = Symbol();
+const onBlurCallback = Symbol();
 
 /**
  * Adds focus and blur related methods to a control.
@@ -81,15 +20,69 @@ export default (Base) => {
 		constructor(settings = {}) {
 			super(settings);
 
-			this[IS_ALL_BLURRED] = true;
+			const self = this;
 
 			settings = settings.FocusMixin || {};
 
-			this[MAIN_CONTROL] = settings.mainControl || this;
-			this[SUB_CONTROL] = settings.subControl;
-			this[SET_FOCUS] = settings.setFocus;
-			this[GET_FOCUS] = settings.getFocus;
-			this[HAS_CHILDREN] = settings.hasChildren;
+			_.set(self, {
+				isAllBlurred: true,
+				mainControl: settings.mainControl || self,
+				subControl: settings.subControl,
+				setFocus: settings.setFocus,
+				getFocus: settings.getFocus,
+				hasChildren: settings.hasChildren,
+				isFocused: false
+			});
+		}
+
+		/**
+		 * Callback that is called when the control gets focus
+		 *
+		 * @function onFocusCallback
+		 */
+		[onFocusCallback](event) {
+			const self = this;
+			const _self = _(self);
+
+			event.stopPropagation();
+
+			if (_self.subControl || _self.hasChildren) {
+				_self.isFocused = true;
+
+				if (_self.isAllBlurred) {
+					_self.isAllBlurred = false;
+					self.onFocus().trigger(null, [event]);
+				}
+			}
+			else {
+				self.onFocus().trigger(null, [event]);
+			}
+		}
+
+		/**
+		 * Callback that is called when the control loses focus
+		 *
+		 * @function onBlurCallback
+		 */
+		[onBlurCallback](event) {
+			const self = this;
+			const _self = _(self);
+
+			event.stopPropagation();
+
+			if (_self.subControl || _self.hasChildren) {
+				_self.isFocused = false;
+
+				defer(() => {
+					if (!_self.isFocused) {
+						_self.isAllBlurred = true;
+						self.onBlur().trigger(null, [event]);
+					}
+				});
+			}
+			else {
+				self.onBlur().trigger(null, [event]);
+			}
 		}
 
 		/**
@@ -121,41 +114,42 @@ export default (Base) => {
 		 * @returns {Boolean}
 		 */
 		isFocused(doFocus) {
+			const self = this;
+			const _self = _(self);
 			const activeElement = DOCUMENT.activeElement;
 
 			if (doFocus !== undefined) {
 				if (doFocus) {
-					if (!this.isFocused()) {
-						if (this[SET_FOCUS]) {
-							this[SET_FOCUS]();
+					if (!self.isFocused()) {
+						if (_self.setFocus) {
+							_self.setFocus();
 						}
-						else if (this[MAIN_CONTROL] !== this) {
-							this[MAIN_CONTROL].isFocused(true);
+						else if (_self.mainControl !== self) {
+							_self.mainControl.isFocused(true);
 						}
 						else {
-							this[MAIN_CONTROL].element().focus();
+							_self.mainControl.element().focus();
 						}
 					}
 				}
-				else if (this.isFocused()) {
+				else if (self.isFocused()) {
 					activeElement.blur();
 				}
 
-				return this;
+				return self;
 			}
 
-			if (this[GET_FOCUS]) {
-				return this[GET_FOCUS](activeElement);
+			if (_self.getFocus) {
+				return _self.getFocus(activeElement);
 			}
 
-			const element = this.element();
+			const element = self.element();
 
 			return !element ? false : (element === activeElement || element.contains(activeElement));
 		}
 	}
 
 	Object.assign(FocusMixin.prototype, {
-
 		/**
 		 * Adds a callback that is triggered when the control gets focus
 		 * @method onFocus
@@ -166,10 +160,19 @@ export default (Base) => {
 		 */
 		onFocus: method.queue({
 			set(queue) {
-				if (queue.length === 1 && (!this.isFocusable || this.isFocusable())) {
-					setCallback.call(this, this[MAIN_CONTROL], FOCUS_IN_EVENT, onFocusCallback);
-					if (this[SUB_CONTROL]) {
-						setCallback.call(this, this[SUB_CONTROL], FOCUS_IN_EVENT, onFocusCallback);
+				const self = this;
+				const _self = _(self);
+
+				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
+
+					_self.mainControl.on(FOCUS_IN_EVENT, (event) => {
+						self[onFocusCallback](event);
+					});
+
+					if (_self.subControl) {
+						_self.subControl.on(FOCUS_IN_EVENT, (event) => {
+							self[onFocusCallback](event);
+						});
 					}
 				}
 			}
@@ -185,10 +188,19 @@ export default (Base) => {
 		 */
 		onBlur: method.queue({
 			set(queue) {
-				if (queue.length === 1 && (!this.isFocusable || this.isFocusable())) {
-					setCallback.call(this, this[MAIN_CONTROL], FOCUS_OUT_EVENT, onBlurCallback);
-					if (this[SUB_CONTROL]) {
-						setCallback.call(this, this[SUB_CONTROL], FOCUS_OUT_EVENT, onBlurCallback);
+				const self = this;
+				const _self = _(self);
+
+				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
+
+					_self.mainControl.on(FOCUS_OUT_EVENT, (event) => {
+						self[onBlurCallback](event);
+					});
+
+					if (_self.subControl) {
+						_self.subControl.on(FOCUS_OUT_EVENT, (event) => {
+							self[onBlurCallback](event);
+						});
 					}
 				}
 			}
