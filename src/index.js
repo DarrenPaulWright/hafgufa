@@ -1,3 +1,6 @@
+import 'type-enforcer-math-addon';
+import 'type-enforcer-ui-addon';
+
 export { default as theme } from './ui/themes/theme';
 
 export { default as controlTypes } from './ui/controlTypes';
