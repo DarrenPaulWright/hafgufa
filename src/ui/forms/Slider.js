@@ -283,9 +283,7 @@ Object.assign(Slider.prototype, {
 	}),
 	increment: method.number({
 		init: 0,
-		set() {
-			this[setSnapGrid]();
-		}
+		set: setSnapGrid
 	}),
 	buildTooltip: method.function({
 		init(value) {

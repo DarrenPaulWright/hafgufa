@@ -219,9 +219,7 @@ Object.assign(Conversion.prototype, {
 
 	fractionDigits: method.integer({
 		init: 1,
-		set() {
-			this[setValue]();
-		},
+		set: setValue,
 		min: 0
 	})
 

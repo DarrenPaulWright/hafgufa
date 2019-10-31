@@ -262,9 +262,7 @@ export default class LightBox extends Control {
 
 Object.assign(LightBox.prototype, {
 	files: method.array({
-		set() {
-			this[renderImages]();
-		}
+		set: renderImages
 	}),
 
 	selectedItems: method.array({

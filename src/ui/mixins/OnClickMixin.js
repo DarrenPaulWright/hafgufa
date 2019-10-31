@@ -124,9 +124,7 @@ export default (Base) => {
 		 * @returns {Function|this}
 		 */
 		onClick: method.function({
-			set() {
-				self[addClickEvent]();
-			},
+			set: addClickEvent,
 			other: null
 		})
 	});

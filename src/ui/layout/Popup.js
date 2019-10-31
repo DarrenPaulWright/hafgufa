@@ -519,16 +519,12 @@ Object.assign(Popup.prototype, {
 
 	anchorDockPoint: method.dockPoint({
 		init: new DockPoint(POINTS.BOTTOM_CENTER),
-		set() {
-			this[setSlidability]();
-		}
+		set: setSlidability
 	}),
 
 	popupDockPoint: method.dockPoint({
 		init: new DockPoint(POINTS.TOP_CENTER),
-		set() {
-			this[setSlidability]();
-		}
+		set: setSlidability
 	}),
 
 	isSticky: method.boolean({

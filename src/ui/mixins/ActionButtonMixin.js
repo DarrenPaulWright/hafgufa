@@ -120,9 +120,7 @@ export default function(Base) {
 		 * @returns {String|this}
 		 */
 		actionButtonIcon: method.string({
-			set() {
-				this[refreshActionButton]();
-			}
+			set: refreshActionButton
 		}),
 
 		/**
@@ -135,9 +133,7 @@ export default function(Base) {
 		 * @returns {String|this}
 		 */
 		actionButtonLabel: method.string({
-			set() {
-				this[refreshActionButton]();
-			}
+			set: refreshActionButton
 		}),
 
 		/**
@@ -150,9 +146,7 @@ export default function(Base) {
 		 * @returns {Function|this}
 		 */
 		actionButtonOnClick: method.function({
-			set() {
-				this[refreshActionButton]();
-			}
+			set: refreshActionButton
 		}),
 
 		/**
@@ -166,9 +160,7 @@ export default function(Base) {
 		 */
 		isActionButtonAutoHide: method.boolean({
 			init: true,
-			set() {
-				this[refreshActionButton]();
-			}
+			set: refreshActionButton
 		}),
 
 		/**
@@ -182,9 +174,7 @@ export default function(Base) {
 		 */
 		isActionButtonEnabled: method.boolean({
 			init: true,
-			set() {
-				this[refreshActionButton]();
-			}
+			set: refreshActionButton
 		}),
 
 		/**

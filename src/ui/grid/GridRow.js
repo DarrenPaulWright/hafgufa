@@ -316,9 +316,7 @@ Object.assign(GridRow.prototype, {
 	 * @returns {this}
 	 */
 	columns: method.array({
-		set() {
-			this[refresh]();
-		}
+		set: refresh
 	}),
 
 	/**
@@ -354,9 +352,7 @@ Object.assign(GridRow.prototype, {
 	}),
 
 	onSelect: method.function({
-		set() {
-			this[setClickEvent]();
-		},
+		set: setClickEvent,
 		other: undefined
 	}),
 

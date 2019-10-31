@@ -89,8 +89,6 @@ Object.assign(TimeSpan.prototype, {
 		}
 	}),
 	lineOffset: method.cssSize({
-		set() {
-			this.resize();
-		}
+		set: 'resize'
 	})
 });

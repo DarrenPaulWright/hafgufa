@@ -1016,9 +1016,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {Array|this}
 	 */
 	preferred: method.array({
-		set() {
-			this[buildPreferredItemsList]();
-		}
+		set: buildPreferredItemsList
 	}),
 
 	/**
@@ -1151,9 +1149,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	defaultButtonText: method.string({
-		set() {
-			this[updateGroupedButtonsLayout]();
-		}
+		set: updateGroupedButtonsLayout
 	}),
 
 	/**
@@ -1168,9 +1164,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	defaultButtonIcon: method.string({
-		set() {
-			this[updateGroupedButtonsLayout]();
-		}
+		set: updateGroupedButtonsLayout
 	}),
 
 	/**
@@ -1185,9 +1179,7 @@ Object.assign(Picker.prototype, {
 	 * @returns {string|this}
 	 */
 	emptyButtonText: method.string({
-		set() {
-			this[updateGroupedButtonsLayout]();
-		}
+		set: updateGroupedButtonsLayout
 	}),
 
 	/**
@@ -1206,9 +1198,7 @@ Object.assign(Picker.prototype, {
 	}),
 
 	showAll: method.boolean({
-		set() {
-			this[buildPreferredItemsList]();
-		}
+		set: buildPreferredItemsList
 	}),
 
 	/**

@@ -783,9 +783,7 @@ Object.assign(TileLayout.prototype, {
 	 */
 	tileWidth: method.cssSize({
 		init: new CssSize('14rem'),
-		set() {
-			this[calculateColumns]();
-		}
+		set: calculateColumns
 	}),
 
 	/**
@@ -801,9 +799,7 @@ Object.assign(TileLayout.prototype, {
 	 */
 	tileMargin: method.cssSize({
 		init: new CssSize('0.6rem'),
-		set() {
-			this[calculateColumns]();
-		}
+		set: calculateColumns
 	}),
 
 	/**
@@ -820,9 +816,7 @@ Object.assign(TileLayout.prototype, {
 	columnAlign: method.enum({
 		enum: TILE_COLUMN_ALIGN,
 		init: TILE_COLUMN_ALIGN.CENTER,
-		set() {
-			this[calculateColumns]();
-		}
+		set: calculateColumns
 	}),
 
 	/**
@@ -839,9 +833,7 @@ Object.assign(TileLayout.prototype, {
 	minColumns: method.integer({
 		init: 1,
 		min: 1,
-		set() {
-			this[calculateColumns]();
-		}
+		set: calculateColumns
 	}),
 
 	/**
@@ -858,9 +850,7 @@ Object.assign(TileLayout.prototype, {
 	maxColumns: method.integer({
 		init: 10,
 		min: 1,
-		set() {
-			this[calculateColumns]();
-		}
+		set: calculateColumns
 	}),
 
 	/**
@@ -913,9 +903,7 @@ Object.assign(TileLayout.prototype, {
 	 * @returns {Function|this}
 	 */
 	onTileRender: method.function({
-		set() {
-			this[calculateColumns]();
-		},
+		set: calculateColumns,
 		other: undefined
 	}),
 

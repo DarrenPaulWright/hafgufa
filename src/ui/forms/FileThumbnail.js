@@ -125,12 +125,8 @@ Object.assign(FileThumbnail.prototype, {
 	previewSize: method.enum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
-		before(oldValue) {
-			this.removeClass(oldValue);
-		},
-		set(previewSize) {
-			this.addClass(previewSize);
-		}
+		before: 'removeClass',
+		set: 'addClass'
 	}),
 
 	/**

@@ -183,15 +183,11 @@ Object.assign(TextInput.prototype, {
 	}),
 
 	maxRows: method.integer({
-		set() {
-			this[maxRowCallback]();
-		}
+		set: maxRowCallback
 	}),
 
 	textWidth: method.cssSize({
-		set() {
-			this[positionElements]();
-		}
+		set: positionElements
 	}),
 
 	/**

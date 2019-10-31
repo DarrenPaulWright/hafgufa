@@ -420,9 +420,7 @@ Object.assign(Control.prototype, {
 	 * @returns {String|this}
 	 */
 	idSuffix: method.string({
-		set() {
-			this[updateElementId]();
-		}
+		set: updateElementId
 	}),
 
 	/**
@@ -744,9 +742,7 @@ Object.assign(Control.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	stopPropagation: method.boolean({
-		set() {
-			this[setPropagationClickEvent]();
-		}
+		set: setPropagationClickEvent
 	}),
 
 	/**

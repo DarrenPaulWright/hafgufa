@@ -365,9 +365,7 @@ Object.assign(Calendar.prototype, {
 	 * @returns {Date|this}
 	 */
 	selectedDate: method.date({
-		set() {
-			this[buildDays]();
-		},
+		set: buildDays,
 		other: undefined
 	}),
 

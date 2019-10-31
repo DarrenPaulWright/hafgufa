@@ -460,9 +460,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @returns {Array|this}
 	 */
 	selectableColumns: method.array({
-		set() {
-			this[setContextMenu]();
-		}
+		set: setContextMenu
 	}),
 
 	/**
@@ -473,9 +471,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isAllRowsSelected: method.boolean({
-		set() {
-			this[setCheckBoxValue]();
-		}
+		set: setCheckBoxValue
 	}),
 
 	/**
@@ -486,9 +482,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @returns {Boolean|this}
 	 */
 	isSomeRowsSelected: method.boolean({
-		set() {
-			this[setCheckBoxValue]();
-		}
+		set: setCheckBoxValue
 	}),
 
 	onGetFilterOptions: method.function(),

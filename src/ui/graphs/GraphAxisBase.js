@@ -278,15 +278,11 @@ export default class GraphAxisBase extends GraphBase {
 
 Object.assign(GraphAxisBase.prototype, {
 	xLabel: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	}),
 
 	xSuffix: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	}),
 
 	xAxisSize: method.number({
@@ -308,38 +304,28 @@ Object.assign(GraphAxisBase.prototype, {
 
 	xMin: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	xMax: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	xInterval: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	yLabel: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	}),
 
 	ySuffix: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	}),
 
 	yAxisSize: method.number({
@@ -361,38 +347,28 @@ Object.assign(GraphAxisBase.prototype, {
 
 	yMin: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	yMax: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	yInterval: method.number({
 		init: null,
-		set() {
-			this[updateData]();
-		},
+		set: updateData,
 		other: null
 	}),
 
 	zLabel: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	}),
 
 	zSuffix: method.string({
-		set() {
-			this[updateData]();
-		}
+		set: updateData
 	})
 });
 

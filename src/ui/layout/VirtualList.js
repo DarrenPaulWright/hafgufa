@@ -824,9 +824,7 @@ Object.assign(VirtualList.prototype, {
 	 */
 	extraRenderedItemsRatio: method.number({
 		init: 0.1,
-		set() {
-			this[render]();
-		},
+		set: render,
 		min: 0
 	}),
 
@@ -858,9 +856,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {Function|this}
 	 */
 	onItemRender: method.function({
-		set() {
-			this[render]();
-		},
+		set: render,
 		other: undefined
 	}),
 
@@ -1031,9 +1027,7 @@ Object.assign(VirtualList.prototype, {
 	 * @returns {boolean|this}
 	 */
 	hideScrollBars: method.boolean({
-		set() {
-			this[setExtent]();
-		}
+		set: setExtent
 	}),
 
 	/**

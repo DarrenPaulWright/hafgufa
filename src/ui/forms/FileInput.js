@@ -244,12 +244,8 @@ Object.assign(FileInput.prototype, {
 	previewSize: method.enum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
-		before(oldValue) {
-			this.removeClass(oldValue);
-		},
-		set(newValue) {
-			this.addClass(newValue);
-		}
+		before: 'removeClass',
+		set: 'addClass'
 	}),
 
 	/**

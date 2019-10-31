@@ -316,9 +316,7 @@ Object.assign(Menu.prototype, {
 
 			return newValue;
 		},
-		set() {
-			this[filterItems]();
-		}
+		set: filterItems
 	}),
 
 	isMultiSelect: method.boolean({

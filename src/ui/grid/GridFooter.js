@@ -141,9 +141,7 @@ Object.assign(GridFooter.prototype, {
 	 */
 	count: method.integer({
 		init: 0,
-		set() {
-			this[setCountString]();
-		}
+		set: setCountString
 	}),
 
 	/**
@@ -155,9 +153,7 @@ Object.assign(GridFooter.prototype, {
 	 */
 	groupSuffixes: method.array({
 		init: [],
-		set() {
-			this[setCountString]();
-		}
+		set: setCountString
 	}),
 
 	/**
@@ -168,9 +164,7 @@ Object.assign(GridFooter.prototype, {
 	 * @returns {String|this}
 	 */
 	groupCounts: method.array({
-		set() {
-			this[setCountString]();
-		}
+		set: setCountString
 	}),
 
 	/**

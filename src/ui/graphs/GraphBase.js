@@ -224,9 +224,7 @@ Object.assign(GraphBase.prototype, {
 
 	graphPadding: method.thickness({
 		init: new Thickness(12),
-		set() {
-			this.resize();
-		}
+		set: 'resize'
 	}),
 
 	color: method.string({

@@ -1375,9 +1375,7 @@ Object.assign(Grid.prototype, {
 				return column;
 			});
 		},
-		set() {
-			this[setColumns]();
-		}
+		set: setColumns
 	}),
 	/**
 	 * @method groupBy
@@ -1408,20 +1406,14 @@ Object.assign(Grid.prototype, {
 		}
 	}),
 	onSelect: method.function({
-		set() {
-			this[updateSelectState]();
-		}
+		set: updateSelectState
 	}),
 	onMultiSelect: method.function({
-		set() {
-			this[updateSelectState]();
-		}
+		set: updateSelectState
 	}),
 	itemsLabel: method.string(),
 	hideFooter: method.boolean({
-		set() {
-			this[updateFooter]();
-		}
+		set: updateFooter
 	})
 });
 

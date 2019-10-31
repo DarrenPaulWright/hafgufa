@@ -180,7 +180,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		insertIndex = Math.min(enforceInteger(insertIndex, currentButtons.length), currentButtons.length);
 
 		if (insertIndex < currentButtons.length) {
-			self.contentContainer.insertAt(button, insertIndex);
+			self.contentContainer.insertAt(button, insertIndex + 1);
 		}
 		else {
 			self.contentContainer.append(button);
@@ -283,9 +283,7 @@ Object.assign(GroupedButtons.prototype, {
 
 			return isArray(newValue) ? newValue[0] : newValue;
 		},
-		set() {
-			this[setAllButtonToggles]();
-		}
+		set: setAllButtonToggles
 	}),
 
 	/**

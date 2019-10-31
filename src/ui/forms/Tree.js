@@ -275,9 +275,7 @@ Object.assign(Tree.prototype, {
 	 * @returns {Array|this}
 	 */
 	branches: method.array({
-		set() {
-			this[processBranches]();
-		}
+		set: processBranches
 	}),
 
 	/**
@@ -330,8 +328,6 @@ Object.assign(Tree.prototype, {
 	}),
 
 	isMultiSelect: method.boolean({
-		set() {
-			this[processBranches]();
-		}
+		set: processBranches
 	})
 });
