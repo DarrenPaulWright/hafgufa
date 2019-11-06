@@ -37,7 +37,7 @@ export default (Base) => {
 					self[HEADING].resize();
 
 					if (self.height().isPercent) {
-						self[CONTENT_CONTAINER].height(height - self[HEADING].borderHeight());
+						self[CONTENT_CONTAINER].height(height - self[HEADING].outerHeight());
 					}
 				}
 			});
