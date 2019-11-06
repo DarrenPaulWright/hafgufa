@@ -43,9 +43,6 @@ export default class Tree extends FocusMixin(FormControl) {
 			maxWidth: settings.maxWidth,
 			itemControl: Heading,
 			itemDefaultSettings: {
-				onSelect() {
-					self[toggleSelected](this);
-				},
 				onExpand() {
 					self[toggleExpanded](this);
 				},
@@ -89,9 +86,18 @@ export default class Tree extends FocusMixin(FormControl) {
 	 * @function renderRow
 	 */
 	[renderRow](heading, branchData) {
+		const self = this;
+
 		heading.removeClass(heading.classes())
 			.addClass('heading')
 			.isEnabled(heading.isEnabled(), true);
+
+		if (heading.onSelect()) {
+			heading.onSelect().discardAll();
+			heading.onSelect(function() {
+				self[toggleSelected](this);
+			})
+		}
 
 		applySettings(heading, branchData);
 

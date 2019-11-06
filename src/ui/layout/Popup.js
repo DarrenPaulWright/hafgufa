@@ -177,6 +177,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 		settings.id = settings.id || 'popup_' + shortid.generate();
 		settings.isSticky = enforce.boolean(settings.isSticky, false);
 		settings.fade = settings.zoom || settings.fade;
+		settings.stopPropagation = true;
 
 		super(settings);
 
