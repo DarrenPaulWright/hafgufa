@@ -1,0 +1,16 @@
+
+.timeline {
+	position: relative;
+
+	.line {
+		height: 0.05em;
+		width: 100%;
+		background: @timelineLineBackground;
+		position: absolute;
+		left: 0;
+	}
+
+	.virtual-list {
+		mask-image: @timelineMask;
+	}
+}

@@ -47,11 +47,9 @@ export default {
 	 * @returns {Number} - An unique id for this callback.
 	 */
 	add(callback, type) {
-		const newId = queue.add(callback, {
+		return queue.add(callback, {
 			type: type
 		});
-
-		return newId;
 	},
 
 	/**

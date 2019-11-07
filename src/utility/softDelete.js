@@ -1,5 +1,5 @@
 import { clone } from 'object-agent';
-import toast from '../ui/display/toast';
+import toast from '../display/toast';
 import locale from './locale';
 
 /**

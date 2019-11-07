@@ -57,7 +57,7 @@ const config = {
 		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 		new ThemesPlugin({
 			filename: 'styles/[name].min.css',
-			themesPath: './src/ui/themes',
+			themesPath: './src/themes',
 			sourceMap: true,
 			themes: {
 				simple: {
