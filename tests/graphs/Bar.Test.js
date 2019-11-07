@@ -1,4 +1,4 @@
-import { Bar } from '../../src';
+import { Bar } from '../..';
 import TestUtil from '../TestUtil';
 import GraphBaseTests from './GraphBaseTests';
 

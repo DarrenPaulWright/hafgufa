@@ -1,4 +1,4 @@
-import { LightBox } from '../../src';
+import { LightBox } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

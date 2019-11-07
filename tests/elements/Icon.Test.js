@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Icon, ICON_SIZES } from '../../src';
+import { Icon, ICON_SIZES } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

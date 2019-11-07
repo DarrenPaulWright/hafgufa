@@ -1,4 +1,4 @@
-import { Container } from '../../src';
+import { Container } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

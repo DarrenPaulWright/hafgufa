@@ -1,4 +1,4 @@
-import { Popup } from '../../src';
+import { Popup } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

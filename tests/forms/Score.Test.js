@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Score } from '../../src';
+import { Score } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

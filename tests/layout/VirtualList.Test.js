@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { AUTO } from 'type-enforcer-ui';
-import { Button, Heading, SCROLL_EVENT, VirtualList } from '../../src';
+import { Button, Heading, SCROLL_EVENT, VirtualList } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

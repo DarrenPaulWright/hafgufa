@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import Moment from 'moment';
-import { Calendar } from '../../src';
+import { Calendar } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import shortid from 'shortid';
-import { CONTEXT_MENU_EVENT } from '../../src';
+import { CONTEXT_MENU_EVENT } from '../..';
 import GridColumnBlock from '../../src/grid/GridColumnBlock';
 import * as gridConstants from '../../src/grid/gridConstants';
 import ControlTests from '../ControlTests';

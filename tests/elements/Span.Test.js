@@ -1,4 +1,4 @@
-import { Span } from '../../src';
+import { Span } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

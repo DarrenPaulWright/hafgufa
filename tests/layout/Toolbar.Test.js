@@ -1,4 +1,4 @@
-import { Toolbar } from '../../src';
+import { Toolbar } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

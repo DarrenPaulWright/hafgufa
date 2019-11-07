@@ -1,4 +1,4 @@
-import { FileInput } from '../../src';
+import { FileInput } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

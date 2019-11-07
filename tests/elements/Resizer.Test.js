@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { CssSize } from 'type-enforcer-ui';
-import { ORIENTATION, Resizer } from '../../src';
+import { ORIENTATION, Resizer } from '../..';
 import { offsetToPixels, pixelsToOffset } from '../../src/elements/Resizer';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';

@@ -1,4 +1,4 @@
-import { DragPoint } from '../../src';
+import { DragPoint } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

@@ -1,4 +1,4 @@
-import { FilePicker } from '../../src';
+import { FilePicker } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

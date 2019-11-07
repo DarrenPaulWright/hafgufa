@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { IsWorking } from '../../src';
+import { IsWorking } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

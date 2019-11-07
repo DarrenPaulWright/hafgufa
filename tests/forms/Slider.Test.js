@@ -1,4 +1,4 @@
-import { Slider } from '../../src';
+import { Slider } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

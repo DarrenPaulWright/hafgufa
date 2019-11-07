@@ -1,6 +1,6 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { CONTEXT_MENU_EVENT } from '../../src';
+import { CONTEXT_MENU_EVENT } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
 import GridHeaderCell from '../../src/grid/GridHeaderCell';
 import ControlTests from '../ControlTests';

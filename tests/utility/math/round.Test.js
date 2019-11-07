@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { round } from '../../../src';
+import { round } from '../../..';
 
 describe('round', () => {
 	const tests = [{

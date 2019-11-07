@@ -1,4 +1,4 @@
-import { Group } from '../../src';
+import { Group } from '../..';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 import TestUtil from '../TestUtil';
 

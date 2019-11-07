@@ -4,7 +4,7 @@
 	"description": "A javascript ES6+ Frameworkless UI library.",
 	"author": "Darren Paul Wright <Darren@DarrenPaulWright.com>",
 	"license": "MIT",
-	"main": "src/index.js",
+	"main": "index.js",
 	"sideEffects": false,
 	"scripts": {
 		"test": "karma start --single-run",
@@ -20,7 +20,8 @@
 		"url": "git+https://github.com/DarrenPaulWright/hafgufa.git"
 	},
 	"keywords": [
-		"UI"
+		"UI",
+		"UX"
 	],
 	"engines": {
 		"node": "9.5.0"

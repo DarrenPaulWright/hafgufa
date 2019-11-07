@@ -1,4 +1,4 @@
-import { SplitView } from '../../src';
+import { SplitView } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

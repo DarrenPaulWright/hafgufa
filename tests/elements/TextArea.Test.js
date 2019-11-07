@@ -1,4 +1,4 @@
-import { TextArea } from '../../src';
+import { TextArea } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

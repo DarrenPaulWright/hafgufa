@@ -1,6 +1,6 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { Heading, HEADING_LEVELS, MOUSE_ENTER_EVENT } from '../../src';
+import { Heading, HEADING_LEVELS, MOUSE_ENTER_EVENT } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

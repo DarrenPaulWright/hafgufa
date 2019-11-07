@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { EditableGrid } from '../../src';
+import { EditableGrid } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';

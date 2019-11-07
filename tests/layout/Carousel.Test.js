@@ -1,4 +1,4 @@
-import { Carousel } from '../../src';
+import { Carousel } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

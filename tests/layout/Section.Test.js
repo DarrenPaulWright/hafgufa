@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Section } from '../../src';
+import { Section } from '../..';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 import TestUtil from '../TestUtil';
 

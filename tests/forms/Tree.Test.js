@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { PIXELS } from 'type-enforcer-ui';
-import { Tree } from '../../src';
+import { Tree } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

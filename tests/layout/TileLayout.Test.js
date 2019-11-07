@@ -1,4 +1,4 @@
-import { TileLayout } from '../../src';
+import { TileLayout } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

@@ -1,4 +1,4 @@
-import { Scatter } from '../../src';
+import { Scatter } from '../..';
 import TestUtil from '../TestUtil';
 import GraphBaseTests from './GraphBaseTests';
 

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Button } from '../../src';
+import { Button } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

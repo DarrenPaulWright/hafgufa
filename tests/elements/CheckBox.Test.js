@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { CheckBox } from '../../src';
+import { CheckBox } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

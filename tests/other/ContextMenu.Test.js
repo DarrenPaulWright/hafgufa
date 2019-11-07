@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { CONTEXT_MENU_EVENT, ContextMenu } from '../../src';
+import { CONTEXT_MENU_EVENT, ContextMenu } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

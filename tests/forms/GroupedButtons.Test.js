@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { GroupedButtons } from '../../src';
+import { GroupedButtons } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

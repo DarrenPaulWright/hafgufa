@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { toast } from '../../src';
+import { toast } from '../..';
 import TestUtil from '../TestUtil';
 
 describe('toast', () => {

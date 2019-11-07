@@ -1,4 +1,4 @@
-import { VectorEditor } from '../../src';
+import { VectorEditor } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Conversion, locale } from '../../src';
+import { Conversion, locale } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

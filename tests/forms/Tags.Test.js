@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import keyCodes from 'keycodes';
-import { KEY_DOWN_EVENT, Tags } from '../../src';
+import { KEY_DOWN_EVENT, Tags } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

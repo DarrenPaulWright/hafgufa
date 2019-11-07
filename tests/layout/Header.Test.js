@@ -1,4 +1,4 @@
-import { Header } from '../../src';
+import { Header } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

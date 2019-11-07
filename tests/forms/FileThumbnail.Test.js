@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { FileThumbnail } from '../../src';
+import { FileThumbnail } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

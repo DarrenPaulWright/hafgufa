@@ -1,4 +1,4 @@
-import { BackDrop } from '../../src';
+import { BackDrop } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

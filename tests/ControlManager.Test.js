@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Container, ControlManager, Div, IsWorking } from '../src';
+import { Container, ControlManager, Div, IsWorking } from '../';
 
 describe('ControlManager', () => {
 	let manager;

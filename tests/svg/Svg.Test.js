@@ -1,4 +1,4 @@
-import { Svg } from '../../src';
+import { Svg } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

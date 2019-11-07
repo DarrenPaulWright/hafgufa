@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { CONTEXT_MENU_EVENT } from '../../src';
+import { CONTEXT_MENU_EVENT } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
 import GridHeader from '../../src/grid/GridHeader';
 import ControlTests from '../ControlTests';

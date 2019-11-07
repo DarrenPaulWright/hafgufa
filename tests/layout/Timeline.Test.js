@@ -1,4 +1,4 @@
-import { Timeline } from '../../src';
+import { Timeline } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

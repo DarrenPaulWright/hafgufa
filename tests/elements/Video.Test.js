@@ -1,4 +1,4 @@
-import { Video } from '../../src';
+import { Video } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

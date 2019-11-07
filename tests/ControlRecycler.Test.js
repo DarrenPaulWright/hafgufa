@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Button, ControlRecycler, Icon } from '../src';
+import { Button, ControlRecycler, Icon } from '../';
 import TestUtil from './TestUtil';
 
 describe('ControlRecycler', () => {

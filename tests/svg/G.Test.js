@@ -1,4 +1,4 @@
-import { G } from '../../src';
+import { G } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

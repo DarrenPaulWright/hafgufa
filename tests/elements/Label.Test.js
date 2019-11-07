@@ -1,4 +1,4 @@
-import { Label } from '../../src';
+import { Label } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

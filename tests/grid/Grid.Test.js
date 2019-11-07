@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { Grid } from '../../src';
+import { Grid } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 

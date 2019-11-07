@@ -1,4 +1,4 @@
-import { DateInput } from '../../src';
+import { DateInput } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

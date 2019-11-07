@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import { clone } from 'object-agent';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { Picker } from '../../src';
+import { Picker } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

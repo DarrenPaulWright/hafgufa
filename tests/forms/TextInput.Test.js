@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { locale, TextInput } from '../../src';
+import { locale, TextInput } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
 

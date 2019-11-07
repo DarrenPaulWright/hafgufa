@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Dialog } from '../../src';
+import { Dialog } from '../..';
 import TestUtil from '../TestUtil';
 
 describe('Dialog', () => {
