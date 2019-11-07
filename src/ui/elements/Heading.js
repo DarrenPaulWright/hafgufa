@@ -1,7 +1,6 @@
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
-import { Div } from '../../index';
 import {
 	CLICK_EVENT,
 	DISPLAY,
@@ -19,6 +18,7 @@ import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
 import Toolbar from '../layout/Toolbar';
 import FocusMixin from '../mixins/FocusMixin';
 import Button from './Button';
+import Div from './Div';
 import './Heading.less';
 import Icon from './Icon';
 import Image from './Image';
