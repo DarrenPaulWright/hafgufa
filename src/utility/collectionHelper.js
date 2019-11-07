@@ -1,5 +1,5 @@
 import { clone, forOwn } from 'object-agent';
-import { enforce, isArray } from 'type-enforcer-ui';
+import { enforceString, isArray } from 'type-enforcer-ui';
 import { byKey } from './sortBy';
 
 const find = (array, item, start, end, increment) => {
@@ -64,7 +64,7 @@ const collectionHelper = {
 	 * @arg {Function} [settings.onEachChild]
 	 */
 	flatten(collection, settings = {}) {
-		let childProperty = enforce.string(settings.childProperty, 'children');
+		let childProperty = enforceString(settings.childProperty, 'children');
 		let childItem;
 
 		const innerFlatten = (innerCollection, depth, parent) => {
@@ -168,7 +168,7 @@ const collectionHelper = {
 	 */
 	eachChild(collection, onEachChild, settings = {}) {
 		let isCancelled = false;
-		const childProperty = enforce.string(settings.childProperty, 'children');
+		const childProperty = enforceString(settings.childProperty, 'children');
 		let returnValue;
 
 		const each = (innerCollection, depth, parent) => {

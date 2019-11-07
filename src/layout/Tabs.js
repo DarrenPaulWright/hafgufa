@@ -1,5 +1,5 @@
 import { clone, forOwn } from 'object-agent';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -41,8 +41,8 @@ const clickTab = Symbol();
 export default class Tabs extends MergeContentContainerMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.TABS;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
 
 		super(settings);
 

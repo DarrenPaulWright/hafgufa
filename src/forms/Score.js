@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforce, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Label from '../elements/Label';
@@ -20,7 +20,7 @@ const LABEL = Symbol();
 export default class Score extends FormControl {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SCORE;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
 
 		super(settings);
 

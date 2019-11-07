@@ -1,6 +1,16 @@
 import { throttle } from 'async-agent';
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	CssSize,
+	enforceCssSize,
+	enforceString,
+	HUNDRED_PERCENT,
+	isInteger,
+	isNumber,
+	method
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
 import Span from '../elements/Span';
@@ -50,8 +60,8 @@ const maxRowCallback = Symbol();
 export default class TextInput extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.TEXT;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
-		settings.height = enforce.cssSize(settings.height, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
+		settings.height = enforceCssSize(settings.height, AUTO, true);
 		settings.rows = settings.rows || 1;
 		settings.changeDelay = 'changeDelay' in settings ? settings.changeDelay : (settings.rows === 1 ? ON_CHANGE_DELAY : ON_CHANGE_DELAY_LONG);
 		settings.ActionButtonMixin = {
@@ -62,7 +72,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		settings.actionButtonOnClick = settings.actionButtonOnClick || function() {
 			self.value('').triggerChange().isFocused(true);
 		};
-		settings.actionButtonIcon = enforce.string(settings.actionButtonIcon, CLEAR_ICON);
+		settings.actionButtonIcon = enforceString(settings.actionButtonIcon, CLEAR_ICON);
 
 		super(settings);
 

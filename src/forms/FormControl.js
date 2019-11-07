@@ -1,6 +1,6 @@
 import { debounce } from 'async-agent';
 import { deepEqual } from 'object-agent';
-import { enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import { enforceBoolean, enforceCssSize, enforceInteger, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import './FormControl.less';
@@ -22,8 +22,8 @@ const ON_CHANGE = Symbol();
  */
 export default class FormControl extends ControlHeadingMixin(Control) {
 	constructor(settings = {}) {
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.changeDelay = enforce.integer(settings.changeDelay, 0);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.changeDelay = enforceInteger(settings.changeDelay, 0);
 
 		super(settings);
 
@@ -62,7 +62,7 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 		const self = this;
 
 		if (!self.isRemoved) {
-			isHardTrigger = enforce.boolean(isHardTrigger, true);
+			isHardTrigger = enforceBoolean(isHardTrigger, true);
 
 			if ((isHardTrigger || (self.value && !deepEqual(self[CURRENT_VALUE], self.value()))) && self.onChange().length) {
 				self[ON_CHANGE](skipCallback);

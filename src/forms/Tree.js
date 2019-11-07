@@ -1,5 +1,15 @@
 import { set } from 'object-agent';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceBoolean,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	isArray,
+	isString,
+	method,
+	PIXELS
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import VirtualList from '../layout/VirtualList';
@@ -55,7 +65,7 @@ export default class Tree extends FocusMixin(FormControl) {
 		});
 
 		settings.type = settings.type || controlTypes.TREE;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.contentContainer = virtualList;
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = virtualList;
@@ -130,7 +140,7 @@ export default class Tree extends FocusMixin(FormControl) {
 					icon: '',
 					...branches[index],
 					css: set({}, PADDING_LEFT, depth ? ((depth * INDENT_PIXELS) + PIXELS) : EMPTY_STRING),
-					isSelectable: self.isMultiSelect() || enforce.boolean(branches[index].isSelectable, false),
+					isSelectable: self.isMultiSelect() || enforceBoolean(branches[index].isSelectable, false),
 					isExpandable: !!branches[index].children,
 					isExpanded: self[EXPANDED_BRANCHES].includes(branches[index].id)
 				};

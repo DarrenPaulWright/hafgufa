@@ -1,5 +1,15 @@
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	enforceBoolean,
+	enforceEnum,
+	enforceString,
+	HUNDRED_PERCENT,
+	isArray,
+	method
+} from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
@@ -20,7 +30,7 @@ const MAX_POPUP_WIDTH = 600;
 
 const eachChild = function(collection, onEachChild, settings = {}) {
 	let isCancelled = false;
-	const childProperty = enforce.string(settings.childProperty, 'children');
+	const childProperty = enforceString(settings.childProperty, 'children');
 	let returnValue;
 
 	const each = (innerCollection, depth, parent) => {
@@ -97,10 +107,10 @@ export default class Menu extends Popup {
 			minWidth: MIN_POPUP_WIDTH,
 			maxWidth: MAX_POPUP_WIDTH,
 			...settings,
-			anchorDockPoint: enforce.enum(settings.anchorDockPoint, DockPoint.POINTS, DockPoint.POINTS.BOTTOM_RIGHT),
-			popupDockPoint: enforce.enum(settings.popupDockPoint, DockPoint.POINTS, DockPoint.POINTS.TOP_LEFT),
-			canTrackMouse: enforce.boolean(settings.canTrackMouse, false),
-			hideOnEscapeKey: enforce.boolean(settings.hideOnEscapeKey, true),
+			anchorDockPoint: enforceEnum(settings.anchorDockPoint, DockPoint.POINTS, DockPoint.POINTS.BOTTOM_RIGHT),
+			popupDockPoint: enforceEnum(settings.popupDockPoint, DockPoint.POINTS, DockPoint.POINTS.TOP_LEFT),
+			canTrackMouse: enforceBoolean(settings.canTrackMouse, false),
+			hideOnEscapeKey: enforceBoolean(settings.hideOnEscapeKey, true),
 			FocusMixin: {
 				mainControl: tree
 			}

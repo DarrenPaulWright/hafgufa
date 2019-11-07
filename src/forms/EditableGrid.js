@@ -1,6 +1,14 @@
 import { clone, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceBoolean,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	isArray,
+	method
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import toast from '../display/toast';
 import Button from '../elements/Button';
@@ -60,8 +68,8 @@ const showDialog = Symbol();
 export default class EditableGrid extends FormControl {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.EDITABLE_GRID;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforce.cssSize(settings.height, AUTO, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, AUTO, true);
 
 		super(settings);
 
@@ -391,7 +399,7 @@ export default class EditableGrid extends FormControl {
 			case controlTypes.PICKER:
 				Object.assign(controlSettings, {
 					control: Picker,
-					showAll: enforce.boolean(column.showAll, true),
+					showAll: enforceBoolean(column.showAll, true),
 					showSelectAll: column.showSelectAll,
 					onChange(newValue) {
 						if (newValue.length) {

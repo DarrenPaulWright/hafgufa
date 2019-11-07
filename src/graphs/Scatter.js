@@ -1,5 +1,5 @@
 import { select } from 'd3';
-import { applySettings, enforce, INITIAL, NONE } from 'type-enforcer-ui';
+import { applySettings, enforceEnum, INITIAL, NONE } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants';
@@ -42,8 +42,8 @@ const VISIBLE_ITEMS = Symbol();
 export default class Scatter extends GraphAxisBase {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SCATTER;
-		settings.xScaleType = enforce.enum(settings.xScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
-		settings.yScaleType = enforce.enum(settings.yScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
+		settings.xScaleType = enforceEnum(settings.xScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
+		settings.yScaleType = enforceEnum(settings.yScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
 
 		super(settings);
 

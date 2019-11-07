@@ -1,6 +1,6 @@
 import { delay } from 'async-agent';
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, DockPoint, enforceCssSize, HUNDRED_PERCENT, isString, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
@@ -78,7 +78,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		});
 
 		settings.type = settings.type || controlTypes.TAGS;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = textInput;
 		settings.FocusMixin.getFocus = () => {

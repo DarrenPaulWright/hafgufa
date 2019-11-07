@@ -1,4 +1,12 @@
-import { applySettings, enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer-ui';
+import {
+	applySettings,
+	enforceBoolean,
+	enforceCssSize,
+	enforceEnum,
+	HUNDRED_PERCENT,
+	method,
+	Thickness
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
@@ -21,9 +29,9 @@ export default class Section extends MergeContentContainerMixin(ControlHeadingMi
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SECTION;
 		settings.element = 'section';
-		settings.headingLevel = enforce.enum(settings.headingLevel, HEADING_LEVELS, HEADING_LEVELS.TWO);
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.canCollapse = enforce.boolean(settings.canCollapse, true);
+		settings.headingLevel = enforceEnum(settings.headingLevel, HEADING_LEVELS, HEADING_LEVELS.TWO);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.canCollapse = enforceBoolean(settings.canCollapse, true);
 		settings.contentContainer = new Container();
 
 		super(settings);

@@ -1,4 +1,13 @@
-import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	CssSize,
+	enforceCssSize,
+	enforceEnum,
+	HUNDRED_PERCENT,
+	method,
+	PERCENT,
+	PIXELS
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import DragMixin from '../mixins/DragMixin';
 import { ORIENTATION } from '../uiConstants';
@@ -76,8 +85,8 @@ export default class Resizer extends DragMixin(Control) {
 			...settings,
 			ignorePadding: true,
 			type: settings.type || controlTypes.RESIZER,
-			orientation: enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),
-			splitOffset: enforce.cssSize(settings.splitOffset, new CssSize('0'), true)
+			orientation: enforceEnum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),
+			splitOffset: enforceCssSize(settings.splitOffset, new CssSize('0'), true)
 		};
 
 		super(settings);

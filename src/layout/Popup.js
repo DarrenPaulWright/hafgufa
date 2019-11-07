@@ -1,7 +1,16 @@
 import { clear, defer, delay } from 'async-agent';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
-import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	enforceBoolean,
+	enforceElement,
+	isElement,
+	method,
+	ZERO_PIXELS
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
@@ -173,9 +182,9 @@ const onEscapeKey = Symbol();
 class Popup extends MergeContentContainerMixin(Container) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.POPUP;
-		settings.container = enforce.element(settings.container, BODY);
+		settings.container = enforceElement(settings.container, BODY);
 		settings.id = settings.id || 'popup_' + shortid.generate();
-		settings.isSticky = enforce.boolean(settings.isSticky, false);
+		settings.isSticky = enforceBoolean(settings.isSticky, false);
 		settings.fade = settings.zoom || settings.fade;
 		settings.stopPropagation = true;
 

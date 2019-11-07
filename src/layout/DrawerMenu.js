@@ -1,5 +1,13 @@
 import { defer } from 'async-agent';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	enforceBoolean,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	method
+} from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
@@ -38,8 +46,8 @@ const clearMenu = Symbol();
 export default class DrawerMenu extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.DRAWER_MENU;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
-		settings.isMenuOpen = enforce.boolean(settings.isMenuOpen, IS_DESKTOP);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
+		settings.isMenuOpen = enforceBoolean(settings.isMenuOpen, IS_DESKTOP);
 
 		super(settings);
 

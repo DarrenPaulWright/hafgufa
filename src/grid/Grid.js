@@ -3,7 +3,18 @@ import { Collection } from 'hord';
 import Moment from 'moment';
 import { clone, deepEqual } from 'object-agent';
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, enforceString, HUNDRED_PERCENT, isArray, method, Queue } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceBoolean,
+	enforceCssSize,
+	enforceEnum,
+	enforceString,
+	HUNDRED_PERCENT,
+	isArray,
+	method,
+	Queue
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import collectionHelper from '../utility/collectionHelper';
@@ -74,7 +85,7 @@ const updateSelectState = Symbol();
 export default class Grid extends Control {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.GRID;
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
 
 		super(settings);
 
@@ -1082,7 +1093,7 @@ export default class Grid extends Control {
 			return items.map((item) => item.groupId === undefined ? item.rowId : null).filter(Boolean);
 		};
 
-		isSelected = enforce.boolean(isSelected, true);
+		isSelected = enforceBoolean(isSelected, true);
 
 		if (self.onSelect() || self.onMultiSelect()) {
 			selectedRow = self.getRow((row) => row.rowId === rowId);
@@ -1336,12 +1347,12 @@ Object.assign(Grid.prototype, {
 				column = {
 					...column,
 					id: index.toString(),
-					title: enforce.string(column.title, ''),
-					sortKey: enforce.string(column.sortKey, 'text'),
-					canSort: enforce.boolean(column.canSort, false),
-					filterType: enforce.enum(column.filterType, FILTER_TYPES, FILTER_TYPES.TEXT),
-					canFilter: enforce.boolean(column.canFilter, false),
-					direction: enforce.enum(column.defaultSort, SORT_TYPES, SORT_TYPES.NONE)
+					title: enforceString(column.title, ''),
+					sortKey: enforceString(column.sortKey, 'text'),
+					canSort: enforceBoolean(column.canSort, false),
+					filterType: enforceEnum(column.filterType, FILTER_TYPES, FILTER_TYPES.TEXT),
+					canFilter: enforceBoolean(column.canFilter, false),
+					direction: enforceEnum(column.defaultSort, SORT_TYPES, SORT_TYPES.NONE)
 				};
 
 				switch (column.type) {

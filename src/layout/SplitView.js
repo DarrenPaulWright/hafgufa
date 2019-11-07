@@ -1,5 +1,14 @@
 import { set } from 'object-agent';
-import { applySettings, CssSize, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	CssSize,
+	enforceCssSize,
+	enforceEnum,
+	Enum,
+	HUNDRED_PERCENT,
+	method,
+	ZERO_PIXELS
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Resizer, { offsetToPixels } from '../elements/Resizer';
@@ -42,9 +51,9 @@ const positionViews = Symbol();
 export default class SplitView extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SPLIT_VIEW;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.orientation = enforce.enum(settings.orientation, ORIENTATION, ORIENTATION.COLUMNS);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.orientation = enforceEnum(settings.orientation, ORIENTATION, ORIENTATION.COLUMNS);
 
 		super(settings);
 

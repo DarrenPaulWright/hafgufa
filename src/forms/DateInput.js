@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import moment from 'moment';
-import { applySettings, AUTO, DockPoint, enforce, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, DockPoint, enforceCssSize, enforceDate, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
@@ -31,7 +31,7 @@ const POPUP = Symbol();
 export default class DateInput extends FormControl {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.DATE;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
 
 		super(settings);
 
@@ -132,7 +132,7 @@ Object.assign(DateInput.prototype, {
 		const self = this;
 
 		if (arguments.length) {
-			newValue = enforce.date(newValue, '', true);
+			newValue = enforceDate(newValue, '', true);
 			self[DATE_INPUT].value(moment(newValue).format(DATE_FORMAT));
 
 			return self;

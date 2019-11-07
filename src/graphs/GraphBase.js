@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import { forOwn } from 'object-agent';
-import { DockPoint, enforce, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer-ui';
+import { DockPoint, enforceBoolean, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer-ui';
 import Control from '../Control';
 import Tooltip from '../layout/Tooltip';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
@@ -38,7 +38,7 @@ const buildTooltipText = Symbol();
  */
 export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
-		settings.isWorking = enforce.boolean(settings.isWorking, true);
+		settings.isWorking = enforceBoolean(settings.isWorking, true);
 
 		super(settings);
 

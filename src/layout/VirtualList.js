@@ -4,7 +4,8 @@ import {
 	applySettings,
 	AUTO,
 	CssSize,
-	enforce,
+	enforceBoolean,
+	enforceCssSize,
 	HUNDRED_PERCENT,
 	INITIAL,
 	isNumber,
@@ -145,8 +146,8 @@ export default class VirtualList extends FocusMixin(Control) {
 		let self;
 
 		settings.type = settings.type || controlTypes.VIRTUAL_LIST;
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.stopPropagation = enforce.boolean(settings.stopPropagation, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.stopPropagation = enforceBoolean(settings.stopPropagation, true);
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.setFocus = () => {
 			if (self.isFocusable()) {

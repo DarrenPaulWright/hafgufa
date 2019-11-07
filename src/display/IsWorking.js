@@ -1,4 +1,4 @@
-import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import { applySettings, CssSize, enforceBoolean, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
@@ -51,9 +51,9 @@ const CURRENT_SIZE = Symbol();
 export default class IsWorking extends DelayedRenderMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.IS_WORKING;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.fade = enforce.boolean(settings.fade, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.fade = enforceBoolean(settings.fade, true);
 		settings.onRender = () => {
 			self[ANIMATION_DIV] = new Div({
 				container: self

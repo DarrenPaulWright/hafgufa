@@ -3,7 +3,8 @@ import {
 	applySettings,
 	AUTO,
 	castArray,
-	enforce,
+	enforceArray,
+	enforceCssSize,
 	enforceInteger,
 	HUNDRED_PERCENT,
 	isArray,
@@ -49,7 +50,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		});
 		settings.type = settings.type || controlTypes.GROUPED_BUTTONS;
 		settings.contentContainer = buttonContainer;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.mainControl = buttonContainer;
 		settings.FocusMixin.setFocus = () => {
@@ -126,7 +127,7 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 			self[setAllButtonToggles]();
 		}
 		else {
-			self.value(enforce.array(self.value(), []));
+			self.value(enforceArray(self.value(), []));
 			currentValue = self.value();
 			if (button.isSelected()) {
 				currentValue.push(button.id());

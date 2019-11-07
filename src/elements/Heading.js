@@ -1,6 +1,6 @@
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceEnum, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
@@ -68,7 +68,7 @@ const keyDownEvent = Symbol();
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.HEADING;
-		settings.element = enforce.enum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX);
+		settings.element = enforceEnum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX);
 		settings.FocusMixin = {};
 		settings.FocusMixin.setFocus = () => self[setFocus]();
 

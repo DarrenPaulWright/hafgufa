@@ -1,4 +1,4 @@
-import { applySettings, AUTO, castArray, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, castArray, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { ORIENTATION } from '../uiConstants';
@@ -18,7 +18,7 @@ const CHECK_BOXES = Symbol();
 export default class CheckBoxes extends FormControl {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.CHECKBOX;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
 
 		super(settings);
 

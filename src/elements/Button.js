@@ -1,4 +1,4 @@
-import { applySettings, enforce, Enum, method } from 'type-enforcer-ui';
+import { applySettings, enforceString, Enum, method } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
@@ -36,7 +36,7 @@ const ICON_POSITIONS = new Enum({
 export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.BUTTON;
-		settings.label = enforce.string(settings.label, '');
+		settings.label = enforceString(settings.label, '');
 		settings.classes = settings.classes || DEFAULT_CLASS;
 		settings.element = 'button';
 

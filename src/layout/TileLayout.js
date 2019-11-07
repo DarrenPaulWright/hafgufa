@@ -1,6 +1,6 @@
 import { debounce, forRange, throttle } from 'async-agent';
 import { clone, fill } from 'object-agent';
-import { applySettings, AUTO, CssSize, enforce, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
+import { applySettings, AUTO, CssSize, enforceCssSize, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import {
@@ -147,8 +147,8 @@ const calculateColumns = Symbol();
 export default class TileLayout extends Container {
 	constructor(settings = {}) {
 		settings.type = controlTypes.TILE_LAYOUT;
-		settings.width = enforce.cssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforce.cssSize(settings.height, HUNDRED_PERCENT, true);
+		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
+		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
 
 		super(settings);
 

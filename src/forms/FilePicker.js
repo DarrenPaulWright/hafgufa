@@ -1,6 +1,6 @@
 import { delay } from 'async-agent';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforce, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, method } from 'type-enforcer-ui';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import LightBox from '../edit/LightBox';
@@ -41,7 +41,7 @@ const updateLightBox = Symbol();
 export default class FilePicker extends IsWorkingMixin(FormControl) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.FILE_PICKER;
-		settings.width = enforce.cssSize(settings.width, AUTO, true);
+		settings.width = enforceCssSize(settings.width, AUTO, true);
 
 		super(settings);
 

@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, method, PIXELS, ZERO_PIXELS } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import NextPrevMixin from '../mixins/NextPrevMixin';
@@ -24,7 +24,7 @@ const fitToSlide = Symbol();
 export default class Carousel extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.CAROUSEL;
-		settings.height = enforce.cssSize(settings.height, AUTO, true);
+		settings.height = enforceCssSize(settings.height, AUTO, true);
 		settings.NextPrevMixin = {
 			onShowButtons(onChange, buttonWidth) {
 				self[BUTTON_SIZE] = buttonWidth;
