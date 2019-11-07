@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import { Thickness } from 'type-enforcer';
+import { Thickness } from 'type-enforcer-ui';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
 export default function GraphBaseTests(Control, testUtil, settings) {

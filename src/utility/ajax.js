@@ -1,6 +1,6 @@
 import { throttle } from 'async-agent';
 import axios from 'axios';
-import { Queue } from 'type-enforcer';
+import { Queue } from 'type-enforcer-ui';
 
 const queue = new Queue();
 const TYPE = {

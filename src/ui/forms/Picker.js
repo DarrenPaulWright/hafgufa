@@ -1,6 +1,6 @@
 import { Collection } from 'hord';
 import { clone, isEmpty } from 'object-agent';
-import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer-ui';
 import { byKey } from '../../../src/utility/sortBy';
 import collectionHelper from '../../utility/collectionHelper';
 import { CLICK_EVENT, WINDOW } from '../../utility/domConstants';

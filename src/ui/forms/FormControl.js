@@ -1,6 +1,6 @@
 import { debounce } from 'async-agent';
 import { deepEqual } from 'object-agent';
-import { enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import './FormControl.less';

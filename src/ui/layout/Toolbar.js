@@ -1,4 +1,4 @@
-import { applySettings, isFunction, isNumber } from 'type-enforcer';
+import { applySettings, isFunction, isNumber } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';

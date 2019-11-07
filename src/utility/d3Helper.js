@@ -1,5 +1,5 @@
 import { easeQuadIn, interpolateNumber, max, select, selection } from 'd3';
-import { isElement, isString } from 'type-enforcer';
+import { isElement, isString } from 'type-enforcer-ui';
 import { DOCUMENT, OPACITY, WINDOW } from './domConstants';
 
 const EASE = easeQuadIn;

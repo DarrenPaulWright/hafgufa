@@ -1,5 +1,5 @@
 import { clone } from 'object-agent';
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 
 const VISIBLE_CONTROLS = Symbol();
 const DISCARDED_CONTROLS = Symbol();

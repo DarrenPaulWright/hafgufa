@@ -1,4 +1,4 @@
-import { applySettings, enforce, Enum, method } from 'type-enforcer';
+import { applySettings, enforce, Enum, method } from 'type-enforcer-ui';
 import { ALT, INPUT_TYPE, TITLE } from '../../utility/domConstants';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';

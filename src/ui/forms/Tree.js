@@ -1,5 +1,5 @@
 import { set } from 'object-agent';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, isString, method, PIXELS } from 'type-enforcer-ui';
 import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';

@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Label from '../elements/Label';

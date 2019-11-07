@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import { Div } from '../../index';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';

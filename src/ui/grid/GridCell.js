@@ -1,5 +1,5 @@
 import { repeat } from 'object-agent';
-import { applySettings, DockPoint, method } from 'type-enforcer';
+import { applySettings, DockPoint, method } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../utility/domConstants';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';

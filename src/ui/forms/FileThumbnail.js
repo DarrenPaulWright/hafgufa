@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer-ui';
 import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

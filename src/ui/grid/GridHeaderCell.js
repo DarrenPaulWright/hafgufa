@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import { CLICK_EVENT, MARGIN_LEFT } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

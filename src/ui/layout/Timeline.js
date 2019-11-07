@@ -1,7 +1,7 @@
 import { throttle } from 'async-agent';
 import moment from 'moment';
 import { repeat } from 'object-agent';
-import { applySettings, CssSize, enforceBoolean, Enum, isInteger, method, PIXELS, Thickness } from 'type-enforcer';
+import { applySettings, CssSize, enforceBoolean, Enum, isInteger, method, PIXELS, Thickness } from 'type-enforcer-ui';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import Control from '../Control';

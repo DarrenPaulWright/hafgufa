@@ -1,5 +1,5 @@
 import { clone, deepEqual } from 'object-agent';
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 
 const NO_ITEMS_INDEX = -1;
 

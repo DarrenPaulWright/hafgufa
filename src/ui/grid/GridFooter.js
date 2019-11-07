@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import locale from '../../utility/locale';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

@@ -1,4 +1,4 @@
-import { CssSize, method } from 'type-enforcer';
+import { CssSize, method } from 'type-enforcer-ui';
 import { HEIGHT, WIDTH } from '../..';
 import Control from '../Control';
 

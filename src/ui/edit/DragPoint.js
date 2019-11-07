@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';

@@ -1,5 +1,5 @@
 import { set } from 'object-agent';
-import { applySettings, CssSize, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, CssSize, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
 import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

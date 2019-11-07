@@ -1,4 +1,4 @@
-import { applySettings, castArray, method } from 'type-enforcer';
+import { applySettings, castArray, method } from 'type-enforcer-ui';
 import { IS_DESKTOP } from '../../utility/browser';
 import {
 	ACCEPT,

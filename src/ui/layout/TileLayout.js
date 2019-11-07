@@ -1,6 +1,6 @@
 import { debounce, forRange, throttle } from 'async-agent';
 import { clone, fill } from 'object-agent';
-import { applySettings, AUTO, CssSize, enforce, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, CssSize, enforce, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
 import {
 	ABSOLUTE,
 	CONTENT_CHANGE_EVENT,

@@ -1,4 +1,4 @@
-import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer';
+import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method, PERCENT, PIXELS } from 'type-enforcer-ui';
 import { IS_DESKTOP } from '../..';
 import clamp from '../../utility/math/clamp';
 import controlTypes from '../controlTypes';

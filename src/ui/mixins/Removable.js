@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { isFunction, method, PrivateVars } from 'type-enforcer';
+import { isFunction, method, PrivateVars } from 'type-enforcer-ui';
 
 const isTest = isFunction(global.it);
 const FADE_INITIAL_CLASS = 'fade-initial';

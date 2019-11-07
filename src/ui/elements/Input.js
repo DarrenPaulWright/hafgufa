@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer-ui';
 import {
 	INPUT_TYPE,
 	INPUT_TYPE_CHECKBOX,

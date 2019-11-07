@@ -1,6 +1,6 @@
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
 import { Div } from '../../index';
 import {
 	CLICK_EVENT,

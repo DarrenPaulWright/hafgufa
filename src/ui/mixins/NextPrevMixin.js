@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { HUNDRED_PERCENT, method, PrivateVars } from 'type-enforcer';
+import { HUNDRED_PERCENT, method, PrivateVars } from 'type-enforcer-ui';
 import { ABSOLUTE, ICON_SIZES } from '../..';
 import ControlManager from '../ControlManager';
 import Button from '../elements/Button';

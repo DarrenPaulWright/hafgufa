@@ -1,4 +1,4 @@
-import { Enum } from 'type-enforcer';
+import { Enum } from 'type-enforcer-ui';
 
 export const COLUMN_TYPES = new Enum({
 	TEXT: 'text',

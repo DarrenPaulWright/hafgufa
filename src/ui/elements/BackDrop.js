@@ -1,4 +1,4 @@
-import { applySettings } from 'type-enforcer';
+import { applySettings } from 'type-enforcer-ui';
 import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';

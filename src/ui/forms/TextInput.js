@@ -1,6 +1,6 @@
 import { throttle } from 'async-agent';
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer';
+import { applySettings, AUTO, CssSize, enforce, HUNDRED_PERCENT, isInteger, isNumber, method } from 'type-enforcer-ui';
 import getAttributes from '../../utility/dom/getAttributes';
 import replaceElement from '../../utility/dom/replaceElement';
 import {

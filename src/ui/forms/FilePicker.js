@@ -1,6 +1,6 @@
 import { delay } from 'async-agent';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method } from 'type-enforcer-ui';
 import { EMPTY_STRING } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import ControlManager from '../ControlManager';

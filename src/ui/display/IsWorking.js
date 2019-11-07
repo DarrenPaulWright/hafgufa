@@ -1,4 +1,4 @@
-import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, CssSize, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import { ABSOLUTE_CLASS } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

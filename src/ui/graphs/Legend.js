@@ -1,5 +1,5 @@
 import { color, select } from 'd3';
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import d3Helper from '../../utility/d3Helper';
 import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';

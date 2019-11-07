@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer';
+import { method } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../..';
 
 /**

@@ -1,5 +1,5 @@
 import { clear, defer, delay } from 'async-agent';
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
 import {
 	BODY,
 	MOUSE_ENTER_EVENT,

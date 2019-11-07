@@ -1,4 +1,4 @@
-import { method, PrivateVars } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer-ui';
 import IsWorking from '../display/IsWorking';
 
 const _ = new PrivateVars();

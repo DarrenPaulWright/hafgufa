@@ -1,5 +1,5 @@
 import bowser from 'bowser';
-import { castArray } from 'type-enforcer';
+import { castArray } from 'type-enforcer-ui';
 
 const env = bowser.parse(window.navigator.userAgent).platform.type;
 

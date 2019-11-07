@@ -1,4 +1,4 @@
-import { isFloat } from 'type-enforcer';
+import { isFloat } from 'type-enforcer-ui';
 
 /**
  * Gets the mathematical accuracy of a number (digits to the right of the decimal)

@@ -1,4 +1,4 @@
-import { applySettings, enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer';
+import { applySettings, enforce, HUNDRED_PERCENT, method, Thickness } from 'type-enforcer-ui';
 import { PADDING } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

@@ -1,5 +1,5 @@
 import { clone, firstInPath, forOwn, walkPath } from 'object-agent';
-import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer';
+import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer-ui';
 import getAttributes from '../utility/dom/getAttributes';
 import replaceElement from '../utility/dom/replaceElement';
 import {

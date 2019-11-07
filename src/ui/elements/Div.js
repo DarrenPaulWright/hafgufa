@@ -8,7 +8,7 @@ import {
 	isNumber,
 	isObject,
 	isString
-} from 'type-enforcer';
+} from 'type-enforcer-ui';
 import { CONTENT_CHANGE_EVENT } from '../..';
 import controlTypes from '../controlTypes';
 import Control, { CHILD_CONTROLS } from './../Control';

@@ -1,4 +1,4 @@
-import { applySettings, DockPoint } from 'type-enforcer';
+import { applySettings, DockPoint } from 'type-enforcer-ui';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../../utility/domConstants';
 import Container from '../layout/Container';
 import Popup from '../layout/Popup';

@@ -1,4 +1,4 @@
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PERCENT, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, HUNDRED_PERCENT, method, PERCENT, ZERO_PIXELS } from 'type-enforcer-ui';
 import d3Helper from '../../utility/d3Helper';
 import { WIDTH } from '../../utility/domConstants';
 import round from '../../utility/math/round';

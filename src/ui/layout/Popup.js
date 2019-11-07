@@ -1,7 +1,7 @@
 import { clear, defer, delay } from 'async-agent';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
-import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, isElement, method, ZERO_PIXELS } from 'type-enforcer-ui';
 import {
 	ABSOLUTE,
 	BLOCK,

@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Radio from '../elements/Radio';
 import { ORIENTATION } from '../uiConstants';

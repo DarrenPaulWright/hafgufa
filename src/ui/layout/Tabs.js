@@ -1,5 +1,5 @@
 import { clone, forOwn } from 'object-agent';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import { IS_DESKTOP } from '../../utility/browser';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

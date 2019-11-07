@@ -1,4 +1,4 @@
-import { applySettings, AUTO, castArray, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, castArray, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { ORIENTATION } from '../uiConstants';

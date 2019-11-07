@@ -1,5 +1,5 @@
 import { select } from 'd3';
-import { applySettings, enforce, INITIAL, NONE } from 'type-enforcer';
+import { applySettings, enforce, INITIAL, NONE } from 'type-enforcer-ui';
 import d3Helper from '../../utility/d3Helper';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';

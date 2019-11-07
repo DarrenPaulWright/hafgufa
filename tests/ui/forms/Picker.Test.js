@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import { clone } from 'object-agent';
-import { HUNDRED_PERCENT } from 'type-enforcer';
+import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { Picker } from '../../../src';
 import TestUtil from '../../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -8,22 +8,22 @@ import FormControlTests from './FormControlTests';
 describe('Picker', () => {
 	const testUtil = new TestUtil(Picker);
 
-const testValue = [{
-	id: '1'
-}];
-const testValue2 = [{
-	id: '2'
-}];
-const testOptions = [{
-	id: '1',
-	title: 'first'
-}, {
-	id: '2',
-	title: 'second'
-}, {
-	id: '3',
-	title: 'third'
-}];
+	const testValue = [{
+		id: '1'
+	}];
+	const testValue2 = [{
+		id: '2'
+	}];
+	const testOptions = [{
+		id: '1',
+		title: 'first'
+	}, {
+		id: '2',
+		title: 'second'
+	}, {
+		id: '3',
+		title: 'third'
+	}];
 
 	const formControlTests = new FormControlTests(Picker, testUtil, {
 		extraSettings: {

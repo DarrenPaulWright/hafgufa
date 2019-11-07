@@ -1,4 +1,4 @@
-import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer';
+import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer-ui';
 import { LEFT } from '../../utility/domConstants';
 import clamp from '../../utility/math/clamp';
 import controlTypes from '../controlTypes';

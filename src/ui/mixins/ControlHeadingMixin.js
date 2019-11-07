@@ -1,4 +1,4 @@
-import { AUTO, HUNDRED_PERCENT, method, NONE } from 'type-enforcer';
+import { AUTO, HUNDRED_PERCENT, method, NONE } from 'type-enforcer-ui';
 import { DISPLAY } from '../../utility/domConstants';
 import Div from '../elements/Div';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';

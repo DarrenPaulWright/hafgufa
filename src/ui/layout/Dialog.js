@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { applySettings, AUTO, DockPoint, HUNDRED_PERCENT, isFunction, method, PIXELS, Thickness } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, HUNDRED_PERCENT, isFunction, method, PIXELS, Thickness } from 'type-enforcer-ui';
 import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../../utility/domConstants';
 import BackDrop from '../elements/BackDrop';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';

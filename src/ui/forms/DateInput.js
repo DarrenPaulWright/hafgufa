@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import moment from 'moment';
-import { applySettings, AUTO, DockPoint, enforce, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, method } from 'type-enforcer-ui';
 import Popup from '../../ui/layout/Popup';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';

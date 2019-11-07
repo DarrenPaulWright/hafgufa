@@ -1,6 +1,6 @@
 import { delay } from 'async-agent';
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isString, method } from 'type-enforcer-ui';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import search from '../../utility/search';
 import { filteredTitle } from '../../utility/sortBy';

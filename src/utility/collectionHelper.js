@@ -1,5 +1,5 @@
 import { clone, forOwn } from 'object-agent';
-import { enforce, isArray } from 'type-enforcer';
+import { enforce, isArray } from 'type-enforcer-ui';
 import { byKey } from './sortBy';
 
 const find = (array, item, start, end, increment) => {

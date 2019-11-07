@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import { forOwn } from 'object-agent';
-import { DockPoint, enforce, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer';
+import { DockPoint, enforce, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer-ui';
 import { HEIGHT, WIDTH } from '../../utility/domConstants';
 import Control from '../Control';
 import Tooltip from '../layout/Tooltip';

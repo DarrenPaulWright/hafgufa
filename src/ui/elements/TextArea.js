@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import { ROWS } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import Control from './../Control';

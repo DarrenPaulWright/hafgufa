@@ -1,4 +1,4 @@
-import { applySettings } from 'type-enforcer';
+import { applySettings } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Container from './Container';
 import './Header.less';

@@ -3,7 +3,7 @@ import { Collection } from 'hord';
 import Moment from 'moment';
 import { clone, deepEqual } from 'object-agent';
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, enforceString, HUNDRED_PERCENT, isArray, method, Queue } from 'type-enforcer';
+import { applySettings, AUTO, enforce, enforceString, HUNDRED_PERCENT, isArray, method, Queue } from 'type-enforcer-ui';
 import collectionHelper from '../../utility/collectionHelper';
 import locale from '../../utility/locale';
 import search from '../../utility/search';

@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer';
+import { applySettings, Enum, method } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';

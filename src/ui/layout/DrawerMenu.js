@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import { IS_DESKTOP } from '../../utility/browser';
 import collectionHelper from '../../utility/collectionHelper';

@@ -1,6 +1,6 @@
 import { select } from 'd3';
 import Hammer from 'hammerjs';
-import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer';
+import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer-ui';
 import { IS_PHONE } from '../../utility/browser';
 import d3Helper from '../../utility/d3Helper';
 import {

@@ -1,5 +1,5 @@
 import keyCodes from 'keycodes';
-import { method } from 'type-enforcer';
+import { method } from 'type-enforcer-ui';
 import { KEY_DOWN_EVENT } from './domConstants';
 
 const CONTAINER = Symbol();

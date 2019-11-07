@@ -1,6 +1,6 @@
 import getBrowserLanguage from 'get-browser-language';
 import { forOwn } from 'object-agent';
-import { Enum, method } from 'type-enforcer';
+import { Enum, method } from 'type-enforcer-ui';
 import ajax from './ajax';
 
 const strings = {};

@@ -1,6 +1,6 @@
 import Moment from 'moment';
 import { fill, repeat } from 'object-agent';
-import { applySettings, AUTO, method } from 'type-enforcer';
+import { applySettings, AUTO, method } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';

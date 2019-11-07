@@ -1,5 +1,6 @@
 import { clear, delay } from 'async-agent';
-import { method, PIXELS, Point, Thickness, Vector } from 'type-enforcer';
+import { method, Point, Vector } from 'type-enforcer-math';
+import { PIXELS, Thickness } from 'type-enforcer-ui';
 import {
 	ABSOLUTE,
 	BODY,

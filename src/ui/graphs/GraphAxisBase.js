@@ -1,6 +1,6 @@
 import { axisBottom, axisLeft, axisRight, axisTop, scaleBand, scaleLinear, select } from 'd3';
 import { fill } from 'object-agent';
-import { Enum, method } from 'type-enforcer';
+import { Enum, method } from 'type-enforcer-ui';
 import d3Helper from '../../utility/d3Helper';
 import accuracy from '../../utility/math/accuracy';
 import round from '../../utility/math/round';

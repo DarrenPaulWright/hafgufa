@@ -1,5 +1,5 @@
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
+import { applySettings, AUTO, DockPoint, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import { KEY_DOWN_EVENT } from '../../utility/domConstants';
 import locale from '../../utility/locale';

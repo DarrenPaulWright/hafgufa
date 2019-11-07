@@ -1,6 +1,6 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { isString } from 'type-enforcer';
+import { isString } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../../src';
 import GridCell from '../../../src/ui/grid/GridCell';
 import * as gridConstants from '../../../src/ui/grid/gridConstants';

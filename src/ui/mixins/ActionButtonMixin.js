@@ -1,5 +1,5 @@
 import { debounce } from 'async-agent';
-import { method, PrivateVars } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer-ui';
 import {
 	LINE_HEIGHT,
 	PADDING_RIGHT,

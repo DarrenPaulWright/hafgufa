@@ -1,4 +1,4 @@
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import VirtualList from '../layout/VirtualList';

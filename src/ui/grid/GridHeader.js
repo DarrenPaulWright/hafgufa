@@ -1,4 +1,4 @@
-import { applySettings, method, PIXELS } from 'type-enforcer';
+import { applySettings, method, PIXELS } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';

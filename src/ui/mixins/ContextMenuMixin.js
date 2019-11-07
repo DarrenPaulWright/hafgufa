@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer';
+import { method } from 'type-enforcer-ui';
 import { CONTEXT_MENU_EVENT } from '../../utility/domConstants';
 import ContextMenu from '../other/ContextMenu';
 

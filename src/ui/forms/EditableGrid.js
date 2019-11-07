@@ -1,6 +1,6 @@
 import { clone, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, isArray, method } from 'type-enforcer-ui';
 import { MARGIN_TOP } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import controlTypes from '../controlTypes';

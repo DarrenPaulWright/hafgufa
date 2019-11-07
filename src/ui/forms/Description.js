@@ -1,4 +1,4 @@
-import { applySettings, AUTO, method } from 'type-enforcer';
+import { applySettings, AUTO, method } from 'type-enforcer-ui';
 import { LEFT, TEXT_ALIGN, WIDTH } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import './Description.less';

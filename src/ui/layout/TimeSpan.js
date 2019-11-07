@@ -1,5 +1,5 @@
 import { repeat } from 'object-agent';
-import { applySettings, method, PERCENT, PIXELS } from 'type-enforcer';
+import { applySettings, method, PERCENT, PIXELS } from 'type-enforcer-ui';
 import { BOTTOM, LEFT, TOP } from '../../utility/domConstants';
 import ControlRecycler from '../ControlRecycler';
 import Div from '../elements/Div';

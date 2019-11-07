@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { method, PrivateVars } from 'type-enforcer';
+import { method, PrivateVars } from 'type-enforcer-ui';
 
 /**
  * @function start

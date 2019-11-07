@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { forOwn } from 'object-agent';
-import { castArray } from 'type-enforcer';
+import { castArray } from 'type-enforcer-ui';
 import { CLICK_EVENT, Container, windowResize } from '../../src';
 
 const TEST_ID = 'testId';

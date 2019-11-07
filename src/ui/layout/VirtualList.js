@@ -12,7 +12,7 @@ import {
 	PIXELS,
 	Thickness,
 	ZERO_PIXELS
-} from 'type-enforcer';
+} from 'type-enforcer-ui';
 import d3Helper from '../../utility/d3Helper';
 import {
 	ABSOLUTE,

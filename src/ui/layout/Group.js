@@ -1,4 +1,4 @@
-import { applySettings, AUTO, method, Thickness } from 'type-enforcer';
+import { applySettings, AUTO, method, Thickness } from 'type-enforcer-ui';
 import { MIN_WIDTH, PADDING } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

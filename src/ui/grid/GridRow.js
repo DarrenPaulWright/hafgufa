@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { applySettings, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer';
+import { applySettings, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
 import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../../utility/domConstants';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';

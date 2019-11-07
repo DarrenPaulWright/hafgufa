@@ -1,4 +1,4 @@
-import { applySettings } from 'type-enforcer';
+import { applySettings } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 

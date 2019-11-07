@@ -1,5 +1,5 @@
 import { debounce, throttle } from 'async-agent';
-import { Queue } from 'type-enforcer';
+import { Queue } from 'type-enforcer-ui';
 import { RESIZE_EVENT, WINDOW } from './domConstants';
 
 let windowWidth = 0;

@@ -1,5 +1,5 @@
 import keycodes from 'keycodes/index';
-import { method, Point } from 'type-enforcer';
+import { method, Point } from 'type-enforcer-math';
 import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../../index';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import DragMixin from '../mixins/DragMixin';

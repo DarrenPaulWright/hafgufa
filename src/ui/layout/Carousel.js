@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer';
+import { applySettings, AUTO, enforce, method, PIXELS, ZERO_PIXELS } from 'type-enforcer-ui';
 import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../../utility/domConstants';
 import Control from '../Control';
 import controlTypes from '../controlTypes';

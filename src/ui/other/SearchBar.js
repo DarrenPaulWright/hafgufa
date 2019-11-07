@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer';
+import { applySettings, AUTO, enforce, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
 import { IS_PHONE } from '../../utility/browser';
 import locale from '../../utility/locale';
 import Control from '../Control';

@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer';
+import { method } from 'type-enforcer-ui';
 import { CLICK_EVENT } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 

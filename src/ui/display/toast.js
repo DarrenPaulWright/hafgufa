@@ -1,6 +1,6 @@
 import { clear, delay } from 'async-agent';
 import { List } from 'hord';
-import { isNumber } from 'type-enforcer';
+import { isNumber } from 'type-enforcer-ui';
 import { BODY, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../../utility/domConstants';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';

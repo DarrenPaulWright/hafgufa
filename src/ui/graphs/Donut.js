@@ -1,5 +1,5 @@
 import { arc, color, pie, select, sum } from 'd3';
-import { applySettings, Point } from 'type-enforcer';
+import { applySettings, Point } from 'type-enforcer-math';
 import { byKeyDesc } from '../../../src/utility/sortBy';
 import controlTypes from '../controlTypes';
 import './Donut.less';

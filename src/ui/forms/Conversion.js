@@ -1,4 +1,4 @@
-import { applySettings, enforceInteger, Enum, method } from 'type-enforcer';
+import { applySettings, enforceInteger, Enum, method } from 'type-enforcer-ui';
 import { TAB_INDEX, TAB_INDEX_DISABLED } from '../../utility/domConstants';
 import locale from '../../utility/locale';
 import round from '../../utility/math/round';

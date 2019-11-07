@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer';
+import { applySettings, method } from 'type-enforcer-ui';
 import { INPUT_TYPE_CHECKBOX } from '../../utility/domConstants';
 import controlTypes from '../controlTypes';
 import './CheckBox.less';

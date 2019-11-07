@@ -8,7 +8,7 @@ import {
 	HUNDRED_PERCENT,
 	isArray,
 	method
-} from 'type-enforcer';
+} from 'type-enforcer-ui';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../../utility/domConstants';
 import MultiItemFocus from '../../utility/MultiItemFocus';
 import ControlRecycler from '../ControlRecycler';
