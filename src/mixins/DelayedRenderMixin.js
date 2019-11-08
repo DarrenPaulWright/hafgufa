@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { method, PrivateVars } from 'type-enforcer-ui';
+import { methodNumber, PrivateVars } from 'type-enforcer-ui';
 
 /**
  * @function start
@@ -47,7 +47,7 @@ export default (Base) => {
 		 * @arg {number} delay
 		 * @returns {number|this}
 		 */
-		delay: method.number({
+		delay: methodNumber({
 			init: 0.2,
 			min: 0,
 			set(delay) {

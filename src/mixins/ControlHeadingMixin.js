@@ -1,4 +1,13 @@
-import { AUTO, HUNDRED_PERCENT, method, NONE } from 'type-enforcer-ui';
+import {
+	AUTO,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodEnum,
+	methodFunction,
+	methodString,
+	NONE
+} from 'type-enforcer-ui';
 import Div from '../elements/Div';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
 import { DISPLAY } from '../utility/domConstants';
@@ -56,7 +65,7 @@ export default (Base) => {
 	}
 
 	Object.assign(ControlHeadingMixin.prototype, {
-		headingLevel: method.enum({
+		headingLevel: methodEnum({
 			enum: HEADING_LEVELS,
 			init: HEADING_LEVELS.FIVE,
 			set(level) {
@@ -73,7 +82,7 @@ export default (Base) => {
 		 * @arg {Boolean} [newCanCollapse]
 		 * @returns {Boolean|this}
 		 */
-		canCollapse: method.boolean({
+		canCollapse: methodBoolean({
 			set(newValue) {
 				const self = this;
 
@@ -103,7 +112,7 @@ export default (Base) => {
 		 * @arg {Boolean} [newIsCollapsed]
 		 * @returns {Boolean|this}
 		 */
-		isCollapsed: method.boolean({
+		isCollapsed: methodBoolean({
 			set(isCollapsed) {
 				const self = this;
 
@@ -128,7 +137,7 @@ export default (Base) => {
 		 * @arg {function} [newOnCollapse]
 		 * @returns {function|this}
 		 */
-		onCollapse: method.function(),
+		onCollapse: methodFunction(),
 
 		/**
 		 * Adds a title above the control
@@ -141,7 +150,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|this}
 		 */
-		title: method.string({
+		title: methodString({
 			init: undefined,
 			set(title) {
 				const self = this;
@@ -188,7 +197,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|this}
 		 */
-		subTitle: method.string({
+		subTitle: methodString({
 			set(subTitle) {
 				if (this[HEADING]) {
 					this[HEADING].subTitle(subTitle);
@@ -207,7 +216,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|this}
 		 */
-		error: method.string({
+		error: methodString({
 			set(error) {
 				if (this[HEADING]) {
 					this[HEADING].error(error);
@@ -222,7 +231,7 @@ export default (Base) => {
 		 * @instance
 		 * @arg {String} headingIcon
 		 */
-		headingIcon: method.string({
+		headingIcon: methodString({
 			set(headingIcon) {
 				if (this[HEADING]) {
 					this[HEADING].icon(headingIcon);
@@ -239,7 +248,7 @@ export default (Base) => {
 		 *
 		 * @arg {String} headingImage
 		 */
-		headingImage: method.string({
+		headingImage: methodString({
 			set(headingImage) {
 				if (this[HEADING]) {
 					this[HEADING].image(headingImage);
@@ -254,7 +263,7 @@ export default (Base) => {
 		 * @instance
 		 * @arg {String} headingButton
 		 */
-		headingButtons: method.array({
+		headingButtons: methodArray({
 			set(headingButtons) {
 				if (this[HEADING]) {
 					this[HEADING].buttons(headingButtons);
@@ -270,7 +279,7 @@ export default (Base) => {
 		 * @arg {Boolean} [newSingleLine]
 		 * @returns {Boolean|this}
 		 */
-		singleLine: method.boolean({
+		singleLine: methodBoolean({
 			set(newValue) {
 				this.classes(SINGLE_LINE_CLASS, newValue);
 				if (this[HEADING]) {

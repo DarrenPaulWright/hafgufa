@@ -4,7 +4,7 @@ import {
 	enforceCssSize,
 	enforceEnum,
 	HUNDRED_PERCENT,
-	method,
+	methodThickness,
 	Thickness
 } from 'type-enforcer-ui';
 import Control from '../Control';
@@ -54,7 +54,7 @@ Object.assign(Section.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	padding: method.thickness({
+	padding: methodThickness({
 		init: new Thickness('1.25rem'),
 		set(padding) {
 			this.contentContainer.css(PADDING, padding.toString());

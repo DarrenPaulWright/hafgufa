@@ -1,6 +1,15 @@
 import { debounce } from 'async-agent';
 import { deepEqual } from 'object-agent';
-import { enforceBoolean, enforceCssSize, enforceInteger, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	enforceBoolean,
+	enforceCssSize,
+	enforceInteger,
+	HUNDRED_PERCENT,
+	methodBoolean,
+	methodInteger,
+	methodObject,
+	methodQueue
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import './FormControl.less';
@@ -106,13 +115,13 @@ Object.assign(FormControl.prototype, {
 	 *
 	 * @returns {Boolean|this}
 	 */
-	isRequired: method.boolean({
+	isRequired: methodBoolean({
 		set(isRequired) {
 			this.classes('required', isRequired);
 		}
 	}),
 
-	data: method.object({
+	data: methodObject({
 		init: {}
 	}),
 
@@ -127,7 +136,7 @@ Object.assign(FormControl.prototype, {
 	 *
 	 * @returns {int|this}
 	 */
-	changeDelay: method.integer({
+	changeDelay: methodInteger({
 		min: 0,
 		set(changeDelay) {
 			this[ON_CHANGE] = debounce(function(skipCallback) {
@@ -145,7 +154,7 @@ Object.assign(FormControl.prototype, {
 		}
 	}),
 
-	newline: method.boolean({
+	newline: methodBoolean({
 		set(newline) {
 			this.classes('newline', newline);
 		}
@@ -164,5 +173,5 @@ Object.assign(FormControl.prototype, {
 	 *
 	 * @returns {queue}
 	 */
-	onChange: method.queue()
+	onChange: methodQueue()
 });

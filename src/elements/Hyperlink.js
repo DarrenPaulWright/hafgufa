@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import OnClickMixin from '../mixins/OnClickMixin';
@@ -37,7 +37,7 @@ Object.assign(Hyperlink.prototype, {
 	 *
 	 * @returns {string|element|this}
 	 */
-	text: method.string({
+	text: methodString({
 		set(text) {
 			this.element().innerHTML = text || this.url();
 		}

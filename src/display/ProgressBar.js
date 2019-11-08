@@ -1,4 +1,14 @@
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PERCENT, ZERO_PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodInteger,
+	methodNumber,
+	PERCENT,
+	ZERO_PIXELS
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -220,7 +230,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @arg {number} [progress]
 	 * @returns {number|this}
 	 */
-	progress: method.number({
+	progress: methodNumber({
 		init: 0,
 		set(progress) {
 			const self = this;
@@ -239,7 +249,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @arg {Array} [steps]
 	 * @returns {Array|this}
 	 */
-	steps: method.array({
+	steps: methodArray({
 		set: buildSteps
 	}),
 
@@ -250,7 +260,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @arg {Int} [currentStep]
 	 * @returns {Int|this}
 	 */
-	currentStep: method.integer({
+	currentStep: methodInteger({
 		init: 1,
 		set: updateCurrentStep,
 		min: 1
@@ -263,7 +273,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @arg {Boolean} [showBigNumbers]
 	 * @returns {Boolean|this}
 	 */
-	showBigNumbers: method.boolean({
+	showBigNumbers: methodBoolean({
 		set: updateBigNumbers
 	}),
 
@@ -274,7 +284,7 @@ Object.assign(ProgressBar.prototype, {
 	 * @arg {Boolean} [showInlineNumbers]
 	 * @returns {Boolean|this}
 	 */
-	showInlineNumbers: method.boolean({
+	showInlineNumbers: methodBoolean({
 		set: updateTitles
 	})
 });

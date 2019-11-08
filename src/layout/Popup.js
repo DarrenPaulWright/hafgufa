@@ -8,7 +8,9 @@ import {
 	enforceBoolean,
 	enforceElement,
 	isElement,
-	method,
+	methodBoolean,
+	methodDockPoint,
+	methodElement,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
@@ -483,7 +485,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 Popup.MOUSE = 'mouse';
 
 Object.assign(Popup.prototype, {
-	showArrow: method.boolean({
+	showArrow: methodBoolean({
 		set(showArrow) {
 			const self = this;
 
@@ -500,7 +502,7 @@ Object.assign(Popup.prototype, {
 		}
 	}),
 
-	anchor: method.element({
+	anchor: methodElement({
 		before(oldValue) {
 			const self = this;
 
@@ -527,17 +529,17 @@ Object.assign(Popup.prototype, {
 		other: [undefined, Popup.MOUSE]
 	}),
 
-	anchorDockPoint: method.dockPoint({
+	anchorDockPoint: methodDockPoint({
 		init: new DockPoint(POINTS.BOTTOM_CENTER),
 		set: setSlidability
 	}),
 
-	popupDockPoint: method.dockPoint({
+	popupDockPoint: methodDockPoint({
 		init: new DockPoint(POINTS.TOP_CENTER),
 		set: setSlidability
 	}),
 
-	isSticky: method.boolean({
+	isSticky: methodBoolean({
 		init: true,
 		set(isSticky) {
 			const self = this;
@@ -553,9 +555,9 @@ Object.assign(Popup.prototype, {
 		}
 	}),
 
-	hideOnMouseLeave: method.boolean(),
+	hideOnMouseLeave: methodBoolean(),
 
-	hideOnEscapeKey: method.boolean({
+	hideOnEscapeKey: methodBoolean({
 		set(hideOnEscapeKey) {
 			const self = this;
 
@@ -577,11 +579,11 @@ Object.assign(Popup.prototype, {
 	 * @arg {Boolean} canTrackMouse
 	 * @returns {Boolean|this}
 	 */
-	canTrackMouse: method.boolean({
+	canTrackMouse: methodBoolean({
 		init: true
 	}),
 
-	zoom: method.boolean()
+	zoom: methodBoolean()
 });
 
 export default Popup;

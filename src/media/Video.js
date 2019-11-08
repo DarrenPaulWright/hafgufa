@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodArray, methodBoolean, methodNumber, methodQueue } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Source from './Source';
@@ -84,12 +84,12 @@ export default class Video extends Control {
 }
 
 Object.assign(Video.prototype, {
-	showControls: method.boolean({
+	showControls: methodBoolean({
 		set(showControls) {
 			this.element().controls = showControls;
 		}
 	}),
-	sources: method.array({
+	sources: methodArray({
 		init: [],
 		before() {
 			const self = this;
@@ -118,12 +118,12 @@ Object.assign(Video.prototype, {
 			}
 		}
 	}),
-	onReady: method.queue(),
-	onTimeUpdate: method.queue(),
-	onError: method.queue(),
-	onPlay: method.queue(),
-	onPause: method.queue(),
-	fps: method.number({
+	onReady: methodQueue(),
+	onTimeUpdate: methodQueue(),
+	onError: methodQueue(),
+	onPlay: methodQueue(),
+	onPause: methodQueue(),
+	fps: methodNumber({
 		set(fps) {
 			this[SECONDS_PER_FRAME] = 1 / fps;
 		}

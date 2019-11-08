@@ -9,7 +9,13 @@ import {
 	HUNDRED_PERCENT,
 	INITIAL,
 	isNumber,
-	method,
+	methodArray,
+	methodBoolean,
+	methodCssSize,
+	methodFunction,
+	methodNumber,
+	methodObject,
+	methodString,
 	PIXELS,
 	Thickness,
 	ZERO_PIXELS
@@ -718,7 +724,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {function|this}
 	 */
-	onLayoutChange: method.function({
+	onLayoutChange: methodFunction({
 		other: null
 	}),
 
@@ -730,7 +736,7 @@ Object.assign(VirtualList.prototype, {
 	 * @param {boolean} [isHorizontal]
 	 * @returns {boolean|this}
 	 */
-	isHorizontal: method.boolean({
+	isHorizontal: methodBoolean({
 		set(isHorizontal) {
 			const self = this;
 
@@ -753,7 +759,7 @@ Object.assign(VirtualList.prototype, {
 	 * @param {Object[]} [newItemData]
 	 * @returns {Object[]|this}
 	 */
-	itemData: method.array({
+	itemData: methodArray({
 		set(newValue) {
 			const self = this;
 
@@ -772,7 +778,7 @@ Object.assign(VirtualList.prototype, {
 	 * @param {Boolean} [newIsVirtualized]
 	 * @returns {Boolean|this}
 	 */
-	isVirtualized: method.boolean({
+	isVirtualized: methodBoolean({
 		init: true
 	}),
 
@@ -783,14 +789,14 @@ Object.assign(VirtualList.prototype, {
 	 * @param {string} [newItemSize]
 	 * @returns {string|this}
 	 */
-	itemSize: method.cssSize({
+	itemSize: methodCssSize({
 		set(newValue) {
 			this[ITEM_SIZE] = newValue.toPixels(true) || 1;
 			this.refresh();
 		}
 	}),
 
-	keepAltRows: method.boolean({
+	keepAltRows: methodBoolean({
 		init: true
 	}),
 
@@ -802,7 +808,7 @@ Object.assign(VirtualList.prototype, {
 	 * @param {Object} [newControl]
 	 * @returns {Object|this}
 	 */
-	itemControl: method.function({
+	itemControl: methodFunction({
 		bind: false,
 		set(newValue) {
 			if (this[CONTROL_RECYCLER]) {
@@ -823,7 +829,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	extraRenderedItemsRatio: method.number({
+	extraRenderedItemsRatio: methodNumber({
 		init: 0.1,
 		set: render,
 		min: 0
@@ -841,7 +847,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	itemDefaultSettings: method.object({
+	itemDefaultSettings: methodObject({
 		set(newValue) {
 			this[CONTROL_RECYCLER].defaultSettings(newValue);
 		},
@@ -856,7 +862,7 @@ Object.assign(VirtualList.prototype, {
 	 * @param {Function} callback
 	 * @returns {Function|this}
 	 */
-	onItemRender: method.function({
+	onItemRender: methodFunction({
 		set: render,
 		other: undefined
 	}),
@@ -998,7 +1004,7 @@ Object.assign(VirtualList.prototype, {
 			.toPixels(true) + self.endOffset().toPixels(true) - self[INNER_PADDING][self[EXTENT_PADDING]];
 	},
 
-	startOffset: method.cssSize({
+	startOffset: methodCssSize({
 		init: new CssSize('0'),
 		set(startOffset) {
 			const self = this;
@@ -1007,7 +1013,7 @@ Object.assign(VirtualList.prototype, {
 		}
 	}),
 
-	endOffset: method.cssSize({
+	endOffset: methodCssSize({
 		init: new CssSize('0'),
 		set(endOffset) {
 			const self = this;
@@ -1027,7 +1033,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	hideScrollBars: method.boolean({
+	hideScrollBars: methodBoolean({
 		set: setExtent
 	}),
 
@@ -1042,7 +1048,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	isCentered: method.boolean(),
+	isCentered: methodBoolean(),
 
 	/**
 	 * When the user is done scrolling, animate the scroll to the nearest leading edge of an item
@@ -1055,7 +1061,7 @@ Object.assign(VirtualList.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	snapToLeadingEdge: method.boolean({
+	snapToLeadingEdge: methodBoolean({
 		set(snapToLeadingEdge) {
 			const self = this;
 
@@ -1068,7 +1074,7 @@ Object.assign(VirtualList.prototype, {
 		}
 	}),
 
-	emptyContentMessage: method.string(),
+	emptyContentMessage: methodString(),
 
 	/**
 	 * Remove all the items and re-render them at the current scroll position.
@@ -1101,7 +1107,7 @@ Object.assign(VirtualList.prototype, {
 		}
 	},
 
-	isFocusable: method.boolean({
+	isFocusable: methodBoolean({
 		set(newValue) {
 			const self = this;
 

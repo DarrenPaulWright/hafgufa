@@ -1,4 +1,13 @@
-import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodQueue,
+	methodString
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -147,7 +156,7 @@ export default class SearchBar extends Control {
 }
 
 Object.assign(SearchBar.prototype, {
-	suggestions: method.array({
+	suggestions: methodArray({
 		set(suggestions) {
 			if (this[TAGS]) {
 				this[TAGS].suggestions(suggestions);
@@ -162,7 +171,7 @@ Object.assign(SearchBar.prototype, {
 	 * @arg {function} [callback]
 	 * @returns {queue}
 	 */
-	onChange: method.queue(),
+	onChange: methodQueue(),
 
 	/**
 	 * Get the search bar container, if it exists
@@ -177,7 +186,7 @@ Object.assign(SearchBar.prototype, {
 		return this[SEARCH_BAR_CONTAINER];
 	},
 
-	countText: method.string({
+	countText: methodString({
 		set(countText) {
 			if (this[TAGS]) {
 				this[TAGS].countText(countText);
@@ -223,7 +232,7 @@ Object.assign(SearchBar.prototype, {
 		return (this[SEARCH_BAR] ? this[SEARCH_BAR].isFocused() : false) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;
 	},
 
-	breakOnSpaces: method.boolean({
+	breakOnSpaces: methodBoolean({
 		init: true,
 		set(breakOnSpaces) {
 			if (this[TAGS]) {

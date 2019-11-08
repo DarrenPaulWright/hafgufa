@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodBoolean, methodQueue, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../utility/domConstants';
 import Div from './Div';
@@ -59,17 +59,17 @@ export default class Radio extends Label {
 }
 
 Object.assign(Radio.prototype, {
-	name: method.string({
+	name: methodString({
 		set(name) {
 			this[INPUT].attr('name', name);
 		}
 	}),
-	value: method.string({
+	value: methodString({
 		set(value) {
 			this[INPUT].attr('value', value);
 		}
 	}),
-	isChecked: method.boolean({
+	isChecked: methodBoolean({
 		set(isChecked) {
 			const self = this;
 
@@ -81,5 +81,5 @@ Object.assign(Radio.prototype, {
 			}
 		}
 	}),
-	onChange: method.queue()
+	onChange: methodQueue()
 });

@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { INPUT_TYPE_CHECKBOX } from '../utility/domConstants';
 import './CheckBox.less';
@@ -28,7 +28,7 @@ export default class CheckBox extends Radio {
 }
 
 Object.assign(CheckBox.prototype, {
-	isIndeterminate: method.boolean({
+	isIndeterminate: methodBoolean({
 		set(isIndeterminate) {
 			this[INPUT].element().indeterminate = isIndeterminate;
 			this.classes('indeterminate', isIndeterminate);

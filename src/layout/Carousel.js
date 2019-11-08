@@ -1,4 +1,16 @@
-import { applySettings, AUTO, enforceCssSize, method, PIXELS, ZERO_PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceCssSize,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodNumber,
+	methodObject,
+	methodString,
+	PIXELS,
+	ZERO_PIXELS
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import NextPrevMixin from '../mixins/NextPrevMixin';
@@ -126,7 +138,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {function|this}
 	 */
-	slideControl: method.function({
+	slideControl: methodFunction({
 		set(slideControl) {
 			this[VIRTUAL_LIST].itemControl(slideControl);
 		},
@@ -144,7 +156,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {object[]|this}
 	 */
-	slideData: method.array({
+	slideData: methodArray({
 		set(slideData) {
 			this[VIRTUAL_LIST].itemData(slideData);
 		}
@@ -161,7 +173,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {object|this}
 	 */
-	slideDefaultSettings: method.object({
+	slideDefaultSettings: methodObject({
 		set(slideDefaultSettings) {
 			this[VIRTUAL_LIST].itemDefaultSettings(slideDefaultSettings);
 			this.resize();
@@ -179,7 +191,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {function|this}
 	 */
-	onSlideRender: method.function({
+	onSlideRender: methodFunction({
 		set(onSlideRender) {
 			this[VIRTUAL_LIST].onItemRender((control, itemData) => {
 				onSlideRender(control, itemData);
@@ -201,7 +213,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	slideWidth: method.string({
+	slideWidth: methodString({
 		set(slideWidth) {
 			this[VIRTUAL_LIST].itemSize(slideWidth);
 		}
@@ -218,7 +230,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	fitToSlide: method.boolean({
+	fitToSlide: methodBoolean({
 		set(fitToSlide) {
 			this[VIRTUAL_LIST].snapToLeadingEdge(fitToSlide);
 			this.resize();
@@ -250,7 +262,7 @@ Object.assign(Carousel.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	extraRenderedItemsRatio: method.number({
+	extraRenderedItemsRatio: methodNumber({
 		init: 0.1,
 		set(extraRenderedItemsRatio) {
 			this[VIRTUAL_LIST].extraRenderedItemsRatio(extraRenderedItemsRatio);
@@ -258,7 +270,7 @@ Object.assign(Carousel.prototype, {
 		min: 0
 	}),
 
-	isFocusable: method.boolean({
+	isFocusable: methodBoolean({
 		set(isFocusable) {
 			this[VIRTUAL_LIST].isFocusable(isFocusable);
 		}

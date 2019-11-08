@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { applySettings, method, Point } from 'type-enforcer-math';
+import { applySettings, methodFunction, Point } from 'type-enforcer-math';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';
@@ -192,9 +192,9 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 }
 
 Object.assign(VectorEditor.prototype, {
-	onChange: method.function(),
-	onAdd: method.function(),
-	onDeleteShape: method.function(),
-	onDeleteAllShapes: method.function(),
-	onHighlight: method.function()
+	onChange: methodFunction(),
+	onAdd: methodFunction(),
+	onDeleteShape: methodFunction(),
+	onDeleteAllShapes: methodFunction(),
+	onHighlight: methodFunction()
 });

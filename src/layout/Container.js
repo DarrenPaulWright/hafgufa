@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import FocusMixin from '../mixins/FocusMixin';
@@ -31,7 +31,7 @@ export default class Container extends IsWorkingMixin(FocusMixin(Div)) {
 }
 
 Object.assign(Container.prototype, {
-	isFocusable: method.boolean({
+	isFocusable: methodBoolean({
 		set(newValue) {
 			this.attr(TAB_INDEX, newValue ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		}

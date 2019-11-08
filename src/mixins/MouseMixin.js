@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer-ui';
+import { methodFunction } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
 
 /**
@@ -24,7 +24,7 @@ export default (Base) => {
 		 *
 		 * @returns {Function|this}
 		 */
-		onMouseEnter: method.function({
+		onMouseEnter: methodFunction({
 			set(onMouseEnter) {
 				this.on(MOUSE_ENTER_EVENT, onMouseEnter);
 			},
@@ -43,7 +43,7 @@ export default (Base) => {
 		 *
 		 * @returns {Function|this}
 		 */
-		onMouseLeave: method.function({
+		onMouseLeave: methodFunction({
 			set(onMouseLeave) {
 				this.on(MOUSE_LEAVE_EVENT, onMouseLeave);
 			},

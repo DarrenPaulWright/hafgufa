@@ -8,7 +8,10 @@ import {
 	enforceString,
 	HUNDRED_PERCENT,
 	isArray,
-	method
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodString
 } from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import controlTypes from '../controlTypes';
@@ -310,9 +313,9 @@ export default class Menu extends Popup {
 }
 
 Object.assign(Menu.prototype, {
-	onSelect: method.function(),
+	onSelect: methodFunction(),
 
-	menuItems: method.array({
+	menuItems: methodArray({
 		enforce(newValue, oldValue) {
 			if (!isArray(newValue)) {
 				return oldValue;
@@ -329,7 +332,7 @@ Object.assign(Menu.prototype, {
 		set: filterItems
 	}),
 
-	isMultiSelect: method.boolean({
+	isMultiSelect: methodBoolean({
 		set(isMultiSelect) {
 			if (this.get(TREE_ID)) {
 				this.get(TREE_ID).isMultiSelect(isMultiSelect);
@@ -337,7 +340,7 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	canFilter: method.boolean({
+	canFilter: methodBoolean({
 		set(canFilter) {
 			const self = this;
 
@@ -370,7 +373,7 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	currentFilter: method.string({
+	currentFilter: methodString({
 		set(currentFilter) {
 			if (this.canFilter()) {
 				this.get(FILTER_ID)
@@ -380,7 +383,7 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	canFilterSelectedOnly: method.boolean({
+	canFilterSelectedOnly: methodBoolean({
 		set(canFilterSelectedOnly) {
 			const self = this;
 
@@ -403,7 +406,7 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	isFilteredSelectedOnly: method.boolean({
+	isFilteredSelectedOnly: methodBoolean({
 		set(isFilteredSelectedOnly) {
 			if (this.canFilterSelectedOnly()) {
 				this.get(SELECTED_ONLY_ID)
@@ -413,7 +416,7 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	canSelectAll: method.boolean({
+	canSelectAll: methodBoolean({
 		set(canSelectAll) {
 			const self = this;
 
@@ -449,14 +452,14 @@ Object.assign(Menu.prototype, {
 		}
 	}),
 
-	onAdd: method.function({
+	onAdd: methodFunction({
 		set() {
 			this.canFilter(true);
 			this[setAddButton]();
 		}
 	}),
 
-	onEdit: method.function(),
+	onEdit: methodFunction(),
 
-	onDelete: method.function()
+	onDelete: methodFunction()
 });

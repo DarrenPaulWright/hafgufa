@@ -1,4 +1,4 @@
-import { applySettings, castArray, method } from 'type-enforcer-ui';
+import { applySettings, castArray, methodArray, methodBoolean, methodEnum, methodFunction } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Icon from '../elements/Icon';
@@ -192,28 +192,28 @@ export default class FileInput extends Control {
 }
 
 Object.assign(FileInput.prototype, {
-	isAudio: method.boolean({
+	isAudio: methodBoolean({
 		set(isAudio) {
 			this.mimeTypes([isAudio ? AUDIO_TYPE : EMPTY_STRING]);
 			this[ICON].icon(AUDIO_FILE_ICON);
 		}
 	}),
 
-	isImage: method.boolean({
+	isImage: methodBoolean({
 		set(isImage) {
 			this.mimeTypes([isImage ? IMAGE_TYPE : EMPTY_STRING]);
 			this[ICON].icon(IMAGE_FILE_ICON);
 		}
 	}),
 
-	isVideo: method.boolean({
+	isVideo: methodBoolean({
 		set(isVideo) {
 			this.mimeTypes([isVideo ? VIDEO_TYPE : EMPTY_STRING]);
 			this[ICON].icon(VIDEO_FILE_ICON);
 		}
 	}),
 
-	mimeTypes: method.array({
+	mimeTypes: methodArray({
 		set(mimeTypes) {
 			this[INPUT_CONTROL].attr(ACCEPT, mimeTypes.join(','));
 		}
@@ -227,7 +227,7 @@ Object.assign(FileInput.prototype, {
 	 * @arg {Boolean} [isMulti]
 	 * @returns {Boolean|this}
 	 */
-	isMulti: method.boolean({
+	isMulti: methodBoolean({
 		set(newValue) {
 			this[INPUT_CONTROL].attr(MULTIPLE, newValue);
 		}
@@ -241,7 +241,7 @@ Object.assign(FileInput.prototype, {
 	 * @arg {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {String|this}
 	 */
-	previewSize: method.enum({
+	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
 		before: 'removeClass',
@@ -256,7 +256,7 @@ Object.assign(FileInput.prototype, {
 	 * @arg {Function} [onLoad]
 	 * @returns {Function|this}
 	 */
-	onPreLoad: method.function(),
+	onPreLoad: methodFunction(),
 
 	/**
 	 * Get or Set a function that gets called when a file is loaded via user input
@@ -266,5 +266,5 @@ Object.assign(FileInput.prototype, {
 	 * @arg {Function} [onLoad]
 	 * @returns {Function|this}
 	 */
-	onLoad: method.function()
+	onLoad: methodFunction()
 });

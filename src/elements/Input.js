@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer-ui';
+import { applySettings, Enum, methodAny, methodEnum } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import {
 	INPUT_TYPE,
@@ -58,14 +58,14 @@ Object.assign(Input.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	inputType: method.enum({
+	inputType: methodEnum({
 		enum: AVAILABLE_TYPES,
 		set(inputType) {
 			this.attr(INPUT_TYPE, inputType);
 		}
 	}),
 
-	value: method.any({
+	value: methodAny({
 		set(value) {
 			this.element().value = value;
 		},

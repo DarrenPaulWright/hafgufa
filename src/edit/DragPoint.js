@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';
@@ -34,7 +34,7 @@ export default class DragPoint extends FocusMixin(DragMixin(G)) {
 }
 
 Object.assign(DragPoint.prototype, {
-	isCircle: method.boolean({
+	isCircle: methodBoolean({
 		set(isCircle) {
 			this.classes('circle', isCircle);
 		}

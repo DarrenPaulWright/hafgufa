@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { HUNDRED_PERCENT, method, PrivateVars } from 'type-enforcer-ui';
+import { HUNDRED_PERCENT, methodBoolean, methodEnum, PrivateVars } from 'type-enforcer-ui';
 import ControlManager from '../ControlManager';
 import Button from '../elements/Button';
 import { ICON_SIZES } from '../elements/Icon';
@@ -102,7 +102,7 @@ export default (Base) => {
 		 *
 		 * @returns {boolean|this}
 		 */
-		showButtons: method.boolean({
+		showButtons: methodBoolean({
 			set(newValue) {
 				const self = this;
 				const _self = _(self);
@@ -167,7 +167,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|this}
 		 */
-		buttonIconSize: method.enum({
+		buttonIconSize: methodEnum({
 			init: ICON_SIZES.TWO_TIMES,
 			enum: ICON_SIZES,
 			set(buttonIconSize) {

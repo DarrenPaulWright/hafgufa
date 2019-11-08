@@ -1,6 +1,14 @@
 import { delay } from 'async-agent';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforceCssSize, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceCssSize,
+	methodArray,
+	methodBoolean,
+	methodEnum,
+	methodFunction
+} from 'type-enforcer-ui';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import LightBox from '../edit/LightBox';
@@ -220,7 +228,7 @@ Object.assign(FilePicker.prototype, {
 	 *
 	 * @returns {Number|this}
 	 */
-	value: method.array({
+	value: methodArray({
 		set(value) {
 			const self = this;
 			self[FILES] = value;
@@ -238,7 +246,7 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
-	isAudio: method.boolean({
+	isAudio: methodBoolean({
 		set(isAudio) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isAudio(isAudio);
@@ -246,7 +254,7 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
-	isImage: method.boolean({
+	isImage: methodBoolean({
 		set(isImage) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isImage(isImage);
@@ -254,7 +262,7 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
-	isVideo: method.boolean({
+	isVideo: methodBoolean({
 		set(isVideo) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].isVideo(isVideo);
@@ -273,9 +281,9 @@ Object.assign(FilePicker.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	isQuickEdit: method.boolean(),
+	isQuickEdit: methodBoolean(),
 
-	mimeTypes: method.array({
+	mimeTypes: methodArray({
 		set(newValue) {
 			if (this[FILE_INPUT]) {
 				this[FILE_INPUT].mimeTypes(newValue);
@@ -283,11 +291,11 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
-	onSave: method.function(),
+	onSave: methodFunction(),
 
-	onDelete: method.function(),
+	onDelete: methodFunction(),
 
-	canEdit: method.boolean({
+	canEdit: methodBoolean({
 		set() {
 			const self = this;
 			self[FILE_THUMBNAILS].each((fileThumbnail) => {
@@ -298,7 +306,7 @@ Object.assign(FilePicker.prototype, {
 		}
 	}),
 
-	canDelete: method.boolean({
+	canDelete: methodBoolean({
 		init: true,
 		set(newValue) {
 			this[FILE_THUMBNAILS].each((fileThumbnail) => {
@@ -315,7 +323,7 @@ Object.assign(FilePicker.prototype, {
 	 * @arg {Number} [previewSize] - FilePicker.PREVIEW_SIZES
 	 * @returns {Number|this}
 	 */
-	previewSize: method.enum({
+	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
 		set(newValue) {
@@ -342,7 +350,7 @@ Object.assign(FilePicker.prototype, {
 	 * @arg {Boolean} [isMulti]
 	 * @returns {Boolean|this}
 	 */
-	isMulti: method.boolean({
+	isMulti: methodBoolean({
 		set(isMulti) {
 			const self = this;
 

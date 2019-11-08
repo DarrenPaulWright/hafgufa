@@ -1,5 +1,13 @@
 import { clone, forOwn } from 'object-agent';
-import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodEnum
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -175,7 +183,7 @@ Object.assign(Tabs.prototype, {
 		}
 	},
 
-	orientation: method.enum({
+	orientation: methodEnum({
 		enum: ORIENTATION,
 		set(orientation) {
 			const self = this;
@@ -191,7 +199,7 @@ Object.assign(Tabs.prototype, {
 		}
 	}),
 
-	hideToolbar: method.boolean({
+	hideToolbar: methodBoolean({
 		init: true,
 		set(hideToolbar) {
 			const self = this;
@@ -211,7 +219,7 @@ Object.assign(Tabs.prototype, {
 		}
 	}),
 
-	canCollapseTabContainer: method.boolean({
+	canCollapseTabContainer: methodBoolean({
 		set(newValue) {
 			const self = this;
 
@@ -252,7 +260,7 @@ Object.assign(Tabs.prototype, {
 	 *
 	 * @returns {Array|this}
 	 */
-	tabs: method.array({
+	tabs: methodArray({
 		before() {
 			const self = this;
 

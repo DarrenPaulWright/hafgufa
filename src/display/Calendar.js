@@ -1,6 +1,6 @@
 import Moment from 'moment';
 import { fill, repeat } from 'object-agent';
-import { applySettings, AUTO, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, methodDate, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -310,7 +310,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Int} newMonth - Accepts 0 to 11
 	 * @returns {Int|this}
 	 */
-	month: method.integer({
+	month: methodInteger({
 		init: new Moment().month(),
 		set(month) {
 			const self = this;
@@ -331,7 +331,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Int} newYear
 	 * @returns {Int|this}
 	 */
-	year: method.integer({
+	year: methodInteger({
 		init: new Moment().year(),
 		set(year) {
 			const self = this;
@@ -352,7 +352,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Function} newOnDateSelected
 	 * @returns {Function|this}
 	 */
-	onDateSelected: method.function({
+	onDateSelected: methodFunction({
 		other: undefined
 	}),
 
@@ -364,7 +364,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Date} newSelectedDate - Accepts js date objects or momentjs instances
 	 * @returns {Date|this}
 	 */
-	selectedDate: method.date({
+	selectedDate: methodDate({
 		set: buildDays,
 		other: undefined
 	}),
@@ -377,7 +377,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {String} newWeekdayFormat - Default is 'ddd'. See momentjs docs for more options.
 	 * @returns {String|this}
 	 */
-	weekdayFormat: method.string({
+	weekdayFormat: methodString({
 		init: 'ddd',
 		set() {
 			const self = this;
@@ -394,7 +394,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {String} newMonthFormat - Default is 'MMM'. See momentjs docs for more options.
 	 * @returns {String|this}
 	 */
-	monthFormat: method.string({
+	monthFormat: methodString({
 		init: 'MMM',
 		set() {
 			const self = this;
@@ -412,7 +412,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Int} newYearRangePast - Minimum value is 0
 	 * @returns {Int|this}
 	 */
-	yearRangePast: method.integer({
+	yearRangePast: methodInteger({
 		init: 100,
 		set() {
 			const self = this;
@@ -432,7 +432,7 @@ Object.assign(Calendar.prototype, {
 	 * @arg {Int} newYearRangeFuture - Minimum value is 0
 	 * @returns {Int|this}
 	 */
-	yearRangeFuture: method.integer({
+	yearRangeFuture: methodInteger({
 		init: 10,
 		set() {
 			const self = this;

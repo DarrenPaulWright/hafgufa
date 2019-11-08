@@ -1,4 +1,12 @@
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	PIXELS
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import VirtualList from '../layout/VirtualList';
@@ -111,7 +119,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @arg {Array} [columns]
 	 * @returns {Array|this}
 	 */
-	columns: method.array({
+	columns: methodArray({
 		set(columns) {
 			this[GRID_HEADER].columns(columns);
 			this.resize();
@@ -125,7 +133,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @arg {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
-	selectableColumns: method.array({
+	selectableColumns: methodArray({
 		set(newValue) {
 			this[GRID_HEADER].selectableColumns(newValue, true);
 		}
@@ -138,7 +146,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @arg {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isAllRowsSelected: method.boolean({
+	isAllRowsSelected: methodBoolean({
 		set(newValue) {
 			this[GRID_HEADER].isAllRowsSelected(newValue);
 		}
@@ -151,7 +159,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @arg {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isSomeRowsSelected: method.boolean({
+	isSomeRowsSelected: methodBoolean({
 		set(newValue) {
 			this[GRID_HEADER].isSomeRowsSelected(newValue);
 		}
@@ -192,9 +200,9 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @arg {Boolean} [newIsFiltered]
 	 * @returns {Boolean|this}
 	 */
-	isFiltered: method.boolean(),
+	isFiltered: methodBoolean(),
 
-	onSelect: method.function({
+	onSelect: methodFunction({
 		set(onSelect) {
 			this[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
 				control.onSelect(onSelect);

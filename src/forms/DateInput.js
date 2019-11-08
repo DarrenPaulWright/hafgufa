@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import moment from 'moment';
-import { applySettings, AUTO, DockPoint, enforceCssSize, enforceDate, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, DockPoint, enforceCssSize, enforceDate, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
@@ -145,7 +145,7 @@ Object.assign(DateInput.prototype, {
 		this[DATE_INPUT].isFocused(true);
 	},
 
-	showNowButton: method.boolean({
+	showNowButton: methodBoolean({
 		set(showNowButton) {
 			const self = this;
 
@@ -165,7 +165,7 @@ Object.assign(DateInput.prototype, {
 		}
 	}),
 
-	showDatePicker: method.boolean({
+	showDatePicker: methodBoolean({
 		init: true
 	}),
 

@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer-ui';
+import { applySettings, Enum, methodBoolean, methodEnum, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../utility/domConstants';
 import Control from './../Control';
@@ -54,7 +54,7 @@ Object.assign(Image.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	source: method.string({
+	source: methodString({
 		set(source) {
 			this.attr(SOURCE, source || DEFAULT_IMAGE_SOURCE)
 				.css(OPACITY, (source && source !== ' ') ? 1 : 0.001);
@@ -72,7 +72,7 @@ Object.assign(Image.prototype, {
 	 *
 	 * @returns {string|element|this}
 	 */
-	fit: method.enum({
+	fit: methodEnum({
 		enum: FIT,
 		init: FIT.CONTAIN,
 		set(fit) {
@@ -80,7 +80,7 @@ Object.assign(Image.prototype, {
 		}
 	}),
 
-	preventDrag: method.boolean({
+	preventDrag: methodBoolean({
 		set(preventDrag) {
 			this.set(DRAG_START_EVENT, preventDefault, preventDrag);
 		}

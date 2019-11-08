@@ -7,7 +7,9 @@ import {
 	enforceCssSize,
 	HUNDRED_PERCENT,
 	isArray,
-	method
+	methodBoolean,
+	methodFunction,
+	methodString
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import toast from '../display/toast';
@@ -650,27 +652,27 @@ export default class EditableGrid extends FormControl {
 }
 
 Object.assign(EditableGrid.prototype, {
-	mapDataIn: method.function(),
+	mapDataIn: methodFunction(),
 
-	processDataIn: method.function(),
+	processDataIn: methodFunction(),
 
-	mapDataOut: method.function(),
+	mapDataOut: methodFunction(),
 
-	processDataOut: method.function(),
+	processDataOut: methodFunction(),
 
-	showAddAnother: method.boolean({
+	showAddAnother: methodBoolean({
 		init: true
 	}),
 
-	autoGenerateIds: method.boolean({
+	autoGenerateIds: methodBoolean({
 		init: true
 	}),
 
-	dialogWidth: method.string({
+	dialogWidth: methodString({
 		init: '34rem'
 	}),
 
-	onDelete: method.function()
+	onDelete: methodFunction()
 });
 
 EditableGrid.COLUMN_TYPES = COLUMN_TYPES;

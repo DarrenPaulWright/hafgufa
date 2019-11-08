@@ -1,6 +1,21 @@
 import { debounce, forRange, throttle } from 'async-agent';
 import { clone, fill } from 'object-agent';
-import { applySettings, AUTO, CssSize, enforceCssSize, Enum, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	CssSize,
+	enforceCssSize,
+	Enum,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodCssSize,
+	methodEnum,
+	methodFunction,
+	methodInteger,
+	methodNumber,
+	methodObject,
+	PIXELS
+} from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import {
@@ -781,7 +796,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	tileWidth: method.cssSize({
+	tileWidth: methodCssSize({
 		init: new CssSize('14rem'),
 		set: calculateColumns
 	}),
@@ -797,7 +812,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	tileMargin: method.cssSize({
+	tileMargin: methodCssSize({
 		init: new CssSize('0.6rem'),
 		set: calculateColumns
 	}),
@@ -813,7 +828,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	columnAlign: method.enum({
+	columnAlign: methodEnum({
 		enum: TILE_COLUMN_ALIGN,
 		init: TILE_COLUMN_ALIGN.CENTER,
 		set: calculateColumns
@@ -830,7 +845,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {number|this}
 	 */
-	minColumns: method.integer({
+	minColumns: methodInteger({
 		init: 1,
 		min: 1,
 		set: calculateColumns
@@ -847,7 +862,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {number|this}
 	 */
-	maxColumns: method.integer({
+	maxColumns: methodInteger({
 		init: 10,
 		min: 1,
 		set: calculateColumns
@@ -865,7 +880,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	tileControl: method.function({
+	tileControl: methodFunction({
 		set(tileControl) {
 			this[CONTROL_RECYCLER].control(tileControl);
 		}
@@ -883,7 +898,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	tileDefaultSettings: method.object({
+	tileDefaultSettings: methodObject({
 		set(defaultSettings) {
 			this[CONTROL_RECYCLER].defaultSettings(defaultSettings);
 		},
@@ -902,7 +917,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {Function|this}
 	 */
-	onTileRender: method.function({
+	onTileRender: methodFunction({
 		set: calculateColumns,
 		other: undefined
 	}),
@@ -918,7 +933,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {Object[]|this}
 	 */
-	tileData: method.array({
+	tileData: methodArray({
 		set() {
 			const self = this;
 
@@ -939,7 +954,7 @@ Object.assign(TileLayout.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	extraRenderedItemsRatio: method.number({
+	extraRenderedItemsRatio: methodNumber({
 		init: 1,
 		set() {
 			const self = this;

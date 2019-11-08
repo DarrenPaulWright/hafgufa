@@ -1,5 +1,5 @@
 import { clone } from 'object-agent';
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodFunction, methodObject } from 'type-enforcer-ui';
 
 const VISIBLE_CONTROLS = Symbol();
 const DISCARDED_CONTROLS = Symbol();
@@ -44,7 +44,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {constructor} [newControl]
 	 * @returns {constructor|this}
 	 */
-	control: method.function({
+	control: methodFunction({
 		bind: false
 	}),
 
@@ -55,7 +55,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {Object} [newDefaultSettings]
 	 * @returns {Object|this}
 	 */
-	defaultSettings: method.object({
+	defaultSettings: methodObject({
 		other: undefined
 	}),
 

@@ -1,5 +1,5 @@
 import keyCodes from 'keycodes';
-import { method } from 'type-enforcer-ui';
+import { methodFunction, methodInteger } from 'type-enforcer-ui';
 import { KEY_DOWN_EVENT } from './domConstants';
 
 const CONTAINER = Symbol();
@@ -113,7 +113,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 *
 	 * @returns {Int|this}
 	 */
-	current: method.integer({
+	current: methodInteger({
 		init: 0
 	}),
 
@@ -128,7 +128,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 *
 	 * @returns {Function|this}
 	 */
-	onSetFocus: method.function(),
+	onSetFocus: methodFunction(),
 
 	/**
 	 * Get or set the total items that can be focused
@@ -141,7 +141,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 *
 	 * @returns {Int|this}
 	 */
-	length: method.integer({
+	length: methodInteger({
 		set(length) {
 			this.current(Math.min(this.current(), length - 1));
 		}

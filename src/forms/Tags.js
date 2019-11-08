@@ -1,6 +1,16 @@
 import { delay } from 'async-agent';
 import keyCodes from 'keycodes';
-import { applySettings, AUTO, DockPoint, enforceCssSize, HUNDRED_PERCENT, isString, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	isString,
+	methodArray,
+	methodBoolean,
+	methodString
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
@@ -495,7 +505,7 @@ Object.assign(Tags.prototype, {
 	 * @arg {String} [value]
 	 * @returns {String|this}
 	 */
-	value: method.array({
+	value: methodArray({
 		set(newValue) {
 			const self = this;
 
@@ -546,7 +556,7 @@ Object.assign(Tags.prototype, {
 	 * @arg {Array} [suggestions.subTitle] - A subTitle or alternate text to display
 	 * @returns {Array|this}
 	 */
-	suggestions: method.array({
+	suggestions: methodArray({
 		set(suggestions) {
 			const self = this;
 
@@ -582,7 +592,7 @@ Object.assign(Tags.prototype, {
 	 * @arg {String} [newSuggestionsDataSource]
 	 * @returns {String|this}
 	 */
-	// suggestionsDataSource: method.object({
+	// suggestionsDataSource: methodObject({
 	// 	init: {},
 	// 	before(oldValue) {
 	// 		if (oldValue) {
@@ -608,7 +618,7 @@ Object.assign(Tags.prototype, {
 	 * @arg {String} [newPlaceholder]
 	 * @returns {String|this}
 	 */
-	placeholder: method.string({
+	placeholder: methodString({
 		set(newValue) {
 			this[TEXT_INPUT].placeholder(newValue);
 		}
@@ -622,5 +632,5 @@ Object.assign(Tags.prototype, {
 	 * @arg {Boolean} [breakOnSpaces]
 	 * @returns {Boolean|this}
 	 */
-	breakOnSpaces: method.boolean()
+	breakOnSpaces: methodBoolean()
 });

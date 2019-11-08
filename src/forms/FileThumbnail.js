@@ -1,4 +1,13 @@
-import { applySettings, Enum, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	Enum,
+	methodAny,
+	methodBoolean,
+	methodEnum,
+	methodFunction,
+	methodObject,
+	methodString
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -122,7 +131,7 @@ Object.assign(FileThumbnail.prototype, {
 	 * @arg {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {String|this}
 	 */
-	previewSize: method.enum({
+	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
 		init: PREVIEW_SIZES.SMALL,
 		before: 'removeClass',
@@ -137,7 +146,7 @@ Object.assign(FileThumbnail.prototype, {
 	 * @arg {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {String|this}
 	 */
-	imageSource: method.any({
+	imageSource: methodAny({
 		set(newValue) {
 			const self = this;
 			if (self[IMAGE]) {
@@ -149,9 +158,9 @@ Object.assign(FileThumbnail.prototype, {
 		}
 	}),
 
-	fileData: method.object(),
+	fileData: methodObject(),
 
-	fileExtension: method.string({
+	fileExtension: methodString({
 		set(fileExtension) {
 			let fileIcon = FILE_ICON;
 
@@ -176,13 +185,13 @@ Object.assign(FileThumbnail.prototype, {
 		}
 	}),
 
-	isSelected: method.boolean({
+	isSelected: methodBoolean({
 		set(isSelected) {
 			this.classes(IS_SELECTED_CLASS, isSelected);
 		}
 	}),
 
-	onEdit: method.function({
+	onEdit: methodFunction({
 		set(onEdit) {
 			const self = this;
 			self.set(CLICK_EVENT, () => {
@@ -194,5 +203,5 @@ Object.assign(FileThumbnail.prototype, {
 		}
 	}),
 
-	onDelete: method.function()
+	onDelete: methodFunction()
 });

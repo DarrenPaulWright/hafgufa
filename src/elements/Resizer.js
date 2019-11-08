@@ -4,7 +4,9 @@ import {
 	enforceCssSize,
 	enforceEnum,
 	HUNDRED_PERCENT,
-	method,
+	methodCssSize,
+	methodEnum,
+	methodFunction,
 	PERCENT,
 	PIXELS
 } from 'type-enforcer-ui';
@@ -176,7 +178,7 @@ Object.assign(Resizer.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	orientation: method.enum({
+	orientation: methodEnum({
 		enum: ORIENTATION,
 		set(orientation) {
 			const self = this;
@@ -208,7 +210,7 @@ Object.assign(Resizer.prototype, {
 	 *
 	 * @returns {String|Object}
 	 */
-	splitOffset: method.cssSize({
+	splitOffset: methodCssSize({
 		set(splitOffset) {
 			this[SPLIT_OFFSET].set(splitOffset);
 
@@ -230,7 +232,7 @@ Object.assign(Resizer.prototype, {
 	 *
 	 * @returns {String|Object}
 	 */
-	minOffset: method.cssSize({
+	minOffset: methodCssSize({
 		init: new CssSize('0'),
 		set() {
 			this[setMinMaxOffsets]();
@@ -249,7 +251,7 @@ Object.assign(Resizer.prototype, {
 	 *
 	 * @returns {String|Object}
 	 */
-	maxOffset: method.cssSize({
+	maxOffset: methodCssSize({
 		init: new CssSize('100%'),
 		set() {
 			this[setMinMaxOffsets]();
@@ -257,11 +259,11 @@ Object.assign(Resizer.prototype, {
 		}
 	}),
 
-	onOffsetChange: method.function({
+	onOffsetChange: methodFunction({
 		other: undefined
 	}),
 
-	onOffsetChangeDone: method.function({
+	onOffsetChangeDone: methodFunction({
 		other: undefined
 	})
 });

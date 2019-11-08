@@ -1,4 +1,12 @@
-import { applySettings, DockPoint, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	DockPoint,
+	methodArray,
+	methodFunction,
+	methodNumber,
+	methodQueue,
+	PIXELS
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
@@ -259,7 +267,7 @@ export default class Slider extends FormControl {
 }
 
 Object.assign(Slider.prototype, {
-	value: method.array({
+	value: methodArray({
 		init: [0],
 		coerce: true,
 		set(value) {
@@ -276,20 +284,20 @@ Object.assign(Slider.prototype, {
 			}
 		}
 	}),
-	min: method.number({
+	min: methodNumber({
 		init: 0
 	}),
-	max: method.number({
+	max: methodNumber({
 		init: 100
 	}),
-	increment: method.number({
+	increment: methodNumber({
 		init: 0,
 		set: setSnapGrid
 	}),
-	buildTooltip: method.function({
+	buildTooltip: methodFunction({
 		init(value) {
 			return value + '';
 		}
 	}),
-	onSlide: method.queue()
+	onSlide: methodQueue()
 });

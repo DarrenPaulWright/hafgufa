@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer-ui';
+import { methodArray, methodFunction } from 'type-enforcer-ui';
 import ContextMenu from '../other/ContextMenu';
 import { CONTEXT_MENU_EVENT } from '../utility/domConstants';
 
@@ -44,7 +44,7 @@ export default (Base) => {
 		 *
 		 * @returns {Array|this}
 		 */
-		contextMenu: method.array({
+		contextMenu: methodArray({
 			init: null,
 			set(menuItems) {
 				const self = this;
@@ -100,7 +100,7 @@ export default (Base) => {
 		 *
 		 * @returns {Function|this}
 		 */
-		onContextMenuChange: method.function({
+		onContextMenuChange: methodFunction({
 			other: undefined
 		})
 	});

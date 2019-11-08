@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, methodArray, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Radio from '../elements/Radio';
 import { ORIENTATION } from '../uiConstants';
@@ -42,7 +42,7 @@ Object.assign(Radios.prototype, {
 	 * @arg {Array|String} [value]
 	 * @returns {Array|String|this}
 	 */
-	value: method.string({
+	value: methodString({
 		init: '',
 		set(value) {
 			this[RADIOS].forEach((radio) => {
@@ -56,7 +56,7 @@ Object.assign(Radios.prototype, {
 		}
 	}),
 
-	values: method.array({
+	values: methodArray({
 		before() {
 			this[RADIOS].forEach((radio) => {
 				radio.remove();

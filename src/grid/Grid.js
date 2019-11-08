@@ -12,7 +12,10 @@ import {
 	enforceString,
 	HUNDRED_PERCENT,
 	isArray,
-	method,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodString,
 	Queue
 } from 'type-enforcer-ui';
 import Control from '../Control';
@@ -1337,7 +1340,7 @@ Object.assign(Grid.prototype, {
 	 * @arg {String}   [columns[].buttons[].title] - Applied to title and alt attributes
 	 */
 	// TODO: enforce inidividual column data via a Schema
-	columns: method.array({
+	columns: methodArray({
 		enforce(columns, oldValue) {
 			if (!isArray(columns)) {
 				return oldValue;
@@ -1410,19 +1413,19 @@ Object.assign(Grid.prototype, {
 	 *    this button
 	 * @arg {Function} [groupBy[].buttons.onClick]         - A function to be called when the button is clicked
 	 */
-	groupBy: method.array({
+	groupBy: methodArray({
 		set(groupBy) {
 			this[HAS_GROUPS] = groupBy.length !== 0;
 		}
 	}),
-	onSelect: method.function({
+	onSelect: methodFunction({
 		set: updateSelectState
 	}),
-	onMultiSelect: method.function({
+	onMultiSelect: methodFunction({
 		set: updateSelectState
 	}),
-	itemsLabel: method.string(),
-	hideFooter: method.boolean({
+	itemsLabel: methodString(),
+	hideFooter: methodBoolean({
 		set: updateFooter
 	})
 });

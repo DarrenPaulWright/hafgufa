@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import { method, PrivateVars } from 'type-enforcer-ui';
+import { methodQueue, PrivateVars } from 'type-enforcer-ui';
 import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../utility/domConstants';
 
 const _ = new PrivateVars();
@@ -158,7 +158,7 @@ export default (Base) => {
 		 * @arg {Function} callback
 		 * @returns {queue}
 		 */
-		onFocus: method.queue({
+		onFocus: methodQueue({
 			set(queue) {
 				const self = this;
 				const _self = _(self);
@@ -186,7 +186,7 @@ export default (Base) => {
 		 * @arg {Function} callback
 		 * @returns {queue}
 		 */
-		onBlur: method.queue({
+		onBlur: methodQueue({
 			set(queue) {
 				const self = this;
 				const _self = _(self);

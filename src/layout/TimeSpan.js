@@ -1,5 +1,5 @@
 import { repeat } from 'object-agent';
-import { applySettings, method, PERCENT, PIXELS } from 'type-enforcer-ui';
+import { applySettings, methodCssSize, methodInteger, methodString, PERCENT, PIXELS } from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
@@ -54,17 +54,17 @@ export default class TimeSpan extends Container {
 }
 
 Object.assign(TimeSpan.prototype, {
-	title: method.string({
+	title: methodString({
 		set(title) {
 			this[HEADING].title(title);
 		}
 	}),
-	subTitle: method.string({
+	subTitle: methodString({
 		set(subTitle) {
 			this[HEADING].subTitle(subTitle);
 		}
 	}),
-	subSpans: method.integer({
+	subSpans: methodInteger({
 		min: 1,
 		set(subSpans) {
 			const self = this;
@@ -88,7 +88,7 @@ Object.assign(TimeSpan.prototype, {
 			}
 		}
 	}),
-	lineOffset: method.cssSize({
+	lineOffset: methodCssSize({
 		set: 'resize'
 	})
 });

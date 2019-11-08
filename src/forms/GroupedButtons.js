@@ -8,7 +8,10 @@ import {
 	enforceInteger,
 	HUNDRED_PERCENT,
 	isArray,
-	method
+	methodAny,
+	methodArray,
+	methodBoolean,
+	methodEnum
 } from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -276,7 +279,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {Array|String} [value]
 	 * @returns {Array|String|this}
 	 */
-	value: method.any({
+	value: methodAny({
 		enforce(newValue) {
 			if (this.isMultiSelect()) {
 				return castArray(newValue);
@@ -364,7 +367,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {Array} [buttons]
 	 * @returns {Array|this}
 	 */
-	buttons: method.array({
+	buttons: methodArray({
 		set(buttons) {
 			const self = this;
 
@@ -397,7 +400,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {Boolean} [isSelectable]
 	 * @returns {Boolean|this}
 	 */
-	isSelectable: method.boolean({
+	isSelectable: methodBoolean({
 		init: true,
 		set(isSelectable) {
 			this[BUTTON_RECYCLER].each((control) => {
@@ -415,7 +418,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {Boolean} [isMultiSelect]
 	 * @returns {Boolean|this}
 	 */
-	isMultiSelect: method.boolean({
+	isMultiSelect: methodBoolean({
 		set() {
 			this.value(this.value());
 		}
@@ -430,7 +433,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @arg {String} [orientation]
 	 * @returns {String|this}
 	 */
-	orientation: method.enum({
+	orientation: methodEnum({
 		init: ORIENTATION.HORIZONTAL,
 		enum: ORIENTATION,
 		set(newValue) {

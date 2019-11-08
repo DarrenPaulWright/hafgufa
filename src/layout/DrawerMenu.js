@@ -6,7 +6,14 @@ import {
 	enforceBoolean,
 	enforceCssSize,
 	HUNDRED_PERCENT,
-	method
+	methodArray,
+	methodBoolean,
+	methodDockPoint,
+	methodElement,
+	methodFunction,
+	methodObject,
+	methodQueue,
+	methodString
 } from 'type-enforcer-ui';
 import uuid from 'uuid/v4';
 import Control from '../Control';
@@ -155,16 +162,16 @@ export default class DrawerMenu extends Control {
 }
 
 Object.assign(DrawerMenu.prototype, {
-	icon: method.string({
+	icon: methodString({
 		init: MENU_ICON,
 		set(icon) {
 			this[MENU_BUTTON].icon(icon);
 		}
 	}),
 
-	onMenuSlide: method.queue(),
+	onMenuSlide: methodQueue(),
 
-	isMenuOpen: method.boolean({
+	isMenuOpen: methodBoolean({
 		set(isMenuOpen) {
 			const self = this;
 
@@ -179,9 +186,9 @@ Object.assign(DrawerMenu.prototype, {
 		}
 	}),
 
-	onSelect: method.function(),
+	onSelect: methodFunction(),
 
-	menuContainer: method.element({
+	menuContainer: methodElement({
 		set(menuContainer) {
 			const self = this;
 
@@ -247,11 +254,11 @@ Object.assign(DrawerMenu.prototype, {
 		}
 	}),
 
-	headerControl: method.function(),
+	headerControl: methodFunction(),
 
-	headerSettings: method.object(),
+	headerSettings: methodObject(),
 
-	menuItems: method.array({
+	menuItems: methodArray({
 		set(menuItems) {
 			const self = this;
 			collectionHelper.eachChild(menuItems, (item) => {
@@ -269,9 +276,9 @@ Object.assign(DrawerMenu.prototype, {
 		}
 	}),
 
-	footerContent: method.array(),
+	footerContent: methodArray(),
 
-	drawerDock: method.dockPoint({
+	drawerDock: methodDockPoint({
 		init: new DockPoint('LEFT'),
 		set(drawerDock) {
 			if (this[DRAWER]) {

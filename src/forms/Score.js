@@ -1,4 +1,4 @@
-import { applySettings, AUTO, enforceCssSize, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, enforceCssSize, methodNumber, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Label from '../elements/Label';
@@ -47,14 +47,14 @@ Object.assign(Score.prototype, {
 	 * @arg {Number} [value]
 	 * @returns {Number|this}
 	 */
-	value: method.number({
+	value: methodNumber({
 		init: null,
 		set() {
 			this[TEXT_DISPLAY].content(this.value() + '');
 		}
 	}),
 
-	label: method.string({
+	label: methodString({
 		set(label) {
 			const self = this;
 

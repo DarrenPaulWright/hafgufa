@@ -9,7 +9,11 @@ import {
 	HUNDRED_PERCENT,
 	isInteger,
 	isNumber,
-	method
+	methodBoolean,
+	methodCssSize,
+	methodInteger,
+	methodQueue,
+	methodString
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Input from '../elements/Input';
@@ -156,7 +160,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Int} [newRows]
 	 * @returns {Int|this}
 	 */
-	rows: method.integer({
+	rows: methodInteger({
 		set(rows) {
 			const self = this;
 			let oldInput = self[INPUT];
@@ -192,11 +196,11 @@ Object.assign(TextInput.prototype, {
 		min: 1
 	}),
 
-	maxRows: method.integer({
+	maxRows: methodInteger({
 		set: maxRowCallback
 	}),
 
-	textWidth: method.cssSize({
+	textWidth: methodCssSize({
 		set: positionElements
 	}),
 
@@ -207,7 +211,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newIsPassword]
 	 * @returns {Boolean|this}
 	 */
-	isPassword: method.boolean({
+	isPassword: methodBoolean({
 		set(isPassword) {
 			if (this.rows() === 1) {
 				this[INPUT].inputType(isPassword ? INPUT_TYPE_PASSWORD : INPUT_TYPE_TEXT);
@@ -215,7 +219,7 @@ Object.assign(TextInput.prototype, {
 		}
 	}),
 
-	isSoftValidation: method.boolean({
+	isSoftValidation: methodBoolean({
 		init: true,
 		set() {
 			if (this.maxLength()) {
@@ -231,7 +235,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Int} [newMinLength]
 	 * @returns {Int|this}
 	 */
-	minLength: method.integer({
+	minLength: methodInteger({
 		other: undefined
 	}),
 
@@ -242,7 +246,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Int} [newMaxLength]
 	 * @returns {Int|this}
 	 */
-	maxLength: method.integer({
+	maxLength: methodInteger({
 		set(newValue) {
 			this[INPUT].attr(MAX_LENGTH, (this.isSoftValidation() || !newValue) ? null : newValue);
 		},
@@ -256,7 +260,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Int} [newMinValue]
 	 * @returns {Int|this}
 	 */
-	minValue: method.integer({
+	minValue: methodInteger({
 		other: undefined
 	}),
 
@@ -267,7 +271,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Int} [newMaxValue]
 	 * @returns {Int|this}
 	 */
-	maxValue: method.integer({
+	maxValue: methodInteger({
 		other: undefined
 	}),
 
@@ -278,7 +282,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	isInt: method.boolean(),
+	isInt: methodBoolean(),
 
 	/**
 	 * @method isNumber
@@ -287,7 +291,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	isNumber: method.boolean(),
+	isNumber: methodBoolean(),
 
 	/**
 	 * @method totalNumberDigits
@@ -296,7 +300,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	maxNumberDigits: method.integer({
+	maxNumberDigits: methodInteger({
 		other: undefined,
 		min: 1
 	}),
@@ -308,7 +312,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	maxFractionDigits: method.integer({
+	maxFractionDigits: methodInteger({
 		other: undefined,
 		min: 1
 	}),
@@ -400,7 +404,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {String} [newPlaceholder]
 	 * @returns {String|this}
 	 */
-	placeholder: method.string({
+	placeholder: methodString({
 		set(newValue) {
 			this[INPUT].attr(PLACE_HOLDER, newValue);
 		}
@@ -413,7 +417,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {String} [newPrefix]
 	 * @returns {String|this}
 	 */
-	prefix: method.string({
+	prefix: methodString({
 		set(prefix) {
 			const self = this;
 
@@ -447,7 +451,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {String} [newPrefix]
 	 * @returns {String|this}
 	 */
-	suffix: method.string({
+	suffix: methodString({
 		set(suffix) {
 			const self = this;
 
@@ -558,7 +562,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Function} callback
 	 * @returns {this}
 	 */
-	onFocus: method.queue({
+	onFocus: methodQueue({
 		set(queue) {
 			if (queue.length === 1) {
 				const self = this;
@@ -580,7 +584,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Function} callback
 	 * @returns {this}
 	 */
-	onBlur: method.queue({
+	onBlur: methodQueue({
 		set(queue) {
 			if (queue.length === 1) {
 				const self = this;
@@ -602,7 +606,7 @@ Object.assign(TextInput.prototype, {
 	 * @param {Function} callback
 	 * @returns {this}
 	 */
-	onEnter: method.queue({
+	onEnter: methodQueue({
 		set(queue) {
 			if (queue.length === 1) {
 				const self = this;

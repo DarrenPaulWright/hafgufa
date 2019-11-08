@@ -1,4 +1,4 @@
-import { method } from 'type-enforcer-ui';
+import { methodFunction, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { CLICK_EVENT } from '../utility/domConstants';
 
@@ -96,7 +96,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|element|this}
 		 */
-		url: method.string({
+		url: methodString({
 			set(url) {
 				const self = this;
 
@@ -123,7 +123,7 @@ export default (Base) => {
 		 * @arg {Function} [callback]
 		 * @returns {Function|this}
 		 */
-		onClick: method.function({
+		onClick: methodFunction({
 			set: addClickEvent,
 			other: null
 		})

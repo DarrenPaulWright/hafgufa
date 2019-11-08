@@ -1,5 +1,5 @@
 import { clone, deepEqual } from 'object-agent';
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodFunction, methodInteger } from 'type-enforcer-ui';
 
 const NO_ITEMS_INDEX = -1;
 
@@ -158,10 +158,10 @@ export default class LocalHistory {
 }
 
 Object.assign(LocalHistory.prototype, {
-	max: method.integer({
+	max: methodInteger({
 		init: 0
 	}),
-	onPush: method.function(),
-	onUndo: method.function(),
-	onRedo: method.function()
+	onPush: methodFunction(),
+	onUndo: methodFunction(),
+	onRedo: methodFunction()
 });

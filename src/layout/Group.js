@@ -1,4 +1,4 @@
-import { applySettings, AUTO, method, Thickness } from 'type-enforcer-ui';
+import { applySettings, AUTO, methodThickness, Thickness } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import { HEADING_LEVELS } from '../elements/Heading';
@@ -46,7 +46,7 @@ Object.assign(Group.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	padding: method.thickness({
+	padding: methodThickness({
 		init: new Thickness('0.25rem 0.6rem 0.5rem'),
 		set(padding) {
 			this.contentContainer.css(PADDING, padding.toString());

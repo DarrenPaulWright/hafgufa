@@ -1,6 +1,20 @@
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
-import { applySettings, AUTO, enforceEnum, Enum, HUNDRED_PERCENT, method, ZERO_PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	enforceEnum,
+	Enum,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodEnum,
+	methodFunction,
+	methodObject,
+	methodQueue,
+	methodString,
+	ZERO_PIXELS
+} from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
@@ -206,7 +220,7 @@ export default class Heading extends FocusMixin(Control) {
 }
 
 Object.assign(Heading.prototype, {
-	level: method.enum({
+	level: methodEnum({
 		enum: HEADING_LEVELS,
 		init: HEADING_LEVELS.SIX,
 		set(level) {
@@ -214,7 +228,7 @@ Object.assign(Heading.prototype, {
 		}
 	}),
 
-	isInline: method.boolean({
+	isInline: methodBoolean({
 		init: true,
 		set(isInline) {
 			this.classes('not-inline', !isInline);
@@ -223,7 +237,7 @@ Object.assign(Heading.prototype, {
 		}
 	}),
 
-	canWrap: method.boolean({
+	canWrap: methodBoolean({
 		set(canWrap) {
 			this.classes('wrap', canWrap);
 		}
@@ -237,7 +251,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {String} [title]
 	 * @returns {String|this}
 	 */
-	title: method.string({
+	title: methodString({
 		set(title) {
 			this[CHILD_CONTROLS].get(TITLE_CONTAINER).get(TITLE_ID).text(title);
 		}
@@ -254,7 +268,7 @@ Object.assign(Heading.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	subTitle: method.string({
+	subTitle: methodString({
 		set(subTitle) {
 			const self = this;
 
@@ -287,7 +301,7 @@ Object.assign(Heading.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	error: method.string({
+	error: methodString({
 		set(error) {
 			const self = this;
 
@@ -317,7 +331,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {String} icon
 	 * @returns {String|this}
 	 */
-	icon: method.string({
+	icon: methodString({
 		set(newValue) {
 			const self = this;
 
@@ -348,7 +362,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {String} iconTooltip
 	 * @returns {String|this}
 	 */
-	iconTooltip: method.string({
+	iconTooltip: methodString({
 		set(iconTooltip) {
 			if (this[CHILD_CONTROLS].get(ICON_CONTROL)) {
 				this[CHILD_CONTROLS].get(ICON_CONTROL).tooltip(iconTooltip);
@@ -364,7 +378,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {String} image
 	 * @returns {String|this}
 	 */
-	image: method.string({
+	image: methodString({
 		set(image) {
 			const self = this;
 
@@ -393,7 +407,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Array} [buttons] - See Toolbar.addButton for settings of each item in array.
 	 * @returns {Array|this}
 	 */
-	buttons: method.array({
+	buttons: methodArray({
 		set(newValue) {
 			const self = this;
 
@@ -444,7 +458,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} isSelectable
 	 * @returns {Boolean|this}
 	 */
-	isSelectable: method.boolean({
+	isSelectable: methodBoolean({
 		set(newValue) {
 			const self = this;
 
@@ -463,7 +477,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} isSelected
 	 * @returns {Boolean|this}
 	 */
-	isSelected: method.boolean({
+	isSelected: methodBoolean({
 		set(newValue) {
 			const self = this;
 
@@ -483,7 +497,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} isIndeterminate
 	 * @returns {Boolean|this}
 	 */
-	isIndeterminate: method.boolean({
+	isIndeterminate: methodBoolean({
 		set(isIndeterminate) {
 			const self = this;
 
@@ -502,7 +516,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} isExpandable
 	 * @returns {Boolean|this}
 	 */
-	isExpandable: method.boolean({
+	isExpandable: methodBoolean({
 		set() {
 			const self = this;
 
@@ -519,7 +533,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} isExpanded
 	 * @returns {Boolean|this}
 	 */
-	isExpanded: method.boolean({
+	isExpanded: methodBoolean({
 		set() {
 			this[updateExpander]();
 		}
@@ -534,7 +548,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} shouldMainClickExpand
 	 * @returns {Boolean|this}
 	 */
-	shouldMainClickExpand: method.boolean(),
+	shouldMainClickExpand: methodBoolean(),
 
 	/**
 	 * Get or set the visibility of the expander on this heading
@@ -544,7 +558,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} showExpander
 	 * @returns {Boolean|this}
 	 */
-	showExpander: method.boolean({
+	showExpander: methodBoolean({
 		set(newValue) {
 			const self = this;
 
@@ -575,7 +589,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Boolean} showCheckbox
 	 * @returns {Boolean|this}
 	 */
-	showCheckbox: method.boolean({
+	showCheckbox: methodBoolean({
 		set(showCheckbox) {
 			const self = this;
 
@@ -605,7 +619,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Function} onSelect
 	 * @returns {Function|this}
 	 */
-	onSelect: method.queue({
+	onSelect: methodQueue({
 		set() {
 			this[setClickable]();
 		}
@@ -619,7 +633,7 @@ Object.assign(Heading.prototype, {
 	 * @arg {Function} onExpand
 	 * @returns {Function|this}
 	 */
-	onExpand: method.function({
+	onExpand: methodFunction({
 		other: undefined
 	}),
 
@@ -631,11 +645,11 @@ Object.assign(Heading.prototype, {
 	 * @arg {Object} data
 	 * @returns {Object|this}
 	 */
-	data: method.object({
+	data: methodObject({
 		other: undefined
 	}),
 
-	isFocusable: method.boolean({
+	isFocusable: methodBoolean({
 		set(newValue) {
 			const self = this;
 

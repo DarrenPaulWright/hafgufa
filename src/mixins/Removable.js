@@ -1,5 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { isFunction, method, PrivateVars } from 'type-enforcer-ui';
+import { isFunction, methodBoolean, methodQueue, PrivateVars } from 'type-enforcer-ui';
 
 const isTest = isFunction(global.it);
 const FADE_INITIAL_CLASS = 'fade-initial';
@@ -32,7 +32,7 @@ export default class Removable {
 }
 
 Object.assign(Removable.prototype, {
-	fade: method.boolean({
+	fade: methodBoolean({
 		set(fade) {
 			const self = this;
 
@@ -108,7 +108,7 @@ Object.assign(Removable.prototype, {
 	 * @arg {Function} callback
 	 * @returns {this}
 	 */
-	onPreRemove: method.queue(),
+	onPreRemove: methodQueue(),
 	/**
 	 * Adds a callback to the remove method
 	 * @method onRemove
@@ -117,5 +117,5 @@ Object.assign(Removable.prototype, {
 	 * @arg {Function} callback
 	 * @returns {this}
 	 */
-	onRemove: method.queue()
+	onRemove: methodQueue()
 });

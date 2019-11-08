@@ -5,7 +5,10 @@ import {
 	DockPoint,
 	HUNDRED_PERCENT,
 	isFunction,
-	method,
+	methodBoolean,
+	methodObject,
+	methodString,
+	methodThickness,
 	PIXELS,
 	Thickness
 } from 'type-enforcer-ui';
@@ -118,7 +121,7 @@ export default class Dialog extends Removable {
 }
 
 Object.assign(Dialog.prototype, {
-	title: method.string({
+	title: methodString({
 		set(newValue) {
 			const self = this;
 
@@ -148,7 +151,7 @@ Object.assign(Dialog.prototype, {
 		}
 	}),
 
-	footer: method.object({
+	footer: methodObject({
 		set(newValue) {
 			const self = this;
 
@@ -213,7 +216,7 @@ Object.assign(Dialog.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	padding: method.thickness({
+	padding: methodThickness({
 		init: new Thickness('1rem 1.25rem'),
 		set(padding) {
 			this[CONTENT_CONTAINER].padding(padding);
@@ -228,7 +231,7 @@ Object.assign(Dialog.prototype, {
 	 * @arg   {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
-	isEnabled: method.boolean({
+	isEnabled: methodBoolean({
 		init: true,
 		set(newValue) {
 			this[CONTENT_CONTAINER].isEnabled(!newValue);

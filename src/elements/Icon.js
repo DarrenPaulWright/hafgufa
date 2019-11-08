@@ -1,4 +1,4 @@
-import { applySettings, Enum, method } from 'type-enforcer-ui';
+import { applySettings, Enum, methodEnum, methodString } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';
@@ -47,7 +47,7 @@ Object.assign(Icon.prototype, {
 	 * @arg {String} newIcon
 	 * @returns {String|this}
 	 */
-	icon: method.string({
+	icon: methodString({
 		before(oldValue) {
 			const self = this;
 
@@ -125,7 +125,7 @@ Object.assign(Icon.prototype, {
 	 * @arg {String} newSize - Use Icon ICON_SIZES
 	 * @returns {String|this}
 	 */
-	size: method.enum({
+	size: methodEnum({
 		enum: ICON_SIZES,
 		init: ICON_SIZES.LARGE,
 		before(oldValue) {

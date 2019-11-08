@@ -6,7 +6,10 @@ import {
 	enforceEnum,
 	Enum,
 	HUNDRED_PERCENT,
-	method,
+	methodBoolean,
+	methodCssSize,
+	methodEnum,
+	methodFunction,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
 import Control from '../Control';
@@ -177,7 +180,7 @@ Object.assign(SplitView.prototype, {
 	 * @instance
 	 * @returns {String|Object}
 	 */
-	orientation: method.enum({
+	orientation: methodEnum({
 		init: ORIENTATION.COLUMNS,
 		enum: ORIENTATION,
 		set(orientation) {
@@ -204,7 +207,7 @@ Object.assign(SplitView.prototype, {
 	 * @instance
 	 * @returns {String|Object}
 	 */
-	splitOffset: method.cssSize({
+	splitOffset: methodCssSize({
 		set(splitOffset) {
 			const self = this;
 
@@ -223,7 +226,7 @@ Object.assign(SplitView.prototype, {
 	 * @instance
 	 * @returns {String|Object}
 	 */
-	isResizable: method.boolean({
+	isResizable: methodBoolean({
 		set(isResizable) {
 			const self = this;
 
@@ -265,7 +268,7 @@ Object.assign(SplitView.prototype, {
 	 * @arg {Number} [newMinOffset]
 	 * @returns {Number|Object}
 	 */
-	minOffset: method.cssSize({
+	minOffset: methodCssSize({
 		set(minOffset) {
 			const self = this;
 
@@ -283,7 +286,7 @@ Object.assign(SplitView.prototype, {
 	 * @arg {Number} [newMaxOffset]
 	 * @returns {Number|Object}
 	 */
-	maxOffset: method.cssSize({
+	maxOffset: methodCssSize({
 		set(maxOffset) {
 			const self = this;
 
@@ -293,7 +296,7 @@ Object.assign(SplitView.prototype, {
 		}
 	}),
 
-	onOffsetChange: method.function()
+	onOffsetChange: methodFunction()
 });
 
 SplitView.ORIENTATION = ORIENTATION;

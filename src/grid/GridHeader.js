@@ -1,4 +1,4 @@
-import { applySettings, method, PIXELS } from 'type-enforcer-ui';
+import { applySettings, methodArray, methodBoolean, methodFunction, methodNumber, PIXELS } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -79,7 +79,7 @@ Object.assign(GridHeader.prototype, {
 	 * @arg {Array} [columns]
 	 * @returns {Array|this}
 	 */
-	columns: method.array({
+	columns: methodArray({
 		set(columns) {
 			const self = this;
 
@@ -145,7 +145,7 @@ Object.assign(GridHeader.prototype, {
 	 * @arg {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
-	selectableColumns: method.array({
+	selectableColumns: methodArray({
 		set(newValue) {
 			this[CELL_RECYCLER].each((control) => {
 				control.selectableColumns(newValue, true);
@@ -215,7 +215,7 @@ Object.assign(GridHeader.prototype, {
 	 * @arg {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isAllRowsSelected: method.boolean({
+	isAllRowsSelected: methodBoolean({
 		set(isAllRowsSelected) {
 			this[CELL_RECYCLER].each((control) => {
 				control.isAllRowsSelected(isAllRowsSelected, true);
@@ -230,7 +230,7 @@ Object.assign(GridHeader.prototype, {
 	 * @arg {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isSomeRowsSelected: method.boolean({
+	isSomeRowsSelected: methodBoolean({
 		set(isSomeRowsSelected) {
 			this[CELL_RECYCLER].each((control) => {
 				control.isSomeRowsSelected(isSomeRowsSelected, true);
@@ -245,11 +245,11 @@ Object.assign(GridHeader.prototype, {
 	 * @arg {Number} [scrollbarWidth]
 	 * @returns {Number|this}
 	 */
-	scrollbarWidth: method.number({
+	scrollbarWidth: methodNumber({
 		init: 0
 	}),
 
-	onSort: method.function(),
+	onSort: methodFunction(),
 
 	updateFilters() {
 		this[CELL_RECYCLER].each((control) => {

@@ -1,6 +1,17 @@
 import { Collection } from 'hord';
 import { clone, isEmpty } from 'object-agent';
-import { applySettings, AUTO, DockPoint, isArray, isObject, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	isArray,
+	isObject,
+	methodAny,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodString
+} from 'type-enforcer-ui';
 import { byKey } from '../../src/utility/sortBy';
 import controlTypes from '../controlTypes';
 import Dialog from '../layout/Dialog';
@@ -883,7 +894,7 @@ export default class Picker extends FocusMixin(FormControl) {
 }
 
 Object.assign(Picker.prototype, {
-	// dataSource: method.object({
+	// dataSource: methodObject({
 	// 	init: {},
 	// 	before(oldValue) {
 	// 		if (oldValue) {
@@ -970,7 +981,7 @@ Object.assign(Picker.prototype, {
 	 * @arg {Object} newOptions - See initial input options.
 	 * @returns {Object|this}
 	 */
-	options: method.any({
+	options: methodAny({
 		init: {
 			isMultiSelect: false,
 			children: []
@@ -1015,7 +1026,7 @@ Object.assign(Picker.prototype, {
 	 * @arg {Array} preferred - Prioritized array of option id's.
 	 * @returns {Array|this}
 	 */
-	preferred: method.array({
+	preferred: methodArray({
 		set: buildPreferredItemsList
 	}),
 
@@ -1027,7 +1038,7 @@ Object.assign(Picker.prototype, {
 	 * @arg {Function} [callback]
 	 * @returns {Function|this}
 	 */
-	onOptionsChange: method.function(),
+	onOptionsChange: methodFunction(),
 
 	/**
 	 * Get or set the value of this control
@@ -1133,7 +1144,7 @@ Object.assign(Picker.prototype, {
 	 * @arg {Boolean} canUnselect
 	 * @returns {Boolean|this}
 	 */
-	canUnselect: method.boolean({
+	canUnselect: methodBoolean({
 		init: true
 	}),
 
@@ -1148,7 +1159,7 @@ Object.assign(Picker.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	defaultButtonText: method.string({
+	defaultButtonText: methodString({
 		set: updateGroupedButtonsLayout
 	}),
 
@@ -1163,7 +1174,7 @@ Object.assign(Picker.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	defaultButtonIcon: method.string({
+	defaultButtonIcon: methodString({
 		set: updateGroupedButtonsLayout
 	}),
 
@@ -1178,7 +1189,7 @@ Object.assign(Picker.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	emptyButtonText: method.string({
+	emptyButtonText: methodString({
 		set: updateGroupedButtonsLayout
 	}),
 
@@ -1193,11 +1204,11 @@ Object.assign(Picker.prototype, {
 	 *
 	 * @returns {Boolean|this}
 	 */
-	showSelectedItems: method.boolean({
+	showSelectedItems: methodBoolean({
 		init: true
 	}),
 
-	showAll: method.boolean({
+	showAll: methodBoolean({
 		set: buildPreferredItemsList
 	}),
 
@@ -1212,17 +1223,17 @@ Object.assign(Picker.prototype, {
 	 *
 	 * @returns {Boolean|this}
 	 */
-	canFilterSelectedOnly: method.boolean(),
+	canFilterSelectedOnly: methodBoolean(),
 
-	canSelectAll: method.boolean(),
+	canSelectAll: methodBoolean(),
 
-	onAdd: method.function(),
+	onAdd: methodFunction(),
 
-	onEdit: method.function(),
+	onEdit: methodFunction(),
 
-	onDelete: method.function(),
+	onDelete: methodFunction(),
 
-	onBuildDialogContents: method.function({
+	onBuildDialogContents: methodFunction({
 		set() {
 			const self = this;
 
@@ -1235,5 +1246,5 @@ Object.assign(Picker.prototype, {
 		}
 	}),
 
-	onRemoveDialogContents: method.function()
+	onRemoveDialogContents: methodFunction()
 });

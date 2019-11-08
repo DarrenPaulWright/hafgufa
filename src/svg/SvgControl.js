@@ -1,4 +1,4 @@
-import { CssSize, method } from 'type-enforcer-ui';
+import { CssSize, methodCssSize } from 'type-enforcer-ui';
 import Control from '../Control';
 import { HEIGHT, WIDTH } from '../utility/domConstants';
 
@@ -9,7 +9,7 @@ export default class SvgControl extends Control {
 }
 
 Object.assign(SvgControl.prototype, {
-	width: method.cssSize({
+	width: methodCssSize({
 		init: new CssSize(),
 		set(width) {
 			this.attr(WIDTH, width.toPixels());
@@ -20,7 +20,7 @@ Object.assign(SvgControl.prototype, {
 		return this.element().getBoundingClientRect().width;
 	},
 
-	height: method.cssSize({
+	height: methodCssSize({
 		init: new CssSize(),
 		set(height) {
 			this.attr(HEIGHT, height.toPixels());

@@ -1,5 +1,13 @@
 import { repeat } from 'object-agent';
-import { applySettings, DockPoint, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	DockPoint,
+	methodBoolean,
+	methodEnum,
+	methodFunction,
+	methodObject,
+	methodString
+} from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
@@ -186,7 +194,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Object} [data]
 	 * @returns {Object|this}
 	 */
-	rowData: method.object({
+	rowData: methodObject({
 		init: {}
 	}),
 
@@ -197,7 +205,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {String} [dataType]
 	 * @returns {String|this}
 	 */
-	dataType: method.enum({
+	dataType: methodEnum({
 		init: COLUMN_TYPES.NONE,
 		enum: COLUMN_TYPES,
 		set() {
@@ -215,7 +223,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Object} [content]
 	 * @returns {Object|this}
 	 */
-	content: method.object({
+	content: methodObject({
 		set(content) {
 			const self = this;
 			let align = CELL_ALIGNMENT.NONE;
@@ -303,7 +311,7 @@ Object.assign(GridCell.prototype, {
 		return this[DISPLAY_TYPE];
 	},
 
-	onSelect: method.function(),
+	onSelect: methodFunction(),
 
 	/**
 	 * @method isSelected
@@ -312,7 +320,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Boolean} isSelected
 	 * @returns {Boolean|this}
 	 */
-	isSelected: method.boolean({
+	isSelected: methodBoolean({
 		set(isSelected) {
 			const self = this;
 
@@ -329,7 +337,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Boolean} newCanWordWrap
 	 * @returns {Boolean|this}
 	 */
-	wordWrap: method.boolean({
+	wordWrap: methodBoolean({
 		set(newValue) {
 			this.classes(NO_WRAP_CLASS, newValue);
 		}
@@ -342,7 +350,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Boolean} newTextAlign
 	 * @returns {Boolean|this}
 	 */
-	textAlign: method.enum({
+	textAlign: methodEnum({
 		init: CELL_ALIGNMENT.NONE,
 		enum: CELL_ALIGNMENT,
 		set(newValue) {
@@ -361,7 +369,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {Boolean} newIsEnabled
 	 * @returns {Boolean|this}
 	 */
-	isEnabled: method.boolean({
+	isEnabled: methodBoolean({
 		init: true
 	}),
 
@@ -372,7 +380,7 @@ Object.assign(GridCell.prototype, {
 	 * @arg {String} newTooltip
 	 * @returns {String|this}
 	 */
-	tooltip: method.string({
+	tooltip: methodString({
 		set(newValue) {
 			const self = this;
 

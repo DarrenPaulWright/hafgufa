@@ -1,4 +1,4 @@
-import { applySettings, AUTO, method } from 'type-enforcer-ui';
+import { applySettings, AUTO, methodBoolean, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { LEFT, TEXT_ALIGN, WIDTH } from '../utility/domConstants';
 import './Description.less';
@@ -37,7 +37,7 @@ Object.assign(Description.prototype, {
 	 * @arg {String} [value]
 	 * @returns {String|this}
 	 */
-	value: method.string({
+	value: methodString({
 		set(value) {
 			this.contentContainer.element().innerHTML = value;
 		}
@@ -50,7 +50,7 @@ Object.assign(Description.prototype, {
 	 * @arg {String} [newTextWidth]
 	 * @returns {String|this}
 	 */
-	textWidth: method.string({
+	textWidth: methodString({
 		init: AUTO,
 		set(newValue) {
 			this.contentContainer.css(WIDTH, newValue);
@@ -64,7 +64,7 @@ Object.assign(Description.prototype, {
 	 * @arg {String} [newAlign] - Applys directly to the css property text-align.
 	 * @returns {String|this}
 	 */
-	align: method.string({
+	align: methodString({
 		init: LEFT,
 		set(newValue) {
 			this.contentContainer.css(TEXT_ALIGN, newValue);
@@ -80,7 +80,7 @@ Object.assign(Description.prototype, {
 	 *
 	 * @returns {boolean|this}
 	 */
-	isColumns: method.boolean({
+	isColumns: methodBoolean({
 		set(isColumns) {
 			this.classes(COLUMNS_CLASS, isColumns);
 		}

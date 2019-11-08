@@ -1,4 +1,12 @@
-import { applySettings, enforceString, Enum, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	enforceString,
+	Enum,
+	methodAny,
+	methodBoolean,
+	methodEnum,
+	methodString
+} from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
@@ -67,7 +75,7 @@ Object.assign(Button.prototype, {
 	 * @arg {anything} [value]
 	 * @returns {*|this}
 	 */
-	value: method.any(),
+	value: methodAny(),
 
 	/**
 	 * Set the button label.
@@ -77,7 +85,7 @@ Object.assign(Button.prototype, {
 	 * @arg {String} newLabel - A none-HTML string
 	 * @returns {String|this}
 	 */
-	label: method.string({
+	label: methodString({
 		init: undefined,
 		set(label) {
 			if ((this.icon() || this.image()) && !label) {
@@ -105,7 +113,7 @@ Object.assign(Button.prototype, {
 	 * @arg {String} newTitle - A none-HTML string
 	 * @returns {this}
 	 */
-	alt: method.string({
+	alt: methodString({
 		set(newValue) {
 			this.attr(ALT, newValue)
 				.attr(TITLE, newValue);
@@ -124,7 +132,7 @@ Object.assign(Button.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	icon: method.string({
+	icon: methodString({
 		set(newValue) {
 			if (!newValue) {
 				this[CHILD_CONTROLS].remove(ICON_ID);
@@ -163,7 +171,7 @@ Object.assign(Button.prototype, {
 	 * @arg {String} [iconSize]
 	 * @returns {String|this}
 	 */
-	iconSize: method.enum({
+	iconSize: methodEnum({
 		init: ICON_SIZES.LARGE,
 		enum: ICON_SIZES,
 		set(newValue) {
@@ -180,7 +188,7 @@ Object.assign(Button.prototype, {
 	 * @arg {String} [iconPosition]
 	 * @returns {String|this}
 	 */
-	iconPosition: method.enum({
+	iconPosition: methodEnum({
 		init: ICON_POSITIONS.LEFT,
 		enum: ICON_POSITIONS,
 		set(newValue) {
@@ -204,7 +212,7 @@ Object.assign(Button.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	image: method.string({
+	image: methodString({
 		set(image) {
 			if (!image) {
 				this[CHILD_CONTROLS].remove(IMAGE_ID);
@@ -242,7 +250,7 @@ Object.assign(Button.prototype, {
 	 * @arg {Boolean} [newisSelectable]
 	 * @returns {Boolean|this}
 	 */
-	isSelectable: method.boolean({
+	isSelectable: methodBoolean({
 		set(newValue) {
 			if (!newValue) {
 				this.isSelected(false);
@@ -262,7 +270,7 @@ Object.assign(Button.prototype, {
 	 *
 	 * @returns {Boolean|this}
 	 */
-	isSelected: method.boolean({
+	isSelected: methodBoolean({
 		set(newValue) {
 			if (newValue && !this.isSelectable()) {
 				this.isSelected(false);

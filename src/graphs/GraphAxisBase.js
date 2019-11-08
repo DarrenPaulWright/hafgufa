@@ -1,6 +1,6 @@
 import { axisBottom, axisLeft, axisRight, axisTop, scaleBand, scaleLinear, select } from 'd3';
 import { fill } from 'object-agent';
-import { Enum, method } from 'type-enforcer-ui';
+import { Enum, methodAny, methodEnum, methodNumber, methodString } from 'type-enforcer-ui';
 import d3Helper from '../utility/d3Helper';
 import accuracy from '../utility/math/accuracy';
 import round from '../utility/math/round';
@@ -277,97 +277,97 @@ export default class GraphAxisBase extends GraphBase {
 }
 
 Object.assign(GraphAxisBase.prototype, {
-	xLabel: method.string({
+	xLabel: methodString({
 		set: updateData
 	}),
 
-	xSuffix: method.string({
+	xSuffix: methodString({
 		set: updateData
 	}),
 
-	xAxisSize: method.number({
+	xAxisSize: methodNumber({
 		init: 0
 	}),
 
-	xScale: method.any({
+	xScale: methodAny({
 		get() {
 			return this[X_SCALE];
 		}
 	}),
 
-	xScaleType: method.enum({
+	xScaleType: methodEnum({
 		enum: SCALE_TYPES,
 		set(xScaleType) {
 			this[X_SCALE] = this[buildScale](xScaleType);
 		}
 	}),
 
-	xMin: method.number({
+	xMin: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	xMax: method.number({
+	xMax: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	xInterval: method.number({
+	xInterval: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	yLabel: method.string({
+	yLabel: methodString({
 		set: updateData
 	}),
 
-	ySuffix: method.string({
+	ySuffix: methodString({
 		set: updateData
 	}),
 
-	yAxisSize: method.number({
+	yAxisSize: methodNumber({
 		init: 0
 	}),
 
-	yScale: method.any({
+	yScale: methodAny({
 		get() {
 			return this[Y_SCALE];
 		}
 	}),
 
-	yScaleType: method.enum({
+	yScaleType: methodEnum({
 		enum: SCALE_TYPES,
 		set(yScaleType) {
 			this[Y_SCALE] = this[buildScale](yScaleType);
 		}
 	}),
 
-	yMin: method.number({
+	yMin: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	yMax: method.number({
+	yMax: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	yInterval: method.number({
+	yInterval: methodNumber({
 		init: null,
 		set: updateData,
 		other: null
 	}),
 
-	zLabel: method.string({
+	zLabel: methodString({
 		set: updateData
 	}),
 
-	zSuffix: method.string({
+	zSuffix: methodString({
 		set: updateData
 	})
 });

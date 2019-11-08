@@ -1,5 +1,15 @@
 import { defer } from 'async-agent';
-import { applySettings, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	HUNDRED_PERCENT,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodInteger,
+	methodObject,
+	methodString,
+	PIXELS
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -270,7 +280,7 @@ Object.assign(GridRow.prototype, {
 	 * @arg {Boolean} newData
 	 * @returns {Boolean|this}
 	 */
-	rowData: method.object({
+	rowData: methodObject({
 		init: {},
 		set(rowData) {
 			const self = this;
@@ -283,21 +293,21 @@ Object.assign(GridRow.prototype, {
 		}
 	}),
 
-	rowId: method.string({
+	rowId: methodString({
 		set(rowId) {
 			this[IS_GROUP_HEADER] = !rowId;
 			this[refresh]();
 		}
 	}),
 
-	groupId: method.integer({
+	groupId: methodInteger({
 		set(groupId) {
 			this[IS_GROUP_HEADER] = groupId > 0;
 			this[refresh]();
 		}
 	}),
 
-	indentLevel: method.integer({
+	indentLevel: methodInteger({
 		min: 0,
 		set(indentLevel) {
 			const self = this;
@@ -315,7 +325,7 @@ Object.assign(GridRow.prototype, {
 	 * @arg {Object[]} newColumns
 	 * @returns {this}
 	 */
-	columns: method.array({
+	columns: methodArray({
 		set: refresh
 	}),
 
@@ -326,7 +336,7 @@ Object.assign(GridRow.prototype, {
 	 * @arg {Boolean} newIsSelected
 	 * @returns {Boolean|this}
 	 */
-	isSelected: method.boolean({
+	isSelected: methodBoolean({
 		set(isSelected) {
 			this.classes('selected', isSelected);
 
@@ -343,7 +353,7 @@ Object.assign(GridRow.prototype, {
 	 * @arg {Boolean} newIsSelected
 	 * @returns {Boolean|this}
 	 */
-	isIndeterminate: method.boolean({
+	isIndeterminate: methodBoolean({
 		set(newValue) {
 			if (this[GROUP_HEADING]) {
 				this[GROUP_HEADING].isIndeterminate(newValue);
@@ -351,16 +361,16 @@ Object.assign(GridRow.prototype, {
 		}
 	}),
 
-	onSelect: method.function({
+	onSelect: methodFunction({
 		set: setClickEvent,
 		other: undefined
 	}),
 
-	onSelectGroup: method.function({
+	onSelectGroup: methodFunction({
 		other: undefined
 	}),
 
-	onExpandCollapseGroup: method.function(),
+	onExpandCollapseGroup: methodFunction(),
 
-	wordWrap: method.function()
+	wordWrap: methodFunction()
 });

@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodAny, methodInteger } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { ROWS } from '../utility/domConstants';
 import Control from './../Control';
@@ -36,13 +36,13 @@ Object.assign(TextArea.prototype, {
 	 *
 	 * @returns {int|this}
 	 */
-	rows: method.integer({
+	rows: methodInteger({
 		set(rows) {
 			this.attr(ROWS, rows);
 		}
 	}),
 
-	value: method.any({
+	value: methodAny({
 		set(value) {
 			this.element().value = value;
 		},

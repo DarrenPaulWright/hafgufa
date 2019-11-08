@@ -1,4 +1,4 @@
-import { DockPoint, method } from 'type-enforcer-ui';
+import { DockPoint, methodAny, methodDockPoint } from 'type-enforcer-ui';
 import Tooltip from '../layout/Tooltip';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
 
@@ -57,7 +57,7 @@ export default (Base) => {
 	}
 
 	Object.assign(TooltipMixin.prototype, {
-		tooltip: method.any({
+		tooltip: methodAny({
 			set(tooltip) {
 				const self = this;
 
@@ -96,7 +96,7 @@ export default (Base) => {
 			}
 		}),
 
-		tooltipDockPoint: method.dockPoint({
+		tooltipDockPoint: methodDockPoint({
 			init: new DockPoint(DockPoint.POINTS.LEFT_CENTER)
 		})
 	});

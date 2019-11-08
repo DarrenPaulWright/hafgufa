@@ -1,6 +1,17 @@
 import { select } from 'd3';
 import Hammer from 'hammerjs';
-import { applySettings, CssSize, DockPoint, Enum, method, PIXELS } from 'type-enforcer-ui';
+import {
+	applySettings,
+	CssSize,
+	DockPoint,
+	Enum,
+	methodBoolean,
+	methodCssSize,
+	methodDockPoint,
+	methodEnum,
+	methodFunction,
+	PIXELS
+} from 'type-enforcer-ui';
 import { CONTROL_PROP } from '../Control';
 import controlTypes from '../controlTypes';
 import Resizer from '../elements/Resizer';
@@ -255,7 +266,7 @@ Object.assign(Drawer.prototype, {
 	 *
 	 * @returns {string|this}
 	 */
-	dock: method.dockPoint({
+	dock: methodDockPoint({
 		set(dock) {
 			const self = this;
 
@@ -271,9 +282,9 @@ Object.assign(Drawer.prototype, {
 		}
 	}),
 
-	isAnimated: method.boolean(),
+	isAnimated: methodBoolean(),
 
-	canResize: method.boolean({
+	canResize: methodBoolean({
 		set(canResize) {
 			const self = this;
 
@@ -297,7 +308,7 @@ Object.assign(Drawer.prototype, {
 		}
 	}),
 
-	overlap: method.enum({
+	overlap: methodEnum({
 		init: Drawer.OVERLAP.PHONE,
 		enum: Drawer.OVERLAP,
 		set(overlap) {
@@ -306,7 +317,7 @@ Object.assign(Drawer.prototype, {
 		}
 	}),
 
-	closedSize: method.cssSize({
+	closedSize: methodCssSize({
 		init: new CssSize('0'),
 		set(closedSize) {
 			this[SWIPE_HIT_SIZE] = Math.max(minSwipeHitSize.toPixels(true), closedSize.toPixels(true));
@@ -314,7 +325,7 @@ Object.assign(Drawer.prototype, {
 		}
 	}),
 
-	isOpen: method.boolean({
+	isOpen: methodBoolean({
 		set(isOpen) {
 			if (isOpen) {
 				if (this.onOpen()) {
@@ -329,7 +340,7 @@ Object.assign(Drawer.prototype, {
 		}
 	}),
 
-	onOpen: method.function(),
+	onOpen: methodFunction(),
 
-	onClose: method.function()
+	onClose: methodFunction()
 });

@@ -1,5 +1,5 @@
 import { debounce } from 'async-agent';
-import { method, PrivateVars } from 'type-enforcer-ui';
+import { methodBoolean, methodFunction, methodString, PrivateVars } from 'type-enforcer-ui';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
 import Span from '../elements/Span';
@@ -112,7 +112,7 @@ export default function(Base) {
 		 *
 		 * @returns {String|this}
 		 */
-		actionButtonIcon: method.string({
+		actionButtonIcon: methodString({
 			set: refreshActionButton
 		}),
 
@@ -125,7 +125,7 @@ export default function(Base) {
 		 *
 		 * @returns {String|this}
 		 */
-		actionButtonLabel: method.string({
+		actionButtonLabel: methodString({
 			set: refreshActionButton
 		}),
 
@@ -138,7 +138,7 @@ export default function(Base) {
 		 *
 		 * @returns {Function|this}
 		 */
-		actionButtonOnClick: method.function({
+		actionButtonOnClick: methodFunction({
 			set: refreshActionButton
 		}),
 
@@ -151,7 +151,7 @@ export default function(Base) {
 		 *
 		 * @returns {Boolean|this}
 		 */
-		isActionButtonAutoHide: method.boolean({
+		isActionButtonAutoHide: methodBoolean({
 			init: true,
 			set: refreshActionButton
 		}),
@@ -165,7 +165,7 @@ export default function(Base) {
 		 *
 		 * @returns {Boolean|this}
 		 */
-		isActionButtonEnabled: method.boolean({
+		isActionButtonEnabled: methodBoolean({
 			init: true,
 			set: refreshActionButton
 		}),
@@ -181,7 +181,7 @@ export default function(Base) {
 		 *
 		 * @returns {String|this}
 		 */
-		countText: method.string({
+		countText: methodString({
 			set(countText) {
 				const self = this;
 				const _self = _(self);

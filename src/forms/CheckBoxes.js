@@ -1,4 +1,12 @@
-import { applySettings, AUTO, castArray, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	AUTO,
+	castArray,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	methodAny,
+	methodArray
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { ORIENTATION } from '../uiConstants';
@@ -38,7 +46,7 @@ Object.assign(CheckBoxes.prototype, {
 	 * @arg {Array|String} [value]
 	 * @returns {Array|String|this}
 	 */
-	value: method.any({
+	value: methodAny({
 		enforce(value) {
 			return castArray(value);
 		},
@@ -55,7 +63,7 @@ Object.assign(CheckBoxes.prototype, {
 		}
 	}),
 
-	values: method.array({
+	values: methodArray({
 		before() {
 			const self = this;
 

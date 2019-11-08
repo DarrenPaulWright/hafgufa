@@ -1,6 +1,18 @@
 import { defer } from 'async-agent';
 import { forOwn } from 'object-agent';
-import { DockPoint, enforceBoolean, Enum, isObject, method, PIXELS, Thickness } from 'type-enforcer-ui';
+import {
+	DockPoint,
+	enforceBoolean,
+	Enum,
+	isObject,
+	methodArray,
+	methodElement,
+	methodQueue,
+	methodString,
+	methodThickness,
+	PIXELS,
+	Thickness
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import Tooltip from '../layout/Tooltip';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
@@ -209,7 +221,7 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 }
 
 Object.assign(GraphBase.prototype, {
-	svgElement: method.element({
+	svgElement: methodElement({
 		set(newValue) {
 			if (newValue) {
 				this.contentContainer.append(newValue);
@@ -218,16 +230,16 @@ Object.assign(GraphBase.prototype, {
 		other: null
 	}),
 
-	onUpdateSize: method.queue(),
+	onUpdateSize: methodQueue(),
 
-	onUpdateData: method.queue(),
+	onUpdateData: methodQueue(),
 
-	graphPadding: method.thickness({
+	graphPadding: methodThickness({
 		init: new Thickness(12),
 		set: 'resize'
 	}),
 
-	color: method.string({
+	color: methodString({
 		init: '#b24f26',
 		set(newValue) {
 			const self = this;
@@ -239,7 +251,7 @@ Object.assign(GraphBase.prototype, {
 		}
 	}),
 
-	data: method.array({
+	data: methodArray({
 		set(newValue) {
 			const self = this;
 
@@ -255,7 +267,7 @@ Object.assign(GraphBase.prototype, {
 		}
 	}),
 
-	// dataSource: method.array({
+	// dataSource: methodArray({
 	// 	init: undefined,
 	// 	before(oldValue) {
 	// 		if (oldValue && !isArray(oldValue)) {
@@ -335,7 +347,7 @@ Object.assign(GraphBase.prototype, {
 		}
 	},
 
-	legendItems: method.array({
+	legendItems: methodArray({
 		set(newValue) {
 			const self = this;
 

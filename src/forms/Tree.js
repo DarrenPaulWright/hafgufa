@@ -7,7 +7,11 @@ import {
 	HUNDRED_PERCENT,
 	isArray,
 	isString,
-	method,
+	methodAny,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodString,
 	PIXELS
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
@@ -265,7 +269,7 @@ Object.assign(Tree.prototype, {
 	 * @param {Array} [value]
 	 * @returns {Array|this}
 	 */
-	value: method.any({
+	value: methodAny({
 		init: [],
 		set(value) {
 			const self = this;
@@ -290,7 +294,7 @@ Object.assign(Tree.prototype, {
 	 * @param {Array} branches
 	 * @returns {Array|this}
 	 */
-	branches: method.array({
+	branches: methodArray({
 		set: processBranches
 	}),
 
@@ -302,7 +306,7 @@ Object.assign(Tree.prototype, {
 	 * @param {Function} onLayoutChange
 	 * @returns {Function|this}
 	 */
-	onLayoutChange: method.function({
+	onLayoutChange: methodFunction({
 		other: undefined
 	}),
 
@@ -315,7 +319,7 @@ Object.assign(Tree.prototype, {
 	 * @param {Function} onSelect
 	 * @returns {Function|this}
 	 */
-	onSelect: method.function({
+	onSelect: methodFunction({
 		other: undefined
 	}),
 
@@ -337,13 +341,13 @@ Object.assign(Tree.prototype, {
 		return self;
 	},
 
-	emptyContentMessage: method.string({
+	emptyContentMessage: methodString({
 		set(emptyContentMessage) {
 			this[VIRTUAL_LIST].emptyContentMessage(emptyContentMessage);
 		}
 	}),
 
-	isMultiSelect: method.boolean({
+	isMultiSelect: methodBoolean({
 		set: processBranches
 	})
 });

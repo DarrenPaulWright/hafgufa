@@ -1,4 +1,11 @@
-import { applySettings, CssSize, enforceBoolean, enforceCssSize, HUNDRED_PERCENT, method } from 'type-enforcer-ui';
+import {
+	applySettings,
+	CssSize,
+	enforceBoolean,
+	enforceCssSize,
+	HUNDRED_PERCENT,
+	methodString
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
@@ -86,7 +93,7 @@ Object.assign(IsWorking.prototype, {
 	 * @arg {String} newLabel
 	 * @returns {String|this}
 	 */
-	label: method.string({
+	label: methodString({
 		set(label) {
 			if (label) {
 				if (!this[LABEL]) {

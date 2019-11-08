@@ -1,5 +1,20 @@
 import { clone, firstInPath, forOwn, walkPath } from 'object-agent';
-import { CssSize, enforceBoolean, isElement, isString, method, PIXELS, PrivateVars, Thickness } from 'type-enforcer-ui';
+import {
+	CssSize,
+	enforceBoolean,
+	isElement,
+	isString,
+	methodBoolean,
+	methodCssSize,
+	methodElement,
+	methodKeyValue,
+	methodQueue,
+	methodString,
+	methodThickness,
+	PIXELS,
+	PrivateVars,
+	Thickness
+} from 'type-enforcer-ui';
 import './Control.less';
 import ControlManager from './ControlManager';
 import Removable from './mixins/Removable';
@@ -234,7 +249,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	container: method.element({
+	container: methodElement({
 		enforce(newValue, oldValue) {
 			if (!newValue) {
 				return oldValue;
@@ -325,7 +340,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Object|this}
 	 */
-	element: method.element({
+	element: methodElement({
 		enforce(newValue, oldValue) {
 			if (newValue) {
 				if (isElement(newValue)) {
@@ -395,7 +410,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	id: method.string({
+	id: methodString({
 		set(id) {
 			const self = this;
 
@@ -419,7 +434,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	idSuffix: method.string({
+	idSuffix: methodString({
 		set: updateElementId
 	}),
 
@@ -434,7 +449,7 @@ Object.assign(Control.prototype, {
 	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
 	 *    the attribute's value.
 	 */
-	attr: method.keyValue({
+	attr: methodKeyValue({
 		set(attribute, value) {
 			_(this).element.setAttribute(attribute, value);
 		},
@@ -459,7 +474,7 @@ Object.assign(Control.prototype, {
 	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
 	 *    the computed style.
 	 */
-	css: method.keyValue({
+	css: methodKeyValue({
 		set(property, value) {
 			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
 				value += PIXELS;
@@ -549,7 +564,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	padding: method.thickness({
+	padding: methodThickness({
 		init: new Thickness('initial'),
 		set(newValue) {
 			this.css(PADDING, newValue.toString());
@@ -567,7 +582,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {String|this}
 	 */
-	margin: method.thickness({
+	margin: methodThickness({
 		init: new Thickness('initial'),
 		set(newValue) {
 			this.css(MARGIN, newValue.toString());
@@ -585,7 +600,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	minWidth: method.cssSize({
+	minWidth: methodCssSize({
 		init: new CssSize(),
 		set(newValue) {
 			this.css(MIN_WIDTH, newValue.toPixels());
@@ -603,7 +618,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	width: method.cssSize({
+	width: methodCssSize({
 		init: new CssSize(),
 		set(width) {
 			this.css(WIDTH, width.toPixels());
@@ -633,7 +648,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	maxWidth: method.cssSize({
+	maxWidth: methodCssSize({
 		init: new CssSize(),
 		set(newValue) {
 			this.css(MAX_WIDTH, newValue.toPixels());
@@ -651,7 +666,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	minHeight: method.cssSize({
+	minHeight: methodCssSize({
 		init: new CssSize(),
 		set(newValue) {
 			this.css(MIN_HEIGHT, newValue.toPixels());
@@ -669,7 +684,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	height: method.cssSize({
+	height: methodCssSize({
 		init: new CssSize(),
 		set(height) {
 			this.css(HEIGHT, height.toPixels());
@@ -699,7 +714,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {CssSize|this}
 	 */
-	maxHeight: method.cssSize({
+	maxHeight: methodCssSize({
 		init: new CssSize(),
 		set(maxHeight) {
 			this.css(MAX_HEIGHT, maxHeight.toPixels());
@@ -717,7 +732,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
-	isEnabled: method.boolean({
+	isEnabled: methodBoolean({
 		init: true,
 		set(isEnabled) {
 			const self = this;
@@ -741,7 +756,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Boolean|this}
 	 */
-	stopPropagation: method.boolean({
+	stopPropagation: methodBoolean({
 		set: setPropagationClickEvent
 	}),
 
@@ -756,7 +771,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
-	isVisible: method.boolean({
+	isVisible: methodBoolean({
 		init: true,
 		set(isVisible) {
 			const self = this;
@@ -785,7 +800,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
-	isDisplayed: method.boolean({
+	isDisplayed: methodBoolean({
 		init: true,
 		set(isDisplayed) {
 			const self = this;
@@ -815,7 +830,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	on: method.keyValue({
+	on: methodKeyValue({
 		set(eventName, handler) {
 			const self = this;
 
@@ -950,7 +965,7 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {queue}
 	 */
-	onResize: method.queue(),
+	onResize: methodQueue(),
 
 	/**
 	 * Trigger a resize on this control. This method is throttled by default

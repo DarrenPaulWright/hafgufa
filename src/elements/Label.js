@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Control from './../Control';
 
@@ -37,7 +37,7 @@ Object.assign(Label.prototype, {
 	 *
 	 * @returns {string|element|this}
 	 */
-	content: method.string({
+	content: methodString({
 		set(text) {
 			this.element().innerHTML = text;
 		}

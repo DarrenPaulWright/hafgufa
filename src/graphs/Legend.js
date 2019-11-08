@@ -1,5 +1,5 @@
 import { color, select } from 'd3';
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodArray, methodQueue, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
@@ -100,7 +100,7 @@ export default class Legend extends Control {
 }
 
 Object.assign(Legend.prototype, {
-	items: method.array({
+	items: methodArray({
 		set(newValue) {
 			const self = this;
 			const TEXT_X = (RADIUS * 2) + TEXT_PADDING + CHECKBOX_OFFSET;
@@ -173,16 +173,16 @@ Object.assign(Legend.prototype, {
 		return self[D3_COLOR].brighter(((self[ITEMS].indexOf(item) + 1) / self[ITEMS].length) * COLOR_MULTIPLIER);
 	},
 
-	color: method.string({
+	color: methodString({
 		init: '#b24f26',
 		set() {
 			this.items(this.items(), true);
 		}
 	}),
 
-	onMouseOverItem: method.queue(),
+	onMouseOverItem: methodQueue(),
 
-	onMouseOutItem: method.queue(),
+	onMouseOutItem: methodQueue(),
 
-	onSelectionChange: method.queue()
+	onSelectionChange: methodQueue()
 });

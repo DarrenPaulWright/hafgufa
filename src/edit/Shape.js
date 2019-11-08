@@ -1,5 +1,5 @@
 import keycodes from 'keycodes/index';
-import { method, Point } from 'type-enforcer-math';
+import { methodBoolean, methodFunction, methodQueue, Point } from 'type-enforcer-math';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';
@@ -125,14 +125,14 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 }
 
 Object.assign(Shape.prototype, {
-	onChange: method.function(),
-	onSelect: method.queue(),
-	isSelected: method.boolean({
+	onChange: methodFunction(),
+	onSelect: methodQueue(),
+	isSelected: methodBoolean({
 		set(isSelected) {
 			this.onSelect().trigger(null, [isSelected]);
 		}
 	}),
-	ignore: method.boolean({
+	ignore: methodBoolean({
 		set(ignore) {
 			this.classes('ignore', ignore);
 		}

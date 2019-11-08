@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodArray, methodBoolean, methodEnum, methodFunction, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
@@ -313,7 +313,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {String} [label]
 	 * @returns {String|this}
 	 */
-	label: method.string({
+	label: methodString({
 		set(newValue) {
 			this[HEADING].title(newValue);
 		}
@@ -326,7 +326,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {String} [dataType]
 	 * @returns {String|this}
 	 */
-	dataType: method.enum({
+	dataType: methodEnum({
 		init: COLUMN_TYPES.NONE,
 		enum: COLUMN_TYPES,
 		set(newValue) {
@@ -348,7 +348,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {Boolean} [canSort]
 	 * @returns {Boolean|this}
 	 */
-	canSort: method.boolean({
+	canSort: methodBoolean({
 		set(canSort) {
 			const self = this;
 
@@ -379,7 +379,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {String} [sortDirection]
 	 * @returns {String|this}
 	 */
-	sortDirection: method.enum({
+	sortDirection: methodEnum({
 		init: SORT_TYPES.NONE,
 		enum: SORT_TYPES,
 		set(sortDirection) {
@@ -401,7 +401,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {String} [filterType]
 	 * @returns {String|this}
 	 */
-	filterType: method.enum({
+	filterType: methodEnum({
 		init: FILTER_TYPES.NONE,
 		enum: FILTER_TYPES,
 		set(filterType) {
@@ -431,7 +431,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {String} [filter]
 	 * @returns {String|this}
 	 */
-	filter: method.string({
+	filter: methodString({
 		set(newValue) {
 			const self = this;
 
@@ -459,7 +459,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
-	selectableColumns: method.array({
+	selectableColumns: methodArray({
 		set: setContextMenu
 	}),
 
@@ -470,7 +470,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isAllRowsSelected: method.boolean({
+	isAllRowsSelected: methodBoolean({
 		set: setCheckBoxValue
 	}),
 
@@ -481,19 +481,19 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @arg {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
-	isSomeRowsSelected: method.boolean({
+	isSomeRowsSelected: methodBoolean({
 		set: setCheckBoxValue
 	}),
 
-	onGetFilterOptions: method.function(),
+	onGetFilterOptions: methodFunction(),
 
-	onColumnChange: method.function(),
+	onColumnChange: methodFunction(),
 
-	onSort: method.function(),
+	onSort: methodFunction(),
 
-	onFilter: method.function(),
+	onFilter: methodFunction(),
 
-	onSelect: method.function(),
+	onSelect: methodFunction(),
 
 	updateFilter() {
 		const self = this;

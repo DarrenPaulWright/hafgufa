@@ -1,5 +1,5 @@
 import { clear, defer, delay } from 'async-agent';
-import { applySettings, AUTO, HUNDRED_PERCENT, method, PIXELS } from 'type-enforcer-ui';
+import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodFunction, PIXELS } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -261,16 +261,16 @@ export default class LightBox extends Control {
 }
 
 Object.assign(LightBox.prototype, {
-	files: method.array({
+	files: methodArray({
 		set: renderImages
 	}),
 
-	selectedItems: method.array({
+	selectedItems: methodArray({
 		set() {
 			this[renderMainImage]();
 			this[updateSelectedItems]();
 		}
 	}),
 
-	onDelete: method.function()
+	onDelete: methodFunction()
 });

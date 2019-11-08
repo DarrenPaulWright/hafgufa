@@ -1,6 +1,6 @@
 import { clear, delay } from 'async-agent';
-import { method, Point, Vector } from 'type-enforcer-math';
-import { PIXELS, Thickness } from 'type-enforcer-ui';
+import { Point, Vector } from 'type-enforcer-math';
+import { methodBoolean, methodNumber, methodQueue, PIXELS, Thickness } from 'type-enforcer-ui';
 import { CONTROL_PROP } from '../Control';
 import {
 	ABSOLUTE,
@@ -478,7 +478,7 @@ export default (Base) => {
 	}
 
 	Object.assign(DragMixin.prototype, {
-		canDrag: method.boolean({
+		canDrag: methodBoolean({
 			set(canDrag) {
 				const self = this;
 
@@ -535,38 +535,38 @@ export default (Base) => {
 			}
 		}),
 
-		canThrow: method.boolean(),
+		canThrow: methodBoolean(),
 
-		scaleMin: method.number({
+		scaleMin: methodNumber({
 			init: 1,
 			min: 0
 		}),
 
-		scaleMax: method.number({
+		scaleMax: methodNumber({
 			init: 1,
 			min: 0
 		}),
 
-		scale: method.number({
+		scale: methodNumber({
 			init: 1,
 			min: 0
 		}),
 
-		restrictVerticalDrag: method.boolean(),
+		restrictVerticalDrag: methodBoolean(),
 
-		restrictHorizontalDrag: method.boolean(),
+		restrictHorizontalDrag: methodBoolean(),
 
-		scrollOnDrag: method.boolean(),
+		scrollOnDrag: methodBoolean(),
 
-		snapGridSize: method.number({
+		snapGridSize: methodNumber({
 			init: 0
 		}),
 
-		onDragStart: method.queue(),
+		onDragStart: methodQueue(),
 
-		onDrag: method.queue(),
+		onDrag: methodQueue(),
 
-		onDragEnd: method.queue()
+		onDragEnd: methodQueue()
 	});
 
 	return DragMixin;

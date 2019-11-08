@@ -1,7 +1,23 @@
 import { throttle } from 'async-agent';
 import moment from 'moment';
 import { repeat } from 'object-agent';
-import { applySettings, CssSize, enforceBoolean, Enum, isInteger, method, PIXELS, Thickness } from 'type-enforcer-ui';
+import {
+	applySettings,
+	CssSize,
+	enforceBoolean,
+	Enum,
+	isInteger,
+	methodArray,
+	methodBoolean,
+	methodCssSize,
+	methodDate,
+	methodEnum,
+	methodFunction,
+	methodNumber,
+	methodThickness,
+	PIXELS,
+	Thickness
+} from 'type-enforcer-ui';
 import Control from '../Control';
 import Div from '../elements/Div';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
@@ -397,14 +413,14 @@ Object.assign(Timeline.prototype, {
 		this[ZOOM] = 1;
 		this[setLayout]();
 	},
-	padding: method.thickness({
+	padding: methodThickness({
 		init: new Thickness('0'),
 		set(padding) {
 			this[VIRTUAL_LIST].padding(padding);
 			this[reset]();
 		}
 	}),
-	data: method.array({
+	data: methodArray({
 		set(data) {
 			const self = this;
 
@@ -436,28 +452,28 @@ Object.assign(Timeline.prototype, {
 			self[reset]();
 		}
 	}),
-	dateStart: method.date({
+	dateStart: methodDate({
 		set(dateStart) {
 			this[START] = dateStart;
 			this[reset]();
 		},
 		coerce: true
 	}),
-	dateEnd: method.date({
+	dateEnd: methodDate({
 		set(dateEnd) {
 			this[END] = dateEnd;
 			this[reset]();
 		},
 		coerce: true
 	}),
-	duration: method.number({
+	duration: methodNumber({
 		set(duration) {
 			this[START] = 0;
 			this[END] = duration;
 			this[reset]();
 		}
 	}),
-	lineOffset: method.cssSize({
+	lineOffset: methodCssSize({
 		set(lineOffset) {
 			const self = this;
 
@@ -476,8 +492,8 @@ Object.assign(Timeline.prototype, {
 				});
 		}
 	}),
-	onSpanRender: method.function(),
-	canZoom: method.boolean({
+	onSpanRender: methodFunction(),
+	canZoom: methodBoolean({
 		set(canZoom) {
 			const self = this;
 			const onMouseWheel = (event) => {
@@ -492,7 +508,7 @@ Object.assign(Timeline.prototype, {
 
 		}
 	}),
-	maxZoom: method.enum({
+	maxZoom: methodEnum({
 		enum: SPAN_TYPES,
 		init: SPAN_TYPES.MILLISECOND,
 		set(maxZoom) {

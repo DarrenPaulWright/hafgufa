@@ -1,5 +1,5 @@
 import { color, select } from 'd3';
-import { applySettings, enforceEnum, method } from 'type-enforcer-ui';
+import { applySettings, enforceEnum, methodNumber } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
 import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../utility/domConstants';
@@ -202,7 +202,7 @@ export default class Bar extends GraphAxisBase {
 }
 
 Object.assign(Bar.prototype, {
-	cornerRadius: method.number({
+	cornerRadius: methodNumber({
 		init: 2,
 		set: updateData
 	})

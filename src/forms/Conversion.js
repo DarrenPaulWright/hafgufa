@@ -1,4 +1,4 @@
-import { applySettings, enforceInteger, Enum, method } from 'type-enforcer-ui';
+import { applySettings, enforceInteger, Enum, methodInteger, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import { TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants';
@@ -197,7 +197,7 @@ export default class Conversion extends FocusMixin(FormControl) {
 }
 
 Object.assign(Conversion.prototype, {
-	fromType: method.string({
+	fromType: methodString({
 		set(fromType) {
 			const self = this;
 
@@ -207,7 +207,7 @@ Object.assign(Conversion.prototype, {
 		}
 	}),
 
-	toType: method.string({
+	toType: methodString({
 		set(toType) {
 			const self = this;
 
@@ -217,7 +217,7 @@ Object.assign(Conversion.prototype, {
 		}
 	}),
 
-	fractionDigits: method.integer({
+	fractionDigits: methodInteger({
 		init: 1,
 		set: setValue,
 		min: 0

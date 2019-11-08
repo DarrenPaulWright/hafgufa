@@ -1,4 +1,4 @@
-import { method, PrivateVars } from 'type-enforcer-ui';
+import { methodBoolean, methodString, PrivateVars } from 'type-enforcer-ui';
 import IsWorking from '../display/IsWorking';
 
 const _ = new PrivateVars();
@@ -32,7 +32,7 @@ export default (Base) => {
 		 *
 		 * @returns {boolean|this}
 		 */
-		isWorking: method.boolean({
+		isWorking: methodBoolean({
 			set(isWorking) {
 				const _self = _(this);
 
@@ -67,7 +67,7 @@ export default (Base) => {
 		 *
 		 * @returns {string|this}
 		 */
-		isWorkingLabel: method.string({
+		isWorkingLabel: methodString({
 			set(isWorkingLabel) {
 				const _self = _(this);
 

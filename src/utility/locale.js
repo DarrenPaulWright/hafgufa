@@ -1,6 +1,6 @@
 import getBrowserLanguage from 'get-browser-language';
 import { forOwn } from 'object-agent';
-import { Enum, method } from 'type-enforcer-ui';
+import { Enum, methodObject, methodQueue, methodString } from 'type-enforcer-ui';
 import ajax from './ajax';
 
 const strings = {};
@@ -22,7 +22,7 @@ const locale = {
 	 *
 	 * @returns {Object}
 	 */
-	languages: method.object({
+	languages: methodObject({
 		init: {
 			English: 'en-US'
 		},
@@ -50,7 +50,7 @@ const locale = {
 	 *
 	 * @returns {String}
 	 */
-	language: method.string({
+	language: methodString({
 		set(language) {
 			document.querySelector('html').setAttribute('lang', language);
 			locale.onLanguageChange().trigger(null, [language]);
@@ -67,7 +67,7 @@ const locale = {
 	 *
 	 * @returns {String}
 	 */
-	urlFormat: method.string({
+	urlFormat: methodString({
 		init: '[path]-[lang].json'
 	}),
 	/**
@@ -140,7 +140,7 @@ const locale = {
 	 *
 	 * @returns {Queue}
 	 */
-	onLanguageChange: method.queue()
+	onLanguageChange: methodQueue()
 };
 
 export default locale;

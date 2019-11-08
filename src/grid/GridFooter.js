@@ -1,4 +1,4 @@
-import { applySettings, method } from 'type-enforcer-ui';
+import { applySettings, methodArray, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -125,7 +125,7 @@ Object.assign(GridFooter.prototype, {
 	 * @arg {String} [countSuffix]
 	 * @returns {String|this}
 	 */
-	countSuffix: method.string({
+	countSuffix: methodString({
 		init: 'items',
 		set() {
 			this[setCountString]();
@@ -139,7 +139,7 @@ Object.assign(GridFooter.prototype, {
 	 * @arg {String} [count]
 	 * @returns {String|this}
 	 */
-	count: method.integer({
+	count: methodInteger({
 		init: 0,
 		set: setCountString
 	}),
@@ -151,7 +151,7 @@ Object.assign(GridFooter.prototype, {
 	 * @arg {String} [groupSuffixes]
 	 * @returns {String|this}
 	 */
-	groupSuffixes: method.array({
+	groupSuffixes: methodArray({
 		init: [],
 		set: setCountString
 	}),
@@ -163,7 +163,7 @@ Object.assign(GridFooter.prototype, {
 	 * @arg {String} [groupCounts]
 	 * @returns {String|this}
 	 */
-	groupCounts: method.array({
+	groupCounts: methodArray({
 		set: setCountString
 	}),
 
@@ -174,7 +174,7 @@ Object.assign(GridFooter.prototype, {
 	 * @arg {Function} [onCollapseAllGroups]
 	 * @returns {Function|this}
 	 */
-	onCollapseAllGroups: method.function({
+	onCollapseAllGroups: methodFunction({
 		other: undefined
 	})
 });
