@@ -5,7 +5,9 @@
 	"author": "Darren Paul Wright <Darren@DarrenPaulWright.com>",
 	"license": "MIT",
 	"main": "index.js",
-	"sideEffects": false,
+	"sideEffects": [
+		"*.less"
+	],
 	"scripts": {
 		"test": "karma start --single-run",
 		"test-watch": "karma start",
