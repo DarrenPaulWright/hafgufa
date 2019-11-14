@@ -195,6 +195,23 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 			}
 		});
 
+		self[setLayout] = throttle(function() {
+			const self = this;
+			const minSpanWidth = self.duration() === undefined ? self[MIN_SPAN_WIDTH] : self[MIN_DURATION_SPAN_WIDTH];
+
+			self[LENGTH] = self[END] - self[START];
+
+			const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / minSpanWidth;
+			const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self[INNER_WIDTH]);
+
+			if (minZoom !== self[MIN_ZOOM]) {
+				self[MIN_ZOOM] = minZoom;
+				self[setZoom](self[ZOOM]);
+			}
+		}, 0, {
+			leading: false
+		});
+
 		self.onResize(() => {
 			self[MIN_SPAN_WIDTH] = minSpanWidth.toPixels(true);
 			self[MIN_DURATION_SPAN_WIDTH] = minDurationSpanWidth.toPixels(true);
@@ -378,22 +395,6 @@ Object.assign(Timeline.prototype, {
 		this[ZOOM] = 1;
 		this[setLayout]();
 	},
-	[setLayout]: throttle(function() {
-		const self = this;
-		const minSpanWidth = self.duration() === undefined ? self[MIN_SPAN_WIDTH] : self[MIN_DURATION_SPAN_WIDTH];
-
-		self[LENGTH] = self[END] - self[START];
-
-		const baseZoomMsPerPixel = MILLISECONDS_IN_YEAR / minSpanWidth;
-		const minZoom = baseZoomMsPerPixel / (self[LENGTH] / self[INNER_WIDTH]);
-
-		if (minZoom !== self[MIN_ZOOM]) {
-			self[MIN_ZOOM] = minZoom;
-			self[setZoom](self[ZOOM]);
-		}
-	}, 0, {
-		leading: false
-	}),
 	padding: method.thickness({
 		init: new Thickness('0'),
 		set(padding) {
