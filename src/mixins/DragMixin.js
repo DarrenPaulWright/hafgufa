@@ -77,7 +77,7 @@ export default (Base) => {
 											self[AVAILABLE_WIDTH] = width;
 											self[AVAILABLE_HEIGHT] = height;
 
-											if (!IGNORE_PADDING) {
+											if (!self[IGNORE_PADDING]) {
 												const padding = new Thickness(this.css('padding') || 0);
 
 												self[AVAILABLE_WIDTH] -= padding.horizontal;
