@@ -243,10 +243,12 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 			return 1;
 		}
 
+		date = date.valueOf ? date.valueOf() : date;
+
 		const start = moment(date)
 			.startOf(span.incUnit)
 			.toDate();
-		const end = moment(date)
+		const end = moment(date + (span.length * (this[PARENT_MULTIPLIER] - 1)))
 			.endOf(span.incUnit)
 			.toDate();
 
@@ -337,7 +339,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		const isDuration = self.duration() !== undefined;
 		const spanLength = self[SPAN].length * self[PARENT_MULTIPLIER];
 		const totalSlides = Math.ceil(self[LENGTH] / spanLength) + 1;
-		const currentValue = isDuration ? moment.utc(0) : moment(self[START]);
+		const currentValue = isDuration ? moment.utc(0) : moment(self[START].valueOf());
 		const format = isDuration ? (self[SPAN].incUnit !== 'ms' ? 'HH:mm:ss' : 'HH:mm:ss.SSS') : self[SPAN].format;
 		const exporter = isDuration ? ((value) => value.toDate()
 			.valueOf()) : ((value) => value.toDate());
@@ -351,7 +353,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 				events: [],
 				start: exporter(moment(currentValue)
 					.startOf(self[SPAN].incUnit)),
-				end: exporter(moment(currentValue)
+				end: exporter(moment(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))
 					.endOf(self[SPAN].incUnit))
 			});
 
@@ -363,7 +365,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		self.data()
 			.forEach((item) => {
 				if (!isNaN(item.date)) {
-					const diff = Math.floor((item.date - start) / spanLength);
+					const diff = Math.floor((item.date.valueOf() - start) / spanLength);
 					if (slides[diff]) {
 						slides[diff].events.push(item);
 					}
@@ -410,19 +412,22 @@ Object.assign(Timeline.prototype, {
 				self[START] = data[0].startdate || data[0].date;
 				self[END] = data[0].endDate || data[0].date;
 
+				self[START] = self[START].valueOf();
+				self[END] = self[END].valueOf();
+
 				data.forEach((item) => {
 					if (item.date) {
-						if (item.date > self[END]) {
-							self[END] = item.date;
+						if (item.date.valueOf() > self[END]) {
+							self[END] = item.date.valueOf();
 						}
-						if (item.endDate > self[END]) {
-							self[END] = item.endDate;
+						if (item.endDate && item.endDate.valueOf() > self[END]) {
+							self[END] = item.endDate.valueOf();
 						}
-						if (item.date < self[START]) {
-							self[START] = item.date;
+						if (item.date.valueOf() < self[START]) {
+							self[START] = item.date.valueOf();
 						}
-						if (item.startDate < self[START]) {
-							self[START] = item.startDate;
+						if (item.startDate && item.startDate.valueOf() < self[START]) {
+							self[START] = item.startDate.valueOf();
 						}
 					}
 				});
