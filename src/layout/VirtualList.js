@@ -321,10 +321,10 @@ export default class VirtualList extends FocusMixin(Control) {
 				return (self[VIEWPORT_SIZE] - totalSize) / 2;
 			}
 			else if (self.snapToLeadingEdge() && !self.isAtEnd()) {
-				return self[CURRENT_STEP_OFFSET] + (self[CURRENT_SCROLL_OFFSET] % self[ITEM_SIZE]);
+				return self[CURRENT_STEP_OFFSET] + (self[CURRENT_SCROLL_OFFSET] % self[ITEM_SIZE]) + self[INNER_PADDING][self[POSITION_ORIGIN]];
 			}
 			else {
-				return self[CURRENT_STEP_OFFSET];
+				return self[CURRENT_STEP_OFFSET] + self[INNER_PADDING][self[POSITION_ORIGIN]];
 			}
 		};
 
