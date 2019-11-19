@@ -21,7 +21,7 @@
 @chromeInverseSubFontColor: fade(@chromeInverseFontColor, 50%);
 
 /* Body */
-@bodyBackground: radial-gradient(ellipse at top center, darken(@subHighlightColor, 32), @backgroundColor, black), @backgroundColor;
+@bodyBackground: radial-gradient(ellipse at top center, multiply(@subHighlightColor, @backgroundColor), @backgroundColor, black), @backgroundColor;
 
 /* Header */
 @headerButtonHoverBackground: fade(@shadowColor, 8%);
