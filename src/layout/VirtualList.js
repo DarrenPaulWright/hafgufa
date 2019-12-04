@@ -1005,7 +1005,7 @@ Object.assign(VirtualList.prototype, {
 	},
 
 	startOffset: methodCssSize({
-		init: new CssSize('0'),
+		init: new CssSize(),
 		set(startOffset) {
 			const self = this;
 
@@ -1014,7 +1014,7 @@ Object.assign(VirtualList.prototype, {
 	}),
 
 	endOffset: methodCssSize({
-		init: new CssSize('0'),
+		init: new CssSize(),
 		set(endOffset) {
 			const self = this;
 

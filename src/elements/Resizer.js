@@ -88,7 +88,7 @@ export default class Resizer extends DragMixin(Control) {
 			ignorePadding: true,
 			type: settings.type || controlTypes.RESIZER,
 			orientation: enforceEnum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),
-			splitOffset: enforceCssSize(settings.splitOffset, new CssSize('0'), true)
+			splitOffset: enforceCssSize(settings.splitOffset, new CssSize(), true)
 		};
 
 		super(settings);
@@ -233,7 +233,7 @@ Object.assign(Resizer.prototype, {
 	 * @returns {String|Object}
 	 */
 	minOffset: methodCssSize({
-		init: new CssSize('0'),
+		init: new CssSize(),
 		set() {
 			this[setMinMaxOffsets]();
 			this[setPosition]();

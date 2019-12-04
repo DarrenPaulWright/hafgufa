@@ -318,7 +318,7 @@ Object.assign(Drawer.prototype, {
 	}),
 
 	closedSize: methodCssSize({
-		init: new CssSize('0'),
+		init: new CssSize(),
 		set(closedSize) {
 			this[SWIPE_HIT_SIZE] = Math.max(minSwipeHitSize.toPixels(true), closedSize.toPixels(true));
 			this[layout]();
