@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { applySettings, methodFunction, Point } from 'type-enforcer-math';
+import { applySettings, methodFunction, Point } from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';

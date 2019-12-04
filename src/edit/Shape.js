@@ -1,5 +1,5 @@
 import keycodes from 'keycodes/index';
-import { methodBoolean, methodFunction, methodQueue, Point } from 'type-enforcer-math';
+import { methodBoolean, methodFunction, methodQueue, Point } from 'type-enforcer-ui';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';

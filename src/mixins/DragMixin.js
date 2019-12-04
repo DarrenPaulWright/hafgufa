@@ -1,6 +1,5 @@
 import { clear, delay } from 'async-agent';
-import { Point, Vector } from 'type-enforcer-math';
-import { methodBoolean, methodNumber, methodQueue, PIXELS, Thickness } from 'type-enforcer-ui';
+import { methodBoolean, methodNumber, methodQueue, PIXELS, Point, Thickness, Vector } from 'type-enforcer-ui';
 import { CONTROL_PROP } from '../Control';
 import {
 	ABSOLUTE,
