@@ -1,8 +1,8 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
 import { forOwn } from 'object-agent';
-import { castArray } from 'type-enforcer-ui';
-import { CLICK_EVENT, Container, windowResize } from '../';
+import { castArray, windowResize } from 'type-enforcer-ui';
+import { CLICK_EVENT, Container } from '../';
 
 const TEST_ID = 'testId';
 const TEST_ID_SUFFIX = 'testIdSuffix';

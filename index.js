@@ -111,4 +111,3 @@ export { default as locale } from './src/utility/locale';
 export { default as LocalHistory } from './src/utility/LocalHistory';
 export { default as search } from './src/utility/search';
 export { default as softDelete } from './src/utility/softDelete';
-export { default as windowResize } from './src/utility/windowResize';

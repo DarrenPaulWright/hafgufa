@@ -11,6 +11,7 @@ import {
 	methodBoolean,
 	methodDockPoint,
 	methodElement,
+	windowResize,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
@@ -44,7 +45,6 @@ import {
 	Z_INDEX
 } from '../utility/domConstants';
 import * as mouse from '../utility/mouse';
-import windowResize from '../utility/windowResize';
 import Container from './Container';
 import './Popup.less';
 

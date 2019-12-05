@@ -13,7 +13,8 @@ import {
 	methodThickness,
 	PIXELS,
 	PrivateVars,
-	Thickness
+	Thickness,
+	windowResize
 } from 'type-enforcer-ui';
 import './Control.less';
 import ControlManager from './ControlManager';
@@ -48,7 +49,6 @@ import {
 	WIDTH,
 	WINDOW
 } from './utility/domConstants';
-import windowResize from './utility/windowResize';
 
 const _ = new PrivateVars();
 
