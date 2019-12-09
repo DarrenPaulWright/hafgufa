@@ -5,6 +5,9 @@
 	"author": "Darren Paul Wright <Darren@DarrenPaulWright.com>",
 	"license": "MIT",
 	"main": "index.js",
+	"files": [
+		"src"
+	],
 	"sideEffects": [
 		"*.less"
 	],
