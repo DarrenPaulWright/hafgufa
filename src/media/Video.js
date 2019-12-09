@@ -9,10 +9,10 @@ const SECONDS_PER_FRAME = Symbol();
 
 const methodProperty = (property) => function(value) {
 	if (arguments.length) {
-		this.element()[property] = value;
+		this.element[property] = value;
 		return this;
 	}
-	return this.element()[property];
+	return this.element[property];
 };
 
 export default class Video extends Control {
@@ -41,7 +41,7 @@ export default class Video extends Control {
 				self.onPause().trigger();
 			},
 			error() {
-				self.onError().trigger(null, [self.element().error]);
+				self.onError().trigger(null, [self.element.error]);
 			}
 		});
 	}
@@ -50,7 +50,7 @@ export default class Video extends Control {
 		const self = this;
 
 		self[IS_PLAYING] = true;
-		self.element().play();
+		self.element.play();
 		self.onPlay().trigger();
 	}
 
@@ -58,7 +58,7 @@ export default class Video extends Control {
 		const self = this;
 
 		self[IS_PLAYING] = false;
-		self.element().pause();
+		self.element.pause();
 		self.onPause().trigger();
 	}
 
@@ -86,7 +86,7 @@ export default class Video extends Control {
 Object.assign(Video.prototype, {
 	showControls: methodBoolean({
 		set(showControls) {
-			this.element().controls = showControls;
+			this.element.controls = showControls;
 		}
 	}),
 	sources: methodArray({
@@ -99,7 +99,7 @@ Object.assign(Video.prototype, {
 			});
 			self[SOURCES].length = 0;
 
-			self.element().textContent = '';
+			self.element.textContent = '';
 		},
 		set(sources) {
 			const self = this;

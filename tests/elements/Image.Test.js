@@ -16,7 +16,7 @@ describe('Image', () => {
 				source: 'something'
 			});
 
-			assert.equal(testUtil.control.element().getAttribute('src'), 'something');
+			assert.equal(testUtil.control.element.getAttribute('src'), 'something');
 		});
 
 		it('should set the src attribute of the img  to "#" when set to an empty string', () => {
@@ -27,7 +27,7 @@ describe('Image', () => {
 
 			testUtil.control.source('');
 
-			assert.equal(testUtil.control.element().getAttribute('src'), ' ');
+			assert.equal(testUtil.control.element.getAttribute('src'), ' ');
 		});
 	});
 });

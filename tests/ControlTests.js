@@ -140,14 +140,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				}));
 
 				assert.equal(testUtil.container.children.length, 0);
-				assert.isOk(testUtil.control.element());
+				assert.isOk(testUtil.control.element);
 			});
 
 			it('should have a main element if the container was set', () => {
 				testUtil.control = new Control(buildSettings());
 
 				assert.isOk(testUtil.container.children.length >= 1);
-				assert.isOk(testUtil.control.element());
+				assert.isOk(testUtil.control.element);
 			});
 		});
 	};
@@ -468,7 +468,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.control.on(CLICK_EVENT, controlClick);
 
-				testUtil.simulateClick(testUtil.control.element());
+				testUtil.simulateClick(testUtil.control.element);
 
 				window.removeEventListener(CLICK_EVENT, containerClick);
 			};

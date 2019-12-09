@@ -72,9 +72,9 @@ export default function(Base) {
 
 						if (_self.rightContainer) {
 							_self.rightContainer.css({
-								top: container.element().offsetTop,
+								top: container.element.offsetTop,
 								height: containerHeight,
-								right: Math.max(0, width - containerWidth - container.element().offsetLeft)
+								right: Math.max(0, width - containerWidth - container.element.offsetLeft)
 							});
 							rightContainerWidth = _self.rightContainer.borderWidth();
 

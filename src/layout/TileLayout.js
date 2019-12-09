@@ -245,7 +245,7 @@ export default class TileLayout extends Container {
 		const self = this;
 
 		if (!self[IS_RENDERING] && !self.height().isAuto && !self.isRemoved) {
-			const scrollTop = self.element().scrollTop;
+			const scrollTop = self.element.scrollTop;
 			self[RENDER_CUTOFF_TOP] = scrollTop - (self[LAYOUT_HEIGHT] * self.extraRenderedItemsRatio());
 			self[RENDER_CUTTOFF_BOTTOM] = scrollTop + self[LAYOUT_HEIGHT] + (self[LAYOUT_HEIGHT] * self.extraRenderedItemsRatio());
 		}
@@ -269,7 +269,7 @@ export default class TileLayout extends Container {
 		const self = this;
 		let columnSpan;
 
-		self.element().scrollTop = 0;
+		self.element.scrollTop = 0;
 		self[CURRENT_SCROLL_HEIGHT] = 0;
 		self[PREVIOUS_CUTTOFF_BOTTOM] = 0;
 
@@ -284,7 +284,7 @@ export default class TileLayout extends Container {
 		}
 		else {
 			const defaults = self[CONTROL_RECYCLER].defaultSettings() || {};
-			defaults.container = self.element();
+			defaults.container = self.element;
 			self[CONTROL_RECYCLER].defaultSettings(defaults);
 
 			self.tileData().forEach((tile) => {
@@ -298,8 +298,8 @@ export default class TileLayout extends Container {
 	[attachControl](control) {
 		const self = this;
 
-		if (control.container() !== self.element()) {
-			control.container(self.element());
+		if (control.container() !== self.element) {
+			control.container(self.element);
 		}
 	}
 
@@ -447,7 +447,7 @@ export default class TileLayout extends Container {
 						.attr(COLUMN_SPAN, columnSpan)
 						.css(POSITION, ABSOLUTE)
 						.width(self[calculateControlWidth](columnSpan))
-						.container(self.element(), doPrepend);
+						.container(self.element, doPrepend);
 
 					if (self[TILE_OFFSETS][index] && self[TILE_OFFSETS][index].removed) {
 						control.borderHeight(self[RENDERED_HEIGHTS][index] - self[RENDERED_TILE_MARGIN]);

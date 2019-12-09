@@ -320,7 +320,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			self[TEXT_INPUT].isFocused(true);
 		}
 		if (self[SUGGESTION_MENU] && !self.isRemoved) {
-			self[SUGGESTION_MENU].anchor(self[TEXT_INPUT].getInput().element());
+			self[SUGGESTION_MENU].anchor(self[TEXT_INPUT].getInput().element);
 		}
 		self[IS_MOVING_TEXT_INPUT] = false;
 	}
@@ -400,7 +400,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		if (self.suggestions().length && self.isFocused() && !self.isRemoved) {
 			if (!self[SUGGESTION_MENU]) {
 				self[SUGGESTION_MENU] = new Menu({
-					anchor: self[TEXT_INPUT].getInput().element(),
+					anchor: self[TEXT_INPUT].getInput().element,
 					anchorDockPoint: DockPoint.POINTS.BOTTOM_LEFT,
 					popupDockPoint: DockPoint.POINTS.TOP_LEFT,
 					classes: 'tags-menu',

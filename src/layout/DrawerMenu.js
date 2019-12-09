@@ -206,7 +206,7 @@ Object.assign(DrawerMenu.prototype, {
 						if (!IS_DESKTOP) {
 							self[BACKDROP] = new BackDrop({
 								container: self.menuContainer(),
-								prepend: self[DRAWER].element(),
+								prepend: self[DRAWER].element,
 								onRemove() {
 									self[DRAWER].isOpen(false);
 								}

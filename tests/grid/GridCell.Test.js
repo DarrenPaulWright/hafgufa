@@ -279,7 +279,7 @@ describe('GridCell', () => {
 				})
 					.content(inputContent);
 
-				compareContent(testUtil.control.element(), output);
+				compareContent(testUtil.control.element, output);
 			});
 
 			it('should have textAlign of ' + textAlign + ' when dataType is ' + typeString, () => {
@@ -305,7 +305,7 @@ describe('GridCell', () => {
 						.dataType(gridConstants.COLUMN_TYPES[testType.type])
 						.content(testType.content);
 
-					compareContent(testUtil.control.element(), testType.output);
+					compareContent(testUtil.control.element, testType.output);
 				});
 			});
 		};
@@ -859,7 +859,7 @@ describe('GridCell', () => {
 				tooltip: 'test'
 			});
 
-			testUtil.trigger(testUtil.control.element(), MOUSE_ENTER_EVENT);
+			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
 
 			return wait(510)
 				.then(() => {
@@ -872,7 +872,7 @@ describe('GridCell', () => {
 				container: testUtil.container
 			});
 
-			testUtil.trigger(testUtil.control.element(), MOUSE_ENTER_EVENT);
+			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
 
 			return wait(510)
 				.then(() => {
@@ -887,7 +887,7 @@ describe('GridCell', () => {
 			});
 
 			testUtil.control.tooltip('');
-			testUtil.trigger(testUtil.control.element(), MOUSE_ENTER_EVENT);
+			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
 
 			return wait(510)
 				.then(() => {

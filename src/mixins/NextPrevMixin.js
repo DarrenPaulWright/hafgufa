@@ -111,7 +111,7 @@ export default (Base) => {
 					if (!_self.controls.get(PREV_BUTTON_ID)) {
 						_self.controls.add(new Button({
 							id: PREV_BUTTON_ID,
-							container: self.element(),
+							container: self.element,
 							classes: BUTTON_CLASS,
 							icon: PREVIOUS_ICON,
 							iconSize: self.buttonIconSize(),
@@ -127,7 +127,7 @@ export default (Base) => {
 						}));
 						_self.controls.add(new Button({
 							id: NEXT_BUTTON_ID,
-							container: self.element(),
+							container: self.element,
 							classes: BUTTON_CLASS,
 							icon: NEXT_ICON,
 							iconSize: self.buttonIconSize(),

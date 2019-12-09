@@ -34,7 +34,7 @@ export default (Base) => {
 			if (!self[TOOLTIP]) {
 				self[TOOLTIP] = new Tooltip({
 					content: self.tooltip(),
-					anchor: self.element(),
+					anchor: self.element,
 					anchorDockPoint: self.tooltipDockPoint().opposite,
 					tooltipDockPoint: self.tooltipDockPoint(),
 					onRemove() {

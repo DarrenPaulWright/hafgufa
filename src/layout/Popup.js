@@ -205,7 +205,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			.css(LEFT, ZERO_PIXELS);
 
 		self[CONTENT_CONTAINER] = new Container({
-			container: self.element()
+			container: self.element
 		});
 		self[CONTENT_CONTAINER].on(CONTENT_CHANGE_EVENT, () => {
 			self.resize(true);
@@ -220,7 +220,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			self.remove();
 		};
 		self[onMouseEnter] = (event) => {
-			if (event.target === self.element()) {
+			if (event.target === self.element) {
 				self[IS_ACTIVE] = true;
 			}
 			if (self.hideOnMouseLeave() && !self.isSticky()) {
@@ -229,7 +229,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			}
 		};
 		self[onMouseLeave] = (event) => {
-			if (event.target === self.element()) {
+			if (event.target === self.element) {
 				self[IS_ACTIVE] = false;
 			}
 			if (self.hideOnMouseLeave() && !self.isSticky()) {
@@ -337,7 +337,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 	[positionPopup](event) {
 		const self = this;
-		const currentScrollOffset = self.element().scrollTop;
+		const currentScrollOffset = self.element.scrollTop;
 		const marginsVertical = self.marginHeight;
 		const marginsHorizontal = self.marginWidth;
 		let popupTop = 0;
@@ -404,10 +404,10 @@ class Popup extends MergeContentContainerMixin(Container) {
 			}
 
 			popupTop = anchorTop + anchorDockHeight;
-			popupTop -= getDockPointOffsetHeight(self.popupDockPoint(), self.element());
+			popupTop -= getDockPointOffsetHeight(self.popupDockPoint(), self.element);
 
 			popupLeft = anchorLeft + anchorDockWidth;
-			popupLeft -= getDockPointOffsetWidth(self.popupDockPoint(), self.element());
+			popupLeft -= getDockPointOffsetWidth(self.popupDockPoint(), self.element);
 
 			optimizedLayout = optimizePosition({
 				offset: popupTop,
@@ -454,7 +454,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 		self[positionArrow]();
 
-		self.element().scrollTop = currentScrollOffset;
+		self.element.scrollTop = currentScrollOffset;
 
 		if (!self[IS_INITIALIZED]) {
 			self[IS_INITIALIZED] = true;
@@ -491,7 +491,7 @@ Object.assign(Popup.prototype, {
 
 			if (showArrow) {
 				self[ARROW] = new Div({
-					container: self.element(),
+					container: self.element,
 					classes: ARROW_CLASS
 				});
 			}

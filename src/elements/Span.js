@@ -37,7 +37,7 @@ Object.assign(Span.prototype, {
 	 */
 	text: methodString({
 		set(text) {
-			this.element().innerHTML = text;
+			this.element.innerHTML = text;
 		}
 	})
 });

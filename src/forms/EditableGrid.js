@@ -93,7 +93,7 @@ export default class EditableGrid extends FormControl {
 		});
 
 		self[ADD_NEW_BUTTON] = new Button({
-			container: self.element(),
+			container: self.element,
 			classes: 'form-button add-new-button',
 			label: locale.get('addNew') || '',
 			icon: ADD_ICON,
@@ -108,7 +108,7 @@ export default class EditableGrid extends FormControl {
 		self.onResize(() => {
 				if (!self.height().isAuto) {
 					self[GRID]
-						.height(self.innerHeight() - self.contentContainer.element().offsetTop - self[ADD_NEW_BUTTON].outerHeight())
+						.height(self.innerHeight() - self.contentContainer.element.offsetTop - self[ADD_NEW_BUTTON].outerHeight())
 						.resize();
 				}
 			})

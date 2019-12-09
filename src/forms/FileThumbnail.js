@@ -76,7 +76,7 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 				if (self.onDelete()) {
 					if (!self[DELETE_BUTTON]) {
 						self[DELETE_BUTTON] = new Button({
-							container: self.element(),
+							container: self.element,
 							stopPropagation: true,
 							icon: CLEAR_ALT_ICON,
 							classes: BUTTON_CLASS,

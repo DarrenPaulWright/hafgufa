@@ -55,7 +55,7 @@ Object.assign(Icon.prototype, {
 				self[CHILD_CONTROLS].each((control) => {
 					control.remove();
 				});
-				self.element().textContent = '';
+				self.element.textContent = '';
 				self.removeClass('has-stack text');
 			}
 		},
@@ -86,7 +86,7 @@ Object.assign(Icon.prototype, {
 				}
 
 				if (main.length === 1) {
-					self.element().textContent = main;
+					self.element.textContent = main;
 
 					if (/[a-zA-Z0-9]/.test(main)) {
 						self.addClass('text');

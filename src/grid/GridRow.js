@@ -141,7 +141,7 @@ export default class GridRow extends Control {
 
 		if (!self[GROUP_HEADING]) {
 			self[GROUP_HEADING] = new Heading({
-				container: self.element(),
+				container: self.element,
 				width: HUNDRED_PERCENT,
 				classes: 'grid-group-header',
 				isExpandable: true,

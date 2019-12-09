@@ -99,7 +99,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		const self = this;
 
 		self[FILTER_CONTROL] = new Picker({
-			container: self.element(),
+			container: self.element,
 			defaultButtonText: 'Filter',
 			onChange(newValue) {
 				self[applyOrFilter](newValue.map((item) => item.id));
@@ -117,7 +117,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		const self = this;
 
 		self[FILTER_CONTROL] = new Tags({
-			container: self.element(),
+			container: self.element,
 			onChange(newValue) {
 				if (!self[IGNORE_EVENTS]) {
 					self[applyOrFilter](newValue);
@@ -144,7 +144,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		const self = this;
 
 		self[FILTER_CONTROL] = new TextInput({
-			container: self.element(),
+			container: self.element,
 			placeholder: 'min',
 			width: '3rem',
 			onChange() {
@@ -152,7 +152,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			}
 		});
 		self[FILTER_CONTROL_2] = new TextInput({
-			container: self.element(),
+			container: self.element,
 			placeholder: 'max',
 			width: '3rem',
 			onChange() {
@@ -201,7 +201,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		const self = this;
 
 		self[CHECKBOX] = new CheckBox({
-			container: self.element(),
+			container: self.element,
 			width: '1rem',
 			stopPropagation: true,
 			onChange(isChecked) {

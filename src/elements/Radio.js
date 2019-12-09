@@ -73,7 +73,7 @@ Object.assign(Radio.prototype, {
 		set(isChecked) {
 			const self = this;
 
-			self[INPUT].element().checked = isChecked;
+			self[INPUT].element.checked = isChecked;
 			self.classes('checked', isChecked);
 
 			if (self.isIndeterminate && isChecked) {

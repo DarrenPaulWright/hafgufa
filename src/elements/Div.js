@@ -77,11 +77,11 @@ export default class Div extends Control {
 				self[addLayout](JSON.parse(content), appendAt);
 			}
 			else {
-				const parent = self.element();
+				const parent = self.element;
 
-				if (isFunction(content.element)) {
+				if (content.element !== undefined) {
 					content.container(self);
-					content = content.element();
+					content = content.element;
 				}
 
 				if (isElement(content)) {
@@ -132,7 +132,7 @@ export default class Div extends Control {
 	 */
 	content(content) {
 		this[CHILD_CONTROLS].remove();
-		this.element().textContent = '';
+		this.element.textContent = '';
 		this[addContent](content);
 		return this;
 	}

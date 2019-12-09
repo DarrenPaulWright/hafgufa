@@ -477,7 +477,7 @@ Object.assign(Timeline.prototype, {
 		set(lineOffset) {
 			const self = this;
 
-			lineOffset.element(self.element());
+			lineOffset.element(self.element);
 
 			if (lineOffset.toPixels(true) < 0) {
 				self[LINE].css(BOTTOM, -lineOffset.toPixels(true) + PIXELS);

@@ -108,8 +108,8 @@ export default (Base) => {
 				if (self.type === controlTypes.HYPERLINK) {
 					const link = buildLink(url);
 
-					self.element().target = link.target;
-					self.element().href = link.url;
+					self.element.target = link.target;
+					self.element.href = link.url;
 				}
 			}
 		}),

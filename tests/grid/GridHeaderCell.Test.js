@@ -584,7 +584,7 @@ describe('GridHeaderCell', () => {
 				selectableColumns: []
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			assert.equal(testUtil.count('.context-menu'), 0);
 		});
@@ -597,7 +597,7 @@ describe('GridHeaderCell', () => {
 				selectableColumns: []
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			assert.equal(testUtil.count('.menu .heading', true), 3);
 		});
@@ -616,7 +616,7 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
@@ -637,7 +637,7 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			assert.equal(testUtil.count('.menu .heading', true), 5);
 		});
@@ -662,7 +662,7 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			assert.equal(testUtil.count('.menu .heading.selected', true), 1);
 		});
@@ -692,7 +692,7 @@ describe('GridHeaderCell', () => {
 				}]
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 3, true));
 
@@ -706,7 +706,7 @@ describe('GridHeaderCell', () => {
 				canSort: true
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 0, true));
 
@@ -720,7 +720,7 @@ describe('GridHeaderCell', () => {
 				canSort: true
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 1, true));
 
@@ -734,7 +734,7 @@ describe('GridHeaderCell', () => {
 				canSort: true
 			});
 
-			testUtil.trigger(testUtil.control.element(), CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 2, true));
 

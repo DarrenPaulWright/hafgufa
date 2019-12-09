@@ -14,13 +14,10 @@ const getElement = (element, isContainer = false) => {
 		return select(element);
 	}
 	else if (isContainer && element && element.contentContainer) {
-		return select(element.contentContainer.element());
+		return select(element.contentContainer.element);
 	}
 	else if (element && element.element) {
-		return select(element.element());
-	}
-	else if (element && element.element) {
-		return select(element.element());
+		return select(element.element);
 	}
 	else if (isString(element)) {
 		return select(DOCUMENT.querySelector(element));

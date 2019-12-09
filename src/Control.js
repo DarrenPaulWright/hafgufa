@@ -1,4 +1,4 @@
-import { clone, firstInPath, forOwn, walkPath } from 'object-agent';
+import { firstInPath, forOwn, walkPath } from 'object-agent';
 import {
 	CssSize,
 	enforceBoolean,
@@ -20,7 +20,6 @@ import './Control.less';
 import ControlManager from './ControlManager';
 import Removable from './mixins/Removable';
 import getAttributes from './utility/dom/getAttributes';
-import replaceElement from './utility/dom/replaceElement';
 import {
 	BORDER_BOX,
 	BOTTOM,
@@ -98,21 +97,17 @@ const propagationClickEvent = (event) => {
 	event.stopPropagation();
 };
 
+const getElement = (element) => {
+	return isElement(element) && element ||
+		isString(element) && element.indexOf(':') !== -1 && DOCUMENT.createElementNS(`http://www.w3.org/2000/${element.substr(0, element.indexOf(':'))}`, element.substr(element.indexOf(':') + 1)) ||
+		DOCUMENT.createElement(element || 'div');
+};
+
 const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyValue(styleName)) || 0;
 const parseStyle = (element, styleName) => parseElementStyle(getComputedStyle(element), styleName);
 
-const removeElement = (element) => {
-	if (element.remove) {
-		element.remove();
-	}
-	else if (element.parentNode) {
-		element.parentNode.removeChild(element);
-	}
-};
-
 const updateElementId = Symbol();
 const setPropagationClickEvent = Symbol();
-const setCssSizeElement = Symbol();
 const resizeContainer = Symbol();
 
 /**
@@ -144,8 +139,16 @@ export default class Control extends Removable {
 		delete settings.prepend;
 		delete settings.appendAt;
 
-		self.element(settings.element || 'div');
+		Object.defineProperty(self, 'element', {
+			value: getElement(settings.element),
+			writable: false
+		});
+		self.element[CONTROL_PROP] = self;
+
+		cssSizeMethods.forEach((method) => self[method]().element(self.element));
+
 		delete settings.element;
+
 		self.id(settings.id);
 		delete settings.id;
 		self.container(settings.container);
@@ -161,7 +164,13 @@ export default class Control extends Removable {
 			});
 
 			self.container(null);
-			removeElement(_self.element);
+
+			if (self.element.remove) {
+				self.element.remove();
+			}
+			else if (self.element.parentNode) {
+				self.element.parentNode.removeChild(self.element);
+			}
 		});
 	}
 
@@ -189,10 +198,6 @@ export default class Control extends Removable {
 		);
 	}
 
-	[setCssSizeElement](value) {
-		cssSizeMethods.forEach((method) => this[method]().element(value));
-	}
-
 	[resizeContainer]() {
 		const self = this;
 
@@ -217,22 +222,22 @@ export default class Control extends Removable {
 	}
 
 	get paddingWidth() {
-		const styles = getComputedStyle(_(this).element);
+		const styles = getComputedStyle(this.element);
 		return parseElementStyle(styles, PADDING_LEFT) + parseElementStyle(styles, PADDING_RIGHT);
 	}
 
 	get paddingHeight() {
-		const styles = getComputedStyle(_(this).element);
+		const styles = getComputedStyle(this.element);
 		return parseElementStyle(styles, PADDING_TOP) + parseElementStyle(styles, PADDING_BOTTOM);
 	}
 
 	get marginWidth() {
-		const styles = getComputedStyle(_(this).element);
+		const styles = getComputedStyle(this.element);
 		return parseElementStyle(styles, MARGIN_LEFT) + parseElementStyle(styles, MARGIN_RIGHT);
 	}
 
 	get marginHeight() {
-		const styles = getComputedStyle(_(this).element);
+		const styles = getComputedStyle(this.element);
 		return parseElementStyle(styles, MARGIN_TOP) + parseElementStyle(styles, MARGIN_BOTTOM);
 	}
 }
@@ -259,10 +264,10 @@ Object.assign(Control.prototype, {
 				return newValue;
 			}
 			if (newValue.contentContainer) {
-				return newValue.contentContainer.element();
+				return newValue.contentContainer.element;
 			}
 			if (newValue.element) {
-				return newValue.element();
+				return newValue.element;
 			}
 			if (isString(newValue)) {
 				return DOCUMENT.querySelector(newValue);
@@ -275,8 +280,8 @@ Object.assign(Control.prototype, {
 			const self = this;
 			const _self = _(self);
 
-			if (container && container.contains(_self.element)) {
-				container.removeChild(_self.element);
+			if (container && container.contains(self.element)) {
+				container.removeChild(self.element);
 				if (container[CONTROL_PROP]) {
 					container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
 				}
@@ -294,29 +299,29 @@ Object.assign(Control.prototype, {
 			if (container) {
 				if (_self.append) {
 					if (isElement(_self.append)) {
-						container.insertBefore(_self.element, _self.append.nextSibling);
+						container.insertBefore(self.element, _self.append.nextSibling);
 					}
 					else {
-						container.appendChild(_self.element);
+						container.appendChild(self.element);
 					}
 					delete _self.append;
 				}
 				else if (_self.prepend) {
 					if (isElement(_self.prepend)) {
-						container.insertBefore(_self.element, _self.prepend);
+						container.insertBefore(self.element, _self.prepend);
 					}
 					else {
-						container.insertBefore(_self.element, container.firstChild);
+						container.insertBefore(self.element, container.firstChild);
 					}
 					delete _self.prepend;
 				}
 				else if (_self.appendAt !== undefined) {
-					container.insertBefore(_self.element, container.children[_self.appendAt]);
+					container.insertBefore(self.element, container.children[_self.appendAt]);
 
 					delete _self.appendAt;
 				}
 				else {
-					container.appendChild(_self.element);
+					container.appendChild(self.element);
 				}
 
 				if (container[CONTROL_PROP]) {
@@ -327,74 +332,6 @@ Object.assign(Control.prototype, {
 						self.resize(true);
 					});
 				}
-			}
-		}
-	}),
-
-	/**
-	 * The main DOM element for this control
-	 *
-	 * @method element
-	 * @member module:Control
-	 * @instance
-	 *
-	 * @returns {Object|this}
-	 */
-	element: methodElement({
-		enforce(newValue, oldValue) {
-			if (newValue) {
-				if (isElement(newValue)) {
-					return newValue;
-				}
-				if (isString(newValue)) {
-					const index = newValue.indexOf(':');
-
-					if (index !== -1) {
-						return DOCUMENT.createElementNS(`http://www.w3.org/2000/${newValue.substr(0, index)}`, newValue.substr(index + 1));
-					}
-					else {
-						return DOCUMENT.createElement(newValue);
-					}
-				}
-			}
-
-			return oldValue;
-		},
-		before(element) {
-			if (element) {
-				const self = this;
-				const _self = _(self);
-
-				_self.oldElement = element;
-				_self.oldElement.events = clone(_self.events);
-				forOwn(_self.events, (handler, name) => {
-					self.off(name);
-				});
-				_self.events = {};
-			}
-		},
-		set(newElement) {
-			const self = this;
-			const _self = _(self);
-
-			_self.element = newElement;
-			_self.element[CONTROL_PROP] = self;
-
-			if (_self.oldElement) {
-				self.attr(getAttributes(_self.oldElement));
-				forOwn(_self.oldElement.events, (handler, name) => {
-					self.on(name, handler);
-				});
-				_self.oldElement.events = null;
-				replaceElement(_self.oldElement, newElement);
-			}
-
-			self[setCssSizeElement](_self.element);
-
-			if (_self.oldElement) {
-				_self.oldElement[CONTROL_PROP] = null;
-				removeElement(_self.oldElement);
-				_self.oldElement = null;
 			}
 		}
 	}),
@@ -451,14 +388,14 @@ Object.assign(Control.prototype, {
 	 */
 	attr: methodKeyValue({
 		set(attribute, value) {
-			_(this).element.setAttribute(attribute, value);
+			this.element.setAttribute(attribute, value);
 		},
 		get(attribute) {
 			if (attribute !== undefined) {
-				return _(this).element.getAttribute(attribute);
+				return this.element.getAttribute(attribute);
 			}
 			else {
-				return getAttributes(_(this).element);
+				return getAttributes(this.element);
 			}
 		}
 	}),
@@ -480,10 +417,10 @@ Object.assign(Control.prototype, {
 				value += PIXELS;
 			}
 
-			_(this).element.style[property] = value;
+			this.element.style[property] = value;
 		},
 		get(property) {
-			return _(this).element.style[property];
+			return this.element.style[property];
 		}
 	}),
 
@@ -532,7 +469,7 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	classes(classes, performAdd) {
-		const _self = _(this);
+		const self = this;
 
 		if (arguments.length) {
 			if (isString(classes) && !this.isRemoved) {
@@ -542,7 +479,7 @@ Object.assign(Control.prototype, {
 					const action = enforceBoolean(performAdd, true) ? 'add' : 'remove';
 
 					walkPath(classes, (name) => {
-						_self.element.classList[action](name);
+						self.element.classList[action](name);
 					}, SPACE);
 				}
 			}
@@ -550,7 +487,7 @@ Object.assign(Control.prototype, {
 			return this;
 		}
 
-		return _self.element.classList.value;
+		return self.element.classList.value;
 	},
 
 	/**
@@ -626,11 +563,11 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderWidth() {
-		return _(this).element.offsetWidth;
+		return this.element.offsetWidth;
 	},
 
 	innerWidth() {
-		return _(this).element.offsetWidth - this.paddingWidth;
+		return this.element.offsetWidth - this.paddingWidth;
 	},
 
 	outerWidth() {
@@ -692,11 +629,11 @@ Object.assign(Control.prototype, {
 	}),
 
 	borderHeight() {
-		return _(this).element.offsetHeight;
+		return this.element.offsetHeight;
 	},
 
 	innerHeight() {
-		return _(this).element.offsetHeight - this.paddingHeight;
+		return this.element.offsetHeight - this.paddingHeight;
 	},
 
 	outerHeight() {
@@ -739,7 +676,7 @@ Object.assign(Control.prototype, {
 
 			self.classes(DISABLED_CLASS, !isEnabled);
 
-			if (_(self).element && !isEnabled && self.isFocused) {
+			if (self.element && !isEnabled && self.isFocused) {
 				self.isFocused(false);
 			}
 
@@ -842,10 +779,10 @@ Object.assign(Control.prototype, {
 
 				walkPath(eventName, (name) => {
 					if (_self.events[name]) {
-						_self.element.removeEventListener(firstInPath(name), _self.events[name], false);
+						self.element.removeEventListener(firstInPath(name), _self.events[name], false);
 					}
 
-					_self.element.addEventListener(firstInPath(name), handler, false);
+					self.element.addEventListener(firstInPath(name), handler, false);
 
 					_self.events[name] = handler;
 				}, SPACE);
@@ -874,7 +811,7 @@ Object.assign(Control.prototype, {
 				const handler = _self.events[name];
 
 				if (handler) {
-					_self.element.removeEventListener(firstInPath(name), handler, false);
+					self.element.removeEventListener(firstInPath(name), handler, false);
 					delete _self.events[name];
 				}
 			}, SPACE);
@@ -912,10 +849,9 @@ Object.assign(Control.prototype, {
 
 	trigger(eventName) {
 		const self = this;
-		const _self = _(self);
 
-		if (_self.element) {
-			_self.element.dispatchEvent(new Event(eventName));
+		if (self.element !== undefined) {
+			self.element.dispatchEvent(new Event(eventName));
 		}
 
 		return self;
@@ -934,12 +870,11 @@ Object.assign(Control.prototype, {
 	 */
 	isFocused(isFocused) {
 		const self = this;
-		const element = _(self).element;
 
 		if (isFocused !== undefined) {
-			if (element) {
+			if (self.element) {
 				if (isFocused) {
-					element.focus();
+					self.element.focus();
 				}
 				else if (self.isFocused()) {
 					DOCUMENT.activeElement.blur();
@@ -949,7 +884,7 @@ Object.assign(Control.prototype, {
 			return self;
 		}
 
-		return element ? (element === DOCUMENT.activeElement || element
+		return self.element ? (self.element === DOCUMENT.activeElement || self.element
 			.contains(DOCUMENT.activeElement)) : false;
 	},
 
@@ -979,7 +914,6 @@ Object.assign(Control.prototype, {
 	resize(isForced) {
 		const self = this;
 		const _self = _(self);
-		const element = _self.element;
 
 		if (!self.isRemoved && !_self.isResizing) {
 			_self.isResizing = true;
@@ -991,13 +925,13 @@ Object.assign(Control.prototype, {
 				let calculatedHeight = parseStyle(self.container(), 'height') * (self.height().value / 100);
 
 				calculatedHeight -= self.marginHeight;
-				if (getComputedStyle(element).boxSizing !== BORDER_BOX) {
+				if (getComputedStyle(self.element).boxSizing !== BORDER_BOX) {
 					calculatedHeight -= self.paddingHeight;
 				}
 
 				if (_self.currentHeight !== calculatedHeight) {
 					newHeight = calculatedHeight;
-					element.style.height = calculatedHeight + PIXELS;
+					self.element.style.height = calculatedHeight + PIXELS;
 					isForced = true;
 				}
 			}

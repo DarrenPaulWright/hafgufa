@@ -144,7 +144,7 @@ export default class Drawer extends Container {
 					}
 				});
 
-			self[TOUCH_ELEMENT] = new Hammer(self.element())
+			self[TOUCH_ELEMENT] = new Hammer(self.element)
 				.on(swipeCloseEvent, () => {
 					self.isOpen(false);
 				});
@@ -205,7 +205,7 @@ export default class Drawer extends Container {
 		let newMargin = 0;
 		let newOpacity = 1;
 		let containerPadding = self.isRemoved ? 0 : closedSize;
-		const element = (self.isAnimated() && !self.isRemoved) ? d3Helper.animate(self) : select(self.element());
+		const element = (self.isAnimated() && !self.isRemoved) ? d3Helper.animate(self) : select(self.element);
 
 		if (self.isOpen() && !self.isRemoved) {
 			if (!self[OVERLAP]) {
@@ -291,7 +291,7 @@ Object.assign(Drawer.prototype, {
 			if (canResize) {
 				if (!self[RESIZER]) {
 					self[RESIZER] = new Resizer({
-						container: self.element().parentElement,
+						container: self.element.parentElement,
 						onOffsetChange(splitOffset, offset, availableSize) {
 							self[resize](splitOffset, availableSize);
 							self[layout]();

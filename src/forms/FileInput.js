@@ -73,7 +73,7 @@ export default class FileInput extends Control {
 		});
 		self[INPUT_CONTROL].on(CHANGE_EVENT, () => {
 			const onPreLoad = self.onPreLoad();
-			const files = castArray(self[INPUT_CONTROL].element().files);
+			const files = castArray(self[INPUT_CONTROL].element.files);
 
 			if (onPreLoad) {
 				onPreLoad(files.map((file) => ({

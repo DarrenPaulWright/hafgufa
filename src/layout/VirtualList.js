@@ -161,7 +161,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			}
 		};
 		settings.FocusMixin.getFocus = () => {
-			return self.isFocusable() ? self.element().contains(DOCUMENT.activeElement) : false;
+			return self.isFocusable() ? self.element.contains(DOCUMENT.activeElement) : false;
 		};
 
 		super(settings);
@@ -371,7 +371,7 @@ export default class VirtualList extends FocusMixin(Control) {
 
 				if (control && !control.isRemoved) {
 					if (control.isFocused()) {
-						self.element().focus();
+						self.element.focus();
 					}
 					self[CONTROL_RECYCLER].discardControl(control.id());
 					control = null;

@@ -111,7 +111,7 @@ export default class Grid extends Control {
 		self[RENDERED_QUEUE] = new Queue();
 
 		self[GRID_COLUMN_BLOCK] = new GridColumnBlock({
-			container: self.element(),
+			container: self.element,
 			isAutoHeight: settings.height === AUTO,
 			noItemsText: settings.noItemsText,
 			isVirtualized: settings.isVirtualized,
@@ -195,7 +195,7 @@ export default class Grid extends Control {
 		else {
 			if (!self[FOOTER]) {
 				self[FOOTER] = new GridFooter({
-					container: self.element(),
+					container: self.element,
 					onCollapseAllGroups: (isCollapsed) => self[expandCollapseAllGroups](isCollapsed),
 					countSuffix: self.itemsLabel()
 				});

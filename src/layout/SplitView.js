@@ -94,12 +94,12 @@ export default class SplitView extends IsWorkingMixin(Control) {
 	[resize]() {
 		const self = this;
 		const setStackedSize = (localSize, scrollType) => {
-			self.css(localSize, Math.ceil(self[FIRST_VIEW].element()[scrollType] + self[SECOND_VIEW].element()[scrollType]));
+			self.css(localSize, Math.ceil(self[FIRST_VIEW].element[scrollType] + self[SECOND_VIEW].element[scrollType]));
 		};
 		const setSingleSize = (localSize, scrollType) => {
 			self[FIRST_VIEW][localSize]('0');
 			self[SECOND_VIEW][localSize]('0');
-			self.css(localSize, Math.ceil(Math.max(self[FIRST_VIEW].element()[scrollType], self[SECOND_VIEW].element()[scrollType])));
+			self.css(localSize, Math.ceil(Math.max(self[FIRST_VIEW].element[scrollType], self[SECOND_VIEW].element[scrollType])));
 		};
 
 		if (self.height().isAuto) {

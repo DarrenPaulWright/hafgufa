@@ -39,7 +39,7 @@ Object.assign(Label.prototype, {
 	 */
 	content: methodString({
 		set(text) {
-			this.element().innerHTML = text;
+			this.element.innerHTML = text;
 		}
 	})
 });

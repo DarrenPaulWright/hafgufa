@@ -45,7 +45,7 @@ export default class Legend extends Control {
 		self[ITEM_ELEMENTS] = [];
 		self[UNCHECKED_ITEMS] = [];
 
-		self[BACKGROUND] = select(self.element()).append('rect')
+		self[BACKGROUND] = select(self.element).append('rect')
 			.classed('legend-background', true)
 			.attr(WIDTH, PADDING * 2)
 			.attr(HEIGHT, PADDING * 2);
@@ -110,7 +110,7 @@ Object.assign(Legend.prototype, {
 				self[ITEMS] = newValue[0].items;
 				self[D3_COLOR] = color(self.color());
 
-				self[TITLE] = select(self.element()).selectAll('.legend-title')
+				self[TITLE] = select(self.element).selectAll('.legend-title')
 					.data([newValue[0].title])
 					.enter()
 					.append('text')
@@ -121,9 +121,9 @@ Object.assign(Legend.prototype, {
 					.attr('dy', () => d3Helper.maxTextHeight(self[TITLE]) + PADDING)
 					.text((d) => d);
 
-				select(self.element()).selectAll('g').remove();
+				select(self.element).selectAll('g').remove();
 
-				self[ITEM_ELEMENTS] = select(self.element()).selectAll('g')
+				self[ITEM_ELEMENTS] = select(self.element).selectAll('g')
 					.data(self[ITEMS])
 					.enter()
 					.append('g')

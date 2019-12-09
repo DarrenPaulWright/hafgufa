@@ -44,14 +44,14 @@ Object.assign(TextArea.prototype, {
 
 	value: methodAny({
 		set(value) {
-			this.element().value = value;
+			this.element.value = value;
 		},
 		get() {
-			return this.element().value;
+			return this.element.value;
 		}
 	}),
 
 	focus() {
-		this.element().focus();
+		this.element.focus();
 	}
 });

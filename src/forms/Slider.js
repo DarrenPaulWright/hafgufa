@@ -67,7 +67,7 @@ export default class Slider extends FormControl {
 			on: {
 				mousedown(event) {
 					const mouseOffset = clamp(
-						event.clientX - self.element().getBoundingClientRect().x - self[MOUSE_OFFSET],
+						event.clientX - self.element.getBoundingClientRect().x - self[MOUSE_OFFSET],
 						0,
 						self[LOCATION_SIZE]
 					);

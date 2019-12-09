@@ -682,7 +682,7 @@ describe('GridRow', () => {
 				onSelect: onRowClick
 			});
 
-			testUtil.simulateClick(testUtil.control.element());
+			testUtil.simulateClick(testUtil.control.element);
 
 			assert.equal(testVar, 1);
 		});
@@ -727,7 +727,7 @@ describe('GridRow', () => {
 				onSelect: onRowClick
 			});
 
-			assert.isTrue(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+			assert.isTrue(testUtil.hasClass(testUtil.control.element, 'clickable'));
 		});
 
 		it('should return the rowData when a button is clicked after setting rowData twice', () => {

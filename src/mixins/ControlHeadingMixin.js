@@ -37,7 +37,7 @@ export default (Base) => {
 			delete settings.title;
 
 			self[CONTENT_CONTAINER] = settings.contentContainer || new Div();
-			self[CONTENT_CONTAINER].container(self.element());
+			self[CONTENT_CONTAINER].container(self.element);
 			self[CONTENT_CONTAINER].removeClass('container');
 			delete settings.contentContainer;
 
@@ -158,7 +158,7 @@ export default (Base) => {
 				if (title) {
 					if (!self[HEADING]) {
 						self[HEADING] = new Heading({
-							container: self.element(),
+							container: self.element,
 							prepend: true,
 							showCheckbox: false,
 							showExpander: false,

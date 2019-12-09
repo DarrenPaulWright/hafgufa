@@ -358,8 +358,8 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			testUtil.control.element().scrollTop = 57;
-			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
+			testUtil.control.element.scrollTop = 57;
+			testUtil.trigger(testUtil.control.element, SCROLL_EVENT);
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
@@ -378,9 +378,9 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			testUtil.control.element().scrollTop = 357;
-			testUtil.control.element().scrollTop = 300;
-			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
+			testUtil.control.element.scrollTop = 357;
+			testUtil.control.element.scrollTop = 300;
+			testUtil.trigger(testUtil.control.element, SCROLL_EVENT);
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
@@ -399,9 +399,9 @@ describe('VirtualList', () => {
 				itemData: longList
 			});
 
-			testUtil.control.element().scrollTop = 357;
-			testUtil.control.element().scrollTop = 100;
-			testUtil.trigger(testUtil.control.element(), SCROLL_EVENT);
+			testUtil.control.element.scrollTop = 357;
+			testUtil.control.element.scrollTop = 100;
+			testUtil.trigger(testUtil.control.element, SCROLL_EVENT);
 
 			const renderedControls = testUtil.control.getRenderedControls();
 

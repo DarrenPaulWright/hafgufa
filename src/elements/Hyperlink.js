@@ -39,7 +39,7 @@ Object.assign(Hyperlink.prototype, {
 	 */
 	text: methodString({
 		set(text) {
-			this.element().innerHTML = text || this.url();
+			this.element.innerHTML = text || this.url();
 		}
 	})
 });

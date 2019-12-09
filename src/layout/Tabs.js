@@ -65,11 +65,11 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 		self[COLLAPSE_BUTTON];
 		self[IS_VERTICAL] = false;
 		self[TAB_CONTAINER] = new Container({
-			container: self.element(),
+			container: self.element,
 			classes: 'tab-container'
 		});
 		self[CONTENT_CONTAINER] = new Container({
-			container: self.element(),
+			container: self.element,
 			classes: 'tabs-content'
 		});
 
@@ -212,8 +212,8 @@ Object.assign(Tabs.prototype, {
 			}
 			else {
 				self[TOOLBAR] = new Toolbar({
-					container: self.element(),
-					prepend: self[CONTENT_CONTAINER].element()
+					container: self.element,
+					prepend: self[CONTENT_CONTAINER].element
 				});
 			}
 		}

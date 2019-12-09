@@ -115,7 +115,7 @@ export default class Heading extends FocusMixin(Control) {
 				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
 					.width(HUNDRED_PERCENT)
 					.width(self.innerWidth() - self[CHILD_CONTROLS].get(TITLE_CONTAINER)
-						.element().offsetLeft - (self[CHILD_CONTROLS].get(TOOLBAR) ? self[CHILD_CONTROLS].get(TOOLBAR)
+						.element.offsetLeft - (self[CHILD_CONTROLS].get(TOOLBAR) ? self[CHILD_CONTROLS].get(TOOLBAR)
 						.borderWidth() : ZERO_PIXELS))
 					.css(PADDING_RIGHT, ZERO_PIXELS);
 			}
@@ -127,7 +127,7 @@ export default class Heading extends FocusMixin(Control) {
 
 	[setFocus]() {
 		if (this.isFocusable()) {
-			this.element().focus();
+			this.element.focus();
 		}
 	}
 
@@ -334,7 +334,7 @@ Object.assign(Heading.prototype, {
 					new Icon({
 						container: self,
 						id: ICON_CONTROL,
-						prepend: self[CHILD_CONTROLS].get(TITLE_CONTAINER).element()
+						prepend: self[CHILD_CONTROLS].get(TITLE_CONTAINER).element
 					});
 				}
 

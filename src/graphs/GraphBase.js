@@ -56,14 +56,14 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 
 		const self = this;
 		self.addClass('graph');
-		self.svgElement(new Svg().element());
+		self.svgElement(new Svg().element);
 
 		// self[STORE_ON_CHANGE_IDS] = [];
 
 		self.onResize(() => {
 			let legendWidth;
-			let renderWidth = self.innerWidth() || self.element().offsetWidth;
-			let renderHeight = self.innerHeight() || self.element().offsetHeight;
+			let renderWidth = self.innerWidth() || self.element.offsetWidth;
+			let renderHeight = self.innerHeight() || self.element.offsetHeight;
 
 			if (self.getHeading()) {
 				renderHeight -= self.getHeading().height();

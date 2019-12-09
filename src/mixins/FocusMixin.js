@@ -128,7 +128,7 @@ export default (Base) => {
 							_self.mainControl.isFocused(true);
 						}
 						else {
-							_self.mainControl.element().focus();
+							_self.mainControl.element.focus();
 						}
 					}
 				}
@@ -143,9 +143,7 @@ export default (Base) => {
 				return _self.getFocus(activeElement);
 			}
 
-			const element = self.element();
-
-			return !element ? false : (element === activeElement || element.contains(activeElement));
+			return !self.element ? false : (self.element === activeElement || self.element.contains(activeElement));
 		}
 	}
 

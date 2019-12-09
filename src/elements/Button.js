@@ -153,10 +153,10 @@ Object.assign(Button.prototype, {
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					this.element().insertBefore(this[CHILD_CONTROLS].get(ICON_ID).element(), this.element().firstChild);
+					this.element.insertBefore(this[CHILD_CONTROLS].get(ICON_ID).element, this.element.firstChild);
 				}
 				else {
-					this.element().appendChild(this[CHILD_CONTROLS].get(ICON_ID).element());
+					this.element.appendChild(this[CHILD_CONTROLS].get(ICON_ID).element);
 				}
 			}
 
@@ -230,11 +230,11 @@ Object.assign(Button.prototype, {
 
 				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
 					this.iconPosition() === ICON_POSITIONS.TOP) {
-					this.element()
-						.insertBefore(this[CHILD_CONTROLS].get(IMAGE_ID).element(), this.element().firstChild);
+					this.element
+						.insertBefore(this[CHILD_CONTROLS].get(IMAGE_ID).element, this.element.firstChild);
 				}
 				else {
-					this.element().appendChild(this[CHILD_CONTROLS].get(IMAGE_ID).element());
+					this.element.appendChild(this[CHILD_CONTROLS].get(IMAGE_ID).element);
 				}
 			}
 

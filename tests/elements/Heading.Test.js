@@ -1,6 +1,6 @@
 import { wait } from 'async-agent';
 import { assert } from 'chai';
-import { Heading, HEADING_LEVELS, MOUSE_ENTER_EVENT } from '../..';
+import { Heading, MOUSE_ENTER_EVENT } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
 
@@ -329,7 +329,7 @@ describe('Heading', () => {
 				isExpandable: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
 		});
 
 		it('should have a button when isExpandable is true', () => {
@@ -391,7 +391,7 @@ describe('Heading', () => {
 				isSelectable: true
 			});
 
-			testUtil.simulateClick(testUtil.control.element());
+			testUtil.simulateClick(testUtil.control.element);
 
 			assert.equal(testUtil.count('.heading button'), 1);
 		});
@@ -411,7 +411,7 @@ describe('Heading', () => {
 				isSelectable: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
 		});
 	});
 
@@ -496,7 +496,7 @@ describe('Heading', () => {
 				showCheckbox: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
 		});
 
 		it('should NOT have a div with class \'checkboxes\' when showCheckbox is false', () => {
@@ -519,7 +519,7 @@ describe('Heading', () => {
 				}
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element(), 'clickable'));
+			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
 		});
 
 		it('should NOT execute the onSelect callback when clicked if not set', () => {

@@ -137,13 +137,13 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 		const maxRows = self.maxRows();
 
 		if (maxRows && maxRows > minRows && minRows > 1) {
-			const lineHeight = parseFloat(getComputedStyle(self[INPUT].element()).getPropertyValue(LINE_HEIGHT)) || 0;
+			const lineHeight = parseFloat(getComputedStyle(self[INPUT].element).getPropertyValue(LINE_HEIGHT)) || 0;
 			const padding = self[INPUT].paddingHeight;
 
 			if (lineHeight) {
 				self[INPUT].height('1px');
 
-				let actualRows = Math.floor(self[INPUT].element().scrollHeight / lineHeight);
+				let actualRows = Math.floor(self[INPUT].element.scrollHeight / lineHeight);
 				actualRows = clamp(actualRows, minRows, maxRows);
 
 				self[INPUT].height((actualRows * lineHeight) + padding);
@@ -181,8 +181,8 @@ Object.assign(TextInput.prototype, {
 			}
 
 			if (oldInput) {
-				self[INPUT].attr(getAttributes(oldInput.element()));
-				replaceElement(oldInput.element(), self[INPUT].element());
+				self[INPUT].attr(getAttributes(oldInput.element));
+				replaceElement(oldInput.element, self[INPUT].element);
 				oldInput.remove();
 				oldInput = null;
 			}
@@ -551,7 +551,7 @@ Object.assign(TextInput.prototype, {
 			return self;
 		}
 
-		return self[INPUT].element() === DOCUMENT.activeElement;
+		return self[INPUT].element === DOCUMENT.activeElement;
 	},
 
 	/**

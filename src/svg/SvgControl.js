@@ -17,7 +17,7 @@ Object.assign(SvgControl.prototype, {
 	}),
 
 	borderWidth() {
-		return this.element().getBoundingClientRect().width;
+		return this.element.getBoundingClientRect().width;
 	},
 
 	height: methodCssSize({
@@ -28,6 +28,6 @@ Object.assign(SvgControl.prototype, {
 	}),
 
 	borderHeight() {
-		return this.element().getBoundingClientRect().height;
+		return this.element.getBoundingClientRect().height;
 	}
 });

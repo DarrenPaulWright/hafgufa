@@ -51,7 +51,7 @@ export default class SearchBar extends Control {
 
 		if (IS_PHONE) {
 			self[MENU_BUTTON] = new Button({
-				container: self.element(),
+				container: self.element,
 				classes: 'header-button',
 				label: settings.isCompact ? null : locale.get('search'),
 				icon: SEARCH_ICON,
@@ -62,7 +62,7 @@ export default class SearchBar extends Control {
 			});
 		}
 		else {
-			self[buildSearchBar](self.element(), '20rem');
+			self[buildSearchBar](self.element, '20rem');
 		}
 
 		applySettings(self, settings);

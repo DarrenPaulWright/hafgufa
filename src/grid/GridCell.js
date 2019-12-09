@@ -78,11 +78,11 @@ export default class GridCell extends Control {
 	 */
 	[checkOverflow]() {
 		const self = this;
-		let displayText = self.element().textContent;
+		let displayText = self.element.textContent;
 
 		if (self[DISPLAY_TYPE] === DISPLAY_TYPES.TEXT &&
-			self.element() &&
-			self.element().scrollWidth > self.borderWidth()) {
+			self.element &&
+			self.element.scrollWidth > self.borderWidth()) {
 
 			if (displayText.length > MAX_TOOLTIP_LENGTH) {
 				displayText = displayText.substring(0, MAX_TOOLTIP_LENGTH) + ELLIPSIS;
@@ -164,7 +164,7 @@ export default class GridCell extends Control {
 
 		self[TOOLTIP_CONTROL] = new Tooltip({
 			content: self.tooltip(),
-			anchor: self.element(),
+			anchor: self.element,
 			anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
 			tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 			maxWidth: MAX_TOOLTIP_WIDTH,

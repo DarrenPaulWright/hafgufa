@@ -121,7 +121,7 @@ describe('Button', () => {
 				}
 			});
 
-			testUtil.trigger(testUtil.control.element(), 'mouseenter');
+			testUtil.trigger(testUtil.control.element, 'mouseenter');
 
 			assert.equal(testUtil.control, testVar);
 		});
@@ -141,8 +141,8 @@ describe('Button', () => {
 				}
 			});
 
-			testUtil.trigger(testUtil.control.element(), 'mouseenter');
-			testUtil.trigger(testUtil.control.element(), 'mouseleave');
+			testUtil.trigger(testUtil.control.element, 'mouseenter');
+			testUtil.trigger(testUtil.control.element, 'mouseleave');
 
 			assert.equal(testUtil.control, testVar);
 		});

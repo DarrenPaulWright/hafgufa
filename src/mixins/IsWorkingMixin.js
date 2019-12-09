@@ -39,7 +39,7 @@ export default (Base) => {
 				if (isWorking) {
 					if (!_self.isWorking) {
 						_self.isWorking = new IsWorking({
-							container: this.element(),
+							container: this.element,
 							label: this.isWorkingLabel(),
 							onRemove() {
 								_self.isWorking = null;

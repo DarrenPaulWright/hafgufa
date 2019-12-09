@@ -39,7 +39,7 @@ export default class GridColumnBlock extends Control {
 		self.classes('grid-column-block');
 
 		self[GRID_HEADER] = new GridHeader({
-			container: self.element(),
+			container: self.element,
 			onSort: settings.onSort,
 			onSelectAllGroups: settings.onSelectAllGroups,
 			onFilter: settings.onFilter,
@@ -48,7 +48,7 @@ export default class GridColumnBlock extends Control {
 		});
 
 		self[VIRTUAL_LIST] = new VirtualList({
-			container: self.element(),
+			container: self.element,
 			height: settings.isAutoHeight ? AUTO : HUNDRED_PERCENT,
 			isVirtualized: settings.isVirtualized,
 			emptyContentMessage: settings.noItemsText || 'No items to display',
@@ -68,7 +68,7 @@ export default class GridColumnBlock extends Control {
 		applySettings(self, settings);
 
 		self.onResize((width, height) => {
-				self[GRID_HEADER].scrollbarWidth(self[VIRTUAL_LIST].element().offsetWidth - self[VIRTUAL_LIST].element().clientWidth);
+				self[GRID_HEADER].scrollbarWidth(self[VIRTUAL_LIST].element.offsetWidth - self[VIRTUAL_LIST].element.clientWidth);
 				self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(width);
 				self[GRID_HEADER].width(self[RENDERED_WIDTH]);
 				self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);

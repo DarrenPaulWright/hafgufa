@@ -768,7 +768,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			self[MENU] = new Menu({
 				minWidth: 160,
-				anchor: self[POPUP_BUTTON].element(),
+				anchor: self[POPUP_BUTTON].element,
 				anchorDockPoint: DockPoint.POINTS.BOTTOM_LEFT,
 				popupDockPoint: DockPoint.POINTS.TOP_LEFT,
 				keepMenuOpen: true,

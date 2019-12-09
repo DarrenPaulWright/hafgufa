@@ -30,7 +30,7 @@ export default class CheckBox extends Radio {
 Object.assign(CheckBox.prototype, {
 	isIndeterminate: methodBoolean({
 		set(isIndeterminate) {
-			this[INPUT].element().indeterminate = isIndeterminate;
+			this[INPUT].element.indeterminate = isIndeterminate;
 			this.classes('indeterminate', isIndeterminate);
 
 			if (isIndeterminate) {

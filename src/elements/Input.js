@@ -39,7 +39,7 @@ export default class Input extends Control {
 	}
 
 	click() {
-		this.element().click();
+		this.element.click();
 
 		return this;
 	}
@@ -67,10 +67,10 @@ Object.assign(Input.prototype, {
 
 	value: methodAny({
 		set(value) {
-			this.element().value = value;
+			this.element.value = value;
 		},
 		get() {
-			return this.element().value;
+			return this.element.value;
 		}
 	})
 });
