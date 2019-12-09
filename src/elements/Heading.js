@@ -8,7 +8,6 @@ import {
 	HUNDRED_PERCENT,
 	methodArray,
 	methodBoolean,
-	methodEnum,
 	methodFunction,
 	methodObject,
 	methodQueue,
@@ -220,14 +219,6 @@ export default class Heading extends FocusMixin(Control) {
 }
 
 Object.assign(Heading.prototype, {
-	level: methodEnum({
-		enum: HEADING_LEVELS,
-		init: HEADING_LEVELS.SIX,
-		set(level) {
-			this.element(level);
-		}
-	}),
-
 	isInline: methodBoolean({
 		init: true,
 		set(isInline) {

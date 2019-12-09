@@ -286,15 +286,6 @@ describe('Heading', () => {
 		});
 	});
 
-	describe('.level', () => {
-		testUtil.testMethod({
-			methodName: 'level',
-			defaultValue: HEADING_LEVELS.SIX,
-			testValue: HEADING_LEVELS.FOUR,
-			secondTestValue: HEADING_LEVELS.THREE
-		});
-	});
-
 	describe('.isSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSelected',
