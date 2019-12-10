@@ -21,8 +21,6 @@ import Span from '../elements/Span';
 import TextArea from '../elements/TextArea';
 import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
-import getAttributes from '../utility/dom/getAttributes';
-import replaceElement from '../utility/dom/replaceElement';
 import {
 	BLUR_EVENT,
 	DOCUMENT,
@@ -181,8 +179,9 @@ Object.assign(TextInput.prototype, {
 			}
 
 			if (oldInput) {
-				self[INPUT].attr(getAttributes(oldInput.element));
-				replaceElement(oldInput.element, self[INPUT].element);
+				self[INPUT]
+					.attr(oldInput.attr())
+					.classes(oldInput.classes());
 				oldInput.remove();
 				oldInput = null;
 			}
