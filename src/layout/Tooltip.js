@@ -1,3 +1,4 @@
+import { erase } from 'object-agent';
 import { applySettings, DockPoint } from 'type-enforcer-ui';
 import Container from '../layout/Container';
 import Popup from '../layout/Popup';
@@ -32,7 +33,7 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 	constructor(settings = {}) {
 		settings.onRender = () => {
 			const initialContent = settings.content;
-			delete settings.content;
+			erase(settings, 'content');
 
 			const windowScrollEvent = () => self.remove();
 

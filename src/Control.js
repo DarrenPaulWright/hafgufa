@@ -1,4 +1,4 @@
-import { firstInPath, forOwn, walkPath } from 'object-agent';
+import { erase, firstInPath, forOwn, walkPath } from 'object-agent';
 import {
 	CssSize,
 	enforceBoolean,
@@ -134,10 +134,10 @@ export default class Control extends Removable {
 			events: {}
 		});
 
-		delete settings.type;
-		delete settings.append;
-		delete settings.prepend;
-		delete settings.appendAt;
+		erase(settings, 'type');
+		erase(settings, 'append');
+		erase(settings, 'prepend');
+		erase(settings, 'appendAt');
 
 		Object.defineProperty(self, 'element', {
 			value: getElement(settings.element),
@@ -147,12 +147,12 @@ export default class Control extends Removable {
 
 		cssSizeMethods.forEach((method) => self[method]().element(self.element));
 
-		delete settings.element;
+		erase(settings, 'element');
 
 		self.id(settings.id);
-		delete settings.id;
+		erase(settings, 'id');
 		self.container(settings.container);
-		delete settings.container;
+		erase(settings, 'container');
 
 		self.onRemove(() => {
 			const _self = _(self);
@@ -304,7 +304,7 @@ Object.assign(Control.prototype, {
 					else {
 						container.appendChild(self.element);
 					}
-					delete _self.append;
+					erase(_self, 'append');
 				}
 				else if (_self.prepend) {
 					if (isElement(_self.prepend)) {
@@ -313,12 +313,12 @@ Object.assign(Control.prototype, {
 					else {
 						container.insertBefore(self.element, container.firstChild);
 					}
-					delete _self.prepend;
+					erase(_self, 'prepend');
 				}
 				else if (_self.appendAt !== undefined) {
 					container.insertBefore(self.element, container.children[_self.appendAt]);
 
-					delete _self.appendAt;
+					erase(_self, 'appendAt');
 				}
 				else {
 					container.appendChild(self.element);
@@ -812,7 +812,7 @@ Object.assign(Control.prototype, {
 
 				if (handler) {
 					self.element.removeEventListener(firstInPath(name), handler, false);
-					delete _self.events[name];
+					erase(_self.events, name);
 				}
 			}, SPACE);
 		}

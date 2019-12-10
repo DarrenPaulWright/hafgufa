@@ -1,7 +1,7 @@
 import { debounce } from 'async-agent';
 import { Collection } from 'hord';
 import Moment from 'moment';
-import { clone, deepEqual } from 'object-agent';
+import { clone, deepEqual, erase } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
@@ -759,7 +759,7 @@ export default class Grid extends Control {
 				row.isIndeterminate = (childCount > 1 && selectedCount > 0 && selectedCount < childCount);
 
 				if (row.isCollapsed) {
-					delete row.children;
+					erase(row, 'children');
 				}
 			},
 			onEachChild(row) {

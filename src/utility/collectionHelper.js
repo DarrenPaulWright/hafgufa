@@ -1,4 +1,4 @@
-import { clone, forOwn } from 'object-agent';
+import { clone, erase, forOwn } from 'object-agent';
 import { enforceString, isArray } from 'type-enforcer-ui';
 import { byKey } from './sortBy';
 
@@ -90,7 +90,7 @@ const collectionHelper = {
 					if (settings.onEachParent) {
 						settings.onEachParent(childItem, parent);
 					}
-					delete childItem[childProperty];
+					erase(childItem, childProperty);
 					flatCollection.push(childItem);
 
 					if ((!settings.ignoreChildrenProperty || !childItem[settings.ignoreChildrenProperty]) &&
@@ -146,7 +146,7 @@ const collectionHelper = {
 				}
 
 				if (settings.deleteParentProperty) {
-					delete item[parentKey];
+					erase(item, parentKey);
 				}
 			});
 

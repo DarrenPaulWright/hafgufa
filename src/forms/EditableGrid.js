@@ -1,4 +1,4 @@
-import { clone, forOwn, set } from 'object-agent';
+import { clone, erase, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
@@ -419,8 +419,8 @@ export default class EditableGrid extends FormControl {
 				});
 
 				if (editOptions.dataSource) {
-					delete editOptions.options;
-					delete editOptions.preferred;
+					erase(editOptions, 'options');
+					erase(editOptions, 'preferred');
 				}
 				else {
 					editOptions.options = self[filterOptions](editOptions.options, column, cellData);

@@ -1,3 +1,4 @@
+import { erase } from 'object-agent';
 import {
 	AUTO,
 	HUNDRED_PERCENT,
@@ -32,14 +33,14 @@ export default (Base) => {
 
 			const self = this;
 			self.headingLevel(settings.headingLevel);
-			delete settings.headingLevel;
+			erase(settings, 'headingLevel');
 			self.title(settings.title || '');
-			delete settings.title;
+			erase(settings, 'title');
 
 			self[CONTENT_CONTAINER] = settings.contentContainer || new Div();
 			self[CONTENT_CONTAINER].container(self.element);
 			self[CONTENT_CONTAINER].removeClass('container');
-			delete settings.contentContainer;
+			erase(settings, 'contentContainer');
 
 			self.onResize((width, height) => {
 				if (self[HEADING]) {

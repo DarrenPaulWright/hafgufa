@@ -1,4 +1,4 @@
-import { set } from 'object-agent';
+import { erase, set } from 'object-agent';
 import {
 	applySettings,
 	AUTO,
@@ -137,7 +137,7 @@ export default class Tree extends FocusMixin(FormControl) {
 			for (let index = 0; index < branches.length; index++) {
 				if (branches[index].isExpanded) {
 					self[EXPANDED_BRANCHES].push(branches[index].id);
-					delete branches[index].isExpanded;
+					erase(branches[index], 'isExpanded');
 				}
 
 				branchData = {

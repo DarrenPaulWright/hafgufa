@@ -1,5 +1,5 @@
 import { debounce } from 'async-agent';
-import { deepEqual, get } from 'object-agent';
+import { deepEqual, erase, get } from 'object-agent';
 
 /**
  * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
@@ -336,7 +336,7 @@ const FormRelationshipHandler = function() {
 
 				if (typeof targetValue !== 'undefined') {
 					if (typeof targetValue.displayOrder !== 'undefined') {
-						delete targetValue.displayOrder;
+						erase(targetValue, 'displayOrder');
 					}
 				}
 
