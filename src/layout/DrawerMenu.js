@@ -1,4 +1,5 @@
 import { defer } from 'async-agent';
+import { Collection } from 'hord';
 import {
 	applySettings,
 	AUTO,
@@ -24,7 +25,6 @@ import Div from '../elements/Div';
 import Tree from '../forms/Tree';
 import { MENU_ICON } from '../icons';
 import { IS_DESKTOP } from '../utility/browser';
-import collectionHelper from '../utility/collectionHelper';
 import locale from '../utility/locale';
 import Drawer from './Drawer';
 import './DrawerMenu.less';
@@ -261,7 +261,8 @@ Object.assign(DrawerMenu.prototype, {
 	menuItems: methodArray({
 		set(menuItems) {
 			const self = this;
-			collectionHelper.eachChild(menuItems, (item) => {
+
+			new Collection(menuItems).eachChild((item) => {
 				item.id = item.id || uuid();
 			});
 

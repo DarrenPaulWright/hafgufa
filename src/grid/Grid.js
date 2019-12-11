@@ -20,7 +20,6 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
-import collectionHelper from '../utility/collectionHelper';
 import locale from '../utility/locale';
 import search from '../utility/search';
 import './Grid.less';
@@ -745,11 +744,9 @@ export default class Grid extends Control {
 		let childCount;
 		let selectedCount;
 
-		return collectionHelper.flatten(rows, {
-			childProperty: 'children',
+		return new Collection(rows || []).flatten({
 			saveDepth: true,
-			ignoreChildrenProperty: 'isCollapsed',
-			onEachParent(row) {
+			onParent(row) {
 				row.id = shortid.generate();
 				row.footerSuffix = row.footerSuffix || self.itemsLabel() || locale.get('items');
 
@@ -763,8 +760,10 @@ export default class Grid extends Control {
 				if (row.isCollapsed) {
 					erase(row, 'children');
 				}
+
+				return row.isCollapsed;
 			},
-			onEachChild(row) {
+			onChild(row) {
 				row.id = row.rowId || shortid.generate();
 				row.isSelected = self[SELECTED_ROWS].includes(row.rowId);
 			}
@@ -1089,7 +1088,7 @@ export default class Grid extends Control {
 		const thisEvent = event || {};
 
 		const getShiftSelection = () => {
-			const items = collectionHelper.slice(self[FLATTENED_ROWS], {
+			const items = new Collection(self[FLATTENED_ROWS]).sliceBy({
 				rowId: self[LAST_SELECTED_ROW]
 			}, {
 				rowId: rowId

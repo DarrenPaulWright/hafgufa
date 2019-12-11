@@ -24,7 +24,8 @@
 		"postpublish": "git push --follow-tags",
 		"deps": "ncu -u && npm install",
 		"deps-commit": "npm run deps && git add --all && git commit -m \"Updating dependencies\"",
-		"deps-patch": "npm run deps-commit && npm run patch"
+		"deps-patch": "npm run deps-commit && npm run patch",
+		"docs": ""
 	},
 	"repository": {
 		"type": "git",

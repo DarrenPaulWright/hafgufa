@@ -16,7 +16,6 @@ import controlTypes from '../controlTypes';
 import Dialog from '../layout/Dialog';
 import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
-import collectionHelper from '../utility/collectionHelper';
 import { CLICK_EVENT, WINDOW } from '../utility/domConstants';
 import locale from '../utility/locale';
 import softDelete from '../utility/softDelete';
@@ -201,6 +200,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		const self = this;
 		let newItem;
 		const newItems = [];
+
 		self[ARE_ALL_SELECTED_ITEMS_ACCOUNTED_FOR] = true;
 
 		if (isArray(newValue) && (newValue[0] || newValue[0] === 0) && newValue[0] !== '') {
@@ -266,7 +266,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		self[FLATTENED_ITEMS_LIST] = [];
 		self[FLATTENED_ITEMS_OBJECT] = {};
 
-		collectionHelper.eachChild(values, (item) => {
+		new Collection(values.children).eachChild((item) => {
 			if (values.isMultiSelect) {
 				self[HAS_MULTI_SELECT] = true;
 				self[HAS_VISIBLE_MULTI_SELECT] = true;
@@ -277,7 +277,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			self[FLATTENED_ITEMS_LIST].push(item);
 			self[FLATTENED_ITEMS_OBJECT][item.id] = item;
 		}, {
-			onEachParent(parent) {
+			onParent(parent) {
 				if (parent.isMultiSelect) {
 					self[HAS_MULTI_SELECT] = true;
 				}
@@ -1114,7 +1114,7 @@ Object.assign(Picker.prototype, {
 		if (self[HAS_MULTI_SELECT]) {
 			self[SELECTED_ITEMS] = [];
 
-			collectionHelper.eachChild(self.options().children, (item) => {
+			new Collection(self.options().children).eachChild((item) => {
 				if (item.isMultiSelect) {
 					self[SELECTED_ITEMS].push(item);
 				}
