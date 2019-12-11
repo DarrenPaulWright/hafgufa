@@ -1,4 +1,14 @@
-import Moment from 'moment';
+import {
+	addDays,
+	format as formatDate,
+	isSameDay,
+	isWeekend,
+	setDay,
+	setMonth,
+	setYear,
+	startOfMonth,
+	startOfWeek
+} from 'date-fns';
 import { fill, repeat } from 'object-agent';
 import { applySettings, AUTO, methodDate, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
@@ -13,10 +23,6 @@ import './Calendar.less';
 const DAYS_IN_A_WEEK = 7;
 const WEEKS_IN_A_MONTH = 6;
 const MONTHS_IN_A_YEAR = 12;
-const MOMENTJS_DAY_LABEL = 'D';
-const MOMENTJS_DAY = 'day';
-const MOMENTJS_WEEK = 'week';
-const MOMENTJS_MONTH = 'month';
 const DAY_CLASS = 'day-button';
 const WEEKEND_CLASS = ' weekend';
 const TODAY_CLASS = ' today';
@@ -118,7 +124,7 @@ export default class Calendar extends Control {
 
 		return fill(MONTHS_IN_A_YEAR, (month) => ({
 			id: month.toString(),
-			title: new Moment().month(parseInt(month, 10)).format(self.monthFormat())
+			title: formatDate(new Date().setMonth(month), self.monthFormat())
 		}));
 	}
 
@@ -197,7 +203,7 @@ export default class Calendar extends Control {
 	[buildWeekDays]() {
 		const self = this;
 		const newFormat = self.weekdayFormat();
-		const date = new Moment();
+		const date = new Date();
 
 		if (self[WEEKDAYS] === undefined) {
 			self[WEEKDAYS] = fill(DAYS_IN_A_WEEK, () => {
@@ -209,7 +215,7 @@ export default class Calendar extends Control {
 		}
 
 		self[WEEKDAYS].forEach((control, dayIndex) => {
-			control.title(date.day(dayIndex).format(newFormat));
+			control.title(formatDate(setDay(date, dayIndex), newFormat));
 		});
 	}
 
@@ -224,9 +230,9 @@ export default class Calendar extends Control {
 
 		self.selectedDate(newDate);
 
-		if (self.month() !== newDate.month()) {
-			self.month(newDate.month())
-				.year(newDate.year());
+		if (self.month() !== newDate.getMonth()) {
+			self.month(newDate.getMonth())
+				.year(newDate.getFullYear());
 		}
 
 		if (self.onDateSelected()) {
@@ -242,12 +248,13 @@ export default class Calendar extends Control {
 		const self = this;
 		let classes;
 		const isFirstRun = self[DAYS] === undefined;
-		const todayDate = new Moment();
-		const currentDay = new Moment()
-			.month(self.month())
-			.year(self.year())
-			.startOf(MOMENTJS_MONTH)
-			.startOf(MOMENTJS_WEEK);
+		const selectedDate = self.selectedDate();
+		const todayDate = new Date();
+		let currentDay = new Date();
+
+		currentDay = setMonth(currentDay, self.month());
+		currentDay = setYear(currentDay, self.year());
+		currentDay = startOfWeek(startOfMonth(currentDay));
 
 		if (self[DAYS] === undefined) {
 			self[DAYS] = fill(WEEKS_IN_A_MONTH * DAYS_IN_A_WEEK, () => {
@@ -264,25 +271,26 @@ export default class Calendar extends Control {
 
 		repeat(WEEKS_IN_A_MONTH * DAYS_IN_A_WEEK, (dayIndex) => {
 			classes = '';
-			if (isFirstRun && (currentDay.day() === 0 || currentDay.day() === 6)) {
+
+			if (isFirstRun && isWeekend(currentDay)) {
 				classes += WEEKEND_CLASS;
 			}
-			if (currentDay.isSame(todayDate, MOMENTJS_DAY)) {
+			if (isSameDay(currentDay, todayDate)) {
 				classes += TODAY_CLASS;
 			}
-			if (currentDay.month() !== self.month()) {
+			if (currentDay.getMonth() !== self.month()) {
 				classes += DIFFERENT_MONTH_CLASS;
 
 			}
 
 			self[DAYS][dayIndex]
-				.removeClass(TODAY_CLASS + DIFFERENT_MONTH_CLASS)
-				.addClass(classes)
-				.isSelected(self.selectedDate() && currentDay.isSame(self.selectedDate(), MOMENTJS_DAY))
-				.label(currentDay.format(MOMENTJS_DAY_LABEL))
-				.value(new Moment(currentDay));
+				.classes(TODAY_CLASS + DIFFERENT_MONTH_CLASS, false)
+				.classes(classes)
+				.isSelected(selectedDate !== undefined && isSameDay(currentDay, selectedDate))
+				.label(currentDay.getDate() + '')
+				.value(new Date(currentDay));
 
-			currentDay.add(1, MOMENTJS_DAY);
+			currentDay = addDays(currentDay, 1);
 		});
 
 		if (isFirstRun) {
@@ -301,7 +309,7 @@ Object.assign(Calendar.prototype, {
 	 * @returns {Int|this}
 	 */
 	month: methodInteger({
-		init: new Moment().month(),
+		init: new Date().getMonth(),
 		set(month) {
 			const self = this;
 			self[buildDays]();
@@ -322,7 +330,7 @@ Object.assign(Calendar.prototype, {
 	 * @returns {Int|this}
 	 */
 	year: methodInteger({
-		init: new Moment().year(),
+		init: new Date().getFullYear(),
 		set(year) {
 			const self = this;
 			self[buildDays]();
@@ -351,7 +359,7 @@ Object.assign(Calendar.prototype, {
 	 * @method selectedDate
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Date} newSelectedDate - Accepts js date objects or momentjs instances
+	 * @arg {Date} newSelectedDate
 	 * @returns {Date|this}
 	 */
 	selectedDate: methodDate({
@@ -360,15 +368,18 @@ Object.assign(Calendar.prototype, {
 	}),
 
 	/*
-	 * Get or Set the momentjs format string for weekdays
+	 * The format string for weekdays
+	 *
 	 * @method weekdayFormat
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {String} newWeekdayFormat - Default is 'ddd'. See momentjs docs for more options.
+	 *
+	 * @arg {String} newWeekdayFormat - Default is 'EEE'
+	 *
 	 * @returns {String|this}
 	 */
 	weekdayFormat: methodString({
-		init: 'ddd',
+		init: 'EEE',
 		set() {
 			const self = this;
 			self[buildWeekDays]();
@@ -377,11 +388,11 @@ Object.assign(Calendar.prototype, {
 	}),
 
 	/*
-	 * Get or Set the momentjs format string for months
+	 * The format string for months
 	 * @method monthFormat
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {String} newMonthFormat - Default is 'MMM'. See momentjs docs for more options.
+	 * @arg {String} newMonthFormat - Default is 'MMM'
 	 * @returns {String|this}
 	 */
 	monthFormat: methodString({

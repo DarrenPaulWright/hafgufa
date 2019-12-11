@@ -1,5 +1,20 @@
 import { throttle } from 'async-agent';
-import moment from 'moment';
+import {
+	endOfDay,
+	endOfDecade,
+	endOfHour,
+	endOfMinute,
+	endOfMonth,
+	endOfSecond,
+	endOfYear,
+	startOfDay,
+	startOfDecade,
+	startOfHour,
+	startOfMinute,
+	startOfMonth,
+	startOfSecond,
+	startOfYear
+} from 'date-fns';
 import { repeat } from 'object-agent';
 import {
 	applySettings,
@@ -37,6 +52,8 @@ const MONTHS_IN_YEAR = 12;
 const MILLISECONDS_IN_DAY = HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND;
 const MILLISECONDS_IN_YEAR = MILLISECONDS_IN_DAY * DAYS_IN_YEAR;
 
+const startOfMillisecond = (x) => x;
+
 const SPAN_TYPES = new Enum({
 	MILLENNIUM: 'Millennium',
 	CENTURY: 'Century',
@@ -57,7 +74,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 1000,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incUnit: 'y'
+	startOf: startOfDecade,
+	endOf: endOfDecade
 }, {
 	min: 0.25,
 	max: 0.5,
@@ -65,7 +83,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 100,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incUnit: 'y'
+	startOf: startOfDecade,
+	endOf: endOfDecade
 }, {
 	min: 0.5,
 	max: 1,
@@ -73,7 +92,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR * 10,
 	subSpans: [10, 5, 2],
 	format: 'YYYY',
-	incUnit: 'y'
+	startOf: startOfDecade,
+	endOf: endOfDecade
 }, {
 	min: 1,
 	max: MONTHS_IN_YEAR,
@@ -81,7 +101,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR,
 	subSpans: [12, 6, 4, 2],
 	format: 'YYYY',
-	incUnit: 'y'
+	startOf: startOfYear,
+	endOf: endOfYear
 }, {
 	min: MONTHS_IN_YEAR,
 	max: MONTHS_IN_YEAR * 30,
@@ -89,7 +110,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_YEAR / MONTHS_IN_YEAR,
 	subSpans: [30, 4, 2],
 	format: 'MMM YYYY',
-	incUnit: 'M'
+	startOf: startOfMonth,
+	endOf: endOfMonth
 }, {
 	min: MONTHS_IN_YEAR * 30,
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY,
@@ -97,7 +119,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_DAY,
 	subSpans: [24, 12, 6, 4, 2],
 	format: 'D MMM YYYY',
-	incUnit: 'd'
+	startOf: startOfDay,
+	endOf: endOfDay
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY,
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR,
@@ -105,7 +128,8 @@ const SPANS = [{
 	length: MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [60, 30, 12, 6, 4, 2],
 	format: 'ha, D MMM YYYY',
-	incUnit: 'h'
+	startOf: startOfHour,
+	endOf: endOfHour
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR,
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE,
@@ -113,7 +137,8 @@ const SPANS = [{
 	length: SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [60, 30, 12, 6, 4, 2],
 	format: 'h:mma, D MMM YYYY',
-	incUnit: 'm'
+	startOf: startOfMinute,
+	endOf: endOfMinute
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE,
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
@@ -121,7 +146,8 @@ const SPANS = [{
 	length: MILLISECONDS_IN_SECOND,
 	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
 	format: 'h:mm:ssa, D MMM YYYY',
-	incUnit: 's'
+	startOf: startOfSecond,
+	endOf: endOfSecond
 }, {
 	min: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	max: MONTHS_IN_YEAR * 30 * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND * 1000,
@@ -129,7 +155,8 @@ const SPANS = [{
 	length: 1,
 	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
 	format: 'h:mm:ssa, D MMM YYYY',
-	incUnit: 'ms'
+	startOf: startOfMillisecond,
+	endOf: startOfMillisecond
 }];
 
 const minSpanWidth = new CssSize('8rem');
@@ -255,18 +282,14 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 	}
 
 	[getSpanOffset](span, date) {
-		if (!span.incUnit) {
+		if (!span.startOf) {
 			return 1;
 		}
 
 		date = date.valueOf ? date.valueOf() : date;
 
-		const start = moment(date)
-			.startOf(span.incUnit)
-			.toDate();
-		const end = moment(date + (span.length * (this[PARENT_MULTIPLIER] - 1)))
-			.endOf(span.incUnit)
-			.toDate();
+		const start = span.startOf(date);
+		const end = span.endOf(date + (span.length * (this[PARENT_MULTIPLIER] - 1)));
 
 		return (date - start) / (end - start);
 	}
@@ -355,10 +378,9 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		const isDuration = self.duration() !== undefined;
 		const spanLength = self[SPAN].length * self[PARENT_MULTIPLIER];
 		const totalSlides = Math.ceil(self[LENGTH] / spanLength) + 1;
-		const currentValue = isDuration ? moment.utc(0) : moment(self[START].valueOf());
-		const format = isDuration ? (self[SPAN].incUnit !== 'ms' ? 'HH:mm:ss' : 'HH:mm:ss.SSS') : self[SPAN].format;
-		const exporter = isDuration ? ((value) => value.toDate()
-			.valueOf()) : ((value) => value.toDate());
+		const currentValue = isDuration ? new Date(0) : new Date(self[START]);
+		const format = isDuration ? (self[SPAN].startOf !== startOfMillisecond ? 'HH:mm:ss' : 'HH:mm:ss.SSS') : self[SPAN].format;
+		const exporter = isDuration ? ((value) => value.valueOf()) : ((value) => value);
 
 		repeat(totalSlides, () => {
 			const title = currentValue.format(format);
@@ -367,10 +389,8 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 				id: 'span_' + title,
 				title: title,
 				events: [],
-				start: exporter(moment(currentValue)
-					.startOf(self[SPAN].incUnit)),
-				end: exporter(moment(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))
-					.endOf(self[SPAN].incUnit))
+				start: exporter(self[SPAN].startOf(currentValue)),
+				end: exporter(self[SPAN].endOf(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1))))
 			});
 
 			currentValue.add(spanLength);

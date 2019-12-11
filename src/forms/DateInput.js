@@ -1,5 +1,5 @@
 import { defer } from 'async-agent';
-import moment from 'moment';
+import { format as formatDate, isValid } from 'date-fns';
 import { applySettings, AUTO, DockPoint, enforceCssSize, enforceDate, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
@@ -75,11 +75,10 @@ export default class DateInput extends FormControl {
 		const self = this;
 
 		if (self.showDatePicker() && !self[POPUP]) {
-			let newDate = moment(self.value());
-			const isSelected = newDate.isValid();
+			let newDate = new Date(self.value());
 
-			if (!isSelected) {
-				newDate = moment();
+			if (!isValid(newDate)) {
+				newDate = new Date();
 			}
 
 			self[POPUP] = new Popup({
@@ -89,8 +88,8 @@ export default class DateInput extends FormControl {
 				content: [{
 					control: Calendar,
 					margin: '0.25rem',
-					month: newDate.month(),
-					year: newDate.year(),
+					month: newDate.getMonth(),
+					year: newDate.getFullYear(),
 					width: CALENDAR_WIDTH,
 					height: CALENDAR_HEIGHT,
 					onDateSelected(value) {
@@ -98,7 +97,7 @@ export default class DateInput extends FormControl {
 						self[onDateInputChange](value);
 					},
 					navButtonClass: 'icon-button',
-					selectedDate: newDate.toDate()
+					selectedDate: newDate
 				}],
 				onRemove() {
 					self[POPUP] = null;
@@ -110,9 +109,8 @@ export default class DateInput extends FormControl {
 
 	[onDateInputChange](value) {
 		const self = this;
-		const newDate = moment(new Date(value));
 
-		if (newDate.isValid() || value === '') {
+		if (isValid(value) || value === '') {
 			if (self[POPUP]) {
 				self[POPUP].remove();
 			}
@@ -133,7 +131,7 @@ Object.assign(DateInput.prototype, {
 
 		if (arguments.length) {
 			newValue = enforceDate(newValue, '', true);
-			self[DATE_INPUT].value(moment(newValue).format(DATE_FORMAT));
+			self[DATE_INPUT].value(formatDate(newValue, DATE_FORMAT));
 
 			return self;
 		}

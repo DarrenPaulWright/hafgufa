@@ -1,5 +1,4 @@
 import { assert } from 'chai';
-import Moment from 'moment';
 import { Calendar } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -13,7 +12,7 @@ describe('Calendar', () => {
 	describe('Month', () => {
 		testUtil.testMethod({
 			methodName: 'month',
-			defaultValue: new Moment().month(),
+			defaultValue: new Date().getMonth(),
 			testValue: 11,
 			secondTestValue: 0
 		});
@@ -141,7 +140,7 @@ describe('Calendar', () => {
 	describe('Year', () => {
 		testUtil.testMethod({
 			methodName: 'year',
-			defaultValue: Moment().year(),
+			defaultValue: new Date().getFullYear(),
 			testValue: 2000,
 			secondTestValue: 1996
 		});
@@ -194,7 +193,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.nth('.day-button', 40));
 
-			assert.isTrue((testUtil.control.month() === Moment().month() + 1) || (testUtil.control.month() === 0));
+			assert.isTrue((testUtil.control.month() === new Date().getMonth() + 1) || (testUtil.control.month() === 0));
 		});
 	});
 
@@ -207,36 +206,32 @@ describe('Calendar', () => {
 		});
 
 		it('should have a div with class "selected" when selectedDate is set to a date in the current month', () => {
-			const testDate = new Moment();
-
 			testUtil.control = new Calendar({
 				container: testUtil.container
 			})
-				.selectedDate(testDate.toDate());
+				.selectedDate(new Date());
 
 			assert.equal(testUtil.count('.day-button.selected'), 1);
 		});
 
 		it('should NOT have a div with class "selected" when selectedDate is set to a date in a different month', () => {
-			const testDate = new Moment();
+			const testDate = new Date();
 
-			testDate.year(testDate.year() + 1);
+			testDate.setFullYear(testDate.getFullYear() + 1);
 
 			testUtil.control = new Calendar({
 				container: testUtil.container
 			})
-				.selectedDate(testDate.toDate());
+				.selectedDate(testDate);
 
 			assert.equal(testUtil.count('.day-button.selected'), 0);
 		});
 
 		it('should remember the selected date after navigating to a different month and back', () => {
-			const testDate = new Moment();
-
 			testUtil.control = new Calendar({
 				container: testUtil.container
 			})
-				.selectedDate(testDate.toDate());
+				.selectedDate(new Date());
 
 			testUtil.control.year(testUtil.control.year() + 1);
 			testUtil.control.year(testUtil.control.year() - 1);
@@ -248,9 +243,9 @@ describe('Calendar', () => {
 	describe('WeekdayFormat', () => {
 		testUtil.testMethod({
 			methodName: 'weekdayFormat',
-			defaultValue: 'ddd',
-			testValue: 'dd',
-			secondTestValue: 'dddd'
+			defaultValue: 'EEE',
+			testValue: 'EE',
+			secondTestValue: 'EEEE'
 		});
 
 		it('should have seven divs with class "weekday"', () => {
@@ -272,7 +267,7 @@ describe('Calendar', () => {
 		it('should change the format of weekdays when weekdayFormat is set', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
-				weekdayFormat: 'dd'
+				weekdayFormat: 'EEEEEE'
 			});
 
 			assert.equal(testUtil.first('.heading').textContent, 'Su');

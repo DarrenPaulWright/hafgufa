@@ -1,6 +1,6 @@
 import { debounce } from 'async-agent';
+import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fns';
 import { Collection, compare, List } from 'hord';
-import Moment from 'moment';
 import { clone, deepEqual, erase } from 'object-agent';
 import shortid from 'shortid';
 import {
@@ -257,18 +257,18 @@ export default class Grid extends Control {
 				if (!cell.original) {
 					cell.original = cell.text;
 				}
-				cell.date = new Moment(cell.original, Moment.ISO_8601);
+				cell.date = cell.date || parseISO(cell.original);
 
-				if (cell.date.isValid()) {
+				if (isValid(cell.date)) {
 					switch (column.type) {
 						case COLUMN_TYPES.DATE:
-							cell.text = cell.date.format('MM/DD/YYYY');
+							cell.text = formatDate(cell.date, 'MM/dd/yyyy');
 							break;
 						case COLUMN_TYPES.DATE_TIME:
-							cell.text = cell.date.calendar();
+							cell.text = formatRelative(cell.date, new Date());
 							break;
 						case COLUMN_TYPES.TIME:
-							cell.text = cell.date.format('HH:mm:ss');
+							cell.text = formatDate(cell.date, 'hh:mm:ss');
 							break;
 					}
 				}

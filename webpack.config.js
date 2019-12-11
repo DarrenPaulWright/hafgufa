@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ThemesPlugin = require('less-themes-webpack-plugin');
@@ -54,7 +53,6 @@ const config = {
 			},
 			excludeAssets: [/.*desktop.js/, /.*mobile.js/]
 		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 		new ThemesPlugin({
 			filename: 'styles/[name].min.css',
 			themesPath: './src/themes',
