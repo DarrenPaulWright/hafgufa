@@ -1,14 +1,4 @@
-import {
-	applySettings,
-	castArray,
-	isArray,
-	isElement,
-	isFunction,
-	isJson,
-	isNumber,
-	isObject,
-	isString
-} from 'type-enforcer-ui';
+import { applySettings, castArray, isArray, isElement, isJson, isNumber, isObject, isString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { CONTENT_CHANGE_EVENT } from '../utility/domConstants';
 import Control, { CHILD_CONTROLS } from './../Control';
@@ -31,7 +21,7 @@ export default class Div extends Control {
 
 		super(settings);
 
-		if (this.type === controlTypes.DIV) {
+		if (this.type === controlTypes.DIV && settings !== undefined) {
 			applySettings(this, settings);
 		}
 	}
@@ -49,11 +39,13 @@ export default class Div extends Control {
 
 		castArray(content).forEach((controlDefinition, index) => {
 			if (controlDefinition && controlDefinition.control) {
-				new controlDefinition.control({
-					...controlDefinition,
-					container: self,
-					appendAt: isNumber(appendAt) ? appendAt + index : null
-				});
+				new controlDefinition.control(Object.assign({},
+					controlDefinition,
+					{
+						container: self,
+						appendAt: isNumber(appendAt) ? appendAt + index : null
+					}
+				));
 			}
 		});
 	}
@@ -134,6 +126,7 @@ export default class Div extends Control {
 		this[CHILD_CONTROLS].remove();
 		this.element.textContent = '';
 		this[addContent](content);
+
 		return this;
 	}
 
@@ -148,6 +141,7 @@ export default class Div extends Control {
 	 */
 	append(content) {
 		this[addContent](content);
+
 		return this;
 	}
 
@@ -205,7 +199,7 @@ export default class Div extends Control {
 	}
 
 	total() {
-		return this[CHILD_CONTROLS].total();
+		return this[CHILD_CONTROLS].length;
 	}
 
 	/**

@@ -3,6 +3,7 @@ import {
 	CssSize,
 	enforceBoolean,
 	isElement,
+	isNumber,
 	isString,
 	methodBoolean,
 	methodCssSize,
@@ -81,17 +82,11 @@ const cssPropertiesToParseAsInt = [
 	PADDING_RIGHT,
 	PADDING_BOTTOM,
 	PADDING_LEFT
-];
-const cssSizeMethods = [
-	'padding',
-	'margin',
-	'minWidth',
-	'width',
-	'maxWidth',
-	'minHeight',
-	'height',
-	'maxHeight'
-];
+].reduce((result, value) => {
+	result[value] = true;
+
+	return result;
+}, {});
 
 const propagationClickEvent = (event) => {
 	event.stopPropagation();
@@ -124,6 +119,7 @@ export default class Control extends Removable {
 		super();
 
 		const self = this;
+
 		self[CHILD_CONTROLS] = new ControlManager();
 
 		_.set(self, {
@@ -134,43 +130,46 @@ export default class Control extends Removable {
 			events: {}
 		});
 
-		erase(settings, 'type');
-		erase(settings, 'append');
-		erase(settings, 'prepend');
-		erase(settings, 'appendAt');
-
-		Object.defineProperty(self, 'element', {
+		Object.defineProperty(this, 'element', {
 			value: getElement(settings.element),
 			writable: false
 		});
 		self.element[CONTROL_PROP] = self;
 
-		cssSizeMethods.forEach((method) => self[method]().element(self.element));
+		self.padding().element(self.element);
+		self.margin().element(self.element);
+		self.minWidth().element(self.element);
+		self.width().element(self.element);
+		self.maxWidth().element(self.element);
+		self.minHeight().element(self.element);
+		self.height().element(self.element);
+		self.maxHeight().element(self.element);
 
+		erase(settings, 'type');
+		erase(settings, 'append');
+		erase(settings, 'prepend');
+		erase(settings, 'appendAt');
 		erase(settings, 'element');
 
-		self.id(settings.id);
-		erase(settings, 'id');
-		self.container(settings.container);
-		erase(settings, 'container');
+		if ('id' in settings) {
+			self.id(settings.id);
+			erase(settings, 'id');
+		}
 
-		self.onRemove(() => {
-			const _self = _(self);
+		if ('container' in settings) {
+			self.container(settings.container);
+			erase(settings, 'container');
+		}
 
-			self[CHILD_CONTROLS].remove();
+		self.onRemove(function() {
+			this[CHILD_CONTROLS].remove();
 
-			forOwn(_self.events, (handler, name) => {
-				self.off(name);
+			forOwn(_(this).events, (handler, name) => {
+				this.off(name);
 			});
 
-			self.container(null);
-
-			if (self.element.remove) {
-				self.element.remove();
-			}
-			else if (self.element.parentNode) {
-				self.element.parentNode.removeChild(self.element);
-			}
+			this.container(null);
+			this.element.remove();
 		});
 	}
 
@@ -256,63 +255,50 @@ Object.assign(Control.prototype, {
 	 */
 	container: methodElement({
 		enforce(newValue, oldValue) {
-			if (!newValue) {
-				return oldValue;
-			}
-
-			if (isElement(newValue) || newValue === WINDOW) {
-				return newValue;
-			}
-			if (newValue.contentContainer) {
-				return newValue.contentContainer.element;
-			}
-			if (newValue.element) {
-				return newValue.element;
-			}
-			if (isString(newValue)) {
-				return DOCUMENT.querySelector(newValue);
-			}
-
-			return oldValue;
+			return (isElement(newValue) || newValue === WINDOW) && newValue ||
+				newValue.contentContainer !== undefined && newValue.contentContainer.element ||
+				newValue.element !== undefined && newValue.element ||
+				isString(newValue) && DOCUMENT.querySelector(newValue) ||
+				oldValue;
 		},
 		other: null,
 		before(container) {
-			const self = this;
-			const _self = _(self);
+			if (container) {
+				const self = this;
+				const _self = _(self);
 
-			if (container && container.contains(self.element)) {
-				container.removeChild(self.element);
-				if (container[CONTROL_PROP]) {
-					container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
+				if (container && container.contains(self.element)) {
+					container.removeChild(self.element);
+
+					if (container[CONTROL_PROP]) {
+						container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
+					}
 				}
-			}
 
-			if (_self.windowResizeId) {
-				windowResize.discard(_self.windowResizeId);
-				_self.windowResizeId = null;
+				if (_self.windowResizeId !== undefined) {
+					windowResize.discard(_self.windowResizeId);
+					_self.windowResizeId = null;
+				}
 			}
 		},
 		set(container) {
-			const self = this;
-			const _self = _(self);
-
 			if (container) {
-				if (_self.append) {
+				const self = this;
+				const _self = _(self);
+
+				if (_self.append !== undefined) {
 					if (isElement(_self.append)) {
 						container.insertBefore(self.element, _self.append.nextSibling);
 					}
 					else {
 						container.appendChild(self.element);
 					}
+
 					erase(_self, 'append');
 				}
-				else if (_self.prepend) {
-					if (isElement(_self.prepend)) {
-						container.insertBefore(self.element, _self.prepend);
-					}
-					else {
-						container.insertBefore(self.element, container.firstChild);
-					}
+				else if (_self.prepend !== undefined) {
+					container.insertBefore(self.element, isElement(_self.prepend) ? _self.prepend : container.firstChild);
+
 					erase(_self, 'prepend');
 				}
 				else if (_self.appendAt !== undefined) {
@@ -413,7 +399,7 @@ Object.assign(Control.prototype, {
 	 */
 	css: methodKeyValue({
 		set(property, value) {
-			if (!isNaN(value) && cssPropertiesToParseAsInt.includes(property)) {
+			if (cssPropertiesToParseAsInt[property] && isNumber(value, true)) {
 				value += PIXELS;
 			}
 
@@ -437,6 +423,7 @@ Object.assign(Control.prototype, {
 	 */
 	addClass(className) {
 		this.classes(className, true);
+
 		return this;
 	},
 
@@ -453,6 +440,7 @@ Object.assign(Control.prototype, {
 	 */
 	removeClass(className) {
 		this.classes(className, false);
+
 		return this;
 	},
 
@@ -468,26 +456,20 @@ Object.assign(Control.prototype, {
 	 *
 	 * @returns {this}
 	 */
-	classes(classes, performAdd) {
-		const self = this;
-
+	classes(classes, performAdd = true) {
 		if (arguments.length) {
-			if (isString(classes) && !this.isRemoved) {
-				classes = classes.trim();
+			if (isString(classes) && this.isRemoved !== true) {
+				performAdd = enforceBoolean(performAdd, true) ? 'add' : 'remove';
 
-				if (classes) {
-					const action = enforceBoolean(performAdd, true) ? 'add' : 'remove';
-
-					walkPath(classes, (name) => {
-						self.element.classList[action](name);
-					}, SPACE);
-				}
+				walkPath(classes, (name) => {
+					this.element.classList[performAdd](name);
+				}, SPACE);
 			}
 
 			return this;
 		}
 
-		return self.element.classList.value;
+		return this.element.classList.value;
 	},
 
 	/**

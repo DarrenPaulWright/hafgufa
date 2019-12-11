@@ -37,6 +37,22 @@ Object.assign(Span.prototype, {
 	 */
 	text: methodString({
 		set(text) {
+			this.element.textContent = text;
+		}
+	}),
+	/**
+	 * Set or get the span HTML.
+	 *
+	 * @method html
+	 * @member module:Span
+	 * @instance
+	 *
+	 * @arg {string|element} content
+	 *
+	 * @returns {string|element|this}
+	 */
+	html: methodString({
+		set(text) {
 			this.element.innerHTML = text;
 		}
 	})

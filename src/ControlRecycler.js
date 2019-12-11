@@ -1,9 +1,8 @@
 import { clone } from 'object-agent';
 import { applySettings, methodFunction, methodObject } from 'type-enforcer-ui';
 
-const VISIBLE_CONTROLS = Symbol();
-const DISCARDED_CONTROLS = Symbol();
-const DISCARD = Symbol();
+const VISIBLES = Symbol();
+const DISCARDED = Symbol();
 
 /**
  * Instead of creating and destroying controls in rapid succession, recycle them!
@@ -12,26 +11,12 @@ const DISCARD = Symbol();
  * @constructor
  */
 export default class ControlRecycler {
-	constructor(settings = {}) {
-		this[VISIBLE_CONTROLS] = [];
-		this[DISCARDED_CONTROLS] = [];
-		applySettings(this, settings);
-	}
+	constructor(settings) {
+		this[VISIBLES] = [];
+		this[DISCARDED] = [];
 
-	/**
-	 * Discard a control at a specific index of visibleControls.
-	 * @function discardControl
-	 * @arg {Number} index
-	 * @arg {array} visibleControls
-	 * @arg {array} discardedControls
-	 */
-	[DISCARD](index) {
-		const control = this[VISIBLE_CONTROLS][index];
-
-		if (control) {
-			control.container(null);
-			this[DISCARDED_CONTROLS].push(control);
-			this[VISIBLE_CONTROLS].splice(index, 1);
+		if (settings !== undefined) {
+			applySettings(this, settings);
 		}
 	}
 }
@@ -67,18 +52,17 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg   {Boolean} [doPrepend=false]
 	 * @returns {Object}
 	 */
-	getRecycledControl(doPrepend) {
-		let control;
+	getRecycledControl(doPrepend = false) {
 		const Control = this.control();
 
-		if (Control) {
-			control = this[DISCARDED_CONTROLS].shift() || new Control(clone(this.defaultSettings()));
+		if (Control !== undefined) {
+			const control = this[DISCARDED].length !== 0 && this[DISCARDED].shift() || new Control(clone(this.defaultSettings()));
 
 			if (doPrepend) {
-				this[VISIBLE_CONTROLS].unshift(control);
+				this[VISIBLES].unshift(control);
 			}
 			else {
-				this[VISIBLE_CONTROLS].push(control);
+				this[VISIBLES].push(control);
 			}
 
 			return control;
@@ -94,7 +78,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object}
 	 */
 	getControl(id) {
-		return this[VISIBLE_CONTROLS].find((control) => control.id() === id);
+		return this[VISIBLES].find((control) => control.id() === id);
 	},
 
 	/**
@@ -105,7 +89,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object[]}
 	 */
 	getRenderedControls() {
-		return this[VISIBLE_CONTROLS];
+		return this[VISIBLES];
 	},
 
 	/**
@@ -117,7 +101,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object[]}
 	 */
 	each(callback) {
-		this[VISIBLE_CONTROLS].forEach(callback);
+		this[VISIBLES].forEach(callback);
 	},
 
 	/**
@@ -132,7 +116,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object[]}
 	 */
 	map(callback) {
-		return this[VISIBLE_CONTROLS].map(callback);
+		return this[VISIBLES].map(callback);
 	},
 
 	/**
@@ -143,7 +127,12 @@ Object.assign(ControlRecycler.prototype, {
 	 * @arg {String} [id]
 	 */
 	discardControl(id) {
-		this[DISCARD](this[VISIBLE_CONTROLS].findIndex((control) => control.id() === id));
+		const index = this[VISIBLES].findIndex((control) => control.id() === id);
+
+		if (index !== -1) {
+			this[DISCARDED].push(this[VISIBLES][index].container(null));
+			this[VISIBLES].splice(index, 1);
+		}
 	},
 
 	/**
@@ -153,8 +142,8 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 */
 	discardAllControls() {
-		while (this[VISIBLE_CONTROLS].length > 0) {
-			this[DISCARD](0);
+		while (this[VISIBLES].length > 0) {
+			this[DISCARDED].push(this[VISIBLES].pop().container(null));
 		}
 	},
 
@@ -171,13 +160,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Object}
 	 */
 	getControlAtOffset(controlOffset, canCreateNew = false) {
-		let control = this[VISIBLE_CONTROLS][controlOffset];
-
-		if (!control && canCreateNew) {
-			control = this.getRecycledControl();
-		}
-
-		return control;
+		return this[VISIBLES][controlOffset] || canCreateNew && this.getRecycledControl();
 	},
 
 	/**
@@ -188,7 +171,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @returns {Number}
 	 */
 	totalVisibleControls() {
-		return this[VISIBLE_CONTROLS].length;
+		return this[VISIBLES].length;
 	},
 
 	/**
@@ -198,9 +181,10 @@ Object.assign(ControlRecycler.prototype, {
 	 * @instance
 	 */
 	remove() {
-		this[DISCARDED_CONTROLS].forEach((control) => control.remove());
-		this[VISIBLE_CONTROLS].forEach((control) => control.remove());
-		this[DISCARDED_CONTROLS].length = 0;
-		this[VISIBLE_CONTROLS].length = 0;
+		this[DISCARDED].forEach((control) => control.remove());
+		this[DISCARDED].length = 0;
+		
+		this[VISIBLES].forEach((control) => control.remove());
+		this[VISIBLES].length = 0;
 	}
 });

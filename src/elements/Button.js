@@ -12,7 +12,7 @@ import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import MouseMixin from '../mixins/MouseMixin';
 import OnClickMixin from '../mixins/OnClickMixin';
-import { ALT, INPUT_TYPE, TITLE } from '../utility/domConstants';
+import { INPUT_TYPE } from '../utility/domConstants';
 import './Button.less';
 import Icon, { ICON_SIZES } from './Icon';
 import Image from './Image';
@@ -50,11 +50,9 @@ export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))
 
 		super(settings);
 
-		const self = this;
+		this.attr(INPUT_TYPE, 'button');
 
-		self.attr(INPUT_TYPE, 'button');
-
-		applySettings(self, settings);
+		applySettings(this, settings);
 	}
 
 	iconClasses(classes, performAdd) {
@@ -88,19 +86,22 @@ Object.assign(Button.prototype, {
 	label: methodString({
 		init: undefined,
 		set(label) {
-			if ((this.icon() || this.image()) && !label) {
-				this[CHILD_CONTROLS].remove(LABEL_ID);
+			const self = this;
+
+			if (label === '' && (self.icon() !== '' || self.image() !== '')) {
+				self[CHILD_CONTROLS].remove(LABEL_ID);
 			}
 			else {
-				this.alt(label === DEFAULT_LABEL ? '' : label);
+				self.alt(label === DEFAULT_LABEL ? '' : label);
 
-				if (!this[CHILD_CONTROLS].get(LABEL_ID)) {
+				if (!self[CHILD_CONTROLS].get(LABEL_ID)) {
 					new Span({
-						container: this,
+						container: self,
 						id: LABEL_ID
 					});
 				}
-				this[CHILD_CONTROLS].get(LABEL_ID).text(label || DEFAULT_LABEL);
+
+				self[CHILD_CONTROLS].get(LABEL_ID).html(label || DEFAULT_LABEL);
 			}
 		}
 	}),
@@ -114,9 +115,11 @@ Object.assign(Button.prototype, {
 	 * @returns {this}
 	 */
 	alt: methodString({
-		set(newValue) {
-			this.attr(ALT, newValue)
-				.attr(TITLE, newValue);
+		set(alt) {
+			this.attr({
+				alt: alt,
+				title: alt
+			});
 		}
 	}),
 
@@ -134,33 +137,35 @@ Object.assign(Button.prototype, {
 	 */
 	icon: methodString({
 		set(newValue) {
-			if (!newValue) {
-				this[CHILD_CONTROLS].remove(ICON_ID);
+			const self = this;
+
+			if (newValue === '') {
+				self[CHILD_CONTROLS].remove(ICON_ID);
 			}
 			else {
-				this.image('');
+				self.image('');
 
-				if (!this[CHILD_CONTROLS].get(ICON_ID)) {
+				if (!self[CHILD_CONTROLS].get(ICON_ID)) {
 					new Icon({
-						container: this,
+						container: self,
 						id: ICON_ID,
-						size: this.iconSize()
+						size: self.iconSize()
 					});
 				}
 
-				this[CHILD_CONTROLS].get(ICON_ID).icon(newValue)
-					.size(this.iconSize());
+				self[CHILD_CONTROLS].get(ICON_ID).icon(newValue)
+					.size(self.iconSize());
 
-				if (this.iconPosition() === ICON_POSITIONS.LEFT ||
-					this.iconPosition() === ICON_POSITIONS.TOP) {
-					this.element.insertBefore(this[CHILD_CONTROLS].get(ICON_ID).element, this.element.firstChild);
+				if (self.iconPosition() === ICON_POSITIONS.LEFT ||
+					self.iconPosition() === ICON_POSITIONS.TOP) {
+					self.element.insertBefore(self[CHILD_CONTROLS].get(ICON_ID).element, self.element.firstChild);
 				}
 				else {
-					this.element.appendChild(this[CHILD_CONTROLS].get(ICON_ID).element);
+					self.element.appendChild(self[CHILD_CONTROLS].get(ICON_ID).element);
 				}
 			}
 
-			this.label(this.label(), true);
+			self.label(self.label(), true);
 		}
 	}),
 

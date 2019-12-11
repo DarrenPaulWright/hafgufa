@@ -20,7 +20,7 @@ describe('ControlManager', () => {
 		manager.add(div);
 
 		assert.equal(div.onRemove().length, initial + 1);
-		assert.equal(manager.total(), 1);
+		assert.equal(manager.length, 1);
 	});
 
 	it('should add onRemove callbacks to multiple controls', () => {
@@ -33,13 +33,13 @@ describe('ControlManager', () => {
 
 		assert.equal(div1.onRemove().length, initial1 + 1);
 		assert.equal(div2.onRemove().length, initial2 + 1);
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 
 		manager.remove();
 
 		assert.equal(div1.onRemove().length, 0);
 		assert.equal(div2.onRemove().length, 0);
-		assert.equal(manager.total(), 0);
+		assert.equal(manager.length, 0);
 	});
 
 	it('should get a control by id', () => {
@@ -153,7 +153,7 @@ describe('ControlManager', () => {
 		manager.discard(div);
 
 		assert.equal(manager.get('test'), undefined);
-		assert.equal(manager.total(), 0);
+		assert.equal(manager.length, 0);
 	});
 
 	it('should NOT get a control by id after the control is discarded (fade)', () => {
@@ -168,7 +168,7 @@ describe('ControlManager', () => {
 		manager.discard(div);
 
 		assert.equal(manager.get('test'), undefined);
-		assert.equal(manager.total(), 0);
+		assert.equal(manager.length, 0);
 	});
 
 	it('should NOT get a control by id after the control is discarded (by id)', () => {
@@ -196,11 +196,11 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.total(), 3);
+		assert.equal(manager.length, 3);
 
 		manager.remove('2');
 
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), undefined);
 	});
@@ -221,25 +221,25 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.total(), 3);
+		assert.equal(manager.length, 3);
 
 		manager.remove(div2);
 
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), undefined);
 		assert.isOk(manager.get('test4'));
 
 		manager.remove('test4');
 
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), undefined);
 		assert.isOk(manager.get('test4'));
 
 		manager.remove(div3);
 
-		assert.equal(manager.total(), 1);
+		assert.equal(manager.length, 1);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), undefined);
 		assert.notOk(manager.get('test4'));
@@ -256,17 +256,17 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.total(), 3);
+		assert.equal(manager.length, 3);
 
 		div3.remove();
 
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), div2);
 
 		div2.remove();
 
-		assert.equal(manager.total(), 1);
+		assert.equal(manager.length, 1);
 		assert.equal(manager.get('1'), div1);
 		assert.equal(manager.get('2'), undefined);
 	});
@@ -281,11 +281,11 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2]);
 
-		assert.equal(manager.total(), 2);
+		assert.equal(manager.length, 2);
 
 		manager.remove();
 
-		assert.equal(manager.total(), 0);
+		assert.equal(manager.length, 0);
 	});
 
 });

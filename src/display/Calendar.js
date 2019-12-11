@@ -2,7 +2,6 @@ import Moment from 'moment';
 import { fill, repeat } from 'object-agent';
 import { applySettings, AUTO, methodDate, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
-import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
@@ -19,7 +18,6 @@ const MOMENTJS_DAY = 'day';
 const MOMENTJS_WEEK = 'week';
 const MOMENTJS_MONTH = 'month';
 const DAY_CLASS = 'day-button';
-const WEEKDAYS_CLASS = 'weekdays';
 const WEEKEND_CLASS = ' weekend';
 const TODAY_CLASS = ' today';
 const DIFFERENT_MONTH_CLASS = ' different-month';
@@ -36,9 +34,8 @@ const onClickDay = Symbol();
 const buildDays = Symbol();
 
 const HEADER = Symbol();
-const WEEKDAY_RECYCLER = Symbol();
-const DAY_RECYCLER = Symbol();
-const WEEKDAY_CONTAINER = Symbol();
+const WEEKDAYS = Symbol();
+const DAYS = Symbol();
 
 /**
  * Display a calendar layout of a month.
@@ -62,20 +59,20 @@ export default class Calendar extends Control {
 
 		applySettings(self, settings);
 
-		if (!self[DAY_RECYCLER]) {
+		if (self[DAYS] === undefined) {
 			self[buildDays]();
 		}
 
 		self.onResize((width, height) => {
 			const dayWidth = Math.floor(width / DAYS_IN_A_WEEK);
-			const dayHeight = Math.floor((height - self[HEADER].borderHeight() - self[WEEKDAY_CONTAINER].borderHeight()) / WEEKS_IN_A_MONTH);
+			const dayHeight = Math.floor((height - self[HEADER].borderHeight() - self[WEEKDAYS][0].borderHeight()) / WEEKS_IN_A_MONTH);
 
-			self[WEEKDAY_RECYCLER].each((weekday) => {
+			self[WEEKDAYS].forEach((weekday) => {
 				weekday.width(dayWidth);
 			});
-			self[DAY_RECYCLER].each((button) => {
-				button.width(dayWidth);
-				button.height(dayHeight);
+			self[DAYS].forEach((button) => {
+				button.width(dayWidth)
+					.height(dayHeight);
 			});
 		});
 	}
@@ -202,24 +199,17 @@ export default class Calendar extends Control {
 		const newFormat = self.weekdayFormat();
 		const date = new Moment();
 
-		if (!self[WEEKDAY_CONTAINER]) {
-			self[WEEKDAY_CONTAINER] = new Div({
-				container: self,
-				classes: WEEKDAYS_CLASS
-			});
-
-			self[WEEKDAY_RECYCLER] = new ControlRecycler()
-				.control(Heading)
-				.defaultSettings({
-					container: self[WEEKDAY_CONTAINER],
+		if (self[WEEKDAYS] === undefined) {
+			self[WEEKDAYS] = fill(DAYS_IN_A_WEEK, () => {
+				return new Heading({
+					container: self,
 					level: HEADING_LEVELS.FIVE
 				});
+			});
 		}
 
-		repeat(DAYS_IN_A_WEEK, (dayIndex) => {
-			self[WEEKDAY_RECYCLER]
-				.getControlAtOffset(dayIndex, true)
-				.title(date.day(dayIndex).format(newFormat));
+		self[WEEKDAYS].forEach((control, dayIndex) => {
+			control.title(date.day(dayIndex).format(newFormat));
 		});
 	}
 
@@ -251,7 +241,7 @@ export default class Calendar extends Control {
 	[buildDays]() {
 		const self = this;
 		let classes;
-		const isFirstRun = !self[DAY_RECYCLER];
+		const isFirstRun = self[DAYS] === undefined;
 		const todayDate = new Moment();
 		const currentDay = new Moment()
 			.month(self.month())
@@ -259,10 +249,9 @@ export default class Calendar extends Control {
 			.startOf(MOMENTJS_MONTH)
 			.startOf(MOMENTJS_WEEK);
 
-		if (!self[DAY_RECYCLER]) {
-			self[DAY_RECYCLER] = new ControlRecycler()
-				.control(Button)
-				.defaultSettings({
+		if (self[DAYS] === undefined) {
+			self[DAYS] = fill(WEEKS_IN_A_MONTH * DAYS_IN_A_WEEK, () => {
+				return new Button({
 					container: self,
 					classes: DAY_CLASS,
 					isSelectable: true,
@@ -270,6 +259,7 @@ export default class Calendar extends Control {
 						self[onClickDay](this);
 					}
 				});
+			});
 		}
 
 		repeat(WEEKS_IN_A_MONTH * DAYS_IN_A_WEEK, (dayIndex) => {
@@ -282,10 +272,10 @@ export default class Calendar extends Control {
 			}
 			if (currentDay.month() !== self.month()) {
 				classes += DIFFERENT_MONTH_CLASS;
+
 			}
 
-			self[DAY_RECYCLER]
-				.getControlAtOffset(dayIndex, true)
+			self[DAYS][dayIndex]
 				.removeClass(TODAY_CLASS + DIFFERENT_MONTH_CLASS)
 				.addClass(classes)
 				.isSelected(self.selectedDate() && currentDay.isSame(self.selectedDate(), MOMENTJS_DAY))

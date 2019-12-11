@@ -240,7 +240,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			}
 		});
 
-		if (self.showAll()) {
+		if (self.showAll() === true) {
 			self[FLATTENED_ITEMS_LIST].forEach((item) => {
 				if (!self[PREFERRED_ITEMS_LIST].find((preferredItem) => preferredItem.id === item.id)) {
 					self[PREFERRED_ITEMS_LIST].push(item);
@@ -248,7 +248,9 @@ export default class Picker extends FocusMixin(FormControl) {
 			});
 		}
 
-		self[preMeasurePreferredButtons]();
+		if (self.preferred().length > 1 || self.showAll() === true) {
+			self[preMeasurePreferredButtons]();
+		}
 	}
 
 	/**

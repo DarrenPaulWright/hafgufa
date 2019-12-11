@@ -67,7 +67,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 
 	[buildFileInput]() {
 		const self = this;
-		if (!self[FILE_INPUT] && (!self[FILE_THUMBNAILS].total() || self.isMulti())) {
+		if (!self[FILE_INPUT] && (!self[FILE_THUMBNAILS].length || self.isMulti())) {
 			self[FILE_INPUT] = new FileInput({
 				container: self,
 				onPreLoad(data) {
