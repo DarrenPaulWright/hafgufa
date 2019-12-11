@@ -1,4 +1,4 @@
-import { Collection } from 'hord';
+import { Collection, compare } from 'hord';
 import { clone, isEmpty } from 'object-agent';
 import {
 	applySettings,
@@ -12,7 +12,6 @@ import {
 	methodFunction,
 	methodString
 } from 'type-enforcer-ui';
-import { byKey } from '../../src/utility/sortBy';
 import controlTypes from '../controlTypes';
 import Dialog from '../layout/Dialog';
 import FocusMixin from '../mixins/FocusMixin';
@@ -290,7 +289,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		rankedItems = clone(self[FLATTENED_ITEMS_LIST].filter((item) => item[RANK_KEY]));
 
 		if (rankedItems) {
-			rankedItems.sort(byKey(RANK_KEY));
+			rankedItems.sort(compare(RANK_KEY));
 		}
 
 		if (rankedItems.length) {

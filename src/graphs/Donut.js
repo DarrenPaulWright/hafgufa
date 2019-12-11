@@ -1,6 +1,6 @@
 import { arc, color, pie, select, sum } from 'd3';
+import { compare } from 'hord';
 import { applySettings, Point } from 'type-enforcer-ui';
-import { byKeyDesc } from '../../src/utility/sortBy';
 import controlTypes from '../controlTypes';
 import './Donut.less';
 import GraphBase from './GraphBase';
@@ -130,7 +130,7 @@ export default class Donut extends GraphBase {
 		const mainColor = color(self.color());
 
 		if (data.length) {
-			data = data[0].data ? data[0].data.sort(byKeyDesc('value')) : [];
+			data = data[0].data ? data[0].data.sort(compare('value', true)) : [];
 
 			self[SVG].select('.slices')
 				.datum(data)

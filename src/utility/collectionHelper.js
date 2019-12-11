@@ -1,6 +1,6 @@
+import { compare } from 'hord';
 import { clone, erase, forOwn } from 'object-agent';
 import { enforceString, isArray } from 'type-enforcer-ui';
-import { byKey } from './sortBy';
 
 const find = (array, item, start, end, increment) => {
 	while (start !== end) {
@@ -233,7 +233,7 @@ const collectionHelper = {
 		let zippedIds = [];
 
 		for (valuesIndex = 0; valuesIndex < values.length; valuesIndex++) {
-			values[valuesIndex].sort(byKey(idKey));
+			values[valuesIndex].sort(compare(idKey));
 		}
 
 		for (valuesIndex = 0; valuesIndex < values.length; valuesIndex++) {

@@ -1,5 +1,5 @@
 import { debounce } from 'async-agent';
-import { Collection } from 'hord';
+import { Collection, compare, List } from 'hord';
 import Moment from 'moment';
 import { clone, deepEqual, erase } from 'object-agent';
 import shortid from 'shortid';
@@ -23,11 +23,13 @@ import controlTypes from '../controlTypes';
 import collectionHelper from '../utility/collectionHelper';
 import locale from '../utility/locale';
 import search from '../utility/search';
-import { byKey, dateAsc, dateDesc, numberAsc, numberDesc, textAsc, textDesc } from '../utility/sortBy';
 import './Grid.less';
 import GridColumnBlock from './GridColumnBlock';
 import { CELL_ALIGNMENT, COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants';
 import GridFooter from './GridFooter';
+
+const baseSort = compare();
+const descSort = (a, b) => baseSort(b, a);
 
 const RENDERED_QUEUE = Symbol();
 const ROWS = Symbol();
@@ -670,7 +672,7 @@ export default class Grid extends Control {
 
 		const sortGroups = (a, b) => {
 			if (a.children && b.children) {
-				return textAsc(a.title, b.title);
+				return List.sorter.string.asc(a.title, b.title);
 			}
 			else if (a.children) {
 				return 1;
@@ -791,7 +793,7 @@ export default class Grid extends Control {
 				output.sort(self.columns()[columnNum].sortFunctionAsc);
 			}
 			else {
-				output.sort(textAsc);
+				output.sort(List.sorter.string.asc);
 			}
 		};
 
@@ -814,7 +816,7 @@ export default class Grid extends Control {
 				output.sort((a, b) => self.columns()[columnNum].sortFunctionAsc(a.date, b.date));
 			}
 			else {
-				output.sort((a, b) => dateAsc(a.date, b.date));
+				output.sort(compare('date'));
 			}
 		};
 
@@ -1230,14 +1232,14 @@ Object.assign(Grid.prototype, {
 				let currentGroup = {};
 				let groupBy = self.groupBy()[depth];
 
-				input.sort(byKey(self.groupBy()[depth].property));
+				input.sort(compare(self.groupBy()[depth].property));
 
 				if (groupBy.sort !== 'none' && input.length > 1) {
 					if (groupBy.type === 'text') {
-						input.sort((a, b) => groupBy.sort === 'desc' ? textDesc(a[groupBy.property], b[groupBy.property]) : textAsc(a[groupBy.property], b[groupBy.property]));
+						input.sort((a, b) => groupBy.sort === 'desc' ? List.sorter.string.desc(a[groupBy.property], b[groupBy.property]) : List.sorter.string.asc(a[groupBy.property], b[groupBy.property]));
 					}
 					else if (groupBy.type === 'date') {
-						input.sort((a, b) => groupBy.sort === 'desc' ? dateDesc(a[groupBy.property], b[groupBy.property]) : dateAsc(a[groupBy.property], b[groupBy.property]));
+						input.sort(compare(groupBy.property, groupBy.sort === 'desc'));
 					}
 				}
 
@@ -1362,26 +1364,26 @@ Object.assign(Grid.prototype, {
 					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:
-						column.sortFunctionAsc = column.sortFunctionAsc || textAsc;
-						column.sortFunctionDesc = column.sortFunctionDesc || textDesc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.string.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.string.desc;
 						column.filterType = column.filterType || FILTER_TYPES.AUTO_COMPLETE;
 						break;
 					case COLUMN_TYPES.NUMBER:
-						column.sortFunctionAsc = column.sortFunctionAsc || numberAsc;
-						column.sortFunctionDesc = column.sortFunctionDesc || numberDesc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.number.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.number.desc;
 						column.filterType = column.filterType || FILTER_TYPES.NUMBER;
 						break;
 					case COLUMN_TYPES.DATE:
 					case COLUMN_TYPES.DATE_TIME:
 					case COLUMN_TYPES.TIME:
 						column.filterType = column.filterType || FILTER_TYPES.DATE;
-						column.sortFunctionAsc = column.sortFunctionAsc || dateAsc;
-						column.sortFunctionDesc = column.sortFunctionDesc || dateDesc;
+						column.sortFunctionAsc = column.sortFunctionAsc || baseSort;
+						column.sortFunctionDesc = column.sortFunctionDesc || descSort;
 						column.sortKey = column.sortKey || 'date';
 						break;
 					case COLUMN_TYPES.IMAGE:
-						column.sortFunctionAsc = column.sortFunctionAsc || textAsc;
-						column.sortFunctionDesc = column.sortFunctionDesc || textDesc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.string.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.string.desc;
 						column.sortKey = column.sortKey || 'icon';
 				}
 
