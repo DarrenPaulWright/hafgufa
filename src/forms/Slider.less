@@ -28,6 +28,15 @@
 	.range {
 		background: linear-gradient(to right, @subHighlightColor, @highlightColor);
 		pointer-events: none;
+
+		&.draggable {
+			pointer-events: all;
+			cursor: grab;
+
+			&:active {
+				cursor: grabbing;
+			}
+		}
 	}
 
 	.form-button {
@@ -38,5 +47,10 @@
 		top: 0;
 		left: 0;
 		border-radius: @sliderThumbSize / 2;
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
 	}
 }

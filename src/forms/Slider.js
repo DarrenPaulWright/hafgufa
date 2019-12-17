@@ -1,18 +1,9 @@
-import {
-	applySettings,
-	DockPoint,
-	methodArray,
-	methodFunction,
-	methodNumber,
-	methodQueue,
-	PIXELS
-} from 'type-enforcer-ui';
+import { applySettings, DockPoint, methodArray, methodBoolean, methodFunction, methodNumber, methodQueue } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
 import DragMixin from '../mixins/DragMixin';
 import TooltipMixin from '../mixins/TooltipMixin';
-import { LEFT } from '../utility/domConstants';
 import clamp from '../utility/math/clamp';
 import FormControl from './FormControl';
 import './Slider.less';
@@ -25,6 +16,17 @@ class Thumb extends TooltipMixin(DragMixin(Button)) {
 			restrictVerticalDrag: true,
 			restrictHorizontalDrag: true,
 			tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER
+		});
+	}
+}
+
+class Range extends DragMixin(Div) {
+	constructor(settings = {}) {
+		super({
+			...settings,
+			canDrag: false,
+			restrictVerticalDrag: true,
+			restrictHorizontalDrag: true
 		});
 	}
 }
@@ -90,10 +92,28 @@ export default class Slider extends FormControl {
 			}
 		});
 
-		self[RANGE] = new Div({
+		self[RANGE] = new Range({
 			container: self,
 			classes: 'range',
-			width: '0.5rem'
+			width: '0.5rem',
+			onDragStart() {
+				self[IS_DRAGGING] = true;
+			},
+			onDrag(offset) {
+				self[OFFSETS] = [offset.x, offset.x + (self[OFFSETS][1] - self[OFFSETS][0])];
+
+				self[THUMBS].forEach((thumb, index) => {
+					thumb.position(self[OFFSETS][index], 0);
+				});
+
+				if (self.onSlide().length) {
+					self.onSlide().trigger(null, [self[OFFSETS].map((offset) => self[getValueAtOffset](offset))]);
+				}
+			},
+			onDragEnd(offset) {
+				self[IS_DRAGGING] = false;
+				self[saveNewValue]();
+			}
 		});
 
 		self[THUMBS] = [];
@@ -230,7 +250,8 @@ export default class Slider extends FormControl {
 
 		self[RANGE]
 			.width(width + self[TRACK_SIZE])
-			.css(LEFT, start + PIXELS);
+			.resize()
+			.position(start, 0);
 	}
 
 	[getSnapSize]() {
@@ -250,6 +271,8 @@ export default class Slider extends FormControl {
 		self[THUMBS].forEach((thumb) => {
 			thumb.snapGridSize(snap);
 		});
+
+		self[RANGE].snapGridSize(snap);
 	}
 
 	[positionThumbs]() {
@@ -280,6 +303,7 @@ Object.assign(Slider.prototype, {
 				while (value.length < self[THUMBS].length) {
 					self[removeThumb]();
 				}
+				self.resize(true);
 				self[positionThumbs]();
 			}
 		}
@@ -299,5 +323,12 @@ Object.assign(Slider.prototype, {
 			return value + '';
 		}
 	}),
-	onSlide: methodQueue()
+	onSlide: methodQueue(),
+	canDragRange: methodBoolean({
+		set(canDragRange) {
+			this[RANGE]
+				.canDrag(canDragRange)
+				.classes('draggable', canDragRange);
+		}
+	})
 });
