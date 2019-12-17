@@ -391,10 +391,10 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 				title: title,
 				events: [],
 				start: exporter(self[SPAN].startOf(currentValue)),
-				end: exporter(self[SPAN].endOf(new Date(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))))
+				end: exporter(self[SPAN].endOf(new Date(currentValue.valueOf() + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))))
 			});
 
-			currentValue = new Date(currentValue + spanLength);
+			currentValue = new Date(currentValue.valueOf() + spanLength);
 		});
 
 		const start = slides[0].start;
@@ -478,14 +478,16 @@ Object.assign(Timeline.prototype, {
 			this[START] = dateStart;
 			this[reset]();
 		},
-		coerce: true
+		coerce: true,
+		other: null
 	}),
 	dateEnd: methodDate({
 		set(dateEnd) {
 			this[END] = dateEnd;
 			this[reset]();
 		},
-		coerce: true
+		coerce: true,
+		other: null
 	}),
 	duration: methodNumber({
 		set(duration) {
