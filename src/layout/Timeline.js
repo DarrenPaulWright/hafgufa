@@ -7,6 +7,7 @@ import {
 	endOfMonth,
 	endOfSecond,
 	endOfYear,
+	format as formatDate,
 	startOfDay,
 	startOfDecade,
 	startOfHour,
@@ -73,7 +74,7 @@ const SPANS = [{
 	type: SPAN_TYPES.MILLENNIUM,
 	length: MILLISECONDS_IN_YEAR * 1000,
 	subSpans: [10, 5, 2],
-	format: 'YYYY',
+	format: 'yyyy',
 	startOf: startOfDecade,
 	endOf: endOfDecade
 }, {
@@ -82,7 +83,7 @@ const SPANS = [{
 	type: SPAN_TYPES.CENTURY,
 	length: MILLISECONDS_IN_YEAR * 100,
 	subSpans: [10, 5, 2],
-	format: 'YYYY',
+	format: 'yyyy',
 	startOf: startOfDecade,
 	endOf: endOfDecade
 }, {
@@ -91,7 +92,7 @@ const SPANS = [{
 	type: SPAN_TYPES.DECADE,
 	length: MILLISECONDS_IN_YEAR * 10,
 	subSpans: [10, 5, 2],
-	format: 'YYYY',
+	format: 'yyyy',
 	startOf: startOfDecade,
 	endOf: endOfDecade
 }, {
@@ -100,7 +101,7 @@ const SPANS = [{
 	type: SPAN_TYPES.YEAR,
 	length: MILLISECONDS_IN_YEAR,
 	subSpans: [12, 6, 4, 2],
-	format: 'YYYY',
+	format: 'yyyy',
 	startOf: startOfYear,
 	endOf: endOfYear
 }, {
@@ -109,7 +110,7 @@ const SPANS = [{
 	type: SPAN_TYPES.MONTH,
 	length: MILLISECONDS_IN_YEAR / MONTHS_IN_YEAR,
 	subSpans: [30, 4, 2],
-	format: 'MMM YYYY',
+	format: 'MMM yyyy',
 	startOf: startOfMonth,
 	endOf: endOfMonth
 }, {
@@ -118,7 +119,7 @@ const SPANS = [{
 	type: SPAN_TYPES.DAY,
 	length: MILLISECONDS_IN_DAY,
 	subSpans: [24, 12, 6, 4, 2],
-	format: 'D MMM YYYY',
+	format: 'd MMM yyyy',
 	startOf: startOfDay,
 	endOf: endOfDay
 }, {
@@ -127,7 +128,7 @@ const SPANS = [{
 	type: SPAN_TYPES.HOUR,
 	length: MINUTES_IN_HOUR * SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [60, 30, 12, 6, 4, 2],
-	format: 'ha, D MMM YYYY',
+	format: 'ha, d MMM yyyy',
 	startOf: startOfHour,
 	endOf: endOfHour
 }, {
@@ -136,7 +137,7 @@ const SPANS = [{
 	type: SPAN_TYPES.MINUTE,
 	length: SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND,
 	subSpans: [60, 30, 12, 6, 4, 2],
-	format: 'h:mma, D MMM YYYY',
+	format: 'h:mma, d MMM yyyy',
 	startOf: startOfMinute,
 	endOf: endOfMinute
 }, {
@@ -145,7 +146,7 @@ const SPANS = [{
 	type: SPAN_TYPES.SECOND,
 	length: MILLISECONDS_IN_SECOND,
 	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
-	format: 'h:mm:ssa, D MMM YYYY',
+	format: 'h:mm:ssa, d MMM yyyy',
 	startOf: startOfSecond,
 	endOf: endOfSecond
 }, {
@@ -154,7 +155,7 @@ const SPANS = [{
 	type: SPAN_TYPES.MILLISECOND,
 	length: 1,
 	subSpans: [1000, 500, 200, 100, 50, 20, 10, 5, 2],
-	format: 'h:mm:ssa, D MMM YYYY',
+	format: 'h:mm:ssa, d MMM yyyy',
 	startOf: startOfMillisecond,
 	endOf: startOfMillisecond
 }];
@@ -378,22 +379,22 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 		const isDuration = self.duration() !== undefined;
 		const spanLength = self[SPAN].length * self[PARENT_MULTIPLIER];
 		const totalSlides = Math.ceil(self[LENGTH] / spanLength) + 1;
-		const currentValue = isDuration ? new Date(0) : new Date(self[START]);
-		const format = isDuration ? (self[SPAN].startOf !== startOfMillisecond ? 'HH:mm:ss' : 'HH:mm:ss.SSS') : self[SPAN].format;
+		let currentValue = isDuration ? new Date(0) : new Date(self[START]);
+		const format = isDuration ? (self[SPAN].startOf !== startOfMillisecond ? 'hh:mm:ss' : 'hh:mm:ss.SSS') : self[SPAN].format;
 		const exporter = isDuration ? ((value) => value.valueOf()) : ((value) => value);
 
 		repeat(totalSlides, () => {
-			const title = currentValue.format(format);
+			const title = formatDate(currentValue, format);
 
 			slides.push({
 				id: 'span_' + title,
 				title: title,
 				events: [],
 				start: exporter(self[SPAN].startOf(currentValue)),
-				end: exporter(self[SPAN].endOf(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1))))
+				end: exporter(self[SPAN].endOf(new Date(currentValue + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))))
 			});
 
-			currentValue.add(spanLength);
+			currentValue = new Date(currentValue + spanLength);
 		});
 
 		const start = slides[0].start;
