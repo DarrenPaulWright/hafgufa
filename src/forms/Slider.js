@@ -110,7 +110,7 @@ export default class Slider extends FormControl {
 					self.onSlide().trigger(null, [self[OFFSETS].map((offset) => self[getValueAtOffset](offset))]);
 				}
 			},
-			onDragEnd(offset) {
+			onDragEnd() {
 				self[IS_DRAGGING] = false;
 				self[saveNewValue]();
 			}
