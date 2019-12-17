@@ -283,7 +283,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 	}
 
 	[getSpanOffset](span, date) {
-		if (!span.startOf) {
+		if (!span.startOf || !date) {
 			return 1;
 		}
 
