@@ -48,7 +48,6 @@ const roundToSnapGrid = Symbol();
 const animateThrow = Symbol();
 const calculateBounce = Symbol();
 const animateBounce = Symbol();
-const setPosition = Symbol();
 const setZoom = Symbol();
 const startDrag = Symbol();
 const onDrag = Symbol();
@@ -63,6 +62,11 @@ export default (Base) => {
 			self[IGNORE_PADDING] = settings.ignorePadding;
 			self[AVAILABLE_WIDTH] = 0;
 			self[AVAILABLE_HEIGHT] = 0;
+
+			self[DRAG_BOUNDS] = new Thickness();
+			self[DRAG_OFFSET] = new Point();
+			self[DRAG_OFFSET_PREVIOUS] = new Point();
+			self[TRANSFORM_OFFSET] = new Point();
 
 			self.onResize((width, height) => {
 					if (self.canDrag()) {
@@ -142,7 +146,7 @@ export default (Base) => {
 
 			if (self[THROW_VELOCITY].length() > 0.5) {
 				self[THROW_VELOCITY].length(self[THROW_VELOCITY].length() * FRICTION);
-				self[setPosition](self[DRAG_OFFSET].x + self[THROW_VELOCITY].offset().x, self[DRAG_OFFSET].y + self[THROW_VELOCITY].offset().y);
+				self.position(self[DRAG_OFFSET].x + self[THROW_VELOCITY].offset().x, self[DRAG_OFFSET].y + self[THROW_VELOCITY].offset().y);
 
 				if (self[DRAG_OFFSET].x < self[DRAG_BOUNDS].left ||
 					self[DRAG_OFFSET].x > self[DRAG_BOUNDS].right ||
@@ -244,73 +248,15 @@ export default (Base) => {
 			if (self[BOUNCE_VECTOR].length() > 0.5) {
 				self[BOUNCE_VECTOR].length(self[BOUNCE_VECTOR].length() * ELASTICITY);
 
-				self[setPosition](self[BOUNCE_VECTOR].end().x, self[BOUNCE_VECTOR].end().y);
+				self.position(self[BOUNCE_VECTOR].end().x, self[BOUNCE_VECTOR].end().y);
 
 				self[BOUNCE_FRAME] = requestAnimationFrame(() => self[animateBounce]());
 			}
 			else {
 				self[IS_BOUNCING] = false;
-				self[setPosition](Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
+				self.position(Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
 
 				self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}]);
-			}
-		}
-
-		[setPosition](newX, newY) {
-			const self = this;
-			let transform = '';
-
-			const setScrollPosition = (scrollOrigin, dragPosition, start, end) => {
-				const isOverStart = self[DRAG_OFFSET][dragPosition] > self[DRAG_BOUNDS][start];
-				const isOverEnd = self[DRAG_OFFSET][dragPosition] < self[DRAG_BOUNDS][end];
-				let scrollOffset = 0;
-
-				if (isOverStart) {
-					self[TRANSFORM_OFFSET][dragPosition] = self[DRAG_OFFSET][dragPosition];
-				}
-				else if (isOverEnd) {
-					self[TRANSFORM_OFFSET][dragPosition] = self[DRAG_OFFSET][dragPosition] - self[DRAG_BOUNDS][end];
-					scrollOffset = Math.round(-self[DRAG_BOUNDS][end]);
-				}
-				else {
-					self[TRANSFORM_OFFSET][dragPosition] = 0;
-					scrollOffset = -self[DRAG_OFFSET][dragPosition];
-				}
-
-				self.container()[scrollOrigin] = scrollOffset;
-			};
-
-			self[DRAG_OFFSET].x = newX;
-			self[DRAG_OFFSET].y = newY;
-
-			if (self.restrictHorizontalDrag()) {
-				self[DRAG_OFFSET].x = clamp(self[DRAG_OFFSET].x, self[DRAG_BOUNDS].left, self[DRAG_BOUNDS].right);
-			}
-			if (self.restrictVerticalDrag()) {
-				self[DRAG_OFFSET].y = clamp(self[DRAG_OFFSET].y, self[DRAG_BOUNDS].top, self[DRAG_BOUNDS].bottom);
-			}
-
-			if (!self.isRemoved) {
-				if (self.scrollOnDrag()) {
-					setScrollPosition(SCROLL_LEFT, 'x', RIGHT, LEFT);
-					setScrollPosition(SCROLL_TOP, 'y', BOTTOM, TOP);
-				}
-				else {
-					self[TRANSFORM_OFFSET].x = self[DRAG_OFFSET].x;
-					self[TRANSFORM_OFFSET].y = self[DRAG_OFFSET].y;
-				}
-
-				if (self[TRANSFORM_OFFSET].x || self[TRANSFORM_OFFSET].y) {
-					transform = 'translate(' + self[TRANSFORM_OFFSET].toString(PIXELS) + ') ';
-				}
-				if (self.scale() !== 1) {
-					transform += 'scale(' + self.scale() + ')';
-				}
-				self.css(TRANSFORM, transform);
-
-				if (self.isDragging) {
-					self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}]);
-				}
 			}
 		}
 
@@ -322,7 +268,7 @@ export default (Base) => {
 			scaleChange = (self.scale() - newScaleLevel) * (1 / self.scale());
 			self.scale(newScaleLevel);
 
-			self[setPosition](self[DRAG_OFFSET].x + (offsetX * scaleChange), self[DRAG_OFFSET].y + (offsetY * scaleChange));
+			self.position(self[DRAG_OFFSET].x + (offsetX * scaleChange), self[DRAG_OFFSET].y + (offsetY * scaleChange));
 
 			self.trigger(SCALE_CHANGE_EVENT);
 		}
@@ -348,7 +294,7 @@ export default (Base) => {
 		[onDrag](x, y) {
 			const self = this;
 
-			self[setPosition](x, y);
+			self.position(x, y);
 
 			if (self.canThrow()) {
 				clear(self[DRAG_DELAY]);
@@ -407,7 +353,7 @@ export default (Base) => {
 		center() {
 			const self = this;
 
-			self[setPosition](self[DRAG_BOUNDS].horizontal / 2, self[DRAG_BOUNDS].vertical / 2);
+			self.position(self[DRAG_BOUNDS].horizontal / 2, self[DRAG_BOUNDS].vertical / 2);
 
 			return self;
 		}
@@ -422,7 +368,7 @@ export default (Base) => {
 			cancelAnimationFrame(self[THROW_FRAME]);
 
 			self.scale(newScale);
-			self[setPosition](newX, newY);
+			self.position(newX, newY);
 
 			return self;
 		}
@@ -431,7 +377,7 @@ export default (Base) => {
 			const self = this;
 
 			if (value !== undefined) {
-				self[setPosition](self[DRAG_OFFSET].x, value);
+				self.position(self[DRAG_OFFSET].x, value);
 
 				return self;
 			}
@@ -443,7 +389,7 @@ export default (Base) => {
 			const self = this;
 
 			if (value !== undefined) {
-				self[setPosition](value, self[DRAG_OFFSET].y);
+				self.position(value, self[DRAG_OFFSET].y);
 
 				return self;
 			}
@@ -455,7 +401,60 @@ export default (Base) => {
 			const self = this;
 
 			if (arguments.length) {
-				self[setPosition](x, y);
+				let transform = '';
+
+				const setScrollPosition = (scrollOrigin, dragPosition, start, end) => {
+					const isOverStart = self[DRAG_OFFSET][dragPosition] > self[DRAG_BOUNDS][start];
+					const isOverEnd = self[DRAG_OFFSET][dragPosition] < self[DRAG_BOUNDS][end];
+					let scrollOffset = 0;
+
+					if (isOverStart) {
+						self[TRANSFORM_OFFSET][dragPosition] = self[DRAG_OFFSET][dragPosition];
+					}
+					else if (isOverEnd) {
+						self[TRANSFORM_OFFSET][dragPosition] = self[DRAG_OFFSET][dragPosition] - self[DRAG_BOUNDS][end];
+						scrollOffset = Math.round(-self[DRAG_BOUNDS][end]);
+					}
+					else {
+						self[TRANSFORM_OFFSET][dragPosition] = 0;
+						scrollOffset = -self[DRAG_OFFSET][dragPosition];
+					}
+
+					self.container()[scrollOrigin] = scrollOffset;
+				};
+
+				self[DRAG_OFFSET].x = x;
+				self[DRAG_OFFSET].y = y;
+
+				if (self.restrictHorizontalDrag()) {
+					self[DRAG_OFFSET].x = clamp(self[DRAG_OFFSET].x, self[DRAG_BOUNDS].left, self[DRAG_BOUNDS].right);
+				}
+				if (self.restrictVerticalDrag()) {
+					self[DRAG_OFFSET].y = clamp(self[DRAG_OFFSET].y, self[DRAG_BOUNDS].top, self[DRAG_BOUNDS].bottom);
+				}
+
+				if (!self.isRemoved) {
+					if (self.scrollOnDrag()) {
+						setScrollPosition(SCROLL_LEFT, 'x', RIGHT, LEFT);
+						setScrollPosition(SCROLL_TOP, 'y', BOTTOM, TOP);
+					}
+					else {
+						self[TRANSFORM_OFFSET].x = self[DRAG_OFFSET].x;
+						self[TRANSFORM_OFFSET].y = self[DRAG_OFFSET].y;
+					}
+
+					if (self[TRANSFORM_OFFSET].x || self[TRANSFORM_OFFSET].y) {
+						transform = 'translate(' + self[TRANSFORM_OFFSET].toString(PIXELS) + ') ';
+					}
+					if (self.scale() !== 1) {
+						transform += 'scale(' + self.scale() + ')';
+					}
+					self.css(TRANSFORM, transform);
+
+					if (self.isDragging) {
+						self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}]);
+					}
+				}
 
 				return self;
 			}
@@ -482,11 +481,6 @@ export default (Base) => {
 				const self = this;
 
 				if (canDrag) {
-					self[DRAG_BOUNDS] = new Thickness();
-					self[DRAG_OFFSET] = new Point();
-					self[DRAG_OFFSET_PREVIOUS] = new Point();
-					self[TRANSFORM_OFFSET] = new Point();
-
 					self[THROW_VELOCITY] = new Vector();
 					self[VELOCITY_OFFSET] = new Point();
 					self[BOUNCE_VECTOR] = new Vector();
