@@ -1,5 +1,6 @@
 import { defer } from 'async-agent';
 import { Collection } from 'hord';
+import shortid from 'shortid';
 import {
 	applySettings,
 	AUTO,
@@ -16,7 +17,6 @@ import {
 	methodQueue,
 	methodString
 } from 'type-enforcer-ui';
-import uuid from 'uuid/v4';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import BackDrop from '../elements/BackDrop';
@@ -263,7 +263,7 @@ Object.assign(DrawerMenu.prototype, {
 			const self = this;
 
 			new Collection(menuItems).eachChild((item) => {
-				item.id = item.id || uuid();
+				item.id = item.id || shortid.generate();
 			});
 
 			if (self[DRAWER] && self[DRAWER].isOpen()) {

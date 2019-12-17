@@ -1,4 +1,5 @@
 import keyCodes from 'keycodes';
+import shortid from 'shortid';
 import {
 	applySettings,
 	AUTO,
@@ -13,7 +14,6 @@ import {
 	methodFunction,
 	methodString
 } from 'type-enforcer-ui';
-import uuid from 'uuid/v4';
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import Div from '../elements/Div';
@@ -323,7 +323,7 @@ Object.assign(Menu.prototype, {
 
 			newValue.forEach((value) => {
 				if (!value.id) {
-					value.id = uuid();
+					value.id = shortid.generate();
 				}
 			});
 
