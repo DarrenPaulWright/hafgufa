@@ -1,3 +1,4 @@
+import { defer } from 'async-agent';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
 import {
@@ -147,16 +148,19 @@ export default class Menu extends Popup {
 			}
 		});
 
-		self.content(tree)
-			.onResize(() => {
+		self.onResize(() => {
 				self
 					.width(self.get(TREE_ID).borderWidth())
 					.css('height', 'auto')
 					.get(TREE_ID)
 					.fitHeightToContents()
-					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0))
-					.resize(true);
-			});
+					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0));
+
+				defer(() => {
+					self.resize();
+				});
+			})
+			.content(tree);
 		tree = null;
 
 		applySettings(self, settings);
