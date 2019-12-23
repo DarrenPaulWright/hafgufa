@@ -925,7 +925,7 @@ Object.assign(Control.prototype, {
 				self.onResize().trigger(null, [newWidth, newHeight]);
 
 				self[CHILD_CONTROLS].each((control) => {
-					control.resize();
+					control.resize(isForced && self.contentContainer === control);
 				});
 			}
 
