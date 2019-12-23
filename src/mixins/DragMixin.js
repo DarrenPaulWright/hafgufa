@@ -70,30 +70,30 @@ export default (Base) => {
 
 			self.onResize((width, height) => {
 					if (self.canDrag()) {
-						if (self.container()) {
-							if (!self[IS_REGISTERED_RESIZE]) {
-								self[IS_REGISTERED_RESIZE] = true;
+						if (!self[IS_REGISTERED_RESIZE] && self.container()) {
+							self[IS_REGISTERED_RESIZE] = true;
 
-								if (self.container()[CONTROL_PROP]) {
-									self.container()[CONTROL_PROP]
-										.onResize(function(width, height) {
-											self[AVAILABLE_WIDTH] = width;
-											self[AVAILABLE_HEIGHT] = height;
+							if (self.container()[CONTROL_PROP]) {
+								self.container()[CONTROL_PROP]
+									.onResize(function(width, height) {
+										self[AVAILABLE_WIDTH] = width;
+										self[AVAILABLE_HEIGHT] = height;
 
-											if (!self[IGNORE_PADDING]) {
-												const padding = new Thickness(this.css('padding') || 0);
+										if (!self[IGNORE_PADDING]) {
+											const padding = new Thickness(this.css('padding') || 0);
 
-												self[AVAILABLE_WIDTH] -= padding.horizontal;
-												self[AVAILABLE_HEIGHT] -= padding.vertical;
-											}
-										})
-										.resize(true);
-								}
-								else {
-									const bounds = self.container().getBoundingClientRect();
-									self[AVAILABLE_WIDTH] = bounds.width;
-									self[AVAILABLE_HEIGHT] = bounds.height;
-								}
+											self[AVAILABLE_WIDTH] -= padding.horizontal;
+											self[AVAILABLE_HEIGHT] -= padding.vertical;
+										}
+
+										self.resize(true);
+									})
+									.resize(true);
+							}
+							else {
+								const bounds = self.container().getBoundingClientRect();
+								self[AVAILABLE_WIDTH] = bounds.width;
+								self[AVAILABLE_HEIGHT] = bounds.height;
 							}
 						}
 
