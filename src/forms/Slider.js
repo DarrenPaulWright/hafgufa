@@ -1,3 +1,4 @@
+import { defer } from 'async-agent';
 import { applySettings, DockPoint, methodArray, methodBoolean, methodFunction, methodNumber, methodQueue } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -133,7 +134,12 @@ export default class Slider extends FormControl {
 				self[LOCATION_SIZE] = trackWidth - self[TRACK_SIZE];
 
 				self[setSnapGrid]();
-				self[positionThumbs]();
+				self[THUMBS].forEach((thumb) => {
+					thumb.resize(true);
+				});
+				defer(() => {
+					self[positionThumbs]();
+				});
 			})
 			.resize();
 	}
@@ -282,7 +288,7 @@ export default class Slider extends FormControl {
 			.map(self[getOffsetAtValue], self);
 
 		self[THUMBS].forEach((thumb, index) => {
-			thumb.resize(true).position(self[OFFSETS][index], 0);
+			thumb.position(self[OFFSETS][index], 0);
 		});
 
 		self[positionRange]();
