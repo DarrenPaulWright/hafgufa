@@ -11,6 +11,9 @@
 	"sideEffects": [
 		"*.less"
 	],
+	"browserslist": [
+		"defaults"
+	],
 	"scripts": {
 		"clean": "rm -rf node_modules && del /f package-lock.json && npm install",
 		"test": "karma start --single-run",
