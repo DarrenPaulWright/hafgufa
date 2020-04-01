@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Dialog } from '../..';
 import TestUtil from '../TestUtil';
 
@@ -9,7 +9,7 @@ describe('Dialog', () => {
 		it('should instantiate without options', () => {
 			testUtil.control = new Dialog();
 
-			assert.equal(testUtil.count('.dialog', true), 1);
+			assert.is(testUtil.count('.dialog', true), 1);
 		});
 
 		it('should have a class "dialog" when instantiated', () => {
@@ -17,7 +17,7 @@ describe('Dialog', () => {
 				title: 'test'
 			});
 
-			assert.equal(testUtil.count('.dialog', true), 1);
+			assert.is(testUtil.count('.dialog', true), 1);
 		});
 
 		it('should have a div with class "dialog-header" when title is set', () => {
@@ -25,7 +25,7 @@ describe('Dialog', () => {
 				title: 'test'
 			});
 
-			assert.equal(testUtil.count('.dialog-header', true), 1);
+			assert.is(testUtil.count('.dialog-header', true), 1);
 		});
 
 		it('should have a div with class "toolbar" when footer is set', () => {
@@ -38,7 +38,7 @@ describe('Dialog', () => {
 				}
 			});
 
-			assert.equal(testUtil.count('.dialog-footer', true), 1);
+			assert.is(testUtil.count('.dialog-footer', true), 1);
 		});
 	});
 });

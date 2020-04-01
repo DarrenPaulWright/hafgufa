@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { DragContainer } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -16,7 +16,9 @@ describe('DragContainer', () => {
 				canDrag: true
 			});
 
-			assert.isOk(testUtil.control.stretch('fit'));
+			assert.notThrows(() => {
+				testUtil.control.stretch('fit');
+			});
 		});
 	});
 });

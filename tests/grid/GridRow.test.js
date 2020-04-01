@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import * as gridConstants from '../../src/grid/gridConstants';
 import GridRow from '../../src/grid/GridRow';
 import ControlTests from '../ControlTests';
@@ -42,9 +42,9 @@ describe('GridRow', () => {
 
 			testUtil.control.updateWidth(200);
 
-			assert.equal(getComputedStyle(testUtil.nth('.grid-cell', 0)).width, '80px');
-			assert.equal(getComputedStyle(testUtil.nth('.grid-cell', 1)).width, '120px');
-			assert.equal(getComputedStyle(testUtil.nth('.grid-cell', 2)).width, '160px');
+			assert.is(getComputedStyle(testUtil.nth('.grid-cell', 0)).width, '80px');
+			assert.is(getComputedStyle(testUtil.nth('.grid-cell', 1)).width, '120px');
+			assert.is(getComputedStyle(testUtil.nth('.grid-cell', 2)).width, '160px');
 		});
 
 		it('should set the width of the row if updateWidth is set and the row is a header', () => {
@@ -77,7 +77,7 @@ describe('GridRow', () => {
 
 			testUtil.control.updateWidth(200);
 
-			assert.equal(getComputedStyle(testUtil.nth('.grid-row', 0)).width, '200px');
+			assert.is(getComputedStyle(testUtil.nth('.grid-row', 0)).width, '200px');
 		});
 	});
 
@@ -91,7 +91,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 
 		it('should have one header control if the row is set to a header twice', () => {
@@ -109,7 +109,7 @@ describe('GridRow', () => {
 				title: 'test title 1'
 			});
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 
 		it('should render a checkbox in the header control if any of the columns are type CHECKBOX', () => {
@@ -128,7 +128,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.count('.heading .checkbox'), 1);
+			assert.is(testUtil.count('.heading .checkbox'), 1);
 		});
 
 		it('should have a title text if rowData.title is set and the row is a header', () => {
@@ -141,7 +141,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.first('.heading > .title-container > span').textContent, 'test title');
+			assert.is(testUtil.first('.heading > .title-container > span').textContent, 'test title');
 		});
 
 		it('should have a subtitle if rowData.childCount is set and the row is a header', () => {
@@ -155,7 +155,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.first('.subtitle').textContent, '3 items');
+			assert.is(testUtil.first('.subtitle').textContent, '3 items');
 		});
 
 		it('should have a subtitle if rowData.childCount and rowData.footerSuffix is set and the row is a header', () => {
@@ -170,7 +170,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.first('.subtitle').textContent, '3 things');
+			assert.is(testUtil.first('.subtitle').textContent, '3 things');
 		});
 
 		it('should have a selected checkbox if rowData.isSelected is set to true and the row is a header', () => {
@@ -191,7 +191,7 @@ describe('GridRow', () => {
 				.isSelected(true)
 				.groupId(1);
 
-			assert.isTrue(testUtil.first('.checkbox input').checked);
+			assert.is(testUtil.first('.checkbox input').checked, true);
 		});
 
 		it('should have an indeterminate checkbox if isIndeterminate is set to true and the row is a header', () => {
@@ -211,7 +211,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.isTrue(testUtil.first('.checkbox input').indeterminate);
+			assert.is(testUtil.first('.checkbox input').indeterminate, true);
 		});
 
 		it('should have an indeterminate checkbox if the row is a header and isIndeterminate is set to true after', () => {
@@ -232,7 +232,7 @@ describe('GridRow', () => {
 
 			testUtil.control.isIndeterminate(true);
 
-			assert.isTrue(testUtil.first('.checkbox input').indeterminate);
+			assert.is(testUtil.first('.checkbox input').indeterminate, true);
 		});
 
 		it('should render an image if rowData.image is a function that returns a string and the row is a header', () => {
@@ -248,7 +248,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.count('img'), 1);
+			assert.is(testUtil.count('img'), 1);
 		});
 
 		it('should NOT render an image if rowData.image is a function that returns an empty string and the row is a header', () => {
@@ -263,7 +263,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.count('img'), 0);
+			assert.is(testUtil.count('img'), 0);
 		});
 
 		it('should call the settings.onExpandCollapseGroup callback when the row is a header and it is clicked', () => {
@@ -283,7 +283,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should call the settings.onSelectGroup callback when the row is a header and its checkbox is clicked', () => {
@@ -309,7 +309,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should have a hidden header control if the row is a header and then it is set to a normal row again', () => {
@@ -333,7 +333,7 @@ describe('GridRow', () => {
 				})
 				.groupId(0);
 
-			assert.equal(testUtil.count('.heading.display-none'), 1);
+			assert.is(testUtil.count('.heading.display-none'), 1);
 		});
 
 		it('should not have cells if the row is first set to a normal row with cells and then a header', () => {
@@ -356,7 +356,7 @@ describe('GridRow', () => {
 				})
 				.groupId(1);
 
-			assert.equal(testUtil.count('.grid-cell'), 0);
+			assert.is(testUtil.count('.grid-cell'), 0);
 		});
 	});
 
@@ -385,7 +385,7 @@ describe('GridRow', () => {
 					order: 2
 				}]);
 
-			assert.equal(testUtil.count('.grid-cell'), 3);
+			assert.is(testUtil.count('.grid-cell'), 3);
 		});
 
 		it('should render two cells if three columns are provided and then only two columns are provided', () => {
@@ -429,7 +429,7 @@ describe('GridRow', () => {
 
 			testUtil.control.updateWidth('200px');
 
-			assert.equal(testUtil.count('.grid-cell'), 2);
+			assert.is(testUtil.count('.grid-cell'), 2);
 		});
 	});
 
@@ -458,7 +458,7 @@ describe('GridRow', () => {
 				}])
 				.isSelected(true);
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 
 		it('should NOT check a checkbox if isSelected is true and it has a checkbox cell', () => {
@@ -474,7 +474,7 @@ describe('GridRow', () => {
 				}])
 				.isSelected(false);
 
-			assert.equal(testUtil.first('input').checked, false);
+			assert.is(testUtil.first('input').checked, false);
 		});
 
 		it('should check a checkbox if it has a checkbox cell and the row is clicked', () => {
@@ -493,7 +493,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('.grid-row'));
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 
 		it('should NOT check a checkbox if it has a checkbox cell and the row is clicked twice', () => {
@@ -513,7 +513,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.grid-row'));
 			testUtil.simulateClick(testUtil.first('.grid-row'));
 
-			assert.equal(testUtil.first('input').checked, false);
+			assert.is(testUtil.first('input').checked, false);
 		});
 
 		it('should NOT check a checkbox if it has a checkbox cell and the row is clicked and then isSelected is set to false', () => {
@@ -533,7 +533,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.grid-row'));
 			testUtil.control.isSelected(false);
 
-			assert.equal(testUtil.first('input').checked, false);
+			assert.is(testUtil.first('input').checked, false);
 		});
 
 		it('should check a checkbox if it has a checkbox cell and the row is clicked and then isSelected is set to true', () => {
@@ -553,7 +553,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.grid-row'));
 			testUtil.control.isSelected(true);
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 
 		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked', () => {
@@ -572,7 +572,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 
 		it('should NOT check a checkbox if it has a checkbox cell and the checkbox is clicked twice', () => {
@@ -592,7 +592,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testUtil.first('input').checked, false);
+			assert.is(testUtil.first('input').checked, false);
 		});
 
 		it('should NOT check a checkbox if it has a checkbox cell and the checkbox is clicked and then isSelected is set to false', () => {
@@ -612,7 +612,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.control.isSelected(false);
 
-			assert.equal(testUtil.first('input').checked, false);
+			assert.is(testUtil.first('input').checked, false);
 		});
 
 		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked and then isSelected is set to true', () => {
@@ -632,7 +632,7 @@ describe('GridRow', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.control.isSelected(true);
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 
 		it('should check a checkbox if it has a checkbox cell and the checkbox is clicked and then the rowData is reset', () => {
@@ -655,7 +655,7 @@ describe('GridRow', () => {
 				cells: [{}]
 			});
 
-			assert.equal(testUtil.first('input').checked, true);
+			assert.is(testUtil.first('input').checked, true);
 		});
 	});
 
@@ -684,7 +684,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.control.element);
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should call the onSelect callback when a button is clicked', () => {
@@ -715,7 +715,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should have class "clickable" if onSelect is set', () => {
@@ -727,7 +727,7 @@ describe('GridRow', () => {
 				onSelect: onRowClick
 			});
 
-			assert.isTrue(testUtil.hasClass(testUtil.control.element, 'clickable'));
+			assert.is(testUtil.hasClass(testUtil.control.element, 'clickable'), true);
 		});
 
 		it('should return the rowData when a button is clicked after setting rowData twice', () => {
@@ -764,7 +764,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('button'));
 
-			assert.equal(testVar, 'else');
+			assert.is(testVar, 'else');
 		});
 	});
 });

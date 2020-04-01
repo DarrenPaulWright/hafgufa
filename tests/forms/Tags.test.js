@@ -1,6 +1,6 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
 import keyCodes from 'keycodes';
+import { assert } from 'type-enforcer';
 import { KEY_DOWN_EVENT, Tags } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -61,7 +61,7 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.tags'), 1);
+			assert.is(testUtil.count('.tags'), 1);
 		});
 
 		it('should have an input element', () => {
@@ -69,7 +69,7 @@ describe('Tags', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('input'), 1);
+			assert.is(testUtil.count('input'), 1);
 		});
 
 		it('should set focus when the list container is clicked', () => {
@@ -79,7 +79,7 @@ describe('Tags', () => {
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			assert.isTrue(testUtil.control.isFocused());
+			assert.is(testUtil.control.isFocused(), true);
 		});
 	});
 
@@ -92,7 +92,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			addTag('test1');
 
-			assert.deepEqual(testUtil.control.value(), ['test1']);
+			assert.equal(testUtil.control.value(), ['test1']);
 		});
 
 		it('should NOT add a tag when no text is entered and Enter is pressed', () => {
@@ -103,7 +103,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			testUtil.hitEnter();
 
-			assert.deepEqual(testUtil.control.value(), []);
+			assert.equal(testUtil.control.value(), []);
 		});
 
 		it('should add a tag when text is entered and the control loses focus', () => {
@@ -115,7 +115,7 @@ describe('Tags', () => {
 			setInputValue('test2');
 			testUtil.control.isFocused(false);
 
-			assert.deepEqual(testUtil.control.value(), ['test2']);
+			assert.equal(testUtil.control.value(), ['test2']);
 		});
 
 		it('should set the width of the text input when text is entered', () => {
@@ -132,8 +132,8 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('test string that is really long');
 
-			assert.isAbove(inputElement.offsetWidth, fakeInputElement.offsetWidth - 2);
-			assert.isBelow(inputElement.offsetWidth, fakeInputElement.offsetWidth + 10);
+			assert.moreThan(inputElement.offsetWidth, fakeInputElement.offsetWidth - 2);
+			assert.lessThan(inputElement.offsetWidth, fakeInputElement.offsetWidth + 10);
 		});
 
 		it('should remove a tag when the delete button is clicked', () => {
@@ -146,7 +146,7 @@ describe('Tags', () => {
 			addTag('test2');
 			clickDeleteButton(0);
 
-			assert.deepEqual(testUtil.control.value(), ['test2']);
+			assert.equal(testUtil.control.value(), ['test2']);
 		});
 
 		it('should maintain the order of tags when the first tag is deleted', () => {
@@ -160,7 +160,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickDeleteButton(0);
 
-			assert.deepEqual(testUtil.control.value(), ['test2', 'test3']);
+			assert.equal(testUtil.control.value(), ['test2', 'test3']);
 		});
 
 		it('should maintain the order of tags when a middle tag is deleted', () => {
@@ -174,7 +174,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickDeleteButton(1);
 
-			assert.deepEqual(testUtil.control.value(), ['test1', 'test3']);
+			assert.equal(testUtil.control.value(), ['test1', 'test3']);
 		});
 
 		it('should maintain the order of tags when the last tag is deleted', () => {
@@ -188,7 +188,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickDeleteButton(2);
 
-			assert.deepEqual(testUtil.control.value(), ['test1', 'test2']);
+			assert.equal(testUtil.control.value(), ['test1', 'test2']);
 		});
 
 		it('should be able to edit a tag by clicking on it', () => {
@@ -201,7 +201,7 @@ describe('Tags', () => {
 			addTag('test2');
 			clickTag(0);
 
-			assert.equal(testUtil.count('.heading.hidden'), 1);
+			assert.is(testUtil.count('.heading.hidden'), 1);
 		});
 
 		it('should add a tag when text is entered and another tag is clicked', () => {
@@ -215,7 +215,7 @@ describe('Tags', () => {
 			setInputValue('edit');
 			clickTag(0);
 
-			assert.equal(testUtil.control.value().length, 3);
+			assert.is(testUtil.control.value().length, 3);
 		});
 
 		it('should be able to save an edited tag when enter is pressed', () => {
@@ -228,7 +228,7 @@ describe('Tags', () => {
 			clickTag(0);
 			addTag('test2');
 
-			assert.deepEqual(testUtil.control.value(), ['test2']);
+			assert.equal(testUtil.control.value(), ['test2']);
 		});
 
 		it('should remove a tag when the edit text is deleted and enter is pressed', () => {
@@ -241,7 +241,7 @@ describe('Tags', () => {
 			clickTag(0);
 			addTag('');
 
-			assert.deepEqual(testUtil.control.value(), []);
+			assert.equal(testUtil.control.value(), []);
 		});
 
 		it('should move the input element when a tag is being edited', () => {
@@ -255,7 +255,7 @@ describe('Tags', () => {
 			addTag('test3');
 			clickTag(1);
 
-			assert.deepEqual(testUtil.first('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
+			assert.equal(testUtil.first('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
 		});
 
 		it('should maintain the order of tags when the first tag is edited', () => {
@@ -271,7 +271,7 @@ describe('Tags', () => {
 			clickTag(0);
 			addTag('testEdit');
 
-			assert.deepEqual(testUtil.control.value(), ['testEdit', 'test2', 'test3', 'test4']);
+			assert.equal(testUtil.control.value(), ['testEdit', 'test2', 'test3', 'test4']);
 		});
 
 		it('should maintain the order of tags when a middle tag is edited', () => {
@@ -287,7 +287,7 @@ describe('Tags', () => {
 			clickTag(1);
 			addTag('testEdit');
 
-			assert.deepEqual(testUtil.control.value(), ['test1', 'testEdit', 'test3', 'test4']);
+			assert.equal(testUtil.control.value(), ['test1', 'testEdit', 'test3', 'test4']);
 		});
 
 		it('should maintain the order of tags when the last tag is edited', () => {
@@ -303,7 +303,7 @@ describe('Tags', () => {
 			clickTag(3);
 			addTag('testEdit');
 
-			assert.deepEqual(testUtil.control.value(), ['test1', 'test2', 'test3', 'testEdit']);
+			assert.equal(testUtil.control.value(), ['test1', 'test2', 'test3', 'testEdit']);
 		});
 	});
 
@@ -315,7 +315,7 @@ describe('Tags', () => {
 
 			testUtil.control.value('test1,test2,test 3');
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should not set focus when a value is set', () => {
@@ -325,7 +325,7 @@ describe('Tags', () => {
 
 			testUtil.control.value('test1,test2,test 3');
 
-			assert.isTrue(!testUtil.control.isFocused());
+			assert.is(!testUtil.control.isFocused(), true);
 		});
 
 		it('should not show the popup when a value is set', () => {
@@ -335,7 +335,7 @@ describe('Tags', () => {
 
 			testUtil.control.value('test1,test2,test 3');
 
-			assert.isTrue(!isPopupRendered());
+			assert.is(!isPopupRendered(), true);
 		});
 
 		it('should accept an array of strings as a value', () => {
@@ -345,7 +345,7 @@ describe('Tags', () => {
 
 			testUtil.control.value(['test1', 'test2', 'test 3']);
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should accept an array of objects with only title as a value', () => {
@@ -361,7 +361,7 @@ describe('Tags', () => {
 				title: 'test 3 title'
 			}]);
 
-			assert.deepEqual(testUtil.control.value(), ['test 1 title', 'test 2 title', 'test 3 title']);
+			assert.equal(testUtil.control.value(), ['test 1 title', 'test 2 title', 'test 3 title']);
 		});
 
 		it('should accept an array of objects with id and title as a value', () => {
@@ -380,7 +380,7 @@ describe('Tags', () => {
 				title: 'test 3 title'
 			}]);
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should accept an array of objects with id, title, and subTitle as a value', () => {
@@ -402,7 +402,7 @@ describe('Tags', () => {
 				subTitle: 'sub title 3'
 			}]);
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should only have tags for the second value when value is set twice', () => {
@@ -430,7 +430,7 @@ describe('Tags', () => {
 				subTitle: 'sub title 1'
 			}]);
 
-			assert.equal(getRenderedTags().length, 1);
+			assert.is(getRenderedTags().length, 1);
 		});
 
 		it('should only have tags for the set value when value is set after adding tags manually', () => {
@@ -448,7 +448,7 @@ describe('Tags', () => {
 				subTitle: 'sub title 1'
 			}]);
 
-			assert.equal(getRenderedTags().length, 1);
+			assert.is(getRenderedTags().length, 1);
 		});
 	});
 
@@ -505,7 +505,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			assert.isTrue(!isPopupRendered());
+			assert.is(!isPopupRendered(), true);
 		});
 
 		it('should show a popup when the control is focused and suggestions are provided', () => {
@@ -516,7 +516,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			assert.isTrue(isPopupRendered());
+			assert.is(isPopupRendered(), true);
 		});
 
 		it('should remove the popup when the control loses focus', () => {
@@ -529,7 +529,7 @@ describe('Tags', () => {
 
 			return wait(100)
 				.then(() => {
-					assert.isTrue(!isPopupRendered());
+					assert.is(!isPopupRendered(), true);
 				});
 		});
 
@@ -541,7 +541,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			assert.equal(getRenderedSuggestions().length, 3);
+			assert.is(getRenderedSuggestions().length, 3);
 		});
 
 		it('should accept an array of objects with id and title as suggestions', () => {
@@ -552,7 +552,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			assert.equal(getRenderedSuggestions().length, 3);
+			assert.is(getRenderedSuggestions().length, 3);
 		});
 
 		it('should accept an array of objects with id, title, and subTitle as suggestions', () => {
@@ -563,7 +563,7 @@ describe('Tags', () => {
 
 			testUtil.control.isFocused(true);
 
-			assert.equal(getRenderedSuggestions().length, 3);
+			assert.is(getRenderedSuggestions().length, 3);
 		});
 
 		it('should filter suggestions with titles when text is added to the text control', () => {
@@ -575,7 +575,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('2');
 
-			assert.equal(getRenderedSuggestions().length, 1);
+			assert.is(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show all suggestions if the filter text is removed', () => {
@@ -590,7 +590,7 @@ describe('Tags', () => {
 			setInputValue('');
 			return wait(1)
 				.then(() => {
-					assert.equal(getRenderedSuggestions().length, 3);
+					assert.is(getRenderedSuggestions().length, 3);
 				});
 		});
 
@@ -603,7 +603,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('nothing');
 
-			assert.isTrue(!isPopupRendered());
+			assert.is(!isPopupRendered(), true);
 		});
 
 		it('should filter suggestions with subtitles when text is added to the text control', () => {
@@ -615,7 +615,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			setInputValue('sub 2');
 
-			assert.equal(getRenderedSuggestions().length, 1);
+			assert.is(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show suggestions when editing an existing tag', () => {
@@ -629,7 +629,7 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			assert.equal(getRenderedSuggestions().length, 1);
+			assert.is(getRenderedSuggestions().length, 1);
 		});
 
 		it('should show the typed text when editing a tag that was selected from the list', () => {
@@ -643,7 +643,7 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			assert.equal(testUtil.getTextInput().value, 'sub 2');
+			assert.is(testUtil.getTextInput().value, 'sub 2');
 		});
 
 		it('should remember the typed input after selecting a suggestion and then editing that tag', () => {
@@ -657,7 +657,7 @@ describe('Tags', () => {
 			clickOption(0);
 			clickTag(0);
 
-			assert.equal(testUtil.getTextInput().value, 'te 2');
+			assert.is(testUtil.getTextInput().value, 'te 2');
 		});
 
 		it('should filter suggestions on previously typed text when editing a tag', () => {
@@ -671,7 +671,7 @@ describe('Tags', () => {
 			addTag('sub 2');
 			clickTag(1);
 
-			assert.equal(getRenderedSuggestions().length, 1);
+			assert.is(getRenderedSuggestions().length, 1);
 		});
 
 		it('should update the suggestions if the background is clicked while editing a tag', () => {
@@ -687,7 +687,7 @@ describe('Tags', () => {
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			assert.equal(getRenderedSuggestions().length, 3);
+			assert.is(getRenderedSuggestions().length, 3);
 		});
 
 		it('should not have multiple popups after several tags have been clicked', () => {
@@ -705,7 +705,7 @@ describe('Tags', () => {
 			clickTag(0);
 			clickTag(3);
 
-			assert.isTrue(isPopupRendered());
+			assert.is(isPopupRendered(), true);
 		});
 
 		it('should not have multiple popups after several tags have been clicked and the background is clicked', () => {
@@ -724,7 +724,7 @@ describe('Tags', () => {
 			clickTag(3);
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			assert.isTrue(isPopupRendered());
+			assert.is(isPopupRendered(), true);
 		});
 
 		it('should save a tag when a suggestion is clicked', () => {
@@ -736,7 +736,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			clickOption(1);
 
-			assert.deepEqual(testUtil.control.value(), ['test2']);
+			assert.equal(testUtil.control.value(), ['test2']);
 		});
 
 		it('should have one rendered tag when a suggestion is clicked', () => {
@@ -748,7 +748,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			clickOption(1);
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 
 		it('should have one rendered tag when a suggestion is clicked after some text is entered', () => {
@@ -761,7 +761,7 @@ describe('Tags', () => {
 			setInputValue('te');
 			clickOption(1);
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 
 		it('should maintain the order of tags when the first tag is replaced with a suggestion', () => {
@@ -779,7 +779,7 @@ describe('Tags', () => {
 			setInputValue('');
 			clickOption(1);
 
-			assert.deepEqual(testUtil.control.value(), ['test2', 'typed2', 'typed3', 'typed4']);
+			assert.equal(testUtil.control.value(), ['test2', 'typed2', 'typed3', 'typed4']);
 		});
 
 		it('should maintain the order of tags when a middle tag is replaced with a suggestion', () => {
@@ -797,7 +797,7 @@ describe('Tags', () => {
 			setInputValue('');
 			clickOption(1);
 
-			assert.deepEqual(testUtil.control.value(), ['typed1', 'test2', 'typed3', 'typed4']);
+			assert.equal(testUtil.control.value(), ['typed1', 'test2', 'typed3', 'typed4']);
 		});
 
 		it('should maintain the order of tags when the last tag is replaced with a suggestion', () => {
@@ -815,7 +815,7 @@ describe('Tags', () => {
 			setInputValue('');
 			clickOption(1);
 
-			assert.deepEqual(testUtil.control.value(), ['typed1', 'typed2', 'typed3', 'test2']);
+			assert.equal(testUtil.control.value(), ['typed1', 'typed2', 'typed3', 'test2']);
 		});
 
 		it('should only add one tag if text is typed and an option is clicked', () => {
@@ -828,7 +828,7 @@ describe('Tags', () => {
 			setInputValue('te 2');
 			clickOption(0);
 
-			assert.equal(getRenderedTags().length, 1);
+			assert.is(getRenderedTags().length, 1);
 		});
 
 		it('should focus the first item in the popup when the down arrow is pressed', () => {
@@ -842,7 +842,7 @@ describe('Tags', () => {
 
 			testUtil.simulateKeyEvent(testUtil.getTextInput(), keyCodes('down'), KEY_DOWN_EVENT);
 
-			assert.equal(getRenderedSuggestions()[0], document.activeElement);
+			assert.is(getRenderedSuggestions()[0], document.activeElement);
 		});
 	});
 
@@ -866,7 +866,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			addTag('test 1,test 2;test 3');
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should add multiple tags when breakOnSpaces is true and a string with spaces is entered', () => {
@@ -878,7 +878,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			addTag('test1 test2 test3');
 
-			assert.equal(getRenderedTags().length, 3);
+			assert.is(getRenderedTags().length, 3);
 		});
 
 		it('should add multiple tags when breakOnSpaces is true and a string with spaces, commas, and semicolons is entered', () => {
@@ -890,7 +890,7 @@ describe('Tags', () => {
 			testUtil.control.isFocused(true);
 			addTag('  test1    test2, test3;test4   ');
 
-			assert.equal(getRenderedTags().length, 4);
+			assert.is(getRenderedTags().length, 4);
 		});
 
 		it('should break on spaces when a string is set as a the value', () => {
@@ -901,7 +901,7 @@ describe('Tags', () => {
 
 			testUtil.control.value('  test1    test2, test3;test4   ');
 
-			assert.equal(getRenderedTags().length, 4);
+			assert.is(getRenderedTags().length, 4);
 		});
 	});
 });

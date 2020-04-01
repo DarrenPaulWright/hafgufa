@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Conversion, locale } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -56,7 +56,7 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(testUtil.nth('.input-suffix', 0).textContent, 'ft');
+			assert.is(testUtil.nth('.input-suffix', 0).textContent, 'ft');
 		});
 
 		it('should show a label after the \'to\' text box', () => {
@@ -66,7 +66,7 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(testUtil.nth('.input-suffix', 1).textContent, 'm');
+			assert.is(testUtil.nth('.input-suffix', 1).textContent, 'm');
 		});
 
 		it('should show two labels, one for each type', () => {
@@ -76,8 +76,8 @@ describe('Conversion', () => {
 				toType: Conversion.CONVERSION_TYPES.LENGTH.METERS
 			});
 
-			assert.equal(testUtil.nth('.input-suffix', 0).textContent, 'ft');
-			assert.equal(testUtil.nth('.input-suffix', 1).textContent, 'm');
+			assert.is(testUtil.nth('.input-suffix', 0).textContent, 'ft');
+			assert.is(testUtil.nth('.input-suffix', 1).textContent, 'm');
 		});
 	});
 
@@ -91,7 +91,7 @@ describe('Conversion', () => {
 				.changeDelay(0);
 
 			testUtil.control.value(10);
-			assert.equal(testUtil.control.getToValue(), '3');
+			assert.is(testUtil.control.getToValue(), '3');
 		});
 
 		it('should convert meters back to feet', () => {
@@ -104,7 +104,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 10;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '32.8');
+			assert.is(testUtil.control.value(), '32.8');
 		});
 
 		it('should convert meters to feet', () => {
@@ -117,7 +117,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = 10;
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.getToValue(), '32.8');
+			assert.is(testUtil.control.getToValue(), '32.8');
 		});
 
 		it('should convert feet back to meters', () => {
@@ -130,7 +130,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 10;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '3');
+			assert.is(testUtil.control.value(), '3');
 		});
 
 		it('should set feet to empty when meters is set to empty', () => {
@@ -143,7 +143,7 @@ describe('Conversion', () => {
 
 			getToInput().value = '';
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '');
+			assert.is(testUtil.control.value(), '');
 		});
 
 		it('should convert inches to millimeters', () => {
@@ -156,7 +156,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = 10;
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.getToValue(), '254');
+			assert.is(testUtil.control.getToValue(), '254');
 		});
 
 		it('should convert millimeters to inches', () => {
@@ -169,7 +169,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = 10;
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.getToValue(), '0.4');
+			assert.is(testUtil.control.getToValue(), '0.4');
 		});
 	});
 
@@ -183,7 +183,7 @@ describe('Conversion', () => {
 				.changeDelay(0);
 
 			testUtil.control.value(10);
-			assert.equal(testUtil.control.getToValue(), '22');
+			assert.is(testUtil.control.getToValue(), '22');
 		});
 
 		it('should convert pounds back to kilograms', () => {
@@ -196,7 +196,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 10;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '4.5');
+			assert.is(testUtil.control.value(), '4.5');
 		});
 
 		it('should convert pounds to kilograms', () => {
@@ -209,7 +209,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = 10;
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.getToValue(), '4.5');
+			assert.is(testUtil.control.getToValue(), '4.5');
 		});
 
 		it('should convert kilograms back to pounds', () => {
@@ -222,7 +222,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 10;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '22');
+			assert.is(testUtil.control.value(), '22');
 		});
 
 		it('should set kilograms to empty when pounds is set to empty', () => {
@@ -237,7 +237,7 @@ describe('Conversion', () => {
 			testUtil.control.triggerFromChange();
 			getFromInput().value = '';
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.value(), '');
+			assert.is(testUtil.control.value(), '');
 		});
 	});
 
@@ -251,7 +251,7 @@ describe('Conversion', () => {
 				.changeDelay(0);
 
 			testUtil.control.value(10);
-			assert.equal(testUtil.control.getToValue(), '50');
+			assert.is(testUtil.control.getToValue(), '50');
 		});
 
 		it('should convert fahrenheit back to celsius', () => {
@@ -264,7 +264,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 100;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '37.8');
+			assert.is(testUtil.control.value(), '37.8');
 		});
 
 		it('should convert fahrenheit to celsius', () => {
@@ -277,7 +277,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = 100;
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.getToValue(), '37.8');
+			assert.is(testUtil.control.getToValue(), '37.8');
 		});
 
 		it('should convert celsius back to fahrenheit', () => {
@@ -290,7 +290,7 @@ describe('Conversion', () => {
 
 			getToInput().value = 10;
 			testUtil.control.triggerToChange();
-			assert.equal(testUtil.control.value(), '50');
+			assert.is(testUtil.control.value(), '50');
 		});
 
 		it('should set celsius to empty when fahrenheit is set to empty', () => {
@@ -303,7 +303,7 @@ describe('Conversion', () => {
 
 			getFromInput().value = '';
 			testUtil.control.triggerFromChange();
-			assert.equal(testUtil.control.value(), '');
+			assert.is(testUtil.control.value(), '');
 		});
 	});
 

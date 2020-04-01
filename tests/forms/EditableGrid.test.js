@@ -1,5 +1,5 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { EditableGrid } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
@@ -20,7 +20,7 @@ describe('EditableGrid', () => {
 
 			testUtil.simulateClick(testUtil.first('.add-new-button'));
 
-			assert.equal(testUtil.count('.dialog', true), 1);
+			assert.is(testUtil.count('.dialog', true), 1);
 		});
 
 		it('should display a dialog when a row is clicked', () => {
@@ -45,7 +45,7 @@ describe('EditableGrid', () => {
 				.then(() => {
 					testUtil.simulateClick(testUtil.first('.clickable'));
 
-					assert.equal(testUtil.count('.dialog', true), 1);
+					assert.is(testUtil.count('.dialog', true), 1);
 				});
 		});
 
@@ -80,8 +80,8 @@ describe('EditableGrid', () => {
 				.then(() => {
 					testUtil.simulateClick(testUtil.nth('.grid-row', 2));
 
-					assert.equal(testUtil.count('.dialog', true), 1);
-					assert.equal(testUtil.first('input[type=text]', true).value, 'text 3');
+					assert.is(testUtil.count('.dialog', true), 1);
+					assert.is(testUtil.first('input[type=text]', true).value, 'text 3');
 				});
 		});
 	});
@@ -126,7 +126,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
+					assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
 		});
 
@@ -169,7 +169,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.equal(testUtil.control.value()[0].values[0].text, 'test option, test option 2');
+					assert.is(testUtil.control.value()[0].values[0].text, 'test option, test option 2');
 				});
 		});
 
@@ -234,7 +234,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.equal(testUtil.control.value()[0].values[0].text, 'test option 2');
+					assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
 				});
 		});
 
@@ -299,7 +299,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.equal(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
+					assert.is(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
 				});
 		});
 	});

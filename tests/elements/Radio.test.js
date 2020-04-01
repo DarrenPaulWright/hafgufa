@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Radio } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -25,7 +25,7 @@ describe('Radio', () => {
 				name: 'test'
 			});
 
-			assert.deepEqual(testUtil.first('input').getAttribute('name'), 'test');
+			assert.equal(testUtil.first('input').getAttribute('name'), 'test');
 		});
 	});
 
@@ -43,7 +43,7 @@ describe('Radio', () => {
 				value: 'test'
 			});
 
-			assert.deepEqual(testUtil.first('input').getAttribute('value'), 'test');
+			assert.equal(testUtil.first('input').getAttribute('value'), 'test');
 		});
 	});
 
@@ -53,7 +53,7 @@ describe('Radio', () => {
 				container: testUtil.container
 			});
 
-			assert.deepEqual(testUtil.count('div'), 0);
+			assert.equal(testUtil.count('div'), 0);
 		});
 
 		it('should have a span with text', () => {
@@ -62,7 +62,7 @@ describe('Radio', () => {
 				content: 'test'
 			});
 
-			assert.deepEqual(testUtil.first('div').textContent, 'test');
+			assert.equal(testUtil.first('div').textContent, 'test');
 		});
 	});
 
@@ -81,7 +81,7 @@ describe('Radio', () => {
 				isChecked: true
 			});
 
-			assert.deepEqual(testUtil.first('input').checked, true);
+			assert.equal(testUtil.first('input').checked, true);
 		});
 	});
 
@@ -98,13 +98,13 @@ describe('Radio', () => {
 				}
 			});
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 
 			testUtil.control.isChecked(true);
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 		});
 
 		it('should not call the onChange callback when isChecked is set to false', () => {
@@ -119,14 +119,14 @@ describe('Radio', () => {
 				}
 			});
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 
 			testUtil.control.isChecked(true);
 			testUtil.control.isChecked(false);
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 		});
 
 		it('should call the onChange callback when the label is clicked', () => {
@@ -141,18 +141,18 @@ describe('Radio', () => {
 				}
 			});
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 
 			testUtil.simulateClick(testUtil.first('label'));
 
-			assert.equal(context, testUtil.control);
-			assert.equal(value, true);
+			assert.is(context, testUtil.control);
+			assert.is(value, true);
 
 			testUtil.simulateClick(testUtil.first('label'));
 
-			assert.equal(context, testUtil.control);
-			assert.equal(value, false);
+			assert.is(context, testUtil.control);
+			assert.is(value, false);
 		});
 
 		it('should call the onChange callback when the input is clicked', () => {
@@ -167,18 +167,18 @@ describe('Radio', () => {
 				}
 			});
 
-			assert.equal(context, undefined);
-			assert.equal(value, undefined);
+			assert.is(context, undefined);
+			assert.is(value, undefined);
 
 			testUtil.simulateClick(testUtil.first('input'));
 
-			assert.equal(context, testUtil.control);
-			assert.equal(value, true);
+			assert.is(context, testUtil.control);
+			assert.is(value, true);
 
 			testUtil.simulateClick(testUtil.first('input'));
 
-			assert.equal(context, testUtil.control);
-			assert.equal(value, false);
+			assert.is(context, testUtil.control);
+			assert.is(value, false);
 		});
 	});
 });

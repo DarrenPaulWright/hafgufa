@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { LocalHistory } from '../..';
 import TestUtil from '../TestUtil';
 
@@ -19,32 +19,32 @@ describe('LocalHistory', () => {
 		it('should return true when an object is pushed', () => {
 			const history = new LocalHistory();
 
-			assert.isTrue(history.push(historyObject1));
+			assert.is(history.push(historyObject1), true);
 		});
 		it('should NOT show that it has history when one object is pushed', () => {
 			const history = new LocalHistory();
 			history.push(historyObject1);
 
-			assert.isFalse(history.hasHistory());
+			assert.is(history.hasHistory(), false);
 		});
 		it('should show that it has history after a second object is pushed', () => {
 			const history = new LocalHistory();
 			history.push(historyObject1);
 			history.push(historyObject2);
 
-			assert.isTrue(history.hasHistory());
+			assert.is(history.hasHistory(), true);
 		});
 		it('should return undefined if no history has been pushed', () => {
 			const history = new LocalHistory();
 
-			assert.deepEqual(history.undo(), undefined);
+			assert.equal(history.undo(), undefined);
 		});
 		it('should return the same history object that gets pushed', () => {
 			const history = new LocalHistory();
 			history.push(historyObject1);
 			history.push(historyObject2);
 
-			assert.deepEqual(history.undo(), historyObject1);
+			assert.equal(history.undo(), historyObject1);
 		});
 		it('should return undefined if the history is deleted', () => {
 			const history = new LocalHistory();
@@ -53,7 +53,7 @@ describe('LocalHistory', () => {
 			history.push(historyObject3);
 			history.clear();
 
-			assert.deepEqual(history.undo(), undefined);
+			assert.equal(history.undo(), undefined);
 		});
 		it('should replace the most recent history item if replace is used', () => {
 			const history = new LocalHistory();
@@ -61,13 +61,13 @@ describe('LocalHistory', () => {
 			history.push(historyObject2);
 			history.replace(historyObject3);
 
-			assert.deepEqual(history.undo(), historyObject1);
+			assert.equal(history.undo(), historyObject1);
 		});
 		it('should not save history if replace is called when there is no history', () => {
 			const history = new LocalHistory();
 			history.replace(historyObject3);
 
-			assert.deepEqual(history.undo(), undefined);
+			assert.equal(history.undo(), undefined);
 		});
 	});
 
@@ -88,7 +88,7 @@ describe('LocalHistory', () => {
 			});
 			history.undo();
 
-			assert.equal(callbackValue, '');
+			assert.is(callbackValue, '');
 		});
 		it('should call a callback function when undo is called and history exists', () => {
 			let callbackValue = '';
@@ -101,7 +101,7 @@ describe('LocalHistory', () => {
 			history.push(historyObject2);
 			history.undo();
 
-			assert.equal(callbackValue, 'test1');
+			assert.is(callbackValue, 'test1');
 		});
 		it('should NOT call a callback function when replace is called and no history exists', () => {
 			let callbackValue = '';
@@ -112,7 +112,7 @@ describe('LocalHistory', () => {
 			});
 			history.replace(historyObject1);
 
-			assert.equal(callbackValue, '');
+			assert.is(callbackValue, '');
 		});
 		it('should call a callback function when push is called and history exists', () => {
 			let callbackValue = 0;
@@ -124,7 +124,7 @@ describe('LocalHistory', () => {
 			history.push(historyObject1);
 			history.push(historyObject2);
 
-			assert.equal(callbackValue, 2);
+			assert.is(callbackValue, 2);
 		});
 	});
 });

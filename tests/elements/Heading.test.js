@@ -1,5 +1,5 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Heading, MOUSE_ENTER_EVENT } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -19,7 +19,7 @@ describe('Heading', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 	});
 
@@ -37,7 +37,7 @@ describe('Heading', () => {
 				title: 'test 1'
 			});
 
-			assert.equal(testUtil.first('.heading span').innerText, 'test 1');
+			assert.is(testUtil.first('.heading span').innerText, 'test 1');
 		});
 	});
 
@@ -55,7 +55,7 @@ describe('Heading', () => {
 				subTitle: 'test 1'
 			});
 
-			assert.equal(testUtil.first('.heading .subtitle').textContent, 'test 1');
+			assert.is(testUtil.first('.heading .subtitle').textContent, 'test 1');
 		});
 
 		it('should NOT have a div with a class \'subtitle\' when subTitle is set back to an empty string', () => {
@@ -66,7 +66,7 @@ describe('Heading', () => {
 
 			testUtil.control.subTitle('');
 
-			assert.equal(testUtil.count('.heading .subtitle'), 0);
+			assert.is(testUtil.count('.heading .subtitle'), 0);
 		});
 	});
 
@@ -89,7 +89,7 @@ describe('Heading', () => {
 				icon: 'edit'
 			});
 
-			assert.equal(testUtil.nthChild('.heading', 2), testUtil.first('.heading > i'));
+			assert.is(testUtil.nthChild('.heading', 2), testUtil.first('.heading > i'));
 		});
 
 		it('should not have an icon element in the DOM when icon is set to an icon and then nothing', () => {
@@ -103,7 +103,7 @@ describe('Heading', () => {
 
 			testUtil.control.icon('');
 
-			assert.equal(testUtil.count('.heading i'), 0);
+			assert.is(testUtil.count('.heading i'), 0);
 		});
 
 		it('should have an icon element in the DOM when icon is set and then an image is set', () => {
@@ -117,7 +117,7 @@ describe('Heading', () => {
 
 			testUtil.control.image('edit.png');
 
-			assert.equal(testUtil.count('.heading i'), 1);
+			assert.is(testUtil.count('.heading i'), 1);
 		});
 	});
 
@@ -140,7 +140,7 @@ describe('Heading', () => {
 
 			return wait(210)
 				.then(() => {
-					assert.equal(testUtil.count('.tooltip', true), 1);
+					assert.is(testUtil.count('.tooltip', true), 1);
 				});
 		});
 	});
@@ -151,18 +151,6 @@ describe('Heading', () => {
 			defaultValue: '',
 			testValue: 'edit.png',
 			secondTestValue: 'trash.png'
-		});
-
-		it('should have a div with a class \'image\' as the third child when isExpandable is true, isSelectable is true, and an image is provided', () => {
-			testUtil.control = new Heading({
-				container: testUtil.container,
-				title: 'test 1',
-				isExpandable: true,
-				isSelectable: true,
-				image: 'edit.png'
-			});
-
-			assert.equal(testUtil.nth('.heading', 2), testUtil.first('.heading .image'));
 		});
 
 		it('should not have an image element in the DOM when image is set to an image and then nothing', () => {
@@ -176,7 +164,7 @@ describe('Heading', () => {
 
 			testUtil.control.image('');
 
-			assert.equal(testUtil.count('.heading .image'), 0);
+			assert.is(testUtil.count('.heading img'), 0);
 		});
 
 		it('should have an image element in the DOM when image is set and then an icon is set', () => {
@@ -190,7 +178,7 @@ describe('Heading', () => {
 
 			testUtil.control.icon('edit');
 
-			assert.equal(testUtil.count('.heading img'), 1);
+			assert.is(testUtil.count('.heading img'), 1);
 		});
 	});
 
@@ -215,7 +203,7 @@ describe('Heading', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.heading .toolbar'), 1);
+			assert.is(testUtil.count('.heading .toolbar'), 1);
 		});
 
 		it('should have a the same div when buttons is set twice', () => {
@@ -236,7 +224,7 @@ describe('Heading', () => {
 				classes: 'test-class'
 			}]);
 
-			assert.equal(testUtil.first('.heading .toolbar'), buttonContainer);
+			assert.is(testUtil.first('.heading .toolbar'), buttonContainer);
 		});
 
 		it('should return the set data object first in the click event for buttons', () => {
@@ -261,7 +249,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.icon-button'));
 
-			assert.equal(testVar, 2);
+			assert.is(testVar, 2);
 		});
 
 		it('should accept a function for a buttons isEnabled property', () => {
@@ -282,7 +270,7 @@ describe('Heading', () => {
 				}
 			}]);
 
-			assert.isTrue(testUtil.hasClass(testUtil.first('.icon-button'), 'disabled'));
+			assert.is(testUtil.hasClass(testUtil.first('.icon-button'), 'disabled'), true);
 		});
 	});
 
@@ -301,7 +289,7 @@ describe('Heading', () => {
 				isSelected: true
 			});
 
-			assert.equal(testUtil.count('.heading.selected'), 1);
+			assert.is(testUtil.count('.heading.selected'), 1);
 		});
 
 		it('should have a checked checkbox when isSelected is true', () => {
@@ -311,7 +299,7 @@ describe('Heading', () => {
 				isSelected: true
 			});
 
-			assert.isTrue(testUtil.first('.heading input[type=checkbox]').checked);
+			assert.is(testUtil.first('.heading input[type=checkbox]').checked, true);
 		});
 	});
 
@@ -329,7 +317,7 @@ describe('Heading', () => {
 				isExpandable: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
+			assert.is(testUtil.hasClass(testUtil.control.element, 'clickable'), true);
 		});
 
 		it('should have a button when isExpandable is true', () => {
@@ -339,7 +327,7 @@ describe('Heading', () => {
 				isExpandable: true
 			});
 
-			assert.equal(testUtil.count('.heading button'), 1);
+			assert.is(testUtil.count('.heading button'), 1);
 		});
 	});
 
@@ -359,7 +347,7 @@ describe('Heading', () => {
 				isExpanded: true
 			});
 
-			assert.equal(testUtil.first('button span').innerHTML, '&nbsp;');
+			assert.is(testUtil.first('button span').innerHTML, '&nbsp;');
 		});
 
 		it('should have a div with class \'expander\' and not \'expanded\' when isExpandable is true and isExpanded is true', () => {
@@ -370,7 +358,7 @@ describe('Heading', () => {
 				isExpanded: true
 			});
 
-			assert.equal(testUtil.first('button').textContent, '');
+			assert.is(testUtil.first('button').textContent, '');
 		});
 	});
 
@@ -393,7 +381,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.control.element);
 
-			assert.equal(testUtil.count('.heading button'), 1);
+			assert.is(testUtil.count('.heading button'), 1);
 		});
 	});
 
@@ -411,7 +399,7 @@ describe('Heading', () => {
 				isSelectable: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
+			assert.is(testUtil.hasClass(testUtil.control.element, 'clickable'), true);
 		});
 	});
 
@@ -430,7 +418,7 @@ describe('Heading', () => {
 				isIndeterminate: true
 			});
 
-			assert.deepEqual(testUtil.count('.indeterminate'), 1);
+			assert.equal(testUtil.count('.indeterminate'), 1);
 		});
 
 		it('should NOT have a div with class \'checked\' when isSelected is true and isIndeterminate is true', () => {
@@ -441,7 +429,7 @@ describe('Heading', () => {
 				isIndeterminate: true
 			});
 
-			assert.equal(testUtil.count('.heading .checked'), 0);
+			assert.is(testUtil.count('.heading .checked'), 0);
 		});
 
 		it('should set isSelected to false when isSelected is true and isIndeterminate is true', () => {
@@ -452,7 +440,7 @@ describe('Heading', () => {
 				isIndeterminate: true
 			});
 
-			assert.equal(testUtil.control.isSelected(), false);
+			assert.is(testUtil.control.isSelected(), false);
 		});
 	});
 
@@ -467,6 +455,17 @@ describe('Heading', () => {
 			secondTestValue: false
 		});
 
+		it('should have a div with class \'expander\' when showExpander is true', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showExpander: true,
+				isExpandable: true,
+				isExpanded: true
+			});
+
+			assert.is(testUtil.count('.heading #expander'), 1);
+		});
+
 		it('should NOT have a div with class \'expander\' when showExpander is false', () => {
 			testUtil.control = new Heading({
 				container: testUtil.container,
@@ -475,7 +474,7 @@ describe('Heading', () => {
 				isExpanded: true
 			});
 
-			assert.equal(testUtil.count('.heading .expander'), 0);
+			assert.is(testUtil.count('.heading #expander'), 0);
 		});
 	});
 
@@ -496,7 +495,7 @@ describe('Heading', () => {
 				showCheckbox: true
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
+			assert.is(testUtil.hasClass(testUtil.control.element, 'clickable'), true);
 		});
 
 		it('should NOT have a div with class \'checkboxes\' when showCheckbox is false', () => {
@@ -507,7 +506,7 @@ describe('Heading', () => {
 				isSelected: true
 			});
 
-			assert.equal(testUtil.count('.heading .checkboxes'), 0);
+			assert.is(testUtil.count('.heading .checkboxes'), 0);
 		});
 	});
 
@@ -519,7 +518,7 @@ describe('Heading', () => {
 				}
 			});
 
-			assert.isOk(testUtil.hasClass(testUtil.control.element, 'clickable'));
+			assert.is(testUtil.hasClass(testUtil.control.element, 'clickable'), true);
 		});
 
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
@@ -531,7 +530,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should execute the onSelect callback when clicked', () => {
@@ -547,7 +546,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 2);
+			assert.is(testVar, 2);
 		});
 	});
 
@@ -565,7 +564,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should NOT execute the onExpand callback when the expander is clicked if onExpand is not set', () => {
@@ -578,7 +577,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should execute the onExpand callback when the expander is clicked', () => {
@@ -594,7 +593,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 2);
+			assert.is(testVar, 2);
 		});
 
 		it('should NOT execute the onSelect callback when the expander is clicked', () => {
@@ -610,7 +609,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should execute the onExpand callback when the branch is clicked and isSelectable is false', () => {
@@ -627,7 +626,7 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 2);
+			assert.is(testVar, 2);
 		});
 	});
 

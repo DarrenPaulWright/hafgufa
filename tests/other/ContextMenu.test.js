@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT, ContextMenu } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -29,7 +29,7 @@ describe('ContextMenu', () => {
 			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
 			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.context-menu'), 0);
+			assert.is(testUtil.count('.context-menu'), 0);
 		});
 	});
 });

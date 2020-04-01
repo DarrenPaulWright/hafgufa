@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { CheckBoxes } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -34,7 +34,7 @@ describe('CheckBoxes', () => {
 				container: testUtil.container
 			});
 
-			assert.deepEqual(testUtil.control.value(), []);
+			assert.equal(testUtil.control.value(), []);
 		});
 
 		it('should have a value that matches the checked items provided when instantiated', () => {
@@ -59,7 +59,7 @@ describe('CheckBoxes', () => {
 				}]
 			});
 
-			assert.deepEqual(testUtil.control.value(), ['1', '3']);
+			assert.equal(testUtil.control.value(), ['1', '3']);
 		});
 
 		it('should call the onChange callback when a checkbox is clicked', () => {
@@ -79,7 +79,7 @@ describe('CheckBoxes', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onChecked callback when a checkbox is clicked', () => {
@@ -99,7 +99,7 @@ describe('CheckBoxes', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onUnChecked callback when a checkbox is clicked twice', () => {
@@ -120,7 +120,7 @@ describe('CheckBoxes', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onChecked callback with an event when a checkbox is clicked', () => {
@@ -140,7 +140,7 @@ describe('CheckBoxes', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(typeof testVar, 'object');
+			assert.is(typeof testVar, 'object');
 		});
 	});
 });

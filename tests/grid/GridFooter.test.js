@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import GridFooter from '../../src/grid/GridFooter';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -17,7 +17,7 @@ describe('GridFooter', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.grid-footer-left'), 1);
+			assert.is(testUtil.count('.grid-footer-left'), 1);
 		});
 
 		it('should have a div with class grid-footer-right', () => {
@@ -25,7 +25,7 @@ describe('GridFooter', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.grid-footer-right'), 1);
+			assert.is(testUtil.count('.grid-footer-right'), 1);
 		});
 	});
 
@@ -44,7 +44,7 @@ describe('GridFooter', () => {
 				countSuffix: 'things'
 			});
 
-			assert.equal(testUtil.first('.grid-footer-right').textContent, '9 things');
+			assert.is(testUtil.first('.grid-footer-right').textContent, '9 things');
 		});
 	});
 
@@ -61,7 +61,7 @@ describe('GridFooter', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.first('.grid-footer-right').textContent, '0 items');
+			assert.is(testUtil.first('.grid-footer-right').textContent, '0 items');
 		});
 
 		it('should have a string "9 items" when count is set to 9', () => {
@@ -70,7 +70,7 @@ describe('GridFooter', () => {
 				count: 9
 			});
 
-			assert.equal(testUtil.first('.grid-footer-right').textContent, '9 items');
+			assert.is(testUtil.first('.grid-footer-right').textContent, '9 items');
 		});
 	});
 
@@ -88,7 +88,7 @@ describe('GridFooter', () => {
 				groupSuffixes: ['groups']
 			});
 
-			assert.equal(testUtil.first('.grid-footer-right').textContent, ' 0 groups • 0 items');
+			assert.is(testUtil.first('.grid-footer-right').textContent, ' 0 groups • 0 items');
 		});
 	});
 
@@ -107,7 +107,7 @@ describe('GridFooter', () => {
 				groupCounts: [9]
 			});
 
-			assert.equal(testUtil.first('.grid-footer-right').textContent, ' 9 groups • 0 items');
+			assert.is(testUtil.first('.grid-footer-right').textContent, ' 9 groups • 0 items');
 		});
 	});
 
@@ -119,7 +119,7 @@ describe('GridFooter', () => {
 
 			testUtil.control.showExpandCollapseButtons();
 
-			assert.equal(testUtil.count('.icon-button'), 2);
+			assert.is(testUtil.count('.icon-button'), 2);
 		});
 
 		it('should have two buttons when showExpandCollapseButtons is called twice', () => {
@@ -130,7 +130,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.control.showExpandCollapseButtons();
 
-			assert.equal(testUtil.count('.icon-button'), 2);
+			assert.is(testUtil.count('.icon-button'), 2);
 		});
 
 		it('should call onCollapseAllGroups with false when the expand all button is clicked', () => {
@@ -146,7 +146,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 0));
 
-			assert.isTrue(testVar === false);
+			assert.is(testVar === false, true);
 		});
 
 		it('should call onCollapseAllGroups with true when the collapse all button is clicked', () => {
@@ -162,7 +162,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 1));
 
-			assert.isTrue(testVar === true);
+			assert.is(testVar === true, true);
 		});
 
 		it('should not throw an error when the expand all button is clicked', () => {
@@ -175,7 +175,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 0));
 
-			assert.isTrue(testVar === undefined);
+			assert.is(testVar === undefined, true);
 		});
 
 		it('should not throw an error when the collapse all button is clicked', () => {
@@ -188,7 +188,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 1));
 
-			assert.isTrue(testVar === undefined);
+			assert.is(testVar === undefined, true);
 		});
 	});
 });

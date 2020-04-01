@@ -1,5 +1,5 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { isString } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../..';
 import GridCell from '../../src/grid/GridCell';
@@ -58,7 +58,7 @@ describe('GridCell', () => {
 
 			testUtil.control.dataType(gridConstants.COLUMN_TYPES.TEXT);
 
-			assert.equal(testUtil.count('.toolbar'), 0);
+			assert.is(testUtil.count('.toolbar'), 0);
 		});
 
 		it('should remove a checkbox if previously set to CHECKBOX', () => {
@@ -70,7 +70,7 @@ describe('GridCell', () => {
 
 			testUtil.control.dataType(gridConstants.COLUMN_TYPES.TEXT);
 
-			assert.equal(testUtil.count('.checkboxes'), 0);
+			assert.is(testUtil.count('.checkboxes'), 0);
 		});
 	});
 
@@ -251,14 +251,14 @@ describe('GridCell', () => {
 
 		const compareContent = (element, output) => {
 			if (isString(output)) {
-				assert.equal(element.innerHTML, output);
+				assert.is(element.innerHTML, output);
 			}
 			else {
-				assert.equal(element.children.length, 1);
-				assert.equal(element.children[0].tagName, output.tagName);
-				assert.deepEqual(getAttributes(element.children[0]), output.attrs);
+				assert.is(element.children.length, 1);
+				assert.is(element.children[0].tagName, output.tagName);
+				assert.equal(getAttributes(element.children[0]), output.attrs);
 				if (isString(output.content)) {
-					assert.equal(element.children[0].textContent, output.content);
+					assert.is(element.children[0].textContent, output.content);
 				}
 				else {
 					compareContent(element.children[0], output.content);
@@ -289,7 +289,7 @@ describe('GridCell', () => {
 				})
 					.content(inputContent);
 
-				assert.equal(testUtil.control.textAlign(), gridConstants.CELL_ALIGNMENT[textAlign]);
+				assert.is(testUtil.control.textAlign(), gridConstants.CELL_ALIGNMENT[textAlign]);
 			});
 
 			testTypes.forEach((testType) => {
@@ -327,7 +327,7 @@ describe('GridCell', () => {
 					}]
 				});
 
-			assert.equal(testUtil.count('button'), 2);
+			assert.is(testUtil.count('button'), 2);
 		});
 
 		it('should render only the second buttons when dataType is ACTIONS and button definitions are provided twice', () => {
@@ -351,7 +351,7 @@ describe('GridCell', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('button'), 2);
+			assert.is(testUtil.count('button'), 2);
 		});
 
 		it('should call the button onclick event when a button is clicked', () => {
@@ -374,7 +374,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should call the onSelect callback when a button is clicked', () => {
@@ -400,7 +400,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.equal(testVar, 2);
+			assert.is(testVar, 2);
 		});
 
 		it('should disable all buttons if isEnabled is set to false', () => {
@@ -419,7 +419,7 @@ describe('GridCell', () => {
 					}]
 				});
 
-			assert.equal(testUtil.count('button.disabled'), 2);
+			assert.is(testUtil.count('button.disabled'), 2);
 		});
 
 		it('should disable a specific button if specified', () => {
@@ -440,7 +440,7 @@ describe('GridCell', () => {
 					}]
 				});
 
-			assert.equal(testUtil.count('button.disabled'), 1);
+			assert.is(testUtil.count('button.disabled'), 1);
 		});
 
 		it('should add a title to a button if the button is disabled and a title is provided', () => {
@@ -464,7 +464,7 @@ describe('GridCell', () => {
 					}]
 				});
 
-			assert.equal(testUtil.nth('button.disabled', 0).getAttribute('alt'), 'test title');
+			assert.is(testUtil.nth('button.disabled', 0).getAttribute('alt'), 'test title');
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over', () => {
@@ -484,7 +484,7 @@ describe('GridCell', () => {
 
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OVER_EVENT);
 
-			assert.equal(testVar, 0);
+			assert.is(testVar, 0);
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over and then out', () => {
@@ -505,7 +505,7 @@ describe('GridCell', () => {
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OVER_EVENT);
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OUT_EVENT);
 
-			assert.equal(testVar, 0);
+			assert.is(testVar, 0);
 		});
 
 		it('should have a checkox if datatype is set to CHECKBOX and content is set twice', () => {
@@ -521,7 +521,7 @@ describe('GridCell', () => {
 				text: 'another'
 			});
 
-			assert.equal(testUtil.count('.checkbox'), 1);
+			assert.is(testUtil.count('.checkbox'), 1);
 		});
 	});
 
@@ -533,7 +533,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.EMAIL', () => {
@@ -543,7 +543,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.LINK', () => {
@@ -553,7 +553,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.NUMBER', () => {
@@ -563,7 +563,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.DATE', () => {
@@ -573,7 +573,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.DATE_TIME', () => {
@@ -583,7 +583,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.TIME', () => {
@@ -593,7 +593,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.IMAGE if dataType is set to gridConstants.COLUMN_TYPES.IMAGE', () => {
@@ -603,7 +603,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.BUTTONS if dataType is set to gridConstants.COLUMN_TYPES.ACTIONS', () => {
@@ -615,7 +615,7 @@ describe('GridCell', () => {
 					columnButtons: []
 				});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.BUTTONS);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.BUTTONS);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.CHECKBOX if dataType is set to gridConstants.COLUMN_TYPES.CHECKBOX', () => {
@@ -625,7 +625,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.CHECKBOX);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.CHECKBOX);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.IMAGE if dataType is set to gridConstants.COLUMN_TYPES.IMAGE', () => {
@@ -635,7 +635,7 @@ describe('GridCell', () => {
 			})
 				.content({});
 
-			assert.equal(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
+			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
 		});
 	});
 
@@ -657,7 +657,7 @@ describe('GridCell', () => {
 				.content({})
 				.isSelected(true);
 
-			assert.equal(testUtil.count('.checkbox.checked'), 1);
+			assert.is(testUtil.count('.checkbox.checked'), 1);
 		});
 
 		it('should check a checkbox if isSelected is true before the display type is set to checkbox', () => {
@@ -668,7 +668,7 @@ describe('GridCell', () => {
 				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
 				.content({});
 
-			assert.equal(testUtil.count('.checkbox.checked'), 1);
+			assert.is(testUtil.count('.checkbox.checked'), 1);
 		});
 
 		it('should NOT check a checkbox if isSelected is false and the display type is checkbox', () => {
@@ -679,7 +679,7 @@ describe('GridCell', () => {
 				.content({})
 				.isSelected(false);
 
-			assert.equal(testUtil.count('.checkbox.checked'), 0);
+			assert.is(testUtil.count('.checkbox.checked'), 0);
 		});
 
 		it('should NOT check a checkbox if isSelected is set to true and then false and the display type is checkbox', () => {
@@ -692,7 +692,7 @@ describe('GridCell', () => {
 
 			testUtil.control.isSelected(false);
 
-			assert.equal(testUtil.count('.checkbox.checked'), 0);
+			assert.is(testUtil.count('.checkbox.checked'), 0);
 		});
 
 		it('should call the onSelect callback with true when an unchecked checkbox is clicked', () => {
@@ -709,7 +709,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar === true);
+			assert.is(testVar === true, true);
 		});
 
 		it('should call the onSelect callback with false when a checked checkbox is clicked', () => {
@@ -727,7 +727,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar === false);
+			assert.is(testVar === false, true);
 		});
 
 		it('should call the onSelect callback with true when a checked checkbox is clicked twice', () => {
@@ -746,7 +746,7 @@ describe('GridCell', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar === true);
+			assert.is(testVar === true, true);
 		});
 
 		it('should call the onSelect callback with an event object when a checkbox is clicked', () => {
@@ -763,7 +763,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar.target.nodeName === 'INPUT');
+			assert.is(testVar.target.nodeName === 'INPUT', true);
 		});
 	});
 
@@ -790,7 +790,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resize(true);
 
-			assert.equal(testUtil.control.tooltip(), 'a long string that doesn\'t fit in a narrow cell');
+			assert.is(testUtil.control.tooltip(), 'a long string that doesn\'t fit in a narrow cell');
 		});
 
 		it('should have a trimmed tooltip if the text doesn\'t fit in the cell and is more than 600 characters', () => {
@@ -805,7 +805,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resize(true);
 
-			assert.equal(testUtil.control.tooltip(), '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890…');
+			assert.is(testUtil.control.tooltip(), '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890…');
 		});
 	});
 
@@ -863,7 +863,7 @@ describe('GridCell', () => {
 
 			return wait(510)
 				.then(() => {
-					assert.equal(testUtil.count('.tooltip', true), 1);
+					assert.is(testUtil.count('.tooltip', true), 1);
 				});
 		});
 
@@ -876,7 +876,7 @@ describe('GridCell', () => {
 
 			return wait(510)
 				.then(() => {
-					assert.equal(testUtil.count('.tooltip'), 0);
+					assert.is(testUtil.count('.tooltip'), 0);
 				});
 		});
 
@@ -891,7 +891,7 @@ describe('GridCell', () => {
 
 			return wait(510)
 				.then(() => {
-					assert.equal(testUtil.count('.tooltip'), 0);
+					assert.is(testUtil.count('.tooltip'), 0);
 				});
 		});
 	});
@@ -905,7 +905,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resetClasses();
 
-			assert.equal(testUtil.count('.grid-cell'), 1);
+			assert.is(testUtil.count('.grid-cell'), 1);
 		});
 
 		it('should have the class "can-wrap" after resetClasses is called if wordWrap is true', () => {
@@ -917,7 +917,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resetClasses();
 
-			assert.equal(testUtil.count('.can-wrap'), 1);
+			assert.is(testUtil.count('.can-wrap'), 1);
 		});
 
 		it('should have the class "align-right" after resetClasses is called if textAlign is set', () => {
@@ -929,7 +929,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resetClasses();
 
-			assert.equal(testUtil.count('.align-right'), 1);
+			assert.is(testUtil.count('.align-right'), 1);
 		});
 
 		it('should remove all added classes after resetClasses is called', () => {
@@ -940,7 +940,7 @@ describe('GridCell', () => {
 
 			testUtil.control.resetClasses();
 
-			assert.equal(testUtil.count('.test-class'), 0);
+			assert.is(testUtil.count('.test-class'), 0);
 		});
 	});
 });

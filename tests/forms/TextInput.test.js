@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { locale, TextInput } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -55,7 +55,7 @@ describe('TextInput', () => {
 				rows: 1
 			});
 
-			assert.equal(testUtil.count('input'), 1);
+			assert.is(testUtil.count('input'), 1);
 		});
 
 		it('should have an input element if rows is set multiple times', () => {
@@ -66,7 +66,7 @@ describe('TextInput', () => {
 
 			testUtil.control.rows(1);
 
-			assert.equal(testUtil.count('input'), 1);
+			assert.is(testUtil.count('input'), 1);
 		});
 
 		it('should have an input element if rows is set greater than 1 then back to 1', () => {
@@ -77,7 +77,7 @@ describe('TextInput', () => {
 
 			testUtil.control.rows(1);
 
-			assert.equal(testUtil.count('input'), 1);
+			assert.is(testUtil.count('input'), 1);
 		});
 
 		it('should have a textarea element if rows is greater than 1', () => {
@@ -86,7 +86,7 @@ describe('TextInput', () => {
 				rows: 5
 			});
 
-			assert.equal(testUtil.count('textarea'), 1);
+			assert.is(testUtil.count('textarea'), 1);
 		});
 
 		it('should have a textarea element if rows is 1 then set to greater than 1', () => {
@@ -97,7 +97,7 @@ describe('TextInput', () => {
 
 			testUtil.control.rows(5);
 
-			assert.equal(testUtil.count('textarea'), 1);
+			assert.is(testUtil.count('textarea'), 1);
 		});
 
 		it('should have a textarea element with a set height if rows is greater than 1 and height is set to a percent', () => {
@@ -109,7 +109,7 @@ describe('TextInput', () => {
 			});
 			testUtil.control.resize(true);
 
-			assert.isOk(testUtil.first('textarea').style.height);
+			assert.notIs(testUtil.first('textarea').style.height, '');
 		});
 
 		it('should have a textarea element WITHOUT a set height if rows is greater than 1 and height is set to a fixed amount', () => {
@@ -121,7 +121,7 @@ describe('TextInput', () => {
 			});
 			testUtil.control.resize();
 
-			assert.isNotTrue(testUtil.first('textarea').style.height);
+			assert.notIs(testUtil.first('textarea').style.height, '200px');
 		});
 	});
 
@@ -134,7 +134,7 @@ describe('TextInput', () => {
 
 			testUtil.first('input').value = 'Some Value';
 
-			assert.equal(testUtil.control.value(), 'Some Value');
+			assert.is(testUtil.control.value(), 'Some Value');
 		});
 
 		it('should return a blank value that has been set in the input element', () => {
@@ -145,7 +145,7 @@ describe('TextInput', () => {
 
 			testUtil.first('input').value = '';
 
-			assert.equal(testUtil.control.value(), '');
+			assert.is(testUtil.control.value(), '');
 		});
 
 		it('should return a value that has been set in the textarea element', () => {
@@ -156,7 +156,7 @@ describe('TextInput', () => {
 
 			testUtil.first('textarea').value = 'Some Value';
 
-			assert.equal(testUtil.control.value(), 'Some Value');
+			assert.is(testUtil.control.value(), 'Some Value');
 		});
 
 		it('should return an empty value that has been set in the textarea element', () => {
@@ -167,7 +167,7 @@ describe('TextInput', () => {
 
 			testUtil.first('textarea').value = '';
 
-			assert.equal(testUtil.control.value(), '');
+			assert.is(testUtil.control.value(), '');
 		});
 	});
 
@@ -180,7 +180,7 @@ describe('TextInput', () => {
 
 			testUtil.control.value('Some Value');
 
-			assert.equal(testUtil.first('input').value, 'Some Value');
+			assert.is(testUtil.first('input').value, 'Some Value');
 		});
 
 		it('should set the value of an input element to blank', () => {
@@ -191,7 +191,7 @@ describe('TextInput', () => {
 
 			testUtil.control.value('');
 
-			assert.equal(testUtil.first('input').value, '');
+			assert.is(testUtil.first('input').value, '');
 		});
 
 		it('should set the value of an textarea element', () => {
@@ -202,7 +202,7 @@ describe('TextInput', () => {
 
 			testUtil.control.value('Some Value');
 
-			assert.equal(testUtil.first('textarea').value, 'Some Value');
+			assert.is(testUtil.first('textarea').value, 'Some Value');
 		});
 
 		it('should set the value of an textarea element to blank', () => {
@@ -213,7 +213,7 @@ describe('TextInput', () => {
 
 			testUtil.control.value('');
 
-			assert.equal(testUtil.first('textarea').value, '');
+			assert.is(testUtil.first('textarea').value, '');
 		});
 	});
 
@@ -224,7 +224,7 @@ describe('TextInput', () => {
 				rows: 1
 			});
 
-			assert.equal(testUtil.control.getInput().element, testUtil.first('input'));
+			assert.is(testUtil.control.getInput().element, testUtil.first('input'));
 		});
 
 		it('should return a textarea element when getItnput is called and rows is more than 1', () => {
@@ -233,7 +233,7 @@ describe('TextInput', () => {
 				rows: 5
 			});
 
-			assert.equal(testUtil.control.getInput().element, testUtil.first('textarea'));
+			assert.is(testUtil.control.getInput().element, testUtil.first('textarea'));
 		});
 	});
 
@@ -269,7 +269,7 @@ describe('TextInput', () => {
 			testUtil.control.value('12345');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value has the same characters as the minLength', () => {
@@ -281,7 +281,7 @@ describe('TextInput', () => {
 			testUtil.control.value('12345');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 	});
 
@@ -304,7 +304,7 @@ describe('TextInput', () => {
 
 			testUtil.control.maxLength(100);
 
-			assert.equal(testUtil.first('input').maxLength, 100);
+			assert.is(testUtil.first('input').maxLength, 100);
 		});
 
 		it('should set the maxLength attribute of the textArea control if maxLength is set and rows is greater than 1', () => {
@@ -315,7 +315,7 @@ describe('TextInput', () => {
 				rows: 5
 			});
 
-			assert.equal(testUtil.first('textarea').maxLength, 100);
+			assert.is(testUtil.first('textarea').maxLength, 100);
 		});
 
 		it('should show an error if the input value has more characters than the maxLength', () => {
@@ -328,7 +328,7 @@ describe('TextInput', () => {
 			testUtil.control.value('12345');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value has the same characters as the maxLength', () => {
@@ -341,7 +341,7 @@ describe('TextInput', () => {
 			testUtil.control.value('12345');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 	});
 
@@ -365,7 +365,7 @@ describe('TextInput', () => {
 			testUtil.control.value('4 miles');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is less than the minValue', () => {
@@ -377,7 +377,7 @@ describe('TextInput', () => {
 			testUtil.control.value('2');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value is the same as the minValue', () => {
@@ -389,7 +389,7 @@ describe('TextInput', () => {
 			testUtil.control.value('5');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is NaN and minValue is set', () => {
@@ -401,7 +401,7 @@ describe('TextInput', () => {
 			testUtil.control.value('NaN');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 	});
 
@@ -425,7 +425,7 @@ describe('TextInput', () => {
 			testUtil.control.value('4 miles');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is greater than the maxValue', () => {
@@ -437,7 +437,7 @@ describe('TextInput', () => {
 			testUtil.control.value('6');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value is the same as the maxValue', () => {
@@ -449,7 +449,7 @@ describe('TextInput', () => {
 			testUtil.control.value('5');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is NaN and maxValue is set', () => {
@@ -461,7 +461,7 @@ describe('TextInput', () => {
 			testUtil.control.value('NaN');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 	});
 
@@ -484,7 +484,7 @@ describe('TextInput', () => {
 			testUtil.control.value('4 miles');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is not an integer and isInt is true', () => {
@@ -496,7 +496,7 @@ describe('TextInput', () => {
 			testUtil.control.value('6.4');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is not an integer and isInt is true and minValue and maxValue are set', () => {
@@ -510,7 +510,7 @@ describe('TextInput', () => {
 			testUtil.control.value('6.4');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value is an integer and isInt is true', () => {
@@ -522,7 +522,7 @@ describe('TextInput', () => {
 			testUtil.control.value('5');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is NaN and isInt is true', () => {
@@ -534,7 +534,7 @@ describe('TextInput', () => {
 			testUtil.control.value('NaN');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 	});
 
@@ -557,7 +557,7 @@ describe('TextInput', () => {
 			testUtil.control.value('4 miles');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 
 		it('should NOT show an error if the input value is a number and isNumber is true', () => {
@@ -569,7 +569,7 @@ describe('TextInput', () => {
 			testUtil.control.value('5.2');
 			testUtil.control.validate();
 
-			assert.isNotTrue(testUtil.control.error());
+			assert.is(testUtil.control.error(), '');
 		});
 
 		it('should show an error if the input value is NaN and isNumber is true', () => {
@@ -581,7 +581,7 @@ describe('TextInput', () => {
 			testUtil.control.value('NaN');
 			testUtil.control.validate();
 
-			assert.isOk(testUtil.control.error());
+			assert.notIs(testUtil.control.error(), '');
 		});
 	});
 
@@ -602,7 +602,7 @@ describe('TextInput', () => {
 				placeholder: 'test'
 			});
 
-			assert.equal(testUtil.first('input').placeholder, 'test');
+			assert.is(testUtil.first('input').placeholder, 'test');
 		});
 	});
 
@@ -623,7 +623,7 @@ describe('TextInput', () => {
 				prefix: 'test'
 			});
 
-			assert.equal(testUtil.count('.input-prefix'), 1);
+			assert.is(testUtil.count('.input-prefix'), 1);
 		});
 
 		it('should have a div with class input-prefix when prefix is set multiple times', () => {
@@ -636,7 +636,7 @@ describe('TextInput', () => {
 			testUtil.control.prefix('3');
 			testUtil.control.prefix('4');
 
-			assert.equal(testUtil.count('.input-prefix'), 1);
+			assert.is(testUtil.count('.input-prefix'), 1);
 		});
 
 		it('should NOT have a div with class input-prefix when prefix is set and then set to an empty string', () => {
@@ -647,7 +647,7 @@ describe('TextInput', () => {
 
 			testUtil.control.prefix('');
 
-			assert.equal(testUtil.count('.input-prefix'), 0);
+			assert.is(testUtil.count('.input-prefix'), 0);
 		});
 	});
 
@@ -667,7 +667,7 @@ describe('TextInput', () => {
 				isPassword: true
 			});
 
-			assert.equal(testUtil.first('input').type, 'password');
+			assert.is(testUtil.first('input').type, 'password');
 		});
 
 		it('should have an input with type text when isPassword is set to false', () => {
@@ -678,7 +678,7 @@ describe('TextInput', () => {
 
 			testUtil.control.isPassword(false);
 
-			assert.equal(testUtil.first('input').type, 'text');
+			assert.is(testUtil.first('input').type, 'text');
 		});
 	});
 
@@ -698,7 +698,7 @@ describe('TextInput', () => {
 				rows: 5
 			});
 
-			assert.equal(testUtil.control.changeDelay(), 500);
+			assert.is(testUtil.control.changeDelay(), 500);
 		});
 
 		it('should still have a changeDelay of 200 when triggerChange is called', () => {
@@ -708,7 +708,7 @@ describe('TextInput', () => {
 
 			testUtil.control.triggerChange();
 
-			assert.equal(testUtil.control.changeDelay(), 200);
+			assert.is(testUtil.control.changeDelay(), 200);
 		});
 	});
 });

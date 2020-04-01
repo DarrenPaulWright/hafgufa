@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import ControlTests from '../ControlTests';
 
 const TEST_ID = 'testId';
@@ -26,7 +26,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.count('.fa-' + TEST_ICON_FA), 1);
+				assert.is(testUtil.count('.fa-' + TEST_ICON_FA), 1);
 			});
 
 			it('should NOT have an icon element if icon is set to an empty string', () => {
@@ -36,7 +36,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.count('.fa-' + TEST_ICON_FA), 0);
+				assert.is(testUtil.count('.fa-' + TEST_ICON_FA), 0);
 			});
 		});
 	};
@@ -50,7 +50,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.first(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
+				assert.is(testUtil.first(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
 			});
 
 			it('should have an empty title element if the title is set to an empty string', () => {
@@ -60,7 +60,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.count('.heading'), 0);
+				assert.is(testUtil.count('.heading'), 0);
 			});
 		});
 	};
@@ -75,7 +75,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.first(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
+				assert.is(testUtil.first(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
 			});
 		});
 	};
@@ -100,7 +100,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					title: TEST_TITLE
 				});
 
-				assert.equal(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.is(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 
 			it('should show an error message when "error" is called', () => {
@@ -111,7 +111,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 				})
 					.error(ERROR_MESSAGE);
 
-				assert.equal(testUtil.first(ERROR_MESSAGE_ELEMENT_CLASS).textContent, ERROR_MESSAGE_ICON + ERROR_MESSAGE);
+				assert.is(testUtil.first(ERROR_MESSAGE_ELEMENT_CLASS).textContent, ERROR_MESSAGE_ICON + ERROR_MESSAGE);
 			});
 
 			it('should NOT show an error message when error is set to "" after "error"', () => {
@@ -123,7 +123,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					.error(ERROR_MESSAGE)
 					.error('');
 
-				assert.equal(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.is(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 		});
 	};
@@ -165,7 +165,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					headingButtons: testButton
 				});
 
-				assert.equal(testUtil.count('.' + TOOLBAR_BASE_CLASS), 1);
+				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 1);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to empty array', () => {
@@ -177,7 +177,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 				testUtil.control.headingButtons([]);
 
-				assert.equal(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to an empty array', () => {
@@ -189,7 +189,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 
 				testUtil.control.headingButtons([]);
 
-				assert.equal(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set to an empty array', () => {
@@ -199,7 +199,7 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 					headingButtons: []
 				});
 
-				assert.equal(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 		});
 	};

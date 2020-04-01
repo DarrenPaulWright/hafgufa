@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
 import { forOwn } from 'object-agent';
-import { castArray, windowResize } from 'type-enforcer-ui';
+import { assert } from 'type-enforcer';
+import { castArray, CssSize, windowResize } from 'type-enforcer-ui';
 import { CLICK_EVENT, Container } from '../';
 
 const TEST_ID = 'testId';
@@ -50,14 +50,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('without settings', () => {
 				testUtil.control = new Control();
 
-				assert.equal(testUtil.count('.' + settings.mainCssClass), 0);
+				assert.is(testUtil.count('.' + settings.mainCssClass), 0);
 			});
 
 			if (settings.mainCssClass) {
 				it(`should have a css class called ${settings.mainCssClass}`, () => {
 					testUtil.control = new Control(buildSettings());
 
-					assert.equal(testUtil.count('.' + settings.mainCssClass), 1);
+					assert.is(testUtil.count('.' + settings.mainCssClass), 1);
 				});
 			}
 		});
@@ -72,16 +72,16 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					container: null
 				}));
 
-				assert.equal(testUtil.container.children.length, 0);
-				assert.equal(testUtil.control.container(), undefined);
-				assert.equal(windowResize.length, initialLength);
+				assert.is(testUtil.container.children.length, 0);
+				assert.is(testUtil.control.container(), null);
+				assert.is(windowResize.length, initialLength);
 			});
 
 			it('should have a container element if the container setting was set', () => {
 				testUtil.control = new Control(buildSettings());
 
-				assert.isTrue(testUtil.container.children.length >= 1);
-				assert.isOk(testUtil.control.container());
+				assert.is(testUtil.container.children.length >= 1, true);
+				assert.is(testUtil.control.container() instanceof Element, true);
 			});
 
 			it('should have a container element if the container method was called', () => {
@@ -89,8 +89,8 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					container: null
 				})).container(testUtil.container);
 
-				assert.equal(testUtil.container.children.length, 1);
-				assert.isOk(testUtil.control.container());
+				assert.is(testUtil.container.children.length, 1);
+				assert.is(testUtil.control.container() instanceof Element, true);
 			});
 
 			it('should add a callback to windowResize', () => {
@@ -100,7 +100,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					container: testUtil.container
 				}));
 
-				assert.equal(windowResize.length, initialLength + 1);
+				assert.is(windowResize.length, initialLength + 1);
 			});
 
 			it('should NOT add a callback to windowResize if set in the content setting of a Container', () => {
@@ -113,7 +113,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					})
 				});
 
-				assert.equal(windowResize.length, initialLength + 1);
+				assert.is(windowResize.length, initialLength + 1);
 			});
 
 			it('should NOT add a callback to windowResize if set in the content method of a Container', () => {
@@ -127,7 +127,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					control: Control
 				}));
 
-				assert.equal(windowResize.length, initialLength + 1);
+				assert.is(windowResize.length, initialLength + 1);
 			});
 		});
 	};
@@ -139,15 +139,15 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					container: null
 				}));
 
-				assert.equal(testUtil.container.children.length, 0);
-				assert.isOk(testUtil.control.element);
+				assert.is(testUtil.container.children.length, 0);
+				assert.is(testUtil.control.element instanceof Element, true);
 			});
 
 			it('should have a main element if the container was set', () => {
 				testUtil.control = new Control(buildSettings());
 
-				assert.isOk(testUtil.container.children.length >= 1);
-				assert.isOk(testUtil.control.element);
+				assert.atLeast(testUtil.container.children.length, 1);
+				assert.is(testUtil.control.element instanceof Element, true);
 			});
 		});
 	};
@@ -166,7 +166,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should have an element with the id property set if the id setting was set', () => {
 				testUtil.control = new Control(buildSettings());
 
-				assert.equal(testUtil.count('#' + TEST_ID, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID, true), 1);
 			});
 
 			it('should have an element with the id property set if the id method was set', () => {
@@ -175,7 +175,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				}))
 					.id(TEST_ID);
 
-				assert.equal(testUtil.count('#' + TEST_ID, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID, true), 1);
 			});
 		});
 	};
@@ -197,7 +197,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					idSuffix: TEST_ID_SUFFIX
 				}));
 
-				assert.equal(testUtil.count('#' + TEST_ID_SUFFIX, true), 0);
+				assert.is(testUtil.count('#' + TEST_ID_SUFFIX, true), 0);
 			});
 
 			it('should have a container element with an id of the control id and idSuffix concatenated if both are provided as settings', () => {
@@ -205,14 +205,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					idSuffix: TEST_ID_SUFFIX
 				}));
 
-				assert.equal(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
 			});
 
 			it('should have a container element with an id of the control id and idSuffix concatenated if the id was set and the idSuffix method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.idSuffix(TEST_ID_SUFFIX);
 
-				assert.equal(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
 			});
 		});
 	};
@@ -226,14 +226,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					classes: TEST_CLASS
 				}));
 
-				assert.equal(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
 			});
 
 			it('should have a css class on the main element when the addClass method is set', () => {
 				testUtil.control = new Control(buildSettings())
 					.addClass(TEST_CLASS);
 
-				assert.equal(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
 			});
 
 			it('shouldnt have a css class on the main element when the removeClass method is used to remove a previously added class', () => {
@@ -241,19 +241,19 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					.addClass(TEST_CLASS)
 					.removeClass(TEST_CLASS);
 
-				assert.equal(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 0);
+				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 0);
 			});
 		});
 	};
 
 	self.minWidth = () => {
 		describe('Control minWidth', () => {
-			const TEST_WIDTH = '213px';
+			const TEST_WIDTH = new CssSize('213px');
 
 			it('shouldnt have a minWidth value if no minWidth was set', () => {
 				testUtil.control = new Control(buildSettings());
 
-				assert.notEqual(testUtil.control.minWidth(), parseInt(TEST_WIDTH, 10));
+				assert.notIs(testUtil.control.minWidth(), TEST_WIDTH);
 			});
 
 			it('should have a minWidth value if the minWidth setting was set', () => {
@@ -261,14 +261,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					minWidth: TEST_WIDTH
 				}));
 
-				assert.equal(testUtil.control.minWidth(), TEST_WIDTH);
+				assert.is(testUtil.control.minWidth(), TEST_WIDTH);
 			});
 
 			it('should have a minWidth value if the minWidth method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.minWidth(TEST_WIDTH);
 
-				assert.equal(testUtil.control.minWidth(), TEST_WIDTH);
+				assert.is(testUtil.control.minWidth(), TEST_WIDTH);
 			});
 		});
 	};
@@ -288,26 +288,26 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					width: TEST_WIDTH
 				}));
 
-				assert.equal(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
+				assert.is(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 
 			it('should have a width value if the width method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.width(TEST_WIDTH);
 
-				assert.equal(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
+				assert.is(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 		});
 	};
 
 	self.maxWidth = () => {
 		describe('Control maxWidth', () => {
-			const TEST_WIDTH = '213px';
+			const TEST_WIDTH = new CssSize('213px');
 
 			it('shouldnt have a maxWidth value if no maxWidth was set', () => {
 				testUtil.control = new Control(buildSettings());
 
-				assert.notEqual(testUtil.control.maxWidth(), parseInt(TEST_WIDTH, 10));
+				assert.notIs(testUtil.control.maxWidth(), TEST_WIDTH);
 			});
 
 			it('should have a maxWidth value if the maxWidth setting was set', () => {
@@ -315,14 +315,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					maxWidth: TEST_WIDTH
 				}));
 
-				assert.equal(testUtil.control.maxWidth(), TEST_WIDTH);
+				assert.is(testUtil.control.maxWidth(), TEST_WIDTH);
 			});
 
 			it('should have a maxWidth value if the maxWidth method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.maxWidth(TEST_WIDTH);
 
-				assert.equal(testUtil.control.maxWidth(), TEST_WIDTH);
+				assert.is(testUtil.control.maxWidth(), TEST_WIDTH);
 			});
 		});
 	};
@@ -330,6 +330,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 	self.minHeight = () => {
 		describe('Control minHeight', () => {
 			const TEST_HEIGHT = '200px';
+			// const TEST_HEIGHT = new CssSize('200px');
 
 			it('shouldnt have a minHeight value if no minHeight was set', () => {
 				testUtil.control = new Control(buildSettings());
@@ -342,14 +343,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					minHeight: TEST_HEIGHT
 				}));
 
-				assert.equal(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
+				assert.is(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
 			});
 
 			it('should have a minHeight value if the minHeight method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.minHeight(TEST_HEIGHT);
 
-				assert.equal(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
+				assert.is(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
 			});
 		});
 	};
@@ -369,14 +370,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					height: TEST_HEIGHT
 				}));
 
-				assert.equal(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
+				assert.is(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 
 			it('should have a height value if the height method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.height(TEST_HEIGHT);
 
-				assert.equal(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
+				assert.is(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 		});
 	};
@@ -396,14 +397,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					maxHeight: TEST_HEIGHT
 				}));
 
-				assert.equal(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
+				assert.is(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
 			});
 
 			it('should have a maxHeight value if the maxHeight method was set', () => {
 				testUtil.control = new Control(buildSettings())
 					.maxHeight(TEST_HEIGHT);
 
-				assert.equal(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
+				assert.is(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
 			});
 		});
 	};
@@ -426,14 +427,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					isEnabled: false
 				}));
 
-				assert.equal(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
 			});
 
 			it('should have an element with the disabled css class when the isEnabled method was set to false', () => {
 				testUtil.control = new Control(buildSettings())
 					.isEnabled(false);
 
-				assert.equal(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
+				assert.is(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
 			});
 		});
 	};
@@ -476,13 +477,13 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should NOT prevent the propagation of an event if false', () => {
 				propagationTest(false);
 
-				assert.equal(testItem, 11);
+				assert.is(testItem, 11);
 			});
 
 			it('should prevent the propagation of an event if true', () => {
 				propagationTest(true);
 
-				assert.equal(testItem, 10);
+				assert.is(testItem, 10);
 			});
 		});
 	};
@@ -503,7 +504,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testItem2 = testItem;
 				testUtil.control.resize(true);
 
-				assert.isAbove(testItem, testItem2);
+				assert.moreThan(testItem, testItem2);
 			});
 
 			it('should NOT execute an onResize callback when resize is called after onRemove is called', () => {
@@ -520,7 +521,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testItem2 = testItem;
 				testUtil.control.resize(true);
 
-				assert.equal(testItem, testItem2);
+				assert.is(testItem, testItem2);
 			});
 		});
 	};
@@ -536,7 +537,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					}
 				}));
 
-				assert.equal(testItem, 1);
+				assert.is(testItem, 1);
 			});
 
 			it('should execute onRemove callbacks in order when onRemove is called', () => {
@@ -552,7 +553,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.control.remove();
 
-				assert.equal(testItem, 3);
+				assert.is(testItem, 3);
 			});
 
 			it('should NOT execute an onRemove callback when remove is called twice', () => {
@@ -566,7 +567,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testUtil.control.remove();
 				testUtil.control.remove();
 
-				assert.equal(testItem, 2);
+				assert.is(testItem, 2);
 			});
 		});
 	};
@@ -584,7 +585,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						}
 					}));
 
-					assert.equal(testItem, 1);
+					assert.is(testItem, 1);
 				});
 			}
 
@@ -600,7 +601,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.control.isFocused(true);
 
-				assert.equal(testItem, 2);
+				assert.is(testItem, 2);
 			});
 
 			if (settings.focusableElement) {
@@ -616,7 +617,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					testUtil.first(settings.focusableElement).focus();
 
-					assert.equal(testItem, 2);
+					assert.is(testItem, 2);
 				});
 
 				it('should call the onBlur callback once when a focusable element is blurred', () => {
@@ -635,7 +636,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					return wait(1)
 						.then(() => {
-							assert.equal(testItem, 2);
+							assert.is(testItem, 2);
 						});
 				});
 			}
@@ -656,7 +657,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					return wait(1)
 						.then(() => {
-							assert.equal(testItem, 2);
+							assert.is(testItem, 2);
 						});
 				});
 
@@ -674,7 +675,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					return wait(1)
 						.then(() => {
-							assert.equal(testItem, 2);
+							assert.is(testItem, 2);
 						});
 				});
 
@@ -692,7 +693,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						testUtil.first(settings.focusableElement).focus();
 						testUtil.nth(settings.focusableSubElement, 1).focus();
 
-						assert.equal(testItem, 1);
+						assert.is(testItem, 1);
 					});
 
 					it('should NOT call the onBlur callback if the subControl is focused and then the main element is focused', () => {
@@ -708,7 +709,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						testUtil.nth(settings.focusableSubElement, 1).focus();
 						testUtil.first(settings.focusableElement).focus();
 
-						assert.equal(testItem, 1);
+						assert.is(testItem, 1);
 					});
 				}
 			}
@@ -720,7 +721,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.control.isFocused(true);
 
-				assert.equal(testUtil.control.isFocused(), true);
+				assert.is(testUtil.control.isFocused(), true);
 			});
 
 			it('should not call the onBlur callback if the control is not focused', () => {
@@ -733,7 +734,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 					}
 				}));
 
-				assert.equal(testItem, 1);
+				assert.is(testItem, 1);
 			});
 
 			if (!settings.autoFocus) {
@@ -749,7 +750,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 					testUtil.control.isFocused(false);
 
-					assert.equal(testItem, 1);
+					assert.is(testItem, 1);
 				});
 			}
 
@@ -767,7 +768,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				return wait(1)
 					.then(() => {
-						assert.equal(testItem, 2);
+						assert.is(testItem, 2);
 					});
 			});
 
@@ -778,7 +779,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				testUtil.control.isFocused(true).isFocused(false);
 
-				assert.equal(testUtil.control.isFocused(), false);
+				assert.is(testUtil.control.isFocused(), false);
 			});
 
 			it('should not be focused after the active element is blurred', () => {
@@ -789,7 +790,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				testUtil.control.isFocused(true);
 				document.activeElement.blur();
 
-				assert.equal(testUtil.control.isFocused(), false);
+				assert.is(testUtil.control.isFocused(), false);
 			});
 		});
 	};

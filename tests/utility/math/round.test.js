@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { round } from '../../..';
 
 describe('round', () => {
@@ -26,7 +26,7 @@ describe('round', () => {
 
 	tests.forEach((test) => {
 		it(`should return ${test.output} when given ${test.input} and precision ${test.precision}`, () => {
-			assert.equal(round(test.input, test.precision), test.output);
+			assert.is(round(test.input, test.precision), test.output);
 		});
 	});
 });

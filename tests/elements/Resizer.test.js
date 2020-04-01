@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { CssSize } from 'type-enforcer-ui';
 import { ORIENTATION, Resizer } from '../..';
 import { offsetToPixels, pixelsToOffset } from '../../src/elements/Resizer';
@@ -7,45 +7,45 @@ import TestUtil from '../TestUtil';
 
 describe('offsetToPixels', () => {
 	it('should return 0 if no offset is provided', () => {
-		assert.equal(offsetToPixels(undefined, 1000), 0);
+		assert.is(offsetToPixels(undefined, 1000), 0);
 	});
 
 	it('should calculate a percent', () => {
-		assert.equal(offsetToPixels(new CssSize('60%'), 1000), 600);
+		assert.is(offsetToPixels(new CssSize('60%'), 1000), 600);
 	});
 
 	it('should calculate a negative percent', () => {
-		assert.equal(offsetToPixels(new CssSize('-90%'), 1000), 100);
+		assert.is(offsetToPixels(new CssSize('-90%'), 1000), 100);
 	});
 
 	it('should return a pixel value', () => {
-		assert.equal(offsetToPixels(new CssSize('200px'), 1000), 200);
+		assert.is(offsetToPixels(new CssSize('200px'), 1000), 200);
 	});
 
 	it('should do something', () => {
-		assert.equal(offsetToPixels(new CssSize('-200px'), 1000), 800);
+		assert.is(offsetToPixels(new CssSize('-200px'), 1000), 800);
 	});
 });
 
 describe('pixelsToOffset', () => {
 	it('should return 0 if no offset is provided', () => {
-		assert.equal(pixelsToOffset(undefined, 300, 1000), 0);
+		assert.is(pixelsToOffset(undefined, 300, 1000), 0);
 	});
 
 	it('should calculate a percent', () => {
-		assert.equal(pixelsToOffset(new CssSize('60%'), 100, 1000), '10%');
+		assert.is(pixelsToOffset(new CssSize('60%'), 100, 1000), '10%');
 	});
 
 	it('should calculate a negative percent', () => {
-		assert.equal(pixelsToOffset(new CssSize('-90%'), 400, 1000), '-60%');
+		assert.is(pixelsToOffset(new CssSize('-90%'), 400, 1000), '-60%');
 	});
 
 	it('should return a pixel value', () => {
-		assert.equal(pixelsToOffset(new CssSize('200px'), 215, 1000), '215px');
+		assert.is(pixelsToOffset(new CssSize('200px'), 215, 1000), '215px');
 	});
 
 	it('should do something', () => {
-		assert.equal(pixelsToOffset(new CssSize('-200px'), 215, 1000), '-785px');
+		assert.is(pixelsToOffset(new CssSize('-200px'), 215, 1000), '-785px');
 	});
 });
 
@@ -85,7 +85,7 @@ describe('Resizer', () => {
 					orientation: ORIENTATION.HORIZONTAL
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), []);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), []);
 			});
 
 			it('should render at a positive pixel offset', () => {
@@ -95,7 +95,7 @@ describe('Resizer', () => {
 					splitOffset: '2rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 32]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 32]);
 			});
 
 			it('should render at a negative pixel offset', () => {
@@ -105,7 +105,7 @@ describe('Resizer', () => {
 					splitOffset: '-2rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 768]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 768]);
 			});
 
 			it('should render at a positive percent offset', () => {
@@ -115,7 +115,7 @@ describe('Resizer', () => {
 					splitOffset: '30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 240]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 240]);
 			});
 
 			it('should render at a negative percent offset', () => {
@@ -125,7 +125,7 @@ describe('Resizer', () => {
 					splitOffset: '-30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 560]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 560]);
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
@@ -135,11 +135,11 @@ describe('Resizer', () => {
 					splitOffset: '-30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 560]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 560]);
 
 				testUtil.control.splitOffset('2rem');
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 32]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 32]);
 			});
 		});
 
@@ -151,7 +151,7 @@ describe('Resizer', () => {
 					minOffset: '1rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 16]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 16]);
 			});
 
 			it('should render at a positive pixel offset', () => {
@@ -162,7 +162,7 @@ describe('Resizer', () => {
 					minOffset: '3rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 48]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 48]);
 			});
 
 			it('should render at a negative pixel offset', () => {
@@ -173,7 +173,7 @@ describe('Resizer', () => {
 					maxOffset: '-3rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 752]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 752]);
 			});
 
 			it('should render at a positive percent offset', () => {
@@ -184,7 +184,7 @@ describe('Resizer', () => {
 					minOffset: '40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 320]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 320]);
 			});
 
 			it('should render at a negative percent offset', () => {
@@ -195,7 +195,7 @@ describe('Resizer', () => {
 					maxOffset: '-40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 480]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 480]);
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
@@ -207,11 +207,11 @@ describe('Resizer', () => {
 					maxOffset: '-40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 480]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 480]);
 
 				testUtil.control.splitOffset('2rem');
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 48]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 48]);
 			});
 		});
 	});
@@ -224,7 +224,7 @@ describe('Resizer', () => {
 					orientation: ORIENTATION.VERTICAL
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), []);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), []);
 			});
 
 			it('should render at a positive pixel offset', () => {
@@ -234,7 +234,7 @@ describe('Resizer', () => {
 					splitOffset: '2rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [32, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [32, 0]);
 			});
 
 			it('should render at a negative pixel offset', () => {
@@ -244,7 +244,7 @@ describe('Resizer', () => {
 					splitOffset: '-2rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [968, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [968, 0]);
 			});
 
 			it('should render at a positive percent offset', () => {
@@ -254,7 +254,7 @@ describe('Resizer', () => {
 					splitOffset: '30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [300, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [300, 0]);
 			});
 
 			it('should render at a negative percent offset', () => {
@@ -264,7 +264,7 @@ describe('Resizer', () => {
 					splitOffset: '-30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [700, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [700, 0]);
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
@@ -274,11 +274,11 @@ describe('Resizer', () => {
 					splitOffset: '-30%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [700, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [700, 0]);
 
 				testUtil.control.splitOffset('2rem');
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [32, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [32, 0]);
 			});
 		});
 
@@ -290,7 +290,7 @@ describe('Resizer', () => {
 					minOffset: '1rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [16, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [16, 0]);
 			});
 
 			it('should render at a positive pixel offset', () => {
@@ -301,7 +301,7 @@ describe('Resizer', () => {
 					minOffset: '3rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [48, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [48, 0]);
 			});
 
 			it('should render at a negative pixel offset', () => {
@@ -312,7 +312,7 @@ describe('Resizer', () => {
 					maxOffset: '-3rem'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [952, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [952, 0]);
 			});
 
 			it('should render at a positive percent offset', () => {
@@ -323,7 +323,7 @@ describe('Resizer', () => {
 					minOffset: '40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [400, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [400, 0]);
 			});
 
 			it('should render at a negative percent offset', () => {
@@ -334,7 +334,7 @@ describe('Resizer', () => {
 					maxOffset: '-40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [600, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [600, 0]);
 			});
 
 			it('should move the resizer when splitOffset is reset', () => {
@@ -346,11 +346,11 @@ describe('Resizer', () => {
 					maxOffset: '-40%'
 				});
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [600, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [600, 0]);
 
 				testUtil.control.splitOffset('2rem');
 
-				assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [48, 0]);
+				assert.equal(testUtil.getComputedTranslateXY('.resizer'), [48, 0]);
 			});
 		});
 	});

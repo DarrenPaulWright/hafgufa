@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Button, Div } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -20,7 +20,7 @@ describe('Div', () => {
 				content: button
 			});
 
-			assert.equal(testUtil.control.get(buttonId), button);
+			assert.is(testUtil.control.get(buttonId), button);
 		});
 
 		it('should find a control inside another container', () => {
@@ -36,7 +36,7 @@ describe('Div', () => {
 				}
 			});
 
-			assert.equal(testUtil.control.get(buttonId), button);
+			assert.is(testUtil.control.get(buttonId), button);
 		});
 	});
 
@@ -57,7 +57,7 @@ describe('Div', () => {
 
 			testUtil.control.append(button2);
 
-			assert.equal(testUtil.nth('button', 1), button2.element);
+			assert.is(testUtil.nth('button', 1), button2.element);
 		});
 	});
 
@@ -78,7 +78,7 @@ describe('Div', () => {
 
 			testUtil.control.prepend(button2);
 
-			assert.equal(testUtil.nth('button', 0), button2.element);
+			assert.is(testUtil.nth('button', 0), button2.element);
 		});
 	});
 });

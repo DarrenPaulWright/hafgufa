@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import search from '../../src/utility/search';
 
 describe('search', () => {
@@ -6,7 +6,7 @@ describe('search', () => {
 		data.tests.forEach((test) => {
 			it(test.it, () => {
 				const output = data.functionToTest(...test.args);
-				assert.equal(output, test.expected);
+				assert.is(output, test.expected);
 			});
 		});
 	};

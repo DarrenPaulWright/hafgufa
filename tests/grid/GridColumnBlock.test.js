@@ -1,5 +1,5 @@
-import { assert } from 'chai';
 import shortid from 'shortid';
+import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../..';
 import GridColumnBlock from '../../src/grid/GridColumnBlock';
 import * as gridConstants from '../../src/grid/gridConstants';
@@ -63,7 +63,7 @@ describe('GridColumnBlock', () => {
 
 			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading', true), 5);
+			assert.is(testUtil.count('.menu .heading', true), 5);
 		});
 	});
 
@@ -88,7 +88,7 @@ describe('GridColumnBlock', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
+			assert.is(testUtil.first('input[type=checkbox]').checked, true);
 		});
 	});
 
@@ -113,7 +113,7 @@ describe('GridColumnBlock', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').indeterminate, true);
+			assert.is(testUtil.first('input[type=checkbox]').indeterminate, true);
 		});
 	});
 
@@ -207,7 +207,7 @@ describe('GridColumnBlock', () => {
 
 			testUtil.simulateClick(testUtil.all('button')[5]);
 
-			assert.equal(testVar, '3_trash');
+			assert.is(testVar, '3_trash');
 		});
 	});
 

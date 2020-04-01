@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Section } from '../..';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 import TestUtil from '../TestUtil';
@@ -29,7 +29,7 @@ describe('Section', () => {
 
 			testUtil.control.canCollapse(false);
 
-			assert.equal(testUtil.control.isCollapsed(), false);
+			assert.is(testUtil.control.isCollapsed(), false);
 		});
 	});
 
@@ -54,7 +54,7 @@ describe('Section', () => {
 
 			testUtil.control.isCollapsed(true);
 
-			assert.equal(testUtil.control.isCollapsed(), false);
+			assert.is(testUtil.control.isCollapsed(), false);
 		});
 
 		it('should have a heading control with a expander without class "expanded" when isCollapsed is true', () => {
@@ -64,7 +64,7 @@ describe('Section', () => {
 				isCollapsed: true
 			});
 
-			assert.equal(testUtil.count('.heading button'), 1);
+			assert.is(testUtil.count('.heading button'), 1);
 		});
 
 		it('should have a heading control with a expander with class "expanded" when isCollapsed is false', () => {
@@ -74,7 +74,7 @@ describe('Section', () => {
 				isCollapsed: false
 			});
 
-			assert.equal(testUtil.count('.heading button'), 1);
+			assert.is(testUtil.count('.heading button'), 1);
 		});
 	});
 });

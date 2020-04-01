@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { ProgressBar } from '../..';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 import TestUtil from '../TestUtil';
@@ -32,7 +32,7 @@ describe('ProgressBar', () => {
 				steps: [{}, {}, {}, {}]
 			});
 
-			assert.equal(testUtil.count('.subtitle'), 0);
+			assert.is(testUtil.count('.subtitle'), 0);
 		});
 
 		it('should have subtitles if provided', () => {
@@ -43,7 +43,7 @@ describe('ProgressBar', () => {
 				}, {}, {}, {}]
 			});
 
-			assert.equal(testUtil.first('.subtitle').textContent, 'test subtitle');
+			assert.is(testUtil.first('.subtitle').textContent, 'test subtitle');
 		});
 
 		it('should have class "large" if any subTitles are set', () => {
@@ -54,7 +54,7 @@ describe('ProgressBar', () => {
 				}, {}, {}, {}]
 			});
 
-			assert.equal(testUtil.count('.large'), 1);
+			assert.is(testUtil.count('.large'), 1);
 		});
 
 		it('should only have three steps rendered if three steps are set twice', () => {
@@ -65,7 +65,7 @@ describe('ProgressBar', () => {
 
 			testUtil.control.steps([{}, {}, {}]);
 
-			assert.equal(testUtil.count('.step'), 3);
+			assert.is(testUtil.count('.step'), 3);
 		});
 	});
 
@@ -84,7 +84,7 @@ describe('ProgressBar', () => {
 				currentStep: 2
 			});
 
-			assert.equal(testUtil.nth('.step', 1), testUtil.first('.step.completed'));
+			assert.is(testUtil.nth('.step', 1), testUtil.first('.step.completed'));
 		});
 	});
 
@@ -103,7 +103,7 @@ describe('ProgressBar', () => {
 				showBigNumbers: true
 			});
 
-			assert.equal(testUtil.count('i'), 8);
+			assert.is(testUtil.count('i'), 8);
 		});
 
 		it('should have class "large" if showBigNumbers is true and no subTitles are set', () => {
@@ -113,7 +113,7 @@ describe('ProgressBar', () => {
 				showBigNumbers: true
 			});
 
-			assert.equal(testUtil.count('.large'), 1);
+			assert.is(testUtil.count('.large'), 1);
 		});
 	});
 
@@ -132,7 +132,7 @@ describe('ProgressBar', () => {
 				showInlineNumbers: true
 			});
 
-			assert.equal(testUtil.first('span').textContent, '1');
+			assert.is(testUtil.first('span').textContent, '1');
 		});
 
 		it('should have a div with text 1: when showInlineNumbers is true and a step is set with a title', () => {
@@ -144,7 +144,7 @@ describe('ProgressBar', () => {
 				showInlineNumbers: true
 			});
 
-			assert.equal(testUtil.first('span').textContent, '1: test');
+			assert.is(testUtil.first('span').textContent, '1: test');
 		});
 	});
 });

@@ -1,8 +1,8 @@
-import { assert } from 'chai';
 import displayValue from 'display-value';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
 import simulant from 'simulant';
+import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
 import { CLICK_EVENT, KEY_UP_EVENT } from '../';
 
@@ -47,16 +47,14 @@ export default class TestUtil {
 				self.container.remove();
 			}
 
-			assert.isTrue(
-				windowResize.length <= 1,
-				`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType}`
-			);
+			if (windowResize.length > 1) {
+				throw new Error(`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType}`);
+			}
 			windowResize.discardAll();
 
-			assert.isTrue(
-				self.allEvents.length === 0,
-				`All events should be removed when a control is removed.\n${controlType}Still has these events:\n${eventList()}\n`
-			);
+			if (self.allEvents.length !== 0) {
+				throw new Error(`All events should be removed when a control is removed.\n${controlType}Still has these events:\n${eventList()}\n`);
+			}
 			self.allEvents.length = 0;
 
 			self.control = null;
@@ -74,7 +72,7 @@ export default class TestUtil {
 			Object.assign(Element.prototype, {
 				_addEventListener: Element.prototype.addEventListener,
 				addEventListener(name, handler, useCapture) {
-					const eventObject = {element: this, name, handler, useCapture};
+					const eventObject = { element: this, name, handler, useCapture };
 
 					this._addEventListener(name, handler, useCapture);
 
@@ -84,7 +82,7 @@ export default class TestUtil {
 				},
 				_removeEventListener: Element.prototype.removeEventListener,
 				removeEventListener(name, handler, useCapture) {
-					const eventObject = {element: this, name, handler, useCapture};
+					const eventObject = { element: this, name, handler, useCapture };
 					const eventIndex = self.allEvents.findIndex((event) => isEqual(event, eventObject));
 
 					this._removeEventListener(name, handler, useCapture);
@@ -118,10 +116,10 @@ export default class TestUtil {
 				self.control = new Control(buildOptions());
 
 				if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-					assert.isTrue(self.control[settings.methodName]().isSame(settings.defaultValue));
+					assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
 				}
 				else {
-					assert.deepEqual(self.control[settings.methodName](), settings.defaultValue);
+					assert.equal(self.control[settings.methodName](), settings.defaultValue);
 				}
 			});
 
@@ -134,10 +132,10 @@ export default class TestUtil {
 					self.control = new Control(options);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-						assert.isTrue(self.control[settings.methodName]().isSame(settings.defaultValue));
+						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
 					}
 					else {
-						assert.deepEqual(self.control[settings.methodName](), settings.defaultValue);
+						assert.equal(self.control[settings.methodName](), settings.defaultValue);
 					}
 				});
 			}
@@ -151,10 +149,10 @@ export default class TestUtil {
 					self.control = new Control(options);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-						assert.isTrue(self.control[settings.methodName]().isSame(settings.testValue));
+						assert.is(self.control[settings.methodName]().isSame(settings.testValue), true);
 					}
 					else {
-						assert.deepEqual(self.control[settings.methodName](), settings.testValue);
+						assert.equal(self.control[settings.methodName](), settings.testValue);
 					}
 				});
 			}
@@ -165,10 +163,10 @@ export default class TestUtil {
 					self.control = new Control(buildOptions())[settings.methodName](settings.defaultValue);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-						assert.isTrue(self.control[settings.methodName]().isSame(settings.defaultValue));
+						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
 					}
 					else {
-						assert.deepEqual(self.control[settings.methodName](), settings.defaultValue);
+						assert.equal(self.control[settings.methodName](), settings.defaultValue);
 					}
 				});
 			}
@@ -178,10 +176,10 @@ export default class TestUtil {
 				self.control = new Control(buildOptions())[settings.methodName](settings.testValue);
 
 				if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-					assert.isTrue(self.control[settings.methodName]().isSame(settings.testValue));
+					assert.is(self.control[settings.methodName]().isSame(settings.testValue), true);
 				}
 				else {
-					assert.deepEqual(self.control[settings.methodName](), settings.testValue);
+					assert.equal(self.control[settings.methodName](), settings.testValue);
 				}
 			});
 
@@ -192,10 +190,10 @@ export default class TestUtil {
 				self.control[settings.methodName](settings.testValue);
 
 				if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-					assert.isTrue(self.control[settings.methodName]().isSame(settings.testValue));
+					assert.is(self.control[settings.methodName]().isSame(settings.testValue), true);
 				}
 				else {
-					assert.deepEqual(self.control[settings.methodName](), settings.testValue);
+					assert.equal(self.control[settings.methodName](), settings.testValue);
 				}
 			});
 
@@ -207,10 +205,10 @@ export default class TestUtil {
 					self.control[settings.methodName](settings.secondTestValue);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-						assert.isTrue(self.control[settings.methodName]().isSame(settings.secondTestValue));
+						assert.is(self.control[settings.methodName]().isSame(settings.secondTestValue), true);
 					}
 					else {
-						assert.deepEqual(self.control[settings.methodName](), settings.secondTestValue);
+						assert.equal(self.control[settings.methodName](), settings.secondTestValue);
 					}
 				});
 
@@ -221,10 +219,10 @@ export default class TestUtil {
 					self.control[settings.methodName](settings.secondTestValue);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-						assert.isFalse(self.control[settings.methodName]().isSame(settings.testValue));
+						assert.is(self.control[settings.methodName]().isSame(settings.testValue), false);
 					}
 					else {
-						assert.notDeepEqual(self.control[settings.methodName](), settings.testValue);
+						assert.notEqual(self.control[settings.methodName](), settings.testValue);
 					}
 				});
 			}
@@ -235,7 +233,7 @@ export default class TestUtil {
 						' method is NOT set', () => {
 						self.control = new Control(buildOptions());
 
-						assert.equal(self.count('body > div > .' + settings.testValueClass), 0);
+						assert.is(self.count('body > div > .' + settings.testValueClass), 0);
 					});
 
 					it('should have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
@@ -243,7 +241,7 @@ export default class TestUtil {
 						self.control = new Control(buildOptions());
 						self.control[settings.methodName](settings.testValue);
 
-						assert.equal(self.count('body > div > .' + settings.testValueClass), 1);
+						assert.is(self.count('body > div > .' + settings.testValueClass), 1);
 					});
 
 					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
@@ -253,7 +251,7 @@ export default class TestUtil {
 						self.control[settings.methodName](settings.testValue);
 						self.control[settings.methodName](settings.defaultValue);
 
-						assert.equal(self.count('body > div > .' + settings.testValueClass), 0);
+						assert.is(self.count('body > div > .' + settings.testValueClass), 0);
 					});
 				}
 				else {
@@ -263,7 +261,7 @@ export default class TestUtil {
 								' method is NOT set', () => {
 								self.control = new Control(buildOptions());
 
-								assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
+								assert.is(self.count('body > div > .' + mainClassOptions.class), 0);
 							});
 						}
 
@@ -274,7 +272,7 @@ export default class TestUtil {
 									self.control = new Control(buildOptions());
 									self.control[settings.methodName](mainClassOptions.testValue);
 
-									assert.equal(self.count('body > div > .' + mainClassOptions.class), 1);
+									assert.is(self.count('body > div > .' + mainClassOptions.class), 1);
 								});
 
 								if (settings.defaultValue !== mainClassOptions.testValue) {
@@ -285,7 +283,7 @@ export default class TestUtil {
 										self.control[settings.methodName](mainClassOptions.testValue);
 										self.control[settings.methodName](settings.defaultValue);
 
-										assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
+										assert.is(self.count('body > div > .' + mainClassOptions.class), 0);
 									});
 								}
 							}
@@ -295,7 +293,7 @@ export default class TestUtil {
 									self.control = new Control(buildOptions());
 									self.control[settings.methodName](otherClassOptions.testValue);
 
-									assert.equal(self.count('body > div > .' + mainClassOptions.class), 0);
+									assert.is(self.count('body > div > .' + mainClassOptions.class), 0);
 								});
 							}
 						});
@@ -306,13 +304,19 @@ export default class TestUtil {
 	}
 
 	simulateClick(element) {
+		if (!element) {
+			throw new Error('element expected');
+		}
+
 		this.trigger(element, CLICK_EVENT);
 	}
 
 	trigger(element, eventName) {
-		if (element) {
-			simulant.fire(this[getElement](element), eventName);
+		if (!element) {
+			throw new Error('element expected');
 		}
+
+		simulant.fire(this[getElement](element), eventName);
 	}
 
 	simulateKeyEvent(element, keyCode, eventName) {
@@ -354,9 +358,11 @@ export default class TestUtil {
 	}
 
 	hasClass(element, className) {
-		if (element) {
-			return element.classList.contains(className);
+		if (!element) {
+			throw new Error('element expected');
 		}
+
+		return element.classList.contains(className);
 	}
 
 	first(selector, isGlobal) {

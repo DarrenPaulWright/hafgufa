@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Calendar } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -21,14 +21,14 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar()
 				.month(20);
 
-			assert.equal(testUtil.control.month(), 11);
+			assert.is(testUtil.control.month(), 11);
 		});
 
 		it('should return 0 when month is set to anything lower than 0', () => {
 			testUtil.control = new Calendar()
 				.month(-3);
 
-			assert.equal(testUtil.control.month(), 0);
+			assert.is(testUtil.control.month(), 0);
 		});
 
 		it('should change the selected value of the month picker when month is set', () => {
@@ -38,7 +38,7 @@ describe('Calendar', () => {
 
 			testUtil.control.month(0);
 
-			assert.equal(testUtil.first('.grouped-buttons .form-button > span').textContent, 'Jan');
+			assert.is(testUtil.first('.grouped-buttons .form-button > span').textContent, 'Jan');
 		});
 
 		it('should display a different number of buttons with class "different-month" when month is changed to a month with a different length', () => {
@@ -63,9 +63,9 @@ describe('Calendar', () => {
 			});
 
 			testUtil.simulateClick(testUtil.first('.grouped-buttons .form-button'));
-			testUtil.simulateClick(testUtil.nth('.popup .heading', 3));
+			testUtil.simulateClick(testUtil.nth('.popup .heading', 3, true));
 
-			assert.equal(testUtil.control.month(), 3);
+			assert.is(testUtil.control.month(), 3);
 		});
 
 		it('should set the month to the next month when the next month button is clicked', () => {
@@ -76,7 +76,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(testUtil.control.month(), 7);
+			assert.is(testUtil.control.month(), 7);
 		});
 
 		it('should set the month to the previous month when the previous month button is clicked', () => {
@@ -87,7 +87,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(testUtil.control.month(), 5);
+			assert.is(testUtil.control.month(), 5);
 		});
 
 		it('should set the month to january when the month is already december and the next month button is clicked', () => {
@@ -98,7 +98,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(testUtil.control.month(), 0);
+			assert.is(testUtil.control.month(), 0);
 		});
 
 		it('should set the month to december when the month is already january and the previous month button is clicked', () => {
@@ -109,7 +109,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(testUtil.control.month(), 11);
+			assert.is(testUtil.control.month(), 11);
 		});
 
 		it('should set the year to the next year when the month is already december and the next month button is clicked', () => {
@@ -121,7 +121,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
-			assert.equal(testUtil.control.year(), 2001);
+			assert.is(testUtil.control.year(), 2001);
 		});
 
 		it('should set the year to the previous year when the month is already january and the previous month button is clicked', () => {
@@ -133,7 +133,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
-			assert.equal(testUtil.control.year(), 1999);
+			assert.is(testUtil.control.year(), 1999);
 		});
 	});
 
@@ -152,7 +152,7 @@ describe('Calendar', () => {
 
 			testUtil.control.year(2000);
 
-			assert.equal(testUtil.last('.grouped-buttons .form-button > span').textContent, '2000');
+			assert.is(testUtil.last('.grouped-buttons .form-button > span').textContent, '2000');
 		});
 
 		it('should select the same year when the user de-selects the current year in the year picker', () => {
@@ -162,9 +162,9 @@ describe('Calendar', () => {
 			});
 
 			testUtil.simulateClick(testUtil.last('.grouped-buttons .form-button'));
-			testUtil.simulateClick(testUtil.first('.popup .heading.selected'));
+			testUtil.simulateClick(testUtil.first('.popup .heading.selected', true));
 
-			assert.equal(testUtil.control.year(), 2018);
+			assert.is(testUtil.control.year(), 2018);
 		});
 	});
 
@@ -179,11 +179,11 @@ describe('Calendar', () => {
 				}
 			});
 
-			assert.equal(testVar, '');
+			assert.is(testVar, '');
 
 			testUtil.simulateClick(testUtil.nth('.day-button', 10));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should show the next month when a day on the next month is clicked', () => {
@@ -193,7 +193,7 @@ describe('Calendar', () => {
 
 			testUtil.simulateClick(testUtil.nth('.day-button', 40));
 
-			assert.isTrue((testUtil.control.month() === new Date().getMonth() + 1) || (testUtil.control.month() === 0));
+			assert.is((testUtil.control.month() === new Date().getMonth() + 1) || (testUtil.control.month() === 0), true);
 		});
 	});
 
@@ -211,7 +211,7 @@ describe('Calendar', () => {
 			})
 				.selectedDate(new Date());
 
-			assert.equal(testUtil.count('.day-button.selected'), 1);
+			assert.is(testUtil.count('.day-button.selected'), 1);
 		});
 
 		it('should NOT have a div with class "selected" when selectedDate is set to a date in a different month', () => {
@@ -224,7 +224,7 @@ describe('Calendar', () => {
 			})
 				.selectedDate(testDate);
 
-			assert.equal(testUtil.count('.day-button.selected'), 0);
+			assert.is(testUtil.count('.day-button.selected'), 0);
 		});
 
 		it('should remember the selected date after navigating to a different month and back', () => {
@@ -236,7 +236,7 @@ describe('Calendar', () => {
 			testUtil.control.year(testUtil.control.year() + 1);
 			testUtil.control.year(testUtil.control.year() - 1);
 
-			assert.equal(testUtil.count('.day-button.selected'), 1);
+			assert.is(testUtil.count('.day-button.selected'), 1);
 		});
 	});
 
@@ -253,7 +253,7 @@ describe('Calendar', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.heading'), 7);
+			assert.is(testUtil.count('.heading'), 7);
 		});
 
 		it('should have "weekday" div with the text "Sun" in the first div', () => {
@@ -261,7 +261,7 @@ describe('Calendar', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.first('.heading').textContent, 'Sun');
+			assert.is(testUtil.first('.heading').textContent, 'Sun');
 		});
 
 		it('should change the format of weekdays when weekdayFormat is set', () => {
@@ -270,7 +270,7 @@ describe('Calendar', () => {
 				weekdayFormat: 'EEEEEE'
 			});
 
-			assert.equal(testUtil.first('.heading').textContent, 'Su');
+			assert.is(testUtil.first('.heading').textContent, 'Su');
 		});
 	});
 
@@ -289,7 +289,7 @@ describe('Calendar', () => {
 			});
 			testUtil.control.month(0);
 
-			assert.equal(testUtil.first('.grouped-buttons .form-button > span').textContent, 'January');
+			assert.is(testUtil.first('.grouped-buttons .form-button > span').textContent, 'January');
 		});
 	});
 
@@ -306,7 +306,7 @@ describe('Calendar', () => {
 				yearRangePast: -20
 			});
 
-			assert.equal(testUtil.control.yearRangePast(), 0);
+			assert.is(testUtil.control.yearRangePast(), 0);
 		});
 
 		it('should change the year to whatever past year is selected in the year picker');
@@ -325,7 +325,7 @@ describe('Calendar', () => {
 				yearRangeFuture: -20
 			});
 
-			assert.equal(testUtil.control.yearRangeFuture(), 0);
+			assert.is(testUtil.control.yearRangeFuture(), 0);
 		});
 
 		it('should have the correct number of range years in the year picker when yearRangeFuture is set', () => {
@@ -339,8 +339,8 @@ describe('Calendar', () => {
 			//
 			// return wait(1000)
 			// 	.then(() => {
-			// 		assert.equal(testUtil.count('.popup'), 1);
-			// 		assert.equal(testUtil.count('.popup .form-button'), testUtil.control.yearRangePast() + 21);
+			// 		assert.is(testUtil.count('.popup'), 1);
+			// 		assert.is(testUtil.count('.popup .form-button'), testUtil.control.yearRangePast() + 21);
 			// 	});
 		});
 
@@ -354,7 +354,7 @@ describe('Calendar', () => {
 			//
 			// return wait(1000)
 			// 	.then(() => {
-			// 		assert.equal(testUtil.last('.popup .form-button span').text(), testUtil.control.year() + 20);
+			// 		assert.is(testUtil.last('.popup .form-button span').text(), testUtil.control.year() + 20);
 			// 	});
 		});
 

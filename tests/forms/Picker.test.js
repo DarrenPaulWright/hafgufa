@@ -1,5 +1,5 @@
-import { assert } from 'chai';
 import { clone } from 'object-agent';
+import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { Picker } from '../..';
 import TestUtil from '../TestUtil';
@@ -60,7 +60,7 @@ describe('Picker', () => {
 				options: clone(testOptions)
 			});
 
-			assert.equal(testUtil.count('.form-button'), 3);
+			assert.is(testUtil.count('.form-button'), 3);
 		});
 	});
 
@@ -70,7 +70,7 @@ describe('Picker', () => {
 				container: testUtil.container
 			});
 
-			assert.deepEqual(testUtil.control.preferred(), []);
+			assert.equal(testUtil.control.preferred(), []);
 		});
 
 		it('should return [] when the preferred option is set to []', () => {
@@ -79,7 +79,7 @@ describe('Picker', () => {
 				preferred: []
 			});
 
-			assert.deepEqual(testUtil.control.preferred(), []);
+			assert.equal(testUtil.control.preferred(), []);
 		});
 
 		it('should return an array of objects when the preferred option is set and no options are set', () => {
@@ -88,7 +88,7 @@ describe('Picker', () => {
 				preferred: testValue
 			});
 
-			assert.deepEqual(testUtil.control.preferred(), testValue);
+			assert.equal(testUtil.control.preferred(), testValue);
 		});
 
 		it('should return [] when the preferred method is set to []', () => {
@@ -97,7 +97,7 @@ describe('Picker', () => {
 			})
 				.preferred([]);
 
-			assert.deepEqual(testUtil.control.preferred(), []);
+			assert.equal(testUtil.control.preferred(), []);
 		});
 
 		it('should return an array of objects when the preferred method is set and no options are set', () => {
@@ -106,7 +106,7 @@ describe('Picker', () => {
 			})
 				.preferred(testValue);
 
-			assert.deepEqual(testUtil.control.preferred(), testValue);
+			assert.equal(testUtil.control.preferred(), testValue);
 		});
 
 		it('should return an array of objects when the preferred method is set and options are set', () => {
@@ -116,7 +116,7 @@ describe('Picker', () => {
 				preferred: testValue
 			});
 
-			assert.deepEqual(testUtil.control.preferred()[0].id, '1');
+			assert.equal(testUtil.control.preferred()[0].id, '1');
 		});
 
 		it('should return an array of objects when the preferred method is set twice and options are set', () => {
@@ -127,7 +127,7 @@ describe('Picker', () => {
 			});
 			testUtil.control.preferred(testValue2);
 
-			assert.deepEqual(testUtil.control.preferred()[0].id, '2');
+			assert.equal(testUtil.control.preferred()[0].id, '2');
 		});
 	});
 });

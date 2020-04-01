@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Button, ControlRecycler, Icon } from '../';
 import TestUtil from './TestUtil';
 
@@ -11,7 +11,7 @@ describe('ControlRecycler', () => {
 				testSetting: 'test'
 			});
 
-			assert.equal(testUtil.control.control(), undefined);
+			assert.is(testUtil.control.control(), undefined);
 		});
 	});
 
@@ -41,7 +41,7 @@ describe('ControlRecycler', () => {
 		it('should NOT return an instance of a control when getRecycledControl is called if no control has been defined', () => {
 			testUtil.control = new ControlRecycler();
 
-			assert.isNotTrue(!!testUtil.control.getRecycledControl());
+			assert.is(testUtil.control.getRecycledControl(), undefined);
 		});
 
 		it('should return an instance of a control when getRecycledControl is called', () => {
@@ -52,7 +52,7 @@ describe('ControlRecycler', () => {
 				}
 			});
 
-			assert.isTrue(!!testUtil.control.getRecycledControl());
+			assert.is(!!testUtil.control.getRecycledControl(), true);
 		});
 
 		it('should not discard a control if no id is provided', () => {
@@ -69,7 +69,7 @@ describe('ControlRecycler', () => {
 
 			testUtil.control.getRecycledControl();
 
-			assert.equal(testUtil.control.totalVisibleControls(), 2);
+			assert.is(testUtil.control.totalVisibleControls(), 2);
 		});
 
 		it('should return an instance of a recycled control when getRecycledControl is called after the control is discarded', () => {
@@ -89,7 +89,7 @@ describe('ControlRecycler', () => {
 
 			secondControl = testUtil.control.getRecycledControl();
 
-			assert.equal(initialControl, secondControl);
+			assert.is(initialControl, secondControl);
 		});
 
 		it('should return the instance of a specific control when getControl is called', () => {
@@ -110,7 +110,7 @@ describe('ControlRecycler', () => {
 
 			thirdControl = testUtil.control.getControl('test');
 
-			assert.equal(secondControl, thirdControl);
+			assert.is(secondControl, thirdControl);
 		});
 
 		it('should return an array with two controls when getRenderedControls is called after three conrols have been instantiated and one discarded', () => {
@@ -131,7 +131,7 @@ describe('ControlRecycler', () => {
 
 			testUtil.control.discardControl('test');
 
-			assert.equal(testUtil.control.getRenderedControls().length, 2);
+			assert.is(testUtil.control.getRenderedControls().length, 2);
 		});
 
 		it('should 2 when totalVisibleControls is called ther are two visible controls', () => {
@@ -152,7 +152,7 @@ describe('ControlRecycler', () => {
 
 			testUtil.control.discardControl('test');
 
-			assert.equal(testUtil.control.totalVisibleControls(), 2);
+			assert.is(testUtil.control.totalVisibleControls(), 2);
 		});
 
 		it('should get the appropriate control when getControlAtOffset is called', () => {
@@ -174,9 +174,9 @@ describe('ControlRecycler', () => {
 
 			fourthControl = testUtil.control.getControlAtOffset(1);
 
-			assert.notEqual(initialControl, fourthControl);
-			assert.equal(secondControl, fourthControl);
-			assert.notEqual(thirdControl, fourthControl);
+			assert.notIs(initialControl, fourthControl);
+			assert.is(secondControl, fourthControl);
+			assert.notIs(thirdControl, fourthControl);
 		});
 	});
 });

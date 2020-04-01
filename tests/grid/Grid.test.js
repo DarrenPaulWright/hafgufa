@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { Grid } from '../..';
 import ControlTests from '../ControlTests';
@@ -28,7 +28,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 
 			testUtil.control.addRow(rowData);
-			assert.equal(testUtil.control.rows().length, rows.length);
+			assert.is(testUtil.control.rows().length, rows.length);
 		});
 
 		it('should ', () => {
@@ -54,7 +54,7 @@ describe('Grid', () => {
 			testUtil.control.addRow(rowData);
 			const row = testUtil.control.rows();
 
-			assert.equal(row[0].cells[0].text, 'test');
+			assert.is(row[0].cells[0].text, 'test');
 		});
 
 		it('runAddRow_DateColumn_FormattedDate', () => {
@@ -77,7 +77,7 @@ describe('Grid', () => {
 
 			testUtil.control.addRow(rowData);
 			const row = testUtil.control.rows();
-			assert.equal(row[0].cells[0].text, '02/08/2013');
+			assert.is(row[0].cells[0].text, '02/08/2013');
 		});
 
 		it('runAddRow_DateColumn_FormattedDateTime', () => {
@@ -99,7 +99,7 @@ describe('Grid', () => {
 
 			testUtil.control.addRow(rowData);
 			const row = testUtil.control.rows();
-			assert.equal(row[0].cells[0].text, '02/08/2013');
+			assert.is(row[0].cells[0].text, '02/08/2013');
 		});
 	});
 
@@ -125,7 +125,7 @@ describe('Grid', () => {
 			testUtil.control = new Grid(options);
 			testUtil.control.addRows(rows);
 
-			assert.equal(testUtil.control.rows().length, rows.length);
+			assert.is(testUtil.control.rows().length, rows.length);
 		});
 	});
 });

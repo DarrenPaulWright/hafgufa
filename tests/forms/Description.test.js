@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
 import { Description, TEXT_ALIGN, WIDTH } from '../..';
 import TestUtil from '../TestUtil';
@@ -37,7 +37,7 @@ describe('Description', () => {
 				description: 'sample'
 			});
 
-			assert.equal(testUtil.first('.form-control > div:first-of-type').style[WIDTH], '100px');
+			assert.is(testUtil.first('.form-control > div:first-of-type').style[WIDTH], '100px');
 		});
 	});
 
@@ -55,7 +55,7 @@ describe('Description', () => {
 				align: 'center'
 			});
 
-			assert.equal(testUtil.first('.description > div').style[TEXT_ALIGN], 'center');
+			assert.is(testUtil.first('.description > div').style[TEXT_ALIGN], 'center');
 		});
 	});
 
@@ -63,7 +63,7 @@ describe('Description', () => {
 		it('should return false when the isFocused method is called', () => {
 			testUtil.control = new Description();
 
-			assert.equal(testUtil.control.isFocused(), false);
+			assert.is(testUtil.control.isFocused(), false);
 		});
 	});
 });

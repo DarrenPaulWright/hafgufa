@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Score } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -15,7 +15,7 @@ describe('Score', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('div.score-text'), 1);
+			assert.is(testUtil.count('div.score-text'), 1);
 		});
 	});
 });

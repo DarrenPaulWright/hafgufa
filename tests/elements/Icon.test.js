@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Icon, ICON_SIZES } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -15,8 +15,8 @@ describe('Icon', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.icon'), 1);
-			assert.equal(testUtil.first('.icon').textContent, '');
+			assert.is(testUtil.count('.icon'), 1);
+			assert.is(testUtil.first('.icon').textContent, '');
 		});
 
 		it('should render "cog"', () => {
@@ -25,7 +25,7 @@ describe('Icon', () => {
 				icon: 'cog'
 			});
 
-			assert.equal(testUtil.count('.fa-cog'), 1);
+			assert.is(testUtil.count('.fa-cog'), 1);
 		});
 
 		it('should render "circle;plus"', () => {
@@ -36,9 +36,9 @@ describe('Icon', () => {
 
 			const mainIcon = testUtil.first('.icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon, testUtil.first('.icon.fa-circle'));
-			assert.equal(mainIcon.children[0], testUtil.first('.icon.fa-plus'));
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon, testUtil.first('.icon.fa-circle'));
+			assert.is(mainIcon.children[0], testUtil.first('.icon.fa-plus'));
 		});
 
 		it('should render "cog[plus-circle]"', () => {
@@ -49,9 +49,9 @@ describe('Icon', () => {
 
 			const mainIcon = testUtil.first('.icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon, testUtil.first('.icon.fa-cog'));
-			assert.equal(mainIcon.children[0], testUtil.first('.icon.sub-icon.fa-plus-circle'));
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon, testUtil.first('.icon.fa-cog'));
+			assert.is(mainIcon.children[0], testUtil.first('.icon.sub-icon.fa-plus-circle'));
 		});
 
 		it('should render "cog[circle:plus-circle]"', () => {
@@ -63,12 +63,12 @@ describe('Icon', () => {
 			const mainIcon = testUtil.first('.icon');
 			const subIcon = testUtil.first('.sub-icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon, testUtil.first('.icon.fa-cog'));
-			assert.equal(mainIcon.children[0], testUtil.first('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 1);
-			assert.equal(subIcon, testUtil.first('.icon.fa-circle'));
-			assert.equal(subIcon.children[0], testUtil.first('.icon.fa-plus-circle'));
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon, testUtil.first('.icon.fa-cog'));
+			assert.is(mainIcon.children[0], testUtil.first('.icon.sub-icon'));
+			assert.is(subIcon.children.length, 1);
+			assert.is(subIcon, testUtil.first('.icon.fa-circle'));
+			assert.is(subIcon.children[0], testUtil.first('.icon.fa-plus-circle'));
 		});
 	});
 
@@ -79,7 +79,7 @@ describe('Icon', () => {
 				icon: ''
 			});
 
-			assert.equal(testUtil.first('.icon').textContent, '');
+			assert.is(testUtil.first('.icon').textContent, '');
 		});
 
 		it('should render ":"', () => {
@@ -90,9 +90,9 @@ describe('Icon', () => {
 
 			const mainIcon = testUtil.first('.icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0].textContent, '');
 		});
 
 		it('should render ":" and then ""', () => {
@@ -103,14 +103,14 @@ describe('Icon', () => {
 
 			const mainIcon = testUtil.first('.icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0].textContent, '');
 
 			testUtil.control.icon('');
 
-			assert.equal(mainIcon.textContent, '');
-			assert.isNotTrue(testUtil.hasClass(mainIcon, 'has-stack'));
+			assert.is(mainIcon.textContent, '');
+			assert.is(testUtil.hasClass(mainIcon, 'has-stack'), false);
 		});
 
 		it('should render "[]"', () => {
@@ -121,9 +121,9 @@ describe('Icon', () => {
 
 			const mainIcon = testUtil.first('.icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0].textContent, '');
 		});
 
 		it('should render "[:]"', () => {
@@ -135,12 +135,12 @@ describe('Icon', () => {
 			const mainIcon = testUtil.first('.icon');
 			const subIcon = testUtil.first('.sub-icon');
 
-			assert.equal(mainIcon.children.length, 1);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0], testUtil.first('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 1);
-			assert.equal(subIcon.textContent, '');
-			assert.equal(subIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 1);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0], testUtil.first('.icon.sub-icon'));
+			assert.is(subIcon.children.length, 1);
+			assert.is(subIcon.textContent, '');
+			assert.is(subIcon.children[0].textContent, '');
 		});
 
 		it('should render ":[:]"', () => {
@@ -152,13 +152,13 @@ describe('Icon', () => {
 			const mainIcon = testUtil.first('.icon');
 			const subIcon = testUtil.first('.sub-icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0], testUtil.first('.icon .icon'));
-			assert.equal(mainIcon.children[1], testUtil.first('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 1);
-			assert.equal(subIcon.textContent, '');
-			assert.equal(subIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 2);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0], testUtil.first('.icon .icon'));
+			assert.is(mainIcon.children[1], testUtil.first('.icon.sub-icon'));
+			assert.is(subIcon.children.length, 1);
+			assert.is(subIcon.textContent, '');
+			assert.is(subIcon.children[0].textContent, '');
 		});
 
 		it('should render "::[:]"', () => {
@@ -170,13 +170,13 @@ describe('Icon', () => {
 			const mainIcon = testUtil.first('.icon');
 			const subIcon = testUtil.first('.sub-icon');
 
-			assert.equal(mainIcon.children.length, 2);
-			assert.equal(mainIcon.textContent, '');
-			assert.equal(mainIcon.children[0], testUtil.first('.icon .icon'));
-			assert.equal(mainIcon.children[1], testUtil.first('.icon.sub-icon'));
-			assert.equal(subIcon.children.length, 1);
-			assert.equal(subIcon.textContent, '');
-			assert.equal(subIcon.children[0].textContent, '');
+			assert.is(mainIcon.children.length, 2);
+			assert.is(mainIcon.textContent, '');
+			assert.is(mainIcon.children[0], testUtil.first('.icon .icon'));
+			assert.is(mainIcon.children[1], testUtil.first('.icon.sub-icon'));
+			assert.is(subIcon.children.length, 1);
+			assert.is(subIcon.textContent, '');
+			assert.is(subIcon.children[0].textContent, '');
 		});
 	});
 
@@ -186,7 +186,7 @@ describe('Icon', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.icon-lg'), 1);
+			assert.is(testUtil.count('.icon-lg'), 1);
 		});
 
 		it('should have a span with class "fa-4x" if size is set to ICON_SIZES.FOUR_TIMES', () => {
@@ -195,7 +195,7 @@ describe('Icon', () => {
 				size: ICON_SIZES.FOUR_TIMES
 			});
 
-			assert.equal(testUtil.count('.icon-4x'), 1);
+			assert.is(testUtil.count('.icon-4x'), 1);
 		});
 	});
 });

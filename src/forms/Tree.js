@@ -145,7 +145,7 @@ export default class Tree extends FocusMixin(FormControl) {
 					...branches[index],
 					css: set({}, PADDING_LEFT, depth ? ((depth * INDENT_PIXELS) + PIXELS) : EMPTY_STRING),
 					isSelectable: self.isMultiSelect() || enforceBoolean(branches[index].isSelectable, false),
-					isExpandable: !!branches[index].children,
+					isExpandable: branches[index].children !== undefined,
 					isExpanded: self[EXPANDED_BRANCHES].includes(branches[index].id)
 				};
 
@@ -249,7 +249,7 @@ export default class Tree extends FocusMixin(FormControl) {
 		const self = this;
 
 		if (self[EXPANDED_BRANCHES].includes(heading.id())) {
-			self[EXPANDED_BRANCHES] = self[EXPANDED_BRANCHES].filter((item) => item === heading.id());
+			self[EXPANDED_BRANCHES] = self[EXPANDED_BRANCHES].filter((item) => item !== heading.id());
 		}
 		else {
 			self[EXPANDED_BRANCHES].push(heading.id());

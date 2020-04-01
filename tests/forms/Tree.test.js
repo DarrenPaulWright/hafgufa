@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { PIXELS } from 'type-enforcer-ui';
 import { Tree } from '../..';
 import TestUtil from '../TestUtil';
@@ -72,7 +72,7 @@ describe('Tree', () => {
 				branches: nestedBranches
 			});
 
-			assert.equal(testUtil.count('.heading button'), 1);
+			assert.is(testUtil.count('.heading button'), 1);
 		});
 
 		it('should display child branches when an expandable branch is expanded', () => {
@@ -83,7 +83,7 @@ describe('Tree', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading button'));
 
-			assert.equal(testUtil.count('.heading'), 6);
+			assert.is(testUtil.count('.heading'), 6);
 		});
 
 		it('should NOT display child branches when an expandable branch is expanded and contracted', () => {
@@ -92,10 +92,10 @@ describe('Tree', () => {
 				branches: nestedBranches
 			});
 
-			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
-			testUtil.simulateClick(testUtil.first('.heading .expander.expandable'));
+			testUtil.simulateClick(testUtil.first('.heading #expander'));
+			testUtil.simulateClick(testUtil.first('.heading #expander'));
 
-			assert.equal(testUtil.count('.heading'), 3);
+			assert.is(testUtil.count('.heading'), 3);
 		});
 
 		it('should hide all expanders if none of the branches have children', () => {
@@ -104,7 +104,7 @@ describe('Tree', () => {
 				branches: flatBranches
 			});
 
-			assert.equal(testUtil.count('.heading .expander'), 0);
+			assert.is(testUtil.count('.heading #expander'), 0);
 		});
 
 		it('should hide all checkboxes if none of the branches are multi select', () => {
@@ -113,7 +113,7 @@ describe('Tree', () => {
 				branches: flatBranches
 			});
 
-			assert.equal(testUtil.count('.heading .checkboxes'), 0);
+			assert.is(testUtil.count('.heading .checkboxes'), 0);
 		});
 
 		it('should only have one heading if branches are updated to one branch after more', () => {
@@ -128,7 +128,7 @@ describe('Tree', () => {
 				isMultiSelect: false
 			}]);
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 	});
 
@@ -165,7 +165,7 @@ describe('Tree', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.value()[0], 1);
+			assert.is(testUtil.control.value()[0], '1');
 		});
 
 		it('should have a value of "1" if the branch with id of 1 is clicked and the branch doesn\'t have a checkbox', () => {
@@ -176,7 +176,7 @@ describe('Tree', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.value()[0], 1);
+			assert.is(testUtil.control.value()[0], '1');
 		});
 
 		it('should NOT have a value if a branch is clicked twice', () => {
@@ -189,7 +189,7 @@ describe('Tree', () => {
 			testUtil.simulateClick(testUtil.first('.heading'));
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.value().length, 0);
+			assert.is(testUtil.control.value().length, 0);
 		});
 
 		it('should have a value of [1] if the value is set to [1]', () => {
@@ -200,7 +200,7 @@ describe('Tree', () => {
 
 			testUtil.control.value([1]);
 
-			assert.equal(testUtil.control.value()[0], 1);
+			assert.is(testUtil.control.value()[0], 1);
 		});
 
 		it('should have a value of [1] if the value is set to the number 1', () => {
@@ -211,7 +211,7 @@ describe('Tree', () => {
 
 			testUtil.control.value(1);
 
-			assert.equal(testUtil.control.value()[0], 1);
+			assert.is(testUtil.control.value()[0], 1);
 		});
 
 		it('should have a value of [1,2] if the value is set to a string "1,2"', () => {
@@ -222,7 +222,7 @@ describe('Tree', () => {
 
 			testUtil.control.value('1,2');
 
-			assert.isTrue(testUtil.control.value()[0] === '1' && testUtil.control.value()[1] === '2');
+			assert.is(testUtil.control.value()[0] === '1' && testUtil.control.value()[1] === '2', true);
 		});
 
 		it('should have a value of [] if the value is set to the number 1 and then an empty string', () => {
@@ -234,7 +234,7 @@ describe('Tree', () => {
 			testUtil.control.value(1);
 			testUtil.control.value('');
 
-			assert.deepEqual(testUtil.control.value(), []);
+			assert.equal(testUtil.control.value(), []);
 		});
 	});
 
@@ -267,7 +267,7 @@ describe('Tree', () => {
 
 			rowHeight = parseFloat(testUtil.first('.heading').style.height, 10);
 
-			assert.equal(Math.round(parseFloat(getComputedStyle(testUtil.first('.virtual-list')).height)), Math.round(rowHeight *
+			assert.is(Math.round(parseFloat(getComputedStyle(testUtil.first('.virtual-list')).height)), Math.round(rowHeight *
 				3));
 		});
 
@@ -280,7 +280,7 @@ describe('Tree', () => {
 
 			testUtil.control.resize();
 
-			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
+			assert.is(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
 		});
 
 		it('should have a height three times that of a branch if the height is set to 50px and then fitHeightToContents is called', () => {
@@ -295,7 +295,7 @@ describe('Tree', () => {
 			testUtil.control.fitHeightToContents();
 			rowHeight = parseFloat(testUtil.first('.heading').style.height);
 
-			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
+			assert.is(getComputedStyle(testUtil.first('.virtual-list')).height, Math.round(rowHeight * 3) + PIXELS);
 		});
 
 		it('should set the height of the virtual list control to the same as itself if there are more rows than fit in the height provided', () => {
@@ -305,7 +305,7 @@ describe('Tree', () => {
 				height: '50px'
 			});
 
-			assert.equal(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
+			assert.is(getComputedStyle(testUtil.first('.virtual-list')).height, '50px');
 		});
 	});
 });

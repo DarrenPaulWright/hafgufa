@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Drawer } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -23,7 +23,7 @@ describe('Drawer', () => {
 				dock: 'top'
 			});
 
-			assert.equal(testUtil.count('.drawer.top'), 1);
+			assert.is(testUtil.count('.drawer.top'), 1);
 		});
 
 		it('should have a class "right" if set to right', () => {
@@ -32,7 +32,7 @@ describe('Drawer', () => {
 				dock: 'right'
 			});
 
-			assert.equal(testUtil.count('.drawer.right'), 1);
+			assert.is(testUtil.count('.drawer.right'), 1);
 		});
 
 		it('should have a class "bottom" if set to bottom', () => {
@@ -41,7 +41,7 @@ describe('Drawer', () => {
 				dock: 'bottom'
 			});
 
-			assert.equal(testUtil.count('.drawer.bottom'), 1);
+			assert.is(testUtil.count('.drawer.bottom'), 1);
 		});
 
 		it('should have a class "left" if set to left', () => {
@@ -50,7 +50,7 @@ describe('Drawer', () => {
 				dock: 'left'
 			});
 
-			assert.equal(testUtil.count('.drawer.left'), 1);
+			assert.is(testUtil.count('.drawer.left'), 1);
 		});
 	});
 
@@ -62,7 +62,7 @@ describe('Drawer', () => {
 				canResize: false
 			});
 
-			assert.equal(testUtil.count('.resizer'), 0);
+			assert.is(testUtil.count('.resizer'), 0);
 		});
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "top"', () => {
@@ -73,8 +73,8 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(testUtil.count('.resizer.horizontal'), 1);
-			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 64]);
+			assert.is(testUtil.count('.resizer.horizontal'), 1);
+			assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 64]);
 		});
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "right"', () => {
@@ -85,8 +85,8 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(testUtil.count('.resizer.vertical'), 1);
-			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [936, 0]);
+			assert.is(testUtil.count('.resizer.vertical'), 1);
+			assert.equal(testUtil.getComputedTranslateXY('.resizer'), [936, 0]);
 		});
 
 		it('should have a resizer with class "horizontal" if canResize is true and dock is "bottom"', () => {
@@ -97,8 +97,8 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(testUtil.count('.resizer.horizontal'), 1);
-			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [0, 936]);
+			assert.is(testUtil.count('.resizer.horizontal'), 1);
+			assert.equal(testUtil.getComputedTranslateXY('.resizer'), [0, 936]);
 		});
 
 		it('should have a resizer with class "vertical" if canResize is true and dock is "left"', () => {
@@ -109,8 +109,8 @@ describe('Drawer', () => {
 				canResize: true
 			});
 
-			assert.equal(testUtil.count('.resizer.vertical'), 1);
-			assert.deepEqual(testUtil.getComputedTranslateXY('.resizer'), [64, 0]);
+			assert.is(testUtil.count('.resizer.vertical'), 1);
+			assert.equal(testUtil.getComputedTranslateXY('.resizer'), [64, 0]);
 		});
 	});
 });

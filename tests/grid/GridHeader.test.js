@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
 import GridHeader from '../../src/grid/GridHeader';
@@ -40,7 +40,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.grid-header-cell'), 2);
+			assert.is(testUtil.count('.grid-header-cell'), 2);
 		});
 
 		it('should remove previous columns when new columns are set', () => {
@@ -61,7 +61,7 @@ describe('GridHeader', () => {
 				title: 'test 4'
 			}]);
 
-			assert.equal(testUtil.count('.grid-header-cell'), 2);
+			assert.is(testUtil.count('.grid-header-cell'), 2);
 		});
 
 		it('should set the width of flexible width columns proportionally', () => {
@@ -92,7 +92,7 @@ describe('GridHeader', () => {
 			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
 			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
-			assert.equal(firstCellWidth, secondCellWidth * 3);
+			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
 
 		it('should accept % or * for flexible width columns', () => {
@@ -121,7 +121,7 @@ describe('GridHeader', () => {
 			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
 			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
-			assert.equal(firstCellWidth, secondCellWidth * 3);
+			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
 
 		it('should accept an asterisk without a number as a width value', () => {
@@ -150,7 +150,7 @@ describe('GridHeader', () => {
 			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
 			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
-			assert.equal(firstCellWidth, secondCellWidth * 3);
+			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
 
 		it('should resize flexible width columns when the header width changes', () => {
@@ -171,7 +171,7 @@ describe('GridHeader', () => {
 			testUtil.control.width(200);
 			testUtil.control.desiredWidth(200);
 
-			assert.equal(testUtil.nth('.grid-header-cell', 0).offsetWidth, 100);
+			assert.is(testUtil.nth('.grid-header-cell', 0).offsetWidth, 100);
 		});
 
 		it('should resize flexible width columns to the minWidth when the header width changes', () => {
@@ -198,7 +198,7 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(200);
 
-			assert.equal(testUtil.nth('.grid-header-cell', 1).offsetWidth, 49);
+			assert.is(testUtil.nth('.grid-header-cell', 1).offsetWidth, 49);
 		});
 
 		it('should only have one sorted column after two different columns are sorted', () => {
@@ -220,7 +220,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 1));
 
-			assert.equal(testUtil.count('.sort-asc'), 1);
+			assert.is(testUtil.count('.sort-asc'), 1);
 		});
 	});
 
@@ -236,7 +236,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.tags'), 1);
+			assert.is(testUtil.count('.tags'), 1);
 		});
 
 		it('should set a default filter type of autocomplete if canFilter is true and column type is email', () => {
@@ -250,7 +250,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.tags'), 1);
+			assert.is(testUtil.count('.tags'), 1);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is date', () => {
@@ -264,7 +264,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 1);
+			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should NOT set a default filter type of date if canFilter is false and column type is date', () => {
@@ -278,7 +278,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 0);
+			assert.is(testUtil.count('.grouped-buttons'), 0);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is datetime', () => {
@@ -292,7 +292,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 1);
+			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should set a default filter type of date if canFilter is true and column type is time', () => {
@@ -306,7 +306,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 1);
+			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should set a default filter type of number if canFilter is true and column type is number', () => {
@@ -320,7 +320,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('input[type=text]'), 2);
+			assert.is(testUtil.count('input[type=text]'), 2);
 		});
 
 		it('should NOT set a default filter type of number if canFilter is false and column type is number', () => {
@@ -334,7 +334,7 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('input[type=text]'), 0);
+			assert.is(testUtil.count('input[type=text]'), 0);
 		});
 	});
 
@@ -356,7 +356,7 @@ describe('GridHeader', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.equal(testVal, gridConstants.SORT_TYPES.ASC);
+			assert.is(testVal, gridConstants.SORT_TYPES.ASC);
 		});
 
 		it('should call the onSort callback when a column is sorted twice', () => {
@@ -377,7 +377,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.equal(testVal, gridConstants.SORT_TYPES.DESC);
+			assert.is(testVal, gridConstants.SORT_TYPES.DESC);
 		});
 
 		it('should call the onSort callback when a column is sorted three times', () => {
@@ -399,7 +399,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.equal(testVal, gridConstants.SORT_TYPES.NONE);
+			assert.is(testVal, gridConstants.SORT_TYPES.NONE);
 		});
 
 		it('should set the first column sort direction to none when a second column is sorted', () => {
@@ -418,10 +418,10 @@ describe('GridHeader', () => {
 				}]
 			});
 
-			testUtil.simulateClick(testUtil.nth('label', 0));
-			testUtil.simulateClick(testUtil.nth('label', 1));
+			testUtil.simulateClick(testUtil.nth('.heading', 0));
+			testUtil.simulateClick(testUtil.nth('.heading', 1));
 
-			assert.isNotTrue(testUtil.hasClass(testUtil.nth('label', 0), 'sort-asc'));
+			assert.is(testUtil.hasClass(testUtil.nth('.heading', 0), 'sort-asc'), false);
 		});
 
 		it('should call the onSelectAllGroups callback when a checkbox is clicked', () => {
@@ -440,7 +440,7 @@ describe('GridHeader', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.equal(testVal, 'test');
+			assert.is(testVal, 'test');
 		});
 
 		it('should call the onGetFilterData callback when a filter control is built', () => {
@@ -459,7 +459,7 @@ describe('GridHeader', () => {
 				}
 			});
 
-			assert.equal(testVal, 'test');
+			assert.is(testVal, 'test');
 		});
 
 		it('should call the onFilter callback when a filter is set', () => {
@@ -481,7 +481,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
-			assert.equal(testVal, 'test');
+			assert.is(testVal, 'test');
 		});
 	});
 
@@ -521,7 +521,7 @@ describe('GridHeader', () => {
 
 			testUtil.trigger(testUtil.nth('.grid-header-cell', 1), CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading', true), 5);
+			assert.is(testUtil.count('.menu .heading', true), 5);
 		});
 	});
 
@@ -546,7 +546,7 @@ describe('GridHeader', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
+			assert.is(testUtil.first('input[type=checkbox]').checked, true);
 		});
 	});
 
@@ -571,7 +571,7 @@ describe('GridHeader', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').indeterminate, true);
+			assert.is(testUtil.first('input[type=checkbox]').indeterminate, true);
 		});
 	});
 
@@ -608,7 +608,7 @@ describe('GridHeader', () => {
 
 			lastCellWidth = testUtil.nth('.grid-header-cell', 2).offsetWidth;
 
-			assert.equal(lastCellWidth, 37);
+			assert.is(lastCellWidth, 37);
 		});
 
 	});

@@ -1,5 +1,5 @@
 import { wait } from 'async-agent';
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../..';
 import * as gridConstants from '../../src/grid/gridConstants';
 import GridHeaderCell from '../../src/grid/GridHeaderCell';
@@ -32,7 +32,7 @@ describe('GridHeaderCell', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.heading'), 1);
+			assert.is(testUtil.count('.heading'), 1);
 		});
 
 		it('should have a label element with label text in it', () => {
@@ -41,7 +41,7 @@ describe('GridHeaderCell', () => {
 				label: 'title'
 			});
 
-			assert.equal(testUtil.first('.heading span').textContent, 'title');
+			assert.is(testUtil.first('.heading span').textContent, 'title');
 		});
 	});
 
@@ -59,7 +59,7 @@ describe('GridHeaderCell', () => {
 				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
 			});
 
-			assert.equal(testUtil.count('input[type=checkbox]'), 1);
+			assert.is(testUtil.count('input[type=checkbox]'), 1);
 		});
 
 		it('should remove the checkbox if dataType is set back to none', () => {
@@ -70,7 +70,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.dataType(gridConstants.COLUMN_TYPES.NONE);
 
-			assert.equal(testUtil.count('input[type=checkbox]'), 0);
+			assert.is(testUtil.count('input[type=checkbox]'), 0);
 		});
 
 		it('should call the onSelect callback with true when a checkbox is clicked', () => {
@@ -86,7 +86,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar === true);
+			assert.is(testVar === true, true);
 		});
 
 		it('should call the onSelect callback with false when a checkbox is clicked a second time', () => {
@@ -103,7 +103,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.isTrue(testVar === false);
+			assert.is(testVar === false, true);
 		});
 	});
 
@@ -120,7 +120,7 @@ describe('GridHeaderCell', () => {
 				canSort: true
 			});
 
-			assert.equal(testUtil.count('.heading.sortable'), 1);
+			assert.is(testUtil.count('.heading.sortable'), 1);
 		});
 
 		it('should NOT have class "sortable" if canSort is set back to false', () => {
@@ -131,7 +131,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.canSort(false);
 
-			assert.equal(testUtil.count('label.sortable'), 0);
+			assert.is(testUtil.count('label.sortable'), 0);
 		});
 
 		it('should set sortDirection to ASC when the label is clicked once', () => {
@@ -142,7 +142,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to DESC when the label is clicked twice', () => {
@@ -154,7 +154,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.heading'));
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection back to NONE when the label is clicked thrice', () => {
@@ -163,11 +163,11 @@ describe('GridHeaderCell', () => {
 				canSort: true
 			});
 
-			testUtil.simulateClick(testUtil.first('label'));
-			testUtil.simulateClick(testUtil.first('label'));
-			testUtil.simulateClick(testUtil.first('label'));
+			testUtil.simulateClick(testUtil.first('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
+			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
 		});
 	});
 
@@ -186,7 +186,7 @@ describe('GridHeaderCell', () => {
 				sortDirection: gridConstants.SORT_TYPES.ASC
 			});
 
-			assert.equal(testUtil.count('label.sort-asc'), 0);
+			assert.is(testUtil.count('label.sort-asc'), 0);
 		});
 
 		it('should have class "sort-asc" if sortDirection is set to asc', () => {
@@ -196,7 +196,7 @@ describe('GridHeaderCell', () => {
 				sortDirection: gridConstants.SORT_TYPES.ASC
 			});
 
-			assert.equal(testUtil.count('.heading.sort-asc'), 1);
+			assert.is(testUtil.count('.heading.sort-asc'), 1);
 		});
 
 		it('should have class "sort-desc" if sortDirection is set to desc', () => {
@@ -206,7 +206,7 @@ describe('GridHeaderCell', () => {
 				sortDirection: gridConstants.SORT_TYPES.DESC
 			});
 
-			assert.equal(testUtil.count('.heading.sort-desc'), 1);
+			assert.is(testUtil.count('.heading.sort-desc'), 1);
 		});
 
 		it('should call the onSort callback when sortDirection is set and the label is clicked', () => {
@@ -223,7 +223,7 @@ describe('GridHeaderCell', () => {
 			testUtil.control.sortDirection(gridConstants.SORT_TYPES.ASC);
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 	});
 
@@ -241,7 +241,7 @@ describe('GridHeaderCell', () => {
 				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE
 			});
 
-			assert.equal(testUtil.count('.tags'), 1);
+			assert.is(testUtil.count('.tags'), 1);
 		});
 
 		it('should call the onGetFilterOptions callback when filterType is set to AUTO_COMPLETE', () => {
@@ -258,7 +258,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should build a picker control when filterType is set to DROPDOWN', () => {
@@ -267,7 +267,7 @@ describe('GridHeaderCell', () => {
 				filterType: gridConstants.FILTER_TYPES.DROPDOWN
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 1);
+			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should call the onGetFilterOptions callback when filterType is set to DROPDOWN', () => {
@@ -282,7 +282,7 @@ describe('GridHeaderCell', () => {
 			})
 				.filterType(gridConstants.FILTER_TYPES.DROPDOWN);
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should build a picker control when filterType is set to DATE', () => {
@@ -291,7 +291,7 @@ describe('GridHeaderCell', () => {
 				filterType: gridConstants.FILTER_TYPES.DATE
 			});
 
-			assert.equal(testUtil.count('.grouped-buttons'), 1);
+			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
 		it('should set the width of a picker control when filterType is set to DATE and resize is called', () => {
@@ -303,7 +303,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.resize();
 
-			assert.equal(getComputedStyle(testUtil.first('.grouped-buttons')).width, '100px');
+			assert.is(getComputedStyle(testUtil.first('.grouped-buttons')).width, '100px');
 		});
 
 		it('should remove all filter controls when filterType is set back to NONE', () => {
@@ -314,7 +314,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.filterType(gridConstants.FILTER_TYPES.NONE);
 
-			assert.equal(testUtil.count('.form-control'), 0);
+			assert.is(testUtil.count('.form-control'), 0);
 		});
 
 		it('should build two text controls when filterType is set to NUMBER', () => {
@@ -324,7 +324,7 @@ describe('GridHeaderCell', () => {
 				filterType: gridConstants.FILTER_TYPES.NUMBER
 			});
 
-			assert.equal(testUtil.count('input[type=text]'), 2);
+			assert.is(testUtil.count('input[type=text]'), 2);
 		});
 
 		it('should have default widths set on the two filters when filterType is set to NUMBER', () => {
@@ -335,8 +335,8 @@ describe('GridHeaderCell', () => {
 				width: '100px'
 			});
 
-			assert.equal(getComputedStyle(testUtil.nth('.text-input', 0)).width, '48px');
-			assert.equal(getComputedStyle(testUtil.nth('.text-input', 1)).width, '48px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 0)).width, '48px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 1)).width, '48px');
 		});
 
 		it('should have equal widths set on the two NUMBER filters after resize is called when filterType is set to NUMBER', () => {
@@ -349,8 +349,8 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.resize(true);
 
-			assert.equal(getComputedStyle(testUtil.nth('.text-input', 0)).width, '98px');
-			assert.equal(getComputedStyle(testUtil.nth('.text-input', 1)).width, '98px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 0)).width, '98px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 1)).width, '98px');
 		});
 	});
 
@@ -377,7 +377,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.filter('asdf');
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should call the onFilter callback once when the filter method is set and filterType is AUTO_COMPLETE', () => {
@@ -393,7 +393,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.filter('asdf');
 
-			assert.equal(testVar, 'asdf');
+			assert.is(testVar, 'asdf');
 		});
 
 		it('should return a filter when an AUTO_COMPLETE filter control is set', () => {
@@ -407,7 +407,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
-			assert.equal(testUtil.control.filter(), 'test1');
+			assert.is(testUtil.control.filter(), 'test1');
 		});
 
 		it('should call the onFilter callback when an AUTO_COMPLETE filter control is set', () => {
@@ -424,7 +424,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onFilter callback once when the filter method is set and filterType is DROPDOWN', () => {
@@ -440,7 +440,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.filter('asdf');
 
-			assert.equal(testVar, 'asdf');
+			assert.is(testVar, 'asdf');
 		});
 
 		it('should return a filter value when a DROPDOWN filter control is set', () => {
@@ -455,7 +455,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.popup-button'));
 			testUtil.simulateClick(testUtil.first('.menu .heading', true));
 
-			assert.equal(testUtil.control.filter(), 'test');
+			assert.is(testUtil.control.filter(), 'test');
 		});
 
 		it('should call the onFilter callback when a DROPDOWN filter control is set', () => {
@@ -475,7 +475,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.popup-button'));
 			testUtil.simulateClick(testUtil.first('.menu .heading', true));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onFilter callback once when the filter method is set and filterType is NUMBER', () => {
@@ -491,7 +491,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.filter('asdf');
 
-			assert.equal(testVar, 1);
+			assert.is(testVar, 1);
 		});
 
 		it('should return a filter value when a NUMBER filter control is set', () => {
@@ -512,7 +512,7 @@ describe('GridHeaderCell', () => {
 
 			return wait(210)
 				.then(() => {
-					assert.equal(testUtil.control.filter(), '5,10');
+					assert.is(testUtil.control.filter(), '5,10');
 				});
 		});
 
@@ -538,7 +538,7 @@ describe('GridHeaderCell', () => {
 
 			return wait(210)
 				.then(() => {
-					assert.equal(testVar, '5,10');
+					assert.is(testVar, '5,10');
 				});
 		});
 
@@ -562,7 +562,7 @@ describe('GridHeaderCell', () => {
 			inputs[0].value = '';
 			testUtil.trigger(inputs[0], 'change');
 
-			assert.equal(testVar, '');
+			assert.is(testVar, '');
 		});
 	});
 
@@ -586,7 +586,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.context-menu'), 0);
+			assert.is(testUtil.count('.context-menu'), 0);
 		});
 
 		it('should have three options in the contextmenu if selectableColumns is not set and canSort is true', () => {
@@ -599,7 +599,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading', true), 3);
+			assert.is(testUtil.count('.menu .heading', true), 3);
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to two columns', () => {
@@ -618,7 +618,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading', true), 5);
+			assert.is(testUtil.count('.menu .heading', true), 5);
 		});
 
 		it('should have five options in the contextmenu if selectableColumns is set to three columns but one doesn\'t have a title', () => {
@@ -639,7 +639,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading', true), 5);
+			assert.is(testUtil.count('.menu .heading', true), 5);
 		});
 
 		it('should have a checked checkbox in the contextmenu if one of the selectableColumns has isHidden set to false', () => {
@@ -664,7 +664,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.trigger(testUtil.control.element, CONTEXT_MENU_EVENT);
 
-			assert.equal(testUtil.count('.menu .heading.selected', true), 1);
+			assert.is(testUtil.count('.menu .heading.selected', true), 1);
 		});
 
 		it('should call settings.onColumnChange when the fourth option in the context menu is clicked', () => {
@@ -696,7 +696,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 3, true));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.ASC when the first option in the context menu is clicked', () => {
@@ -710,7 +710,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 0, true));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.DESC when the second option in the context menu is clicked', () => {
@@ -724,7 +724,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 1, true));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.NONE when the third option in the context menu is clicked', () => {
@@ -738,7 +738,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 2, true));
 
-			assert.equal(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
 		});
 	});
 
@@ -756,7 +756,7 @@ describe('GridHeaderCell', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
+			assert.is(testUtil.first('input[type=checkbox]').checked, true);
 		});
 
 		it('should have an unchecked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false', () => {
@@ -768,7 +768,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.isAllRowsSelected(false);
 
-			assert.equal(testUtil.first('input[type=checkbox]').checked, false);
+			assert.is(testUtil.first('input[type=checkbox]').checked, false);
 		});
 
 		it('should have a checked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false then true', () => {
@@ -781,7 +781,7 @@ describe('GridHeaderCell', () => {
 			testUtil.control.isAllRowsSelected(false);
 			testUtil.control.isAllRowsSelected(true);
 
-			assert.equal(testUtil.first('input[type=checkbox]').checked, true);
+			assert.is(testUtil.first('input[type=checkbox]').checked, true);
 		});
 
 		it('should not throw an error if isAllRowsSelected is set when the datatype is something other than checkbox', () => {
@@ -791,7 +791,7 @@ describe('GridHeaderCell', () => {
 				isAllRowsSelected: true
 			});
 
-			assert.equal(testUtil.count('input[type=checkbox]'), 0);
+			assert.is(testUtil.count('input[type=checkbox]'), 0);
 		});
 	});
 
@@ -809,7 +809,7 @@ describe('GridHeaderCell', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(testUtil.first('input[type=checkbox]').indeterminate, true);
+			assert.is(testUtil.first('input[type=checkbox]').indeterminate, true);
 		});
 
 		it('should not throw an error if isSomeRowsSelected is set when the datatype is something other than checkbox', () => {
@@ -819,7 +819,7 @@ describe('GridHeaderCell', () => {
 				isSomeRowsSelected: true
 			});
 
-			assert.equal(testUtil.count('input[type=checkbox]'), 0);
+			assert.is(testUtil.count('input[type=checkbox]'), 0);
 		});
 	});
 });

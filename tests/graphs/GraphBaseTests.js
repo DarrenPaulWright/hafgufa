@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Thickness } from 'type-enforcer-ui';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
@@ -13,7 +13,7 @@ export default function GraphBaseTests(Control, testUtil, settings) {
 				container: testUtil.container
 			});
 
-			assert.isTrue(testUtil.control.svgElement() instanceof SVGElement);
+			assert.is(testUtil.control.svgElement() instanceof SVGElement, true);
 		});
 	};
 

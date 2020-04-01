@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { IsWorking } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -26,7 +26,7 @@ describe('IsWorking', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count('.is-working'), 1);
+			assert.is(testUtil.count('.is-working'), 1);
 		});
 	});
 
@@ -40,7 +40,7 @@ describe('IsWorking', () => {
 				delay: 0
 			});
 
-			assert.equal(testUtil.count('.is-working'), 1);
+			assert.is(testUtil.count('.is-working'), 1);
 		});
 
 		it('should have a medium animation container if the height of the control is less than 200', () => {
@@ -52,7 +52,7 @@ describe('IsWorking', () => {
 				delay: 0
 			});
 
-			assert.equal(testUtil.count('.is-working.medium'), 1);
+			assert.is(testUtil.count('.is-working.medium'), 1);
 		});
 
 		it('should have a medium animation container if the width of the control is less than 200', () => {
@@ -64,7 +64,7 @@ describe('IsWorking', () => {
 				delay: 0
 			});
 
-			assert.equal(testUtil.count('.is-working.medium'), 1);
+			assert.is(testUtil.count('.is-working.medium'), 1);
 		});
 
 		it('should have a small animation container if the height of the control is less than 100', () => {
@@ -76,7 +76,7 @@ describe('IsWorking', () => {
 				delay: 0
 			});
 
-			assert.equal(testUtil.count('.is-working.small'), 1);
+			assert.is(testUtil.count('.is-working.small'), 1);
 		});
 
 		it('should have a small animation container if the width of the control is less than 100', () => {
@@ -88,7 +88,7 @@ describe('IsWorking', () => {
 				delay: 0
 			});
 
-			assert.equal(testUtil.count('.is-working.small'), 1);
+			assert.is(testUtil.count('.is-working.small'), 1);
 		});
 	});
 
@@ -108,7 +108,7 @@ describe('IsWorking', () => {
 				label: testLabel
 			});
 
-			assert.equal(testUtil.first('label').textContent, testLabel);
+			assert.is(testUtil.first('label').textContent, testLabel);
 		});
 
 		it('should have a label in the DOM when a label method is called', () => {
@@ -117,7 +117,7 @@ describe('IsWorking', () => {
 			})
 				.label(testLabel);
 
-			assert.equal(testUtil.first('label').textContent, testLabel);
+			assert.is(testUtil.first('label').textContent, testLabel);
 		});
 
 		it('should update the label when the label method is called', () => {
@@ -128,7 +128,7 @@ describe('IsWorking', () => {
 
 			testUtil.control.label(testLabel2);
 
-			assert.equal(testUtil.first('label').textContent, testLabel2);
+			assert.is(testUtil.first('label').textContent, testLabel2);
 		});
 
 		it('should not have a label if the label is set to an empty string', () => {
@@ -138,7 +138,7 @@ describe('IsWorking', () => {
 			})
 				.label('');
 
-			assert.equal(testUtil.count('label'), 0);
+			assert.is(testUtil.count('label'), 0);
 		});
 	});
 });

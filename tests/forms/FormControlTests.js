@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
 export default function FormControlTests(Control, testUtil, settings) {
@@ -16,7 +16,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					container: testUtil.container
 				});
 
-				assert.equal(testUtil.control.isRequired(), false);
+				assert.is(testUtil.control.isRequired(), false);
 			});
 
 			it('should have a required class if set to true and a title is provided', () => {
@@ -27,7 +27,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				})
 					.isRequired(true);
 
-				assert.equal(testUtil.count('.required'), 1);
+				assert.is(testUtil.count('.required'), 1);
 			});
 
 			it('should be true if it was set to true in the options', () => {
@@ -38,7 +38,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					isRequired: true
 				});
 
-				assert.equal(testUtil.control.isRequired(), true);
+				assert.is(testUtil.control.isRequired(), true);
 			});
 
 			it('should NOT have a required class if set to false', () => {
@@ -48,7 +48,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 				})
 					.isRequired(false);
 
-				assert.equal(testUtil.count('.required'), 0);
+				assert.is(testUtil.count('.required'), 0);
 			});
 
 			it('should be false if it was set to false in the options', () => {
@@ -58,7 +58,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					isRequired: false
 				});
 
-				assert.equal(testUtil.control.isRequired(), false);
+				assert.is(testUtil.control.isRequired(), false);
 			});
 		});
 	};
@@ -91,7 +91,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					testUtil.control.changeDelay(0);
 					testUtil.control.value(settings.onChange.validValue);
 
-					assert.equal(testVar, 0);
+					assert.is(testVar, 0);
 				});
 
 				it('should call the onChange callback when the value is set via the .value method and triggerChange is called', () => {
@@ -105,7 +105,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					testUtil.control.value(settings.onChange.validValue);
 					testUtil.control.triggerChange(true);
 
-					assert.equal(testVar, 1);
+					assert.is(testVar, 1);
 				});
 
 				it('should call the onChange callback when the value is set via the DOM', () => {
@@ -119,7 +119,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					testUtil.control.changeDelay(0);
 					settings.onChange.setValueViaDom();
 
-					assert.equal(testVar, 1);
+					assert.is(testVar, 1);
 				});
 
 				it('should call the onChange callback when the value is set via the DOM and triggerChange is called', () => {
@@ -134,7 +134,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 					settings.onChange.setValueViaDom();
 					testUtil.control.triggerChange(true);
 
-					assert.equal(testVar, 2);
+					assert.is(testVar, 2);
 				});
 
 				if (!settings.onChange.skipSameValue) {
@@ -150,7 +150,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 						testUtil.control.value(settings.onChange.validValue);
 						settings.onChange.setValueViaDom();
 
-						assert.equal(testVar, 1);
+						assert.is(testVar, 1);
 					});
 				}
 
@@ -164,7 +164,7 @@ export default function FormControlTests(Control, testUtil, settings) {
 
 					testUtil.control.triggerChange(true);
 
-					assert.equal(testVar, 1);
+					assert.is(testVar, 1);
 				});
 			});
 		}

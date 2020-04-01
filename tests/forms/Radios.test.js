@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Radios } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -42,7 +42,7 @@ describe('Radios', () => {
 				container: testUtil.container
 			});
 
-			assert.deepEqual(testUtil.control.value(), '');
+			assert.equal(testUtil.control.value(), '');
 		});
 
 		it('should have a value of 3 when an item of value 3 is checked', () => {
@@ -67,7 +67,7 @@ describe('Radios', () => {
 				}]
 			});
 
-			assert.deepEqual(testUtil.control.value(), '3');
+			assert.equal(testUtil.control.value(), '3');
 		});
 
 		it('should call the onChange callback when a radio is clicked', () => {
@@ -87,7 +87,7 @@ describe('Radios', () => {
 
 			testUtil.simulateClick(testUtil.first('.radio'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 
 		it('should call the onChecked callback when a radio is clicked', () => {
@@ -111,7 +111,7 @@ describe('Radios', () => {
 
 			testUtil.simulateClick(testUtil.first('.radio'));
 
-			assert.equal(testVar, 'test');
+			assert.is(testVar, 'test');
 		});
 	});
 });

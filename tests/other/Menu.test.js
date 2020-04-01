@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Menu } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -42,7 +42,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.heading', true), 1);
+			assert.is(testUtil.count('.heading', true), 1);
 		});
 
 		it('should have three menu items if three are provided', () => {
@@ -59,7 +59,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.heading', true), 3);
+			assert.is(testUtil.count('.heading', true), 3);
 		});
 
 		it('should have a selected item if one is set to isSelected', () => {
@@ -78,7 +78,7 @@ describe('Menu', () => {
 				}]
 			});
 
-			assert.equal(testUtil.count('.checkbox.checked', true), 1);
+			assert.is(testUtil.count('.checkbox.checked', true), 1);
 		});
 
 		it('should call settings.onSelect if a menuItem is clicked', () => {
@@ -102,7 +102,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.equal(testVar, 'test2');
+			assert.is(testVar, 'test2');
 		});
 
 		it('should remove itself when a menu item is clicked', () => {
@@ -123,7 +123,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.equal(testUtil.count('.context-menu'), 0);
+			assert.is(testUtil.count('.context-menu'), 0);
 		});
 
 		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
@@ -145,7 +145,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.equal(testUtil.count('.menu'), 1);
+			assert.is(testUtil.count('.menu'), 1);
 		});
 
 		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
@@ -167,7 +167,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.equal(testUtil.count('.menu'), 1);
+			assert.is(testUtil.count('.menu'), 1);
 		});
 	});
 });

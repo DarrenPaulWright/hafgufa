@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
 import { Button, Heading, SCROLL_EVENT, VirtualList } from '../..';
 import ControlTests from '../ControlTests';
@@ -37,7 +37,7 @@ describe('VirtualList', () => {
 				container: testUtil.container
 			});
 
-			assert.equal(testUtil.count(VIRTUAL_LIST_CLASS), 1);
+			assert.is(testUtil.count(VIRTUAL_LIST_CLASS), 1);
 		});
 	});
 
@@ -56,7 +56,7 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
+			assert.is(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 		});
 
 		it('should display the same items that are passed in to the items method', () => {
@@ -67,7 +67,7 @@ describe('VirtualList', () => {
 				.itemControl(Button)
 				.itemData(testRows);
 
-			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
+			assert.is(testUtil.count(VIRTUAL_ITEM_CLASS), 3);
 		});
 
 		it('should display the same items that are passed in to the items method after previous rows', () => {
@@ -82,7 +82,7 @@ describe('VirtualList', () => {
 				id: '1'
 			}]);
 
-			assert.equal(testUtil.count(VIRTUAL_ITEM_CLASS), 1);
+			assert.is(testUtil.count(VIRTUAL_ITEM_CLASS), 1);
 		});
 
 		it('should display an "empty content" message when there are no items', () => {
@@ -91,7 +91,7 @@ describe('VirtualList', () => {
 				emptyContentMessage: 'No Content'
 			});
 
-			assert.equal(testUtil.count(EMPTY_CONTENT_CLASS), 1);
+			assert.is(testUtil.count(EMPTY_CONTENT_CLASS), 1);
 		});
 
 		it('should NOT display an "empty content" message when there are items', () => {
@@ -103,7 +103,7 @@ describe('VirtualList', () => {
 				.itemControl(Button)
 				.itemData(testRows);
 
-			assert.equal(testUtil.count(EMPTY_CONTENT_CLASS), 0);
+			assert.is(testUtil.count(EMPTY_CONTENT_CLASS), 0);
 		});
 	});
 
@@ -116,7 +116,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testUtil.control.getRenderedControls().length, 3);
+			assert.is(testUtil.control.getRenderedControls().length, 3);
 		});
 	});
 
@@ -131,7 +131,7 @@ describe('VirtualList', () => {
 				.itemData(testRows)
 				.fitHeightToContents();
 
-			assert.equal(testUtil.container.offsetHeight, 60);
+			assert.is(testUtil.container.offsetHeight, 60);
 		});
 
 		it('should set the height of the control to the combined height of the items when the height is set to auto', () => {
@@ -143,7 +143,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testUtil.container.offsetHeight, 90);
+			assert.is(testUtil.container.offsetHeight, 90);
 		});
 	});
 
@@ -169,7 +169,7 @@ describe('VirtualList', () => {
 				extraRenderedItemsRatio: -1
 			});
 
-			assert.equal(testUtil.control.extraRenderedItemsRatio(), 0);
+			assert.is(testUtil.control.extraRenderedItemsRatio(), 0);
 		});
 	});
 
@@ -192,7 +192,7 @@ describe('VirtualList', () => {
 
 			testUtil.control.itemDefaultSettings(undefined);
 
-			assert.equal(testUtil.control.itemDefaultSettings(), undefined);
+			assert.is(testUtil.control.itemDefaultSettings(), undefined);
 		});
 	});
 
@@ -210,7 +210,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testValue, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should return a control when the onItemRender callback is executed', () => {
@@ -227,7 +227,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testValue.type, button.type);
+			assert.is(testValue.type, button.type);
 
 			button.remove();
 		});
@@ -245,7 +245,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.equal(testValue.id, '3');
+			assert.is(testValue.id, '3');
 		});
 	});
 
@@ -274,7 +274,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isBelow(renderedControls[0].borderHeight(), renderedControls[2].borderHeight());
+			assert.lessThan(renderedControls[0].borderHeight(), renderedControls[2].borderHeight());
 		});
 
 		it('should NOT be able to display items of varying height if isVirtualized is set to true', () => {
@@ -296,7 +296,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isTrue(renderedControls[0].borderHeight() === renderedControls[2].borderHeight());
+			assert.is(renderedControls[0].borderHeight() === renderedControls[2].borderHeight(), true);
 		});
 
 		it('should set the height of the control if height is "auto" and isVirtualized is set to false', () => {
@@ -315,7 +315,7 @@ describe('VirtualList', () => {
 				itemData: testRows
 			});
 
-			assert.isTrue(testUtil.control.borderHeight() > 0);
+			assert.is(testUtil.control.borderHeight() > 0, true);
 		});
 	});
 
@@ -343,7 +343,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isBelow(renderedControls.length, 9);
+			assert.lessThan(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled', () => {
@@ -363,7 +363,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isBelow(renderedControls.length, 9);
+			assert.lessThan(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a little', () => {
@@ -384,7 +384,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isBelow(renderedControls.length, 9);
+			assert.lessThan(renderedControls.length, 9);
 		});
 
 		it('should render no more than two more items than fit in the height of the list after the list is scrolled a long distance and then back a lot', () => {
@@ -405,7 +405,7 @@ describe('VirtualList', () => {
 
 			const renderedControls = testUtil.control.getRenderedControls();
 
-			assert.isBelow(renderedControls.length, 9);
+			assert.lessThan(renderedControls.length, 9);
 		});
 	});
 

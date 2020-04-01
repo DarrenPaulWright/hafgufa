@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { Container, ControlManager, Div, IsWorking } from '../';
 
 describe('ControlManager', () => {
@@ -19,8 +19,8 @@ describe('ControlManager', () => {
 
 		manager.add(div);
 
-		assert.equal(div.onRemove().length, initial + 1);
-		assert.equal(manager.length, 1);
+		assert.is(div.onRemove().length, initial + 1);
+		assert.is(manager.length, 1);
 	});
 
 	it('should add onRemove callbacks to multiple controls', () => {
@@ -31,15 +31,15 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2]);
 
-		assert.equal(div1.onRemove().length, initial1 + 1);
-		assert.equal(div2.onRemove().length, initial2 + 1);
-		assert.equal(manager.length, 2);
+		assert.is(div1.onRemove().length, initial1 + 1);
+		assert.is(div2.onRemove().length, initial2 + 1);
+		assert.is(manager.length, 2);
 
 		manager.remove();
 
-		assert.equal(div1.onRemove().length, 0);
-		assert.equal(div2.onRemove().length, 0);
-		assert.equal(manager.length, 0);
+		assert.is(div1.onRemove().length, 0);
+		assert.is(div2.onRemove().length, 0);
+		assert.is(manager.length, 0);
 	});
 
 	it('should get a control by id', () => {
@@ -49,7 +49,7 @@ describe('ControlManager', () => {
 
 		manager.add(div);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 	});
 
 	it('should get a nested control by id', () => {
@@ -61,7 +61,7 @@ describe('ControlManager', () => {
 
 		manager.add(container);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 	});
 
 	it('should return undefined if a control can\'t be found', () => {
@@ -73,7 +73,7 @@ describe('ControlManager', () => {
 
 		manager.add(container);
 
-		assert.equal(manager.get('test2'), undefined);
+		assert.is(manager.get('test2'), undefined);
 	});
 
 	it('should call a callback for each control', () => {
@@ -90,8 +90,8 @@ describe('ControlManager', () => {
 			}
 		});
 
-		assert.equal(countTotal, 2);
-		assert.equal(count, 2);
+		assert.is(countTotal, 2);
+		assert.is(count, 2);
 	});
 
 	it('should call a callback for each control and return an array', () => {
@@ -114,9 +114,9 @@ describe('ControlManager', () => {
 			return control.id();
 		});
 
-		assert.equal(countTotal, 2);
-		assert.equal(count, 2);
-		assert.deepEqual(result, ['4', '7']);
+		assert.is(countTotal, 2);
+		assert.is(count, 2);
+		assert.equal(result, ['4', '7']);
 	});
 
 	it('should get a control by id after the id is added', () => {
@@ -126,7 +126,7 @@ describe('ControlManager', () => {
 		div.id('test');
 		manager.update(div);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 	});
 
 	it('should get a control by id after the id is updated', () => {
@@ -138,7 +138,7 @@ describe('ControlManager', () => {
 		div.id('test2');
 		manager.update(div);
 
-		assert.equal(manager.get('test2'), div);
+		assert.is(manager.get('test2'), div);
 	});
 
 	it('should NOT get a control by id after the control is discarded', () => {
@@ -148,12 +148,12 @@ describe('ControlManager', () => {
 
 		manager.add(div);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 
 		manager.discard(div);
 
-		assert.equal(manager.get('test'), undefined);
-		assert.equal(manager.length, 0);
+		assert.is(manager.get('test'), undefined);
+		assert.is(manager.length, 0);
 	});
 
 	it('should NOT get a control by id after the control is discarded (fade)', () => {
@@ -163,12 +163,12 @@ describe('ControlManager', () => {
 
 		manager.add(div);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 
 		manager.discard(div);
 
-		assert.equal(manager.get('test'), undefined);
-		assert.equal(manager.length, 0);
+		assert.is(manager.get('test'), undefined);
+		assert.is(manager.length, 0);
 	});
 
 	it('should NOT get a control by id after the control is discarded (by id)', () => {
@@ -178,11 +178,11 @@ describe('ControlManager', () => {
 
 		manager.add(div);
 
-		assert.equal(manager.get('test'), div);
+		assert.is(manager.get('test'), div);
 
 		manager.discard('test');
 
-		assert.equal(manager.get('test'), undefined);
+		assert.is(manager.get('test'), undefined);
 	});
 
 	it('should remove a control by id', () => {
@@ -196,13 +196,13 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.length, 3);
+		assert.is(manager.length, 3);
 
 		manager.remove('2');
 
-		assert.equal(manager.length, 2);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), undefined);
+		assert.is(manager.length, 2);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), undefined);
 	});
 
 	it('should remove a control by reference', () => {
@@ -221,28 +221,28 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.length, 3);
+		assert.is(manager.length, 3);
 
 		manager.remove(div2);
 
-		assert.equal(manager.length, 2);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), undefined);
-		assert.isOk(manager.get('test4'));
+		assert.is(manager.length, 2);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), undefined);
+		assert.is(manager.get('test4'), div3.get('test4'));
 
 		manager.remove('test4');
 
-		assert.equal(manager.length, 2);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), undefined);
-		assert.isOk(manager.get('test4'));
+		assert.is(manager.length, 2);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), undefined);
+		assert.is(manager.get('test4'), div3.get('test4'));
 
 		manager.remove(div3);
 
-		assert.equal(manager.length, 1);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), undefined);
-		assert.notOk(manager.get('test4'));
+		assert.is(manager.length, 1);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), undefined);
+		assert.is(manager.get('test4'), div3.get('test4'));
 	});
 
 	it('should remove a control when the control is removed externally', () => {
@@ -256,19 +256,19 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2, div3]);
 
-		assert.equal(manager.length, 3);
+		assert.is(manager.length, 3);
 
 		div3.remove();
 
-		assert.equal(manager.length, 2);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), div2);
+		assert.is(manager.length, 2);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), div2);
 
 		div2.remove();
 
-		assert.equal(manager.length, 1);
-		assert.equal(manager.get('1'), div1);
-		assert.equal(manager.get('2'), undefined);
+		assert.is(manager.length, 1);
+		assert.is(manager.get('1'), div1);
+		assert.is(manager.get('2'), undefined);
 	});
 
 	it('should remove a control with fade', () => {
@@ -281,11 +281,11 @@ describe('ControlManager', () => {
 
 		manager.add([div1, div2]);
 
-		assert.equal(manager.length, 2);
+		assert.is(manager.length, 2);
 
 		manager.remove();
 
-		assert.equal(manager.length, 0);
+		assert.is(manager.length, 0);
 	});
 
 });

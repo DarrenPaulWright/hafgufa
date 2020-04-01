@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { toast } from '../..';
 import TestUtil from '../TestUtil';
 
@@ -13,9 +13,9 @@ describe('toast', () => {
 			duration: 0
 		});
 
-		assert.equal(testUtil.count('.toast-wrapper .toast.toast-info', true), 1);
-		assert.equal(testUtil.count('span', true), 1);
-		assert.equal(testUtil.count('.subtitle', true), 0);
+		assert.is(testUtil.count('.toast-wrapper .toast.toast-info', true), 1);
+		assert.is(testUtil.count('span', true), 1);
+		assert.is(testUtil.count('.subtitle', true), 0);
 	});
 
 	it('should add a div with class "toast-success" when toast.success is called', () => {
@@ -24,7 +24,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(testUtil.count('.toast-wrapper .toast.toast-success', true), 1);
+		assert.is(testUtil.count('.toast-wrapper .toast.toast-success', true), 1);
 	});
 
 	it('should add a div with class "toast-warning" when toast.warning is called', () => {
@@ -33,7 +33,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(testUtil.count('.toast-wrapper .toast.toast-warning', true), 1);
+		assert.is(testUtil.count('.toast-wrapper .toast.toast-warning', true), 1);
 	});
 
 	it('should add a div with class "toast-error" when toast.error is called', () => {
@@ -42,7 +42,7 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(testUtil.count('.toast-wrapper .toast.toast-error', true), 1);
+		assert.is(testUtil.count('.toast-wrapper .toast.toast-error', true), 1);
 	});
 
 	it('should add two divs with class "toast-error" when toast.error is called twice', () => {
@@ -56,6 +56,6 @@ describe('toast', () => {
 			subTitle: 'sub title'
 		});
 
-		assert.equal(testUtil.count('.toast-wrapper .toast.toast-error', true), 2);
+		assert.is(testUtil.count('.toast-wrapper .toast.toast-error', true), 2);
 	});
 });

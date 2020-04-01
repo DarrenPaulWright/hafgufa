@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { GroupedButtons } from '../..';
 import TestUtil from '../TestUtil';
 import FormControlTests from './FormControlTests';
@@ -32,7 +32,7 @@ describe('GroupedButtons', () => {
 					label: 'test'
 				});
 
-			assert.equal(testUtil.count('button'), 1);
+			assert.is(testUtil.count('button'), 1);
 		});
 
 		it('should add two buttons to the DOM when addButton is called twice', () => {
@@ -50,7 +50,7 @@ describe('GroupedButtons', () => {
 					label: 'test 2'
 				});
 
-			assert.equal(testUtil.count('button'), 2);
+			assert.is(testUtil.count('button'), 2);
 			testUtil.control = control2;
 		});
 	});

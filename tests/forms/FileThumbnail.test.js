@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from 'type-enforcer';
 import { FileThumbnail } from '../..';
 import ControlTests from '../ControlTests';
 import TestUtil from '../TestUtil';
@@ -25,7 +25,7 @@ describe('FileThumbnail', () => {
 				imageSource: 'http://www.examle.com/test.jpg'
 			});
 
-			assert.equal(testUtil.first('img').getAttribute('src'), 'http://www.examle.com/test.jpg');
+			assert.is(testUtil.first('img').getAttribute('src'), 'http://www.examle.com/test.jpg');
 		});
 	});
 
