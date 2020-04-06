@@ -146,7 +146,10 @@ export default (Base) => {
 
 			if (self[THROW_VELOCITY].length() > 0.5) {
 				self[THROW_VELOCITY].length(self[THROW_VELOCITY].length() * FRICTION);
-				self.position(self[DRAG_OFFSET].x + self[THROW_VELOCITY].offset().x, self[DRAG_OFFSET].y + self[THROW_VELOCITY].offset().y);
+				self.position(
+					self[DRAG_OFFSET].x + self[THROW_VELOCITY].offset().x,
+					self[DRAG_OFFSET].y + self[THROW_VELOCITY].offset().y
+				);
 
 				if (self[DRAG_OFFSET].x < self[DRAG_BOUNDS].left ||
 					self[DRAG_OFFSET].x > self[DRAG_BOUNDS].right ||
@@ -227,8 +230,16 @@ export default (Base) => {
 				}
 			}
 
-			self[BOUNCE_DESTINATION].x = clamp(self[BOUNCE_VECTOR].end().x, self[DRAG_BOUNDS].left, self[DRAG_BOUNDS].right);
-			self[BOUNCE_DESTINATION].y = clamp(self[BOUNCE_VECTOR].end().y, self[DRAG_BOUNDS].top, self[DRAG_BOUNDS].bottom);
+			self[BOUNCE_DESTINATION].x = clamp(
+				self[BOUNCE_VECTOR].end().x,
+				self[DRAG_BOUNDS].left,
+				self[DRAG_BOUNDS].right
+			);
+			self[BOUNCE_DESTINATION].y = clamp(
+				self[BOUNCE_VECTOR].end().y,
+				self[DRAG_BOUNDS].top,
+				self[DRAG_BOUNDS].bottom
+			);
 
 			self[BOUNCE_DESTINATION].x = self[roundToSnapGrid](self[BOUNCE_DESTINATION].x);
 			self[BOUNCE_DESTINATION].y = self[roundToSnapGrid](self[BOUNCE_DESTINATION].y);
@@ -256,7 +267,7 @@ export default (Base) => {
 				self[IS_BOUNCING] = false;
 				self.position(Math.round(self[DRAG_OFFSET].x), Math.round(self[DRAG_OFFSET].y));
 
-				self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}]);
+				self.onDragEnd().trigger(null, [{ ...self[DRAG_OFFSET] }]);
 			}
 		}
 
@@ -273,7 +284,7 @@ export default (Base) => {
 			self.trigger(SCALE_CHANGE_EVENT);
 		}
 
-		[startDrag]() {
+		[startDrag](event) {
 			const self = this;
 
 			self[stopDrag]();
@@ -283,7 +294,7 @@ export default (Base) => {
 			self[IS_THROWING] = false;
 			self[IS_BOUNCING] = false;
 
-			self.onDragStart().trigger();
+			self.onDragStart().trigger(null, [event]);
 
 			if (self.scrollOnDrag()) {
 				self[DRAG_OFFSET].x = -self.container()[SCROLL_LEFT];
@@ -324,7 +335,7 @@ export default (Base) => {
 					self[THROW_FRAME] = requestAnimationFrame(() => self[animateThrow]());
 				}
 				else {
-					self.onDragEnd().trigger(null, [{...self[DRAG_OFFSET]}]);
+					self.onDragEnd().trigger(null, [{ ...self[DRAG_OFFSET] }]);
 				}
 			}
 		}
@@ -452,7 +463,7 @@ export default (Base) => {
 					self.css(TRANSFORM, transform);
 
 					if (self.isDragging) {
-						self.onDrag().trigger(null, [{...self[DRAG_OFFSET]}]);
+						self.onDrag().trigger(null, [{ ...self[DRAG_OFFSET] }]);
 					}
 				}
 
@@ -491,7 +502,10 @@ export default (Base) => {
 						.on('mousedown touchstart', (event) => {
 							event.stopPropagation();
 
-							const localOffset = new Point(event.clientX - self[DRAG_OFFSET].x, event.clientY - self[DRAG_OFFSET].y);
+							const localOffset = new Point(
+								event.clientX - self[DRAG_OFFSET].x,
+								event.clientY - self[DRAG_OFFSET].y
+							);
 
 							const moveHandler = (event) => {
 								event.stopPropagation();
@@ -509,7 +523,7 @@ export default (Base) => {
 								self[stopDrag]();
 							};
 
-							self[startDrag]();
+							self[startDrag](event);
 
 							BODY.addEventListener('mousemove', moveHandler);
 							BODY.addEventListener('touchmove', moveHandler);
@@ -517,7 +531,8 @@ export default (Base) => {
 							BODY.addEventListener('touchend', endHandler);
 						})
 						.on(MOUSE_WHEEL_EVENT, (event) => {
-							self[setZoom](self.scale() * (1 - (event.deltaY / 1000)),
+							self[setZoom](
+								self.scale() * (1 - (event.deltaY / 1000)),
 								event.x - self[DRAG_OFFSET].x,
 								event.y - self[DRAG_OFFSET].y
 							);
