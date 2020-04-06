@@ -87,6 +87,8 @@ export { default as SvgControl } from './src/svg/SvgControl';
 export { default as G } from './src/svg/G';
 export { default as Rect } from './src/svg/Rect';
 export { default as Svg } from './src/svg/Svg';
+export { default as Path } from './src/svg/Path';
+export { default as Polygon } from './src/svg/Polygon';
 
 export { default as ActionButtonMixin } from './src/mixins/ActionButtonMixin';
 export { default as ContextMenuMixin } from './src/mixins/ContextMenuMixin';
