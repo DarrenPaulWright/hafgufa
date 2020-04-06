@@ -5,7 +5,11 @@
 	fill: fade(@highlightColor, 20%);
 	opacity: 0.5;
 	transition: opacity @animationDuration @easing;
-	cursor: move;
+	cursor: grab;
+
+	&:active {
+		cursor: grabbing;
+	}
 
 	&.ignore {
 		pointer-events: none;

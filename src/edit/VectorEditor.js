@@ -1,10 +1,11 @@
 import shortid from 'shortid';
-import { applySettings, methodFunction, Point } from 'type-enforcer-ui';
-import ControlRecycler from '../ControlRecycler';
+import { applySettings, Enum, methodEnum, methodFunction, Point } from 'type-enforcer-ui';
+import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import Svg from '../svg/Svg';
+import EditPolygon from './EditPolygon.js';
 import EditRectangle from './EditRectangle';
 import './VectorEditor.less';
 
@@ -14,6 +15,10 @@ const START = Symbol();
 const CURRENT_SHAPE = Symbol();
 const CONTROLS = Symbol();
 const VALUE = Symbol();
+const EDIT_MODES = new Enum({
+	rectangle: 'rectangle',
+	polygon: 'polygon'
+});
 
 const pixelsToRatios = Symbol();
 const ratiosToPixels = Symbol();
@@ -32,15 +37,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 		self[VALUE] = [];
 		self.addClass('vector-editor');
 
-		self[CONTROLS] = new ControlRecycler({
-			control: EditRectangle,
-			defaultSettings: {
-				container: self,
-				onChange() {
-					self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
-				}
-			}
-		});
+		self[CONTROLS] = new ControlManager();
 
 		self.contextMenu([{
 			id: 'deleteAll',
@@ -64,21 +61,17 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			.on('mousedown', (event) => {
 				event.preventDefault();
 				event.stopPropagation();
-				self[startDrawing](event);
 
-				self.on('mousemove', (event) => {
-						event.preventDefault();
-						event.stopPropagation();
-						self[updateDrawing](event);
-					})
-					.on('mouseup', (event) => {
-						event.preventDefault();
-						event.stopPropagation();
-						self[stopDrawing]();
-
-						self.off('mousemove')
-							.off('mouseup');
-					});
+				if (
+					self.editMode() === EDIT_MODES.polygon &&
+					self[CURRENT_SHAPE] instanceof EditPolygon &&
+					!self[CURRENT_SHAPE].isClosed
+				) {
+					self[CURRENT_SHAPE].addPoint([event.offsetX, event.offsetY]);
+				}
+				else {
+					self[startDrawing](event);
+				}
 			});
 
 		applySettings(self, settings);
@@ -88,16 +81,22 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 
 	[pixelsToRatios](value) {
 		const self = this;
+		const change = new Point({
+			x: 1 / self[WIDTH],
+			y: 1 / self[HEIGHT]
+		});
 
-		return [new Point(value[0].x / self[WIDTH], value[0].y / self[HEIGHT]),
-			new Point(value[1].x / self[WIDTH], value[1].y / self[HEIGHT])];
+		return value.map((point) => point.multiply(change));
 	}
 
 	[ratiosToPixels](value) {
 		const self = this;
+		const change = new Point({
+			x: self[WIDTH],
+			y: self[HEIGHT]
+		});
 
-		return [new Point(value[0].x * self[WIDTH], value[0].y * self[HEIGHT]),
-			new Point(value[1].x * self[WIDTH], value[1].y * self[HEIGHT])];
+		return value.map((point) => point.multiply(change));
 	}
 
 	[startDrawing](event) {
@@ -109,73 +108,131 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 
 		self[START] = new Point(event.offsetX, event.offsetY);
 
-		self[CURRENT_SHAPE] = self[CONTROLS].getRecycledControl();
+		if (self.editMode() === EDIT_MODES.rectangle) {
+			self[CURRENT_SHAPE] = new EditRectangle({
+				container: self,
+				onChange() {
+					self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+				}
+			});
+		}
+		else if (self.editMode() === EDIT_MODES.polygon) {
+			self[CURRENT_SHAPE] = new EditPolygon({
+				container: self,
+				onChange() {
+					self.onChange()(this.id(), self[pixelsToRatios](this.points()));
+				},
+				points: self[START].toString()
+			});
+		}
 		self[CURRENT_SHAPE].originalBounds = null;
 		self[CURRENT_SHAPE]
 			.container(self)
 			.isFocused(true)
 			.id(shortid.generate());
 
+		self[CONTROLS].add(self[CURRENT_SHAPE]);
+
 		self[updateDrawing](event);
+
+		self.on('mousemove', (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+
+				self[updateDrawing](event);
+			})
+			.on('mouseup', (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+
+				self[stopDrawing]();
+
+				self.off('mousemove')
+					.off('mouseup');
+			});
 	}
 
 	[updateDrawing](event) {
 		const self = this;
 
-		self[CURRENT_SHAPE]
-			.bounds([{
-				x: event.offsetX,
-				y: event.offsetY
-			}, self[START]]);
+		if (self.editMode() === EDIT_MODES.rectangle) {
+			self[CURRENT_SHAPE]
+				.bounds([{
+					x: event.offsetX,
+					y: event.offsetY
+				}, self[START]]);
+		}
 	}
 
 	[stopDrawing]() {
 		const self = this;
 
-		if (self[CURRENT_SHAPE].borderWidth() < 10 && self[CURRENT_SHAPE].borderHeight() < 10) {
-			self[CONTROLS].discardControl(self[CURRENT_SHAPE].id());
-		}
-		else {
-			self[HEIGHT] = self.borderHeight();
-			self[WIDTH] = self.borderWidth();
-			self[CURRENT_SHAPE].originalBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
-			self.onAdd()(self[CURRENT_SHAPE].id(), self[CURRENT_SHAPE].originalBounds);
+		if (self.editMode() === EDIT_MODES.rectangle) {
+			if (self[CURRENT_SHAPE].borderWidth() < 10 && self[CURRENT_SHAPE].borderHeight() < 10) {
+				self[CONTROLS].discard(self[CURRENT_SHAPE].id());
+			}
+			else {
+				self[HEIGHT] = self.borderHeight();
+				self[WIDTH] = self.borderWidth();
+				self[CURRENT_SHAPE].originalBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
+				self.onAdd()(self[CURRENT_SHAPE].id(), self[CURRENT_SHAPE].originalBounds);
+			}
 		}
 
 		self[CONTROLS].each((control) => {
 			control.ignore(false);
 		});
-
 	}
 
 	value(value) {
 		const self = this;
 
-		self[CONTROLS].discardAllControls();
+		self[CONTROLS].remove();
 
 		self[VALUE] = value;
 
 		self[VALUE].forEach((shape) => {
-			self[CONTROLS]
-				.getRecycledControl()
-				.container(self)
-				.id(shape.id)
-				.bounds(self[ratiosToPixels](shape.bounds))
-				.contextMenu([{
+			const settings = {
+				container: self,
+				id: shape.id,
+				contextMenu: [{
 					id: 'delete',
 					title: 'Delete',
 					icon: DELETE_ICON,
 					onSelect() {
 						self.onDeleteShape()(shape.id);
 					}
-				}])
-				.onMouseEnter(function() {
+				}],
+				onMouseEnter() {
 					self.onHighlight()(this.id());
-				})
-				.onMouseLeave(function() {
+				},
+				onMouseLeave() {
 					self.onHighlight()();
-				})
-				.originalBounds = shape.bounds;
+				},
+				originalBounds: shape.bounds
+			};
+			let control;
+
+			if (shape.rectangle) {
+				control = new EditRectangle({
+					...settings,
+					onChange() {
+						self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+					},
+					bounds: self[ratiosToPixels](shape.bounds)
+				});
+			}
+			else if (shape.polygon) {
+				control = new EditPolygon({
+					...settings,
+					onChange() {
+						self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+					},
+					points: self[ratiosToPixels](shape.points)
+				});
+			}
+
+			self[CONTROLS].add(control);
 		});
 	}
 
@@ -192,6 +249,10 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 }
 
 Object.assign(VectorEditor.prototype, {
+	editMode: methodEnum({
+		enum: EDIT_MODES,
+		init: EDIT_MODES.rectangle
+	}),
 	onChange: methodFunction(),
 	onAdd: methodFunction(),
 	onDeleteShape: methodFunction(),

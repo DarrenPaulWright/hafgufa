@@ -51,6 +51,7 @@ const controlTypes = {
 	RADIO: 'radio',
 	RECT: 'svg:rect',
 	EDIT_RECTANGLE: 'editRectangle',
+	EDIT_POLYGON: 'editPolygon',
 	RESIZER: 'resizer',
 	SCATTER: 'scatter',
 	SCORE: 'score',

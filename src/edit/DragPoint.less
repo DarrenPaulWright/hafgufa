@@ -1,11 +1,13 @@
-@dragPointSize: 0.33rem;
+@dragPointSize: 0.36rem;
 @dragPointHitSize: 1.5rem;
 
 .drag-point {
 	.point {
 		width: @dragPointSize;
 		height: @dragPointSize;
-		fill: @highlightColor;
+		stroke: @highlightColor;
+		stroke-width: 0.07rem;
+		fill: white;
 		transform: translate(-@dragPointSize / 2, -@dragPointSize / 2)
 	}
 
@@ -19,6 +21,7 @@
 	&.circle {
 		.point {
 			rx: @dragPointSize / 2;
+			fill: @highlightColor;
 		}
 	}
 }
