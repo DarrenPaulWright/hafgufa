@@ -10,7 +10,7 @@ import './toast.less';
 
 let wrapper;
 let currentId = 1;
-const slices = new List().sorter(List.sorter.id.asc);
+const slices = new List().comparer(List.comparers.id.asc);
 const REMOVE_THIS = 'removeThis';
 const REMOVE_ALL = 'removeAll';
 

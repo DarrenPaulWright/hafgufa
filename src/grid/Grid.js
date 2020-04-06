@@ -671,7 +671,7 @@ export default class Grid extends Control {
 
 		const sortGroups = (a, b) => {
 			if (a.children && b.children) {
-				return List.sorter.string.asc(a.title, b.title);
+				return List.comparers.string.asc(a.title, b.title);
 			}
 			else if (a.children) {
 				return 1;
@@ -687,7 +687,10 @@ export default class Grid extends Control {
 
 			if (column.direction !== SORT_TYPES.NONE) {
 				self[eachGroup](filteredRows, (group, rows) => {
-					rows.sort((a, b) => sortGroups(a, b) || sortFunction(a.cells[column.id][column.sortKey] || '', b.cells[column.id][column.sortKey] || ''));
+					rows.sort((a, b) => sortGroups(a, b) || sortFunction(
+						a.cells[column.id][column.sortKey] || '',
+						b.cells[column.id][column.sortKey] || ''
+					));
 
 					group.isCollapsed = self[getCollapsedState](group);
 				});
@@ -792,7 +795,7 @@ export default class Grid extends Control {
 				output.sort(self.columns()[columnNum].sortFunctionAsc);
 			}
 			else {
-				output.sort(List.sorter.string.asc);
+				output.sort(List.comparers.string.asc);
 			}
 		};
 
@@ -977,7 +980,7 @@ export default class Grid extends Control {
 			return self;
 		}
 
-		return clone(this[ROWS], {isCircular: true});
+		return clone(this[ROWS], { isCircular: true });
 	}
 
 	/**
@@ -1235,7 +1238,10 @@ Object.assign(Grid.prototype, {
 
 				if (groupBy.sort !== 'none' && input.length > 1) {
 					if (groupBy.type === 'text') {
-						input.sort((a, b) => groupBy.sort === 'desc' ? List.sorter.string.desc(a[groupBy.property], b[groupBy.property]) : List.sorter.string.asc(a[groupBy.property], b[groupBy.property]));
+						input.sort((a, b) => groupBy.sort === 'desc' ? List.comparers.string.desc(
+							a[groupBy.property],
+							b[groupBy.property]
+						) : List.comparers.string.asc(a[groupBy.property], b[groupBy.property]));
 					}
 					else if (groupBy.type === 'date') {
 						input.sort(compare(groupBy.property, groupBy.sort === 'desc'));
@@ -1363,13 +1369,13 @@ Object.assign(Grid.prototype, {
 					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:
-						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.string.asc;
-						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.string.desc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.comparers.string.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.comparers.string.desc;
 						column.filterType = column.filterType || FILTER_TYPES.AUTO_COMPLETE;
 						break;
 					case COLUMN_TYPES.NUMBER:
-						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.number.asc;
-						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.number.desc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.comparers.number.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.comparers.number.desc;
 						column.filterType = column.filterType || FILTER_TYPES.NUMBER;
 						break;
 					case COLUMN_TYPES.DATE:
@@ -1381,8 +1387,8 @@ Object.assign(Grid.prototype, {
 						column.sortKey = column.sortKey || 'date';
 						break;
 					case COLUMN_TYPES.IMAGE:
-						column.sortFunctionAsc = column.sortFunctionAsc || List.sorter.string.asc;
-						column.sortFunctionDesc = column.sortFunctionDesc || List.sorter.string.desc;
+						column.sortFunctionAsc = column.sortFunctionAsc || List.comparers.string.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.comparers.string.desc;
 						column.sortKey = column.sortKey || 'icon';
 				}
 

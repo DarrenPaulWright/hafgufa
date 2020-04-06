@@ -55,7 +55,7 @@
 		"async-agent": "^0.5.3",
 		"axios": "^0.19.2",
 		"bowser": "^2.9.0",
-		"d3": "^5.15.0",
+		"d3": "^5.15.1",
 		"date-fns": "^2.11.1",
 		"get-browser-language": "^1.0.0",
 		"hammerjs": "^2.0.8",
