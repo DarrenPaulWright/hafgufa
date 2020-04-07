@@ -120,7 +120,12 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			self[CURRENT_SHAPE] = new EditPolygon({
 				container: self,
 				onChange() {
-					self.onChange()(this.id(), 'polygon', self[pixelsToRatios](this.points()));
+					this.points()
+						.then((points) => {
+							points = points.split(' ').map((point) => new Point(point));
+
+							self.onChange()(this.id(), 'polygon', self[pixelsToRatios](points));
+						});
 				},
 				points: self[START].toString()
 			});
