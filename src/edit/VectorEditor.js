@@ -112,7 +112,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			self[CURRENT_SHAPE] = new EditRectangle({
 				container: self,
 				onChange() {
-					self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+					self.onChange()(this.id(), 'rectangle', self[pixelsToRatios](this.bounds()));
 				}
 			});
 		}
@@ -120,7 +120,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			self[CURRENT_SHAPE] = new EditPolygon({
 				container: self,
 				onChange() {
-					self.onChange()(this.id(), self[pixelsToRatios](this.points()));
+					self.onChange()(this.id(), 'polygon', self[pixelsToRatios](this.points()));
 				},
 				points: self[START].toString()
 			});
@@ -175,7 +175,13 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 				self[HEIGHT] = self.borderHeight();
 				self[WIDTH] = self.borderWidth();
 				self[CURRENT_SHAPE].originalBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
-				self.onAdd()(self[CURRENT_SHAPE].id(), self[CURRENT_SHAPE].originalBounds);
+
+				if (self.editMode() === EDIT_MODES.rectangle) {
+					self.onAdd()(self[CURRENT_SHAPE].id(), 'rectangle', self[CURRENT_SHAPE].originalBounds);
+				}
+				else if (self.editMode() === EDIT_MODES.polygon) {
+					self.onAdd()(self[CURRENT_SHAPE].id(), 'polygon', self[CURRENT_SHAPE].points);
+				}
 			}
 		}
 
@@ -213,7 +219,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			};
 			let control;
 
-			if (shape.rectangle) {
+			if (shape.bounds) {
 				control = new EditRectangle({
 					...settings,
 					onChange() {
