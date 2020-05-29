@@ -1,7 +1,6 @@
 import { assert } from 'type-enforcer';
 import ControlTests from '../ControlTests';
 
-const TEST_ID = 'testId';
 const TEST_ICON_FA = 'trash';
 const TEST_TITLE = 'Test Title';
 const SUB_TITLE = 'Test Sub Title';
@@ -11,81 +10,87 @@ const ERROR_MESSAGE = 'There was an error!!!';
 const ERROR_MESSAGE_ICON = '';
 const ERROR_MESSAGE_ELEMENT_CLASS = '.error';
 
-export default function ControlHeadingMixinTests(Control, testUtil, settings = {}) {
-	const self = this;
+const CONTROL = Symbol();
+const TEST_UTIL = Symbol();
 
-	ControlTests.call(self, Control, testUtil, settings);
+export default class ControlHeadingMixinTests extends ControlTests {
+	constructor(Control, testUtil, settings = {}) {
+		super(Control, testUtil, settings);
 
-	self.icon = () => {
+		const self = this;
+
+		self[CONTROL] = Control;
+		self[TEST_UTIL] = testUtil;
+	}
+
+	icon() {
+		const self = this;
+
 		describe('ControlHeadingAddon .icon', () => {
 			it('should show a font-awesome icon as provided', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test Title',
-					headingIcon: TEST_ICON_FA,
-					container: testUtil.container
-				});
+					headingIcon: TEST_ICON_FA
+				}));
 
-				assert.is(testUtil.count('.fa-' + TEST_ICON_FA), 1);
+				assert.is(self[TEST_UTIL].count('.fa-' + TEST_ICON_FA), 1);
 			});
 
 			it('should NOT have an icon element if icon is set to an empty string', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					headingIcon: '',
-					container: testUtil.container
-				});
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
+					headingIcon: ''
+				}));
 
-				assert.is(testUtil.count('.fa-' + TEST_ICON_FA), 0);
+				assert.is(self[TEST_UTIL].count('.fa-' + TEST_ICON_FA), 0);
 			});
 		});
-	};
+	}
 
-	self.title = () => {
+	title() {
+		const self = this;
+
 		describe('ControlHeadingAddon .title', () => {
 			it('should show a title as provided', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					title: TEST_TITLE,
-					container: testUtil.container
-				});
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
+					title: TEST_TITLE
+				}));
 
-				assert.is(testUtil.first(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
+				assert.is(self[TEST_UTIL].first(TITLE_ELEMENT_CLASS).textContent, TEST_TITLE);
 			});
 
 			it('should have an empty title element if the title is set to an empty string', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					title: '',
-					container: testUtil.container
-				});
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
+					title: ''
+				}));
 
-				assert.is(testUtil.count('.heading'), 0);
+				assert.is(self[TEST_UTIL].count('.heading'), 0);
 			});
 		});
-	};
+	}
 
-	self.subTitle = () => {
+	subTitle() {
+		const self = this;
+
 		describe('ControlHeadingAddon .subTitle', () => {
 			it('should show a subTitle as provided if a title is also provided', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE,
-					subTitle: SUB_TITLE,
-					container: testUtil.container
-				});
+					subTitle: SUB_TITLE
+				}));
 
-				assert.is(testUtil.first(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
+				assert.is(self[TEST_UTIL].first(SUB_TITLE_ELEMENT_CLASS).textContent, SUB_TITLE);
 			});
 		});
-	};
+	}
 
-	self.error = () => {
+	error() {
+		const self = this;
+
 		describe('ControlHeadingAddon .error', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'error',
 				defaultSettings: {
-					container: testUtil.container,
+					container: self[TEST_UTIL].container,
 					title: TEST_TITLE
 				},
 				defaultValue: '',
@@ -94,64 +99,65 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should NOT show an error message if "error" is not called', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE
-				});
+				}));
 
-				assert.is(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.is(self[TEST_UTIL].count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 
 			it('should show an error message when "error" is called', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE
-				})
+				}))
 					.error(ERROR_MESSAGE);
 
-				assert.is(testUtil.first(ERROR_MESSAGE_ELEMENT_CLASS).textContent, ERROR_MESSAGE_ICON + ERROR_MESSAGE);
+				assert.is(
+					self[TEST_UTIL].first(ERROR_MESSAGE_ELEMENT_CLASS).textContent,
+					ERROR_MESSAGE_ICON + ERROR_MESSAGE
+				);
 			});
 
 			it('should NOT show an error message when error is set to "" after "error"', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE
-				})
+				}))
 					.error(ERROR_MESSAGE)
 					.error('');
 
-				assert.is(testUtil.count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
+				assert.is(self[TEST_UTIL].count(ERROR_MESSAGE_ELEMENT_CLASS), 0);
 			});
 		});
-	};
+	}
 
-	self.singleLine = () => {
+	singleLine() {
+		const self = this;
+
 		describe('ControlHeadingAddon .singleLine', () => {
 			const SINGLE_LINE_CLASS = 'single-line';
 
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'singleLine',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: false,
 				testValue: true,
 				testValueClass: SINGLE_LINE_CLASS
 			});
 		});
-	};
+	}
 
-	self.headingButtons = () => {
+	headingButtons() {
+		const self = this;
+
 		describe('ControlHeadingAddon .headingButtons', () => {
 			const testButton = [{
 				icon: 'circle'
 			}];
 			const TOOLBAR_BASE_CLASS = 'toolbar';
 
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'headingButtons',
 				defaultValue: [],
 				testValue: testButton,
@@ -159,75 +165,75 @@ export default function ControlHeadingMixinTests(Control, testUtil, settings = {
 			});
 
 			it('should have a toolbar in the header if the button option is set', () => {
-				testUtil.control = new Control({
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test For Buttons',
 					headingButtons: testButton
-				});
+				}));
 
-				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 1);
+				assert.is(self[TEST_UTIL].count('.' + TOOLBAR_BASE_CLASS), 1);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to empty array', () => {
-				testUtil.control = new Control({
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test For Buttons',
 					headingButtons: testButton
-				});
+				}));
 
-				testUtil.control.headingButtons([]);
+				self[TEST_UTIL].control.headingButtons([]);
 
-				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(self[TEST_UTIL].count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set then set to an empty array', () => {
-				testUtil.control = new Control({
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test For Buttons',
 					headingButtons: testButton
-				});
+				}));
 
-				testUtil.control.headingButtons([]);
+				self[TEST_UTIL].control.headingButtons([]);
 
-				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(self[TEST_UTIL].count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 
 			it('should NOT have a toolbar in the header if the button option is set to an empty array', () => {
-				testUtil.control = new Control({
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test For Buttons',
 					headingButtons: []
-				});
+				}));
 
-				assert.is(testUtil.count('.' + TOOLBAR_BASE_CLASS), 0);
+				assert.is(self[TEST_UTIL].count('.' + TOOLBAR_BASE_CLASS), 0);
 			});
 		});
-	};
+	}
 
-	self.canCollapse = () => {
+	canCollapse() {
+		const self = this;
+
 		describe('ControlHeadingAddon .canCollapse', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'canCollapse',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: false,
 				testValue: true
 			});
 		});
-	};
+	}
 
-	self.isCollapsed = () => {
+	isCollapsed() {
+		const self = this;
+
 		describe('ControlHeadingAddon .isCollapsed', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'isCollapsed',
 				defaultSettings: {
-					container: testUtil.container,
+					container: self[TEST_UTIL].container,
 					canCollapse: true
 				},
 				defaultValue: false,
 				testValue: true
 			});
 		});
-	};
+	}
 }

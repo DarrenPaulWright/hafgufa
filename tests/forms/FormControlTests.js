@@ -1,186 +1,198 @@
 import { assert } from 'type-enforcer';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
-export default function FormControlTests(Control, testUtil, settings) {
-	const self = this;
-	const TEST_ID = 'testId';
-	const TEST_TITLE = 'Test <br> Title &nbsp;';
+const TEST_TITLE = 'Test <br> Title &nbsp;';
 
-	ControlHeadingMixinTests.call(self, Control, testUtil, settings);
+const CONTROL = Symbol();
+const TEST_UTIL = Symbol();
 
-	self.isRequired = () => {
+export default class FormControlTests extends ControlHeadingMixinTests {
+	constructor(Control, testUtil, settings) {
+		super(Control, testUtil, settings);
+
+		const self = this;
+
+		self[CONTROL] = Control;
+		self[TEST_UTIL] = testUtil;
+	}
+
+	isRequired() {
+		const self = this;
+
 		describe('FormControl .isRequired', () => {
 			it('should default to false', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container
-				});
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
 
-				assert.is(testUtil.control.isRequired(), false);
+				assert.is(self[TEST_UTIL].control.isRequired(), false);
 			});
 
 			it('should have a required class if set to true and a title is provided', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					title: TEST_TITLE,
-					container: testUtil.container
-				})
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
+					title: TEST_TITLE
+				}))
 					.isRequired(true);
 
-				assert.is(testUtil.count('.required'), 1);
+				assert.is(self[TEST_UTIL].count('.required'), 1);
 			});
 
 			it('should be true if it was set to true in the options', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE,
-					container: testUtil.container,
 					isRequired: true
-				});
+				}));
 
-				assert.is(testUtil.control.isRequired(), true);
+				assert.is(self[TEST_UTIL].control.isRequired(), true);
 			});
 
 			it('should NOT have a required class if set to false', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container
-				})
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings())
 					.isRequired(false);
 
-				assert.is(testUtil.count('.required'), 0);
+				assert.is(self[TEST_UTIL].count('.required'), 0);
 			});
 
 			it('should be false if it was set to false in the options', () => {
-				testUtil.control = new Control({
-					id: TEST_ID,
-					container: testUtil.container,
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					isRequired: false
-				});
+				}));
 
-				assert.is(testUtil.control.isRequired(), false);
+				assert.is(self[TEST_UTIL].control.isRequired(), false);
 			});
 		});
-	};
+	}
 
-	self.newline = () => {
+	newline() {
+		const self = this;
+
 		describe('FormControl newline', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'newline',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: false,
 				testValue: true,
 				testValueClass: 'newline'
 			});
 		});
-	};
+	}
 
-	self.onChange = (settings) => {
+	onChange(settings) {
+		const self = this;
+
 		if (settings.onChange) {
 			describe('FormControl .onChange (+)', () => {
 				it('should NOT call the onChange callback when the value is set via the .value method', () => {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					testUtil.control.onChange(() => {
+					self[TEST_UTIL].control.onChange(() => {
 						testVar++;
 					});
 
-					testUtil.control.changeDelay(0);
-					testUtil.control.value(settings.onChange.validValue);
+					self[TEST_UTIL].control.changeDelay(0);
+					self[TEST_UTIL].control.value(settings.onChange.validValue);
 
 					assert.is(testVar, 0);
 				});
 
-				it('should call the onChange callback when the value is set via the .value method and triggerChange is called', () => {
-					let testVar = 0;
+				it(
+					'should call the onChange callback when the value is set via the .value method and triggerChange is called',
+					() => {
+						let testVar = 0;
 
-					settings.onChange.buildControl();
-					testUtil.control.onChange(() => {
-						testVar++;
-					});
+						settings.onChange.buildControl();
+						self[TEST_UTIL].control.onChange(() => {
+							testVar++;
+						});
 
-					testUtil.control.value(settings.onChange.validValue);
-					testUtil.control.triggerChange(true);
+						self[TEST_UTIL].control.value(settings.onChange.validValue);
+						self[TEST_UTIL].control.triggerChange(true);
 
-					assert.is(testVar, 1);
-				});
+						assert.is(testVar, 1);
+					}
+				);
 
 				it('should call the onChange callback when the value is set via the DOM', () => {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					testUtil.control.onChange(() => {
+					self[TEST_UTIL].control.onChange(() => {
 						testVar++;
 					});
 
-					testUtil.control.changeDelay(0);
+					self[TEST_UTIL].control.changeDelay(0);
 					settings.onChange.setValueViaDom();
 
 					assert.is(testVar, 1);
 				});
 
-				it('should call the onChange callback when the value is set via the DOM and triggerChange is called', () => {
-					let testVar = 0;
-
-					settings.onChange.buildControl();
-					testUtil.control.onChange(() => {
-						testVar++;
-					});
-
-					testUtil.control.changeDelay(0);
-					settings.onChange.setValueViaDom();
-					testUtil.control.triggerChange(true);
-
-					assert.is(testVar, 2);
-				});
-
-				if (!settings.onChange.skipSameValue) {
-					it('should NOT call the onChange callback when the value is set via the DOM to the same value', () => {
+				it(
+					'should call the onChange callback when the value is set via the DOM and triggerChange is called',
+					() => {
 						let testVar = 0;
 
 						settings.onChange.buildControl();
-						testUtil.control.onChange(() => {
+						self[TEST_UTIL].control.onChange(() => {
 							testVar++;
 						});
 
-						testUtil.control.changeDelay(0);
-						testUtil.control.value(settings.onChange.validValue);
+						self[TEST_UTIL].control.changeDelay(0);
 						settings.onChange.setValueViaDom();
+						self[TEST_UTIL].control.triggerChange(true);
 
-						assert.is(testVar, 1);
-					});
+						assert.is(testVar, 2);
+					}
+				);
+
+				if (!settings.onChange.skipSameValue) {
+					it(
+						'should NOT call the onChange callback when the value is set via the DOM to the same value',
+						() => {
+							let testVar = 0;
+
+							settings.onChange.buildControl();
+							self[TEST_UTIL].control.onChange(() => {
+								testVar++;
+							});
+
+							self[TEST_UTIL].control.changeDelay(0);
+							self[TEST_UTIL].control.value(settings.onChange.validValue);
+							settings.onChange.setValueViaDom();
+
+							assert.is(testVar, 1);
+						}
+					);
 				}
 
 				it('should call the onChange callback when triggerChange is called', () => {
 					let testVar = 0;
 
 					settings.onChange.buildControl();
-					testUtil.control.onChange(() => {
+					self[TEST_UTIL].control.onChange(() => {
 						testVar++;
 					});
 
-					testUtil.control.triggerChange(true);
+					self[TEST_UTIL].control.triggerChange(true);
 
 					assert.is(testVar, 1);
 				});
 			});
 		}
-	};
+	}
 
-	self.changeDelay = () => {
+	changeDelay() {
+		const self = this;
+
 		describe('FormControl .changeDelay', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'changeDelay',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: 0,
 				testValue: 200
 			});
 		});
-	};
-
+	}
 }

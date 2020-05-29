@@ -8,21 +8,35 @@ const TEST_ID = 'testId';
 const TEST_ID_SUFFIX = 'testIdSuffix';
 const extraTests = ['focus', 'onChange'];
 
-export default function ControlTests(Control, testUtil, settings = {}) {
-	const self = this;
+const CONTROL = Symbol();
+const TEST_UTIL = Symbol();
+const SETTINGS = Symbol();
 
-	const buildSettings = (localSettings) => {
+export default class ControlTests {
+	constructor(Control, testUtil, settings = {}) {
+		const self = this;
+
+		self[CONTROL] = Control;
+		self[TEST_UTIL] = testUtil;
+		self[SETTINGS] = settings;
+	}
+
+	buildSettings(localSettings) {
+		const self = this;
+
 		return {
 			id: TEST_ID,
-			container: testUtil.container,
+			container: self[TEST_UTIL].container,
 			delay: 0,
 			fade: false,
-			...settings.extraSettings,
+			...self[SETTINGS].extraSettings,
 			...localSettings
 		};
-	};
+	}
 
-	self.run = (exceptions, additions, extraSettings = {}) => {
+	run(exceptions, additions, extraSettings = {}) {
+		const self = this;
+
 		exceptions = castArray(exceptions);
 		additions = castArray(additions);
 
@@ -43,61 +57,65 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				self[key](extraSettings);
 			}
 		});
-	};
+	}
 
-	self.construct = () => {
+	construct() {
+		const self = this;
+
 		describe('Control initialize', () => {
 			it('without settings', () => {
-				testUtil.control = new Control();
+				self[TEST_UTIL].control = new self[CONTROL]();
 
-				assert.is(testUtil.count('.' + settings.mainCssClass), 0);
+				assert.is(self[TEST_UTIL].count('.' + self[SETTINGS].mainCssClass), 0);
 			});
 
-			if (settings.mainCssClass) {
-				it(`should have a css class called ${settings.mainCssClass}`, () => {
-					testUtil.control = new Control(buildSettings());
+			if (self[SETTINGS].mainCssClass) {
+				it(`should have a css class called ${self[SETTINGS].mainCssClass}`, () => {
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
 
-					assert.is(testUtil.count('.' + settings.mainCssClass), 1);
+					assert.is(self[TEST_UTIL].count('.' + self[SETTINGS].mainCssClass), 1);
 				});
 			}
 		});
-	};
+	}
 
-	self.container = () => {
+	container() {
+		const self = this;
+
 		describe('Control container', () => {
 			it('should not have a container value if no container was set', () => {
 				const initialLength = windowResize.length;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					container: null
 				}));
 
-				assert.is(testUtil.container.children.length, 0);
-				assert.is(testUtil.control.container(), null);
+				assert.is(self[TEST_UTIL].container.children.length, 0);
+				assert.is(self[TEST_UTIL].control.container(), null);
 				assert.is(windowResize.length, initialLength);
 			});
 
 			it('should have a container element if the container setting was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.is(testUtil.container.children.length >= 1, true);
-				assert.is(testUtil.control.container() instanceof Element, true);
+				assert.is(self[TEST_UTIL].container.children.length >= 1, true);
+				assert.is(self[TEST_UTIL].control.container() instanceof Element, true);
 			});
 
 			it('should have a container element if the container method was called', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					container: null
-				})).container(testUtil.container);
+				})).container(self[TEST_UTIL].container);
 
-				assert.is(testUtil.container.children.length, 1);
-				assert.is(testUtil.control.container() instanceof Element, true);
+				assert.is(self[TEST_UTIL].container.children.length, 1);
+				assert.is(self[TEST_UTIL].control.container() instanceof Element, true);
 			});
 
 			it('should add a callback to windowResize', () => {
 				const initialLength = windowResize.length;
 
-				testUtil.control = new Control(buildSettings({
-					container: testUtil.container
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
+					container: self[TEST_UTIL].container
 				}));
 
 				assert.is(windowResize.length, initialLength + 1);
@@ -106,10 +124,10 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should NOT add a callback to windowResize if set in the content setting of a Container', () => {
 				const initialLength = windowResize.length;
 
-				testUtil.control = new Container({
-					container: testUtil.container,
-					content: buildSettings({
-						control: Control
+				self[TEST_UTIL].control = new Container({
+					container: self[TEST_UTIL].container,
+					content: self.buildSettings()({
+						control: self[CONTROL]
 					})
 				});
 
@@ -119,332 +137,365 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should NOT add a callback to windowResize if set in the content method of a Container', () => {
 				const initialLength = windowResize.length;
 
-				testUtil.control = new Container({
-					container: testUtil.container
+				self[TEST_UTIL].control = new Container({
+					container: self[TEST_UTIL].container
 				});
 
-				testUtil.control.content(buildSettings({
-					control: Control
+				self[TEST_UTIL].control.content(self.buildSettings()({
+					control: self[CONTROL]
 				}));
 
 				assert.is(windowResize.length, initialLength + 1);
 			});
 		});
-	};
+	}
 
-	self.element = () => {
+	element() {
+		const self = this;
+
 		describe('Control main container', () => {
 			it('should not have a main element if no container was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					container: null
 				}));
 
-				assert.is(testUtil.container.children.length, 0);
-				assert.is(testUtil.control.element instanceof Element, true);
+				assert.is(self[TEST_UTIL].container.children.length, 0);
+				assert.is(self[TEST_UTIL].control.element instanceof Element, true);
 			});
 
 			it('should have a main element if the container was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.atLeast(testUtil.container.children.length, 1);
-				assert.is(testUtil.control.element instanceof Element, true);
+				assert.atLeast(self[TEST_UTIL].container.children.length, 1);
+				assert.is(self[TEST_UTIL].control.element instanceof Element, true);
 			});
 		});
-	};
+	}
 
-	self.id = () => {
+	id() {
+		const self = this;
+
 		describe('Control .id', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'id',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: '',
 				testValue: TEST_ID
 			});
 
 			it('should have an element with the id property set if the id setting was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.is(testUtil.count('#' + TEST_ID, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID, true), 1);
 			});
 
 			it('should have an element with the id property set if the id method was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					id: null
 				}))
 					.id(TEST_ID);
 
-				assert.is(testUtil.count('#' + TEST_ID, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID, true), 1);
 			});
 		});
-	};
+	}
 
-	self.idSuffix = () => {
+	idSuffix() {
+		const self = this;
+
 		describe('Control idSuffix', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'idSuffix',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: '',
 				testValue: TEST_ID_SUFFIX
 			});
 
 			it('shouldnt have an idSuffix value if no idSuffix setting or method was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					id: null,
 					idSuffix: TEST_ID_SUFFIX
 				}));
 
-				assert.is(testUtil.count('#' + TEST_ID_SUFFIX, true), 0);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID_SUFFIX, true), 0);
 			});
 
-			it('should have a container element with an id of the control id and idSuffix concatenated if both are provided as settings', () => {
-				testUtil.control = new Control(buildSettings({
-					idSuffix: TEST_ID_SUFFIX
-				}));
+			it(
+				'should have a container element with an id of the control id and idSuffix concatenated if both are provided as settings',
+				() => {
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
+						idSuffix: TEST_ID_SUFFIX
+					}));
 
-				assert.is(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
-			});
+					assert.is(self[TEST_UTIL].count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
+				}
+			);
 
-			it('should have a container element with an id of the control id and idSuffix concatenated if the id was set and the idSuffix method was set', () => {
-				testUtil.control = new Control(buildSettings())
-					.idSuffix(TEST_ID_SUFFIX);
+			it(
+				'should have a container element with an id of the control id and idSuffix concatenated if the id was set and the idSuffix method was set',
+				() => {
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
+						.idSuffix(TEST_ID_SUFFIX);
 
-				assert.is(testUtil.count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
-			});
+					assert.is(self[TEST_UTIL].count('#' + TEST_ID + TEST_ID_SUFFIX, true), 1);
+				}
+			);
 		});
-	};
+	}
 
-	self.classes = () => {
+	classes() {
+		const self = this;
+
 		describe('Control classes', () => {
 			const TEST_CLASS = 'test-class';
 
 			it('should have a css class on the main element when the classes setting is set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					classes: TEST_CLASS
 				}));
 
-				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
 			});
 
 			it('should have a css class on the main element when the addClass method is set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.addClass(TEST_CLASS);
 
-				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID + '.' + TEST_CLASS, true), 1);
 			});
 
-			it('shouldnt have a css class on the main element when the removeClass method is used to remove a previously added class', () => {
-				testUtil.control = new Control(buildSettings())
-					.addClass(TEST_CLASS)
-					.removeClass(TEST_CLASS);
+			it(
+				'shouldnt have a css class on the main element when the removeClass method is used to remove a previously added class',
+				() => {
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
+						.addClass(TEST_CLASS)
+						.removeClass(TEST_CLASS);
 
-				assert.is(testUtil.count('#' + TEST_ID + '.' + TEST_CLASS, true), 0);
-			});
+					assert.is(self[TEST_UTIL].count('#' + TEST_ID + '.' + TEST_CLASS, true), 0);
+				}
+			);
 		});
-	};
+	}
 
-	self.minWidth = () => {
+	minWidth() {
+		const self = this;
+
 		describe('Control minWidth', () => {
 			const TEST_WIDTH = new CssSize('213px');
 
 			it('shouldnt have a minWidth value if no minWidth was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notIs(testUtil.control.minWidth(), TEST_WIDTH);
+				assert.notIs(self[TEST_UTIL].control.minWidth(), TEST_WIDTH);
 			});
 
 			it('should have a minWidth value if the minWidth setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					minWidth: TEST_WIDTH
 				}));
 
-				assert.is(testUtil.control.minWidth(), TEST_WIDTH);
+				assert.is(self[TEST_UTIL].control.minWidth(), TEST_WIDTH);
 			});
 
 			it('should have a minWidth value if the minWidth method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.minWidth(TEST_WIDTH);
 
-				assert.is(testUtil.control.minWidth(), TEST_WIDTH);
+				assert.is(self[TEST_UTIL].control.minWidth(), TEST_WIDTH);
 			});
 		});
-	};
+	}
 
-	self.width = () => {
+	width() {
+		const self = this;
+
 		describe('Control width', () => {
 			const TEST_WIDTH = '213px';
 
 			it('shouldnt have a width value if no width was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notEqual(testUtil.control.width(), parseInt(TEST_WIDTH, 10));
+				assert.notEqual(self[TEST_UTIL].control.width(), parseInt(TEST_WIDTH, 10));
 			});
 
 			it('should have a width value if the width setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					width: TEST_WIDTH
 				}));
 
-				assert.is(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
+				assert.is(self[TEST_UTIL].control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 
 			it('should have a width value if the width method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.width(TEST_WIDTH);
 
-				assert.is(testUtil.control.borderWidth(), parseInt(TEST_WIDTH, 10));
+				assert.is(self[TEST_UTIL].control.borderWidth(), parseInt(TEST_WIDTH, 10));
 			});
 		});
-	};
+	}
 
-	self.maxWidth = () => {
+	maxWidth() {
+		const self = this;
+
 		describe('Control maxWidth', () => {
 			const TEST_WIDTH = new CssSize('213px');
 
 			it('shouldnt have a maxWidth value if no maxWidth was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notIs(testUtil.control.maxWidth(), TEST_WIDTH);
+				assert.notIs(self[TEST_UTIL].control.maxWidth(), TEST_WIDTH);
 			});
 
 			it('should have a maxWidth value if the maxWidth setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					maxWidth: TEST_WIDTH
 				}));
 
-				assert.is(testUtil.control.maxWidth(), TEST_WIDTH);
+				assert.is(self[TEST_UTIL].control.maxWidth(), TEST_WIDTH);
 			});
 
 			it('should have a maxWidth value if the maxWidth method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.maxWidth(TEST_WIDTH);
 
-				assert.is(testUtil.control.maxWidth(), TEST_WIDTH);
+				assert.is(self[TEST_UTIL].control.maxWidth(), TEST_WIDTH);
 			});
 		});
-	};
+	}
 
-	self.minHeight = () => {
+	minHeight() {
+		const self = this;
+
 		describe('Control minHeight', () => {
 			const TEST_HEIGHT = '200px';
 			// const TEST_HEIGHT = new CssSize('200px');
 
 			it('shouldnt have a minHeight value if no minHeight was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notEqual(testUtil.control.minHeight(), TEST_HEIGHT);
+				assert.notEqual(self[TEST_UTIL].control.minHeight(), TEST_HEIGHT);
 			});
 
 			it('should have a minHeight value if the minHeight setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					minHeight: TEST_HEIGHT
 				}));
 
-				assert.is(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
+				assert.is(self[TEST_UTIL].first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
 			});
 
 			it('should have a minHeight value if the minHeight method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.minHeight(TEST_HEIGHT);
 
-				assert.is(testUtil.first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
+				assert.is(self[TEST_UTIL].first('#' + TEST_ID, true).style.minHeight, TEST_HEIGHT);
 			});
 		});
-	};
+	}
 
-	self.height = () => {
+	height() {
+		const self = this;
+
 		describe('Control height', () => {
 			const TEST_HEIGHT = '200px';
 
 			it('shouldnt have a height value if no height was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notEqual(testUtil.control.height(), TEST_HEIGHT);
+				assert.notEqual(self[TEST_UTIL].control.height(), TEST_HEIGHT);
 			});
 
 			it('should have a height value if the height setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					height: TEST_HEIGHT
 				}));
 
-				assert.is(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
+				assert.is(self[TEST_UTIL].control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 
 			it('should have a height value if the height method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.height(TEST_HEIGHT);
 
-				assert.is(testUtil.control.borderHeight(), parseInt(TEST_HEIGHT, 10));
+				assert.is(self[TEST_UTIL].control.borderHeight(), parseInt(TEST_HEIGHT, 10));
 			});
 		});
-	};
+	}
 
-	self.maxHeight = () => {
+	maxHeight() {
+		const self = this;
+
 		describe('Control maxHeight', () => {
 			const TEST_HEIGHT = '200px';
 
 			it('shouldnt have a maxHeight value if no maxHeight was set', () => {
-				testUtil.control = new Control(buildSettings());
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()());
 
-				assert.notEqual(testUtil.control.maxHeight(), TEST_HEIGHT);
+				assert.notEqual(self[TEST_UTIL].control.maxHeight(), TEST_HEIGHT);
 			});
 
 			it('should have a maxHeight value if the maxHeight setting was set', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					maxHeight: TEST_HEIGHT
 				}));
 
-				assert.is(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
+				assert.is(getComputedStyle(self[TEST_UTIL].first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
 			});
 
 			it('should have a maxHeight value if the maxHeight method was set', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.maxHeight(TEST_HEIGHT);
 
-				assert.is(getComputedStyle(testUtil.first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
+				assert.is(getComputedStyle(self[TEST_UTIL].first('#' + TEST_ID, true)).maxHeight, TEST_HEIGHT);
 			});
 		});
-	};
+	}
 
-	self.isEnabled = () => {
+	isEnabled() {
+		const self = this;
+
 		describe('Control isEnabled', () => {
 			const DISABLED_CLASS = 'disabled';
 
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'isEnabled',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: true,
 				testValue: false
 			});
 
 			it('should have an element with the disabled css class when the isEnabled setting was set to false', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isEnabled: false
 				}));
 
-				assert.is(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
 			});
 
 			it('should have an element with the disabled css class when the isEnabled method was set to false', () => {
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.isEnabled(false);
 
-				assert.is(testUtil.count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
+				assert.is(self[TEST_UTIL].count('#' + TEST_ID + '.' + DISABLED_CLASS, true), 1);
 			});
 		});
-	};
+	}
 
-	self.stopPropagation = () => {
+	stopPropagation() {
+		const self = this;
+
 		describe('Control .stopPropagation', () => {
-			testUtil.testMethod({
+			self[TEST_UTIL].testMethod({
 				methodName: 'stopPropagation',
 				defaultSettings: {
-					container: testUtil.container
+					container: self[TEST_UTIL].container
 				},
 				defaultValue: false,
 				testValue: true
@@ -463,13 +514,13 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 
 				window.addEventListener(CLICK_EVENT, containerClick);
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					stopPropagation: stopPropagation
 				}));
 
-				testUtil.control.on(CLICK_EVENT, controlClick);
+				self[TEST_UTIL].control.on(CLICK_EVENT, controlClick);
 
-				testUtil.simulateClick(testUtil.control.element);
+				self[TEST_UTIL].simulateClick(self[TEST_UTIL].control.element);
 
 				window.removeEventListener(CLICK_EVENT, containerClick);
 			};
@@ -486,15 +537,17 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				assert.is(testItem, 10);
 			});
 		});
-	};
+	}
 
-	self.onResize = () => {
+	onResize() {
+		const self = this;
+
 		describe('Control .onResize', () => {
 			it('should execute an onResize callback when resize is called', () => {
 				let testItem = 1;
 				let testItem2;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					skipWindowResize: true,
 					onResize() {
 						testItem += 1;
@@ -502,7 +555,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				}));
 
 				testItem2 = testItem;
-				testUtil.control.resize(true);
+				self[TEST_UTIL].control.resize(true);
 
 				assert.moreThan(testItem, testItem2);
 			});
@@ -511,27 +564,29 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				let testItem = 1;
 				let testItem2;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					onResize() {
 						testItem += 1;
 					}
 				}));
 
-				testUtil.control.remove();
+				self[TEST_UTIL].control.remove();
 				testItem2 = testItem;
-				testUtil.control.resize(true);
+				self[TEST_UTIL].control.resize(true);
 
 				assert.is(testItem, testItem2);
 			});
 		});
-	};
+	}
 
-	self.onRemove = () => {
+	onRemove() {
+		const self = this;
+
 		describe('Control onRemove', () => {
 			it('should accept an onRemove callback but not execute it', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					onRemove() {
 						testItem = 2;
 					}
@@ -543,7 +598,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should execute onRemove callbacks in order when onRemove is called', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.onRemove(() => {
 						testItem = 2;
 					})
@@ -551,7 +606,7 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						testItem = 3;
 					});
 
-				testUtil.control.remove();
+				self[TEST_UTIL].control.remove();
 
 				assert.is(testItem, 3);
 			});
@@ -559,26 +614,28 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should NOT execute an onRemove callback when remove is called twice', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings())
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()())
 					.onRemove(() => {
 						testItem++;
 					});
 
-				testUtil.control.remove();
-				testUtil.control.remove();
+				self[TEST_UTIL].control.remove();
+				self[TEST_UTIL].control.remove();
 
 				assert.is(testItem, 2);
 			});
 		});
-	};
+	}
 
-	self.focus = () => {
+	focus() {
+		const self = this;
+
 		describe('Control focus', () => {
-			if (!settings.autoFocus) {
+			if (!self[SETTINGS].autoFocus) {
 				it('should not call the onFocus callback if the control is not focused', () => {
 					let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 						isFocusable: true,
 						onFocus() {
 							testItem += 1;
@@ -592,30 +649,30 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			it('should call the onFocus callback once if .focus is called', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true,
 					onFocus() {
 						testItem += 1;
 					}
 				}));
 
-				testUtil.control.isFocused(true);
+				self[TEST_UTIL].control.isFocused(true);
 
 				assert.is(testItem, 2);
 			});
 
-			if (settings.focusableElement) {
+			if (self[SETTINGS].focusableElement) {
 				it('should call the onFocus callback once when a focusable element is focused', () => {
 					let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 						isFocusable: true,
 						onFocus() {
 							testItem += 1;
 						}
 					}));
 
-					testUtil.first(settings.focusableElement).focus();
+					self[TEST_UTIL].first(self[SETTINGS].focusableElement).focus();
 
 					assert.is(testItem, 2);
 				});
@@ -623,14 +680,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				it('should call the onBlur callback once when a focusable element is blurred', () => {
 					let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 						isFocusable: true,
 						onBlur() {
 							testItem += 1;
 						}
 					}));
 
-					const element = testUtil.first(settings.focusableElement);
+					const element = self[TEST_UTIL].first(self[SETTINGS].focusableElement);
 					element.focus();
 					element.blur();
 
@@ -641,19 +698,19 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				});
 			}
 
-			if (settings.focusableSubElement) {
+			if (self[SETTINGS].focusableSubElement) {
 				it('should call the onFocus callback once when a second focusable element is focused', () => {
 					let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 						isFocusable: true,
 						onBlur() {
 							testItem += 1;
 						}
 					}));
 
-					testUtil.nth(settings.focusableSubElement, 1).focus();
-					testUtil.nth(settings.focusableSubElement, 1).blur();
+					self[TEST_UTIL].nth(self[SETTINGS].focusableSubElement, 1).focus();
+					self[TEST_UTIL].nth(self[SETTINGS].focusableSubElement, 1).blur();
 
 					return wait(1)
 						.then(() => {
@@ -664,14 +721,14 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				it('should call the onBlur callback once when a second focusable element is blurred', () => {
 					let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
+					self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 						isFocusable: true,
 						onFocus() {
 							testItem += 1;
 						}
 					}));
 
-					testUtil.nth(settings.focusableSubElement, 1).focus();
+					self[TEST_UTIL].nth(self[SETTINGS].focusableSubElement, 1).focus();
 
 					return wait(1)
 						.then(() => {
@@ -679,55 +736,61 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 						});
 				});
 
-				if (settings.focusableElement) {
-					it('should NOT call the onBlur callback if the main element is focused and then the subControl is focused', () => {
-						let testItem = 1;
+				if (self[SETTINGS].focusableElement) {
+					it(
+						'should NOT call the onBlur callback if the main element is focused and then the subControl is focused',
+						() => {
+							let testItem = 1;
 
-						testUtil.control = new Control(buildSettings({
-							isFocusable: true,
-							onBlur() {
-								testItem += 1;
-							}
-						}));
+							self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
+								isFocusable: true,
+								onBlur() {
+									testItem += 1;
+								}
+							}));
 
-						testUtil.first(settings.focusableElement).focus();
-						testUtil.nth(settings.focusableSubElement, 1).focus();
+							self[TEST_UTIL].first(self[SETTINGS].focusableElement).focus();
+							self[TEST_UTIL].nth(self[SETTINGS].focusableSubElement, 1).focus();
 
-						assert.is(testItem, 1);
-					});
+							assert.is(testItem, 1);
+						}
+					);
 
-					it('should NOT call the onBlur callback if the subControl is focused and then the main element is focused', () => {
-						let testItem = 1;
+					it(
+						'should NOT call the onBlur callback if the subControl is focused and then the main element is focused',
+						() => {
+							let testItem = 1;
 
-						testUtil.control = new Control(buildSettings({
-							isFocusable: true,
-							onBlur() {
-								testItem += 1;
-							}
-						}));
+							self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
+								isFocusable: true,
+								onBlur() {
+									testItem += 1;
+								}
+							}));
 
-						testUtil.nth(settings.focusableSubElement, 1).focus();
-						testUtil.first(settings.focusableElement).focus();
+							self[TEST_UTIL].nth(self[SETTINGS].focusableSubElement, 1).focus();
+							self[TEST_UTIL].first(self[SETTINGS].focusableElement).focus();
 
-						assert.is(testItem, 1);
-					});
+							assert.is(testItem, 1);
+						}
+					);
 				}
 			}
 
 			it('should return true when isFocused is called after focused', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true
 				}));
 
-				testUtil.control.isFocused(true);
+				self[TEST_UTIL].control.isFocused(true);
 
-				assert.is(testUtil.control.isFocused(), true);
+				assert.is(self[TEST_UTIL].control.isFocused(), true);
 			});
 
 			it('should not call the onBlur callback if the control is not focused', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true,
 					onBlur() {
 						testItem += 1;
@@ -737,34 +800,37 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 				assert.is(testItem, 1);
 			});
 
-			if (!settings.autoFocus) {
-				it('should not call the onBlur callback if .isFocused(false) is called when the control doesn\'t have focus', () => {
-					let testItem = 1;
+			if (!self[SETTINGS].autoFocus) {
+				it(
+					'should not call the onBlur callback if .isFocused(false) is called when the control doesn\'t have focus',
+					() => {
+						let testItem = 1;
 
-					testUtil.control = new Control(buildSettings({
-						isFocusable: true,
-						onBlur() {
-							testItem += 1;
-						}
-					}));
+						self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
+							isFocusable: true,
+							onBlur() {
+								testItem += 1;
+							}
+						}));
 
-					testUtil.control.isFocused(false);
+						self[TEST_UTIL].control.isFocused(false);
 
-					assert.is(testItem, 1);
-				});
+						assert.is(testItem, 1);
+					}
+				);
 			}
 
 			it('should call the onBlur callback once if .isFocused(true) is called and then .isFocused(false)', () => {
 				let testItem = 1;
 
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true,
 					onBlur() {
 						testItem += 1;
 					}
 				}));
 
-				testUtil.control.isFocused(true).isFocused(false);
+				self[TEST_UTIL].control.isFocused(true).isFocused(false);
 
 				return wait(1)
 					.then(() => {
@@ -773,25 +839,25 @@ export default function ControlTests(Control, testUtil, settings = {}) {
 			});
 
 			it('should return false when isFocused is called after focused and blurred', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true
 				}));
 
-				testUtil.control.isFocused(true).isFocused(false);
+				self[TEST_UTIL].control.isFocused(true).isFocused(false);
 
-				assert.is(testUtil.control.isFocused(), false);
+				assert.is(self[TEST_UTIL].control.isFocused(), false);
 			});
 
 			it('should not be focused after the active element is blurred', () => {
-				testUtil.control = new Control(buildSettings({
+				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings()({
 					isFocusable: true
 				}));
 
-				testUtil.control.isFocused(true);
+				self[TEST_UTIL].control.isFocused(true);
 				document.activeElement.blur();
 
-				assert.is(testUtil.control.isFocused(), false);
+				assert.is(self[TEST_UTIL].control.isFocused(), false);
 			});
 		});
-	};
+	}
 }

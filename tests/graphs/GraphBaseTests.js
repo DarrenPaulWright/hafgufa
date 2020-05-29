@@ -2,55 +2,68 @@ import { assert } from 'type-enforcer';
 import { Thickness } from 'type-enforcer-ui';
 import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
 
-export default function GraphBaseTests(Control, testUtil, settings) {
-	const self = this;
+const CONTROL = Symbol();
+const TEST_UTIL = Symbol();
 
-	ControlHeadingMixinTests.call(self, Control, testUtil, settings);
+export default class GraphBaseTests extends ControlHeadingMixinTests {
+	constructor(Control, testUtil, settings) {
+		super(Control, testUtil, settings);
 
-	self.svgElement = () => {
+		const self = this;
+
+		self[CONTROL] = Control;
+		self[TEST_UTIL] = testUtil;
+	}
+
+	svgElement() {
+		const self = this;
+
 		it('should return an svg element when svgElement is called', () => {
-			testUtil.control = new Control({
-				container: testUtil.container
-			});
+			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
 
-			assert.is(testUtil.control.svgElement() instanceof SVGElement, true);
+			assert.is(self[TEST_UTIL].control.svgElement() instanceof SVGElement, true);
 		});
-	};
+	}
 
-	self.graphPadding = () => {
-		testUtil.testMethod({
+	graphPadding() {
+		const self = this;
+
+		self[TEST_UTIL].testMethod({
 			methodName: 'graphPadding',
 			defaultSettings: {
-				container: testUtil.container
+				container: self[TEST_UTIL].container
 			},
 			defaultValue: new Thickness(12),
 			testValue: new Thickness(30),
 			secondTestValue: new Thickness(50)
 		});
-	};
+	}
 
-	self.color = () => {
-		testUtil.testMethod({
+	color() {
+		const self = this;
+
+		self[TEST_UTIL].testMethod({
 			methodName: 'color',
 			defaultSettings: {
-				container: testUtil.container
+				container: self[TEST_UTIL].container
 			},
 			defaultValue: '#b24f26',
 			testValue: '#ffffff',
 			secondTestValue: '#000000'
 		});
-	};
+	}
 
-	self.data = () => {
-		testUtil.testMethod({
+	data() {
+		const self = this;
+
+		self[TEST_UTIL].testMethod({
 			methodName: 'data',
 			defaultSettings: {
-				container: testUtil.container
+				container: self[TEST_UTIL].container
 			},
 			defaultValue: [],
 			testValue: [{}],
 			secondTestValue: [{}, {}]
 		});
-	};
-
+	}
 }

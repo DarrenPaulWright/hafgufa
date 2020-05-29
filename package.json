@@ -11,6 +11,11 @@
 	"main": "index.js",
 	"files": [
 		"src",
+		"tests/TestUtil.js",
+		"tests/ControlTests.js",
+		"tests/mixins/ControlHeadingMixinTests.js",
+		"tests/forms/FormControlTests.js",
+		"tests/graphs/GraphBaseTests.js",
 		"localization"
 	],
 	"sideEffects": [
