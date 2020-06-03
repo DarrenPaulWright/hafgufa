@@ -60,10 +60,14 @@ export default class ControlHeadingMixinTests extends ControlTests {
 
 			it('should have an empty title element if the title is set to an empty string', () => {
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
-					title: ''
+					title: TEST_TITLE
 				}));
 
-				assert.is(self[TEST_UTIL].count('.heading'), 0);
+				const totalHeadings = self[TEST_UTIL].count('.heading');
+
+				self[TEST_UTIL].control.title('');
+
+				assert.is(totalHeadings - self[TEST_UTIL].count('.heading'), 1);
 			});
 		});
 	}

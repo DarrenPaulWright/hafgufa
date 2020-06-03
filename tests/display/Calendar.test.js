@@ -5,7 +5,9 @@ import TestUtil from '../TestUtil';
 
 describe('Calendar', () => {
 	const testUtil = new TestUtil(Calendar);
-	const controlBaseTests = new ControlTests(Calendar, testUtil);
+	const controlBaseTests = new ControlTests(Calendar, testUtil, {
+		mainCssClass: 'calendar'
+	});
 
 	controlBaseTests.run();
 
@@ -45,11 +47,11 @@ describe('Calendar', () => {
 			let initialLength;
 
 			testUtil.control = new Calendar({
-				container: testUtil.container
-			});
+					container: testUtil.container
+				});
 
-			testUtil.control.month(0);
-			initialLength = testUtil.count('.different-month');
+				testUtil.control.month(0);
+				initialLength = testUtil.count('.different-month');
 
 			testUtil.control.month(1);
 
@@ -94,7 +96,7 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 11
-			});
+				});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
@@ -105,7 +107,7 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 0
-			});
+				});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
@@ -116,8 +118,8 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 11,
-				year: 2000
-			});
+					year: 2000
+				});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
@@ -128,8 +130,8 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 0,
-				year: 2000
-			});
+					year: 2000
+				});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
@@ -219,9 +221,9 @@ describe('Calendar', () => {
 
 			testDate.setFullYear(testDate.getFullYear() + 1);
 
-			testUtil.control = new Calendar({
-				container: testUtil.container
-			})
+				testUtil.control = new Calendar({
+					container: testUtil.container
+				})
 				.selectedDate(testDate);
 
 			assert.is(testUtil.count('.day-button.selected'), 0);
