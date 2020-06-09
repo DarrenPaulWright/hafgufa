@@ -24,9 +24,10 @@
 @noiseImageUrl: left top/8rem url('/images/common/textureDark.png');
 
 /* Header */
-@headerBackground: #333;
+@mainHeaderTopColor: #555;
+@mainHeaderBottomColor: #111;
 
-@headerButtonIconColor: #000;
+@headerButtonIconColor: @mainHeaderBottomColor;
 @headerButtonHoverBackground: fade(@shadowColor, 8%);
 @headerButtonActiveBackground: fade(@shadowColor, 16%);
 
@@ -47,12 +48,12 @@
 @toolbarColor: #444;
 
 /* Text Input */
-@inputBackground: fade(@fontColor, 20%);
+@inputBackground: fade(@shadowColor, 20%);
 @inputShadow: inset 0 0.25rem 0.3rem fade(@shadowColor, 30%), 0 0.06rem 0 @chromeReflectionColor;
 
 /* group */
-@groupBackground: rgba(255, 255, 255, 0.05);
-@groupBorder: 0.06rem solid rgba(255, 255, 255, 0.1);
+@groupTopColor: fade(@mainHeaderTopColor, 80%);
+@groupBottomColor: fade(@mainHeaderBottomColor, 60%);
 
 /* popups */
 @tooltipFontColor: @chromeFontColor;

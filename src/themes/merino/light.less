@@ -1,9 +1,9 @@
 /* Primary Definitions */
 @import (css) url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css');
 @import (css) url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import (css) url('https://fonts.googleapis.com/css?family=Exo+2:200,400,600');
+@import (css) url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
-@chromeFontFamily: 'Exo 2', 'FontAwesome', arial, helvetica, sans-serif;
+@chromeFontFamily: 'Open Sans', 'FontAwesome', arial, helvetica, sans-serif;
 @inputFontFamily: @chromeFontFamily;
 @headingFontFamily: @chromeFontFamily;
 
@@ -15,7 +15,7 @@
 @normalFontWeight: 400;
 @boldFontWeight: 600;
 
-@highlightColor: #0af;
+@highlightColor: #3399ff;
 @subHighlightColor: spin(@highlightColor, -20);
 @validColor: #336600;
 @warningColor: #cc7700;
@@ -23,8 +23,8 @@
 @shadowColor: #000000;
 @reflectionColor: #ffffff;
 
-@smallShadowColor: fade(@shadowColor, 40%);
-@largeShadowColor: fade(@shadowColor, 30%);
+@smallShadowColor: fade(@shadowColor, 50%);
+@largeShadowColor: fade(@shadowColor, 40%);
 @chromeReflectionColor: fade(@reflectionColor, 70%);
 
 @textShadow: 0 0.06rem 0 fade(@reflectionColor, 100%);
@@ -33,18 +33,21 @@
 @separatorReflectionColor: @chromeReflectionColor;
 @separatorShadowColor: fade(@shadowColor, 10%);
 
-@fontColor: #555555;
+@fontColor: #333333;
 @secondaryFontColor: fade(@fontColor, 50%);
 @disabledFontColor: fade(@fontColor, 30%);
-@backgroundColor: desaturate(lighten(@highlightColor, 38), 70);
+@backgroundColor: #fdfeff;
 
-@hyperlinkColor: @highlightColor;
+@hyperlinkColor: #336699;
 @hyperlinkHoverColor: lighten(@hyperlinkColor, 5);
 
 @chromeFontColor: #333333;
 @chromeSubFontColor: #88888a;
 @chromeInverseFontColor: #ffffff;
 @chromeInverseSubFontColor: fade(@chromeInverseFontColor, 60%);
+
+@checkImageUrl: left top/0.5rem url('/images/common/checkerLight.svg');
+@noiseImageUrl: left top/8rem url('/images/common/textureLight.png');
 
 @asteriskIcon: '';
 @caretDownIcon: '';
@@ -62,7 +65,7 @@
 @easing: ease-out;
 
 /* Body */
-@bodyBackground: radial-gradient(ellipse at top center, @backgroundColor, white), @backgroundColor;
+@bodyBackground: radial-gradient(ellipse at top center, fade(@shadowColor, 0%) 30%, @largeShadowColor 140%), @checkImageUrl, @noiseImageUrl, @backgroundColor;
 @bodyFont: normal normal @normalFontWeight @fontSize @chromeFontFamily;
 @defaultFocusOutline: 0.06rem solid @highlightColor;
 @defaultFocusOutlineOffset: -0.06rem;
@@ -73,8 +76,10 @@
 
 /* Header */
 @headerHeight: 3.2rem;
-@headerBackground: none;
-@headerShadow: none;
+@mainHeaderTopColor: #f8f9fa;
+@mainHeaderBottomColor: #b9babb;
+@headerBackground: radial-gradient(ellipse at top center, @mainHeaderTopColor 0%, @mainHeaderBottomColor 140%), @mainHeaderBottomColor;
+@headerShadow: 0 0 0.8rem fade(@shadowColor, 80%);
 
 @headerButtonIconColor: lighten(@chromeFontColor, 15%);
 @headerButtonTextShadow: @textShadow;
@@ -137,8 +142,8 @@
 @tagWrapperPadding: @tagMargin;
 @tagPaddingLeft: 0.5em;
 @tagHeadingVerticalAlign: bottom;
-@formButtonPadding: 0.4em 0.7em 0.5em 0.7em;
-@formButtonSelectedPadding: 0.35em 0.7em 0.45em 0.7em;
+@formButtonPadding: 0.4rem 0.7rem 0.5rem 0.7rem;
+@formButtonSelectedPadding: 0.35rem 0.7rem 0.45rem 0.7rem;
 @groupedButtonWrapperSize: 0;
 @groupedButtonMultiSelectPaddingLeft: 0.9em;
 @buttonImageSize: 2.3em;
@@ -146,30 +151,24 @@
 @iconButtonPadding: 0.05em 0.05em 0.15em;
 
 .buttonEx() {
-	> span {
-		text-transform: uppercase;
-		letter-spacing: 0.03em;
-		font-size: 0.9em;
-		line-height: 1.6em;
-	}
 }
 
 @buttonSelectedTextColor: saturate(lighten(@highlightColor, 5), 10);
 @buttonReflectionShadow: inset 0 0.06rem 0 @chromeReflectionColor;
 
-@buttonFont: normal normal @boldFontWeight @chromeFontSize/1.5em @chromeFontFamily;
+@buttonFont: normal normal @normalFontWeight @chromeFontSize/1.5em @chromeFontFamily;
 @buttonFontColor: @chromeFontColor;
 
-@formButtonShadow: @buttonReflectionShadow, 0 0.06rem 0.3rem @smallShadowColor;
-@formButtonSelectedShadow: inset 0 0 1.6rem fade(@highlightColor, 50%), 0 0.06rem 0 @chromeReflectionColor;
+@formButtonShadow: @buttonReflectionShadow, 0 0.06rem 0.4rem @smallShadowColor;
+@formButtonSelectedShadow: inset 0 0.1rem 0.6rem @smallShadowColor, 0 0.06rem 0 @chromeReflectionColor;
 @formButtonSelectedTextShadow: 0 0 1.15rem @buttonSelectedTextColor;
 
 @formButtonBorderColor: #bbbcbd;
 @formButtonBorder: none;
-@formButtonTopColor: rgba(0, 0, 0, 0.05);
-@formButtonBottomColor: rgba(0, 0, 0, 0.1);
+@formButtonTopColor: #eeeff0;
+@formButtonBottomColor: shade(@formButtonTopColor, 7);
 @formButtonBackground: linear-gradient(@formButtonTopColor, @formButtonBottomColor);
-@formButtonHoverBackground: linear-gradient(fade(@formButtonTopColor, 10%), fade(@formButtonBottomColor, 15%));
+@formButtonHoverBackground: linear-gradient(lighten(@formButtonTopColor, 5), lighten(@formButtonBottomColor, 5));
 @formButtonActiveBackground: @formButtonBottomColor;
 @formButtonActiveShadow: inset @formButtonShadow;
 
@@ -178,14 +177,18 @@
 @formButtonIconShadow: @headerButtonIconTextShadow;
 
 @formButtonSelectedFontColor: @buttonSelectedTextColor;
-@formButtonSelectedBorder: 0.06rem solid;
-@formButtonSelectedBorderImage: radial-gradient(@formButtonSelectedFontColor 70%, fade(@formButtonSelectedFontColor, 0) 95%) 1;
-@formButtonSelectedBackground: #444;
-@formButtonSelectedHoverBackground: lighten(@formButtonSelectedBackground, 5);
+@formButtonSelectedBorder: 0.06rem solid transparent;
+@formButtonSelectedBorderImage: none;
+@formButtonSelectedTopColor: #444;
+@formButtonSelectedBottomColor: #444;
+@formButtonSelectedBackground: linear-gradient(@formButtonSelectedTopColor, @formButtonSelectedBottomColor);
+@formButtonSelectedHoverTopColor: darken(@formButtonSelectedTopColor, 5);
+@formButtonSelectedHoverBottomColor: darken(@formButtonSelectedBottomColor, 5);
+@formButtonSelectedHoverBackground: linear-gradient(@formButtonSelectedHoverTopColor, @formButtonSelectedHoverBottomColor);
 
 @actionButtonFontColor: @chromeInverseFontColor;
 @actionButtonBorderColor: darken(@highlightColor, 20);
-@actionButtonTopColor: @subHighlightColor;
+@actionButtonTopColor: average(@highlightColor, @subHighlightColor);
 @actionButtonBottomColor: @highlightColor;
 @actionButtonBackground: linear-gradient(@actionButtonTopColor, @actionButtonBottomColor);
 @actionButtonHoverTopColor: lighten(@actionButtonTopColor, 4);
@@ -202,7 +205,7 @@
 @checkboxRadioShadow: @inputShadow;
 
 @groupedButtonShadow: @buttonReflectionShadow;
-@groupedButtonGroupSelectedShadow: 0 0 2rem fade(@highlightColor, 50%);
+@groupedButtonGroupSelectedShadow: none;
 @groupedButtonGroupShadow: 0 0.06rem 0.3rem @smallShadowColor;
 @groupedButtonSelectedShadow: @formButtonSelectedShadow;
 @groupedButtonBorderLeftColor: @separatorShadowColor;
@@ -251,13 +254,13 @@
 @headingInverseFontColor: @chromeInverseFontColor;
 @headingInverseSubTitleFontColor: @chromeInverseSubFontColor;
 
-@h1FontSize: 1.8em;
+@h1FontSize: 1.6em;
 @h2FontSize: 1.6em;
 @h3FontSize: 1.5em;
 @h4FontSize: 1.5em;
 @h5FontSize: 1.1em;
 @h6FontSize: 1.1em;
-@h1FontWeight: @lightFontWeight;
+@h1FontWeight: @normalFontWeight;
 @h2FontWeight: @lightFontWeight;
 @h3FontWeight: @normalFontWeight;
 @h4FontWeight: @lightFontWeight;
@@ -311,7 +314,7 @@
 		}
 
 		.icon {
-			transform: translateY(-0.2em);
+			transform: translateY(-0.1em);
 			font-size: 1.1em;
 		}
 	}
@@ -319,7 +322,7 @@
 
 /* Toolbar */
 @toolbarPadding: 0.3rem 1.4rem;
-@toolbarColor: rgba(0, 0, 0, 0.1);
+@toolbarColor: #dddedf;
 @toolbarHighlightColor: lighten(@toolbarColor, 10);
 @toolbarShadowColor: darken(@toolbarColor, 10);
 
@@ -347,7 +350,7 @@
 
 @inputBackground: fade(@shadowColor, 10%);
 @inputBackgroundActive: fade(@inputBackground, 8%);
-@inputShadow: inset 0 0.1rem 0.4rem fade(@shadowColor, 15%), 0 0.06rem 0 @chromeReflectionColor;
+@inputShadow: inset 0 0.3rem 0.4rem fade(@shadowColor, 15%), 0 0.06rem 0 @chromeReflectionColor;
 
 /* Progress Bar */
 @progressBarMinHeight: 0.6rem;
@@ -406,9 +409,9 @@
 @carouselMask: linear-gradient(90deg, transparent, black 4rem, black calc(100% - 4rem), transparent);
 
 /* Timeline */
-@timelineLineBackground: transparent;
+@timelineLineBackground: linear-gradient(to right, fade(@secondaryFontColor, 00%), fade(@secondaryFontColor, 10%) 4rem, @secondaryFontColor, fade(@secondaryFontColor, 10%) calc(100% - 4rem), fade(@secondaryFontColor, 0%));
 @timelineMask: @carouselMask;
-@timelineSpanAltBackground: linear-gradient(transparent, fade(@fontColor, 15%) 45%, fade(@fontColor, 15%) 55%, transparent);
+@timelineSpanAltBackground: linear-gradient(fade(@fontColor, 5%), transparent);
 
 /* grid */
 @gridHeaderCellPadding: 0.1rem 0.4rem 0.35rem;
@@ -455,8 +458,8 @@
 @menuItemHoverBackground: fade(@fontColor, 10%);
 @menuItemSelectedFontColor: @chromeInverseFontColor;
 @menuItemSubTitleSelectedFontColor: @chromeInverseSubFontColor;
-@menuItemSelectedBackground: @formButtonSelectedBackground;
-@menuItemSelectedHoverBackground: @formButtonSelectedHoverBackground;
+@menuItemSelectedBackground: @formButtonSelectedTopColor;
+@menuItemSelectedHoverBackground: @formButtonSelectedHoverTopColor;
 
 /* context menu */
 @contextMenuBackground: @backgroundColor;
@@ -486,25 +489,13 @@
 @groupMargin: 0 0.85rem 1.15rem 0;
 @groupPadding: 0.3rem 0.7rem 0.6rem;
 @groupMinHeight: 4rem;
-@groupHeadingPadding: 0.1em 0.3em;
+@groupHeadingPadding: 0 0 0 0.4em;
 @groupBorderRadius: @popupCornerRadius;
 
-@groupBackgroundColor: fade(@backgroundColor, 90%);
-
-//@groupBackground: radial-gradient(ellipse at top center, fade(@highlightColor, 3%), fade(@highlightColor, 0%) 70%), linear-gradient(fade(@highlightColor, 3%), fade(@highlightColor, 0%) 30%, fade(@highlightColor, 0%) 80%, fade(@highlightColor, 3%)), @groupBackgroundColor;
-@groupBackground: radial-gradient(ellipse at top center,
-fade(@highlightColor, 4%),
-fade(@highlightColor, 2%) 40%,
-fade(@highlightColor, 0%)),
-@groupBackgroundColor;
-
-@topGlowSize: 8rem;
-@bottomGlowSize: 6rem;
-@groupShadow: inset 0 0.06rem 0 fade(@highlightColor, 80%),
-inset 0 -0.06rem 0 fade(@highlightColor, 80%),
-inset 0 @topGlowSize @topGlowSize -@topGlowSize fade(@highlightColor, 10%),
-inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 10%),
-0 0 1rem fade(@highlightColor, 15%);
+@groupTopColor: fade(@mainHeaderTopColor, 60%);
+@groupBottomColor: fade(@mainHeaderBottomColor, 60%);
+@groupBackground: radial-gradient(ellipse at top center, @groupTopColor 0%, @groupBottomColor 140%), @noiseImageUrl;
+@groupShadow: @formButtonShadow;
 @groupIconColor: @highlightColor;
 @groupBorder: none;
 .groupEx() {
@@ -540,7 +531,7 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 @dialogHeaderPadding: 0.2rem 0.4rem;
 @dialogFooterButtonMargin: 0 0.1rem;
 
-@popupBackground: fade(@shadowColor, 80%);
+@popupBackground: @backgroundColor;
 @popupShadowColor: @largeShadowColor;
 @popupShadow: 0 0.1rem 1.15rem 0 @popupShadowColor;
 
@@ -589,7 +580,7 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 @FileThumbnailDeleteButtonColor: @errorColor;
 
 /* Drawer */
-@drawerBackground: @groupBackgroundColor;
+@drawerBackground: @groupBackground;
 @drawerShadow: 0.1rem 0 0.6rem @largeShadowColor;
 
 /* Drawer Menu */
@@ -611,8 +602,8 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 @searchBarPadding: 0.4rem 0.35rem 0.35rem;
 @searchBarBorderRadius: 0 0 @popupCornerRadius @popupCornerRadius;
 
-@searchBarBackground: none;
-@searchBarShadow: none;
+@searchBarBackground: @toolbarColor;
+@searchBarShadow: @headerShadow;
 
 /* Calendar */
 @calendarHeaderSpacing: 0.3rem;
@@ -639,106 +630,33 @@ inset 0 -@bottomGlowSize @bottomGlowSize -@bottomGlowSize fade(@highlightColor, 
 /* Is Working */
 @isWorkingBackground: transparent;
 .isWorkingEx() {
-	@thickness: 0.08rem;
-	@padding1: 0.3rem;
-	@padding2: 0.7rem;
-
 	> div {
 		border-radius: 50%;
-		border: @thickness solid transparent;
+		border: 0.35rem solid fade(@fontColor, 10%);
 		border-top-color: @highlightColor;
-		animation: spin-outer 2s linear infinite;
-
-		&:before {
-			content: '';
-			position: absolute;
-			top: @padding1;
-			right: @padding1;
-			bottom: @padding1;
-			left: @padding1;
-			border-radius: 50%;
-			border: @thickness solid transparent;
-			border-top-color: mix(@highlightColor, @subHighlightColor, 50%);
-			animation: spin 3.17s linear infinite;
-		}
-
-		&:after {
-			content: '';
-			position: absolute;
-			top: @padding2;
-			right: @padding2;
-			bottom: @padding2;
-			left: @padding2;
-			border-radius: 50%;
-			border: @thickness solid transparent;
-			border-top-color: @subHighlightColor;
-			animation: spin 1.63s linear infinite;
-		}
+		animation: spin 1.5s linear infinite;
 	}
 
 	&.medium {
 		> div {
-			@thickness: 0.06rem;
-			@padding1: 0.2rem;
-			@padding2: 0.45rem;
-
-			border-width: @thickness;
-
-			&:before {
-				top: @padding1;
-				right: @padding1;
-				bottom: @padding1;
-				left: @padding1;
-				border-width: @thickness;
-			}
-
-			&:after {
-				top: @padding2;
-				right: @padding2;
-				bottom: @padding2;
-				left: @padding2;
-				border-width: @thickness;
-			}
+			border-width: 0.3rem;
+			animation: spin 1.25s linear infinite;
 		}
 	}
 
 	&.small {
 		> div {
-			@thickness: 0.06rem;
-			@padding1: 0.1rem;
-			@padding2: 0.25rem;
-
-			border-width: @thickness;
-
-			&:before {
-				top: @padding1;
-				right: @padding1;
-				bottom: @padding1;
-				left: @padding1;
-				border-width: @thickness;
-			}
-
-			&:after {
-				top: @padding2;
-				right: @padding2;
-				bottom: @padding2;
-				left: @padding2;
-				border-width: @thickness;
-			}
+			border-width: 0.25rem;
+			animation: spin 1s linear infinite;
 		}
 	}
 
-	@keyframes spin-outer {
+	@keyframes spin {
 		0% {
 			transform: translate(-50%, -50%) rotate(0deg)
 		}
 		100% {
 			transform: translate(-50%, -50%) rotate(360deg)
-		}
-	}
-	@keyframes spin {
-		100% {
-			transform: rotate(360deg)
 		}
 	}
 }

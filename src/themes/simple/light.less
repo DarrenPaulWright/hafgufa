@@ -15,16 +15,16 @@
 @normalFontWeight: 400;
 @boldFontWeight: 600;
 
-@highlightColor: #3399ff;
-@subHighlightColor: spin(@highlightColor, -20);
+@highlightColor: #49f;
+@subHighlightColor: @highlightColor;
 @validColor: #336600;
 @warningColor: #cc7700;
 @errorColor: #cc0000;
 @shadowColor: #000000;
 @reflectionColor: #ffffff;
 
-@smallShadowColor: fade(@shadowColor, 50%);
-@largeShadowColor: fade(@shadowColor, 40%);
+@smallShadowColor: fade(@shadowColor, 40%);
+@largeShadowColor: fade(@shadowColor, 20%);
 @chromeReflectionColor: fade(@reflectionColor, 70%);
 
 @textShadow: 0 0.06rem 0 fade(@reflectionColor, 100%);
@@ -46,9 +46,6 @@
 @chromeInverseFontColor: #ffffff;
 @chromeInverseSubFontColor: fade(@chromeInverseFontColor, 60%);
 
-@checkImageUrl: left top/0.5rem url('/images/common/checkerLight.svg');
-@noiseImageUrl: left top/8rem url('/images/common/textureLight.png');
-
 @asteriskIcon: '';
 @caretDownIcon: '';
 @caretRightIcon: '';
@@ -65,7 +62,7 @@
 @easing: ease-out;
 
 /* Body */
-@bodyBackground: radial-gradient(ellipse at top center, fade(@shadowColor, 0%) 30%, @largeShadowColor 140%), @checkImageUrl, @noiseImageUrl, @backgroundColor;
+@bodyBackground: @backgroundColor;
 @bodyFont: normal normal @normalFontWeight @fontSize @chromeFontFamily;
 @defaultFocusOutline: 0.06rem solid @highlightColor;
 @defaultFocusOutlineOffset: -0.06rem;
@@ -76,10 +73,8 @@
 
 /* Header */
 @headerHeight: 3.2rem;
-@mainHeaderTopColor: #f8f9fa;
-@mainHeaderBottomColor: #b9babb;
-@headerBackground: radial-gradient(ellipse at top center, @mainHeaderTopColor 0%, @mainHeaderBottomColor 140%), @mainHeaderBottomColor;
-@headerShadow: 0 0 0.8rem fade(@shadowColor, 80%);
+@headerBackground: #f3f4f5;
+@headerShadow: 0 0 0.4rem fade(@shadowColor, 60%);
 
 @headerButtonIconColor: lighten(@chromeFontColor, 15%);
 @headerButtonTextShadow: @textShadow;
@@ -159,14 +154,14 @@
 @buttonFont: normal normal @normalFontWeight @chromeFontSize/1.5em @chromeFontFamily;
 @buttonFontColor: @chromeFontColor;
 
-@formButtonShadow: @buttonReflectionShadow, 0 0.06rem 0.4rem @smallShadowColor;
+@formButtonShadow: @buttonReflectionShadow, 0 0.04rem 0.2rem @smallShadowColor;
 @formButtonSelectedShadow: inset 0 0.1rem 0.6rem @smallShadowColor, 0 0.06rem 0 @chromeReflectionColor;
 @formButtonSelectedTextShadow: 0 0 1.15rem @buttonSelectedTextColor;
 
 @formButtonBorderColor: #bbbcbd;
 @formButtonBorder: none;
 @formButtonTopColor: #eeeff0;
-@formButtonBottomColor: shade(@formButtonTopColor, 7);
+@formButtonBottomColor: shade(@formButtonTopColor, 5);
 @formButtonBackground: linear-gradient(@formButtonTopColor, @formButtonBottomColor);
 @formButtonHoverBackground: linear-gradient(lighten(@formButtonTopColor, 5), lighten(@formButtonBottomColor, 5));
 @formButtonActiveBackground: @formButtonBottomColor;
@@ -199,13 +194,14 @@
 @popupButtonCaretOpacity: 0.5;
 
 @checkboxRadioColor: @highlightColor;
+@checkboxRadioBorder: @inputBorder;
 @checkboxRadioBackground: @inputBackground;
 @checkboxRadioBackgroundHover: @inputBackgroundActive;
 @checkboxRadioShadow: @inputShadow;
 
 @groupedButtonShadow: @buttonReflectionShadow;
 @groupedButtonGroupSelectedShadow: none;
-@groupedButtonGroupShadow: 0 0.06rem 0.3rem @smallShadowColor;
+@groupedButtonGroupShadow: 0 0.06rem 0.2rem @smallShadowColor;
 @groupedButtonSelectedShadow: @formButtonSelectedShadow;
 @groupedButtonBorderLeftColor: @separatorShadowColor;
 @groupedButtonBorderRightColor: @separatorReflectionColor;
@@ -233,7 +229,7 @@
 @headingCheckboxTransform: translateY(0.1em);
 
 @headingIconVerticalAlign: baseline;
-@headingIconTransform: translateY(-0.15em);
+@headingIconTransform: translateY(-0.1em);
 
 @headingSpacing: 0.5ch;
 @headingTitleVerticalAlign: baseline;
@@ -245,7 +241,7 @@
 @headingNotInlineIconWidth: 1.2em;
 @headingNotInlineIconHeight: 1.4em;
 @headingNotInlineIconFontSize: 1.8em;
-@headingNotInlineIconTransform: translateY(.2em);
+@headingNotInlineIconTransform: translateY(.3em);
 @headingNotInlineButtonWidth: 3.2em;
 @headingNotInlineButtonHeight: @headingNotInlineButtonWidth;
 @headingNotInlineSingleLineMarginTop: 0.6em;
@@ -273,13 +269,13 @@
 @h6FontLineHeight: 1.2em;
 .h1Ex() {
 	> .icon {
-		transform: translateY(-0.15em);
+		transform: translateY(-0.1em);
 	}
 }
 
 .h2Ex() {
 	> .icon {
-		transform: translateY(-0.15em);
+		transform: translateY(-0.1em);
 	}
 }
 
@@ -341,14 +337,15 @@
 @inputPaddingVertical: 0.15rem;
 @inputPaddingHorizontal: 0.6rem;
 @inputBorderRadius: 0.3rem;
+@inputBorder: 0.06rem solid fade(@fontColor, 15%);
 @inputLineHeight: 1.8em;
 @inputCountMargin: 0 0.5em;
 @inputPrefixSuffixPaddingSize: 0.5ch;
 @inputSuffixPaddingRight: 0.6em;
 
-@inputBackground: fade(@shadowColor, 10%);
+@inputBackground: fade(@shadowColor, 5%);
 @inputBackgroundActive: fade(@inputBackground, 8%);
-@inputShadow: inset 0 0.3rem 0.4rem fade(@shadowColor, 15%), 0 0.06rem 0 @chromeReflectionColor;
+@inputShadow: inset 0 0.15rem 0.25rem fade(@shadowColor, 8%);
 
 /* Progress Bar */
 @progressBarMinHeight: 0.6rem;
@@ -487,15 +484,13 @@
 @groupMargin: 0 0.85rem 1.15rem 0;
 @groupPadding: 0.3rem 0.7rem 0.6rem;
 @groupMinHeight: 4rem;
-@groupHeadingPadding: 0 0 0 0.4em;
+@groupHeadingPadding: 0.2em 0 0 0.4em;
 @groupBorderRadius: @popupCornerRadius;
 
-@groupTopColor: fade(@mainHeaderTopColor, 60%);
-@groupBottomColor: fade(@mainHeaderBottomColor, 60%);
-@groupBackground: radial-gradient(ellipse at top center, @groupTopColor 0%, @groupBottomColor 140%), @noiseImageUrl;
-@groupShadow: @formButtonShadow;
+@groupBackground: rgba(0, 0, 0, 0.025);
+@groupShadow: none;
 @groupIconColor: @highlightColor;
-@groupBorder: none;
+@groupBorder: 0.06rem solid rgba(0, 0, 0, 0.1);
 .groupEx() {
 }
 
@@ -579,7 +574,7 @@
 
 /* Drawer */
 @drawerBackground: @groupBackground;
-@drawerShadow: 0.1rem 0 0.6rem @largeShadowColor;
+@drawerShadow: 0.1rem 0 0.3rem @largeShadowColor;
 
 /* Drawer Menu */
 @drawerMenuWidth: 18rem;
