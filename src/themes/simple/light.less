@@ -16,7 +16,7 @@
 @boldFontWeight: 600;
 
 @highlightColor: #49f;
-@subHighlightColor: @highlightColor;
+@subHighlightColor: #3ff;
 @validColor: #336600;
 @warningColor: #cc7700;
 @errorColor: #cc0000;
@@ -25,7 +25,7 @@
 
 @smallShadowColor: fade(@shadowColor, 40%);
 @largeShadowColor: fade(@shadowColor, 20%);
-@chromeReflectionColor: fade(@reflectionColor, 70%);
+@chromeReflectionColor: fade(@reflectionColor, 50%);
 
 @textShadow: 0 0.06rem 0 fade(@reflectionColor, 100%);
 @iconShadow: 0 0.06rem 0.06rem fade(@reflectionColor, 100%);
@@ -183,7 +183,7 @@
 
 @actionButtonFontColor: @chromeInverseFontColor;
 @actionButtonBorderColor: darken(@highlightColor, 20);
-@actionButtonTopColor: average(@highlightColor, @subHighlightColor);
+@actionButtonTopColor: @subHighlightColor;
 @actionButtonBottomColor: @highlightColor;
 @actionButtonBackground: linear-gradient(@actionButtonTopColor, @actionButtonBottomColor);
 @actionButtonHoverTopColor: lighten(@actionButtonTopColor, 4);
