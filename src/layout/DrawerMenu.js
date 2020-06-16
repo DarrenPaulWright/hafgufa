@@ -28,7 +28,6 @@ import { IS_DESKTOP } from '../utility/browser';
 import locale from '../utility/locale';
 import Drawer from './Drawer';
 import './DrawerMenu.less';
-import Toolbar from './Toolbar';
 
 const MENU_BUTTON = Symbol();
 const BACKDROP = Symbol();
@@ -131,7 +130,7 @@ export default class DrawerMenu extends Control {
 		}
 
 		if (footerContent.length) {
-			self[FOOTER] = new Toolbar({
+			self[FOOTER] = new Div({
 				container: self[DRAWER],
 				content: footerContent,
 				width: HUNDRED_PERCENT
