@@ -18,7 +18,7 @@
 	"invalidNumberFractionDigits": "This number should have <maxFractionDigits> or less fractional digits",
 	"invalidNumberTotalDigits": "This number should have <maxNumberDigits> or less digits",
 	"invalidMaxLength": "This value should have <maxLength> or less characters",
-	"invalidMinLength": "This value should have <maxLength> or more characters",
+	"invalidMinLength": "This value should have <minLength> or more characters",
 	"items": "items",
 	"menu": "Menu",
 	"noMatchingItems": "No matching items",
