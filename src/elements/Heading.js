@@ -422,8 +422,8 @@ Object.assign(Heading.prototype, {
 						button.classes = 'icon-button';
 					}
 					if (button.onClick) {
-						button.onClick = () => {
-							onClick(self.data());
+						button.onClick = function() {
+							onClick.call(this, self.data());
 						};
 					}
 					if (typeof button.isEnabled === 'function') {
