@@ -87,7 +87,7 @@ export default class Dialog extends Removable {
 			})
 			.onResize(settings.onResize);
 
-		applySettings(self, settings);
+		applySettings(self, settings, ['title, footer'], ['content']);
 
 		self.onRemove(() => {
 			if (self[CONTENT_CONTAINER]) {
