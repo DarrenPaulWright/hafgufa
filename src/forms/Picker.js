@@ -323,7 +323,7 @@ export default class Picker extends FocusMixin(FormControl) {
 			.isSelected(isSelected)
 			.classes('multi-select', self[HAS_VISIBLE_MULTI_SELECT] && settings.isMultiSelect)
 			.removeClass(POPUP_BUTTON_CLASS)
-			.isEnabled(isSelected || settings.isEnabled);
+			.isEnabled(isSelected || settings.isEnabled || true);
 
 		return isSelected;
 	}
