@@ -282,6 +282,8 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 				isSelectable: true
 			});
 
+			heading.resize(true);
+
 			self[CURRENT_TAGS].push({
 				heading: heading,
 				id: value.id,

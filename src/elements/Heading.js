@@ -108,8 +108,9 @@ export default class Heading extends FocusMixin(Control) {
 			if (self.width().isAuto) {
 				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
 					.width(AUTO)
-					.css(PADDING_RIGHT, self[CHILD_CONTROLS].get(TOOLBAR) ? self[CHILD_CONTROLS].get(TOOLBAR)
-						.borderWidth() : ZERO_PIXELS);
+					.css(PADDING_RIGHT, self[CHILD_CONTROLS].get(TOOLBAR) ?
+						self[CHILD_CONTROLS].get(TOOLBAR).borderWidth() :
+						ZERO_PIXELS);
 			}
 			else {
 				self[CHILD_CONTROLS].get(TITLE_CONTAINER)
