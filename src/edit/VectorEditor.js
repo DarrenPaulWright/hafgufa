@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import { applySettings, Enum, methodEnum, methodFunction, Point } from 'type-enforcer-ui';
+import { applySettings, Enum, methodEnum, methodQueue, Point } from 'type-enforcer-ui';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';
@@ -44,7 +44,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			title: 'Delete all',
 			icon: DELETE_ALL_ICON,
 			onSelect() {
-				self.onDeleteAllShapes()();
+				self.onDeleteAllShapes().trigger();
 			}
 		}]);
 
@@ -112,7 +112,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			self[CURRENT_SHAPE] = new EditRectangle({
 				container: self,
 				onChange() {
-					self.onChange()(this.id(), 'rectangle', self[pixelsToRatios](this.bounds()));
+					self.onChange().trigger(null, [this.id(), 'rectangle', self[pixelsToRatios](this.bounds())]);
 				}
 			});
 		}
@@ -124,7 +124,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 						.then((points) => {
 							points = points.split(' ').map((point) => new Point(point));
 
-							self.onChange()(this.id(), 'polygon', self[pixelsToRatios](points));
+							self.onChange().trigger(null, [this.id(), 'polygon', self[pixelsToRatios](points)]);
 						});
 				},
 				points: self[START].toString()
@@ -182,10 +182,11 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 				self[CURRENT_SHAPE].originalBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
 
 				if (self.editMode() === EDIT_MODES.rectangle) {
-					self.onAdd()(self[CURRENT_SHAPE].id(), 'rectangle', self[CURRENT_SHAPE].originalBounds);
+					self.onAdd()
+						.trigger(null, [self[CURRENT_SHAPE].id(), 'rectangle', self[CURRENT_SHAPE].originalBounds]);
 				}
 				else if (self.editMode() === EDIT_MODES.polygon) {
-					self.onAdd()(self[CURRENT_SHAPE].id(), 'polygon', self[CURRENT_SHAPE].points);
+					self.onAdd().trigger(null, [self[CURRENT_SHAPE].id(), 'polygon', self[CURRENT_SHAPE].points]);
 				}
 			}
 		}
@@ -211,14 +212,14 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 					title: 'Delete',
 					icon: DELETE_ICON,
 					onSelect() {
-						self.onDeleteShape()(shape.id);
+						self.onDeleteShape().trigger(null, [shape.id]);
 					}
 				}],
 				onMouseEnter() {
-					self.onHighlight()(this.id());
+					self.onHighlight().trigger(null, [this.id()]);
 				},
 				onMouseLeave() {
-					self.onHighlight()();
+					self.onHighlight().trigger();
 				},
 				originalBounds: shape.bounds
 			};
@@ -228,7 +229,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 				control = new EditRectangle({
 					...settings,
 					onChange() {
-						self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+						self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
 					},
 					bounds: self[ratiosToPixels](shape.bounds)
 				});
@@ -237,7 +238,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 				control = new EditPolygon({
 					...settings,
 					onChange() {
-						self.onChange()(this.id(), self[pixelsToRatios](this.bounds()));
+						self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
 					},
 					points: self[ratiosToPixels](shape.points)
 				});
@@ -264,9 +265,9 @@ Object.assign(VectorEditor.prototype, {
 		enum: EDIT_MODES,
 		init: EDIT_MODES.rectangle
 	}),
-	onChange: methodFunction(),
-	onAdd: methodFunction(),
-	onDeleteShape: methodFunction(),
-	onDeleteAllShapes: methodFunction(),
-	onHighlight: methodFunction()
+	onChange: methodQueue(),
+	onAdd: methodQueue(),
+	onDeleteShape: methodQueue(),
+	onDeleteAllShapes: methodQueue(),
+	onHighlight: methodQueue()
 });
