@@ -1,10 +1,21 @@
 import { defer } from 'async-agent';
-import { applySettings, DockPoint, methodArray, methodBoolean, methodFunction, methodNumber, methodQueue } from 'type-enforcer-ui';
+import keycodes from 'keycodes';
+import {
+	applySettings,
+	DockPoint,
+	methodArray,
+	methodBoolean,
+	methodFunction,
+	methodNumber,
+	methodQueue
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
 import DragMixin from '../mixins/DragMixin';
+import FocusMixin from '../mixins/FocusMixin';
 import TooltipMixin from '../mixins/TooltipMixin';
+import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
 import clamp from '../utility/math/clamp';
 import FormControl from './FormControl';
 import './Slider.less';
@@ -18,8 +29,24 @@ class Thumb extends TooltipMixin(DragMixin(Button)) {
 			restrictHorizontalDrag: true,
 			tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER
 		});
+
+		const self = this;
+
+		self.on(KEY_DOWN_EVENT, (event) => {
+			if (event.keyCode === keycodes('left')) {
+				self.onLeftArrow().trigger();
+			}
+			else if (event.keyCode === keycodes('right')) {
+				self.onRightArrow().trigger();
+			}
+		});
 	}
 }
+
+Object.assign(Thumb.prototype, {
+	onRightArrow: methodQueue(),
+	onLeftArrow: methodQueue()
+});
 
 class Range extends DragMixin(Div) {
 	constructor(settings = {}) {
@@ -53,9 +80,20 @@ const TRACK_SIZE = Symbol();
 const TRACK_MARGINS = Symbol();
 const LOCATION_SIZE = Symbol();
 
-export default class Slider extends FormControl {
+export default class Slider extends FocusMixin(FormControl) {
 	constructor(settings = {}) {
 		settings.type = settings.type || controlTypes.SLIDER;
+		settings.FocusMixin = settings.FocusMixin || {};
+		settings.FocusMixin.hasChildren = true;
+		settings.FocusMixin.setFocus = () => {
+			console.log('focus');
+			self[THUMBS][0].isFocused(true);
+		};
+		settings.FocusMixin.getFocus = () => {
+			return self[THUMBS].some((thumb) => {
+				return thumb.isFocused();
+			});
+		};
 
 		super(settings);
 
@@ -157,6 +195,13 @@ export default class Slider extends FormControl {
 				}
 			}
 		};
+		const arrowAdjust = (thumb, direction) => {
+			const thumbIndex = self[THUMBS].indexOf(thumb);
+			const newValue = self[OFFSETS][thumbIndex] + (self[LOCATION_SIZE] * 0.05 * direction);
+
+			self[OFFSETS][thumbIndex] = clamp(newValue, 0, self[LOCATION_SIZE]);
+			self[saveNewValue]();
+		};
 
 		self[THUMBS].push(new Thumb({
 			container: self,
@@ -172,6 +217,12 @@ export default class Slider extends FormControl {
 			snapGridSize: self[getSnapSize](),
 			onResize() {
 				self[positionThumbs]();
+			},
+			onLeftArrow() {
+				arrowAdjust(this, -1);
+			},
+			onRightArrow() {
+				arrowAdjust(this, 1);
 			}
 		}));
 	}
