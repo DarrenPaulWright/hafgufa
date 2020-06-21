@@ -24,6 +24,7 @@ import Button from '../elements/Button';
 import Div from '../elements/Div';
 import Tree from '../forms/Tree';
 import { MENU_ICON } from '../icons';
+import FocusMixin from '../mixins/FocusMixin';
 import { IS_DESKTOP } from '../utility/browser';
 import locale from '../utility/locale';
 import Drawer from './Drawer';
@@ -49,19 +50,9 @@ const clearMenu = Symbol();
  *
  * @arg {Object} settings
  */
-export default class DrawerMenu extends Control {
+export default class DrawerMenu extends FocusMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DRAWER_MENU;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-		settings.isMenuOpen = enforceBoolean(settings.isMenuOpen, IS_DESKTOP);
-
-		super(settings);
-
-		const self = this;
-		self.addClass('drawer-menu-container');
-
-		self[MENU_BUTTON] = new Button({
-			container: self,
+		let menuButton = new Button({
 			classes: 'header-button',
 			label: settings.label !== undefined ? settings.label : locale.get('menu'),
 			icon: MENU_ICON,
@@ -69,6 +60,18 @@ export default class DrawerMenu extends Control {
 				self[toggleMenu]();
 			}
 		});
+		settings.type = settings.type || controlTypes.DRAWER_MENU;
+		settings.width = enforceCssSize(settings.width, AUTO, true);
+		settings.isMenuOpen = enforceBoolean(settings.isMenuOpen, IS_DESKTOP);
+		settings.FocusMixin = settings.FocusMixin || {};
+		settings.FocusMixin.mainControl = menuButton;
+
+		super(settings);
+
+		const self = this;
+		self.addClass('drawer-menu-container');
+
+		self[MENU_BUTTON] = menuButton.container(self);
 
 		applySettings(self, settings, [], ['menuContainer', 'isMenuOpen']);
 
@@ -285,36 +288,5 @@ Object.assign(DrawerMenu.prototype, {
 				this[DRAWER].dock(drawerDock);
 			}
 		}
-	}),
-
-	/**
-	 * Set focus on the text input element.
-	 * @method focus
-	 * @member module:DrawerMenu
-	 * @instance
-	 */
-	focus() {
-		this[MENU_BUTTON].isFocused(true);
-	},
-
-	/**
-	 * See if this control has focus.
-	 * @method isFocused
-	 * @member module:DrawerMenu
-	 * @instance
-	 * @returns {Boolean}
-	 */
-	isFocused(isFocused) {
-		const self = this;
-
-		if (self) {
-			if (isFocused !== undefined) {
-				self[MENU_BUTTON].isFocused(isFocused);
-
-				return self;
-			}
-
-			return self[MENU_BUTTON].isFocused() || (self[DRAWER] ? self[DRAWER].isFocused() : false);
-		}
-	}
+	})
 });
