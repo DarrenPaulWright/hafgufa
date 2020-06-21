@@ -37,6 +37,7 @@ const HEADER_CONTAINER = Symbol();
 const HEADER = Symbol();
 const TREE = Symbol();
 const FOOTER = Symbol();
+const SELECTED = Symbol();
 
 const toggleMenu = Symbol();
 const buildMenu = Symbol();
@@ -116,25 +117,17 @@ export default class DrawerMenu extends FocusMixin(Control) {
 				container: self[DRAWER],
 				width: HUNDRED_PERCENT,
 				branches: menuItems,
-				isMultiSelect: false,
-				onSelect(item) {
-					const onSelect = self.onSelect();
-
-					if (onSelect) {
-						item = self.menuItems().find((menuItem) => menuItem.id === item);
-						onSelect(item);
-					}
-
-					if (!IS_DESKTOP) {
-						self[DRAWER].isOpen(false);
-					}
-				}
+				onSelect(id) {
+					self.select(id);
+				},
+				value: [self[SELECTED]]
 			});
 		}
 
 		if (footerContent.length) {
 			self[FOOTER] = new Div({
 				container: self[DRAWER],
+				classes: 'footer',
 				content: footerContent,
 				width: HUNDRED_PERCENT
 			});
@@ -189,6 +182,26 @@ Object.assign(DrawerMenu.prototype, {
 	}),
 
 	onSelect: methodFunction(),
+
+	select(id) {
+		const self = this;
+		const onSelect = self.onSelect();
+
+		self[SELECTED] = id;
+
+		if (self[TREE]) {
+			self[TREE].value([id]);
+		}
+
+		if (onSelect) {
+			const item = self.menuItems().find((menuItem) => menuItem.id === id);
+			onSelect(item);
+		}
+
+		if (!IS_DESKTOP) {
+			self[DRAWER].isOpen(false);
+		}
+	},
 
 	menuContainer: methodElement({
 		set(menuContainer) {

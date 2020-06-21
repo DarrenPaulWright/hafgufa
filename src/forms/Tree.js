@@ -280,9 +280,10 @@ Object.assign(Tree.prototype, {
 			else if (!isArray(value)) {
 				self.value([value]);
 			}
-
-			self[processBranches]();
-			self[VIRTUAL_LIST].refresh();
+			else {
+				self[processBranches]();
+				self[VIRTUAL_LIST].refresh();
+			}
 		}
 	}),
 

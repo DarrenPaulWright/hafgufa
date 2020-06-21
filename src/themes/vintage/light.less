@@ -600,11 +600,22 @@
 @drawerMenuIconSize: 1.4em;
 @drawerMenuIconColor: @headerButtonIconColor;
 @drawerMenuIconShadow: @iconShadow;
+@drawerMenuIconTransform: translateY(-0.15rem);
 @drawerMenuItemPadding: 0.6rem 0.6rem 0.4rem;
+@drawerMenuItemBackground: none;
+@drawerMenuItemHoverBackground: fade(@shadowColor, 5%);
 @drawerMenuItemBorderHighlight: 0.06rem solid @separatorReflectionColor;
 @drawerMenuItemBorderShadow: 0.06rem solid @separatorShadowColor;
 
-@drawerMenuFooterPadding: 0.3rem;
+@drawerMenuSelectedFontColor: @formButtonSelectedFontColor;
+@drawerMenuSelectedTextShadow: @formButtonSelectedTextShadow;
+@drawerMenuSelectedShadow: @formButtonSelectedShadow;
+@drawerMenuSelectedIconColor: @formButtonSelectedFontColor;
+@drawerMenuSelectedIconShadow: @formButtonSelectedTextShadow;
+@drawerMenuSelectedBackground: @formButtonSelectedBackground;
+@drawerMenuSelectedItemHoverBackground: @formButtonSelectedHoverBackground;
+@drawerMenuSelectedItemBorderHighlight: @formButtonSelectedHoverTopColor;
+@drawerMenuSelectedItemBorderShadow: @formButtonSelectedHoverBottomColor;
 
 /* Search Button */
 @searchBarPadding: 0.4rem 0.35rem 0.35rem;

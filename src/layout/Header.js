@@ -19,8 +19,8 @@ export default class Header extends Container {
 
 		super(settings);
 
-		this.removeClass('container');
-		this.addClass('clearfix');
+		this.removeClass('container')
+			.addClass('clearfix');
 
 		if (this.type === controlTypes.HEADER) {
 			applySettings(this, settings);

@@ -17,6 +17,7 @@
 			text-shadow: @drawerMenuTextShadow;
 			width: 100%;
 			padding: @drawerMenuItemPadding;
+			background: @drawerMenuItemBackground;
 			border-top: @drawerMenuItemBorderHighlight;
 			border-bottom: @drawerMenuItemBorderShadow;
 
@@ -24,16 +25,30 @@
 				font-size: @drawerMenuIconSize;
 				color: @drawerMenuIconColor;
 				text-shadow: @drawerMenuIconShadow;
+				transform: @drawerMenuIconTransform;
 			}
 
-			&:hover {
-				background: rgba(0, 0, 0, 0.05);
+			&:hover, &:focus {
+				background: @drawerMenuItemHoverBackground;
+			}
+
+			&.selected {
+				color: @drawerMenuSelectedFontColor;
+				box-shadow: @drawerMenuSelectedShadow;
+				text-shadow: @drawerMenuSelectedTextShadow;
+				background: @drawerMenuSelectedBackground;
+				border-top: @drawerMenuSelectedItemBorderHighlight;
+				border-bottom: @drawerMenuSelectedItemBorderShadow;
+
+				.icon {
+					color: @drawerMenuSelectedIconColor;
+					text-shadow: @drawerMenuSelectedIconShadow;
+				}
+
+				&:hover, &:focus {
+					background: @drawerMenuSelectedItemHoverBackground;
+				}
 			}
 		}
-	}
-
-	> .toolbar {
-		border-top: @drawerMenuItemBorderHighlight;
-		padding: @drawerMenuFooterPadding;
 	}
 }
