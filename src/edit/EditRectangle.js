@@ -63,6 +63,14 @@ export default class EditRectangle extends Shape {
 					_self.bottomRight.position(right, bottom);
 					_self.bottomLeft.position(left, bottom);
 				}
+			})
+			.onRemove(() => {
+				if (_self.topLeft) {
+					_self.topLeft.remove();
+					_self.topRight.remove();
+					_self.bottomRight.remove();
+					_self.bottomLeft.remove();
+				}
 			});
 
 		applySettings(self, settings);
