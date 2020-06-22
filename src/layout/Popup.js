@@ -274,7 +274,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			});
 
 		if (self.type === controlTypes.POPUP) {
-			applySettings(self, settings);
+			applySettings(self, settings, ['anchorDockPoint', 'popupDockPoint']);
 		}
 	}
 

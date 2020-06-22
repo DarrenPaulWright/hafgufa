@@ -163,7 +163,7 @@ export default class Menu extends Popup {
 			.content(tree);
 		tree = null;
 
-		applySettings(self, settings);
+		applySettings(self, settings, ['anchorDockPoint', 'popupDockPoint']);
 
 		if (self.canFilter()) {
 			self.get(FILTER_ID).isFocused(true);
