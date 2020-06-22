@@ -12,6 +12,7 @@ export default class DragPoint extends FocusMixin(DragMixin(G)) {
 		settings.canDrag = true;
 		settings.restrictVerticalDrag = true;
 		settings.restrictHorizontalDrag = true;
+		settings.restrictDragToOrigin = true;
 		settings.fade = true;
 
 		super(settings);
@@ -29,7 +30,7 @@ export default class DragPoint extends FocusMixin(DragMixin(G)) {
 			classes: 'hit-area'
 		});
 
-		applySettings(self, settings);
+		applySettings(self, settings, ['restrictDragToOrigin']);
 	}
 }
 

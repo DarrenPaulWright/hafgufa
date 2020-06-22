@@ -97,6 +97,11 @@ export default (Base) => {
 							}
 						}
 
+						if (self.restrictDragToOrigin()) {
+							width = 0;
+							height = 0;
+						}
+
 						if (width < self[AVAILABLE_WIDTH]) {
 							self[DRAG_BOUNDS].left = 0;
 							self[DRAG_BOUNDS].right = self[AVAILABLE_WIDTH] - width;
@@ -438,7 +443,6 @@ export default (Base) => {
 		position(x, y) {
 			const self = this;
 
-
 			if (arguments.length) {
 				let transform = '';
 
@@ -595,6 +599,8 @@ export default (Base) => {
 		restrictVerticalDrag: methodBoolean(),
 
 		restrictHorizontalDrag: methodBoolean(),
+
+		restrictDragToOrigin: methodBoolean(),
 
 		scrollOnDrag: methodBoolean(),
 
