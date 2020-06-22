@@ -65,6 +65,9 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 						edited = true;
 						self.left(self.left() - 1);
 						break;
+					case keycodes('delete'):
+						self.onDelete().trigger();
+						break;
 				}
 
 				if (edited) {
@@ -89,7 +92,7 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 
 		return new DragPoint({
 			container: self.container(),
-			css: {cursor: cursor},
+			css: { cursor: cursor },
 			isCircle: isCircle,
 			onDragStart() {
 				self[IS_RESIZING] = true;
@@ -127,6 +130,7 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 Object.assign(Shape.prototype, {
 	onChange: methodFunction(),
 	onSelect: methodQueue(),
+	onDelete: methodQueue(),
 	isSelected: methodBoolean({
 		set(isSelected) {
 			this.onSelect().trigger(null, [isSelected]);

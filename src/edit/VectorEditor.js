@@ -23,6 +23,7 @@ const EDIT_MODES = new Enum({
 const pixelsToRatios = Symbol();
 const ratiosToPixels = Symbol();
 
+const buildShape = Symbol();
 const startDrawing = Symbol();
 const updateDrawing = Symbol();
 const stopDrawing = Symbol();
@@ -53,8 +54,8 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 				self[WIDTH] = width;
 
 				self[CONTROLS].each((control) => {
-					if (control.originalBounds) {
-						control.bounds(self[ratiosToPixels](control.originalBounds));
+					if (control.ratioBounds) {
+						control.bounds(self[ratiosToPixels](control.ratioBounds));
 					}
 				});
 			})
@@ -99,6 +100,62 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 		return value.map((point) => point.multiply(change));
 	}
 
+	[buildShape](data) {
+		const self = this;
+		const settings = {
+			container: self,
+			id: data.id,
+			contextMenu: [{
+				id: 'delete',
+				title: 'Delete',
+				icon: DELETE_ICON,
+				onSelect() {
+					self.onDeleteShape().trigger(null, [data.id]);
+				}
+			}],
+			onDelete() {
+				self.onDeleteShape().trigger(null, [this.id()]);
+			},
+			onMouseEnter() {
+				self.onHighlight().trigger(null, [this.id()]);
+			},
+			onMouseLeave() {
+				self.onHighlight().trigger();
+			}
+		};
+		let control;
+
+		if (data.bounds) {
+			if (data.bounds.length !== 0) {
+				settings.bounds = self[ratiosToPixels](data.bounds);
+			}
+
+			control = new EditRectangle({
+				...settings,
+				onChange() {
+					self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
+				}
+			});
+		}
+		else if (data.polygon) {
+			control = new EditPolygon({
+				...settings,
+				onChange() {
+					self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
+				},
+				points: self[ratiosToPixels](data.points)
+			});
+		}
+
+		if (data.bounds.length !== 0) {
+			control.ratioBounds = data.bounds;
+		}
+
+		self[CONTROLS].add(control);
+
+		return control;
+	}
+
 	[startDrawing](event) {
 		const self = this;
 
@@ -109,34 +166,20 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 		self[START] = new Point(event.offsetX, event.offsetY);
 
 		if (self.editMode() === EDIT_MODES.rectangle) {
-			self[CURRENT_SHAPE] = new EditRectangle({
-				container: self,
-				onChange() {
-					self.onChange().trigger(null, [this.id(), 'rectangle', self[pixelsToRatios](this.bounds())]);
-				}
+			self[CURRENT_SHAPE] = self[buildShape]({
+				id: shortid.generate(),
+				bounds: []
 			});
 		}
 		else if (self.editMode() === EDIT_MODES.polygon) {
-			self[CURRENT_SHAPE] = new EditPolygon({
-				container: self,
-				onChange() {
-					this.points()
-						.then((points) => {
-							points = points.split(' ').map((point) => new Point(point));
-
-							self.onChange().trigger(null, [this.id(), 'polygon', self[pixelsToRatios](points)]);
-						});
-				},
+			self[CURRENT_SHAPE] = self[buildShape]({
+				id: shortid.generate(),
+				polygon: true,
 				points: self[START].toString()
 			});
 		}
-		self[CURRENT_SHAPE].originalBounds = null;
-		self[CURRENT_SHAPE]
-			.container(self)
-			.isFocused(true)
-			.id(shortid.generate());
-
-		self[CONTROLS].add(self[CURRENT_SHAPE]);
+		self[CURRENT_SHAPE].ratioBounds = null;
+		self[CURRENT_SHAPE].isFocused(true);
 
 		self[updateDrawing](event);
 
@@ -179,11 +222,11 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 			else {
 				self[HEIGHT] = self.borderHeight();
 				self[WIDTH] = self.borderWidth();
-				self[CURRENT_SHAPE].originalBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
+				self[CURRENT_SHAPE].ratioBounds = self[pixelsToRatios](self[CURRENT_SHAPE].bounds());
 
 				if (self.editMode() === EDIT_MODES.rectangle) {
 					self.onAdd()
-						.trigger(null, [self[CURRENT_SHAPE].id(), 'rectangle', self[CURRENT_SHAPE].originalBounds]);
+						.trigger(null, [self[CURRENT_SHAPE].id(), 'rectangle', self[CURRENT_SHAPE].ratioBounds]);
 				}
 				else if (self.editMode() === EDIT_MODES.polygon) {
 					self.onAdd().trigger(null, [self[CURRENT_SHAPE].id(), 'polygon', self[CURRENT_SHAPE].points]);
@@ -203,49 +246,7 @@ export default class VectorEditor extends ContextMenuMixin(Svg) {
 
 		self[VALUE] = value;
 
-		self[VALUE].forEach((shape) => {
-			const settings = {
-				container: self,
-				id: shape.id,
-				contextMenu: [{
-					id: 'delete',
-					title: 'Delete',
-					icon: DELETE_ICON,
-					onSelect() {
-						self.onDeleteShape().trigger(null, [shape.id]);
-					}
-				}],
-				onMouseEnter() {
-					self.onHighlight().trigger(null, [this.id()]);
-				},
-				onMouseLeave() {
-					self.onHighlight().trigger();
-				},
-				originalBounds: shape.bounds
-			};
-			let control;
-
-			if (shape.bounds) {
-				control = new EditRectangle({
-					...settings,
-					onChange() {
-						self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
-					},
-					bounds: self[ratiosToPixels](shape.bounds)
-				});
-			}
-			else if (shape.polygon) {
-				control = new EditPolygon({
-					...settings,
-					onChange() {
-						self.onChange().trigger(null, [this.id(), self[pixelsToRatios](this.bounds())]);
-					},
-					points: self[ratiosToPixels](shape.points)
-				});
-			}
-
-			self[CONTROLS].add(control);
-		});
+		self[VALUE].forEach(self[buildShape].bind(self));
 	}
 
 	highlight(id) {
