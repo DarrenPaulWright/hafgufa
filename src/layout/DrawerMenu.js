@@ -185,21 +185,34 @@ Object.assign(DrawerMenu.prototype, {
 
 	select(id) {
 		const self = this;
-		const onSelect = self.onSelect();
 
-		self[SELECTED] = id;
+		if (self[SELECTED] !== id) {
+			const onSelect = self.onSelect();
+
+			self[SELECTED] = id;
+
+			if (self[TREE]) {
+				self[TREE].value([id]);
+			}
+
+			if (onSelect) {
+				const item = self.menuItems().find((menuItem) => menuItem.id === id);
+				onSelect(item);
+			}
+
+			if (!IS_DESKTOP) {
+				self[DRAWER].isOpen(false);
+			}
+		}
+	},
+
+	unSelect() {
+		const self = this;
+
+		self[SELECTED] = null;
 
 		if (self[TREE]) {
-			self[TREE].value([id]);
-		}
-
-		if (onSelect) {
-			const item = self.menuItems().find((menuItem) => menuItem.id === id);
-			onSelect(item);
-		}
-
-		if (!IS_DESKTOP) {
-			self[DRAWER].isOpen(false);
+			self[TREE].value([]);
 		}
 	},
 
