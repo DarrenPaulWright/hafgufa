@@ -49,6 +49,10 @@ export default (Base) => {
 					if (self.height().isPercent) {
 						self[CONTENT_CONTAINER].height(height - self[HEADING].outerHeight());
 					}
+
+					if (self.singleLine()) {
+						self[CONTENT_CONTAINER].width(width - self[HEADING].borderWidth());
+					}
 				}
 			});
 		}
