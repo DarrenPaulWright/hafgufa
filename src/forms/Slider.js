@@ -86,7 +86,6 @@ export default class Slider extends FocusMixin(FormControl) {
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.hasChildren = true;
 		settings.FocusMixin.setFocus = () => {
-			console.log('focus');
 			self[THUMBS][0].isFocused(true);
 		};
 		settings.FocusMixin.getFocus = () => {
