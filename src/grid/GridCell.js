@@ -256,6 +256,7 @@ Object.assign(GridCell.prototype, {
 					break;
 
 				case COLUMN_TYPES.IMAGE:
+				case COLUMN_TYPES.ICON:
 					self[DISPLAY_TYPE] = DISPLAY_TYPES.IMAGE;
 
 					if (content.src) {

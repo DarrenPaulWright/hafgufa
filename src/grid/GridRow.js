@@ -95,7 +95,6 @@ export default class GridRow extends Control {
 				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
 					container: self,
 					width: self[calculateCellWidth](index),
-					classes: cellData.classes || '',
 					isEnabled: self.isEnabled(),
 					dataType: column.type,
 					content: {
@@ -105,7 +104,8 @@ export default class GridRow extends Control {
 					rowData: self.rowData(),
 					wordWrap: self.wordWrap(),
 					textAlign: column.align,
-					isSelected: self.isSelected()
+					isSelected: self.isSelected(),
+					classes: cellData.classes || ''
 				});
 			});
 
@@ -293,9 +293,9 @@ Object.assign(GridRow.prototype, {
 		}
 	}),
 
-	rowId: methodString({
-		set(rowId) {
-			this[IS_GROUP_HEADER] = !rowId;
+	id: methodString({
+		set(id) {
+			this[IS_GROUP_HEADER] = !id;
 			this[refresh]();
 		}
 	}),

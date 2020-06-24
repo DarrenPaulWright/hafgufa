@@ -35,7 +35,7 @@ describe('EditableGrid', () => {
 			});
 
 			testUtil.control.value([{
-				rowId: '1',
+				id: '1',
 				values: [{
 					text: 'asdf'
 				}]
@@ -60,17 +60,17 @@ describe('EditableGrid', () => {
 			});
 
 			testUtil.control.value([{
-				rowId: '1',
+				id: '1',
 				values: [{
 					text: 'text 1'
 				}]
 			}, {
-				rowId: '2',
+				id: '2',
 				values: [{
 					text: 'text 2'
 				}]
 			}, {
-				rowId: '3',
+				id: '3',
 				values: [{
 					text: 'text 3'
 				}]
@@ -173,134 +173,140 @@ describe('EditableGrid', () => {
 				});
 		});
 
-		it('should be able to save values from single select pickers when single and multi select pickers are in different columns', () => {
-			testUtil.control = new EditableGrid({
-				container: testUtil.container,
-				columns: [{
-					title: 'test',
-					type: 'text',
-					filterType: 'dropDown',
-					size: '50%',
-					editOptions: {
-						options: {
-							isMultiSelect: false,
-							children: [{
-								id: '0',
-								title: 'test option'
+		it(
+			'should be able to save values from single select pickers when single and multi select pickers are in different columns',
+			() => {
+				testUtil.control = new EditableGrid({
+					container: testUtil.container,
+					columns: [{
+						title: 'test',
+						type: 'text',
+						filterType: 'dropDown',
+						size: '50%',
+						editOptions: {
+							options: {
+								isMultiSelect: false,
+								children: [{
+									id: '0',
+									title: 'test option'
+								}, {
+									id: '1',
+									title: 'test option 2'
+								}]
+							},
+							preferred: [{
+								id: '0'
 							}, {
-								id: '1',
-								title: 'test option 2'
+								id: '1'
 							}]
-						},
-						preferred: [{
-							id: '0'
-						}, {
-							id: '1'
-						}]
-					}
-				}, {
-					title: 'test 2',
-					type: 'text',
-					filterType: 'dropDown',
-					size: '50%',
-					editOptions: {
-						options: {
-							isMultiSelect: true,
-							children: [{
-								id: '0',
-								title: 'test option'
+						}
+					}, {
+						title: 'test 2',
+						type: 'text',
+						filterType: 'dropDown',
+						size: '50%',
+						editOptions: {
+							options: {
+								isMultiSelect: true,
+								children: [{
+									id: '0',
+									title: 'test option'
+								}, {
+									id: '1',
+									title: 'test option 2'
+								}]
+							},
+							preferred: [{
+								id: '0'
 							}, {
-								id: '1',
-								title: 'test option 2'
+								id: '1'
 							}]
-						},
-						preferred: [{
-							id: '0'
-						}, {
-							id: '1'
-						}]
-					}
-				}]
-			});
-
-			// open the "add new" dialog
-			testUtil.first('.add-new-button').click();
-
-			return wait(100)
-				.then(() => {
-					//select the preferred item from the picker
-					testUtil.nth('.grouped-buttons .form-button', 0, true).click();
-					testUtil.nth('.grouped-buttons .form-button', 1, true).click();
-					//close the dialog
-					testUtil.first('.action-button', true).click();
-
-					assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
+						}
+					}]
 				});
-		});
 
-		it('should be able to save values from multi select pickers when single and multi select pickers are in different columns', () => {
-			testUtil.control = new EditableGrid({
-				container: testUtil.container,
-				columns: [{
-					title: 'test',
-					type: 'text',
-					filterType: 'dropDown',
-					size: '50%',
-					editOptions: {
-						options: {
-							isMultiSelect: false,
-							children: [{
-								id: '0',
-								title: 'test option'
+				// open the "add new" dialog
+				testUtil.first('.add-new-button').click();
+
+				return wait(100)
+					.then(() => {
+						//select the preferred item from the picker
+						testUtil.nth('.grouped-buttons .form-button', 0, true).click();
+						testUtil.nth('.grouped-buttons .form-button', 1, true).click();
+						//close the dialog
+						testUtil.first('.action-button', true).click();
+
+						assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
+					});
+			}
+		);
+
+		it(
+			'should be able to save values from multi select pickers when single and multi select pickers are in different columns',
+			() => {
+				testUtil.control = new EditableGrid({
+					container: testUtil.container,
+					columns: [{
+						title: 'test',
+						type: 'text',
+						filterType: 'dropDown',
+						size: '50%',
+						editOptions: {
+							options: {
+								isMultiSelect: false,
+								children: [{
+									id: '0',
+									title: 'test option'
+								}, {
+									id: '1',
+									title: 'test option 2'
+								}]
+							},
+							preferred: [{
+								id: '0'
 							}, {
-								id: '1',
-								title: 'test option 2'
+								id: '1'
 							}]
-						},
-						preferred: [{
-							id: '0'
-						}, {
-							id: '1'
-						}]
-					}
-				}, {
-					title: 'test 2',
-					type: 'text',
-					filterType: 'dropDown',
-					size: '50%',
-					editOptions: {
-						options: {
-							isMultiSelect: true,
-							children: [{
-								id: '0',
-								title: 'test option'
+						}
+					}, {
+						title: 'test 2',
+						type: 'text',
+						filterType: 'dropDown',
+						size: '50%',
+						editOptions: {
+							options: {
+								isMultiSelect: true,
+								children: [{
+									id: '0',
+									title: 'test option'
+								}, {
+									id: '1',
+									title: 'test option 2'
+								}]
+							},
+							preferred: [{
+								id: '0'
 							}, {
-								id: '1',
-								title: 'test option 2'
+								id: '1'
 							}]
-						},
-						preferred: [{
-							id: '0'
-						}, {
-							id: '1'
-						}]
-					}
-				}]
-			});
-
-			// open the "add new" dialog
-			testUtil.first('.add-new-button').click();
-
-			return wait(100)
-				.then(() => {
-					//select the preferred item from the picker
-					testUtil.nth('.grouped-buttons button', 2, true).click();
-					testUtil.nth('.grouped-buttons button', 3, true).click();
-					//close the dialog
-					testUtil.first('.action-button', true).click();
-
-					assert.is(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
+						}
+					}]
 				});
-		});
+
+				// open the "add new" dialog
+				testUtil.first('.add-new-button').click();
+
+				return wait(100)
+					.then(() => {
+						//select the preferred item from the picker
+						testUtil.nth('.grouped-buttons button', 2, true).click();
+						testUtil.nth('.grouped-buttons button', 3, true).click();
+						//close the dialog
+						testUtil.first('.action-button', true).click();
+
+						assert.is(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
+					});
+			}
+		);
 	});
 });

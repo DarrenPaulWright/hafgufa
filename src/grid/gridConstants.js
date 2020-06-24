@@ -10,6 +10,7 @@ export const COLUMN_TYPES = new Enum({
 	DATE_TIME: 'datetime',
 	ACTIONS: 'actions',
 	IMAGE: 'image',
+	ICON: 'icon',
 	CHECKBOX: 'checkbox',
 	NONE: 'none'
 });

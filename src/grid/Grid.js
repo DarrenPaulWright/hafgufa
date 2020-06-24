@@ -1,17 +1,19 @@
 import { debounce } from 'async-agent';
 import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fns';
 import { Collection, compare, List } from 'hord';
-import { clone, deepEqual, erase } from 'object-agent';
+import { clone, deepEqual, erase, get } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
 	AUTO,
 	enforceBoolean,
 	enforceCssSize,
+	enforceDate,
 	enforceEnum,
 	enforceString,
 	HUNDRED_PERCENT,
 	isArray,
+	isString,
 	methodArray,
 	methodBoolean,
 	methodFunction,
@@ -240,18 +242,56 @@ export default class Grid extends Control {
 	 * Pre process cell content once before sending the data for rendering
 	 * @function preProcessCells
 	 */
-	[preProcessCells](cells) {
+	[preProcessCells](rowData) {
 		const self = this;
+		const cells = rowData.cells || [];
+
+		if (!rowData.cells) {
+			rowData.cells = cells;
+		}
+
+		const setStringValue = (key, cell, column) => {
+			let value = column.path ? get(rowData, column.path) : cell[key];
+
+			if (isArray(value)) {
+				value = value.join(', ');
+			}
+
+			cell[key] = enforceString(value, '', true);
+		};
 
 		self.columns().forEach((column, columnIndex) => {
-			const cell = cells[columnIndex];
+			const cell = cells[columnIndex] || {};
 
-			if (column.type === COLUMN_TYPES.TEXT) {
-				cell.text = enforceString(cell.text, '');
+			if (cells[columnIndex] === undefined) {
+				cells[columnIndex] = cell;
 			}
-			else if (column.type === COLUMN_TYPES.DATE ||
+
+			if (column.onProcess) {
+				column.onProcess(cell, rowData);
+			}
+			else if (
+				column.type === COLUMN_TYPES.TEXT ||
+				column.type === COLUMN_TYPES.EMAIL ||
+				column.type === COLUMN_TYPES.LINK ||
+				column.type === COLUMN_TYPES.NUMBER
+			) {
+				setStringValue('text', cell, column);
+			}
+			else if (column.type === COLUMN_TYPES.IMAGE) {
+				setStringValue('src', cell, column);
+			}
+			else if (column.type === COLUMN_TYPES.ICON) {
+				setStringValue('icon', cell, column);
+			}
+			else if (
+				column.type === COLUMN_TYPES.DATE ||
 				column.type === COLUMN_TYPES.DATE_TIME ||
-				column.type === COLUMN_TYPES.TIME) {
+				column.type === COLUMN_TYPES.TIME
+			) {
+				let value = column.path ? get(rowData, column.path) : cell.date;
+
+				cell.date = enforceDate(value, '', true);
 
 				if (!cell.original) {
 					cell.original = cell.text;
@@ -353,7 +393,7 @@ export default class Grid extends Control {
 				localGroup.isSelected = isSelected;
 
 				self[eachChild](localGroup, (localChild) => {
-					self.selectRow(localChild.rowId, isSelected, {
+					self.selectRow(localChild.id, isSelected, {
 						ctrlKey: true
 					}, true);
 				});
@@ -379,7 +419,7 @@ export default class Grid extends Control {
 			localGroup.isSelected = isSelected;
 
 			self[eachChild](localGroup, (localChild) => {
-				self.selectRow(localChild.rowId, isSelected, {
+				self.selectRow(localChild.id, isSelected, {
 					ctrlKey: true
 				}, true);
 			});
@@ -491,7 +531,7 @@ export default class Grid extends Control {
 				}
 				else {
 					childCount++;
-					if (self[SELECTED_ROWS].includes(item.rowId)) {
+					if (self[SELECTED_ROWS].includes(item.id)) {
 						selectedCount++;
 					}
 				}
@@ -767,8 +807,8 @@ export default class Grid extends Control {
 				return row.isCollapsed;
 			},
 			onChild(row) {
-				row.id = row.rowId || shortid.generate();
-				row.isSelected = self[SELECTED_ROWS].includes(row.rowId);
+				row.id = row.id || shortid.generate();
+				row.isSelected = self[SELECTED_ROWS].includes(row.id);
 			}
 		});
 	}
@@ -892,7 +932,11 @@ export default class Grid extends Control {
 		const self = this;
 
 		if (rowData) {
-			self[preProcessCells](rowData.cells);
+			if ('id' in rowData && !isString(rowData.id)) {
+				console.warn('Grid row property id should be a string.');
+			}
+
+			self[preProcessCells](rowData);
 
 			rowData.isSelected = false;
 
@@ -960,16 +1004,16 @@ export default class Grid extends Control {
 
 		if (newRows) {
 			for (rowIndex = 0; rowIndex < newRows.length; rowIndex++) {
-				if (self.getRow((row) => row.rowId === newRows[rowIndex].rowId)) {
-					self.updateRowData(newRows[rowIndex].rowId, newRows[rowIndex]);
+				if (self.getRow((row) => row.id === newRows[rowIndex].id)) {
+					self.updateRowData(newRows[rowIndex].id, newRows[rowIndex]);
 				}
 				else {
 					self.addRow(newRows[rowIndex]);
 				}
 			}
 			for (rowIndex = 0; rowIndex < self[ROWS].length; rowIndex++) {
-				if (!newRows.find((row) => row.rowId === self[ROWS][rowIndex].rowId)) {
-					self.selectRow(self[ROWS][rowIndex].rowId, false, {
+				if (!newRows.find((row) => row.id === self[ROWS][rowIndex].id)) {
+					self.selectRow(self[ROWS][rowIndex].id, false, {
 						ctrlKey: true
 					}, true);
 					self[removeRow](rowIndex);
@@ -988,23 +1032,23 @@ export default class Grid extends Control {
 	 * @method updateCellData
 	 * @member module:Grid
 	 * @instance
-	 * @arg   {String|Number} editId    - rowId of the row being updated
+	 * @arg   {String|Number} editId    - id of the row being updated
 	 * @arg   {Number} columnIndex - column index of the cell being updated
 	 * @arg   {String|Number|Object} newValue    - the new value to save
 	 */
-	updateCellData(rowId, columnIndex, newValue) {
+	updateCellData(id, columnIndex, newValue) {
 		const self = this;
 
-		if (rowId && columnIndex !== undefined && newValue !== undefined) {
+		if (id && columnIndex !== undefined && newValue !== undefined) {
 			self[eachChild](self[FILTERED_ROWS], (row) => {
-				if (row.rowId === rowId) {
+				if (row.id === id) {
 					row.cells[columnIndex] = newValue;
 					return true;
 				}
 			});
 
 			self[ROWS].forEach((row) => {
-				if (row.rowId === rowId) {
+				if (row.id === id) {
 					row.cells[columnIndex] = newValue;
 					return false;
 				}
@@ -1019,24 +1063,24 @@ export default class Grid extends Control {
 	 * @method updateRowData
 	 * @member module:Grid
 	 * @instance
-	 * @arg   {String|Number} rowId
+	 * @arg   {String|Number} id
 	 * @arg   {object} newData
 	 */
-	updateRowData(rowId, newData) {
+	updateRowData(id, newData) {
 		const self = this;
 
 		self[eachChild](self[FILTERED_ROWS], (row) => {
-			if (row.rowId === rowId) {
+			if (row.id === id) {
 				Object.assign(row, newData);
-				self[preProcessCells](row.cells);
+				self[preProcessCells](row);
 				return true;
 			}
 		});
 
 		self[ROWS].forEach((row) => {
-			if (row.rowId === rowId) {
+			if (row.id === id) {
 				Object.assign(row, newData);
-				self[preProcessCells](row.cells);
+				self[preProcessCells](row);
 				return false;
 			}
 		});
@@ -1081,40 +1125,40 @@ export default class Grid extends Control {
 	 * @method selectRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {String} rowId
+	 * @arg {String} id
 	 * @arg {boolean} isSelected
 	 * @arg {boolean} skipRender
 	 */
-	selectRow(rowId, isSelected, skipRender, event) {
+	selectRow(id, isSelected, skipRender, event) {
 		const self = this;
 		let selectedRow;
 		const thisEvent = event || {};
 
 		const getShiftSelection = () => {
 			const items = new Collection(self[FLATTENED_ROWS]).sliceBy({
-				rowId: self[LAST_SELECTED_ROW]
+				id: self[LAST_SELECTED_ROW]
 			}, {
-				rowId: rowId
+				id: id
 			});
 
-			return items.map((item) => item.groupId === undefined ? item.rowId : null).filter(Boolean);
+			return items.map((item) => item.groupId === undefined ? item.id : null).filter(Boolean);
 		};
 
 		isSelected = enforceBoolean(isSelected, true);
 
 		if (self.onSelect() || self.onMultiSelect()) {
-			selectedRow = self.getRow((row) => row.rowId === rowId);
+			selectedRow = self.getRow((row) => row.id === id);
 
 			if (selectedRow) {
 				if (self.onMultiSelect() && thisEvent.ctrlKey ||
 					!thisEvent.shiftKey && thisEvent.target && thisEvent.target.nodeName === 'INPUT') {
 
 					if (isSelected) {
-						self[SELECTED_ROWS].push(rowId);
+						self[SELECTED_ROWS].push(id);
 					}
 					else {
-						self[SELECTED_ROWS] = self[SELECTED_ROWS].filter((item) => item !== rowId);
-						if (rowId === self[LAST_SELECTED_ROW]) {
+						self[SELECTED_ROWS] = self[SELECTED_ROWS].filter((item) => item !== id);
+						if (id === self[LAST_SELECTED_ROW]) {
 							self[LAST_SELECTED_ROW] = self[SELECTED_ROWS][0];
 						}
 					}
@@ -1124,8 +1168,8 @@ export default class Grid extends Control {
 				}
 				else {
 					if (isSelected || self[SELECTED_ROWS].length > 1) {
-						self[SELECTED_ROWS] = [rowId];
-						self[LAST_SELECTED_ROW] = rowId;
+						self[SELECTED_ROWS] = [id];
+						self[LAST_SELECTED_ROW] = id;
 					}
 					else {
 						self[SELECTED_ROWS] = [];
@@ -1167,7 +1211,7 @@ export default class Grid extends Control {
 
 				self[FLATTENED_ROWS].forEach((row) => {
 					if (!row.groupId && row.groupId !== 0) {
-						self.selectRow(row.rowId, true);
+						self.selectRow(row.id, true);
 						return false;
 					}
 				});
@@ -1250,7 +1294,7 @@ Object.assign(Grid.prototype, {
 
 				for (let itemIndex = 0, inputLength = input.length; itemIndex < inputLength; itemIndex++) {
 					row = input[itemIndex];
-					row.rowId = row.rowId || currentRowId;
+					row.id = row.id || currentRowId;
 					currentRowId++;
 
 					if (row[groupColumn]) {

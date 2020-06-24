@@ -1,4 +1,3 @@
-import shortid from 'shortid';
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../..';
 import GridColumnBlock from '../../src/grid/GridColumnBlock';
@@ -75,21 +74,24 @@ describe('GridColumnBlock', () => {
 			secondTestValue: false
 		});
 
-		it('should have a checked checkbox if a column has a dataType set to checkbox and isAllRowsSelected is true', () => {
-			testUtil.control = new GridColumnBlock({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
-				}, {
-					title: 'test 2',
-					type: gridConstants.COLUMN_TYPES.TEXT
-				}],
-				isAllRowsSelected: true
-			});
+		it(
+			'should have a checked checkbox if a column has a dataType set to checkbox and isAllRowsSelected is true',
+			() => {
+				testUtil.control = new GridColumnBlock({
+					container: testUtil.container,
+					columns: [{
+						title: 'test 1',
+						type: gridConstants.COLUMN_TYPES.CHECKBOX
+					}, {
+						title: 'test 2',
+						type: gridConstants.COLUMN_TYPES.TEXT
+					}],
+					isAllRowsSelected: true
+				});
 
-			assert.is(testUtil.first('input[type=checkbox]').checked, true);
-		});
+				assert.is(testUtil.first('input[type=checkbox]').checked, true);
+			}
+		);
 	});
 
 	describe('IsSomeRowsSelected', () => {
@@ -100,21 +102,24 @@ describe('GridColumnBlock', () => {
 			secondTestValue: false
 		});
 
-		it('should have a checkbox with indeterminate set to true if one column has a dataType set to checkbox and isSomeRowsSelected is true', () => {
-			testUtil.control = new GridColumnBlock({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
-				}, {
-					title: 'test 2',
-					type: gridConstants.COLUMN_TYPES.TEXT
-				}],
-				isSomeRowsSelected: true
-			});
+		it(
+			'should have a checkbox with indeterminate set to true if one column has a dataType set to checkbox and isSomeRowsSelected is true',
+			() => {
+				testUtil.control = new GridColumnBlock({
+					container: testUtil.container,
+					columns: [{
+						title: 'test 1',
+						type: gridConstants.COLUMN_TYPES.CHECKBOX
+					}, {
+						title: 'test 2',
+						type: gridConstants.COLUMN_TYPES.TEXT
+					}],
+					isSomeRowsSelected: true
+				});
 
-			assert.is(testUtil.first('input[type=checkbox]').indeterminate, true);
-		});
+				assert.is(testUtil.first('input[type=checkbox]').indeterminate, true);
+			}
+		);
 	});
 
 	describe('rows', () => {
@@ -124,7 +129,7 @@ describe('GridColumnBlock', () => {
 				testVar = rowData.something;
 			};
 			const onTrashClick = (rowData) => {
-				testVar = rowData.rowId + '_trash';
+				testVar = rowData.id + '_trash';
 			};
 
 			testUtil.control = new GridColumnBlock({
@@ -151,15 +156,13 @@ describe('GridColumnBlock', () => {
 				}]);
 
 			testUtil.control.rows([{
-				id: shortid.generate(),
-				rowId: '1',
+				id: '1',
 				cells: [{
 					text: 'text 1'
 				}, {}],
 				something: 'else'
 			}, {
-				id: shortid.generate(),
-				rowId: '2',
+				id: '2',
 				cells: [{
 					text: 'text 1'
 				}, {}],
@@ -169,36 +172,31 @@ describe('GridColumnBlock', () => {
 			testUtil.control.rows([]);
 
 			testUtil.control.rows([{
-				id: shortid.generate(),
-				rowId: '1',
+				id: '1',
 				cells: [{
 					text: 'text 1'
 				}, {}],
 				something: 'else'
 			}, {
-				id: shortid.generate(),
-				rowId: '2',
+				id: '2',
 				cells: [{
 					text: 'text 2'
 				}, {}],
 				something: 'another'
 			}, {
-				id: shortid.generate(),
-				rowId: '3',
+				id: '3',
 				cells: [{
 					text: 'text 3'
 				}, {}],
 				something: 'meh'
 			}, {
-				id: shortid.generate(),
-				rowId: '4',
+				id: '4',
 				cells: [{
 					text: 'text 4'
 				}, {}],
 				something: 'stone'
 			}, {
-				id: shortid.generate(),
-				rowId: '5',
+				id: '5',
 				cells: [{
 					text: 'text 5'
 				}, {}],
