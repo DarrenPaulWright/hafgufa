@@ -31,6 +31,7 @@ export default (Base) => {
 			settings = settings.NextPrevMixin || {};
 
 			const self = this;
+
 			_.set(self, {
 				onShowButtons: settings.onShowButtons,
 				onHideButtons: settings.onHideButtons,
@@ -53,7 +54,7 @@ export default (Base) => {
 			const self = this;
 			const _self = _(self);
 
-			if (self.showButtons()) {
+			if (!self.isRemoved && self.showButtons()) {
 				_self.controls.get(PREV_BUTTON_ID).isVisible(!_self.isAtStart());
 				_self.controls.get(NEXT_BUTTON_ID).isVisible(!_self.isAtEnd());
 			}
