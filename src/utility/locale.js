@@ -1,7 +1,6 @@
 import getBrowserLanguage from 'get-browser-language';
 import { forOwn } from 'object-agent';
 import { Enum, methodObject, methodQueue, methodString } from 'type-enforcer-ui';
-import ajax from './ajax';
 
 const strings = {};
 
@@ -23,9 +22,7 @@ const locale = {
 	 * @returns {Object}
 	 */
 	languages: methodObject({
-		init: {
-			English: 'en-US'
-		},
+		init: { English: 'en-US' },
 		set(languages) {
 			const browser = getBrowserLanguage();
 
@@ -83,12 +80,18 @@ const locale = {
 	load(...args) {
 		const format = locale.urlFormat();
 		const language = locale.language().toLowerCase();
+		const options = {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' }
+		};
 
 		return new Promise((resolve) => {
-			Promise.all(args.map((path) => ajax.get(format
-				.replace('[path]', path)
-				.replace('[lang]', language)
-				)))
+			Promise.all(args.map((path) => {
+					const url = format.replace('[path]', path).replace('[lang]', language);
+
+					return fetch(url, options)
+						.then((response) => response.json());
+				}))
 				.then((data) => {
 					data.forEach((result) => {
 						locale.set(result);
