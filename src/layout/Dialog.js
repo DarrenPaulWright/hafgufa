@@ -31,10 +31,12 @@ const onResizePopup = Symbol();
 
 const POPUP = Symbol();
 const HEADING = Symbol();
+const OUTER_CONTENT_CONTAINER = Symbol();
 const CONTENT_CONTAINER = Symbol();
 const FOOTER = Symbol();
 const BACKDROP = Symbol();
 const IS_POPUP_REMOVING = Symbol();
+const IS_AUTO = Symbol();
 
 /**
  * Display a dialog with a title, content, and a footer.
@@ -46,13 +48,21 @@ const IS_POPUP_REMOVING = Symbol();
  */
 export default class Dialog extends Removable {
 	constructor(settings = {}) {
+		settings.height = settings.height || AUTO;
+		settings.width = settings.width || '30rem';
+
 		super(settings);
 
 		const self = this;
 
 		self[IS_POPUP_REMOVING] = false;
 
+		self[OUTER_CONTENT_CONTAINER] = new Container({
+			height: HUNDRED_PERCENT
+		});
+
 		self[CONTENT_CONTAINER] = new Container({
+			container: self[OUTER_CONTENT_CONTAINER],
 			classes: DIALOG_CONTENT_CLASS,
 			height: AUTO
 		});
@@ -65,20 +75,23 @@ export default class Dialog extends Removable {
 			});
 		}
 
-		self[POPUP] = new Popup(Object.assign({
+		self[IS_AUTO] = settings.height === AUTO;
+
+		self[POPUP] = new Popup({
 			anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
 			popupDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 			hideOnEscapeKey: true,
-			fade: true
-		}, settings, {
+			fade: true,
+			...settings,
+			height: settings.height === AUTO ? HUNDRED_PERCENT : settings.height,
 			container: BODY,
-			content: self[CONTENT_CONTAINER],
+			content: self[OUTER_CONTENT_CONTAINER],
 			isSticky: settings.anchor === undefined,
 			showArrow: settings.anchor !== undefined,
 			onResize() {
 				self[onResizePopup]();
 			}
-		}));
+		});
 
 		self[POPUP].addClass(DIALOG_BASE_CLASS)
 			.onRemove(() => {
@@ -90,8 +103,8 @@ export default class Dialog extends Removable {
 		applySettings(self, settings, ['title, footer'], ['content']);
 
 		self.onRemove(() => {
-			if (self[CONTENT_CONTAINER]) {
-				self[CONTENT_CONTAINER].remove();
+			if (self[OUTER_CONTENT_CONTAINER]) {
+				self[OUTER_CONTENT_CONTAINER].remove();
 			}
 			if (self[BACKDROP]) {
 				self[BACKDROP].remove();
@@ -108,15 +121,25 @@ export default class Dialog extends Removable {
 
 	[onResizePopup]() {
 		const self = this;
-		const headerHeight = self[HEADING] ? self[HEADING].borderHeight() : 0;
-		const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
 
 		if (self[POPUP]) {
-			self[CONTENT_CONTAINER].css(MARGIN_TOP, headerHeight + PIXELS)
+			const headerHeight = self[HEADING] ? self[HEADING].borderHeight() : 0;
+			const footerHeight = self[FOOTER] ? self[FOOTER].borderHeight() : 0;
+
+			self[OUTER_CONTENT_CONTAINER]
+				.css(MARGIN_TOP, headerHeight + PIXELS)
 				.css(MARGIN_BOTTOM, footerHeight + PIXELS)
 				.height(self[POPUP].height().isAuto ? AUTO : self[POPUP].borderHeight() - headerHeight - footerHeight + PIXELS)
 				.width(self[POPUP].width().isAuto ? AUTO : HUNDRED_PERCENT);
+
+			if (self[IS_AUTO]) {
+				self[POPUP].maxHeight(self[CONTENT_CONTAINER].outerHeight() + headerHeight + footerHeight);
+			}
 		}
+	}
+
+	get contentContainer() {
+		return this[CONTENT_CONTAINER];
 	}
 }
 
@@ -171,10 +194,6 @@ Object.assign(Dialog.prototype, {
 		},
 		other: undefined
 	}),
-
-	get contentContainer() {
-		return this[CONTENT_CONTAINER];
-	},
 
 	content(content) {
 		this[CONTENT_CONTAINER].content(isFunction(content) ? content(this) : content);
