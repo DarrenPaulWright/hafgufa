@@ -301,13 +301,13 @@ export default class Grid extends Control {
 				if (isValid(cell.date)) {
 					switch (column.type) {
 						case COLUMN_TYPES.DATE:
-							cell.text = formatDate(cell.date, 'MM/dd/yyyy');
+							cell.text = formatDate(cell.date, self.dateFormat());
 							break;
 						case COLUMN_TYPES.DATE_TIME:
 							cell.text = formatRelative(cell.date, new Date());
 							break;
 						case COLUMN_TYPES.TIME:
-							cell.text = formatDate(cell.date, 'hh:mm:ss');
+							cell.text = formatDate(cell.date, self.timeFormat());
 							break;
 					}
 				}
@@ -957,9 +957,7 @@ export default class Grid extends Control {
 		const self = this;
 
 		if (newRows) {
-			for (let rowIndex = 0; rowIndex < newRows.length; rowIndex++) {
-				self.addRow(newRows[rowIndex]);
-			}
+			newRows.forEach(this.addRow.bind(this));
 		}
 	}
 
@@ -1003,14 +1001,15 @@ export default class Grid extends Control {
 		let rowIndex;
 
 		if (newRows) {
-			for (rowIndex = 0; rowIndex < newRows.length; rowIndex++) {
-				if (self.getRow((row) => row.id === newRows[rowIndex].id)) {
-					self.updateRowData(newRows[rowIndex].id, newRows[rowIndex]);
+			newRows.forEach((newRow) => {
+				if (self.getRow((row) => row.id === newRow.id)) {
+					self.updateRowData(newRow.id, newRow);
 				}
 				else {
-					self.addRow(newRows[rowIndex]);
+					self.addRow(newRow);
 				}
-			}
+			});
+
 			for (rowIndex = 0; rowIndex < self[ROWS].length; rowIndex++) {
 				if (!newRows.find((row) => row.id === self[ROWS][rowIndex].id)) {
 					self.selectRow(self[ROWS][rowIndex].id, false, {
@@ -1478,6 +1477,12 @@ Object.assign(Grid.prototype, {
 	itemsLabel: methodString(),
 	hideFooter: methodBoolean({
 		set: updateFooter
+	}),
+	dateFormat: methodString({
+		init: 'MM/dd/yyyy'
+	}),
+	timeFormat: methodString({
+		init: 'hh:mm:ss'
 	})
 });
 
