@@ -35,7 +35,6 @@ const toggleTabContainer = Symbol();
 const getGroup = Symbol();
 const setGroupOrientation = Symbol();
 const onTabClick = Symbol();
-const clickTab = Symbol();
 
 /**
  * Displays a tabbed content control.
@@ -140,12 +139,11 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 
 	[onTabClick](Button, event) {
 		const self = this;
-		let previousTab;
+		const previousTab = self[CURRENT_TAB];
 
 		event.preventDefault();
 
-		if (self[CURRENT_TAB] !== null) {
-			previousTab = self[CURRENT_TAB];
+		if (previousTab !== null) {
 			if (previousTab.data.onRemove) {
 				previousTab.data.onRemove(self[CONTENT_CONTAINER]);
 			}
@@ -154,7 +152,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 
 		self[CURRENT_TAB] = self[TABS].find((item) => item.id === Button.id());
 
-		if (previousTab && previousTab.group !== self[CURRENT_TAB].group) {
+		if (previousTab !== null && previousTab.group !== self[CURRENT_TAB].group) {
 			previousTab.group.value([]);
 		}
 
@@ -172,17 +170,6 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 }
 
 Object.assign(Tabs.prototype, {
-	[clickTab](id) {
-		const self = this;
-
-		if (self[TABS].length > 0) {
-			const tab = self[TABS].find((item) => item.id === id);
-			if (tab) {
-				tab.group.getButton(id).click();
-			}
-		}
-	},
-
 	orientation: methodEnum({
 		enum: ORIENTATION,
 		set(orientation) {
@@ -313,7 +300,13 @@ Object.assign(Tabs.prototype, {
 
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = skipOnClick;
 
-		self[clickTab](id);
+		if (!self.currentTab() !== id) {
+			const tab = self[TABS].find((item) => item.id === id);
+
+			if (tab) {
+				tab.group.getButton(id).click();
+			}
+		}
 
 		return self;
 	},
