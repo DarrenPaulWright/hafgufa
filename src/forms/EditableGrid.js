@@ -1,4 +1,4 @@
-import { clone, erase, forOwn, set } from 'object-agent';
+import { clone, erase, forOwn, set, get } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
@@ -208,12 +208,12 @@ export default class EditableGrid extends FormControl {
 
 		self[GRID].rows(self[CURRENT_VALUE] = self[CURRENT_VALUE].map((row) => {
 			return {
-				cells: row.values.map((cell) => {
+				cells: row.values ? row.values.map((cell) => {
 					return {
 						...cell,
 						id: row.id
 					};
-				}),
+				}) : [],
 				id: row.id,
 				originalData: row,
 				edited: row.edited || self[CURRENT_VALUE].edited,
@@ -438,10 +438,12 @@ export default class EditableGrid extends FormControl {
 		const self = this;
 		let controlType;
 
-		if (column.type === COLUMN_TYPES.TEXT ||
+		if (
+			column.type === COLUMN_TYPES.TEXT ||
 			column.type === COLUMN_TYPES.EMAIL ||
 			column.type === COLUMN_TYPES.LINK ||
-			column.type === COLUMN_TYPES.NUMBER) {
+			column.type === COLUMN_TYPES.NUMBER
+		) {
 			if (column.showDescriptionOnEdit && self[IS_EDITING]) {
 				controlType = controlTypes.DESCRIPTION;
 			}
@@ -548,8 +550,6 @@ export default class EditableGrid extends FormControl {
 
 		self[ADD_NEW_DIALOG] = new Dialog({
 			title: self[IS_EDITING] ? locale.get('edit') : locale.get('addDialogTitle'),
-			width: HUNDRED_PERCENT,
-			maxWidth: self.dialogWidth(),
 			footer: {
 				buttons: self[buildDialogButtons](rowData)
 			},
