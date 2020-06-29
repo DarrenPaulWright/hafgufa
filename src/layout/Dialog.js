@@ -64,7 +64,7 @@ export default class Dialog extends Removable {
 		self[CONTENT_CONTAINER] = new Container({
 			container: self[OUTER_CONTENT_CONTAINER],
 			classes: DIALOG_CONTENT_CLASS,
-			height: AUTO
+			height: settings.height === AUTO ? AUTO : HUNDRED_PERCENT
 		});
 
 		if (!settings.anchor) {
