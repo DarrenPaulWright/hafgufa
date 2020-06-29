@@ -41,7 +41,6 @@ const buildLink = (url) => {
  */
 export default (Base) => {
 	class OnClickMixin extends Base {
-
 		[addClickEvent]() {
 			const self = this;
 
@@ -83,7 +82,6 @@ export default (Base) => {
 	}
 
 	Object.assign(OnClickMixin.prototype, {
-
 		/**
 		 * The url to navigate to.
 		 * If an @ is in the string then it is treated like an email, otherwise automatically adds http:// when clicked if not provided.

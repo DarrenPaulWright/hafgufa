@@ -164,7 +164,7 @@ export default class GridCell extends Control {
 
 		self[TOOLTIP_CONTROL] = new Tooltip({
 			content: self.tooltip(),
-			anchor: self.element,
+			anchor: self,
 			anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
 			tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 			maxWidth: MAX_TOOLTIP_WIDTH,

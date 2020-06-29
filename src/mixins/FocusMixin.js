@@ -162,7 +162,6 @@ export default (Base) => {
 				const _self = _(self);
 
 				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
-
 					_self.mainControl.on(FOCUS_IN_EVENT, (event) => {
 						self[onFocusCallback](event);
 					});
@@ -190,7 +189,6 @@ export default (Base) => {
 				const _self = _(self);
 
 				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
-
 					_self.mainControl.on(FOCUS_OUT_EVENT, (event) => {
 						self[onBlurCallback](event);
 					});

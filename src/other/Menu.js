@@ -1,4 +1,3 @@
-import { defer } from 'async-agent';
 import keyCodes from 'keycodes';
 import shortid from 'shortid';
 import {
@@ -107,6 +106,7 @@ export default class Menu extends Popup {
 		settings = {
 			type: controlTypes.MENU,
 			anchor: Popup.MOUSE,
+			height: HUNDRED_PERCENT,
 			maxHeight: MAX_POPUP_HEIGHT,
 			minWidth: MIN_POPUP_WIDTH,
 			maxWidth: MAX_POPUP_WIDTH,
@@ -148,17 +148,18 @@ export default class Menu extends Popup {
 			}
 		});
 
-		self.onResize(() => {
+		self.onPreResize(() => {
 				self
 					.width(self.get(TREE_ID).borderWidth())
 					.css('height', 'auto')
 					.get(TREE_ID)
-					.fitHeightToContents()
-					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0));
-
-				defer(() => {
-					self.resize();
-				});
+					.fitHeightToContents();
+			})
+			.onResize(() => {
+				self
+					.get(TREE_ID)
+					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0))
+					.resize();
 			})
 			.content(tree);
 		tree = null;

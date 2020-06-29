@@ -3,15 +3,15 @@
 	margin: @tooltipMargin;
 	background: @tooltipBackground;
 	box-shadow: @tooltipBoxShadow;
-	color: @tooltipFontColor;
 
 	.popup-arrow:before {
 		background: @tooltipBackground;
 	}
 
-	.tooltip-content {
-		padding: @tooltipPadding;
+	> .container {
+		margin: @tooltipPadding;
 		overflow-y: auto;
 		line-height: @tooltipLineHeight;
+		color: @tooltipFontColor;
 	}
 }

@@ -82,7 +82,7 @@ export default class DateInput extends FormControl {
 			}
 
 			self[POPUP] = new Popup({
-				anchor: self[DATE_INPUT].getInput().element,
+				anchor: self[DATE_INPUT].getInput(),
 				anchorDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 				popupDockPoint: DockPoint.POINTS.TOP_CENTER,
 				content: [{

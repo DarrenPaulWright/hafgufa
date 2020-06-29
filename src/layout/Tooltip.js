@@ -1,6 +1,4 @@
-import { erase } from 'object-agent';
 import { applySettings, DockPoint } from 'type-enforcer-ui';
-import Container from '../layout/Container';
 import Popup from '../layout/Popup';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
 import Removable from '../mixins/Removable';
@@ -8,10 +6,8 @@ import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../utility/domCo
 import './Tooltip.less';
 
 const TOOLTIP_CLASS = 'tooltip';
-const CONTENT_CLASS = 'tooltip-content';
 
 const POPUP = Symbol();
-const CONTENT_CONTAINER = Symbol();
 
 /**
  * Displays a tooltip anchored to an object or the mouse.
@@ -31,34 +27,30 @@ const CONTENT_CONTAINER = Symbol();
  */
 export default class Tooltip extends DelayedRenderMixin(Removable) {
 	constructor(settings = {}) {
-		settings.onRender = () => {
-			const initialContent = settings.content;
-			erase(settings, 'content');
+		const windowScrollEvent = () => self.remove();
 
-			const windowScrollEvent = () => self.remove();
+		super({
+			...settings,
+			onRender() {
+				WINDOW.addEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
 
-			WINDOW.addEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
+				self[POPUP] = new Popup({
+					anchor: Popup.MOUSE,
+					anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
+					popupDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
+					fade: true,
+					showArrow: true,
+					...settings,
+					classes: TOOLTIP_CLASS + SPACE + (settings.classes || EMPTY_STRING)
+				});
 
-			self[POPUP] = new Popup({
-				anchor: Popup.MOUSE,
-				anchorDockPoint: settings.anchorDockPoint || DockPoint.POINTS.TOP_CENTER,
-				popupDockPoint: settings.tooltipDockPoint || DockPoint.POINTS.BOTTOM_CENTER,
-				fade: true,
-				showArrow: true,
-				...settings,
-				classes: TOOLTIP_CLASS + SPACE + (settings.classes || EMPTY_STRING)
-			});
-
-			self.content(initialContent);
-
-			self[POPUP]
-				.onRemove(() => {
-					WINDOW.removeEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
-				})
-				.resize();
-		};
-
-		super(settings);
+				self[POPUP]
+					.onRemove(() => {
+						WINDOW.removeEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
+					})
+					.resize(true);
+			}
+		});
 
 		const self = this;
 
@@ -73,23 +65,14 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 	}
 
 	content(content) {
-		const self = this;
-
-		if (!self.isRemoved && this[POPUP]) {
-			if (!self[CONTENT_CONTAINER]) {
-				self[CONTENT_CONTAINER] = new Container({
-					classes: CONTENT_CLASS
-				});
-				self[POPUP].append(self[CONTENT_CONTAINER]);
-			}
-
-			self[CONTENT_CONTAINER].content(content);
+		if (this[POPUP]) {
+			return this[POPUP].content(content);
 		}
 	}
 
-	resize() {
+	resize(forceResize) {
 		if (this[POPUP]) {
-			this[POPUP].resize();
+			this[POPUP].resize(forceResize);
 		}
 	}
 }

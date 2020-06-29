@@ -333,7 +333,7 @@ Object.assign(GraphBase.prototype, {
 		if (anchor) {
 			self[TOOLTIP] = new Tooltip({
 				content: self[buildTooltipText](datum, dataType),
-				anchor: anchor,
+				anchor,
 				anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
 				tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
 				maxWidth: MAX_TOOLTIP_WIDTH

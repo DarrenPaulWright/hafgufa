@@ -253,7 +253,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 					}
 					self[CURRENT_EDIT_OFFSET] = heading.data().tagOffset;
 					heading.isVisible(false);
-					self[moveTextInputTo](self[CURRENT_EDIT_OFFSET] - 1, self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].typedInput);
+					self[moveTextInputTo](
+						self[CURRENT_EDIT_OFFSET] - 1,
+						self[CURRENT_TAGS][self[CURRENT_EDIT_OFFSET]].typedInput
+					);
 					self[TEXT_INPUT]
 						.width(initialWidth)
 						.minWidth(initialWidth)
@@ -402,7 +405,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		if (self.suggestions().length && self.isFocused() && !self.isRemoved) {
 			if (!self[SUGGESTION_MENU]) {
 				self[SUGGESTION_MENU] = new Menu({
-					anchor: self[TEXT_INPUT].getInput().element,
+					anchor: self[TEXT_INPUT].getInput(),
 					anchorDockPoint: DockPoint.POINTS.BOTTOM_LEFT,
 					popupDockPoint: DockPoint.POINTS.TOP_LEFT,
 					classes: 'tags-menu',
@@ -463,7 +466,10 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			});
 
 			if (currentTypedInput) {
-				filteredSuggestions = filteredSuggestions.filter((suggestion) => search.find(currentTypedInput, suggestion.title || '') ||
+				filteredSuggestions = filteredSuggestions.filter((suggestion) => search.find(
+					currentTypedInput,
+					suggestion.title || ''
+					) ||
 					search.find(currentTypedInput, suggestion.subTitle || ''));
 				filteredTitle(filteredSuggestions, currentTypedInput);
 			}

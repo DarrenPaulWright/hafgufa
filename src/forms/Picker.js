@@ -723,7 +723,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 
 		if (isGrouped && !level) {
-			rows = new Collection(rows).nest({parentKey: GROUP_KEY});
+			rows = new Collection(rows).nest({ parentKey: GROUP_KEY });
 			rows.eachChild(() => {
 			}, {
 				onParent(group) {
@@ -769,7 +769,7 @@ export default class Picker extends FocusMixin(FormControl) {
 
 			self[MENU] = new Menu({
 				minWidth: 160,
-				anchor: self[POPUP_BUTTON].element,
+				anchor: self[POPUP_BUTTON],
 				anchorDockPoint: DockPoint.POINTS.BOTTOM_LEFT,
 				popupDockPoint: DockPoint.POINTS.TOP_LEFT,
 				keepMenuOpen: true,
