@@ -98,7 +98,7 @@ export default class GridColumnBlock extends Control {
 
 		rowControl
 			.rowData(rowData)
-			.id(rowData.id || '')
+			.rowId(rowData.id || '')
 			.onSelect(self.onSelect())
 			.isSelected(rowData.groupId ? false : rowData.isSelected || false)
 			.isIndeterminate(rowData.isIndeterminate || false)

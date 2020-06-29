@@ -293,7 +293,7 @@ Object.assign(GridRow.prototype, {
 		}
 	}),
 
-	id: methodString({
+	rowId: methodString({
 		set(id) {
 			this[IS_GROUP_HEADER] = !id;
 			this[refresh]();
