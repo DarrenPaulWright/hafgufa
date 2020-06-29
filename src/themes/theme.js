@@ -54,11 +54,29 @@ const getCurrentTheme = (self) => {
 		}
 	}
 
-	return {theme, env};
+	return { theme, env };
 };
 
 const newLink = (self, prevLink, isThemeChange) => {
 	let isWorking;
+	const done = () => {
+		windowResize.trigger();
+
+		if (isThemeChange) {
+			isWorking.remove();
+		}
+	};
+	const appendLink = () => {
+		try {
+			HEAD.appendChild(link);
+		}
+		catch (error) {
+			console.error(error);
+		}
+
+		done();
+	};
+
 	if (isThemeChange) {
 		isWorking = new IsWorking({
 			container: BODY,
@@ -79,17 +97,12 @@ const newLink = (self, prevLink, isThemeChange) => {
 	const link = document.createElement('link');
 	link.rel = 'stylesheet';
 	link.href = buildHref(self);
-
 	link.onload = () => {
 		if (prevLink) {
 			prevLink.parentNode.removeChild(prevLink);
 		}
 
-		windowResize.trigger();
-
-		if (isThemeChange) {
-			isWorking.remove();
-		}
+		done();
 
 		if (self.onLoad()) {
 			self.onLoad()(self.theme());
@@ -97,12 +110,10 @@ const newLink = (self, prevLink, isThemeChange) => {
 	};
 
 	if (isThemeChange) {
-		delay(() => {
-			HEAD.appendChild(link);
-		}, 200);
+		delay(appendLink, 200);
 	}
 	else {
-		HEAD.appendChild(link);
+		appendLink();
 	}
 };
 
