@@ -60,8 +60,6 @@ const WINDOW_PADDING = 4;
 
 const IS_INITIALIZED = Symbol();
 const IS_ACTIVE = Symbol();
-const CURRENT_WIDTH = Symbol();
-const CURRENT_HEIGHT = Symbol();
 const ACTUAL_POPUP_DOCK_POINT = Symbol();
 const CAN_SLIDE_HORIZONTAL = Symbol();
 const CAN_SLIDE_VERTICAL = Symbol();
@@ -146,7 +144,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 		self[initEvents]();
 
-		self.onResize((width, height) => {
+		self.onResize(() => {
 				if (self.onPreResize()) {
 					self.onPreResize()();
 				}

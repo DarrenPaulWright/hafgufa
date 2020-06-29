@@ -954,8 +954,6 @@ export default class Grid extends Control {
 	 * @arg {Object[]} newRows - Array of rowData objects. Same data structure as addRow.
 	 */
 	addRows(newRows) {
-		const self = this;
-
 		if (newRows) {
 			newRows.forEach(this.addRow.bind(this));
 		}

@@ -1,4 +1,4 @@
-import { clone, erase, forOwn, set, get } from 'object-agent';
+import { clone, erase, forOwn, set } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
