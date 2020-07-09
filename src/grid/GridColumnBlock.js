@@ -10,6 +10,7 @@ import {
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import VirtualList from '../layout/VirtualList';
+import locale from '../utility/locale';
 import './GridColumnBlock.less';
 import GridHeader from './GridHeader';
 import GridRow from './GridRow';
@@ -51,7 +52,7 @@ export default class GridColumnBlock extends Control {
 			container: self.element,
 			height: settings.isAutoHeight ? AUTO : HUNDRED_PERCENT,
 			isVirtualized: settings.isVirtualized,
-			emptyContentMessage: settings.noItemsText || 'No items to display',
+			emptyContentMessage: locale.get('noItemsToDisplay'),
 			itemControl: GridRow,
 			extraRenderedItemsRatio: 1,
 			itemDefaultSettings: {
