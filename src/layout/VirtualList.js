@@ -153,7 +153,6 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		settings.type = settings.type || controlTypes.VIRTUAL_LIST;
 		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.stopPropagation = enforceBoolean(settings.stopPropagation, true);
 		settings.FocusMixin = settings.FocusMixin || {};
 		settings.FocusMixin.setFocus = () => {
 			if (self.isFocusable()) {

@@ -333,8 +333,13 @@ Object.assign(GridHeaderCell.prototype, {
 			const self = this;
 
 			self[removeControls]();
+
 			if (newValue === COLUMN_TYPES.CHECKBOX) {
+				self[HEADING].isDisplayed(false);
 				self[addCheckBox]();
+			}
+			else {
+				self[HEADING].isDisplayed(true);
 			}
 
 			self.classes('checkbox-cell', newValue === COLUMN_TYPES.CHECKBOX);

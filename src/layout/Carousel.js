@@ -158,7 +158,7 @@ Object.assign(Carousel.prototype, {
 	 */
 	slideData: methodArray({
 		set(slideData) {
-			this[VIRTUAL_LIST].itemData(slideData);
+			this[VIRTUAL_LIST].itemData(slideData, true);
 		}
 	}),
 

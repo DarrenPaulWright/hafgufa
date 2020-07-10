@@ -1,4 +1,4 @@
-import { applySettings, methodArray, methodBoolean, methodFunction, methodNumber, PIXELS } from 'type-enforcer-ui';
+import { applySettings, CssSize, methodArray, methodBoolean, methodFunction, methodNumber } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
@@ -90,10 +90,17 @@ Object.assign(GridHeader.prototype, {
 				let filterType;
 
 				column.size = column.size || '1*';
-				column.isFixedWidth = column.size.includes(PIXELS);
+
+				if (!column.size.includes('*') && !column.size.includes('%')) {
+					column.size = new CssSize(column.size).element(self.element);
+					column.isFixedWidth = true;
+				}
+				else {
+					column.isFixedWidth = false;
+				}
 
 				if (column.isFixedWidth) {
-					column.currentWidth = parseInt(column.size, 10);
+					column.currentWidth = column.size.toPixels(true);
 					self[TOTAL_FIXED_COLUMN_WIDTH] += column.currentWidth;
 				}
 				else {

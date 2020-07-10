@@ -81,7 +81,6 @@ const updateSelectState = Symbol();
  * @arg {Object}   settings                                     -
  * @arg {Boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
  * @arg {String} [settings.isVirtualized=true] - If set to false then all rows will be rendered and row heights can be variable.
- * @arg {String} [settings.noItemsText] - Text to be displayed if there are no items in the grid
  *
  *
  *
@@ -116,7 +115,6 @@ export default class Grid extends Control {
 		self[GRID_COLUMN_BLOCK] = new GridColumnBlock({
 			container: self.element,
 			isAutoHeight: settings.height === AUTO,
-			noItemsText: settings.noItemsText,
 			isVirtualized: settings.isVirtualized,
 			wordWrap: settings.wordWrap,
 			onSort: (direction, columnNum) => self[sort](direction, columnNum),

@@ -90,9 +90,14 @@ export default class GridRow extends Control {
 
 		if (self.rowData().cells) {
 			self.columns().forEach((column, index) => {
+				const cell = self[CELL_RECYCLER].getControlAtOffset(index, true);
 				const cellData = self.rowData().cells[column.id] || {};
 
-				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
+				if (cellData.classes !== undefined) {
+					cell.resetClasses();
+				}
+
+				applySettings(cell, {
 					container: self,
 					width: self[calculateCellWidth](index),
 					isEnabled: self.isEnabled(),
