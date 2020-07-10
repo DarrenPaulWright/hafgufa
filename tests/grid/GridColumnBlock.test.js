@@ -137,7 +137,7 @@ describe('GridColumnBlock', () => {
 				onSelectRow() {
 				},
 				isSelectable: true,
-				isAutoHeight: true
+				height: '30rem'
 			})
 				.columns([{
 					type: gridConstants.COLUMN_TYPES.TEXT,

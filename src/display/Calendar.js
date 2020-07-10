@@ -249,7 +249,6 @@ export default class Calendar extends Control {
 		const self = this;
 
 		if (self[HEADER]) {
-			const now = new Date();
 			const year = self.year();
 			const month = self.month();
 
@@ -408,7 +407,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	month: methodInteger({
 		init: new Date().getMonth(),
-		set(month) {
+		set() {
 			this[buildDays]();
 			this[updateHeader]();
 		},

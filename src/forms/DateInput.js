@@ -1,19 +1,20 @@
-import { defer, delay } from 'async-agent';
+import { defer } from 'async-agent';
 import { format as formatDate, isValid, parse } from 'date-fns';
-import { CALENDAR_ICON } from '../icons.js';
 import {
 	applySettings,
 	AUTO,
 	DockPoint,
 	enforceCssSize,
 	enforceDate,
-	methodBoolean, methodDate,
+	methodBoolean,
+	methodDate,
 	methodString
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
 import TextInput from '../forms/TextInput';
+import { CALENDAR_ICON } from '../icons.js';
 import Popup from '../layout/Popup';
 import FormControl from './FormControl';
 

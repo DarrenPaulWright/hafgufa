@@ -4,7 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	CssSize,
-	enforceBoolean,
 	enforceCssSize,
 	HUNDRED_PERCENT,
 	INITIAL,

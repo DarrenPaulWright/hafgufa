@@ -75,7 +75,7 @@ export default (Base) => {
 
 							if (self.container()[CONTROL_PROP]) {
 								self.container()[CONTROL_PROP]
-									.onResize(function(width, height) {
+									.onResize(function() {
 										self[AVAILABLE_WIDTH] = this.innerWidth();
 										self[AVAILABLE_HEIGHT] = this.innerHeight();
 

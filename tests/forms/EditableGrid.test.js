@@ -53,6 +53,7 @@ describe('EditableGrid', () => {
 			testUtil.control = new EditableGrid({
 				container: testUtil.container,
 				width: HUNDRED_PERCENT,
+				height: '30rem',
 				columns: [{
 					type: gridConstants.COLUMN_TYPES.TEXT,
 					size: '*'
