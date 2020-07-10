@@ -76,8 +76,8 @@ export default (Base) => {
 							if (self.container()[CONTROL_PROP]) {
 								self.container()[CONTROL_PROP]
 									.onResize(function(width, height) {
-										self[AVAILABLE_WIDTH] = width;
-										self[AVAILABLE_HEIGHT] = height;
+										self[AVAILABLE_WIDTH] = this.innerWidth();
+										self[AVAILABLE_HEIGHT] = this.innerHeight();
 
 										if (!self[IGNORE_PADDING]) {
 											const padding = new Thickness(this.css('padding') || 0);
