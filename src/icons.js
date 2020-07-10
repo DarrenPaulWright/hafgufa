@@ -1,4 +1,5 @@
 export const ADD_ICON = '';
+export const CALENDAR_ICON = '';
 export const CARET_DOWN_ICON = '';
 export const CARET_RIGHT_ICON = '';
 export const CIRCLE_ICON = '';

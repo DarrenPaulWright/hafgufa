@@ -1,6 +1,15 @@
-import { defer } from 'async-agent';
-import { format as formatDate, isValid } from 'date-fns';
-import { applySettings, AUTO, DockPoint, enforceCssSize, enforceDate, methodBoolean } from 'type-enforcer-ui';
+import { defer, delay } from 'async-agent';
+import { format as formatDate, isValid, parse } from 'date-fns';
+import { CALENDAR_ICON } from '../icons.js';
+import {
+	applySettings,
+	AUTO,
+	DockPoint,
+	enforceCssSize,
+	enforceDate,
+	methodBoolean, methodDate,
+	methodString
+} from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
@@ -10,7 +19,6 @@ import FormControl from './FormControl';
 
 const CALENDAR_WIDTH = '14rem';
 const CALENDAR_HEIGHT = '12.25rem';
-const DATE_FORMAT = 'MM/DD/YYYY';
 
 const buildDatePicker = Symbol();
 const onDateInputChange = Symbol();
@@ -41,7 +49,7 @@ export default class DateInput extends FormControl {
 
 		self[DATE_INPUT] = new TextInput({
 			container: self,
-			width: '7.4rem',
+			width: '9rem',
 			onChange(value) {
 				self[onDateInputChange](value);
 			},
@@ -65,6 +73,11 @@ export default class DateInput extends FormControl {
 					});
 				}
 			},
+			actionButtonIcon: CALENDAR_ICON,
+			isActionButtonAutoHide: false,
+			actionButtonOnClick() {
+				this.isFocused(true);
+			},
 			stopPropagation: true
 		});
 
@@ -75,11 +88,8 @@ export default class DateInput extends FormControl {
 		const self = this;
 
 		if (self.showDatePicker() && !self[POPUP]) {
-			let newDate = new Date(self.value());
-
-			if (!isValid(newDate)) {
-				newDate = new Date();
-			}
+			const selectedDate = self.value();
+			const initDate = isValid(selectedDate) ? selectedDate : new Date();
 
 			self[POPUP] = new Popup({
 				anchor: self[DATE_INPUT].getInput(),
@@ -87,23 +97,29 @@ export default class DateInput extends FormControl {
 				popupDockPoint: DockPoint.POINTS.TOP_CENTER,
 				content: [{
 					control: Calendar,
-					margin: '0.25rem',
-					month: newDate.getMonth(),
-					year: newDate.getFullYear(),
+					margin: '0.5rem',
+					month: initDate.getMonth(),
+					year: initDate.getFullYear(),
 					width: CALENDAR_WIDTH,
 					height: CALENDAR_HEIGHT,
 					onDateSelected(value) {
-						self[DATE_INPUT].value(value.format(DATE_FORMAT));
+						self[DATE_INPUT].value(formatDate(value, self.dateFormat()));
 						self[onDateInputChange](value);
 					},
 					navButtonClass: 'icon-button',
-					selectedDate: newDate
+					selectedDate: selectedDate,
+					minDate: self.minDate(),
+					maxDate: self.maxDate()
 				}],
 				onRemove() {
 					self[POPUP] = null;
 				},
-				hideOnEscapeKey: true
+				hideOnEscapeKey: true,
+				showArrow: true,
+				margin: '0.4rem'
 			});
+
+			self[POPUP].resize(true);
 		}
 	}
 
@@ -131,12 +147,14 @@ Object.assign(DateInput.prototype, {
 
 		if (arguments.length) {
 			newValue = enforceDate(newValue, '', true);
-			self[DATE_INPUT].value(formatDate(newValue, DATE_FORMAT));
+			self[DATE_INPUT].value(formatDate(newValue, self.dateFormat()));
 
 			return self;
 		}
 
-		return new Date(self[DATE_INPUT].value());
+		const value = parse(self[DATE_INPUT].value(), self.dateFormat(), new Date());
+
+		return isValid(value) ? value : undefined;
 	},
 
 	focus() {
@@ -154,7 +172,8 @@ Object.assign(DateInput.prototype, {
 					onClick() {
 						self.value(new Date())
 							.triggerChange();
-					}
+					},
+					margin: '0 0 0 1ch'
 				});
 			}
 			else if (self[NOW_BUTTON]) {
@@ -179,5 +198,13 @@ Object.assign(DateInput.prototype, {
 
 			return self[IS_FOCUSED];
 		}
-	}
+	},
+
+	minDate: methodDate(),
+
+	maxDate: methodDate(),
+
+	dateFormat: methodString({
+		init: 'MM/dd/yyyy'
+	})
 });

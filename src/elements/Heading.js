@@ -59,6 +59,7 @@ const ICON_CONTROL = 'icon';
 const IMAGE_CONTROL = 'image';
 const TOOLBAR = 'toolbar';
 const IGNORE_EVENTS = Symbol();
+const IS_CLICKABLE = Symbol();
 
 const setFocus = Symbol();
 const setClickable = Symbol();
@@ -89,6 +90,7 @@ export default class Heading extends FocusMixin(Control) {
 
 		const self = this;
 		self.classes('heading');
+		self[IS_CLICKABLE] = false;
 		self.on(CLICK_EVENT, (event) => {
 			self[mainClickEvent](event);
 		});
@@ -135,7 +137,12 @@ export default class Heading extends FocusMixin(Control) {
 	[setClickable]() {
 		const self = this;
 
-		self.classes(IS_CLICKABLE_CLASS, (self.isExpandable() || self.isSelectable() || self.showCheckbox() || self.onSelect().length));
+		self[IS_CLICKABLE] = self.isExpandable() ||
+			self.isSelectable() ||
+			self.showCheckbox() ||
+			self.onSelect().length !== 0;
+
+		self.classes(IS_CLICKABLE_CLASS, self[IS_CLICKABLE]);
 	}
 
 	/**
@@ -159,13 +166,13 @@ export default class Heading extends FocusMixin(Control) {
 	[toggleChecked](event) {
 		const self = this;
 
-		if (event && (self.isSelectable() || self.isExpandable())) {
+		if (event && self[IS_CLICKABLE]) {
 			event.stopPropagation();
 		}
 
 		if (!self[IGNORE_EVENTS]) {
 			self.isSelected(!self.isSelected());
-			if (self.onSelect()) {
+			if (self.onSelect().length !== 0) {
 				self.onSelect().trigger();
 			}
 		}
@@ -589,7 +596,9 @@ Object.assign(Heading.prototype, {
 				new CheckBox({
 					id: CHECKBOX,
 					container: self,
-					prepend: self[CHILD_CONTROLS].get(IMAGE_CONTROL) || self[CHILD_CONTROLS].get(ICON_CONTROL) || self[CHILD_CONTROLS].get(TITLE_CONTAINER),
+					prepend: self[CHILD_CONTROLS].get(IMAGE_CONTROL) ||
+						self[CHILD_CONTROLS].get(ICON_CONTROL) ||
+						self[CHILD_CONTROLS].get(TITLE_CONTAINER),
 					isVisible: self.isSelectable(),
 					onChange(isChecked, event) {
 						self[toggleChecked](event);

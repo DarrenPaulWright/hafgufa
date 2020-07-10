@@ -4,6 +4,7 @@ import {
 	applySettings,
 	AUTO,
 	DockPoint,
+	enforceBoolean,
 	isArray,
 	isObject,
 	methodAny,
@@ -738,7 +739,8 @@ export default class Picker extends FocusMixin(FormControl) {
 			title: row.title,
 			subTitle: row.subTitle,
 			isSelected: row.isSelected,
-			isSelectable: row.isSelectable
+			isSelectable: row.isSelectable,
+			isEnabled: enforceBoolean(row.isEnabled, true)
 		}));
 	}
 
@@ -788,6 +790,7 @@ export default class Picker extends FocusMixin(FormControl) {
 					else {
 						self[toggleSelectedItem](itemId);
 					}
+
 					if (!self[HAS_MULTI_SELECT]) {
 						self[hideMenu]();
 					}
@@ -795,6 +798,7 @@ export default class Picker extends FocusMixin(FormControl) {
 				onRemove() {
 					self[MENU] = null;
 					self[updateGroupedButtonsLayout]();
+
 					if (self[POPUP_BUTTON] && self.isFocused()) {
 						self[POPUP_BUTTON].isFocused(true);
 					}
@@ -1134,6 +1138,8 @@ Object.assign(Picker.prototype, {
 		if (this[SELECTED_ITEMS].length > 0) {
 			this[setSelectedItems]([]);
 		}
+
+		return this;
 	},
 
 	/**

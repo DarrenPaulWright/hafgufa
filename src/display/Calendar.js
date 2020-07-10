@@ -10,7 +10,8 @@ import {
 	startOfWeek
 } from 'date-fns';
 import { fill, repeat } from 'object-agent';
-import { applySettings, AUTO, methodDate, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
+import { applySettings } from 'type-enforcer';
+import { AUTO, methodDate, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -27,6 +28,8 @@ const DAY_CLASS = 'day-button';
 const WEEKEND_CLASS = ' weekend';
 const TODAY_CLASS = ' today';
 const DIFFERENT_MONTH_CLASS = ' different-month';
+const PREV_BUTTON_ID = 'prev-month';
+const NEXT_BUTTON_ID = 'next-month';
 const MONTH_PICKER_ID = ' monthPicker';
 const YEAR_PICKER_ID = ' yearPicker';
 
@@ -35,9 +38,12 @@ const gotoNextMonth = Symbol();
 const buildMonthOptions = Symbol();
 const buildYearOptions = Symbol();
 const buildHeader = Symbol();
+const updateHeader = Symbol();
 const buildWeekDays = Symbol();
 const onClickDay = Symbol();
 const buildDays = Symbol();
+const updateRange = Symbol();
+const range = Symbol();
 
 const HEADER = Symbol();
 const WEEKDAYS = Symbol();
@@ -60,14 +66,10 @@ export default class Calendar extends Control {
 		const self = this;
 		self.addClass('calendar');
 
+		self[range] = {};
+
 		self[buildHeader]();
 		self[buildWeekDays]();
-
-		applySettings(self, settings);
-
-		if (self[DAYS] === undefined) {
-			self[buildDays]();
-		}
 
 		self.onResize((width, height) => {
 			const dayWidth = Math.floor(width / DAYS_IN_A_WEEK);
@@ -76,11 +78,20 @@ export default class Calendar extends Control {
 			self[WEEKDAYS].forEach((weekday) => {
 				weekday.width(dayWidth);
 			});
-			self[DAYS].forEach((button) => {
-				button.width(dayWidth)
-					.height(dayHeight);
-			});
+
+			if (self[DAYS] !== undefined) {
+				self[DAYS].forEach((button) => {
+					button.width(dayWidth)
+						.height(dayHeight);
+				});
+			}
 		});
+
+		applySettings(self, settings, ['onResize', 'minDate', 'maxDate']);
+
+		if (self[DAYS] === undefined) {
+			self[buildDays]();
+		}
 	}
 
 	/**
@@ -122,10 +133,28 @@ export default class Calendar extends Control {
 	[buildMonthOptions]() {
 		const self = this;
 
-		return fill(MONTHS_IN_A_YEAR, (month) => ({
-			id: month.toString(),
-			title: formatDate(new Date().setMonth(month), self.monthFormat())
-		}));
+		if (self[HEADER] !== undefined) {
+			const year = self.year();
+			const data = new Date();
+			const format = self.monthFormat();
+
+			self[HEADER].get(MONTH_PICKER_ID)
+				.options([])
+				.options(fill(MONTHS_IN_A_YEAR, (month) => ({
+					id: month.toString(),
+					title: formatDate(data.setMonth(month), format),
+					isEnabled: (
+						self[range].minYear === undefined ||
+						self[range].minYear < year ||
+						self[range].minMonth <= month
+					) && (
+						self[range].maxYear === undefined ||
+						self[range].maxYear > year ||
+						self[range].maxMonth >= month
+					)
+				})))
+				.value(self.month());
+		}
 	}
 
 	/**
@@ -135,13 +164,29 @@ export default class Calendar extends Control {
 	[buildYearOptions]() {
 		const self = this;
 
-		return fill(self.yearRangePast() + self.yearRangeFuture() + 1, (yearOffset) => {
-			const year = (self.year() + (self.yearRangeFuture() - yearOffset)).toString();
-			return {
-				id: year,
-				title: year
-			};
-		});
+		if (self[HEADER]) {
+			const year = self.year();
+			let yearRangePast = self.yearRangePast();
+			let yearRangeFuture = self.yearRangeFuture();
+
+			if (self[range].minYear !== undefined) {
+				yearRangePast = year - self[range].minYear;
+			}
+
+			if (self[range].maxYear !== undefined) {
+				yearRangeFuture = self[range].maxYear - year;
+			}
+
+			self[HEADER].get(YEAR_PICKER_ID)
+				.options(fill(yearRangePast + yearRangeFuture + 1, (yearOffset) => {
+					const year = (self.year() + (yearRangeFuture - yearOffset)).toString();
+					return {
+						id: year,
+						title: year
+					};
+				}))
+				.value(self.year());
+		}
 	}
 
 	/**
@@ -157,6 +202,7 @@ export default class Calendar extends Control {
 				classes: 'calendar-header',
 				content: [{
 					control: Button,
+					id: PREV_BUTTON_ID,
 					icon: PREVIOUS_ICON,
 					onClick() {
 						self[gotoPreviousMonth]();
@@ -164,6 +210,7 @@ export default class Calendar extends Control {
 					classes: 'icon-button prev-button'
 				}, {
 					control: Button,
+					id: NEXT_BUTTON_ID,
 					icon: NEXT_ICON,
 					onClick() {
 						self[gotoNextMonth]();
@@ -173,27 +220,76 @@ export default class Calendar extends Control {
 					control: Picker,
 					id: MONTH_PICKER_ID,
 					width: AUTO,
-					options: self[buildMonthOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
 							self.month(parseInt(newValue[0].id, 10));
 						}
+						self.isFocused(true);
 					},
 					value: self.month()
 				}, {
 					control: Picker,
 					id: YEAR_PICKER_ID,
 					width: AUTO,
-					options: self[buildYearOptions](),
 					onChange(newValue) {
 						if (newValue.length) {
 							self.year(parseInt(newValue[0].id, 10));
 						}
+						self.isFocused(true);
 					},
 					value: self.year()
 				}]
 			});
 		}
+
+		self[updateHeader]();
+	}
+
+	[updateHeader]() {
+		const self = this;
+
+		if (self[HEADER]) {
+			const now = new Date();
+			const year = self.year();
+			const month = self.month();
+
+			self[buildMonthOptions]();
+			self[buildYearOptions]();
+
+			self[HEADER].get(PREV_BUTTON_ID).isEnabled(
+				self[range].minYear === undefined ||
+				self[range].minYear < year ||
+				self[range].minMonth < month
+			);
+			self[HEADER].get(NEXT_BUTTON_ID).isEnabled(
+				self[range].maxYear === undefined ||
+				self[range].maxYear > year ||
+				self[range].maxMonth > month
+			);
+		}
+	}
+
+	[updateRange]() {
+		const self = this;
+		const minDate = self.minDate();
+		const maxDate = self.maxDate();
+
+		self[range] = {
+			minDate,
+			maxDate,
+			minMonth: minDate === undefined ? 0 : minDate.getMonth(),
+			maxMonth: maxDate === undefined ? 11 : maxDate.getMonth()
+		};
+
+		if (minDate !== undefined) {
+			self[range].minYear = minDate.getFullYear();
+		}
+
+		if (maxDate !== undefined) {
+			self[range].maxYear = maxDate.getFullYear();
+		}
+
+		self[updateHeader]();
 	}
 
 	/**
@@ -246,11 +342,11 @@ export default class Calendar extends Control {
 	 */
 	[buildDays]() {
 		const self = this;
-		let classes;
 		const isFirstRun = self[DAYS] === undefined;
 		const selectedDate = self.selectedDate();
 		const todayDate = new Date();
 		let currentDay = new Date();
+		let classes = '';
 
 		currentDay = setMonth(currentDay, self.month());
 		currentDay = setYear(currentDay, self.year());
@@ -288,7 +384,9 @@ export default class Calendar extends Control {
 				.classes(classes)
 				.isSelected(selectedDate !== undefined && isSameDay(currentDay, selectedDate))
 				.label(currentDay.getDate() + '')
-				.value(new Date(currentDay));
+				.value(new Date(currentDay))
+				.isEnabled((self[range].minDate === undefined || self[range].minDate <= currentDay) &&
+					(self[range].maxDate === undefined || self[range].maxDate >= currentDay));
 
 			currentDay = addDays(currentDay, 1);
 		});
@@ -311,11 +409,8 @@ Object.assign(Calendar.prototype, {
 	month: methodInteger({
 		init: new Date().getMonth(),
 		set(month) {
-			const self = this;
-			self[buildDays]();
-			if (self[HEADER]) {
-				self[HEADER].get(MONTH_PICKER_ID).value(month);
-			}
+			this[buildDays]();
+			this[updateHeader]();
 		},
 		min: 0,
 		max: 11
@@ -331,14 +426,9 @@ Object.assign(Calendar.prototype, {
 	 */
 	year: methodInteger({
 		init: new Date().getFullYear(),
-		set(year) {
-			const self = this;
-			self[buildDays]();
-			if (self[HEADER]) {
-				self[HEADER].get(YEAR_PICKER_ID)
-					.options(self[buildYearOptions]())
-					.value(year);
-			}
+		set() {
+			this[buildDays]();
+			this[updateHeader]();
 		}
 	}),
 
@@ -381,9 +471,8 @@ Object.assign(Calendar.prototype, {
 	weekdayFormat: methodString({
 		init: 'EEE',
 		set() {
-			const self = this;
-			self[buildWeekDays]();
-			self.resize();
+			this[buildWeekDays]();
+			this.resize();
 		}
 	}),
 
@@ -397,12 +486,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	monthFormat: methodString({
 		init: 'MMM',
-		set() {
-			const self = this;
-			if (self[HEADER]) {
-				self[HEADER].get(MONTH_PICKER_ID).options([]).options(self[buildMonthOptions]());
-			}
-		}
+		set: buildMonthOptions
 	}),
 
 	/*
@@ -415,13 +499,7 @@ Object.assign(Calendar.prototype, {
 	 */
 	yearRangePast: methodInteger({
 		init: 100,
-		set() {
-			const self = this;
-			if (self[HEADER]) {
-				self[HEADER].get(YEAR_PICKER_ID)
-					.options(self[buildYearOptions]());
-			}
-		},
+		set: buildYearOptions,
 		min: 0
 	}),
 
@@ -435,13 +513,15 @@ Object.assign(Calendar.prototype, {
 	 */
 	yearRangeFuture: methodInteger({
 		init: 10,
-		set() {
-			const self = this;
-			if (self[HEADER]) {
-				self[HEADER].get(YEAR_PICKER_ID)
-					.options(self[buildYearOptions]());
-			}
-		},
+		set: buildYearOptions,
 		min: 0
+	}),
+
+	minDate: methodDate({
+		set: updateRange
+	}),
+
+	maxDate: methodDate({
+		set: updateRange
 	})
 });
