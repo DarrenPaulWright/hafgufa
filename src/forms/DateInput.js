@@ -1,5 +1,15 @@
 import { defer } from 'async-agent';
-import { format as formatDate, isValid, parse } from 'date-fns';
+import {
+	format as formatDate,
+	getHours,
+	getMinutes,
+	getSeconds,
+	isValid,
+	parse,
+	setHours,
+	setMinutes,
+	setSeconds
+} from 'date-fns';
 import {
 	applySettings,
 	AUTO,
@@ -50,7 +60,7 @@ export default class DateInput extends FormControl {
 
 		self[DATE_INPUT] = new TextInput({
 			container: self,
-			width: '9rem',
+			width: '16ch',
 			onChange(value) {
 				self[onDateInputChange](value);
 			},
@@ -104,7 +114,17 @@ export default class DateInput extends FormControl {
 					width: CALENDAR_WIDTH,
 					height: CALENDAR_HEIGHT,
 					onDateSelected(value) {
-						self[DATE_INPUT].value(formatDate(value, self.dateFormat()));
+						const oldValue = self.value();
+
+						if (isValid(oldValue)) {
+							value = setHours(value, getHours(oldValue));
+							value = setMinutes(value, getMinutes(oldValue));
+							value = setSeconds(value, getSeconds(oldValue));
+						}
+
+						self[DATE_INPUT]
+							.value(formatDate(value, self.dateFormat()));
+
 						self[onDateInputChange](value);
 					},
 					navButtonClass: 'icon-button',
@@ -206,6 +226,9 @@ Object.assign(DateInput.prototype, {
 	maxDate: methodDate(),
 
 	dateFormat: methodString({
-		init: 'MM/dd/yyyy'
+		init: 'MM/dd/yyyy',
+		set(format) {
+			this[DATE_INPUT].width(format.length + 6 + 'ch');
+		}
 	})
 });

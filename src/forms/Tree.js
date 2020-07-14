@@ -334,8 +334,8 @@ Object.assign(Tree.prototype, {
 	fitHeightToContents() {
 		const self = this;
 
-		self[VIRTUAL_LIST].maxHeight(self.maxHeight());
-		self[VIRTUAL_LIST].fitHeightToContents();
+		self[VIRTUAL_LIST].maxHeight(self.maxHeight())
+			.fitHeightToContents();
 		self.height(self[VIRTUAL_LIST].borderHeight());
 		self[VIRTUAL_LIST].refresh();
 
