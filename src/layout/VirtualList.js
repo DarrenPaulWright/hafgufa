@@ -14,6 +14,7 @@ import {
 	methodFunction,
 	methodNumber,
 	methodObject,
+	methodQueue,
 	methodString,
 	PIXELS,
 	Thickness,
@@ -44,8 +45,10 @@ import {
 	POSITION,
 	RELATIVE,
 	SCROLL_EVENT,
+	SCROLL_HEIGHT,
 	SCROLL_LEFT,
 	SCROLL_TOP,
+	SCROLL_WIDTH,
 	TAB_INDEX,
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED,
@@ -96,6 +99,7 @@ const ALT_EXTENT_VALUE = Symbol();
 const POSITION_ORIGIN = Symbol();
 const ALT_POSITION_ORIGIN = Symbol();
 const EXTENT_SCROLL_ORIGIN = Symbol();
+const EXTENT_SCROLL_TOTAL = Symbol();
 const EXTENT_PADDING = Symbol();
 const EMPTY_CONTENT_CONTAINER = Symbol();
 const CONTENT_CONTAINER = Symbol();
@@ -172,6 +176,7 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[POSITION_ORIGIN] = TOP;
 		self[ALT_POSITION_ORIGIN] = LEFT;
 		self[EXTENT_SCROLL_ORIGIN] = SCROLL_TOP;
+		self[EXTENT_SCROLL_TOTAL] = SCROLL_HEIGHT;
 		self[EXTENT_PADDING] = VERTICAL;
 		self[CONTROL_RECYCLER] = new ControlRecycler();
 
@@ -203,7 +208,10 @@ export default class VirtualList extends FocusMixin(Control) {
 
 					if (controlOffset > self[CURRENT_SCROLL_OFFSET] - scrollBuffer &&
 						controlOffset < self[CURRENT_SCROLL_OFFSET] + scrollBuffer) {
-						maxAltExtent = Math.max(maxAltExtent, control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']());
+						maxAltExtent = Math.max(
+							maxAltExtent,
+							control[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']()
+						);
 					}
 				});
 
@@ -335,7 +343,10 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		self[INNER_PADDING].set(self.css(PADDING) || 0);
 
-		self[CONTENT_CONTAINER].css(self[EXTENT], (totalSize - self[CURRENT_STEP_OFFSET]) + self[INNER_PADDING][self[EXTENT_PADDING]] + PIXELS)
+		self[CONTENT_CONTAINER].css(
+			self[EXTENT],
+			(totalSize - self[CURRENT_STEP_OFFSET]) + self[INNER_PADDING][self[EXTENT_PADDING]] + PIXELS
+			)
 			.css(self[POSITION_ORIGIN], getOffset() + PIXELS);
 	}
 
@@ -347,7 +358,10 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		self[CONTROL_RECYCLER].each((control) => {
-			control.css(self[POSITION_ORIGIN], ((control.virtualIndex * self[ITEM_SIZE]) - self[CURRENT_STEP_OFFSET]) + PIXELS);
+			control.css(
+				self[POSITION_ORIGIN],
+				((control.virtualIndex * self[ITEM_SIZE]) - self[CURRENT_STEP_OFFSET]) + PIXELS
+			);
 		});
 	}
 
@@ -532,6 +546,11 @@ export default class VirtualList extends FocusMixin(Control) {
 
 		event.preventDefault();
 		self[CURRENT_SCROLL_OFFSET] = event.target[self[EXTENT_SCROLL_ORIGIN]];
+
+		if (event.target[self[EXTENT_SCROLL_TOTAL]] - (self[CURRENT_SCROLL_OFFSET] + self.borderHeight()) < self.nearEndThreshold()) {
+			self.onNearEnd().trigger();
+		}
+
 		self[render]();
 	}
 
@@ -639,8 +658,12 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		offset = Math.floor(offset / self[ITEM_SIZE]) * self[ITEM_SIZE];
-		self[CURRENT_SCROLL_OFFSET] = clamp(offset, 0, (self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE] + self.startOffset()
-			.toPixels(true) + self.endOffset().toPixels(true));
+		self[CURRENT_SCROLL_OFFSET] = clamp(
+			offset,
+			0,
+			(self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE] + self.startOffset()
+			.toPixels(true) + self.endOffset().toPixels(true)
+		);
 
 		d3Helper.animate(self)
 			.tween('scrollTween', d3Helper.propertyTween(self[EXTENT_SCROLL_ORIGIN], self[CURRENT_SCROLL_OFFSET]));
@@ -688,6 +711,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[POSITION_ORIGIN] = LEFT;
 			self[ALT_POSITION_ORIGIN] = TOP;
 			self[EXTENT_SCROLL_ORIGIN] = SCROLL_LEFT;
+			self[EXTENT_SCROLL_TOTAL] = SCROLL_WIDTH;
 			overflow = OVERFLOW_X;
 			altOverflow = OVERFLOW_Y;
 			self[EXTENT_PADDING] = HORIZONTAL;
@@ -698,6 +722,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[POSITION_ORIGIN] = TOP;
 			self[ALT_POSITION_ORIGIN] = LEFT;
 			self[EXTENT_SCROLL_ORIGIN] = SCROLL_TOP;
+			self[EXTENT_SCROLL_TOTAL] = SCROLL_HEIGHT;
 			overflow = OVERFLOW_Y;
 			altOverflow = OVERFLOW_X;
 			self[EXTENT_PADDING] = VERTICAL;
@@ -1121,6 +1146,12 @@ Object.assign(VirtualList.prototype, {
 				self[MULTI_ITEM_FOCUS].remove();
 			}
 		}
-	})
+	}),
+
+	nearEndThreshold: methodNumber({
+		init: 500
+	}),
+
+	onNearEnd: methodQueue()
 
 });

@@ -1234,6 +1234,10 @@ export default class Grid extends Control {
 		}
 	}
 
+	onNearBottom(callback) {
+		this[GRID_COLUMN_BLOCK].onNearBottom(callback);
+	}
+
 	/**
 	 * Refresh the display
 	 * @method refresh

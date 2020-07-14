@@ -5,6 +5,7 @@ import {
 	methodArray,
 	methodBoolean,
 	methodFunction,
+	methodQueue,
 	PIXELS
 } from 'type-enforcer-ui';
 import Control from '../Control';
@@ -63,6 +64,9 @@ export default class GridColumnBlock extends Control {
 			},
 			onItemRender(rowControl, rowData) {
 				self[updateRow](rowControl, rowData);
+			},
+			onNearEnd() {
+				self.onNearBottom().trigger();
 			}
 		});
 
@@ -123,7 +127,7 @@ Object.assign(GridColumnBlock.prototype, {
 	columns: methodArray({
 		set(columns) {
 			this[GRID_HEADER].columns(columns);
-			this.resize();
+			this.resize(true);
 		}
 	}),
 
@@ -179,6 +183,7 @@ Object.assign(GridColumnBlock.prototype, {
 
 		self[VIRTUAL_LIST].itemData(newRows);
 		self[GRID_HEADER].updateFilters();
+		self.resize(true);
 
 		return self;
 	},
@@ -211,6 +216,8 @@ Object.assign(GridColumnBlock.prototype, {
 		},
 		other: undefined
 	}),
+
+	onNearBottom: methodQueue(),
 
 	refresh() {
 		this[VIRTUAL_LIST].getRenderedControls().forEach((control) => {
