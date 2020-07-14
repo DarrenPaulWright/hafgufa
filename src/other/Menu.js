@@ -159,7 +159,7 @@ export default class Menu extends Popup {
 				self
 					.get(TREE_ID)
 					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0))
-					.resize();
+					.resize(true);
 			})
 			.content(tree);
 		tree = null;
