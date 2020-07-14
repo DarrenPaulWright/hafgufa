@@ -177,10 +177,9 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 	static [getDockPointOffsetHeight](dockPoint, element) {
 		const styles = getComputedStyle(element);
-		const height = element.offsetHeight + Popup[parseElementStyle](styles, MARGIN_TOP) + Popup[parseElementStyle](
-			styles,
-			MARGIN_BOTTOM
-		);
+		const height = element.offsetHeight +
+			Popup[parseElementStyle](styles, MARGIN_TOP) +
+			Popup[parseElementStyle](styles, MARGIN_BOTTOM);
 
 		if (dockPoint.has(POINTS.BOTTOM)) {
 			return height;
@@ -221,7 +220,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 		const forceToNegativeSide = () => {
 			didSwitch = true;
 			pos.size = Math.min(pos.size, pos.anchorOffset - pos.margin);
-			pos.offset = Math.max(pos.margin, pos.anchorOffset - pos.size);
+			pos.offset = Math.max(pos.margin, pos.anchorOffset - pos.size - pos.margin);
 		};
 
 		if (pos.offset < pos.margin) {
@@ -351,7 +350,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 		const self = this;
 		self[CAN_SLIDE_HORIZONTAL] = self[checkSlidability](POINTS.TOP, POINTS.BOTTOM);
 		self[CAN_SLIDE_VERTICAL] = self[checkSlidability](POINTS.LEFT, POINTS.RIGHT);
-		self[ACTUAL_POPUP_DOCK_POINT] = self.popupDockPoint();
+		self[ACTUAL_POPUP_DOCK_POINT] = new DockPoint(self.popupDockPoint().toString());
 	}
 
 	[checkSlidability](dockOption1, dockOption2) {
@@ -375,7 +374,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 			width: AUTO,
 			height: AUTO
 		}, true);
-		self[ACTUAL_POPUP_DOCK_POINT] = self.popupDockPoint();
+		self[ACTUAL_POPUP_DOCK_POINT] = new DockPoint(self.popupDockPoint().toString());
 
 		const bounds = {
 			top: 0,
