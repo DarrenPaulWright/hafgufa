@@ -62,7 +62,8 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 		self[HEADING] = new Heading({
 			container: self,
-			level: HEADING_LEVELS.FIVE
+			level: HEADING_LEVELS.FIVE,
+			canWrap: true
 		});
 
 		applySettings(self, settings);
