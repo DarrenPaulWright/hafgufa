@@ -13,7 +13,6 @@ import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
 import DragMixin from '../mixins/DragMixin';
-import FocusMixin from '../mixins/FocusMixin';
 import TooltipMixin from '../mixins/TooltipMixin';
 import assign from '../utility/assign.js';
 import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
@@ -81,7 +80,7 @@ const TRACK_SIZE = Symbol();
 const TRACK_MARGINS = Symbol();
 const LOCATION_SIZE = Symbol();
 
-export default class Slider extends FocusMixin(FormControl) {
+export default class Slider extends FormControl {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.SLIDER

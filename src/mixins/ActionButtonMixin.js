@@ -1,4 +1,4 @@
-import { debounce } from 'async-agent';
+import { debounce, defer } from 'async-agent';
 import { methodBoolean, methodFunction, methodString, PrivateVars } from 'type-enforcer-ui';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
@@ -20,12 +20,11 @@ const addRightContainer = Symbol();
 export default function(Base) {
 	class ActionButtonMixin extends Base {
 		constructor(settings = {}) {
-			const containerCallback = settings.ActionButtonMixin.container;
-
 			super(settings);
 
 			const self = this;
 			const _self = _.set(this);
+			const containerCallback = settings.ActionButtonMixin.container;
 
 			self[refreshActionButton] = debounce(() => {
 				const isIconButton = self.actionButtonIcon() === CLEAR_ICON && self.actionButtonLabel() === '';
@@ -63,28 +62,30 @@ export default function(Base) {
 					self[refreshActionButton]();
 				})
 				.onResize((width) => {
-					const container = containerCallback();
+					defer(() => {
+						const container = containerCallback();
 
-					if (container) {
-						const containerHeight = container.borderHeight();
-						const containerWidth = container.borderWidth();
-						let rightContainerWidth = 0;
+						if (container) {
+							const containerHeight = container.borderHeight();
+							const containerWidth = container.borderWidth();
+							let rightContainerWidth = 0;
 
-						if (_self.rightContainer) {
-							_self.rightContainer.css({
-								top: container.element.offsetTop,
-								height: containerHeight,
-								right: Math.max(0, width - containerWidth - container.element.offsetLeft)
-							});
-							rightContainerWidth = _self.rightContainer.borderWidth();
+							if (_self.rightContainer) {
+								_self.rightContainer.css({
+									top: container.element.offsetTop,
+									height: containerHeight,
+									right: Math.max(0, width - containerWidth - container.element.offsetLeft)
+								});
+								rightContainerWidth = _self.rightContainer.borderWidth();
 
-							if (_self.countControl) {
-								_self.countControl.css(LINE_HEIGHT, containerHeight);
+								if (_self.countControl) {
+									_self.countControl.css(LINE_HEIGHT, containerHeight);
+								}
 							}
-						}
 
-						container.css(PADDING_RIGHT, rightContainerWidth);
-					}
+							container.css(PADDING_RIGHT, rightContainerWidth);
+						}
+					});
 				});
 		}
 

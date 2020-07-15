@@ -16,7 +16,6 @@ import {
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import VirtualList from '../layout/VirtualList';
-import FocusMixin from '../mixins/FocusMixin';
 import assign from '../utility/assign.js';
 import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../utility/domConstants';
 import setDefaults from '../utility/setDefaults.js';
@@ -48,7 +47,7 @@ const toggleExpanded = Symbol();
  *
  * @param {Object} settings
  */
-export default class Tree extends FocusMixin(FormControl) {
+export default class Tree extends FormControl {
 	constructor(settings = {}) {
 		let self;
 		let virtualList = new VirtualList({

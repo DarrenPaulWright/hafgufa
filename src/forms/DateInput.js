@@ -17,6 +17,7 @@ import Button from '../elements/Button';
 import TextInput from '../forms/TextInput';
 import { CALENDAR_ICON } from '../icons.js';
 import Popup from '../layout/Popup';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 
@@ -68,6 +69,10 @@ export default class DateInput extends FormControl {
 			onBlur() {
 				self[IS_FOCUSED] = false;
 
+				if (self[POPUP]) {
+					self[POPUP].remove();
+				}
+
 				if (settings.onBlur) {
 					defer(() => {
 						if (!self[IS_FOCUSED]) {
@@ -79,7 +84,8 @@ export default class DateInput extends FormControl {
 			actionButtonIcon: CALENDAR_ICON,
 			isActionButtonAutoHide: false,
 			actionButtonOnClick() {
-				this.isFocused(true);
+				this.isFocused(false)
+					.isFocused(true);
 			},
 			stopPropagation: true
 		});
@@ -213,9 +219,39 @@ Object.assign(DateInput.prototype, {
 		}
 	},
 
-	minDate: methodDate(),
+	minDate: methodDate({
+		set(minDate) {
+			this.onValidate((value, isFocused) => {
+				if (isFocused === false && value !== undefined && value < minDate) {
+					this.error(locale.get('minDateError', {
+						minDate: formatDate(minDate, this.dateFormat())
+					}));
 
-	maxDate: methodDate(),
+					return true;
+				}
+				else {
+					this.error('');
+				}
+			});
+		}
+	}),
+
+	maxDate: methodDate({
+		set(maxDate) {
+			this.onValidate((value, isFocused) => {
+				if (isFocused === false && value !== undefined && value > maxDate) {
+					this.error(locale.get('maxDateError', {
+						maxDate: formatDate(maxDate, this.dateFormat())
+					}));
+
+					return true;
+				}
+				else {
+					this.error('');
+				}
+			});
+		}
+	}),
 
 	dateFormat: methodString({
 		init: 'MM/dd/yyyy',

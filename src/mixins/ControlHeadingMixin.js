@@ -127,10 +127,10 @@ export default (Base) => {
 					self.isCollapsed(false);
 				}
 				else if (self[HEADING] && self.canCollapse()) {
-					self[CONTENT_CONTAINER].css(DISPLAY, isCollapsed ? NONE : null);
 					self[HEADING].isExpanded(!isCollapsed);
-
-					self.resize();
+					self[CONTENT_CONTAINER]
+						.css(DISPLAY, isCollapsed ? NONE : null)
+						.resize(true);
 				}
 			}
 		}),

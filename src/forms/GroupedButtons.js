@@ -16,7 +16,6 @@ import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
 import Div from '../elements/Div';
-import FocusMixin from '../mixins/FocusMixin';
 import { ORIENTATION } from '../uiConstants';
 import assign from '../utility/assign.js';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../utility/domConstants';
@@ -47,7 +46,7 @@ const setFocusIndex = Symbol();
  *
  * @arg {Object} settings - Accepts all control and FormControl options plus:
  */
-export default class GroupedButtons extends FocusMixin(FormControl) {
+export default class GroupedButtons extends FormControl {
 	constructor(settings = {}) {
 		let buttonContainer = new Div({
 			classes: 'grouped-buttons-wrapper'

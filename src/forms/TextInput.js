@@ -19,11 +19,7 @@ import Span from '../elements/Span';
 import TextArea from '../elements/TextArea';
 import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
-import assign from '../utility/assign.js';
 import {
-	BLUR_EVENT,
-	DOCUMENT,
-	FOCUS_EVENT,
 	INPUT_TYPE_PASSWORD,
 	INPUT_TYPE_TEXT,
 	KEY_UP_EVENT,
@@ -31,7 +27,7 @@ import {
 	MAX_LENGTH,
 	PLACE_HOLDER
 } from '../utility/domConstants';
-import locale from '../utility/locale';
+import locale from '../utility/locale.js';
 import clamp from '../utility/math/clamp';
 import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
@@ -72,35 +68,22 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 			},
 			actionButtonIcon: CLEAR_ICON
 		}, settings, {
-			ActionButtonMixin: { container: () => self[INPUT] },
-			FocusMixin: assign(settings.FocusMixin, {
-				setFocus() {
-					self[INPUT].isFocused(true);
-				}
-			})
+			ActionButtonMixin: { container: () => self[INPUT] }
 		}));
 
 		const self = this;
-
-		self
-			.addClass('text-input')
-			.onChange(() => {
-				self.validate();
-			});
+		self.addClass('text-input');
 
 		applySettings(self, settings, ['rows']);
 
-		self.onBlur(() => {
-				self.validate();
-			})
-			.onResize(() => {
-				self[positionElements]();
-				self[maxRowCallback]();
+		self.onResize(() => {
+			self[positionElements]();
+			self[maxRowCallback]();
 
-				if (self.rows() > 1 && !self.height().isAuto) {
-					self[INPUT].height(self.contentContainer.borderHeight());
-				}
-			});
+			if (self.rows() > 1 && !self.height().isAuto) {
+				self[INPUT].height(self.contentContainer.borderHeight());
+			}
+		});
 	}
 
 	/**
@@ -188,6 +171,8 @@ Object.assign(TextInput.prototype, {
 				oldInput = null;
 			}
 
+			self.setFocusControl(self[INPUT]);
+
 			self[INPUT]
 				.on(ON_CHANGE_EVENTS, throttle(() => {
 					self[maxRowCallback]();
@@ -237,7 +222,20 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Int|this}
 	 */
 	minLength: methodInteger({
-		other: undefined
+		other: undefined,
+		set() {
+			const self = this;
+
+			self.onValidate((value, isFocused) => {
+				if (isFocused === false && self.minLength() > value.length) {
+					self.error(locale.get('invalidMinLength', {
+						minLength: self.minLength()
+					}));
+
+					return true;
+				}
+			});
+		}
 	}),
 
 	/**
@@ -249,7 +247,19 @@ Object.assign(TextInput.prototype, {
 	 */
 	maxLength: methodInteger({
 		set(newValue) {
-			this[INPUT].attr(MAX_LENGTH, (this.isSoftValidation() || !newValue) ? null : newValue);
+			const self = this;
+
+			self[INPUT].attr(MAX_LENGTH, (self.isSoftValidation() || !newValue) ? null : newValue);
+
+			self.onValidate((value, isFocused) => {
+				if (isFocused === false && self.maxLength() < value.length) {
+					self.error(locale.get('invalidMaxLength', {
+						minLength: self.maxLength()
+					}));
+
+					return true;
+				}
+			});
 		},
 		other: undefined
 	}),
@@ -262,7 +272,25 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Int|this}
 	 */
 	minValue: methodInteger({
-		other: undefined
+		other: undefined,
+		set() {
+			const self = this;
+
+			self.isNumber(true)
+				.onValidate((value, isFocused) => {
+					if (
+						isFocused === false &&
+						value !== '' &&
+						self.minValue() > value
+					) {
+						self.error(locale.get('invalidMinValue', {
+							minValue: self.minValue()
+						}));
+
+						return true;
+					}
+				});
+		}
 	}),
 
 	/**
@@ -273,7 +301,25 @@ Object.assign(TextInput.prototype, {
 	 * @returns {Int|this}
 	 */
 	maxValue: methodInteger({
-		other: undefined
+		other: undefined,
+		set() {
+			const self = this;
+
+			self.isNumber(true)
+				.onValidate((value, isFocused) => {
+					if (
+						isFocused === false &&
+						value !== '' &&
+						self.maxValue() < value
+					) {
+						self.error(locale.get('invalidMaxValue', {
+							maxValue: self.maxValue()
+						}));
+
+						return true;
+					}
+				});
+		}
 	}),
 
 	/**
@@ -283,7 +329,24 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	isInt: methodBoolean(),
+	isInt: methodBoolean({
+		set() {
+			const self = this;
+
+			self.onValidate((value, isFocused) => {
+				if (
+					isFocused === false &&
+					value !== '' &&
+					self.isInt() === true &&
+					!isInteger(value, true)
+				) {
+					self.error(locale.get('invalidInt'));
+
+					return true;
+				}
+			});
+		}
+	}),
 
 	/**
 	 * @method isNumber
@@ -292,7 +355,24 @@ Object.assign(TextInput.prototype, {
 	 * @param {Boolean} [newMaxValue]
 	 * @returns {Boolean|this}
 	 */
-	isNumber: methodBoolean(),
+	isNumber: methodBoolean({
+		set() {
+			const self = this;
+
+			self.onValidate((value, isFocused) => {
+				if (
+					isFocused === false &&
+					value !== '' &&
+					self.isNumber() === true &&
+					!isNumber(value, true)
+				) {
+					self.error(locale.get('invalidNumber'));
+
+					return true;
+				}
+			});
+		}
+	}),
 
 	/**
 	 * @method totalNumberDigits
@@ -303,7 +383,29 @@ Object.assign(TextInput.prototype, {
 	 */
 	maxNumberDigits: methodInteger({
 		other: undefined,
-		min: 1
+		min: 1,
+		set() {
+			const self = this;
+
+			self.onValidate((value, isFocused) => {
+				if (isFocused === false && value !== '') {
+					const splitValue = value.split('.');
+					let totalNumberDigits = splitValue[0].length;
+
+					if (splitValue.length > 1) {
+						totalNumberDigits += splitValue[1].length;
+					}
+
+					if (self.maxNumberDigits() < totalNumberDigits) {
+						self.error(locale.get('invalidNumberTotalDigits', {
+							maxNumberDigits: self.maxNumberDigits()
+						}));
+
+						return true;
+					}
+				}
+			});
+		}
 	}),
 
 	/**
@@ -315,88 +417,23 @@ Object.assign(TextInput.prototype, {
 	 */
 	maxFractionDigits: methodInteger({
 		other: undefined,
-		min: 1
-	}),
+		min: 1,
+		set() {
+			const self = this;
 
-	/**
-	 * @method validate
-	 * @member module:TextInput
-	 * @instance
-	 * @returns {this}
-	 */
-	validate() {
-		const self = this;
-		const currentValue = self.value();
-		let errorMessage = '';
-		let splitValue;
-		let fractionDigits = 0;
-		let totalNumberDigits = 0;
-
-		if (self.isRequired() && currentValue === '') {
-			errorMessage = locale.get('requiredField');
-		}
-		else if (currentValue !== '') {
-			if (self.maxValue() !== undefined || self.minValue() !== undefined || self.isInt() || self.isNumber()) {
-				if (!errorMessage && self.isInt() && !isInteger(currentValue, true)) {
-					errorMessage = locale.get('invalidInt');
-				}
-				else if (!errorMessage && !isNumber(currentValue, true)) {
-					errorMessage = locale.get('invalidNumber');
-				}
-				else {
-					if (!errorMessage && self.maxValue() !== undefined && self.maxValue() < currentValue) {
-						errorMessage = locale.get('invalidMaxValue', {
-							maxValue: self.maxValue()
-						});
-					}
-					if (!errorMessage && self.minValue() !== undefined && self.minValue() > currentValue) {
-						errorMessage = locale.get('invalidMinValue', {
-							minValue: self.minValue()
-						});
-					}
-
-					splitValue = currentValue.split('.');
-					totalNumberDigits = splitValue[0].length;
-
-					if (splitValue.length > 1) {
-						fractionDigits = splitValue[1].length;
-						totalNumberDigits += fractionDigits;
-					}
-
-					if (!errorMessage && self.maxFractionDigits() !== undefined && self.maxFractionDigits() < fractionDigits) {
-						errorMessage = locale.get('invalidNumberFractionDigits', {
+			self.onValidate((value, isFocused) => {
+				if (isFocused === false && value !== '') {
+					if (self.maxFractionDigits() < value.split('.')[1].length) {
+						self.error(locale.get('invalidNumberFractionDigits', {
 							maxFractionDigits: self.maxFractionDigits()
-						});
-					}
-					if (!errorMessage && self.maxNumberDigits() !== undefined && self.maxNumberDigits() < totalNumberDigits) {
-						errorMessage = locale.get('invalidNumberTotalDigits', {
-							maxNumberDigits: self.maxNumberDigits()
-						});
+						}));
+
+						return true;
 					}
 				}
-			}
-			if (!errorMessage && self.maxLength() !== undefined) {
-				if (self.maxLength() < currentValue.length) {
-					errorMessage = locale.get('invalidMaxLength', {
-						maxLength: self.maxLength()
-					});
-				}
-			}
-			if (!errorMessage && self.minLength() !== undefined) {
-				if (self.minLength() > currentValue.length) {
-					errorMessage = locale.get('invalidMinLength', {
-						minLength: self.minLength()
-					});
-				}
-			}
+			});
 		}
-
-		if (errorMessage === '' || !self.isFocused()) {
-			self.error(errorMessage);
-		}
-
-		return self;
-	},
+	}),
 
 	/**
 	 * @method placeholder
@@ -482,15 +519,15 @@ Object.assign(TextInput.prototype, {
 	 * @method value
 	 * @member module:TextInput
 	 * @instance
-	 * @param {String} [newValue]
+	 * @param {String} [value]
 	 * @returns {String|this}
 	 */
-	value(newValue) {
+	value(value) {
 		const self = this;
 
 		if (arguments.length) {
 			if (!self.isFocused()) {
-				self[INPUT].value(newValue);
+				self[INPUT].value(value);
 				self.triggerChange(true, true, false);
 				self[maxRowCallback]();
 			}
@@ -512,94 +549,6 @@ Object.assign(TextInput.prototype, {
 	},
 
 	/**
-	 * See if this control has focus.
-	 * @method isFocused
-	 * @member module:TextInput
-	 * @instance
-	 * @returns {Boolean}
-	 */
-	isFocused(doFocus) {
-		const self = this;
-
-		if (doFocus !== undefined) {
-			if (doFocus) {
-				if (!self.isFocused()) {
-					if (self.rows() === 1) {
-						self[INPUT].isFocused(true);
-					}
-					else {
-						if (self[INPUT].setSelectionRange) {
-							self[INPUT].isFocused(true);
-							self[INPUT].setSelectionRange(0, 0);
-							self[INPUT].scrollTop = 0;
-						}
-						else if (self[INPUT].createTextRange) {
-							let range = self[INPUT].createTextRange();
-							range.moveStart('character', 0);
-							range.select();
-							self[INPUT].scrollTop = 0;
-						}
-						else {
-							self[INPUT].isFocused(true);
-						}
-					}
-				}
-			}
-			else if (self.isFocused()) {
-				self[INPUT].isFocused(false);
-			}
-
-			return self;
-		}
-
-		return self[INPUT].element === DOCUMENT.activeElement;
-	},
-
-	/**
-	 * Adds a callback that is triggered when the control gets focus
-	 * @method onFocus
-	 * @member module:TextInput
-	 * @instance
-	 * @param {Function} callback
-	 * @returns {this}
-	 */
-	onFocus: methodQueue({
-		set(queue) {
-			if (queue.length === 1) {
-				const self = this;
-
-				self[INPUT].on(FOCUS_EVENT, () => {
-					if (!self.isRemoved) {
-						self.onFocus().trigger();
-					}
-				});
-			}
-		}
-	}),
-
-	/**
-	 * Adds a callback that is triggered when the control loses focus
-	 * @method onBlur
-	 * @member module:TextInput
-	 * @instance
-	 * @param {Function} callback
-	 * @returns {this}
-	 */
-	onBlur: methodQueue({
-		set(queue) {
-			if (queue.length === 1) {
-				const self = this;
-
-				self[INPUT].on(BLUR_EVENT, () => {
-					if (!self.isRemoved) {
-						self.onBlur().trigger();
-					}
-				});
-			}
-		}
-	}),
-
-	/**
 	 * Adds a callback that is triggered when the user hits the enter key when this control is focused
 	 * @method onEnter
 	 * @member module:TextInput
@@ -612,16 +561,17 @@ Object.assign(TextInput.prototype, {
 			if (queue.length === 1) {
 				const self = this;
 
-				self.onFocus(() => {
-					self[INPUT].on(KEY_UP_EVENT, (event) => {
-						if (event.keyCode === keyCodes('enter')) {
-							self.onEnter().trigger();
-						}
+				self
+					.onFocus(() => {
+						self[INPUT].on(KEY_UP_EVENT, (event) => {
+							if (event.keyCode === keyCodes('enter')) {
+								self.onEnter().trigger();
+							}
+						});
+					})
+					.onBlur(() => {
+						self[INPUT].off(KEY_UP_EVENT);
 					});
-				});
-				self.onBlur(() => {
-					self[INPUT].off(KEY_UP_EVENT);
-				});
 			}
 		}
 	})

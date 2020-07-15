@@ -31,9 +31,8 @@ describe('TextInput', () => {
 			},
 			validValue: 'test',
 			setValueViaDom() {
-				const input = testUtil.first('input[type=text]');
-				input.value = '4';
-				testUtil.trigger(input, 'change');
+				testUtil.typeText('4');
+				testUtil.trigger(testUtil.getTextInput(), 'change');
 			}
 		}
 	});
@@ -100,29 +99,35 @@ describe('TextInput', () => {
 			assert.is(testUtil.count('textarea'), 1);
 		});
 
-		it('should have a textarea element with a set height if rows is greater than 1 and height is set to a percent', () => {
-			testUtil.control = new TextInput({
-				container: testUtil.container,
-				title: 'Test Title',
-				rows: 5,
-				height: '90%'
-			});
-			testUtil.control.resize(true);
+		it(
+			'should have a textarea element with a set height if rows is greater than 1 and height is set to a percent',
+			() => {
+				testUtil.control = new TextInput({
+					container: testUtil.container,
+					title: 'Test Title',
+					rows: 5,
+					height: '90%'
+				});
+				testUtil.control.resize(true);
 
-			assert.notIs(testUtil.first('textarea').style.height, '');
-		});
+				assert.notIs(testUtil.first('textarea').style.height, '');
+			}
+		);
 
-		it('should have a textarea element WITHOUT a set height if rows is greater than 1 and height is set to a fixed amount', () => {
-			testUtil.control = new TextInput({
-				container: testUtil.container,
-				title: 'Test Title',
-				rows: 5,
-				height: '200px'
-			});
-			testUtil.control.resize();
+		it(
+			'should have a textarea element WITHOUT a set height if rows is greater than 1 and height is set to a fixed amount',
+			() => {
+				testUtil.control = new TextInput({
+					container: testUtil.container,
+					title: 'Test Title',
+					rows: 5,
+					height: '200px'
+				});
+				testUtil.control.resize();
 
-			assert.notIs(testUtil.first('textarea').style.height, '200px');
-		});
+				assert.notIs(testUtil.first('textarea').style.height, '200px');
+			}
+		);
 	});
 
 	describe('GetValue', () => {
@@ -307,16 +312,19 @@ describe('TextInput', () => {
 			assert.is(testUtil.first('input').maxLength, 100);
 		});
 
-		it('should set the maxLength attribute of the textArea control if maxLength is set and rows is greater than 1', () => {
-			testUtil.control = new TextInput({
-				container: testUtil.container,
-				maxLength: 100,
-				isSoftValidation: false,
-				rows: 5
-			});
+		it(
+			'should set the maxLength attribute of the textArea control if maxLength is set and rows is greater than 1',
+			() => {
+				testUtil.control = new TextInput({
+					container: testUtil.container,
+					maxLength: 100,
+					isSoftValidation: false,
+					rows: 5
+				});
 
-			assert.is(testUtil.first('textarea').maxLength, 100);
-		});
+				assert.is(testUtil.first('textarea').maxLength, 100);
+			}
+		);
 
 		it('should show an error if the input value has more characters than the maxLength', () => {
 			testUtil.control = new TextInput({
@@ -499,19 +507,22 @@ describe('TextInput', () => {
 			assert.notIs(testUtil.control.error(), '');
 		});
 
-		it('should show an error if the input value is not an integer and isInt is true and minValue and maxValue are set', () => {
-			testUtil.control = new TextInput({
-				container: testUtil.container,
-				isInt: true,
-				minValue: 2,
-				maxValue: 10
-			});
+		it(
+			'should show an error if the input value is not an integer and isInt is true and minValue and maxValue are set',
+			() => {
+				testUtil.control = new TextInput({
+					container: testUtil.container,
+					isInt: true,
+					minValue: 2,
+					maxValue: 10
+				});
 
-			testUtil.control.value('6.4');
-			testUtil.control.validate();
+				testUtil.control.value('6.4');
+				testUtil.control.validate();
 
-			assert.notIs(testUtil.control.error(), '');
-		});
+				assert.notIs(testUtil.control.error(), '');
+			}
+		);
 
 		it('should NOT show an error if the input value is an integer and isInt is true', () => {
 			testUtil.control = new TextInput({

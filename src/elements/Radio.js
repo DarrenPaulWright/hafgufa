@@ -1,5 +1,7 @@
 import { applySettings, methodBoolean, methodQueue, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import FocusMixin from '../mixins/FocusMixin.js';
+import assign from '../utility/assign.js';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../utility/domConstants';
 import setDefaults from '../utility/setDefaults.js';
 import Div from './Div';
@@ -19,17 +21,20 @@ const CONTAINER = Symbol();
  *
  * @arg {Object} settings
  */
-export default class Radio extends Label {
+export default class Radio extends FocusMixin(Label) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.RADIO
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new Input()
+			})
+		}));
 
 		const self = this;
 
-		self[INPUT] = new Input({
-			container: self
-		})
+		self[INPUT] = settings.FocusMixin.mainControl
+			.container(self)
 			.on(CLICK_EVENT, (event) => {
 				event.stopPropagation();
 				const isChecked = !self.isChecked();

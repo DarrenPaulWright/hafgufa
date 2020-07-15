@@ -15,7 +15,6 @@ import {
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Dialog from '../layout/Dialog';
-import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
 import assign from '../utility/assign.js';
 import { CLICK_EVENT, WINDOW } from '../utility/domConstants';
@@ -75,7 +74,7 @@ const showDialog = Symbol();
  *
  * @arg {Object} settings
  */
-export default class Picker extends FocusMixin(FormControl) {
+export default class Picker extends FormControl {
 	constructor(settings = {}) {
 		const groupedButtons = new GroupedButtons({
 			width: AUTO,

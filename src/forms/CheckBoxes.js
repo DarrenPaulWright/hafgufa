@@ -2,6 +2,7 @@ import { applySettings, AUTO, castArray, HUNDRED_PERCENT, methodAny, methodArray
 import controlTypes from '../controlTypes';
 import CheckBox from '../elements/CheckBox';
 import { ORIENTATION } from '../uiConstants';
+import assign from '../utility/assign.js';
 import setDefaults from '../utility/setDefaults.js';
 import './CheckBoxes.less';
 import FormControl from './FormControl';
@@ -21,7 +22,13 @@ export default class CheckBoxes extends FormControl {
 		super(setDefaults({
 			type: controlTypes.CHECKBOX,
 			width: AUTO
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					self[CHECK_BOXES][0].isFocused(true);
+				}
+			})
+		}));
 
 		const self = this;
 		self[CHECK_BOXES] = [];

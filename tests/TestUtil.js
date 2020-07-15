@@ -25,7 +25,9 @@ export default class TestUtil {
 
 		beforeEach(function() {
 			self.allEvents.length = 0;
-			self[CONTAINER] = isSvg ? document.createElementNS(`http://www.w3.org/2000/svg`, 'svg') : document.createElement('div');
+			self[CONTAINER] = isSvg ?
+				document.createElementNS(`http://www.w3.org/2000/svg`, 'svg') :
+				document.createElement('div');
 			document.body.appendChild(self[CONTAINER]);
 		});
 
@@ -112,16 +114,19 @@ export default class TestUtil {
 		});
 
 		describe('(testMethod)', () => {
-			it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is not set', () => {
-				self.control = new Control(buildOptions());
+			it(
+				'should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is not set',
+				() => {
+					self.control = new Control(buildOptions());
 
-				if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
-					assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
+					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
+						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
+					}
+					else {
+						assert.equal(self.control[settings.methodName](), settings.defaultValue);
+					}
 				}
-				else {
-					assert.equal(self.control[settings.methodName](), settings.defaultValue);
-				}
-			});
+			);
 
 			if (settings.defaultValue !== undefined) {
 				it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is set to ' +

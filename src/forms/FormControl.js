@@ -10,6 +10,8 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
+import FocusMixin from '../mixins/FocusMixin.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './FormControl.less';
 import formRelationships from './formRelationships';
@@ -28,7 +30,7 @@ const ON_CHANGE = Symbol();
  * @arg {Object} type
  * @arg {Object} settings
  */
-export default class FormControl extends ControlHeadingMixin(Control) {
+export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			width: HUNDRED_PERCENT,
@@ -47,12 +49,18 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 			relationships: settings.relationships
 		});
 
-		self.onRemove(() => {
-			if (self[ON_CHANGE]) {
-				self[ON_CHANGE].clear();
-			}
-			formRelationships.remove(self[RELATIONSHIP_ID]);
-		});
+		self.onChange(() => {
+				self.validate();
+			})
+			.onBlur(() => {
+				self.validate();
+			})
+			.onRemove(() => {
+				if (self[ON_CHANGE]) {
+					self[ON_CHANGE].clear();
+				}
+				formRelationships.remove(self[RELATIONSHIP_ID]);
+			});
 	}
 
 	/**
@@ -72,10 +80,12 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 		if (!self.isRemoved) {
 			isHardTrigger = enforceBoolean(isHardTrigger, true);
 
-			if ((isHardTrigger || (self.value && !deepEqual(
-				self[CURRENT_VALUE],
-				self.value()
-			))) && self.onChange().length) {
+			if (
+				(isHardTrigger || (
+					self.value &&
+					!deepEqual(self[CURRENT_VALUE], self.value())
+				)) && self.onChange().length
+			) {
 				self[ON_CHANGE](skipCallback);
 
 				if (ignoreDelay || !self.changeDelay()) {
@@ -103,6 +113,25 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 			formRelationships.update(self[RELATIONSHIP_ID], updateObject);
 		}
 	}
+
+	/**
+	 * Execute validation queue on this control
+	 *
+	 * @method validate
+	 * @member module:FormControlBase
+	 * @instance
+	 *
+	 * @returns {this}
+	 */
+	validate() {
+		const self = this;
+
+		if (self.onValidate()) {
+			self.onValidate().trigger(null, [self.value(), self.isFocused()]);
+		}
+
+		return self;
+	}
 }
 
 Object.assign(FormControl.prototype, {
@@ -119,7 +148,23 @@ Object.assign(FormControl.prototype, {
 	 */
 	isRequired: methodBoolean({
 		set(isRequired) {
-			this.classes('required', isRequired);
+			this.classes('required', isRequired)
+				.onValidate((value, isFocused) => {
+					if (
+						isFocused === false &&
+						this.isRequired() &&
+						(value === undefined || value.length === 0)
+					) {
+						this.error(locale.get('requiredField'));
+
+						return true;
+					}
+					else {
+						this.error('');
+
+						return isFocused;
+					}
+				});
 		}
 	}),
 
@@ -175,5 +220,7 @@ Object.assign(FormControl.prototype, {
 	 *
 	 * @returns {queue}
 	 */
-	onChange: methodQueue()
+	onChange: methodQueue(),
+
+	onValidate: methodQueue()
 });

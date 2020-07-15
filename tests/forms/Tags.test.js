@@ -255,7 +255,10 @@ describe('Tags', () => {
 			addTag('test3');
 			clickTag(1);
 
-			assert.equal(testUtil.first('.tags-list-container').children[1].children[0].children[0], testUtil.getTextInput());
+			assert.equal(
+				testUtil.first('.tags-list-container').children[1].children[0].children[0],
+				testUtil.getTextInput()
+			);
 		});
 
 		it('should maintain the order of tags when the first tag is edited', () => {
@@ -857,17 +860,20 @@ describe('Tags', () => {
 			secondTestValue: false
 		});
 
-		it('should add multiple tags when breakOnSpaces is false and a string with commas and semicolons is entered', () => {
-			testUtil.control = new Tags({
-				container: testUtil.container,
-				breakOnSpaces: false
-			});
+		it(
+			'should add multiple tags when breakOnSpaces is false and a string with commas and semicolons is entered',
+			() => {
+				testUtil.control = new Tags({
+					container: testUtil.container,
+					breakOnSpaces: false
+				});
 
-			testUtil.control.isFocused(true);
-			addTag('test 1,test 2;test 3');
+				testUtil.control.isFocused(true);
+				addTag('test 1,test 2;test 3');
 
-			assert.is(getRenderedTags().length, 3);
-		});
+				assert.is(getRenderedTags().length, 3);
+			}
+		);
 
 		it('should add multiple tags when breakOnSpaces is true and a string with spaces is entered', () => {
 			testUtil.control = new Tags({
@@ -881,17 +887,20 @@ describe('Tags', () => {
 			assert.is(getRenderedTags().length, 3);
 		});
 
-		it('should add multiple tags when breakOnSpaces is true and a string with spaces, commas, and semicolons is entered', () => {
-			testUtil.control = new Tags({
-				container: testUtil.container,
-				breakOnSpaces: true
-			});
+		it(
+			'should add multiple tags when breakOnSpaces is true and a string with spaces, commas, and semicolons is entered',
+			() => {
+				testUtil.control = new Tags({
+					container: testUtil.container,
+					breakOnSpaces: true
+				});
 
-			testUtil.control.isFocused(true);
-			addTag('  test1    test2, test3;test4   ');
+				testUtil.control.isFocused(true);
+				addTag('  test1    test2, test3;test4   ');
 
-			assert.is(getRenderedTags().length, 4);
-		});
+				assert.is(getRenderedTags().length, 4);
+			}
+		);
 
 		it('should break on spaces when a string is set as a the value', () => {
 			testUtil.control = new Tags({

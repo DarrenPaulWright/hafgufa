@@ -6,6 +6,8 @@ const _ = new PrivateVars();
 
 const onFocusCallback = Symbol();
 const onBlurCallback = Symbol();
+const setFocusEvent = Symbol();
+const setBlurEvent = Symbol();
 
 /**
  * Adds focus and blur related methods to a control.
@@ -37,8 +39,6 @@ export default (Base) => {
 			const self = this;
 			const _self = _(self);
 
-			event.stopPropagation();
-
 			if (_self.subControl || _self.hasChildren) {
 				_self.isFocused = true;
 
@@ -61,8 +61,6 @@ export default (Base) => {
 			const self = this;
 			const _self = _(self);
 
-			event.stopPropagation();
-
 			if (_self.subControl || _self.hasChildren) {
 				_self.isFocused = false;
 
@@ -75,6 +73,40 @@ export default (Base) => {
 			}
 			else {
 				self.onBlur().trigger(null, [event]);
+			}
+		}
+
+		[setFocusEvent](queue) {
+			const self = this;
+			const _self = _(self);
+
+			if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
+				_self.mainControl.on(FOCUS_IN_EVENT, (event) => {
+					self[onFocusCallback](event);
+				});
+
+				if (_self.subControl) {
+					_self.subControl.on(FOCUS_IN_EVENT, (event) => {
+						self[onFocusCallback](event);
+					});
+				}
+			}
+		}
+
+		[setBlurEvent](queue) {
+			const self = this;
+			const _self = _(self);
+
+			if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
+				_self.mainControl.on(FOCUS_OUT_EVENT, (event) => {
+					self[onBlurCallback](event);
+				});
+
+				if (_self.subControl) {
+					_self.subControl.on(FOCUS_OUT_EVENT, (event) => {
+						self[onBlurCallback](event);
+					});
+				}
 			}
 		}
 
@@ -135,8 +167,27 @@ export default (Base) => {
 			if (_self.getFocus) {
 				return _self.getFocus(activeElement);
 			}
+			else if (_self.mainControl !== self && _self.subControl === undefined) {
+				return _self.mainControl.isFocused();
+			}
 
 			return !self.element ? false : (self.element === activeElement || self.element.contains(activeElement));
+		}
+
+		setFocusControl(control) {
+			const self = this;
+			const _self = _(self);
+
+			if (_self.mainControl !== undefined) {
+				_self.mainControl
+					.off(FOCUS_IN_EVENT)
+					.off(FOCUS_OUT_EVENT);
+			}
+
+			_self.mainControl = control;
+
+			self[setFocusEvent](self.onFocus());
+			self[setBlurEvent](self.onBlur());
 		}
 	}
 
@@ -150,22 +201,7 @@ export default (Base) => {
 		 * @returns {queue}
 		 */
 		onFocus: methodQueue({
-			set(queue) {
-				const self = this;
-				const _self = _(self);
-
-				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
-					_self.mainControl.on(FOCUS_IN_EVENT, (event) => {
-						self[onFocusCallback](event);
-					});
-
-					if (_self.subControl) {
-						_self.subControl.on(FOCUS_IN_EVENT, (event) => {
-							self[onFocusCallback](event);
-						});
-					}
-				}
-			}
+			set: setFocusEvent
 		}),
 
 		/**
@@ -177,22 +213,7 @@ export default (Base) => {
 		 * @returns {queue}
 		 */
 		onBlur: methodQueue({
-			set(queue) {
-				const self = this;
-				const _self = _(self);
-
-				if (queue.length === 1 && (!self.isFocusable || self.isFocusable())) {
-					_self.mainControl.on(FOCUS_OUT_EVENT, (event) => {
-						self[onBlurCallback](event);
-					});
-
-					if (_self.subControl) {
-						_self.subControl.on(FOCUS_OUT_EVENT, (event) => {
-							self[onBlurCallback](event);
-						});
-					}
-				}
-			}
+			set: setBlurEvent
 		})
 	});
 

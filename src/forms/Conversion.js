@@ -1,6 +1,5 @@
 import { applySettings, Enum, methodInteger, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
-import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
 import { TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants';
 import locale from '../utility/locale';
@@ -36,7 +35,7 @@ const setValue = Symbol();
  *     Conversion.CONVERSION_TYPES
  * @arg {Int}    settings.fractionDigits - Number of decimal places to display.
  */
-export default class Conversion extends FocusMixin(FormControl) {
+export default class Conversion extends FormControl {
 	constructor(settings = {}) {
 		const fromTextInput = new TextInput({
 			width: INPUT_WIDTH,

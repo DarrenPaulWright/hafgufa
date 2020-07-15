@@ -17,7 +17,6 @@ import Span from '../elements/Span';
 import TextInput from '../forms/TextInput';
 import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
-import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
 import assign from '../utility/assign.js';
 import { KEY_DOWN_EVENT } from '../utility/domConstants';
@@ -57,9 +56,8 @@ const selectSuggestion = Symbol();
  * @module Tags
  * @constructor
  */
-export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
+export default class Tags extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
-		let self;
 		let listContainer = new Div({
 			classes: 'tags-list-container clearfix',
 			on: {
@@ -73,20 +71,6 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 				}
 			}
 		});
-		let textInput = new TextInput({
-			container: listContainer,
-			width: DEFAULT_TEXT_WIDTH,
-			minWidth: DEFAULT_TEXT_WIDTH,
-			textWidth: HUNDRED_PERCENT,
-			changeDelay: 0,
-			onEnter(value) {
-				self[saveTextChanges](value);
-			},
-			onChange(value) {
-				self[onChangeTextInput](value);
-			},
-			actionButtonIcon: ''
-		});
 
 		super(setDefaults({
 			type: controlTypes.TAGS,
@@ -96,14 +80,27 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 				container: () => listContainer
 			}),
 			FocusMixin: assign(settings.FocusMixin, {
-				mainControl: textInput,
+				mainControl: new TextInput({
+					container: listContainer,
+					width: DEFAULT_TEXT_WIDTH,
+					minWidth: DEFAULT_TEXT_WIDTH,
+					textWidth: HUNDRED_PERCENT,
+					changeDelay: 0,
+					onEnter(value) {
+						self[saveTextChanges](value);
+					},
+					onChange(value) {
+						self[onChangeTextInput](value);
+					},
+					actionButtonIcon: ''
+				}),
 				getFocus() {
 					return self[TEXT_INPUT].isFocused() || (self[SUGGESTION_MENU] && self[SUGGESTION_MENU].isFocused()) || false;
 				}
 			})
 		}));
 
-		self = this;
+		const self = this;
 
 		self[CURRENT_TAGS] = [];
 		self[CURRENT_EDIT_OFFSET] = null;
@@ -118,7 +115,7 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 		});
 		self[LIST_CONTAINER] = listContainer;
 		self[LIST_CONTAINER].container(self);
-		self[TEXT_INPUT] = textInput;
+		self[TEXT_INPUT] = settings.FocusMixin.mainControl;
 		self[onChangeTextInput]('');
 
 		self.onFocus(() => {
