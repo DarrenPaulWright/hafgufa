@@ -735,11 +735,7 @@ export default class Picker extends FocusMixin(FormControl) {
 		}
 
 		return rows.map((row) => ({
-			id: row.id,
-			title: row.title,
-			subTitle: row.subTitle,
-			isSelected: row.isSelected,
-			isSelectable: row.isSelectable,
+			...row,
 			isEnabled: enforceBoolean(row.isEnabled, true)
 		}));
 	}
