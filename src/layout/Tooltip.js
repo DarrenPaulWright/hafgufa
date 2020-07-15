@@ -2,6 +2,7 @@ import { applySettings, DockPoint } from 'type-enforcer-ui';
 import Popup from '../layout/Popup';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
 import Removable from '../mixins/Removable';
+import assign from '../utility/assign.js';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../utility/domConstants';
 import './Tooltip.less';
 
@@ -29,8 +30,7 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 	constructor(settings = {}) {
 		const windowScrollEvent = () => self.remove();
 
-		super({
-			...settings,
+		super(assign(settings, {
 			onRender() {
 				WINDOW.addEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
 
@@ -50,7 +50,7 @@ export default class Tooltip extends DelayedRenderMixin(Removable) {
 					})
 					.resize(true);
 			}
-		});
+		}));
 
 		const self = this;
 

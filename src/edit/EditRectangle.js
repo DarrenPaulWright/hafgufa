@@ -1,15 +1,16 @@
 import { applySettings, PrivateVars } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Rect from '../svg/Rect';
+import setDefaults from '../utility/setDefaults.js';
 import Shape, { initDragPoint } from './Shape';
 
 const _ = new PrivateVars();
 
 export default class EditRectangle extends Shape {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.EDIT_RECTANGLE;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.EDIT_RECTANGLE
+		}, settings));
 
 		const self = this;
 

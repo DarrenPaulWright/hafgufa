@@ -1,6 +1,7 @@
 import { applySettings, AUTO, methodBoolean, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { LEFT, TEXT_ALIGN, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './Description.less';
 import FormControl from './FormControl';
 
@@ -19,8 +20,9 @@ const COLUMNS_CLASS = 'columns';
  */
 export default class Description extends FormControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DESCRIPTION;
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DESCRIPTION
+		}, settings));
 
 		const self = this;
 		self.addClass('description');

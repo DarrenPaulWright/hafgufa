@@ -17,8 +17,10 @@ import controlTypes from '../controlTypes';
 import Dialog from '../layout/Dialog';
 import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
+import assign from '../utility/assign.js';
 import { CLICK_EVENT, WINDOW } from '../utility/domConstants';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import softDelete from '../utility/softDelete';
 import FormControl from './FormControl';
 import GroupedButtons from './GroupedButtons';
@@ -81,15 +83,17 @@ export default class Picker extends FocusMixin(FormControl) {
 			isMultiSelect: true
 		});
 
-		settings.type = settings.type || controlTypes.PICKER;
-		settings.contentContainer = groupedButtons;
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = groupedButtons;
-		settings.FocusMixin.getFocus = () => {
-			return (!!self.contentContainer && self.contentContainer.isFocused()) || (self[MENU] && self[MENU].isFocused()) || false;
-		};
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.PICKER
+		}, settings, {
+			contentContainer: groupedButtons,
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: groupedButtons,
+				getFocus() {
+					return (!!self.contentContainer && self.contentContainer.isFocused()) || (self[MENU] && self[MENU].isFocused()) || false;
+				}
+			})
+		}));
 
 		const self = this;
 		self[SELECTED_ITEMS] = [];

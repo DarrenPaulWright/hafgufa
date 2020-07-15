@@ -4,6 +4,7 @@ import Control from '../Control';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
 import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import * as graphConstants from './graphConstants';
 import './Legend.less';
 
@@ -33,10 +34,10 @@ const toggleItem = Symbol();
  */
 export default class Legend extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.LEGEND;
-		settings.element = 'svg:g';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.LEGEND,
+			element: 'svg:g'
+		}, settings));
 
 		const self = this;
 		self.addClass('legend');
@@ -51,11 +52,19 @@ export default class Legend extends Control {
 			.attr(HEIGHT, PADDING * 2);
 
 		self.onMouseOverItem(() => {
-			d3Helper.fade(self[ITEM_ELEMENTS].selectAll('.legend-dots'), graphConstants.DURATION, graphConstants.FADE_OPACITY);
+			d3Helper.fade(
+				self[ITEM_ELEMENTS].selectAll('.legend-dots'),
+				graphConstants.DURATION,
+				graphConstants.FADE_OPACITY
+			);
 			d3Helper.fade(select(this).select('.legend-dots'), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
 		});
 		self.onMouseOutItem(() => {
-			d3Helper.fade(self[ITEM_ELEMENTS].selectAll('.legend-dots'), graphConstants.DURATION, graphConstants.START_OPACITY);
+			d3Helper.fade(
+				self[ITEM_ELEMENTS].selectAll('.legend-dots'),
+				graphConstants.DURATION,
+				graphConstants.START_OPACITY
+			);
 		});
 
 		applySettings(self, settings);

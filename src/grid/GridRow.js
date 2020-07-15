@@ -15,6 +15,7 @@ import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import GridCell from './GridCell';
 import { COLUMN_TYPES } from './gridConstants';
 import './GridRow.less';
@@ -49,9 +50,9 @@ const refresh = Symbol();
  */
 export default class GridRow extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_ROW;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_ROW
+		}, settings));
 
 		const self = this;
 		self[CURRENT_AVAILABLE_WIDTH] = 0;

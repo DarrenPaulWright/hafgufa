@@ -2,6 +2,7 @@ import { arc, color, pie, select, sum } from 'd3';
 import { compare } from 'hord';
 import { applySettings, Point } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import './Donut.less';
 import GraphBase from './GraphBase';
 
@@ -40,9 +41,9 @@ const LINE_PIVOT_ARC = Symbol();
  */
 export default class Donut extends GraphBase {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DONUT;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DONUT
+		}, settings));
 
 		const self = this;
 		self.addClass('donut');
@@ -168,7 +169,10 @@ export default class Donut extends GraphBase {
 					const isOnRight = midAngle(d) < Math.PI;
 					const point1 = new Point(self[LINE_START_ARC].centroid(d));
 					const pivotPoint = new Point(self[LINE_PIVOT_ARC].centroid(d));
-					const point4 = new Point(pivotPoint.x + (self[RADIUS] * LINE_ARM_OFFSET) * (isOnRight ? 1 : -1), pivotPoint.y);
+					const point4 = new Point(
+						pivotPoint.x + (self[RADIUS] * LINE_ARM_OFFSET) * (isOnRight ? 1 : -1),
+						pivotPoint.y
+					);
 
 					return 'M ' + point1.toString() + ' C' + softOffsetPoint(point1, pivotPoint)
 						.toString() + ' ' + softOffsetPoint(point4, pivotPoint).toString() + ' ' + point4.toString();

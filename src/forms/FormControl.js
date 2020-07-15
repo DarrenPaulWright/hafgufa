@@ -2,8 +2,6 @@ import { debounce } from 'async-agent';
 import { deepEqual } from 'object-agent';
 import {
 	enforceBoolean,
-	enforceCssSize,
-	enforceInteger,
 	HUNDRED_PERCENT,
 	methodBoolean,
 	methodInteger,
@@ -12,6 +10,7 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
+import setDefaults from '../utility/setDefaults.js';
 import './FormControl.less';
 import formRelationships from './formRelationships';
 
@@ -31,14 +30,14 @@ const ON_CHANGE = Symbol();
  */
 export default class FormControl extends ControlHeadingMixin(Control) {
 	constructor(settings = {}) {
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.changeDelay = enforceInteger(settings.changeDelay, 0);
-
-		super(settings);
+		super(setDefaults({
+			width: HUNDRED_PERCENT,
+			changeDelay: 0
+		}, settings));
 
 		const self = this;
 
-		if (!settings.element) {
+		if (settings.element === undefined) {
 			self.addClass('form-control');
 		}
 
@@ -73,7 +72,10 @@ export default class FormControl extends ControlHeadingMixin(Control) {
 		if (!self.isRemoved) {
 			isHardTrigger = enforceBoolean(isHardTrigger, true);
 
-			if ((isHardTrigger || (self.value && !deepEqual(self[CURRENT_VALUE], self.value()))) && self.onChange().length) {
+			if ((isHardTrigger || (self.value && !deepEqual(
+				self[CURRENT_VALUE],
+				self.value()
+			))) && self.onChange().length) {
 				self[ON_CHANGE](skipCallback);
 
 				if (ignoreDelay || !self.changeDelay()) {

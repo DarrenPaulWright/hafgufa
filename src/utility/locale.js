@@ -1,6 +1,7 @@
 import getBrowserLanguage from 'get-browser-language';
 import { forOwn } from 'object-agent';
 import { Enum, methodObject, methodQueue, methodString } from 'type-enforcer-ui';
+import assign from './assign.js';
 
 const strings = {};
 
@@ -109,7 +110,7 @@ const locale = {
 	 * @arg {Object} newStrings
 	 */
 	set(newStrings) {
-		Object.assign(strings, newStrings);
+		assign(strings, newStrings);
 	},
 	/**
 	 * Get named strings that have been added via locale.load or locale.set. Convert tags in localized strings into text

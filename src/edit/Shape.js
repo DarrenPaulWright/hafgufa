@@ -6,6 +6,7 @@ import FocusMixin from '../mixins/FocusMixin';
 import MouseMixin from '../mixins/MouseMixin';
 import G from '../svg/G';
 import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import DragPoint from './DragPoint';
 import './Shape.less';
 
@@ -16,11 +17,11 @@ export const initDragPoint = Symbol();
 
 export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMixin(G)))) {
 	constructor(settings) {
-		settings.canDrag = true;
-		settings.restrictVerticalDrag = true;
-		settings.restrictHorizontalDrag = true;
-
-		super(settings);
+		super(setDefaults({
+			canDrag: true,
+			restrictVerticalDrag: true,
+			restrictHorizontalDrag: true
+		}, settings));
 
 		const self = this;
 		let initialBounds;

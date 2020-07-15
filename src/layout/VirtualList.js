@@ -4,7 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	CssSize,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	INITIAL,
 	isNumber,
@@ -26,6 +25,7 @@ import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Span from '../elements/Span';
 import FocusMixin from '../mixins/FocusMixin';
+import assign from '../utility/assign.js';
 import d3Helper from '../utility/d3Helper';
 import {
 	ABSOLUTE,
@@ -57,6 +57,7 @@ import {
 } from '../utility/domConstants';
 import clamp from '../utility/math/clamp';
 import MultiItemFocus from '../utility/MultiItemFocus';
+import setDefaults from '../utility/setDefaults.js';
 import DragContainer from './DragContainer';
 import './VirtualList.less';
 
@@ -152,23 +153,23 @@ const setExtent = Symbol();
  */
 export default class VirtualList extends FocusMixin(Control) {
 	constructor(settings = {}) {
-		let self;
+		super(setDefaults({
+			type: controlTypes.VIRTUAL_LIST,
+			height: HUNDRED_PERCENT
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					if (self.isFocusable()) {
+						self[MULTI_ITEM_FOCUS].first();
+					}
+				},
+				getFocus() {
+					return self.isFocusable() ? self.element.contains(DOCUMENT.activeElement) : false;
+				}
+			})
+		}));
 
-		settings.type = settings.type || controlTypes.VIRTUAL_LIST;
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.setFocus = () => {
-			if (self.isFocusable()) {
-				self[MULTI_ITEM_FOCUS].first();
-			}
-		};
-		settings.FocusMixin.getFocus = () => {
-			return self.isFocusable() ? self.element.contains(DOCUMENT.activeElement) : false;
-		};
-
-		super(settings);
-
-		self = this;
+		const self = this;
 
 		self[EXTENT] = HEIGHT;
 		self[ALT_EXTENT] = WIDTH;

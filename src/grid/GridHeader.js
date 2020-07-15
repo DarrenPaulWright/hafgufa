@@ -2,6 +2,7 @@ import { applySettings, CssSize, methodArray, methodBoolean, methodFunction, met
 import Control from '../Control';
 import ControlRecycler from '../ControlRecycler';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants';
 import './GridHeader.less';
 import GridHeaderCell from './GridHeaderCell';
@@ -24,9 +25,9 @@ const sortColumn = Symbol();
  */
 export default class GridHeader extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_HEADER;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_HEADER
+		}, settings));
 
 		const self = this;
 		self[TOTAL_FIXED_COLUMN_WIDTH] = 0;
@@ -175,7 +176,9 @@ Object.assign(GridHeader.prototype, {
 		let usableFlexibleColumnUnits = self[TOTAL_FLEXIBLE_COLUMN_WIDTH];
 		let extraWidth = 0;
 
-		const getWidth = (column, flexibleWidth, flexibleColumnUnits) => Math.floor(flexibleWidth * (parseInt(column.size, 10) / flexibleColumnUnits));
+		const getWidth = (column, flexibleWidth, flexibleColumnUnits) => {
+			return Math.floor(flexibleWidth * (parseInt(column.size, 10) / flexibleColumnUnits));
+		};
 
 		self.columns().forEach((column) => {
 			if (!column.isFixedWidth) {

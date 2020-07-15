@@ -1,6 +1,7 @@
 import { applySettings, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { INPUT_TYPE_CHECKBOX } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './CheckBox.less';
 import Radio, { INPUT } from './Radio';
 
@@ -15,9 +16,9 @@ import Radio, { INPUT } from './Radio';
  */
 export default class CheckBox extends Radio {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.CHECKBOX;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.CHECKBOX
+		}, settings));
 
 		if (this.type === controlTypes.CHECKBOX) {
 			this.addClass('checkbox');

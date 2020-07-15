@@ -1,8 +1,9 @@
 import shortid from 'shortid';
-import { applySettings, AUTO, enforceCssSize, HUNDRED_PERCENT, methodArray, methodString } from 'type-enforcer-ui';
+import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Radio from '../elements/Radio';
 import { ORIENTATION } from '../uiConstants';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 import './Radios.less';
 
@@ -20,10 +21,10 @@ const NAME = Symbol();
  */
 export default class Radios extends FormControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.RADIO;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.RADIO,
+			width: AUTO
+		}, settings));
 
 		const self = this;
 		self[RADIOS] = [];

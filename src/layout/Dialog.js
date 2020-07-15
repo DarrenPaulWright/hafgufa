@@ -18,6 +18,7 @@ import { CLEAR_ICON } from '../icons';
 import Toolbar from '../layout/Toolbar';
 import Removable from '../mixins/Removable';
 import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Dialog.less';
 import Popup from './Popup';
@@ -48,10 +49,10 @@ const IS_AUTO = Symbol();
  */
 export default class Dialog extends Removable {
 	constructor(settings = {}) {
-		settings.height = settings.height || AUTO;
-		settings.width = settings.width || '30rem';
-
-		super(settings);
+		super(setDefaults({
+			width: '30rem',
+			height: AUTO
+		}, settings));
 
 		const self = this;
 

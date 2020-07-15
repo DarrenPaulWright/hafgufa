@@ -28,22 +28,19 @@ export default (Base) => {
 		constructor(settings = {}) {
 			super(settings);
 
-			settings = settings.NextPrevMixin || {};
-
 			const self = this;
 
 			_.set(self, {
-				onShowButtons: settings.onShowButtons,
-				onHideButtons: settings.onHideButtons,
-				isAtStart: settings.isAtStart,
-				isAtEnd: settings.isAtEnd,
-				onPrev: settings.onPrev,
-				onNext: settings.onNext,
+				...settings.NextPrevMixin,
 				controls: new ControlManager()
 			});
 
-			self.onResize(() => self[updateButtons]())
-				.onRemove(() => _(self).controls.remove());
+			self.onResize(() => {
+					self[updateButtons]();
+				})
+				.onRemove(() => {
+					_(self).controls.remove();
+				});
 		}
 
 		/**

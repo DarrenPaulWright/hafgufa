@@ -28,6 +28,7 @@ import {
 	SWIPE_RIGHT_EVENT,
 	SWIPE_UP_EVENT
 } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Drawer.less';
 
@@ -60,10 +61,10 @@ const layout = Symbol();
  */
 export default class Drawer extends Container {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DRAWER;
-		settings.dock = settings.dock || DockPoint.POINTS.LEFT;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DRAWER,
+			dock: DockPoint.POINTS.LEFT
+		}, settings));
 
 		const self = this;
 
@@ -153,11 +154,11 @@ export default class Drawer extends Container {
 				self[TOUCH_CONTAINER].domEvents = true;
 				self[TOUCH_CONTAINER]
 					.get('swipe')
-					.set({direction: Hammer.DIRECTION_VERTICAL});
+					.set({ direction: Hammer.DIRECTION_VERTICAL });
 				self[TOUCH_ELEMENT].domEvents = true;
 				self[TOUCH_ELEMENT]
 					.get('swipe')
-					.set({direction: Hammer.DIRECTION_VERTICAL});
+					.set({ direction: Hammer.DIRECTION_VERTICAL });
 			}
 		}
 	}

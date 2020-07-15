@@ -10,22 +10,14 @@ import {
 	setMinutes,
 	setSeconds
 } from 'date-fns';
-import {
-	applySettings,
-	AUTO,
-	DockPoint,
-	enforceCssSize,
-	enforceDate,
-	methodBoolean,
-	methodDate,
-	methodString
-} from 'type-enforcer-ui';
+import { applySettings, AUTO, DockPoint, enforceDate, methodBoolean, methodDate, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Calendar from '../display/Calendar';
 import Button from '../elements/Button';
 import TextInput from '../forms/TextInput';
 import { CALENDAR_ICON } from '../icons.js';
 import Popup from '../layout/Popup';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 
 const CALENDAR_WIDTH = '14rem';
@@ -49,10 +41,10 @@ const POPUP = Symbol();
  */
 export default class DateInput extends FormControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DATE;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DATE,
+			width: AUTO
+		}, settings));
 
 		const self = this;
 		self[IS_FOCUSED] = false;

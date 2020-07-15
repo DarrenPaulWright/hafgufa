@@ -2,6 +2,7 @@ import { applySettings, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import OnClickMixin from '../mixins/OnClickMixin';
+import setDefaults from '../utility/setDefaults.js';
 import './Hyperlink.less';
 
 /**
@@ -16,10 +17,10 @@ import './Hyperlink.less';
  */
 export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.HYPERLINK;
-		settings.element = 'a';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.HYPERLINK,
+			element: 'a'
+		}, settings));
 
 		applySettings(this, settings);
 	}

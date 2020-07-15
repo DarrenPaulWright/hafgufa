@@ -18,6 +18,7 @@ import {
 	MULTIPLE
 } from '../utility/domConstants';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import './FileInput.less';
 import { PREVIEW_SIZES } from './FileThumbnail';
 
@@ -59,9 +60,9 @@ const isValidMimeType = Symbol();
  */
 export default class FileInput extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.FILE_INPUT;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.FILE_INPUT
+		}, settings));
 
 		const self = this;
 

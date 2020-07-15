@@ -1,5 +1,6 @@
 import { applySettings } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Header.less';
 
@@ -14,10 +15,10 @@ import './Header.less';
  */
 export default class Header extends Container {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.HEADER;
-		settings.element = 'header';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.HEADER,
+			element: 'header'
+		}, settings));
 
 		this.removeClass('container')
 			.addClass('clearfix');

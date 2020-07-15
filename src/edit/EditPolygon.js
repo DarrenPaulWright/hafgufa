@@ -3,6 +3,7 @@ import origin from 'pathinator/src/utility/origin.js';
 import { applySettings, Point, PrivateVars } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import Path from '../svg/Path';
+import setDefaults from '../utility/setDefaults.js';
 import Shape, { initDragPoint } from './Shape';
 
 const _ = new PrivateVars();
@@ -16,9 +17,9 @@ const addDragEvents = Symbol();
 
 export default class EditPolygon extends Shape {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.EDIT_POLYGON;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.EDIT_POLYGON
+		}, settings));
 
 		const self = this;
 

@@ -9,6 +9,7 @@ import TextInput from '../forms/TextInput';
 import { NONE_ICON, SORT_AMOUNT_ASC_ICON, SORT_AMOUNT_DESC_ICON } from '../icons';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import { CLICK_EVENT, MARGIN_LEFT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import {
 	COLUMN_TYPES,
 	CONTEXT_MENU_COLUMN_PREFIX,
@@ -50,9 +51,9 @@ const removeControls = Symbol();
  */
 export default class GridHeaderCell extends ContextMenuMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_HEADER_CELL;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_HEADER_CELL
+		}, settings));
 
 		const self = this;
 		self[IGNORE_EVENTS] = false;

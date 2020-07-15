@@ -1,6 +1,7 @@
 import { applySettings, methodAny, methodInteger } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { ROWS } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 
 /**
@@ -15,10 +16,10 @@ import Control from './../Control';
  */
 export default class TextArea extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.TEXT_AREA;
-		settings.element = 'textarea';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TEXT_AREA,
+			element: 'textarea'
+		}, settings));
 
 		applySettings(this, settings);
 	}

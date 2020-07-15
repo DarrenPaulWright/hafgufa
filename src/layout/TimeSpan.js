@@ -1,10 +1,12 @@
 import { repeat } from 'object-agent';
 import { applySettings, methodCssSize, methodInteger, methodString, PERCENT, PIXELS } from 'type-enforcer-ui';
 import ControlRecycler from '../ControlRecycler';
+import controlTypes from '../controlTypes.js';
 import Div from '../elements/Div';
 import Heading from '../elements/Heading';
 import Container from '../layout/Container';
 import { BOTTOM, LEFT, TOP } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './TimeSpan.less';
 
 const HEADING = Symbol();
@@ -12,10 +14,10 @@ const TICK_RECYCLER = Symbol();
 
 export default class TimeSpan extends Container {
 	constructor(settings = {}) {
-		settings.type = settings.type || 'timeSpan';
-		settings.subSpans = settings.subSpans || 1;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TIME_SPAN,
+			subSpans: 1
+		}, settings));
 
 		const self = this;
 		self.addClass('time-span');

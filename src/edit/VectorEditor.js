@@ -5,6 +5,7 @@ import controlTypes from '../controlTypes';
 import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
 import Svg from '../svg/Svg';
+import setDefaults from '../utility/setDefaults.js';
 import EditPolygon from './EditPolygon.js';
 import EditRectangle from './EditRectangle';
 import './VectorEditor.less';
@@ -30,9 +31,9 @@ const stopDrawing = Symbol();
 
 export default class VectorEditor extends ContextMenuMixin(Svg) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.VECTOR_EDITOR;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.VECTOR_EDITOR
+		}, settings));
 
 		const self = this;
 		self[VALUE] = [];

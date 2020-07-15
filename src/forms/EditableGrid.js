@@ -4,7 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	enforceBoolean,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	isArray,
 	methodBoolean,
@@ -18,8 +17,10 @@ import Grid from '../grid/Grid';
 import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../grid/gridConstants';
 import { ADD_ICON, DELETE_ICON } from '../icons';
 import Dialog from '../layout/Dialog';
+import assign from '../utility/assign.js';
 import { MARGIN_TOP } from '../utility/domConstants';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import Conversion from './Conversion';
 import Description from './Description';
 import './EditableGrid.less';
@@ -69,11 +70,11 @@ const showDialog = Symbol();
  */
 export default class EditableGrid extends FormControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.EDITABLE_GRID;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforceCssSize(settings.height, AUTO, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.EDITABLE_GRID,
+			width: HUNDRED_PERCENT,
+			height: AUTO
+		}, settings));
 
 		const self = this;
 		self[CURRENT_VALUE] = [];
@@ -367,7 +368,7 @@ export default class EditableGrid extends FormControl {
 			case controlTypes.EMAIL:
 			case controlTypes.LINK:
 			case controlTypes.NUMBER:
-				Object.assign(controlSettings, {
+				assign(controlSettings, {
 					control: TextInput,
 					textWidth: editOptions.textWidth || '14rem',
 					onChange(newValue) {
@@ -379,7 +380,7 @@ export default class EditableGrid extends FormControl {
 				});
 				break;
 			case controlTypes.DESCRIPTION:
-				Object.assign(controlSettings, {
+				assign(controlSettings, {
 					control: Description,
 					textWidth: editOptions.textWidth || '20rem',
 					isEnabled: true,
@@ -388,7 +389,7 @@ export default class EditableGrid extends FormControl {
 				});
 				break;
 			case controlTypes.CONVERSION:
-				Object.assign(controlSettings, {
+				assign(controlSettings, {
 					control: Conversion,
 					onChange(newValue) {
 						cellData.text = newValue;
@@ -399,7 +400,7 @@ export default class EditableGrid extends FormControl {
 				});
 				break;
 			case controlTypes.PICKER:
-				Object.assign(controlSettings, {
+				assign(controlSettings, {
 					control: Picker,
 					showAll: enforceBoolean(column.showAll, true),
 					showSelectAll: column.showSelectAll,
@@ -429,7 +430,7 @@ export default class EditableGrid extends FormControl {
 				break;
 		}
 
-		Object.assign(controlSettings, editOptions);
+		assign(controlSettings, editOptions);
 
 		return controlSettings;
 	}

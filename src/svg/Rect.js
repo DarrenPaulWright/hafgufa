@@ -1,13 +1,14 @@
 import { applySettings } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import SvgControl from './SvgControl';
 
 export default class Rect extends SvgControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.RECT;
-		settings.element = 'svg:rect';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.RECT,
+			element: 'svg:rect'
+		}, settings));
 
 		const self = this;
 		if (self.type === controlTypes.RECT) {

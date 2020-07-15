@@ -4,7 +4,6 @@ import {
 	AUTO,
 	castArray,
 	enforceArray,
-	enforceCssSize,
 	enforceInteger,
 	HUNDRED_PERCENT,
 	isArray,
@@ -19,8 +18,10 @@ import Button from '../elements/Button';
 import Div from '../elements/Div';
 import FocusMixin from '../mixins/FocusMixin';
 import { ORIENTATION } from '../uiConstants';
+import assign from '../utility/assign.js';
 import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../utility/domConstants';
 import MultiItemFocus from '../utility/MultiItemFocus';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 import './GroupedButtons.less';
 
@@ -51,17 +52,20 @@ export default class GroupedButtons extends FocusMixin(FormControl) {
 		let buttonContainer = new Div({
 			classes: 'grouped-buttons-wrapper'
 		});
-		settings.type = settings.type || controlTypes.GROUPED_BUTTONS;
-		settings.contentContainer = buttonContainer;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = buttonContainer;
-		settings.FocusMixin.setFocus = () => {
-			self[MULTI_ITEM_FOCUS].first();
-		};
-		settings.buttons = settings.buttons || [];
 
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GROUPED_BUTTONS,
+			width: AUTO,
+			buttons: []
+		}, settings, {
+			contentContainer: buttonContainer,
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: buttonContainer,
+				setFocus() {
+					self[MULTI_ITEM_FOCUS].first();
+				}
+			})
+		}));
 
 		const self = this;
 		self.addClass('grouped-buttons');

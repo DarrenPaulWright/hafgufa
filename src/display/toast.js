@@ -5,6 +5,7 @@ import Div from '../elements/Div';
 import Heading from '../elements/Heading';
 import { CHECK_ICON, CLEAR_ICON, DELETE_ALL_ICON, DELETE_ICON, ERROR_ICON, INFO_ICON, WARNING_ICON } from '../icons';
 import ContextMenuMixin from '../mixins/ContextMenuMixin';
+import assign from '../utility/assign.js';
 import { BODY, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
 import './toast.less';
 
@@ -22,8 +23,7 @@ const startTimer = Symbol();
 
 class Slice extends ContextMenuMixin(Heading) {
 	constructor(settings) {
-		settings = {
-			...settings,
+		super(assign(settings, {
 			container: wrapper,
 			classes: 'toast inverse ' + settings.class,
 			isInline: false,
@@ -35,9 +35,7 @@ class Slice extends ContextMenuMixin(Heading) {
 					self.remove();
 				}
 			}]
-		};
-
-		super(settings);
+		}));
 
 		const self = this;
 		self[DURATION] = settings.duration;

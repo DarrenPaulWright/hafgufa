@@ -20,7 +20,6 @@ import { repeat } from 'object-agent';
 import {
 	applySettings,
 	CssSize,
-	enforceBoolean,
 	Enum,
 	isInteger,
 	methodArray,
@@ -40,6 +39,7 @@ import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import NextPrevMixin from '../mixins/NextPrevMixin';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../utility/domConstants';
 import clamp from '../utility/math/clamp';
+import setDefaults from '../utility/setDefaults.js';
 import './Timeline.less';
 import TimeSpan from './TimeSpan';
 import VirtualList from './VirtualList';
@@ -192,29 +192,22 @@ const getSpanOffset = Symbol();
 
 export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 	constructor(settings = {}) {
-		settings.canZoom = enforceBoolean(settings.canZoom, true);
-		settings.NextPrevMixin = {
-			onShowButtons(onChange) {
-				self[VIRTUAL_LIST].onLayoutChange(onChange);
-			},
-			onHideButtons() {
-				self[VIRTUAL_LIST].onLayoutChange(null);
-			},
-			isAtStart() {
-				return self[VIRTUAL_LIST].isAtStart();
-			},
-			isAtEnd() {
-				return self[VIRTUAL_LIST].isAtEnd();
-			},
-			onPrev() {
-				return self[VIRTUAL_LIST].prevPage();
-			},
-			onNext() {
-				return self[VIRTUAL_LIST].nextPage();
+		super(setDefaults({
+			canZoom: true
+		}, settings, {
+			NextPrevMixin: {
+				onShowButtons(onChange) {
+					self[VIRTUAL_LIST].onLayoutChange(onChange);
+				},
+				onHideButtons() {
+					self[VIRTUAL_LIST].onLayoutChange(null);
+				},
+				isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
+				isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
+				onPrev: () => self[VIRTUAL_LIST].prevPage(),
+				onNext: () => self[VIRTUAL_LIST].nextPage()
 			}
-		};
-
-		super(settings);
+		}));
 
 		const self = this;
 		self[ZOOM] = 1;

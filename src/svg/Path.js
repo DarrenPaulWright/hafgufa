@@ -1,13 +1,14 @@
 import { applySettings } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import SvgControl from './SvgControl';
 
 export default class Polygon extends SvgControl {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.PATH;
-		settings.element = 'svg:path';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.PATH,
+			element: 'svg:path'
+		}, settings));
 
 		const self = this;
 		if (self.type === controlTypes.PATH) {

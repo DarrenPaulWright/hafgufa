@@ -20,17 +20,10 @@ export default (Base) => {
 		constructor(settings = {}) {
 			super(settings);
 
-			const self = this;
-
-			settings = settings.FocusMixin || {};
-
-			_.set(self, {
+			_.set(this, {
+				mainControl: this,
+				...settings.FocusMixin,
 				isAllBlurred: true,
-				mainControl: settings.mainControl || self,
-				subControl: settings.subControl,
-				setFocus: settings.setFocus,
-				getFocus: settings.getFocus,
-				hasChildren: settings.hasChildren,
 				isFocused: false
 			});
 		}

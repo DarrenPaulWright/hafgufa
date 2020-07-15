@@ -1,9 +1,11 @@
-import { applySettings, enforceInteger, Enum, methodInteger, methodString } from 'type-enforcer-ui';
+import { applySettings, Enum, methodInteger, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
-import FocusMixin from '../mixins/FocusMixin';
+import FocusMixin from '../mixins/FocusMixin.js';
+import assign from '../utility/assign.js';
 import { TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants';
 import locale from '../utility/locale';
 import round from '../utility/math/round';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 import TextInput, { ON_CHANGE_DELAY } from './TextInput';
 
@@ -53,18 +55,18 @@ export default class Conversion extends FocusMixin(FormControl) {
 		});
 		toTextInput.getInput().attr(TAB_INDEX, TAB_INDEX_DISABLED);
 
-		settings.type = settings.type || controlTypes.CONVERSION;
-		settings.changeDelay = enforceInteger(settings.changeDelay, ON_CHANGE_DELAY);
-		settings.FocusMixin = {
-			...settings.FocusMixin,
-			mainControl: fromTextInput,
-			subControl: toTextInput,
-			getFocus() {
-				return self[FROM_TEXT_INPUT].isFocused() || self[TO_TEXT_INPUT].isFocused();
-			}
-		};
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.CONVERSION,
+			changeDelay: ON_CHANGE_DELAY
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: fromTextInput,
+				subControl: toTextInput,
+				getFocus() {
+					return self[FROM_TEXT_INPUT].isFocused() || self[TO_TEXT_INPUT].isFocused();
+				}
+			})
+		}));
 
 		const self = this;
 		self[TO_FACTOR] = 1;

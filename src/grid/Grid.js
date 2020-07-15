@@ -7,7 +7,6 @@ import {
 	applySettings,
 	AUTO,
 	enforceBoolean,
-	enforceCssSize,
 	enforceDate,
 	enforceEnum,
 	enforceString,
@@ -22,8 +21,10 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
+import assign from '../utility/assign.js';
 import locale from '../utility/locale';
 import search from '../utility/search';
+import setDefaults from '../utility/setDefaults.js';
 import './Grid.less';
 import GridColumnBlock from './GridColumnBlock';
 import { CELL_ALIGNMENT, COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants';
@@ -89,10 +90,10 @@ const updateSelectState = Symbol();
  */
 export default class Grid extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID;
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID,
+			height: HUNDRED_PERCENT
+		}, settings));
 
 		const self = this;
 		self[ROWS] = new Collection();
@@ -1066,7 +1067,7 @@ export default class Grid extends Control {
 
 		self[eachChild](self[FILTERED_ROWS], (row) => {
 			if (row.id === id) {
-				Object.assign(row, newData);
+				assign(row, newData);
 				self[preProcessCells](row);
 				return true;
 			}
@@ -1074,7 +1075,7 @@ export default class Grid extends Control {
 
 		self[ROWS].forEach((row) => {
 			if (row.id === id) {
-				Object.assign(row, newData);
+				assign(row, newData);
 				self[preProcessCells](row);
 				return false;
 			}

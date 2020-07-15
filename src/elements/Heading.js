@@ -20,6 +20,7 @@ import CheckBox from '../elements/CheckBox';
 import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
 import Toolbar from '../layout/Toolbar';
 import FocusMixin from '../mixins/FocusMixin';
+import assign from '../utility/assign.js';
 import {
 	CLICK_EVENT,
 	DISPLAY,
@@ -30,6 +31,7 @@ import {
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED
 } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Button from './Button';
 import Div from './Div';
 import './Heading.less';
@@ -81,12 +83,16 @@ const keyDownEvent = Symbol();
  */
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.HEADING;
-		settings.element = enforceEnum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX);
-		settings.FocusMixin = {};
-		settings.FocusMixin.setFocus = () => self[setFocus]();
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.HEADING,
+			element: enforceEnum(settings.level, HEADING_LEVELS, HEADING_LEVELS.SIX)
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					self[setFocus]();
+				}
+			})
+		}));
 
 		const self = this;
 		self.classes('heading');

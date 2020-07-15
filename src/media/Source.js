@@ -1,13 +1,14 @@
 import { applySettings } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 
 export default class Source extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SOURCE;
-		settings.element = 'source';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SOURCE,
+			element: 'source'
+		}, settings));
 
 		applySettings(this, settings);
 	}

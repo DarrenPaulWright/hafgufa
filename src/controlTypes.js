@@ -67,6 +67,7 @@ const controlTypes = {
 	TEXT: 'text',
 	TEXT_AREA: 'textarea',
 	TILE_LAYOUT: 'tileLayout',
+	TIME_SPAN: 'timeSpan',
 	TOOLBAR: 'toolbar',
 	TREE: 'tree',
 	VECTOR_EDITOR: 'vectorEditor',

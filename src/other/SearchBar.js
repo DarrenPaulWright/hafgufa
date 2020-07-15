@@ -1,7 +1,6 @@
 import {
 	applySettings,
 	AUTO,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	methodArray,
 	methodBoolean,
@@ -16,6 +15,7 @@ import Tags from '../forms/Tags';
 import { SEARCH_ICON } from '../icons';
 import { IS_PHONE } from '../utility/browser';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import './SearchBar.less';
 
 const MENU_BUTTON = Symbol();
@@ -38,10 +38,10 @@ const clearSearchBar = Symbol();
  */
 export default class SearchBar extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SEARCH_BAR;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SEARCH_BAR,
+			width: AUTO
+		}, settings));
 
 		const self = this;
 

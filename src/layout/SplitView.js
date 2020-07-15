@@ -2,8 +2,6 @@ import { set } from 'object-agent';
 import {
 	applySettings,
 	CssSize,
-	enforceCssSize,
-	enforceEnum,
 	Enum,
 	HUNDRED_PERCENT,
 	methodBoolean,
@@ -18,6 +16,7 @@ import Resizer, { offsetToPixels } from '../elements/Resizer';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import { ORIENTATION as RESIZER_ORIENTATION } from '../uiConstants';
 import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './SplitView.less';
 
@@ -53,12 +52,12 @@ const positionViews = Symbol();
  */
 export default class SplitView extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SPLIT_VIEW;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.orientation = enforceEnum(settings.orientation, ORIENTATION, ORIENTATION.COLUMNS);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SPLIT_VIEW,
+			width: HUNDRED_PERCENT,
+			height: HUNDRED_PERCENT,
+			orientation: ORIENTATION.COLUMNS
+		}, settings));
 
 		const self = this;
 		self[IS_COLUMNS] = true;
@@ -94,12 +93,18 @@ export default class SplitView extends IsWorkingMixin(Control) {
 	[resize]() {
 		const self = this;
 		const setStackedSize = (localSize, scrollType) => {
-			self.css(localSize, Math.ceil(self[FIRST_VIEW].element[scrollType] + self[SECOND_VIEW].element[scrollType]));
+			self.css(
+				localSize,
+				Math.ceil(self[FIRST_VIEW].element[scrollType] + self[SECOND_VIEW].element[scrollType])
+			);
 		};
 		const setSingleSize = (localSize, scrollType) => {
 			self[FIRST_VIEW][localSize]('0');
 			self[SECOND_VIEW][localSize]('0');
-			self.css(localSize, Math.ceil(Math.max(self[FIRST_VIEW].element[scrollType], self[SECOND_VIEW].element[scrollType])));
+			self.css(
+				localSize,
+				Math.ceil(Math.max(self[FIRST_VIEW].element[scrollType], self[SECOND_VIEW].element[scrollType]))
+			);
 		};
 
 		if (self.height().isAuto) {

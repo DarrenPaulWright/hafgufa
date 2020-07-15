@@ -19,6 +19,7 @@ import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import d3Helper from '../utility/d3Helper';
 import { WIDTH } from '../utility/domConstants';
 import round from '../utility/math/round';
+import setDefaults from '../utility/setDefaults.js';
 import './ProgressBar.less';
 
 const BAR_CONTAINER = Symbol();
@@ -46,9 +47,9 @@ const updateProgress = Symbol();
  */
 export default class ProgressBar extends ControlHeadingMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.PROGRESS;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.PROGRESS
+		}, settings));
 
 		const self = this;
 		self.addClass('progress');

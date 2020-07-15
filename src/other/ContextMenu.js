@@ -1,4 +1,5 @@
 import { BODY, CLICK_EVENT, CONTEXT_MENU_EVENT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './ContextMenu.less';
 import Menu from './Menu';
 
@@ -16,9 +17,7 @@ export default class ContextMenu extends Menu {
 	constructor(settings = {}) {
 		let isInit = false;
 
-		settings.minWidth = settings.minWidth || 160;
-
-		super(settings);
+		super(setDefaults({ minWidth: 160 }, settings));
 
 		const self = this;
 		const onContextMenu = () => {

@@ -1,8 +1,6 @@
 import {
 	applySettings,
 	CssSize,
-	enforceCssSize,
-	enforceEnum,
 	HUNDRED_PERCENT,
 	methodCssSize,
 	methodEnum,
@@ -15,6 +13,7 @@ import DragMixin from '../mixins/DragMixin';
 import { ORIENTATION } from '../uiConstants';
 import { IS_DESKTOP } from '../utility/browser';
 import clamp from '../utility/math/clamp';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 import './Resizer.less';
 
@@ -83,15 +82,12 @@ const setMinMaxOffsets = Symbol();
  */
 export default class Resizer extends DragMixin(Control) {
 	constructor(settings = {}) {
-		settings = {
-			...settings,
-			ignorePadding: true,
-			type: settings.type || controlTypes.RESIZER,
-			orientation: enforceEnum(settings.orientation, ORIENTATION, ORIENTATION.HORIZONTAL),
-			splitOffset: enforceCssSize(settings.splitOffset, new CssSize(), true)
-		};
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.RESIZER,
+			orientation: ORIENTATION.HORIZONTAL,
+			splitOffset: '0',
+			ignoreePadding: true
+		}, settings));
 
 		const self = this;
 

@@ -1,7 +1,6 @@
 import {
 	applySettings,
 	AUTO,
-	enforceCssSize,
 	methodArray,
 	methodBoolean,
 	methodFunction,
@@ -15,6 +14,7 @@ import Control from '../Control';
 import controlTypes from '../controlTypes';
 import NextPrevMixin from '../mixins/NextPrevMixin';
 import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './Carousel.less';
 import VirtualList from './VirtualList';
 
@@ -35,38 +35,32 @@ const fitToSlide = Symbol();
  */
 export default class Carousel extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.CAROUSEL;
-		settings.height = enforceCssSize(settings.height, AUTO, true);
-		settings.NextPrevMixin = {
-			onShowButtons(onChange, buttonWidth) {
-				self[BUTTON_SIZE] = buttonWidth;
+		super(setDefaults({
+			type: controlTypes.CAROUSEL,
+			height: AUTO
+		}, settings, {
+			NextPrevMixin: {
+				onShowButtons(onChange, buttonWidth) {
+					self[BUTTON_SIZE] = buttonWidth;
 
-				self[VIRTUAL_LIST]
-					.padding(ZERO_PIXELS + SPACE + buttonWidth + PIXELS)
-					.onLayoutChange(onChange);
-			},
-			onHideButtons() {
-				self[BUTTON_SIZE] = 0;
+					self[VIRTUAL_LIST]
+						.padding(ZERO_PIXELS + SPACE + buttonWidth + PIXELS)
+						.onLayoutChange(onChange);
+				},
+				onHideButtons() {
+					self[BUTTON_SIZE] = 0;
 
-				self[VIRTUAL_LIST]
-					.padding(ZERO_PIXELS)
-					.onLayoutChange(null);
-			},
-			isAtStart() {
-				return self[VIRTUAL_LIST].isAtStart();
-			},
-			isAtEnd() {
-				return self[VIRTUAL_LIST].isAtEnd();
-			},
-			onPrev() {
-				return self[VIRTUAL_LIST].prevPage();
-			},
-			onNext() {
-				return self[VIRTUAL_LIST].nextPage();
+					self[VIRTUAL_LIST]
+						.padding(ZERO_PIXELS)
+						.onLayoutChange(null);
+				},
+				isAtStart: () => self[VIRTUAL_LIST].isAtStart(),
+				isAtEnd: () => self[VIRTUAL_LIST].isAtEnd(),
+				onPrev: () => self[VIRTUAL_LIST].prevPage(),
+				onNext: () => self[VIRTUAL_LIST].nextPage()
 			}
-		};
+		}));
 
-		super(settings);
 		const self = this;
 		self[IS_FIT] = false;
 		self[BUTTON_SIZE] = 0;

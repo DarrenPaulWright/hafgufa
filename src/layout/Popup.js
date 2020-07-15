@@ -17,7 +17,6 @@ import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
 import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
-import defaults from '../utility/defaults.js';
 import {
 	ABSOLUTE,
 	BLOCK,
@@ -45,6 +44,7 @@ import {
 	Z_INDEX
 } from '../utility/domConstants';
 import * as mouse from '../utility/mouse';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Popup.less';
 
@@ -112,16 +112,14 @@ const positionArrow = Symbol();
  */
 class Popup extends MergeContentContainerMixin(Container) {
 	constructor(settings = {}) {
-		defaults(settings, {
+		super(setDefaults({
 			type: controlTypes.POPUP,
 			container: BODY,
 			id: 'popup_' + shortid.generate(),
 			isSticky: false,
 			fade: settings.zoom || settings.fade,
 			stopPropagation: true
-		});
-
-		super(settings);
+		}, settings));
 
 		const self = this;
 

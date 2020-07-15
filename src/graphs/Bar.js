@@ -1,8 +1,9 @@
 import { color, select } from 'd3';
-import { applySettings, enforceEnum, methodNumber } from 'type-enforcer-ui';
+import { applySettings, methodNumber } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
 import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './Bar.less';
 import GraphAxisBase from './GraphAxisBase';
 import * as graphConstants from './graphConstants';
@@ -28,11 +29,11 @@ const RENDERED_HEIGHT = Symbol();
  */
 export default class Bar extends GraphAxisBase {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.BAR;
-		settings.xScaleType = enforceEnum(settings.xScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.BAND);
-		settings.yScaleType = enforceEnum(settings.yScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.BAR,
+			xScaleType: GraphAxisBase.SCALE_TYPES.BAND,
+			yScaleType: GraphAxisBase.SCALE_TYPES.LINEAR
+		}, settings));
 
 		const self = this;
 

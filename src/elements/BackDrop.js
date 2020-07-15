@@ -1,6 +1,7 @@
 import { applySettings } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 import './BackDrop.less';
 
@@ -17,11 +18,11 @@ const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
  */
 export default class BackDrop extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.BACK_DROP;
-		settings.container = settings.container || BODY;
-		settings.fade = true;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.BACK_DROP,
+			container: BODY,
+			fade: true
+		}, settings));
 
 		const self = this;
 		self.addClass(BACKDROP_CLASS);

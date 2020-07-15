@@ -4,7 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	CssSize,
-	enforceCssSize,
 	Enum,
 	HUNDRED_PERCENT,
 	methodArray,
@@ -31,6 +30,7 @@ import {
 	TOP
 } from '../utility/domConstants';
 import clamp from '../utility/math/clamp';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './TileLayout.less';
 
@@ -161,11 +161,11 @@ const calculateColumns = Symbol();
  */
 export default class TileLayout extends Container {
 	constructor(settings = {}) {
-		settings.type = controlTypes.TILE_LAYOUT;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TILE_LAYOUT,
+			width: HUNDRED_PERCENT,
+			height: HUNDRED_PERCENT
+		}, settings));
 
 		const self = this;
 		self[VIRTUAL_SCROLL_ELEMENT] = new Container();
@@ -283,9 +283,9 @@ export default class TileLayout extends Container {
 			}, true);
 		}
 		else {
-			const defaults = self[CONTROL_RECYCLER].defaultSettings() || {};
-			defaults.container = self.element;
-			self[CONTROL_RECYCLER].defaultSettings(defaults);
+			const defaultSettings = self[CONTROL_RECYCLER].defaultSettings() || {};
+			defaultSettings.container = self.element;
+			self[CONTROL_RECYCLER].defaultSettings(defaultSettings);
 
 			self.tileData().forEach((tile) => {
 				self[MAX_DESIRED_COLUMNS] = (tile.columnSpan || 1) < self[MAX_DESIRED_COLUMNS] ? self[MAX_DESIRED_COLUMNS] : (tile.columnSpan || 1);
@@ -359,7 +359,9 @@ export default class TileLayout extends Container {
 			bottom: 0
 		};
 		let isNewWidth = false;
-		const columnSpan = self[TILE_OFFSETS][index] ? self[TILE_OFFSETS][index].span : Math.min(control.attr(COLUMN_SPAN) || 1, self[COLUMN_COUNT]);
+		const columnSpan = self[TILE_OFFSETS][index] ?
+			self[TILE_OFFSETS][index].span :
+			Math.min(control.attr(COLUMN_SPAN) || 1, self[COLUMN_COUNT]);
 		const columnWidth = self[calculateControlWidth](columnSpan);
 
 		if (control && (isPreviouslyRendered || !self[RENDERED_WIDTHS][index] || self[RENDERED_WIDTHS][index] !== columnWidth)) {
@@ -413,7 +415,10 @@ export default class TileLayout extends Container {
 
 		control
 			.css(TOP, self[TILE_OFFSETS][index].y + PIXELS)
-			.css(LEFT, self[LEFT_MARGIN] + (self[TILE_OFFSETS][index].x * (self[RENDERED_COLUMN_WIDTH] + self[RENDERED_TILE_MARGIN])) + PIXELS);
+			.css(
+				LEFT,
+				self[LEFT_MARGIN] + (self[TILE_OFFSETS][index].x * (self[RENDERED_COLUMN_WIDTH] + self[RENDERED_TILE_MARGIN])) + PIXELS
+			);
 		self[fadeControl](control, true);
 	}
 
@@ -750,7 +755,10 @@ Object.assign(TileLayout.prototype, {
 			self[RENDERED_COLUMN_WIDTH] = self.tileWidth().toPixels(true) + self[RENDERED_TILE_MARGIN];
 
 			self[COLUMN_COUNT] = Math.max(self.total() || self.tileData().length, self[MAX_DESIRED_COLUMNS]);
-			self[COLUMN_COUNT] = Math.min(self[COLUMN_COUNT], Math.floor((self[LAYOUT_WIDTH] + self[RENDERED_TILE_MARGIN]) / self[RENDERED_COLUMN_WIDTH]));
+			self[COLUMN_COUNT] = Math.min(
+				self[COLUMN_COUNT],
+				Math.floor((self[LAYOUT_WIDTH] + self[RENDERED_TILE_MARGIN]) / self[RENDERED_COLUMN_WIDTH])
+			);
 			self[COLUMN_COUNT] = clamp(self[COLUMN_COUNT], self.minColumns(), self.maxColumns());
 
 			if (self.columnAlign() === TILE_COLUMN_ALIGN.STRETCH) {

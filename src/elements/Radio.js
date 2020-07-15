@@ -1,6 +1,7 @@
 import { applySettings, methodBoolean, methodQueue, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Div from './Div';
 import Input from './Input';
 import Label from './Label';
@@ -20,9 +21,9 @@ const CONTAINER = Symbol();
  */
 export default class Radio extends Label {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.RADIO;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.RADIO
+		}, settings));
 
 		const self = this;
 

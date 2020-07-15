@@ -3,7 +3,9 @@ import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import FocusMixin from '../mixins/FocusMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import assign from '../utility/assign.js';
 import { TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './Container.less';
 
 /**
@@ -15,11 +17,13 @@ import './Container.less';
  */
 export default class Container extends IsWorkingMixin(FocusMixin(Div)) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.CONTAINER;
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.hasChildren = true;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.CONTAINER
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				hasChildren: true
+			})
+		}));
 
 		const self = this;
 		self.addClass('container');

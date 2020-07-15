@@ -2,6 +2,7 @@ import { applySettings, isFunction, isNumber } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
+import setDefaults from '../utility/setDefaults.js';
 import './Toolbar.less';
 
 const TOOLBAR_BASE_CLASS = 'toolbar clearfix';
@@ -20,9 +21,9 @@ const getButton = Symbol();
  */
 export default class Toolbar extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.TOOLBAR;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TOOLBAR
+		}, settings));
 
 		this[BUTTONS] = [];
 		this.addClass(TOOLBAR_BASE_CLASS);

@@ -5,8 +5,6 @@ import {
 	applySettings,
 	AUTO,
 	DockPoint,
-	enforceBoolean,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	methodArray,
 	methodBoolean,
@@ -25,8 +23,10 @@ import Div from '../elements/Div';
 import Tree from '../forms/Tree';
 import { MENU_ICON } from '../icons';
 import FocusMixin from '../mixins/FocusMixin';
+import assign from '../utility/assign.js';
 import { IS_DESKTOP } from '../utility/browser';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import Drawer from './Drawer';
 import './DrawerMenu.less';
 
@@ -61,13 +61,16 @@ export default class DrawerMenu extends FocusMixin(Control) {
 				self[toggleMenu]();
 			}
 		});
-		settings.type = settings.type || controlTypes.DRAWER_MENU;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-		settings.isMenuOpen = enforceBoolean(settings.isMenuOpen, IS_DESKTOP);
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = menuButton;
 
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DRAWER_MENU,
+			width: AUTO,
+			isMenuOpen: IS_DESKTOP
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: menuButton
+			})
+		}));
 
 		const self = this;
 		self.addClass('drawer-menu-container');
@@ -308,7 +311,7 @@ Object.assign(DrawerMenu.prototype, {
 	footerContent: methodArray(),
 
 	drawerDock: methodDockPoint({
-		init: new DockPoint('LEFT'),
+		init: new DockPoint(DockPoint.POINTS.LEFT),
 		set(drawerDock) {
 			if (this[DRAWER]) {
 				this[DRAWER].dock(drawerDock);

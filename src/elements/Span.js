@@ -1,5 +1,6 @@
 import { applySettings, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 
 /**
@@ -14,10 +15,10 @@ import Control from './../Control';
  */
 export default class Span extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SPAN;
-		settings.element = 'span';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SPAN,
+			element: 'span'
+		}, settings));
 
 		applySettings(this, settings);
 	}

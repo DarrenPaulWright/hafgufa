@@ -8,6 +8,7 @@ import {
 	INPUT_TYPE_RADIO,
 	INPUT_TYPE_TEXT
 } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 
 const AVAILABLE_TYPES = new Enum({
@@ -30,10 +31,10 @@ const AVAILABLE_TYPES = new Enum({
  */
 export default class Input extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.INPUT;
-		settings.element = 'input';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.INPUT,
+			element: 'input'
+		}, settings));
 
 		applySettings(this, settings);
 	}

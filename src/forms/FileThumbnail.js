@@ -25,6 +25,7 @@ import {
 } from '../icons';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './FileThumbnail.less';
 
 const THUMBNAIL_CLASS = 'file-thumbnail ';
@@ -65,9 +66,9 @@ const hideDeleteButton = Symbol();
  */
 export default class FileThumbnail extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.FILE_THUMBNAIL;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.FILE_THUMBNAIL
+		}, settings));
 
 		const self = this;
 

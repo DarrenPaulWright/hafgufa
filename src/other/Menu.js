@@ -4,8 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	DockPoint,
-	enforceBoolean,
-	enforceEnum,
 	enforceString,
 	HUNDRED_PERCENT,
 	isArray,
@@ -24,6 +22,7 @@ import Popup from '../layout/Popup';
 import { KEY_DOWN_EVENT } from '../utility/domConstants';
 import locale from '../utility/locale';
 import search from '../utility/search';
+import setDefaults from '../utility/setDefaults.js';
 import { filteredTitle } from '../utility/sortBy';
 import './Menu.less';
 
@@ -98,29 +97,25 @@ export default class Menu extends Popup {
 			currentMenu.remove();
 		}
 
-		let tree = new Tree({
-			id: TREE_ID,
-			width: AUTO
-		});
-
-		settings = {
+		super(setDefaults({
 			type: controlTypes.MENU,
 			anchor: Popup.MOUSE,
 			height: HUNDRED_PERCENT,
 			maxHeight: MAX_POPUP_HEIGHT,
 			minWidth: MIN_POPUP_WIDTH,
 			maxWidth: MAX_POPUP_WIDTH,
-			...settings,
-			anchorDockPoint: enforceEnum(settings.anchorDockPoint, DockPoint.POINTS, DockPoint.POINTS.BOTTOM_RIGHT),
-			popupDockPoint: enforceEnum(settings.popupDockPoint, DockPoint.POINTS, DockPoint.POINTS.TOP_LEFT),
-			canTrackMouse: enforceBoolean(settings.canTrackMouse, false),
-			hideOnEscapeKey: enforceBoolean(settings.hideOnEscapeKey, true),
+			canTrackMouse: false,
+			hideOnEscapeKey: true,
+			anchorDockPoint: DockPoint.POINTS.BOTTOM_RIGHT,
+			popupDockPoint: DockPoint.POINTS.TOP_LEFT
+		}, settings, {
 			FocusMixin: {
-				mainControl: tree
+				mainControl: new Tree({
+					id: TREE_ID,
+					width: AUTO
+				})
 			}
-		};
-
-		super(settings);
+		}));
 
 		const self = this;
 		self.addClass(MENU_CLASS);
@@ -128,7 +123,7 @@ export default class Menu extends Popup {
 
 		currentMenu = self;
 
-		applySettings(tree, {
+		applySettings(settings.FocusMixin.mainControl, {
 			onSelect(item) {
 				if (self.onSelect()) {
 					self.onSelect()(item);
@@ -161,8 +156,7 @@ export default class Menu extends Popup {
 					.height(self.borderHeight() - (self.get(HEADER_ID) ? self.get(HEADER_ID).borderHeight() : 0))
 					.resize(true);
 			})
-			.content(tree);
-		tree = null;
+			.content(settings.FocusMixin.mainControl);
 
 		applySettings(self, settings, ['anchorDockPoint', 'popupDockPoint']);
 
@@ -176,6 +170,8 @@ export default class Menu extends Popup {
 		self.onRemove(() => {
 			currentMenu = null;
 		});
+
+		self.resize(true);
 	}
 
 	[buildHeader]() {

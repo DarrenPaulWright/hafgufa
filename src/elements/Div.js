@@ -1,6 +1,7 @@
 import { applySettings, castArray, isArray, isElement, isJson, isNumber, isObject, isString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { CONTENT_CHANGE_EVENT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Control, { CHILD_CONTROLS } from './../Control';
 
 const addContent = Symbol();
@@ -17,11 +18,11 @@ const addLayout = Symbol();
  */
 export default class Div extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.DIV;
+		super(setDefaults({
+			type: controlTypes.DIV
+		}, settings));
 
-		super(settings);
-
-		if (this.type === controlTypes.DIV && settings !== undefined) {
+		if (this.type === controlTypes.DIV) {
 			applySettings(this, settings);
 		}
 	}
@@ -39,13 +40,11 @@ export default class Div extends Control {
 
 		castArray(content).forEach((controlDefinition, index) => {
 			if (controlDefinition && controlDefinition.control) {
-				new controlDefinition.control(Object.assign({},
-					controlDefinition,
-					{
-						container: self,
-						appendAt: isNumber(appendAt) ? appendAt + index : null
-					}
-				));
+				new controlDefinition.control({
+					...controlDefinition,
+					container: self,
+					appendAt: isNumber(appendAt) ? appendAt + index : null
+				});
 			}
 		});
 	}

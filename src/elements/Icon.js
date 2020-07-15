@@ -2,6 +2,7 @@ import { applySettings, Enum, methodEnum, methodString } from 'type-enforcer-ui'
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import TooltipMixin from '../mixins/TooltipMixin';
+import setDefaults from '../utility/setDefaults.js';
 import './Icon.less';
 
 export const ICON_SIZES = new Enum({
@@ -23,10 +24,10 @@ export const ICON_SIZES = new Enum({
  */
 export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.ICON;
-		settings.element = 'i';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.ICON,
+			element: 'i'
+		}, settings));
 
 		const self = this;
 		self.addClass('icon icon-lg');

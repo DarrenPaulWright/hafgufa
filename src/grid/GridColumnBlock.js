@@ -12,6 +12,7 @@ import Control from '../Control';
 import controlTypes from '../controlTypes';
 import VirtualList from '../layout/VirtualList';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import './GridColumnBlock.less';
 import GridHeader from './GridHeader';
 import GridRow from './GridRow';
@@ -32,9 +33,9 @@ const updateRow = Symbol();
  */
 export default class GridColumnBlock extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_COLUMN_BLOCK;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_COLUMN_BLOCK
+		}, settings));
 
 		const self = this;
 		self[RENDERED_WIDTH] = 0;

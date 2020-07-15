@@ -1,17 +1,11 @@
-import {
-	applySettings,
-	CssSize,
-	enforceBoolean,
-	enforceCssSize,
-	HUNDRED_PERCENT,
-	methodString
-} from 'type-enforcer-ui';
+import { applySettings, CssSize, HUNDRED_PERCENT, methodString } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Div from '../elements/Div';
 import Label from '../elements/Label';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
 import { ABSOLUTE_CLASS } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './IsWorking.less';
 
 const IS_WORKING_CLASS = ABSOLUTE_CLASS + 'is-working';
@@ -57,23 +51,24 @@ const CURRENT_SIZE = Symbol();
  */
 export default class IsWorking extends DelayedRenderMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.IS_WORKING;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-		settings.fade = enforceBoolean(settings.fade, true);
-		settings.onRender = () => {
-			self[ANIMATION_DIV] = new Div({
-				container: self
-			});
-
-			self.onResize(setSize);
-			self.resize(true)
-				.onRemove(() => {
-					self[ANIMATION_DIV].remove();
+		super(setDefaults({
+			type: controlTypes.IS_WORKING,
+			width: HUNDRED_PERCENT,
+			height: HUNDRED_PERCENT,
+			fade: true
+		}, settings, {
+			onRender() {
+				self[ANIMATION_DIV] = new Div({
+					container: self
 				});
-		};
 
-		super(settings);
+				self.onResize(setSize);
+				self.resize(true)
+					.onRemove(() => {
+						self[ANIMATION_DIV].remove();
+					});
+			}
+		}));
 
 		const self = this;
 		self[CURRENT_SIZE] = 3;

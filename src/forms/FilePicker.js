@@ -1,20 +1,14 @@
 import { delay } from 'async-agent';
 import { clone } from 'object-agent';
-import {
-	applySettings,
-	AUTO,
-	enforceCssSize,
-	methodArray,
-	methodBoolean,
-	methodEnum,
-	methodFunction
-} from 'type-enforcer-ui';
+import { applySettings, AUTO, methodArray, methodBoolean, methodEnum, methodFunction } from 'type-enforcer-ui';
 import ControlManager from '../ControlManager';
 import controlTypes from '../controlTypes';
 import LightBox from '../edit/LightBox';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import assign from '../utility/assign.js';
 import { EMPTY_STRING } from '../utility/domConstants';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import FileInput from './FileInput';
 import './FilePicker.less';
 import FileThumbnail, { IMAGE_FILE_TYPES, PREVIEW_SIZES } from './FileThumbnail';
@@ -48,10 +42,10 @@ const updateLightBox = Symbol();
  */
 export default class FilePicker extends IsWorkingMixin(FormControl) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.FILE_PICKER;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.FILE_PICKER,
+			width: AUTO
+		}, settings));
 
 		const self = this;
 		self[FILES] = [];
@@ -185,7 +179,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 	[onLoadFile](data) {
 		const self = this;
 
-		Object.assign(self[FILES].find((item) => item.name === data.name), data);
+		assign(self[FILES].find((item) => item.name === data.name), data);
 		self[buildThumbnail](data);
 		self[updateLightBox]();
 	}

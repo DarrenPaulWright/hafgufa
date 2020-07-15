@@ -1,6 +1,7 @@
 import { applySettings, Enum, methodBoolean, methodEnum, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 import './Image.less';
 
@@ -30,10 +31,10 @@ export const FIT = new Enum({
  */
 export default class Image extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.IMAGE;
-		settings.element = 'img';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.IMAGE,
+			element: 'img'
+		}, settings));
 
 		this.fit(this.fit(), true)
 			.source(DEFAULT_IMAGE_SOURCE);

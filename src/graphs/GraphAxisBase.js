@@ -4,6 +4,7 @@ import { Enum, methodAny, methodEnum, methodNumber, methodString } from 'type-en
 import d3Helper from '../utility/d3Helper';
 import accuracy from '../utility/math/accuracy';
 import round from '../utility/math/round';
+import setDefaults from '../utility/setDefaults.js';
 import GraphBase from './GraphBase';
 
 const MIN_AXIS_SIZE = 20;
@@ -42,10 +43,10 @@ const RENDERED_HEIGHT = Symbol();
  */
 export default class GraphAxisBase extends GraphBase {
 	constructor(settings = {}) {
-		settings.xScaleType = settings.xScaleType || SCALE_TYPES.LINEAR;
-		settings.yScaleType = settings.yScaleType || SCALE_TYPES.LINEAR;
-
-		super(settings);
+		super(setDefaults({
+			xScaleType: SCALE_TYPES.LINEAR,
+			yScaleType: SCALE_TYPES.LINEAR
+		}, settings));
 
 		const self = this;
 		self[RENDERED_WIDTH] = 0;
@@ -114,7 +115,10 @@ export default class GraphAxisBase extends GraphBase {
 			switch (self[direction + 'ScaleType']()) {
 				case SCALE_TYPES.BAND:
 					if (interval !== null) {
-						output = fill((maxValue - minValue) / interval, (index) => round((minValue + (index * interval)), intervalAccuracy));
+						output = fill(
+							(maxValue - minValue) / interval,
+							(index) => round((minValue + (index * interval)), intervalAccuracy)
+						);
 					}
 					else {
 						if (dataObject.data) {
@@ -172,7 +176,10 @@ export default class GraphAxisBase extends GraphBase {
 			let label;
 
 			self[SVG].select('.xAxis')
-				.attr('transform', 'translate(' + (padding.left + self.yAxisSize()) + ',' + (self[RENDERED_HEIGHT] + padding.top - self.xAxisSize()) + ')')
+				.attr(
+					'transform',
+					'translate(' + (padding.left + self.yAxisSize()) + ',' + (self[RENDERED_HEIGHT] + padding.top - self.xAxisSize()) + ')'
+				)
 				.call((g) => {
 					switch (self.xScaleType()) {
 						case SCALE_TYPES.BAND:
@@ -204,7 +211,10 @@ export default class GraphAxisBase extends GraphBase {
 						label
 							.classed('label', true)
 							.attr('text-anchor', 'middle')
-							.attr('transform', 'translate(' + ((self[RENDERED_WIDTH] - self.yAxisSize()) / 2) + ',' + (self.xAxisSize()) + ')')
+							.attr(
+								'transform',
+								'translate(' + ((self[RENDERED_WIDTH] - self.yAxisSize()) / 2) + ',' + (self.xAxisSize()) + ')'
+							)
 							.text(self.xLabel());
 						labelSize += AXIS_LABEL_OFFSET;
 					}
@@ -251,7 +261,10 @@ export default class GraphAxisBase extends GraphBase {
 						label
 							.classed('label', true)
 							.attr('text-anchor', 'middle')
-							.attr('transform', 'translate(-' + (self.yAxisSize() - labelSize) + ',' + ((self[RENDERED_HEIGHT] - self.xAxisSize()) / 2) + ') rotate(-90)')
+							.attr(
+								'transform',
+								'translate(-' + (self.yAxisSize() - labelSize) + ',' + ((self[RENDERED_HEIGHT] - self.xAxisSize()) / 2) + ') rotate(-90)'
+							)
 							.text(self.yLabel());
 						labelSize += AXIS_LABEL_OFFSET * 2;
 					}

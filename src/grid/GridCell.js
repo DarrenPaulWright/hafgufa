@@ -18,6 +18,7 @@ import Span from '../elements/Span';
 import Toolbar from '../layout/Toolbar';
 import Tooltip from '../layout/Tooltip';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './GridCell.less';
 import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from './gridConstants';
 
@@ -48,9 +49,9 @@ const removeTooltip = Symbol();
  */
 export default class GridCell extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_CELL;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_CELL
+		}, settings));
 
 		const self = this;
 

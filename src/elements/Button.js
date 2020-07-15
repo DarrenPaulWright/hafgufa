@@ -1,18 +1,11 @@
-import {
-	applySettings,
-	enforceString,
-	Enum,
-	methodAny,
-	methodBoolean,
-	methodEnum,
-	methodString
-} from 'type-enforcer-ui';
+import { applySettings, Enum, methodAny, methodBoolean, methodEnum, methodString } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control';
 import controlTypes from '../controlTypes';
 import FocusMixin from '../mixins/FocusMixin';
 import MouseMixin from '../mixins/MouseMixin';
 import OnClickMixin from '../mixins/OnClickMixin';
 import { INPUT_TYPE } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './Button.less';
 import Icon, { ICON_SIZES } from './Icon';
 import Image from './Image';
@@ -43,12 +36,12 @@ const ICON_POSITIONS = new Enum({
  */
 export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.BUTTON;
-		settings.label = enforceString(settings.label, '');
-		settings.classes = settings.classes || DEFAULT_CLASS;
-		settings.element = 'button';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.BUTTON,
+			element: 'button',
+			label: '',
+			classes: DEFAULT_CLASS
+		}, settings));
 
 		this.attr(INPUT_TYPE, 'button');
 

@@ -4,8 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	CssSize,
-	enforceCssSize,
-	enforceString,
 	HUNDRED_PERCENT,
 	isInteger,
 	isNumber,
@@ -21,6 +19,7 @@ import Span from '../elements/Span';
 import TextArea from '../elements/TextArea';
 import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
+import assign from '../utility/assign.js';
 import {
 	BLUR_EVENT,
 	DOCUMENT,
@@ -34,6 +33,7 @@ import {
 } from '../utility/domConstants';
 import locale from '../utility/locale';
 import clamp from '../utility/math/clamp';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 import './TextInput.less';
 
@@ -61,22 +61,24 @@ const maxRowCallback = Symbol();
  */
 export default class TextInput extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.TEXT;
-		settings.width = enforceCssSize(settings.width, AUTO, true);
-		settings.height = enforceCssSize(settings.height, AUTO, true);
-		settings.rows = settings.rows || 1;
-		settings.changeDelay = 'changeDelay' in settings ? settings.changeDelay : (settings.rows === 1 ? ON_CHANGE_DELAY : ON_CHANGE_DELAY_LONG);
-		settings.ActionButtonMixin = {
-			container() {
-				return self[INPUT];
-			}
-		};
-		settings.actionButtonOnClick = settings.actionButtonOnClick || function() {
-			self.value('').triggerChange().isFocused(true);
-		};
-		settings.actionButtonIcon = enforceString(settings.actionButtonIcon, CLEAR_ICON);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TEXT,
+			width: AUTO,
+			height: AUTO,
+			rows: 1,
+			changeDelay: (settings.rows === 1 || settings.rows === undefined) ? ON_CHANGE_DELAY : ON_CHANGE_DELAY_LONG,
+			actionButtonOnClick() {
+				self.value('').triggerChange().isFocused(true);
+			},
+			actionButtonIcon: CLEAR_ICON
+		}, settings, {
+			ActionButtonMixin: { container: () => self[INPUT] },
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					self[INPUT].isFocused(true);
+				}
+			})
+		}));
 
 		const self = this;
 

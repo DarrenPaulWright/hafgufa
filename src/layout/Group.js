@@ -5,6 +5,7 @@ import { HEADING_LEVELS } from '../elements/Heading';
 import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import { MIN_WIDTH, PADDING } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Group.less';
 
@@ -19,12 +20,13 @@ import './Group.less';
  */
 export default class Group extends MergeContentContainerMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GROUP;
-		settings.element = 'fieldset';
-		settings.headingLevel = HEADING_LEVELS.FOUR;
-		settings.contentContainer = new Container();
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GROUP,
+			element: 'fieldset',
+			headingLevel: HEADING_LEVELS.FOUR
+		}, settings, {
+			contentContainer: new Container()
+		}));
 
 		this
 			.addClass('group clearfix')

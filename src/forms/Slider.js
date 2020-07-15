@@ -15,8 +15,10 @@ import Div from '../elements/Div';
 import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';
 import TooltipMixin from '../mixins/TooltipMixin';
+import assign from '../utility/assign.js';
 import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
 import clamp from '../utility/math/clamp';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 import './Slider.less';
 
@@ -50,12 +52,11 @@ Object.assign(Thumb.prototype, {
 
 class Range extends DragMixin(Div) {
 	constructor(settings = {}) {
-		super({
-			...settings,
+		super(assign(settings, {
 			canDrag: false,
 			restrictVerticalDrag: true,
 			restrictHorizontalDrag: true
-		});
+		}));
 	}
 }
 
@@ -82,19 +83,21 @@ const LOCATION_SIZE = Symbol();
 
 export default class Slider extends FocusMixin(FormControl) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SLIDER;
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.hasChildren = true;
-		settings.FocusMixin.setFocus = () => {
-			self[THUMBS][0].isFocused(true);
-		};
-		settings.FocusMixin.getFocus = () => {
-			return self[THUMBS].some((thumb) => {
-				return thumb.isFocused();
-			});
-		};
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SLIDER
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				hasChildren: true,
+				setFocus() {
+					self[THUMBS][0].isFocused(true);
+				},
+				getFocus() {
+					return self[THUMBS].some((thumb) => {
+						return thumb.isFocused();
+					});
+				}
+			})
+		}));
 
 		const self = this;
 		self.addClass('slider');

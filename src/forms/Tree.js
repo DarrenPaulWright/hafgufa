@@ -3,7 +3,6 @@ import {
 	applySettings,
 	AUTO,
 	enforceBoolean,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	isArray,
 	isString,
@@ -18,7 +17,9 @@ import controlTypes from '../controlTypes';
 import Heading from '../elements/Heading';
 import VirtualList from '../layout/VirtualList';
 import FocusMixin from '../mixins/FocusMixin';
+import assign from '../utility/assign.js';
 import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl';
 
 const ROW_WIDTH_BUFFER_RATIO = 1.1;
@@ -68,13 +69,15 @@ export default class Tree extends FocusMixin(FormControl) {
 			isFocusable: true
 		});
 
-		settings.type = settings.type || controlTypes.TREE;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.contentContainer = virtualList;
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = virtualList;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TREE,
+			width: HUNDRED_PERCENT
+		}, settings, {
+			contentContainer: virtualList,
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: virtualList
+			})
+		}));
 
 		self = this;
 		self.addClass('tree');

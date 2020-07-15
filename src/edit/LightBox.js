@@ -21,6 +21,7 @@ import {
 	PADDING_RIGHT,
 	PADDING_TOP
 } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './LightBox.less';
 
 const ABSOLUTE_CLASS = 'absolute-full-size ';
@@ -67,9 +68,10 @@ const renderImages = Symbol();
  */
 export default class LightBox extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.LIGHT_BOX;
-		settings.container = BODY;
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.LIGHT_BOX,
+			container: BODY
+		}, settings));
 
 		const self = this;
 		self.addClass(LIGHT_BOX_CLASS);

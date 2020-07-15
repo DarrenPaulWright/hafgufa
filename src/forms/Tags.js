@@ -4,7 +4,6 @@ import {
 	applySettings,
 	AUTO,
 	DockPoint,
-	enforceCssSize,
 	HUNDRED_PERCENT,
 	isString,
 	methodArray,
@@ -20,8 +19,10 @@ import { CLEAR_ICON } from '../icons';
 import ActionButtonMixin from '../mixins/ActionButtonMixin';
 import FocusMixin from '../mixins/FocusMixin';
 import Menu from '../other/Menu';
+import assign from '../utility/assign.js';
 import { KEY_DOWN_EVENT } from '../utility/domConstants';
 import search from '../utility/search';
+import setDefaults from '../utility/setDefaults.js';
 import { filteredTitle } from '../utility/sortBy';
 import FormControl from './FormControl';
 import './Tags.less';
@@ -87,17 +88,20 @@ export default class Tags extends ActionButtonMixin(FocusMixin(FormControl)) {
 			actionButtonIcon: ''
 		});
 
-		settings.type = settings.type || controlTypes.TAGS;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.FocusMixin = settings.FocusMixin || {};
-		settings.FocusMixin.mainControl = textInput;
-		settings.FocusMixin.getFocus = () => {
-			return self[TEXT_INPUT].isFocused() || (self[SUGGESTION_MENU] && self[SUGGESTION_MENU].isFocused()) || false;
-		};
-		settings.ActionButtonMixin = settings.ActionButtonMixin || {};
-		settings.ActionButtonMixin.container = () => listContainer;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TAGS,
+			width: HUNDRED_PERCENT
+		}, settings, {
+			ActionButtonMixin: assign(settings.ActionButtonMixin, {
+				container: () => listContainer
+			}),
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: textInput,
+				getFocus() {
+					return self[TEXT_INPUT].isFocused() || (self[SUGGESTION_MENU] && self[SUGGESTION_MENU].isFocused()) || false;
+				}
+			})
+		}));
 
 		self = this;
 

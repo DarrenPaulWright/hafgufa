@@ -19,6 +19,7 @@ import Div from '../elements/Div';
 import Heading, { HEADING_LEVELS } from '../elements/Heading';
 import Picker from '../forms/Picker';
 import { NEXT_ICON, PREVIOUS_ICON } from '../icons';
+import setDefaults from '../utility/setDefaults.js';
 import './Calendar.less';
 
 const DAYS_IN_A_WEEK = 7;
@@ -59,9 +60,9 @@ const DAYS = Symbol();
  */
 export default class Calendar extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.CALENDAR;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.CALENDAR
+		}, settings));
 
 		const self = this;
 		self.addClass('calendar');

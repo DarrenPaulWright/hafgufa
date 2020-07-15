@@ -1,8 +1,9 @@
 import { select } from 'd3';
-import { applySettings, enforceEnum, INITIAL, NONE } from 'type-enforcer-ui';
+import { applySettings, INITIAL, NONE } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
 import d3Helper from '../utility/d3Helper';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import GraphAxisBase from './GraphAxisBase';
 import * as graphConstants from './graphConstants';
 import './Scatter.less';
@@ -41,11 +42,11 @@ const VISIBLE_ITEMS = Symbol();
  */
 export default class Scatter extends GraphAxisBase {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.SCATTER;
-		settings.xScaleType = enforceEnum(settings.xScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
-		settings.yScaleType = enforceEnum(settings.yScaleType, GraphAxisBase.SCALE_TYPES, GraphAxisBase.SCALE_TYPES.LINEAR);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.SCATTER,
+			xScaleType: GraphAxisBase.SCALE_TYPES.LINEAR,
+			yScaleType: GraphAxisBase.SCALE_TYPES.LINEAR
+		}, settings));
 
 		const self = this;
 		self[RENDERED_WIDTH] = 0;
@@ -78,11 +79,19 @@ export default class Scatter extends GraphAxisBase {
 		self.data().forEach((dataObject) => {
 			if (dataObject.dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS) {
 				d3Helper.fade(self[DOTS], graphConstants.DURATION, 0);
-				d3Helper.fade(self[DOTS].filter((d) => d.z === item), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+				d3Helper.fade(
+					self[DOTS].filter((d) => d.z === item),
+					graphConstants.DURATION,
+					graphConstants.HILITE_OPACITY
+				);
 			}
 			else if (dataObject.dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS_RANGE) {
 				d3Helper.fade(self[RANGES], graphConstants.DURATION, 0);
-				d3Helper.fade(self[RANGES].filter((d) => d.z === item), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+				d3Helper.fade(
+					self[RANGES].filter((d) => d.z === item),
+					graphConstants.DURATION,
+					graphConstants.HILITE_OPACITY
+				);
 			}
 		});
 	}
@@ -133,7 +142,11 @@ export default class Scatter extends GraphAxisBase {
 			}
 		}
 		if (self[RANGES]) {
-			d3Helper.fade(self[RANGES].filter(self[isVisibleItem]), graphConstants.DURATION, graphConstants.FADE_OPACITY);
+			d3Helper.fade(
+				self[RANGES].filter(self[isVisibleItem]),
+				graphConstants.DURATION,
+				graphConstants.FADE_OPACITY
+			);
 
 			if (dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS) {
 				d3Helper.fade(self[RANGES].filter((datum) => self[isVisibleItem](d) &&
@@ -239,7 +252,10 @@ export default class Scatter extends GraphAxisBase {
 
 			data.forEach((dataObject) => {
 				if (dataObject.dataType === GraphAxisBase.DATA_TYPES.THREE_AXIS) {
-					self[RADIUS_MULTIPLIER] = (Math.min(self[RENDERED_WIDTH], self[RENDERED_HEIGHT]) / 30) / (dataObject.limits ? dataObject.limits.maxValue : 1);
+					self[RADIUS_MULTIPLIER] = (Math.min(
+						self[RENDERED_WIDTH],
+						self[RENDERED_HEIGHT]
+					) / 30) / (dataObject.limits ? dataObject.limits.maxValue : 1);
 
 					self[DOTS] = self[SVG].selectAll('.dot')
 						.data(dataObject.data);
@@ -275,7 +291,10 @@ export default class Scatter extends GraphAxisBase {
 						.attr('stroke-width', calculateStrokeWidth);
 				}
 				else if (dataObject.dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS) {
-					self[RADIUS_MULTIPLIER] = (Math.min(self[RENDERED_WIDTH], self[RENDERED_HEIGHT]) / 30) / (dataObject.limits ? dataObject.limits.maxValue : 1);
+					self[RADIUS_MULTIPLIER] = (Math.min(
+						self[RENDERED_WIDTH],
+						self[RENDERED_HEIGHT]
+					) / 30) / (dataObject.limits ? dataObject.limits.maxValue : 1);
 
 					self[DOTS] = self[SVG].selectAll('.dot')
 						.data(dataObject.data);

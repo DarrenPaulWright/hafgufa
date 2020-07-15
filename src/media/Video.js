@@ -1,6 +1,7 @@
 import { applySettings, methodArray, methodBoolean, methodNumber, methodQueue } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import Source from './Source';
 
 const IS_PLAYING = Symbol();
@@ -17,10 +18,10 @@ const methodProperty = (property) => function(value) {
 
 export default class Video extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.VIDEO;
-		settings.element = 'video';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.VIDEO,
+			element: 'video'
+		}, settings));
 
 		const self = this;
 		self[IS_PLAYING] = false;

@@ -1,5 +1,6 @@
 import { applySettings, methodString } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes';
+import setDefaults from '../utility/setDefaults.js';
 import Control from './../Control';
 
 /**
@@ -14,10 +15,10 @@ import Control from './../Control';
  */
 export default class Label extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.LABEL;
-		settings.element = 'label';
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.LABEL,
+			element: 'label'
+		}, settings));
 
 		if (this.type === controlTypes.LABEL) {
 			applySettings(this, settings);

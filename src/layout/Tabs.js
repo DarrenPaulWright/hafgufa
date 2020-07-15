@@ -1,13 +1,5 @@
 import { clone, forOwn } from 'object-agent';
-import {
-	applySettings,
-	AUTO,
-	enforceCssSize,
-	HUNDRED_PERCENT,
-	methodArray,
-	methodBoolean,
-	methodEnum
-} from 'type-enforcer-ui';
+import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodBoolean, methodEnum } from 'type-enforcer-ui';
 import Control from '../Control';
 import controlTypes from '../controlTypes';
 import Button from '../elements/Button';
@@ -18,6 +10,7 @@ import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
 import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
 import { ORIENTATION } from '../uiConstants';
 import { IS_DESKTOP } from '../utility/browser';
+import setDefaults from '../utility/setDefaults.js';
 import Container from './Container';
 import './Tabs.less';
 
@@ -47,11 +40,11 @@ const onTabClick = Symbol();
  */
 export default class Tabs extends MergeContentContainerMixin(Control) {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.TABS;
-		settings.width = enforceCssSize(settings.width, HUNDRED_PERCENT, true);
-		settings.height = enforceCssSize(settings.height, HUNDRED_PERCENT, true);
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.TABS,
+			width: HUNDRED_PERCENT,
+			height: HUNDRED_PERCENT
+		}, settings));
 
 		const self = this;
 		self.addClass('tabs');
@@ -161,7 +154,11 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 				self.content(clone(self[CURRENT_TAB].data.content));
 			}
 			if (self[CURRENT_TAB].data.onClick) {
-				self[CURRENT_TAB].data.onClick(self[CONTENT_CONTAINER], self[CURRENT_TAB].data.data, self[CURRENT_TAB].id);
+				self[CURRENT_TAB].data.onClick(
+					self[CONTENT_CONTAINER],
+					self[CURRENT_TAB].data.data,
+					self[CURRENT_TAB].id
+				);
 			}
 		}
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = false;

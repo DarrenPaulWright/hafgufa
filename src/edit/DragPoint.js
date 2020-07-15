@@ -4,18 +4,19 @@ import DragMixin from '../mixins/DragMixin';
 import FocusMixin from '../mixins/FocusMixin';
 import G from '../svg/G';
 import Rect from '../svg/Rect';
+import setDefaults from '../utility/setDefaults.js';
 import './DragPoint.less';
 
 export default class DragPoint extends FocusMixin(DragMixin(G)) {
 	constructor(settings = {}) {
-		settings.type = settings.type = controlTypes.DRAG_POINT;
-		settings.canDrag = true;
-		settings.restrictVerticalDrag = true;
-		settings.restrictHorizontalDrag = true;
-		settings.restrictDragToOrigin = true;
-		settings.fade = true;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.DRAG_POINT,
+			canDrag: true,
+			restrictVerticalDrag: true,
+			restrictHorizontalDrag: true,
+			restrictDragToOrigin: true,
+			fade: true
+		}, settings));
 
 		const self = this;
 		self.addClass('drag-point');

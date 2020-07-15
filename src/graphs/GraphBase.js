@@ -2,7 +2,6 @@ import { defer } from 'async-agent';
 import { forOwn } from 'object-agent';
 import {
 	DockPoint,
-	enforceBoolean,
 	Enum,
 	isObject,
 	methodArray,
@@ -19,6 +18,7 @@ import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
 import IsWorkingMixin from '../mixins/IsWorkingMixin';
 import Svg from '../svg/Svg';
 import { HEIGHT, WIDTH } from '../utility/domConstants';
+import setDefaults from '../utility/setDefaults.js';
 import './GraphBase.less';
 import Legend from './Legend';
 
@@ -50,9 +50,7 @@ const buildTooltipText = Symbol();
  */
 export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
-		settings.isWorking = enforceBoolean(settings.isWorking, true);
-
-		super(settings);
+		super(setDefaults({ isWorking: true }, settings));
 
 		const self = this;
 		self.addClass('graph');

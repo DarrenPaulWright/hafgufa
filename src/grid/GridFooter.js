@@ -5,6 +5,7 @@ import Button from '../elements/Button';
 import Div from '../elements/Div';
 import { COMPRESS_ICON, EXPAND_ICON } from '../icons';
 import locale from '../utility/locale';
+import setDefaults from '../utility/setDefaults.js';
 import './GridFooter.less';
 
 const SPACER = ' • ';
@@ -26,9 +27,9 @@ const setCountString = Symbol();
  */
 export default class GridFooter extends Control {
 	constructor(settings = {}) {
-		settings.type = settings.type || controlTypes.GRID_FOOTER;
-
-		super(settings);
+		super(setDefaults({
+			type: controlTypes.GRID_FOOTER
+		}, settings));
 
 		const self = this;
 		self.addClass('grid-footer');
