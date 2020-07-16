@@ -74,17 +74,17 @@ Object.assign(Icon.prototype, {
 
 				if (subIndex !== -1 || stackIndex !== -1) {
 					if (subIndex === -1) {
-						main = icon.substring(0, stackIndex);
-						stack = icon.substring(stackIndex + 1);
+						main = icon.slice(0, stackIndex);
+						stack = icon.slice(stackIndex + 1);
 					}
 					else if (stackIndex === -1 || stackIndex > subIndex) {
-						main = icon.substring(0, subIndex);
-						sub = icon.substring(subIndex + 1, icon.length - 1);
+						main = icon.slice(0, subIndex);
+						sub = icon.slice(subIndex + 1, -1);
 					}
 					else {
-						main = icon.substring(0, stackIndex);
-						stack = icon.substring(stackIndex + 1, subIndex);
-						sub = icon.substring(subIndex + 1, icon.length - 1);
+						main = icon.slice(0, stackIndex);
+						stack = icon.slice(stackIndex + 1, subIndex);
+						sub = icon.slice(subIndex + 1, -1);
 					}
 				}
 

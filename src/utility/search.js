@@ -25,7 +25,7 @@ const search = {
 				subSearch = subSearch.toLowerCase();
 
 				if (subSearch.charAt(0) === '-') {
-					return !(subSearch.length > 1 && haystack.includes(subSearch.substring(1)));
+					return !(subSearch.length > 1 && haystack.includes(subSearch.slice(1)));
 				}
 
 				return haystack.includes(subSearch);

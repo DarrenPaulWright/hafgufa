@@ -226,7 +226,7 @@ export default class Drawer extends Container {
 
 		if (self.container()) {
 			self.container().style[PADDING + self[DOCK].charAt(0)
-				.toUpperCase() + self[DOCK].substring(1)] = containerPadding + PIXELS;
+				.toUpperCase() + self[DOCK].slice(1)] = containerPadding + PIXELS;
 
 			if (self.container()[CONTROL_PROP]) {
 				self.container()[CONTROL_PROP].resize(true);

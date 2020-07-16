@@ -93,9 +93,18 @@ const propagationClickEvent = (event) => {
 };
 
 const getElement = (element) => {
-	return isElement(element) && element ||
-		isString(element) && element.indexOf(':') !== -1 && DOCUMENT.createElementNS(`http://www.w3.org/2000/${element.substr(0, element.indexOf(':'))}`, element.substr(element.indexOf(':') + 1)) ||
-		DOCUMENT.createElement(element || 'div');
+	if (isElement(element)) {
+		return element;
+	}
+
+	if (isString(element) && element.includes(':')) {
+		return DOCUMENT.createElementNS(
+			`http://www.w3.org/2000/${element.slice(0, element.indexOf(':'))}`,
+			element.slice(element.indexOf(':') + 1)
+		);
+	}
+
+	return DOCUMENT.createElement(element || 'div');
 };
 
 const parseElementStyle = (styles, styleName) => parseFloat(styles.getPropertyValue(styleName)) || 0;

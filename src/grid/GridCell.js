@@ -88,7 +88,7 @@ export default class GridCell extends Control {
 			self.element.scrollWidth > self.borderWidth()) {
 
 			if (displayText.length > MAX_TOOLTIP_LENGTH) {
-				displayText = displayText.substring(0, MAX_TOOLTIP_LENGTH) + ELLIPSIS;
+				displayText = displayText.slice(0, MAX_TOOLTIP_LENGTH) + ELLIPSIS;
 			}
 		}
 		else {
