@@ -1,5 +1,6 @@
 import { debounce, forRange, throttle } from 'async-agent';
 import { clone, fill } from 'object-agent';
+import { isNumber } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -505,7 +506,7 @@ export default class TileLayout extends Container {
 			self[IS_RENDERING] = false;
 			if (self[RENDER_REQUIRED] !== false) {
 				let newIndex;
-				if (typeof self[RENDER_REQUIRED] === 'number') {
+				if (isNumber(self[RENDER_REQUIRED])) {
 					newIndex = self[RENDER_REQUIRED];
 				}
 				self[RENDER_REQUIRED] = false;
@@ -668,14 +669,14 @@ export default class TileLayout extends Container {
 
 		if (self[IS_RENDERING]) {
 			if (startIndex !== undefined) {
-				if (typeof self[RENDER_REQUIRED] !== 'number') {
+				if (isNumber(self[RENDER_REQUIRED])) {
 					self[RENDER_REQUIRED] = startIndex;
 				}
 				else {
 					self[RENDER_REQUIRED] = Math.min(self[RENDER_REQUIRED], startIndex);
 				}
 			}
-			else if (typeof self[RENDER_REQUIRED] !== 'number') {
+			else if (isNumber(self[RENDER_REQUIRED])) {
 				self[RENDER_REQUIRED] = true;
 			}
 		}

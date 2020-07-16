@@ -1,5 +1,6 @@
 import { debounce } from 'async-agent';
 import { deepEqual, erase, get } from 'object-agent';
+import { isArray, isString } from 'type-enforcer';
 
 /**
  * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
@@ -37,8 +38,8 @@ const FormRelationshipHandler = function() {
 	 * @param {string} newData.relationships.caseThen.value - 'value|sum|sumRange|null' | literal
 	 * @param {object} newData.relationships.caseElse
 	 * @param {boolean} newData.relationships.caseElse.isEnabled
-	 * @param {String} newData.relationships.caseElse. value - 'value|sum|sumRange|null' | literal
-	 * @returns {Number} - A unique id that should be used to reference this relationship in the future
+	 * @param {string} newData.relationships.caseElse.value - 'value|sum|sumRange|null' | literal
+	 * @returns {number} - A unique id that should be used to reference this relationship in the future
 	 */
 	self.add = (newData) => {
 		newData.relationships = newData.relationships || [];
@@ -232,7 +233,7 @@ const FormRelationshipHandler = function() {
 	const getValue = (target) => {
 		let targetValue = target.value();
 
-		if (targetValue instanceof Array) {
+		if (isArray(targetValue)) {
 			targetValue = targetValue[0];
 		}
 
@@ -251,7 +252,7 @@ const FormRelationshipHandler = function() {
 	const getIntValue = (target) => {
 		let targetValue = target.value();
 
-		if (targetValue instanceof Array) {
+		if (isArray(targetValue)) {
 			targetValue = targetValue[0];
 		}
 
@@ -259,7 +260,7 @@ const FormRelationshipHandler = function() {
 			targetValue = targetValue.id;
 		}
 
-		if (targetValue && !parseInt(targetValue, 10) && typeof targetValue === 'string') {
+		if (targetValue && !parseInt(targetValue, 10) && isString(targetValue)) {
 			targetValue = targetValue.split('.');
 			targetValue = parseInt(targetValue[targetValue.length - 1], 10);
 		}
@@ -274,7 +275,7 @@ const FormRelationshipHandler = function() {
 	 * @function exists
 	 * @returns {boolean}
 	 */
-	const exists = (relationship) => relationship.targetValues.length > 0 && typeof relationship.targetValues[0] !== 'undefined';
+	const exists = (relationship) => relationship.targetValues.length > 0 && relationship.targetValues[0] !== undefined;
 
 	/**
 	 * Determines if the target controls value is equal to the value provided in relationship.options.
@@ -286,7 +287,7 @@ const FormRelationshipHandler = function() {
 	const simpleEquals = (relationship) => {
 		const target = get(relationship.targetValues.find((item) => item.id), 'id');
 
-		return (typeof target === 'undefined' || target === relationship.options);
+		return (target === undefined || target === relationship.options);
 	};
 
 	/**
@@ -302,7 +303,7 @@ const FormRelationshipHandler = function() {
 		const target = get(relationship.targetValues.find((item) => item.id), 'id');
 		if (relationship.options) {
 			relationship.options.forEach((option) => {
-				if (typeof target !== 'undefined' && target === option) {
+				if (target !== undefined && target === option) {
 					inArray = true;
 				}
 			});
@@ -346,13 +347,13 @@ const FormRelationshipHandler = function() {
 		let allEquals = true;
 
 		relationship.targetValues.forEach((targetValue, targetCount) => {
-			if (typeof relationship.options !== 'undefined') {
+			if (relationship.options !== undefined) {
 				if (relationship.options.length < relationship.targetValues.length) {
 					targetCount = 0;
 				}
 
-				if (typeof targetValue !== 'undefined') {
-					if (typeof targetValue.displayOrder !== 'undefined') {
+				if (targetValue !== undefined) {
+					if (targetValue.displayOrder !== undefined) {
 						erase(targetValue, 'displayOrder');
 					}
 				}

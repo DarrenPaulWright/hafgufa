@@ -3,6 +3,7 @@ import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fn
 import { Collection, compare, List } from 'hord';
 import { clone, deepEqual, erase, get } from 'object-agent';
 import shortid from 'shortid';
+import { isFunction } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -1274,7 +1275,7 @@ Object.assign(Grid.prototype, {
 		let currentRowId = 0;
 
 		const getIsCollapsed = (isCollapsedCallback, group) => {
-			if (!self[ARE_GROUPS_RENDERED] && isCollapsedCallback && typeof isCollapsedCallback === 'function') {
+			if (!self[ARE_GROUPS_RENDERED] && isCollapsedCallback && isFunction(isCollapsedCallback)) {
 				const newIsCollapsed = isCollapsedCallback(group);
 				self[saveCollapsedState](group, newIsCollapsed);
 				return newIsCollapsed;

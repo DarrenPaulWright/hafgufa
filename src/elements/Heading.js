@@ -1,5 +1,6 @@
 import keyCodes from 'keycodes';
 import { clone } from 'object-agent';
+import { isFunction } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -447,7 +448,7 @@ Object.assign(Heading.prototype, {
 							onClick.call(this, self.data());
 						};
 					}
-					if (typeof button.isEnabled === 'function') {
+					if (isFunction(button.isEnabled)) {
 						button.isEnabled = () => isEnabled(self.data());
 					}
 

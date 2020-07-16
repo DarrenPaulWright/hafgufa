@@ -1,5 +1,6 @@
 import { Collection, compare } from 'hord';
 import { clone, isEmpty } from 'object-agent';
+import { isString } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -1073,11 +1074,11 @@ Object.assign(Picker.prototype, {
 	value(newValue, isForcedSave) {
 		const self = this;
 
-		if (typeof newValue !== 'undefined') {
-			if (typeof newValue === 'string') {
+		if (newValue !== undefined) {
+			if (isString(newValue)) {
 				newValue = newValue.split(',');
 			}
-			else if (!(newValue instanceof Array)) {
+			else if (!(isArray(newValue))) {
 				newValue = [newValue];
 			}
 

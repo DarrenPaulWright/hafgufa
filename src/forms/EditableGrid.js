@@ -356,7 +356,7 @@ export default class EditableGrid extends FormControl {
 		const controlSettings = {
 			title: column.title,
 			width: HUNDRED_PERCENT,
-			isEnabled: (typeof editOptions.isEnabled === 'undefined') ? true : editOptions.isEnabled && !self[IS_EDITING],
+			isEnabled: (editOptions.isEnabled === undefined) ? true : editOptions.isEnabled && !self[IS_EDITING],
 			isRequired: editOptions.isRequired
 		};
 		const cellData = rowData.originalData.values[columnCount];

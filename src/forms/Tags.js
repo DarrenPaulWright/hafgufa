@@ -529,7 +529,7 @@ Object.assign(Tags.prototype, {
 
 			self[removeAllTags]();
 
-			if (typeof newValue === 'string') {
+			if (isString(newValue)) {
 				const parsedSearch = search.parseNeedle(newValue, self.breakOnSpaces());
 				newValue = [];
 				parsedSearch.forEach((orValues, orIndex) => {
