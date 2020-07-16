@@ -12,12 +12,12 @@ import {
 	methodFunction,
 	PIXELS
 } from 'type-enforcer-ui';
-import { CONTROL_PROP } from '../Control';
-import controlTypes from '../controlTypes';
-import Resizer from '../elements/Resizer';
-import { ORIENTATION } from '../uiConstants';
-import { IS_PHONE } from '../utility/browser';
-import d3Helper from '../utility/d3Helper';
+import { CONTROL_PROP } from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Resizer from '../elements/Resizer.js';
+import { ORIENTATION } from '../uiConstants.js';
+import { IS_PHONE } from '../utility/browser.js';
+import d3Helper from '../utility/d3Helper.js';
 import {
 	MARGIN,
 	OPACITY,
@@ -27,9 +27,9 @@ import {
 	SWIPE_LEFT_EVENT,
 	SWIPE_RIGHT_EVENT,
 	SWIPE_UP_EVENT
-} from '../utility/domConstants';
+} from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './Drawer.less';
 
 const ALL_SIDE_CLASSES = DockPoint.POINTS.TOP + SPACE + DockPoint.POINTS.RIGHT + SPACE + DockPoint.POINTS.BOTTOM + SPACE + DockPoint.POINTS.LEFT;

@@ -1,9 +1,9 @@
 import { clone } from 'object-agent';
 import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { Picker } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { Picker } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('Picker', () => {
 	const testUtil = new TestUtil(Picker);

@@ -15,19 +15,19 @@ import {
 	methodQueue,
 	methodString
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import BackDrop from '../elements/BackDrop';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import Tree from '../forms/Tree';
-import { MENU_ICON } from '../icons';
-import FocusMixin from '../mixins/FocusMixin';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import BackDrop from '../elements/BackDrop.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import Tree from '../forms/Tree.js';
+import { MENU_ICON } from '../icons.js';
+import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
-import { IS_DESKTOP } from '../utility/browser';
-import locale from '../utility/locale';
+import { IS_DESKTOP } from '../utility/browser.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import Drawer from './Drawer';
+import Drawer from './Drawer.js';
 import './DrawerMenu.less';
 
 const MENU_BUTTON = Symbol();

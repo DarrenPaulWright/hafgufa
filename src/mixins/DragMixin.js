@@ -1,6 +1,6 @@
 import { clear, delay } from 'async-agent';
 import { methodBoolean, methodNumber, methodQueue, PIXELS, Point, Thickness, Vector } from 'type-enforcer-ui';
-import { CONTROL_PROP } from '../Control';
+import { CONTROL_PROP } from '../Control.js';
 import {
 	ABSOLUTE,
 	BODY,
@@ -14,8 +14,8 @@ import {
 	SCROLL_TOP,
 	TOP,
 	TRANSFORM
-} from '../utility/domConstants';
-import clamp from '../utility/math/clamp';
+} from '../utility/domConstants.js';
+import clamp from '../utility/math/clamp.js';
 
 const FRICTION = 0.85;
 const ELASTICITY = 0.75;

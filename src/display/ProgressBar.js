@@ -9,16 +9,16 @@ import {
 	PERCENT,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import Heading from '../elements/Heading';
-import { CIRCLE_ICON } from '../icons';
-import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
-import d3Helper from '../utility/d3Helper';
-import { WIDTH } from '../utility/domConstants';
-import round from '../utility/math/round';
+import Control from '../Control.js';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import Heading from '../elements/Heading.js';
+import { CIRCLE_ICON } from '../icons.js';
+import ControlHeadingMixin from '../mixins/ControlHeadingMixin.js';
+import d3Helper from '../utility/d3Helper.js';
+import { WIDTH } from '../utility/domConstants.js';
+import round from '../utility/math/round.js';
 import setDefaults from '../utility/setDefaults.js';
 import './ProgressBar.less';
 

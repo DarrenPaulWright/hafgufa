@@ -1,10 +1,10 @@
 import { Path as Pathinator } from 'pathinator';
 import origin from 'pathinator/src/utility/origin.js';
 import { applySettings, Point, PrivateVars } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Path from '../svg/Path';
+import controlTypes from '../controlTypes.js';
+import Path from '../svg/Path.js';
 import setDefaults from '../utility/setDefaults.js';
-import Shape, { initDragPoint } from './Shape';
+import Shape, { initDragPoint } from './Shape.js';
 
 const _ = new PrivateVars();
 

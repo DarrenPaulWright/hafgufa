@@ -1,11 +1,11 @@
 import { select } from 'd3';
 import { applySettings, INITIAL, NONE } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import d3Helper from '../utility/d3Helper';
-import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import d3Helper from '../utility/d3Helper.js';
+import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import GraphAxisBase from './GraphAxisBase';
-import * as graphConstants from './graphConstants';
+import GraphAxisBase from './GraphAxisBase.js';
+import * as graphConstants from './graphConstants.js';
 import './Scatter.less';
 
 const MAX_DOT_STROKE_WIDTH = 16;

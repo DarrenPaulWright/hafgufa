@@ -2,7 +2,7 @@ import { wait } from 'async-agent';
 import { forOwn } from 'object-agent';
 import { assert, isFunction } from 'type-enforcer';
 import { castArray, CssSize, windowResize } from 'type-enforcer-ui';
-import { CLICK_EVENT, Container } from '../';
+import { CLICK_EVENT, Container } from '../index.js';
 
 const TEST_ID = 'testId';
 const TEST_ID_SUFFIX = 'testIdSuffix';

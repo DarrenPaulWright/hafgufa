@@ -8,14 +8,14 @@ import {
 	methodQueue,
 	PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import VirtualList from '../layout/VirtualList';
-import locale from '../utility/locale';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import VirtualList from '../layout/VirtualList.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GridColumnBlock.less';
-import GridHeader from './GridHeader';
-import GridRow from './GridRow';
+import GridHeader from './GridHeader.js';
+import GridRow from './GridRow.js';
 
 const GRID_HEADER = Symbol();
 const VIRTUAL_LIST = Symbol();

@@ -1,6 +1,6 @@
 import { methodArray, methodFunction } from 'type-enforcer-ui';
-import ContextMenu from '../other/ContextMenu';
-import { CONTEXT_MENU_EVENT } from '../utility/domConstants';
+import ContextMenu from '../other/ContextMenu.js';
+import { CONTEXT_MENU_EVENT } from '../utility/domConstants.js';
 
 let contextMenu;
 let contextMenuSource;

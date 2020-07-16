@@ -10,14 +10,14 @@ import {
 	methodFunction,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Resizer, { offsetToPixels } from '../elements/Resizer';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
-import { ORIENTATION as RESIZER_ORIENTATION } from '../uiConstants';
-import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Resizer, { offsetToPixels } from '../elements/Resizer.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
+import { ORIENTATION as RESIZER_ORIENTATION } from '../uiConstants.js';
+import { ABSOLUTE, HEIGHT, LEFT, POSITION, SCROLL_HEIGHT, SCROLL_WIDTH, TOP, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './SplitView.less';
 
 const SPLIT_VIEW_CLASS = 'split-view';

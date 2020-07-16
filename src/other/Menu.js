@@ -12,18 +12,18 @@ import {
 	methodFunction,
 	methodString
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import CheckBox from '../elements/CheckBox';
-import Div from '../elements/Div';
-import TextInput from '../forms/TextInput';
-import Tree from '../forms/Tree';
-import { ADD_ICON, DELETE_ICON, EDIT_ICON } from '../icons';
-import Popup from '../layout/Popup';
-import { KEY_DOWN_EVENT } from '../utility/domConstants';
-import locale from '../utility/locale';
-import search from '../utility/search';
+import controlTypes from '../controlTypes.js';
+import CheckBox from '../elements/CheckBox.js';
+import Div from '../elements/Div.js';
+import TextInput from '../forms/TextInput.js';
+import Tree from '../forms/Tree.js';
+import { ADD_ICON, DELETE_ICON, EDIT_ICON } from '../icons.js';
+import Popup from '../layout/Popup.js';
+import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
+import search from '../utility/search.js';
 import setDefaults from '../utility/setDefaults.js';
-import { filteredTitle } from '../utility/sortBy';
+import { filteredTitle } from '../utility/sortBy.js';
 import './Menu.less';
 
 const MAX_POPUP_HEIGHT = 600;

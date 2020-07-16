@@ -1,5 +1,5 @@
 import { methodFunction } from 'type-enforcer-ui';
-import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
+import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
 
 /**
  * Adds onMouseEnter and onMouseLeave methods to a control

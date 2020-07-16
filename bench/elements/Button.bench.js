@@ -1,6 +1,6 @@
 import { benchSettings } from 'karma-webpack-bundle';
-import { Button } from '../../index';
-import controlBenchCommon from '../controlBenchCommon';
+import { Button } from '../../index.js';
+import controlBenchCommon from '../controlBenchCommon.js';
 
 suite('Button', () => {
 	let sandbox = {};

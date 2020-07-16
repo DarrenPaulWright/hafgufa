@@ -10,13 +10,13 @@ import {
 	PIXELS,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import NextPrevMixin from '../mixins/NextPrevMixin';
-import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import NextPrevMixin from '../mixins/NextPrevMixin.js';
+import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Carousel.less';
-import VirtualList from './VirtualList';
+import VirtualList from './VirtualList.js';
 
 const VIRTUAL_LIST = Symbol();
 const IS_FIT = Symbol();

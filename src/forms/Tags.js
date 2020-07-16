@@ -10,20 +10,20 @@ import {
 	methodBoolean,
 	methodString
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import Heading from '../elements/Heading';
-import Span from '../elements/Span';
-import TextInput from '../forms/TextInput';
-import { CLEAR_ICON } from '../icons';
-import ActionButtonMixin from '../mixins/ActionButtonMixin';
-import Menu from '../other/Menu';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import Heading from '../elements/Heading.js';
+import Span from '../elements/Span.js';
+import TextInput from '../forms/TextInput.js';
+import { CLEAR_ICON } from '../icons.js';
+import ActionButtonMixin from '../mixins/ActionButtonMixin.js';
+import Menu from '../other/Menu.js';
 import assign from '../utility/assign.js';
-import { KEY_DOWN_EVENT } from '../utility/domConstants';
-import search from '../utility/search';
+import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
+import search from '../utility/search.js';
 import setDefaults from '../utility/setDefaults.js';
-import { filteredTitle } from '../utility/sortBy';
-import FormControl from './FormControl';
+import { filteredTitle } from '../utility/sortBy.js';
+import FormControl from './FormControl.js';
 import './Tags.less';
 
 const DEFAULT_TEXT_WIDTH = 20;

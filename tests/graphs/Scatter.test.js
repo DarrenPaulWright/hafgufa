@@ -1,6 +1,6 @@
-import { Scatter } from '../..';
-import TestUtil from '../TestUtil';
-import GraphBaseTests from './GraphBaseTests';
+import { Scatter } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import GraphBaseTests from './GraphBaseTests.js';
 
 describe('Scatter', () => {
 	const testUtil = new TestUtil(Scatter);

@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { CONTEXT_MENU_EVENT, ContextMenu } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { CONTEXT_MENU_EVENT, ContextMenu } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('ContextMenu', () => {
 	const testUtil = new TestUtil(ContextMenu);

@@ -1,6 +1,6 @@
 import { CssSize, methodCssSize } from 'type-enforcer-ui';
-import Control from '../Control';
-import { HEIGHT, WIDTH } from '../utility/domConstants';
+import Control from '../Control.js';
+import { HEIGHT, WIDTH } from '../utility/domConstants.js';
 
 export default class SvgControl extends Control {}
 

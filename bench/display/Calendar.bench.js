@@ -1,5 +1,5 @@
-import { Calendar } from '../../index';
-import controlBenchCommon from '../controlBenchCommon';
+import { Calendar } from '../../index.js';
+import controlBenchCommon from '../controlBenchCommon.js';
 
 suite('Calendar', () => {
 	controlBenchCommon(Calendar);

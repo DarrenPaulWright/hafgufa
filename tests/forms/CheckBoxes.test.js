@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { CheckBoxes } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { CheckBoxes } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('CheckBoxes', () => {
 	const testUtil = new TestUtil(CheckBoxes);

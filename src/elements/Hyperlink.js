@@ -1,7 +1,7 @@
 import { applySettings, methodString } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import OnClickMixin from '../mixins/OnClickMixin';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import OnClickMixin from '../mixins/OnClickMixin.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Hyperlink.less';
 

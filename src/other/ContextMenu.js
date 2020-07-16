@@ -1,7 +1,7 @@
-import { BODY, CLICK_EVENT, CONTEXT_MENU_EVENT } from '../utility/domConstants';
+import { BODY, CLICK_EVENT, CONTEXT_MENU_EVENT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './ContextMenu.less';
-import Menu from './Menu';
+import Menu from './Menu.js';
 
 const CONTEXT_MENU_CLASS = 'context-menu';
 

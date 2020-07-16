@@ -10,23 +10,23 @@ import {
 	methodFunction,
 	methodString
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import toast from '../display/toast';
-import Button from '../elements/Button';
-import Grid from '../grid/Grid';
-import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../grid/gridConstants';
-import { ADD_ICON, DELETE_ICON } from '../icons';
-import Dialog from '../layout/Dialog';
+import controlTypes from '../controlTypes.js';
+import toast from '../display/toast.js';
+import Button from '../elements/Button.js';
+import Grid from '../grid/Grid.js';
+import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../grid/gridConstants.js';
+import { ADD_ICON, DELETE_ICON } from '../icons.js';
+import Dialog from '../layout/Dialog.js';
 import assign from '../utility/assign.js';
-import { MARGIN_TOP } from '../utility/domConstants';
-import locale from '../utility/locale';
+import { MARGIN_TOP } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import Conversion from './Conversion';
-import Description from './Description';
+import Conversion from './Conversion.js';
+import Description from './Description.js';
 import './EditableGrid.less';
-import FormControl from './FormControl';
-import Picker from './Picker';
-import TextInput from './TextInput';
+import FormControl from './FormControl.js';
+import Picker from './Picker.js';
+import TextInput from './TextInput.js';
 
 const NEW_ROW_ID = 'new';
 const ADD_BUTTON_MARGIN_TOP = 6;

@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { Section } from '../..';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
-import TestUtil from '../TestUtil';
+import { Section } from '../../index.js';
+import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Section', () => {
 	const testUtil = new TestUtil(Section);

@@ -1,6 +1,6 @@
-import { Slider } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { Slider } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('Slider', () => {
 	const testUtil = new TestUtil(Slider);

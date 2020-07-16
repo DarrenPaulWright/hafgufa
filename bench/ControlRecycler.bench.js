@@ -1,5 +1,5 @@
 import { benchSettings } from 'karma-webpack-bundle';
-import { ControlRecycler } from '../index';
+import { ControlRecycler } from '../index.js';
 
 suite('ControlRecycler', () => {
 	let sandbox = {};

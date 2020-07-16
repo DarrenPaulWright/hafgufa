@@ -1,5 +1,5 @@
 import { benchSettings } from 'karma-webpack-bundle';
-import { ControlManager, Div } from '../index';
+import { ControlManager, Div } from '../index.js';
 
 suite('ControlManager', () => {
 	let sandbox = {};

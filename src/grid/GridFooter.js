@@ -1,10 +1,10 @@
 import { applySettings, methodArray, methodFunction, methodInteger, methodString } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import { COMPRESS_ICON, EXPAND_ICON } from '../icons';
-import locale from '../utility/locale';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import { COMPRESS_ICON, EXPAND_ICON } from '../icons.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GridFooter.less';
 

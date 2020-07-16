@@ -1,6 +1,6 @@
 import { clone } from 'object-agent';
-import toast from '../display/toast';
-import locale from './locale';
+import toast from '../display/toast.js';
+import locale from './locale.js';
 
 /**
  * @class SoftDelete

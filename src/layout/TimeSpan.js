@@ -1,11 +1,11 @@
 import { repeat } from 'object-agent';
 import { applySettings, methodCssSize, methodInteger, methodString, PERCENT, PIXELS } from 'type-enforcer-ui';
-import ControlRecycler from '../ControlRecycler';
+import ControlRecycler from '../ControlRecycler.js';
 import controlTypes from '../controlTypes.js';
-import Div from '../elements/Div';
-import Heading from '../elements/Heading';
-import Container from '../layout/Container';
-import { BOTTOM, LEFT, TOP } from '../utility/domConstants';
+import Div from '../elements/Div.js';
+import Heading from '../elements/Heading.js';
+import Container from '../layout/Container.js';
+import { BOTTOM, LEFT, TOP } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './TimeSpan.less';
 

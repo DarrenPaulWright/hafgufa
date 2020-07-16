@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import { Container, ControlManager, Div, IsWorking } from '../';
+import { Container, ControlManager, Div, IsWorking } from '../index.js';
 
 describe('ControlManager', () => {
 	let manager;

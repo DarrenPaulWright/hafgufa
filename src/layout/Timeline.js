@@ -33,16 +33,16 @@ import {
 	PIXELS,
 	Thickness
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import Div from '../elements/Div';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
-import NextPrevMixin from '../mixins/NextPrevMixin';
-import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../utility/domConstants';
-import clamp from '../utility/math/clamp';
+import Control from '../Control.js';
+import Div from '../elements/Div.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
+import NextPrevMixin from '../mixins/NextPrevMixin.js';
+import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../utility/domConstants.js';
+import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Timeline.less';
-import TimeSpan from './TimeSpan';
-import VirtualList from './VirtualList';
+import TimeSpan from './TimeSpan.js';
+import VirtualList from './VirtualList.js';
 
 const MILLISECONDS_IN_SECOND = 1000;
 const SECONDS_IN_MINUTE = 60;

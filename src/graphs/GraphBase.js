@@ -12,15 +12,15 @@ import {
 	PIXELS,
 	Thickness
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import Tooltip from '../layout/Tooltip';
-import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
-import Svg from '../svg/Svg';
-import { HEIGHT, WIDTH } from '../utility/domConstants';
+import Control from '../Control.js';
+import Tooltip from '../layout/Tooltip.js';
+import ControlHeadingMixin from '../mixins/ControlHeadingMixin.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
+import Svg from '../svg/Svg.js';
+import { HEIGHT, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GraphBase.less';
-import Legend from './Legend';
+import Legend from './Legend.js';
 
 const BREAK = '<br>';
 const MAX_TOOLTIP_WIDTH = '20rem';

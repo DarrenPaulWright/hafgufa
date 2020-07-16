@@ -1,9 +1,9 @@
 import { applySettings, DockPoint } from 'type-enforcer-ui';
-import Popup from '../layout/Popup';
-import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
-import Removable from '../mixins/Removable';
+import Popup from '../layout/Popup.js';
+import DelayedRenderMixin from '../mixins/DelayedRenderMixin.js';
+import Removable from '../mixins/Removable.js';
 import assign from '../utility/assign.js';
-import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../utility/domConstants';
+import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../utility/domConstants.js';
 import './Tooltip.less';
 
 const TOOLTIP_CLASS = 'tooltip';

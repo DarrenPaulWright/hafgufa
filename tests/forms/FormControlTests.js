@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
+import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
 
 const TEST_TITLE = 'Test <br> Title &nbsp;';
 

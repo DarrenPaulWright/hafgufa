@@ -1,7 +1,7 @@
 import { applySettings } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
-import SvgControl from './SvgControl';
+import SvgControl from './SvgControl.js';
 
 export default class Svg extends SvgControl {
 	constructor(settings = {}) {

@@ -15,8 +15,8 @@ import {
 	methodObject,
 	PIXELS
 } from 'type-enforcer-ui';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
 import {
 	ABSOLUTE,
 	CONTENT_CHANGE_EVENT,
@@ -28,10 +28,10 @@ import {
 	POSITION,
 	SCROLL_EVENT,
 	TOP
-} from '../utility/domConstants';
-import clamp from '../utility/math/clamp';
+} from '../utility/domConstants.js';
+import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './TileLayout.less';
 
 const COLUMN_SPAN = 'columnSpan';

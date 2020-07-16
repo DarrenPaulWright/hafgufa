@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { DragContainer } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { DragContainer } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('DragContainer', () => {
 	const testUtil = new TestUtil(DragContainer);

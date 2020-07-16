@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
-import { accuracy } from '../../..';
-import TestUtil from '../../TestUtil';
+import { accuracy } from '../../../index.js';
+import TestUtil from '../../TestUtil.js';
 
 new TestUtil(accuracy);
 

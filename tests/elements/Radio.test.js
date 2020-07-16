@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { Radio } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Radio } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Radio', () => {
 	const testUtil = new TestUtil(Radio);

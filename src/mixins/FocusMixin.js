@@ -1,6 +1,6 @@
 import { defer } from 'async-agent';
 import { methodQueue, PrivateVars } from 'type-enforcer-ui';
-import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../utility/domConstants';
+import { DOCUMENT, FOCUS_IN_EVENT, FOCUS_OUT_EVENT } from '../utility/domConstants.js';
 
 const _ = new PrivateVars();
 

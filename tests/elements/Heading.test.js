@@ -1,8 +1,8 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
-import { Heading, MOUSE_ENTER_EVENT } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Heading, MOUSE_ENTER_EVENT } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Heading', () => {
 	const testUtil = new TestUtil(Heading);

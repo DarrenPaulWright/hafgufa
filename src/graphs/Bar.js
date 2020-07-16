@@ -1,12 +1,12 @@
 import { color, select } from 'd3';
 import { applySettings, methodNumber } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import d3Helper from '../utility/d3Helper';
-import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import d3Helper from '../utility/d3Helper.js';
+import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Bar.less';
-import GraphAxisBase from './GraphAxisBase';
-import * as graphConstants from './graphConstants';
+import GraphAxisBase from './GraphAxisBase.js';
+import * as graphConstants from './graphConstants.js';
 
 const GRADIENT_ID = 'bar-gradient';
 const BAR_LABEL_OFFSET = 4;

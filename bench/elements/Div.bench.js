@@ -1,5 +1,5 @@
-import { Div } from '../../index';
-import controlBenchCommon from '../controlBenchCommon';
+import { Div } from '../../index.js';
+import controlBenchCommon from '../controlBenchCommon.js';
 
 suite('Div', () => {
 	controlBenchCommon(Div);

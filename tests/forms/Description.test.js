@@ -1,8 +1,8 @@
 import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
-import { Description, TEXT_ALIGN, WIDTH } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { Description, TEXT_ALIGN, WIDTH } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('Description', () => {
 	const testUtil = new TestUtil(Description);

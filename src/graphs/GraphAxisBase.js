@@ -1,11 +1,11 @@
 import { axisBottom, axisLeft, axisRight, axisTop, scaleBand, scaleLinear, select } from 'd3';
 import { fill } from 'object-agent';
 import { Enum, methodAny, methodEnum, methodNumber, methodString } from 'type-enforcer-ui';
-import d3Helper from '../utility/d3Helper';
-import accuracy from '../utility/math/accuracy';
-import round from '../utility/math/round';
+import d3Helper from '../utility/d3Helper.js';
+import accuracy from '../utility/math/accuracy.js';
+import round from '../utility/math/round.js';
 import setDefaults from '../utility/setDefaults.js';
-import GraphBase from './GraphBase';
+import GraphBase from './GraphBase.js';
 
 const MIN_AXIS_SIZE = 20;
 const AXIS_LABEL_OFFSET = 6;

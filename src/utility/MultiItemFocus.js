@@ -1,6 +1,6 @@
 import keyCodes from 'keycodes';
 import { methodFunction, methodInteger } from 'type-enforcer-ui';
-import { KEY_DOWN_EVENT } from './domConstants';
+import { KEY_DOWN_EVENT } from './domConstants.js';
 
 const CONTAINER = Symbol();
 

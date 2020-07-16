@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { Calendar } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Calendar } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Calendar', () => {
 	const testUtil = new TestUtil(Calendar);

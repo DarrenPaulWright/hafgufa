@@ -1,9 +1,9 @@
 import { applySettings, methodBoolean } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { INPUT_TYPE_CHECKBOX } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { INPUT_TYPE_CHECKBOX } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './CheckBox.less';
-import Radio, { INPUT } from './Radio';
+import Radio, { INPUT } from './Radio.js';
 
 /**
  * A single checkbox with label.

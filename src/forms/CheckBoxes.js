@@ -1,11 +1,11 @@
 import { applySettings, AUTO, castArray, HUNDRED_PERCENT, methodAny, methodArray } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import CheckBox from '../elements/CheckBox';
-import { ORIENTATION } from '../uiConstants';
+import controlTypes from '../controlTypes.js';
+import CheckBox from '../elements/CheckBox.js';
+import { ORIENTATION } from '../uiConstants.js';
 import assign from '../utility/assign.js';
 import setDefaults from '../utility/setDefaults.js';
 import './CheckBoxes.less';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 
 const CHECK_BOXES = Symbol();
 

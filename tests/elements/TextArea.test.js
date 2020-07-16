@@ -1,6 +1,6 @@
-import { TextArea } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { TextArea } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('TextArea', () => {
 	const testUtil = new TestUtil(TextArea);

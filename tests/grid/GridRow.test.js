@@ -1,8 +1,8 @@
 import { assert } from 'type-enforcer';
-import * as gridConstants from '../../src/grid/gridConstants';
-import GridRow from '../../src/grid/GridRow';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import * as gridConstants from '../../src/grid/gridConstants.js';
+import GridRow from '../../src/grid/GridRow.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridRow', () => {
 	const testUtil = new TestUtil(GridRow);

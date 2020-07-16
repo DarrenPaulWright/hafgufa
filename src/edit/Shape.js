@@ -1,13 +1,13 @@
 import keycodes from 'keycodes/index';
 import { methodBoolean, methodFunction, methodQueue, Point } from 'type-enforcer-ui';
-import ContextMenuMixin from '../mixins/ContextMenuMixin';
-import DragMixin from '../mixins/DragMixin';
-import FocusMixin from '../mixins/FocusMixin';
-import MouseMixin from '../mixins/MouseMixin';
-import G from '../svg/G';
-import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../utility/domConstants';
+import ContextMenuMixin from '../mixins/ContextMenuMixin.js';
+import DragMixin from '../mixins/DragMixin.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import MouseMixin from '../mixins/MouseMixin.js';
+import G from '../svg/G.js';
+import { KEY_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import DragPoint from './DragPoint';
+import DragPoint from './DragPoint.js';
 import './Shape.less';
 
 const IS_RESIZING = Symbol();

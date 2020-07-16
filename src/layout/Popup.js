@@ -13,10 +13,10 @@ import {
 	windowResize,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
-import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin.js';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin.js';
 import {
 	ABSOLUTE,
 	BLOCK,
@@ -42,10 +42,10 @@ import {
 	WIDTH,
 	WINDOW,
 	Z_INDEX
-} from '../utility/domConstants';
-import * as mouse from '../utility/mouse';
+} from '../utility/domConstants.js';
+import * as mouse from '../utility/mouse.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './Popup.less';
 
 const POPUP_CLASS = 'popup';

@@ -1,8 +1,8 @@
 import { applySettings } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { ABSOLUTE_CLASS, BODY, CLICK_EVENT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 import './BackDrop.less';
 
 const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';

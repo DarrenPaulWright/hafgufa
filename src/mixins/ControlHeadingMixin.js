@@ -9,9 +9,9 @@ import {
 	methodString,
 	NONE
 } from 'type-enforcer-ui';
-import Div from '../elements/Div';
-import Heading, { HEADING_LEVELS } from '../elements/Heading';
-import { DISPLAY } from '../utility/domConstants';
+import Div from '../elements/Div.js';
+import Heading, { HEADING_LEVELS } from '../elements/Heading.js';
+import { DISPLAY } from '../utility/domConstants.js';
 
 const SINGLE_LINE_CLASS = 'single-line';
 const CAN_COLLAPSE_CLASS = 'can-collapse';

@@ -1,6 +1,6 @@
 import { applySettings } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
 
 export default class Source extends Control {

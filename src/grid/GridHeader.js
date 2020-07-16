@@ -1,11 +1,11 @@
 import { applySettings, CssSize, methodArray, methodBoolean, methodFunction, methodNumber } from 'type-enforcer-ui';
-import Control from '../Control';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
+import Control from '../Control.js';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
-import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants';
+import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants.js';
 import './GridHeader.less';
-import GridHeaderCell from './GridHeaderCell';
+import GridHeaderCell from './GridHeaderCell.js';
 
 const MIN_COLUMN_WIDTH = 60;
 

@@ -1,7 +1,7 @@
 import { applySettings, Enum, methodEnum, methodString } from 'type-enforcer-ui';
-import Control, { CHILD_CONTROLS } from '../Control';
-import controlTypes from '../controlTypes';
-import TooltipMixin from '../mixins/TooltipMixin';
+import Control, { CHILD_CONTROLS } from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import TooltipMixin from '../mixins/TooltipMixin.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Icon.less';
 

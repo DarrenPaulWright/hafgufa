@@ -1,7 +1,7 @@
 import { throttle } from 'async-agent';
 import { DockPoint, methodAny, methodDockPoint } from 'type-enforcer-ui';
-import Tooltip from '../layout/Tooltip';
-import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
+import Tooltip from '../layout/Tooltip.js';
+import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
 
 const EVENT_SUFFIX = '.tooltip';
 

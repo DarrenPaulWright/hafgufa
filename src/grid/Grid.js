@@ -19,16 +19,16 @@ import {
 	methodString,
 	Queue
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
 import assign from '../utility/assign.js';
-import locale from '../utility/locale';
-import search from '../utility/search';
+import locale from '../utility/locale.js';
+import search from '../utility/search.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Grid.less';
-import GridColumnBlock from './GridColumnBlock';
-import { CELL_ALIGNMENT, COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants';
-import GridFooter from './GridFooter';
+import GridColumnBlock from './GridColumnBlock.js';
+import { CELL_ALIGNMENT, COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants.js';
+import GridFooter from './GridFooter.js';
 
 const baseSort = compare();
 const descSort = (a, b) => baseSort(b, a);

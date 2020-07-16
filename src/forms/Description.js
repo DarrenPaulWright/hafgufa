@@ -1,9 +1,9 @@
 import { applySettings, AUTO, methodBoolean, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { LEFT, TEXT_ALIGN, WIDTH } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { LEFT, TEXT_ALIGN, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Description.less';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 
 const COLUMNS_CLASS = 'columns';
 

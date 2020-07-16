@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
-import { toast } from '../..';
-import TestUtil from '../TestUtil';
+import { toast } from '../../index.js';
+import TestUtil from '../TestUtil.js';
 
 describe('toast', () => {
 	afterEach(() => toast.clear());

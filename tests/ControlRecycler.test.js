@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
-import { Button, ControlRecycler, Icon } from '../';
-import TestUtil from './TestUtil';
+import { Button, ControlRecycler, Icon } from '../index.js';
+import TestUtil from './TestUtil.js';
 
 describe('ControlRecycler', () => {
 	const testUtil = new TestUtil(ControlRecycler);

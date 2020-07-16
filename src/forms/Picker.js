@@ -13,16 +13,16 @@ import {
 	methodFunction,
 	methodString
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Dialog from '../layout/Dialog';
-import Menu from '../other/Menu';
+import controlTypes from '../controlTypes.js';
+import Dialog from '../layout/Dialog.js';
+import Menu from '../other/Menu.js';
 import assign from '../utility/assign.js';
-import { CLICK_EVENT, WINDOW } from '../utility/domConstants';
-import locale from '../utility/locale';
+import { CLICK_EVENT, WINDOW } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import softDelete from '../utility/softDelete';
-import FormControl from './FormControl';
-import GroupedButtons from './GroupedButtons';
+import softDelete from '../utility/softDelete.js';
+import FormControl from './FormControl.js';
+import GroupedButtons from './GroupedButtons.js';
 
 const POPUP_BUTTON_ID = 'picker-popup-button';
 const POPUP_BUTTON_CLASS = 'popup-button';

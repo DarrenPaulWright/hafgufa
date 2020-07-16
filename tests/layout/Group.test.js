@@ -1,6 +1,6 @@
-import { Group } from '../..';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
-import TestUtil from '../TestUtil';
+import { Group } from '../../index.js';
+import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Group', () => {
 	const testUtil = new TestUtil(Group);

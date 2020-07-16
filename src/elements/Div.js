@@ -1,8 +1,8 @@
 import { applySettings, castArray, isArray, isElement, isJson, isNumber, isObject, isString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { CONTENT_CHANGE_EVENT } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { CONTENT_CHANGE_EVENT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control, { CHILD_CONTROLS } from './../Control';
+import Control, { CHILD_CONTROLS } from './../Control.js';
 
 const addContent = Symbol();
 const addLayout = Symbol();

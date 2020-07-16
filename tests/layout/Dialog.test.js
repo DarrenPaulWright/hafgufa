@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
-import { Dialog } from '../..';
-import TestUtil from '../TestUtil';
+import { Dialog } from '../../index.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Dialog', () => {
 	const testUtil = new TestUtil(Dialog);

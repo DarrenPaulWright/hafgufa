@@ -19,14 +19,14 @@ import {
 	Thickness,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import Span from '../elements/Span';
-import FocusMixin from '../mixins/FocusMixin';
+import Control from '../Control.js';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import Span from '../elements/Span.js';
+import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
-import d3Helper from '../utility/d3Helper';
+import d3Helper from '../utility/d3Helper.js';
 import {
 	ABSOLUTE,
 	BOX_SIZING,
@@ -54,11 +54,11 @@ import {
 	TAB_INDEX_ENABLED,
 	TOP,
 	WIDTH
-} from '../utility/domConstants';
-import clamp from '../utility/math/clamp';
-import MultiItemFocus from '../utility/MultiItemFocus';
+} from '../utility/domConstants.js';
+import clamp from '../utility/math/clamp.js';
+import MultiItemFocus from '../utility/MultiItemFocus.js';
 import setDefaults from '../utility/setDefaults.js';
-import DragContainer from './DragContainer';
+import DragContainer from './DragContainer.js';
 import './VirtualList.less';
 
 const forRange = (first, last, callback) => {

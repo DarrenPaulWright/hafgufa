@@ -1,6 +1,6 @@
-import { Label } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Label } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Label', () => {
 	const testUtil = new TestUtil(Label);

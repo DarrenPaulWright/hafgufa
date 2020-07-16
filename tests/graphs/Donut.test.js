@@ -1,6 +1,6 @@
-import { Donut } from '../..';
-import TestUtil from '../TestUtil';
-import GraphBaseTests from './GraphBaseTests';
+import { Donut } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import GraphBaseTests from './GraphBaseTests.js';
 
 describe('Donut', () => {
 	const testUtil = new TestUtil(Donut);

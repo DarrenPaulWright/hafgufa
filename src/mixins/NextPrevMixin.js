@@ -1,10 +1,10 @@
 import { defer } from 'async-agent';
 import { HUNDRED_PERCENT, methodBoolean, methodEnum, PrivateVars } from 'type-enforcer-ui';
-import ControlManager from '../ControlManager';
-import Button from '../elements/Button';
-import { ICON_SIZES } from '../elements/Icon';
-import { NEXT_ICON, PREVIOUS_ICON } from '../icons';
-import { ABSOLUTE } from '../utility/domConstants';
+import ControlManager from '../ControlManager.js';
+import Button from '../elements/Button.js';
+import { ICON_SIZES } from '../elements/Icon.js';
+import { NEXT_ICON, PREVIOUS_ICON } from '../icons.js';
+import { ABSOLUTE } from '../utility/domConstants.js';
 
 const PREV_BUTTON_ID = 'carouselPrevButton';
 const NEXT_BUTTON_ID = 'carouselNextButton';

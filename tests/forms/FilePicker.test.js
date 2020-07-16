@@ -1,6 +1,6 @@
-import { FilePicker } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { FilePicker } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('FilePicker', () => {
 	const testUtil = new TestUtil(FilePicker);

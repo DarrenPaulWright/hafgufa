@@ -12,16 +12,16 @@ import {
 	PIXELS,
 	Thickness
 } from 'type-enforcer-ui';
-import BackDrop from '../elements/BackDrop';
-import Heading, { HEADING_LEVELS } from '../elements/Heading';
-import { CLEAR_ICON } from '../icons';
-import Toolbar from '../layout/Toolbar';
-import Removable from '../mixins/Removable';
-import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../utility/domConstants';
+import BackDrop from '../elements/BackDrop.js';
+import Heading, { HEADING_LEVELS } from '../elements/Heading.js';
+import { CLEAR_ICON } from '../icons.js';
+import Toolbar from '../layout/Toolbar.js';
+import Removable from '../mixins/Removable.js';
+import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './Dialog.less';
-import Popup from './Popup';
+import Popup from './Popup.js';
 
 const DIALOG_BASE_CLASS = 'dialog';
 const DIALOG_CONTENT_CLASS = 'dialog-content';

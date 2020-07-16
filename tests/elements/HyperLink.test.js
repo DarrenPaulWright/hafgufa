@@ -1,6 +1,6 @@
-import { Hyperlink } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Hyperlink } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Hyperlink', () => {
 	const testUtil = new TestUtil(Hyperlink);

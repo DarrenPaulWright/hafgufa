@@ -10,14 +10,14 @@ import {
 	methodString,
 	PIXELS
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
-import Heading from '../elements/Heading';
-import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../utility/domConstants';
+import Control from '../Control.js';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
+import Heading from '../elements/Heading.js';
+import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import GridCell from './GridCell';
-import { COLUMN_TYPES } from './gridConstants';
+import GridCell from './GridCell.js';
+import { COLUMN_TYPES } from './gridConstants.js';
 import './GridRow.less';
 
 const COLUMN_GROUP_WIDTH = 32;

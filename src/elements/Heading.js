@@ -14,12 +14,12 @@ import {
 	methodString,
 	ZERO_PIXELS
 } from 'type-enforcer-ui';
-import Control, { CHILD_CONTROLS } from '../Control';
-import controlTypes from '../controlTypes';
-import CheckBox from '../elements/CheckBox';
-import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons';
-import Toolbar from '../layout/Toolbar';
-import FocusMixin from '../mixins/FocusMixin';
+import Control, { CHILD_CONTROLS } from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import CheckBox from '../elements/CheckBox.js';
+import { CARET_DOWN_ICON, CARET_RIGHT_ICON, ERROR_ICON } from '../icons.js';
+import Toolbar from '../layout/Toolbar.js';
+import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
 import {
 	CLICK_EVENT,
@@ -30,14 +30,14 @@ import {
 	TAB_INDEX,
 	TAB_INDEX_DISABLED,
 	TAB_INDEX_ENABLED
-} from '../utility/domConstants';
+} from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Button from './Button';
-import Div from './Div';
+import Button from './Button.js';
+import Div from './Div.js';
 import './Heading.less';
-import Icon from './Icon';
-import Image from './Image';
-import Span from './Span';
+import Icon from './Icon.js';
+import Image from './Image.js';
+import Span from './Span.js';
 
 const IS_CLICKABLE_CLASS = 'clickable';
 const TITLE_ID = 'headingTitle';

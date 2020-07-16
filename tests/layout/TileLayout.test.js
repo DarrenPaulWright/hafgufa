@@ -1,6 +1,6 @@
-import { TileLayout } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { TileLayout } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('TileLayout', () => {
 	const testUtil = new TestUtil(TileLayout);

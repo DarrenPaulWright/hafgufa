@@ -1,10 +1,10 @@
 import { applySettings, CssSize, HUNDRED_PERCENT, methodString } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import Label from '../elements/Label';
-import DelayedRenderMixin from '../mixins/DelayedRenderMixin';
-import { ABSOLUTE_CLASS } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import Label from '../elements/Label.js';
+import DelayedRenderMixin from '../mixins/DelayedRenderMixin.js';
+import { ABSOLUTE_CLASS } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './IsWorking.less';
 

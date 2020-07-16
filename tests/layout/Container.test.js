@@ -1,6 +1,6 @@
-import { Container } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Container } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Container', () => {
 	const testUtil = new TestUtil(Container);

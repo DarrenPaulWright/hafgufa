@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import GridFooter from '../../src/grid/GridFooter';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import GridFooter from '../../src/grid/GridFooter.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridFooter', () => {
 	const testUtil = new TestUtil(GridFooter);

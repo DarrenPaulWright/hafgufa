@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { Conversion, locale } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { Conversion, locale } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 locale.set({
 	'feetAbbr': 'ft',

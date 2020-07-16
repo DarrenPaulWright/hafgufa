@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { Icon, ICON_SIZES } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Icon, ICON_SIZES } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Icon', () => {
 	const testUtil = new TestUtil(Icon);

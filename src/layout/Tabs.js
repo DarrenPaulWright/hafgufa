@@ -1,17 +1,17 @@
 import { clone, forOwn } from 'object-agent';
 import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodBoolean, methodEnum } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import GroupedButtons from '../forms/GroupedButtons';
-import { COLLAPSE_LEFT_ICON, UN_COLLAPSE_RIGHT_ICON } from '../icons';
-import Toolbar from '../layout/Toolbar';
-import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin';
-import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
-import { ORIENTATION } from '../uiConstants';
-import { IS_DESKTOP } from '../utility/browser';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import GroupedButtons from '../forms/GroupedButtons.js';
+import { COLLAPSE_LEFT_ICON, UN_COLLAPSE_RIGHT_ICON } from '../icons.js';
+import Toolbar from '../layout/Toolbar.js';
+import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin.js';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin.js';
+import { ORIENTATION } from '../uiConstants.js';
+import { IS_DESKTOP } from '../utility/browser.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './Tabs.less';
 
 const TAB_CONTAINER = Symbol();

@@ -1,9 +1,9 @@
 import { applySettings, methodBoolean } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import DragMixin from '../mixins/DragMixin';
-import FocusMixin from '../mixins/FocusMixin';
-import G from '../svg/G';
-import Rect from '../svg/Rect';
+import controlTypes from '../controlTypes.js';
+import DragMixin from '../mixins/DragMixin.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import G from '../svg/G.js';
+import Rect from '../svg/Rect.js';
 import setDefaults from '../utility/setDefaults.js';
 import './DragPoint.less';
 

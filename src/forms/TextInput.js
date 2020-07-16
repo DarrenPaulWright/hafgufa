@@ -13,12 +13,12 @@ import {
 	methodQueue,
 	methodString
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Input from '../elements/Input';
-import Span from '../elements/Span';
-import TextArea from '../elements/TextArea';
-import { CLEAR_ICON } from '../icons';
-import ActionButtonMixin from '../mixins/ActionButtonMixin';
+import controlTypes from '../controlTypes.js';
+import Input from '../elements/Input.js';
+import Span from '../elements/Span.js';
+import TextArea from '../elements/TextArea.js';
+import { CLEAR_ICON } from '../icons.js';
+import ActionButtonMixin from '../mixins/ActionButtonMixin.js';
 import {
 	INPUT_TYPE_PASSWORD,
 	INPUT_TYPE_TEXT,
@@ -26,11 +26,11 @@ import {
 	LINE_HEIGHT,
 	MAX_LENGTH,
 	PLACE_HOLDER
-} from '../utility/domConstants';
+} from '../utility/domConstants.js';
 import locale from '../utility/locale.js';
-import clamp from '../utility/math/clamp';
+import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 import './TextInput.less';
 
 export const ON_CHANGE_DELAY = 200;

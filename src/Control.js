@@ -18,9 +18,9 @@ import {
 	windowResize
 } from 'type-enforcer-ui';
 import './Control.less';
-import ControlManager from './ControlManager';
-import Removable from './mixins/Removable';
-import getAttributes from './utility/dom/getAttributes';
+import ControlManager from './ControlManager.js';
+import Removable from './mixins/Removable.js';
+import getAttributes from './utility/dom/getAttributes.js';
 import {
 	BORDER_BOX,
 	BOTTOM,
@@ -48,7 +48,7 @@ import {
 	TOP,
 	WIDTH,
 	WINDOW
-} from './utility/domConstants';
+} from './utility/domConstants.js';
 
 const _ = new PrivateVars();
 

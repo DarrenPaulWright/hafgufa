@@ -1,9 +1,9 @@
 import { assert } from 'type-enforcer';
-import { CONTEXT_MENU_EVENT } from '../..';
-import GridColumnBlock from '../../src/grid/GridColumnBlock';
-import * as gridConstants from '../../src/grid/gridConstants';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { CONTEXT_MENU_EVENT } from '../../index.js';
+import GridColumnBlock from '../../src/grid/GridColumnBlock.js';
+import * as gridConstants from '../../src/grid/gridConstants.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridColumnBlock', () => {
 	const testUtil = new TestUtil(GridColumnBlock);

@@ -8,13 +8,13 @@ import {
 	methodObject,
 	methodQueue
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
+import Control from '../Control.js';
+import ControlHeadingMixin from '../mixins/ControlHeadingMixin.js';
 import FocusMixin from '../mixins/FocusMixin.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './FormControl.less';
-import formRelationships from './formRelationships';
+import formRelationships from './formRelationships.js';
 
 const CURRENT_VALUE = Symbol();
 const RELATIONSHIP_ID = Symbol();

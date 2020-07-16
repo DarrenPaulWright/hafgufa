@@ -1,6 +1,6 @@
-import { DragPoint } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { DragPoint } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('DragPoint', () => {
 	const testUtil = new TestUtil(DragPoint, true);

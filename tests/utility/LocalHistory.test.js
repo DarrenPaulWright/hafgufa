@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
-import { LocalHistory } from '../..';
-import TestUtil from '../TestUtil';
+import { LocalHistory } from '../../index.js';
+import TestUtil from '../TestUtil.js';
 
 new TestUtil(LocalHistory);
 

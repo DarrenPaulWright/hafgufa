@@ -11,15 +11,15 @@ import {
 	setSeconds
 } from 'date-fns';
 import { applySettings, AUTO, DockPoint, enforceDate, methodBoolean, methodDate, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Calendar from '../display/Calendar';
-import Button from '../elements/Button';
-import TextInput from '../forms/TextInput';
+import controlTypes from '../controlTypes.js';
+import Calendar from '../display/Calendar.js';
+import Button from '../elements/Button.js';
+import TextInput from '../forms/TextInput.js';
 import { CALENDAR_ICON } from '../icons.js';
-import Popup from '../layout/Popup';
+import Popup from '../layout/Popup.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 
 const CALENDAR_WIDTH = '14rem';
 const CALENDAR_HEIGHT = '12.25rem';

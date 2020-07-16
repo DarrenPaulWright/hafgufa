@@ -1,10 +1,10 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
-import { CONTEXT_MENU_EVENT } from '../..';
-import * as gridConstants from '../../src/grid/gridConstants';
-import GridHeaderCell from '../../src/grid/GridHeaderCell';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { CONTEXT_MENU_EVENT } from '../../index.js';
+import * as gridConstants from '../../src/grid/gridConstants.js';
+import GridHeaderCell from '../../src/grid/GridHeaderCell.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridHeaderCell', () => {
 	const testUtil = new TestUtil(GridHeaderCell);

@@ -1,8 +1,8 @@
 import { applySettings, Enum, methodBoolean, methodEnum, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { DRAG_START_EVENT, OBJECT_FIT, OPACITY, SOURCE } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 import './Image.less';
 
 const DEFAULT_IMAGE_SOURCE = ' ';

@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import search from '../../src/utility/search';
+import search from '../../src/utility/search.js';
 
 describe('search', () => {
 	const runTests = (data) => {

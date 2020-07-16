@@ -1,14 +1,14 @@
 import { applySettings, methodArray, methodBoolean, methodEnum, methodFunction, methodString } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import CheckBox from '../elements/CheckBox';
-import Heading, { HEADING_LEVELS } from '../elements/Heading';
-import Picker from '../forms/Picker';
-import Tags from '../forms/Tags';
-import TextInput from '../forms/TextInput';
-import { NONE_ICON, SORT_AMOUNT_ASC_ICON, SORT_AMOUNT_DESC_ICON } from '../icons';
-import ContextMenuMixin from '../mixins/ContextMenuMixin';
-import { CLICK_EVENT, MARGIN_LEFT } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import CheckBox from '../elements/CheckBox.js';
+import Heading, { HEADING_LEVELS } from '../elements/Heading.js';
+import Picker from '../forms/Picker.js';
+import Tags from '../forms/Tags.js';
+import TextInput from '../forms/TextInput.js';
+import { NONE_ICON, SORT_AMOUNT_ASC_ICON, SORT_AMOUNT_DESC_ICON } from '../icons.js';
+import ContextMenuMixin from '../mixins/ContextMenuMixin.js';
+import { CLICK_EVENT, MARGIN_LEFT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import {
 	COLUMN_TYPES,
@@ -16,7 +16,7 @@ import {
 	CONTEXT_MENU_SORT_PREFIX,
 	FILTER_TYPES,
 	SORT_TYPES
-} from './gridConstants';
+} from './gridConstants.js';
 import './GridHeaderCell.less';
 
 const OR_SEPARATOR = ' OR ';

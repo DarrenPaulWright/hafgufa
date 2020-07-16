@@ -4,7 +4,7 @@ import shortid from 'shortid';
 import simulant from 'simulant';
 import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
-import { CLICK_EVENT, KEY_UP_EVENT } from '../';
+import { CLICK_EVENT, KEY_UP_EVENT } from '../index.js';
 
 const last = (array) => array[array.length - 1];
 

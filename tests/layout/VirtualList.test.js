@@ -1,8 +1,8 @@
 import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
-import { Button, Heading, SCROLL_EVENT, VirtualList } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Button, Heading, SCROLL_EVENT, VirtualList } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('VirtualList', () => {
 	const testUtil = new TestUtil(VirtualList);

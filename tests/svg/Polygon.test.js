@@ -1,6 +1,6 @@
-import { Polygon } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Polygon } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Polygon', () => {
 	const testUtil = new TestUtil(Polygon, true);

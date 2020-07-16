@@ -13,13 +13,13 @@ import {
 	methodString,
 	PIXELS
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Heading from '../elements/Heading';
-import VirtualList from '../layout/VirtualList';
+import controlTypes from '../controlTypes.js';
+import Heading from '../elements/Heading.js';
+import VirtualList from '../layout/VirtualList.js';
 import assign from '../utility/assign.js';
-import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../utility/domConstants';
+import { ABSOLUTE, EMPTY_STRING, PADDING_LEFT, POSITION } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 
 const ROW_WIDTH_BUFFER_RATIO = 1.1;
 const AVERAGE_CHARACTER_WIDTH = 8;

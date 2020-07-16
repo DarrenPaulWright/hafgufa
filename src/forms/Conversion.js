@@ -1,12 +1,12 @@
 import { applySettings, Enum, methodInteger, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import assign from '../utility/assign.js';
-import { TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants';
-import locale from '../utility/locale';
-import round from '../utility/math/round';
+import { TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
+import round from '../utility/math/round.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
-import TextInput, { ON_CHANGE_DELAY } from './TextInput';
+import FormControl from './FormControl.js';
+import TextInput, { ON_CHANGE_DELAY } from './TextInput.js';
 
 const INPUT_WIDTH = '8rem';
 

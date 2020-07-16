@@ -1,10 +1,10 @@
 import { debounce, defer } from 'async-agent';
 import { methodBoolean, methodFunction, methodString, PrivateVars } from 'type-enforcer-ui';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import Span from '../elements/Span';
-import { CLEAR_ICON } from '../icons';
-import { LINE_HEIGHT, PADDING_RIGHT, POSITION, RELATIVE, TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import Span from '../elements/Span.js';
+import { CLEAR_ICON } from '../icons.js';
+import { LINE_HEIGHT, PADDING_RIGHT, POSITION, RELATIVE, TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants.js';
 import './ActionButtonMixin.less';
 
 const _ = new PrivateVars();

@@ -1,6 +1,6 @@
-import { Toolbar } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Toolbar } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Toolbar', () => {
 	const testUtil = new TestUtil(Toolbar);

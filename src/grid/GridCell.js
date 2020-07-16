@@ -8,19 +8,19 @@ import {
 	methodObject,
 	methodString
 } from 'type-enforcer-ui';
-import Control, { CHILD_CONTROLS } from '../Control';
-import controlTypes from '../controlTypes';
-import CheckBox from '../elements/CheckBox';
-import Hyperlink from '../elements/Hyperlink';
-import Icon from '../elements/Icon';
-import Image from '../elements/Image';
-import Span from '../elements/Span';
-import Toolbar from '../layout/Toolbar';
-import Tooltip from '../layout/Tooltip';
-import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
+import Control, { CHILD_CONTROLS } from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import CheckBox from '../elements/CheckBox.js';
+import Hyperlink from '../elements/Hyperlink.js';
+import Icon from '../elements/Icon.js';
+import Image from '../elements/Image.js';
+import Span from '../elements/Span.js';
+import Toolbar from '../layout/Toolbar.js';
+import Tooltip from '../layout/Tooltip.js';
+import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GridCell.less';
-import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from './gridConstants';
+import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from './gridConstants.js';
 
 const MAX_TOOLTIP_WIDTH = '20rem';
 const MAX_TOOLTIP_LENGTH = 600;

@@ -1,10 +1,10 @@
 import { applySettings, methodBoolean } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import FocusMixin from '../mixins/FocusMixin';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
 import assign from '../utility/assign.js';
-import { TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../utility/domConstants';
+import { TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Container.less';
 

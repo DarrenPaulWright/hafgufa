@@ -1,6 +1,6 @@
-import { Video } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Video } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Video', () => {
 	const testUtil = new TestUtil(Video);

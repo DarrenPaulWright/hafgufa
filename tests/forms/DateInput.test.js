@@ -1,6 +1,6 @@
-import { DateInput } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { DateInput } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('DateInput', () => {
 	const testUtil = new TestUtil(DateInput);

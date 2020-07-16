@@ -1,7 +1,7 @@
 import { applySettings, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 
 /**
  * Display a span element.

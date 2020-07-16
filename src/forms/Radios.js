@@ -1,10 +1,10 @@
 import shortid from 'shortid';
 import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Radio from '../elements/Radio';
-import { ORIENTATION } from '../uiConstants';
+import controlTypes from '../controlTypes.js';
+import Radio from '../elements/Radio.js';
+import { ORIENTATION } from '../uiConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 import './Radios.less';
 
 const RADIOS = Symbol();

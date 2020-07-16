@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import { round } from '../../..';
+import { round } from '../../../index.js';
 
 describe('round', () => {
 	const tests = [{

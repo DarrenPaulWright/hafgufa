@@ -9,16 +9,16 @@ import {
 	methodNumber,
 	methodQueue
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import DragMixin from '../mixins/DragMixin';
-import TooltipMixin from '../mixins/TooltipMixin';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import DragMixin from '../mixins/DragMixin.js';
+import TooltipMixin from '../mixins/TooltipMixin.js';
 import assign from '../utility/assign.js';
 import { KEY_DOWN_EVENT } from '../utility/domConstants.js';
-import clamp from '../utility/math/clamp';
+import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 import './Slider.less';
 
 class Thumb extends TooltipMixin(DragMixin(Button)) {

@@ -1,11 +1,11 @@
 import { color, select } from 'd3';
 import { applySettings, methodArray, methodQueue, methodString } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import d3Helper from '../utility/d3Helper';
-import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import d3Helper from '../utility/d3Helper.js';
+import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import * as graphConstants from './graphConstants';
+import * as graphConstants from './graphConstants.js';
 import './Legend.less';
 
 const ITEM_OFFSET = 20;

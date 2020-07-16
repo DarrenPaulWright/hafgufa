@@ -1,9 +1,9 @@
 import { assert } from 'type-enforcer';
 import { CssSize } from 'type-enforcer-ui';
-import { ORIENTATION, Resizer } from '../..';
-import { offsetToPixels, pixelsToOffset } from '../../src/elements/Resizer';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { ORIENTATION, Resizer } from '../../index.js';
+import { offsetToPixels, pixelsToOffset } from '../../src/elements/Resizer.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('offsetToPixels', () => {
 	it('should return 0 if no offset is provided', () => {

@@ -1,6 +1,6 @@
 import { benchSettings } from 'karma-webpack-bundle';
-import { Span } from '../../index';
-import controlBenchCommon from '../controlBenchCommon';
+import { Span } from '../../index.js';
+import controlBenchCommon from '../controlBenchCommon.js';
 
 suite('Span', () => {
 	let span = new Span();

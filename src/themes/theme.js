@@ -1,8 +1,8 @@
 import { delay } from 'async-agent';
 import { windowResize } from 'type-enforcer-ui';
-import IsWorking from '../display/IsWorking';
-import { IS_DESKTOP, IS_TABLET } from '../utility/browser';
-import { BODY, FONT_SIZE, HEAD } from '../utility/domConstants';
+import IsWorking from '../display/IsWorking.js';
+import { IS_DESKTOP, IS_TABLET } from '../utility/browser.js';
+import { BODY, FONT_SIZE, HEAD } from '../utility/domConstants.js';
 
 const NAME_TAG = '[name]';
 const ENV_TAG = '[env]';

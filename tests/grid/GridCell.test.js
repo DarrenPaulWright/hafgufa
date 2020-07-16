@@ -1,12 +1,12 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { isString } from 'type-enforcer-ui';
-import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../..';
-import GridCell from '../../src/grid/GridCell';
-import * as gridConstants from '../../src/grid/gridConstants';
-import getAttributes from '../../src/utility/dom/getAttributes';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../index.js';
+import GridCell from '../../src/grid/GridCell.js';
+import * as gridConstants from '../../src/grid/gridConstants.js';
+import getAttributes from '../../src/utility/dom/getAttributes.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridCell', () => {
 	const testUtil = new TestUtil(GridCell);

@@ -1,8 +1,8 @@
 import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { Grid } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Grid } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Grid', () => {
 	const testUtil = new TestUtil(Grid);

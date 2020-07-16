@@ -1,5 +1,5 @@
 import { applySettings, Enum, methodAny, methodEnum } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import {
 	INPUT_TYPE,
 	INPUT_TYPE_CHECKBOX,
@@ -7,9 +7,9 @@ import {
 	INPUT_TYPE_PASSWORD,
 	INPUT_TYPE_RADIO,
 	INPUT_TYPE_TEXT
-} from '../utility/domConstants';
+} from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 
 const AVAILABLE_TYPES = new Enum({
 	INPUT_TYPE_FILE,

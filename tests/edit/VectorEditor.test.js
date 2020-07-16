@@ -1,6 +1,6 @@
-import { VectorEditor } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { VectorEditor } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('VectorEditor', () => {
 	const testUtil = new TestUtil(VectorEditor);

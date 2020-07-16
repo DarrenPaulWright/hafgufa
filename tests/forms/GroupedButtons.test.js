@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { GroupedButtons } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { GroupedButtons } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('GroupedButtons', () => {
 	const testUtil = new TestUtil(GroupedButtons);

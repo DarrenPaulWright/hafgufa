@@ -1,12 +1,12 @@
 import { clear, delay } from 'async-agent';
 import { List } from 'hord';
 import { isNumber } from 'type-enforcer-ui';
-import Div from '../elements/Div';
-import Heading from '../elements/Heading';
-import { CHECK_ICON, CLEAR_ICON, DELETE_ALL_ICON, DELETE_ICON, ERROR_ICON, INFO_ICON, WARNING_ICON } from '../icons';
-import ContextMenuMixin from '../mixins/ContextMenuMixin';
+import Div from '../elements/Div.js';
+import Heading from '../elements/Heading.js';
+import { CHECK_ICON, CLEAR_ICON, DELETE_ALL_ICON, DELETE_ICON, ERROR_ICON, INFO_ICON, WARNING_ICON } from '../icons.js';
+import ContextMenuMixin from '../mixins/ContextMenuMixin.js';
 import assign from '../utility/assign.js';
-import { BODY, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants';
+import { BODY, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
 import './toast.less';
 
 let wrapper;

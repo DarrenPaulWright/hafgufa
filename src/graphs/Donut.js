@@ -1,10 +1,10 @@
 import { arc, color, pie, select, sum } from 'd3';
 import { compare } from 'hord';
 import { applySettings, Point } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Donut.less';
-import GraphBase from './GraphBase';
+import GraphBase from './GraphBase.js';
 
 const INNER_RADIUS = 0.55;
 const OUTER_RADIUS = 0.75;

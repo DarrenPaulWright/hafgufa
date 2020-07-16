@@ -1,8 +1,8 @@
 import { assert } from 'type-enforcer';
 import { PIXELS } from 'type-enforcer-ui';
-import { Tree } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { Tree } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('Tree', () => {
 	const testUtil = new TestUtil(Tree);

@@ -1,8 +1,8 @@
 import { applySettings, PrivateVars } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Rect from '../svg/Rect';
+import controlTypes from '../controlTypes.js';
+import Rect from '../svg/Rect.js';
 import setDefaults from '../utility/setDefaults.js';
-import Shape, { initDragPoint } from './Shape';
+import Shape, { initDragPoint } from './Shape.js';
 
 const _ = new PrivateVars();
 

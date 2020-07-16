@@ -7,14 +7,14 @@ import {
 	methodQueue,
 	methodString
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import Tags from '../forms/Tags';
-import { SEARCH_ICON } from '../icons';
-import { IS_PHONE } from '../utility/browser';
-import locale from '../utility/locale';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import Tags from '../forms/Tags.js';
+import { SEARCH_ICON } from '../icons.js';
+import { IS_PHONE } from '../utility/browser.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './SearchBar.less';
 

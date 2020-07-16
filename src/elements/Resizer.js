@@ -8,13 +8,13 @@ import {
 	PERCENT,
 	PIXELS
 } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import DragMixin from '../mixins/DragMixin';
-import { ORIENTATION } from '../uiConstants';
-import { IS_DESKTOP } from '../utility/browser';
-import clamp from '../utility/math/clamp';
+import controlTypes from '../controlTypes.js';
+import DragMixin from '../mixins/DragMixin.js';
+import { ORIENTATION } from '../uiConstants.js';
+import { IS_DESKTOP } from '../utility/browser.js';
+import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 import './Resizer.less';
 
 const RESIZER_CLASS = 'resizer';

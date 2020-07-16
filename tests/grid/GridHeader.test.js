@@ -1,9 +1,9 @@
 import { assert } from 'type-enforcer';
-import { CONTEXT_MENU_EVENT } from '../..';
-import * as gridConstants from '../../src/grid/gridConstants';
-import GridHeader from '../../src/grid/GridHeader';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { CONTEXT_MENU_EVENT } from '../../index.js';
+import * as gridConstants from '../../src/grid/gridConstants.js';
+import GridHeader from '../../src/grid/GridHeader.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('GridHeader', () => {
 	const testUtil = new TestUtil(GridHeader);

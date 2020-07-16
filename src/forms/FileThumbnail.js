@@ -8,12 +8,12 @@ import {
 	methodObject,
 	methodString
 } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import Icon from '../elements/Icon';
-import Image from '../elements/Image';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import Icon from '../elements/Icon.js';
+import Image from '../elements/Image.js';
 import {
 	CLEAR_ALT_ICON,
 	CODE_FILE_ICON,
@@ -22,9 +22,9 @@ import {
 	PDF_FILE_ICON,
 	WORD_FILE_ICON,
 	ZIP_FILE_ICON
-} from '../icons';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
-import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../utility/domConstants';
+} from '../icons.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
+import { ABSOLUTE_CLASS, CLICK_EVENT, MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT, OPACITY } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './FileThumbnail.less';
 

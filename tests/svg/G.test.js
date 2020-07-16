@@ -1,6 +1,6 @@
-import { G } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { G } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('G', () => {
 	const testUtil = new TestUtil(G, true);

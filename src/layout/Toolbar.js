@@ -1,7 +1,7 @@
 import { applySettings, isFunction, isNumber } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Toolbar.less';
 

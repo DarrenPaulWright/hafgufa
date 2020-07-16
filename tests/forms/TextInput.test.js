@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { locale, TextInput } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { locale, TextInput } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('TextInput', () => {
 	const testUtil = new TestUtil(TextInput);

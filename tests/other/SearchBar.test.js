@@ -1,6 +1,6 @@
-import { SearchBar } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { SearchBar } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('SearchBar', () => {
 	const testUtil = new TestUtil(SearchBar);

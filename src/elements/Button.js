@@ -1,15 +1,15 @@
 import { applySettings, Enum, methodAny, methodBoolean, methodEnum, methodString } from 'type-enforcer-ui';
-import Control, { CHILD_CONTROLS } from '../Control';
-import controlTypes from '../controlTypes';
-import FocusMixin from '../mixins/FocusMixin';
-import MouseMixin from '../mixins/MouseMixin';
-import OnClickMixin from '../mixins/OnClickMixin';
-import { INPUT_TYPE } from '../utility/domConstants';
+import Control, { CHILD_CONTROLS } from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import MouseMixin from '../mixins/MouseMixin.js';
+import OnClickMixin from '../mixins/OnClickMixin.js';
+import { INPUT_TYPE } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Button.less';
-import Icon, { ICON_SIZES } from './Icon';
-import Image from './Image';
-import Span from './Span';
+import Icon, { ICON_SIZES } from './Icon.js';
+import Image from './Image.js';
+import Span from './Span.js';
 
 const SELECTED_CLASS = 'selected';
 const DEFAULT_CLASS = 'form-button';

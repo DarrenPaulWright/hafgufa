@@ -1,8 +1,8 @@
 import { applySettings, methodAny, methodInteger } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { ROWS } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { ROWS } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Control from './../Control';
+import Control from './../Control.js';
 
 /**
  * Display a textarea element.

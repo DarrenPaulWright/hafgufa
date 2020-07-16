@@ -1,13 +1,13 @@
 import shortid from 'shortid';
 import { applySettings, Enum, methodEnum, methodQueue, Point } from 'type-enforcer-ui';
-import ControlManager from '../ControlManager';
-import controlTypes from '../controlTypes';
-import { DELETE_ALL_ICON, DELETE_ICON } from '../icons';
-import ContextMenuMixin from '../mixins/ContextMenuMixin';
-import Svg from '../svg/Svg';
+import ControlManager from '../ControlManager.js';
+import controlTypes from '../controlTypes.js';
+import { DELETE_ALL_ICON, DELETE_ICON } from '../icons.js';
+import ContextMenuMixin from '../mixins/ContextMenuMixin.js';
+import Svg from '../svg/Svg.js';
 import setDefaults from '../utility/setDefaults.js';
 import EditPolygon from './EditPolygon.js';
-import EditRectangle from './EditRectangle';
+import EditRectangle from './EditRectangle.js';
 import './VectorEditor.less';
 
 const HEIGHT = Symbol();

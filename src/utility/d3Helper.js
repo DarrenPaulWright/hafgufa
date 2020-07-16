@@ -1,6 +1,6 @@
 import { easeQuadIn, interpolateNumber, max, select, selection } from 'd3';
 import { isElement, isString } from 'type-enforcer-ui';
-import { DOCUMENT, OPACITY, WINDOW } from './domConstants';
+import { DOCUMENT, OPACITY, WINDOW } from './domConstants.js';
 
 const EASE = easeQuadIn;
 const ANIMATION_DURATION = 200;

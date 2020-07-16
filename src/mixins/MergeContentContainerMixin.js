@@ -1,4 +1,4 @@
-import { CONTENT_CONTAINER } from './ControlHeadingMixin';
+import { CONTENT_CONTAINER } from './ControlHeadingMixin.js';
 
 export default (Base) => {
 	class MergeContentContainerMixin extends Base {

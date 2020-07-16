@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
 import { Thickness } from 'type-enforcer-ui';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
+import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
 
 const CONTROL = Symbol();
 const TEST_UTIL = Symbol();

@@ -1,6 +1,6 @@
-import { EditRectangle } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { EditRectangle } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('EditRectangle', () => {
 	const testUtil = new TestUtil(EditRectangle, true);

@@ -1,9 +1,9 @@
 import { wait } from 'async-agent';
 import keyCodes from 'keycodes';
 import { assert } from 'type-enforcer';
-import { KEY_DOWN_EVENT, Tags } from '../..';
-import TestUtil from '../TestUtil';
-import FormControlTests from './FormControlTests';
+import { KEY_DOWN_EVENT, Tags } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import FormControlTests from './FormControlTests.js';
 
 describe('Tags', () => {
 	const testUtil = new TestUtil(Tags);

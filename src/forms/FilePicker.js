@@ -1,18 +1,18 @@
 import { delay } from 'async-agent';
 import { clone } from 'object-agent';
 import { applySettings, AUTO, methodArray, methodBoolean, methodEnum, methodFunction } from 'type-enforcer-ui';
-import ControlManager from '../ControlManager';
-import controlTypes from '../controlTypes';
-import LightBox from '../edit/LightBox';
-import IsWorkingMixin from '../mixins/IsWorkingMixin';
+import ControlManager from '../ControlManager.js';
+import controlTypes from '../controlTypes.js';
+import LightBox from '../edit/LightBox.js';
+import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
 import assign from '../utility/assign.js';
-import { EMPTY_STRING } from '../utility/domConstants';
-import locale from '../utility/locale';
+import { EMPTY_STRING } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import FileInput from './FileInput';
+import FileInput from './FileInput.js';
 import './FilePicker.less';
-import FileThumbnail, { IMAGE_FILE_TYPES, PREVIEW_SIZES } from './FileThumbnail';
-import FormControl from './FormControl';
+import FileThumbnail, { IMAGE_FILE_TYPES, PREVIEW_SIZES } from './FileThumbnail.js';
+import FormControl from './FormControl.js';
 
 const FILE_PICKER_CLASS = 'file-picker';
 

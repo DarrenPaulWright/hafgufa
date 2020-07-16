@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { ProgressBar } from '../..';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests';
-import TestUtil from '../TestUtil';
+import { ProgressBar } from '../../index.js';
+import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('ProgressBar', () => {
 	const testUtil = new TestUtil(ProgressBar);

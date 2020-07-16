@@ -1,6 +1,6 @@
-import { Bar } from '../..';
-import TestUtil from '../TestUtil';
-import GraphBaseTests from './GraphBaseTests';
+import { Bar } from '../../index.js';
+import TestUtil from '../TestUtil.js';
+import GraphBaseTests from './GraphBaseTests.js';
 
 describe('Bar', () => {
 	const testUtil = new TestUtil(Bar);

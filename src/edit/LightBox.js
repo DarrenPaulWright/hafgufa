@@ -1,17 +1,17 @@
 import { clear, defer, delay } from 'async-agent';
 import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodFunction, PIXELS } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import { ICON_SIZES } from '../elements/Icon';
-import Image from '../elements/Image';
-import FileThumbnail from '../forms/FileThumbnail';
-import { CLEAR_ICON, UP_ARROW_ICON } from '../icons';
-import Carousel from '../layout/Carousel';
-import Container from '../layout/Container';
-import Toolbar from '../layout/Toolbar';
-import DragMixin from '../mixins/DragMixin';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import { ICON_SIZES } from '../elements/Icon.js';
+import Image from '../elements/Image.js';
+import FileThumbnail from '../forms/FileThumbnail.js';
+import { CLEAR_ICON, UP_ARROW_ICON } from '../icons.js';
+import Carousel from '../layout/Carousel.js';
+import Container from '../layout/Container.js';
+import Toolbar from '../layout/Toolbar.js';
+import DragMixin from '../mixins/DragMixin.js';
 import {
 	BODY,
 	MOUSE_ENTER_EVENT,
@@ -20,7 +20,7 @@ import {
 	PADDING_LEFT,
 	PADDING_RIGHT,
 	PADDING_TOP
-} from '../utility/domConstants';
+} from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './LightBox.less';
 

@@ -1,6 +1,6 @@
 import { methodFunction, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import { CLICK_EVENT } from '../utility/domConstants';
+import controlTypes from '../controlTypes.js';
+import { CLICK_EVENT } from '../utility/domConstants.js';
 
 const HAS_CLICK_EVENT = Symbol();
 

@@ -1,6 +1,6 @@
-import { Popup } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Popup } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Popup', () => {
 	const testUtil = new TestUtil(Popup);

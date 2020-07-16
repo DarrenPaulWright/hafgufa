@@ -1,4 +1,4 @@
-import { BODY, MOUSE_ENTER_EVENT, MOUSE_MOVE_EVENT } from './domConstants';
+import { BODY, MOUSE_ENTER_EVENT, MOUSE_MOVE_EVENT } from './domConstants.js';
 
 export let x = null;
 export let y = null;

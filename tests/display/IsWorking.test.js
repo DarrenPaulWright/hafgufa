@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
-import { IsWorking } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { IsWorking } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('IsWorking', () => {
 	const testUtil = new TestUtil(IsWorking);

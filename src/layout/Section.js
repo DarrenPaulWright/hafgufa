@@ -1,12 +1,12 @@
 import { applySettings, HUNDRED_PERCENT, methodThickness, Thickness } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import { HEADING_LEVELS } from '../elements/Heading';
-import ControlHeadingMixin from '../mixins/ControlHeadingMixin';
-import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin';
-import { PADDING } from '../utility/domConstants';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import { HEADING_LEVELS } from '../elements/Heading.js';
+import ControlHeadingMixin from '../mixins/ControlHeadingMixin.js';
+import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin.js';
+import { PADDING } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Container from './Container';
+import Container from './Container.js';
 import './Section.less';
 
 /**

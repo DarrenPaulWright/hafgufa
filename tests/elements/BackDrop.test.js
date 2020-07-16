@@ -1,6 +1,6 @@
-import { BackDrop } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { BackDrop } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('BackDrop', () => {
 	const testUtil = new TestUtil(BackDrop);

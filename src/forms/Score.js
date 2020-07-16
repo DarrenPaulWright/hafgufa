@@ -1,9 +1,9 @@
 import { applySettings, AUTO, methodNumber, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
-import Div from '../elements/Div';
-import Label from '../elements/Label';
+import controlTypes from '../controlTypes.js';
+import Div from '../elements/Div.js';
+import Label from '../elements/Label.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 import './Score.less';
 
 const TEXT_DISPLAY = Symbol();

@@ -1,12 +1,12 @@
 import { applySettings, methodBoolean, methodQueue, methodString } from 'type-enforcer-ui';
-import controlTypes from '../controlTypes';
+import controlTypes from '../controlTypes.js';
 import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
-import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../utility/domConstants';
+import { CLICK_EVENT, INPUT_TYPE_RADIO } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import Div from './Div';
-import Input from './Input';
-import Label from './Label';
+import Div from './Div.js';
+import Input from './Input.js';
+import Label from './Label.js';
 import './Radio.less';
 
 export const INPUT = Symbol();

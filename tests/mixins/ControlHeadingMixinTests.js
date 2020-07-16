@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import ControlTests from '../ControlTests';
+import ControlTests from '../ControlTests.js';
 
 const TEST_ICON_FA = 'trash';
 const TEST_TITLE = 'Test Title';

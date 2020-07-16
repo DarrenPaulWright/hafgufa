@@ -12,16 +12,16 @@ import {
 	methodBoolean,
 	methodEnum
 } from 'type-enforcer-ui';
-import ControlRecycler from '../ControlRecycler';
-import controlTypes from '../controlTypes';
-import Button from '../elements/Button';
-import Div from '../elements/Div';
-import { ORIENTATION } from '../uiConstants';
+import ControlRecycler from '../ControlRecycler.js';
+import controlTypes from '../controlTypes.js';
+import Button from '../elements/Button.js';
+import Div from '../elements/Div.js';
+import { ORIENTATION } from '../uiConstants.js';
 import assign from '../utility/assign.js';
-import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../utility/domConstants';
-import MultiItemFocus from '../utility/MultiItemFocus';
+import { HEIGHT, TAB_INDEX, TAB_INDEX_DISABLED, TAB_INDEX_ENABLED, WIDTH } from '../utility/domConstants.js';
+import MultiItemFocus from '../utility/MultiItemFocus.js';
 import setDefaults from '../utility/setDefaults.js';
-import FormControl from './FormControl';
+import FormControl from './FormControl.js';
 import './GroupedButtons.less';
 
 const BUTTON_RECYCLER = Symbol();

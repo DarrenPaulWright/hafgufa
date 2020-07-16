@@ -1,5 +1,5 @@
 import { methodBoolean, methodString, PrivateVars } from 'type-enforcer-ui';
-import IsWorking from '../display/IsWorking';
+import IsWorking from '../display/IsWorking.js';
 
 const _ = new PrivateVars();
 

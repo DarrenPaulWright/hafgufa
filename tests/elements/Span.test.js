@@ -1,6 +1,6 @@
-import { Span } from '../..';
-import ControlTests from '../ControlTests';
-import TestUtil from '../TestUtil';
+import { Span } from '../../index.js';
+import ControlTests from '../ControlTests.js';
+import TestUtil from '../TestUtil.js';
 
 describe('Span', () => {
 	const testUtil = new TestUtil(Span);

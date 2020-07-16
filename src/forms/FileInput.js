@@ -1,11 +1,11 @@
 import { applySettings, castArray, methodArray, methodBoolean, methodEnum, methodFunction } from 'type-enforcer-ui';
-import Control from '../Control';
-import controlTypes from '../controlTypes';
-import Icon from '../elements/Icon';
-import Input from '../elements/Input';
-import Label from '../elements/Label';
-import { AUDIO_FILE_ICON, FILE_ICON, IMAGE_FILE_ICON, VIDEO_FILE_ICON } from '../icons';
-import { IS_DESKTOP } from '../utility/browser';
+import Control from '../Control.js';
+import controlTypes from '../controlTypes.js';
+import Icon from '../elements/Icon.js';
+import Input from '../elements/Input.js';
+import Label from '../elements/Label.js';
+import { AUDIO_FILE_ICON, FILE_ICON, IMAGE_FILE_ICON, VIDEO_FILE_ICON } from '../icons.js';
+import { IS_DESKTOP } from '../utility/browser.js';
 import {
 	ACCEPT,
 	CHANGE_EVENT,
@@ -16,11 +16,11 @@ import {
 	EMPTY_STRING,
 	INPUT_TYPE_FILE,
 	MULTIPLE
-} from '../utility/domConstants';
-import locale from '../utility/locale';
+} from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './FileInput.less';
-import { PREVIEW_SIZES } from './FileThumbnail';
+import { PREVIEW_SIZES } from './FileThumbnail.js';
 
 const FILE_INPUT_CLASS = 'file-input ';
 const FILE_ELEMENT_CLASS = 'file-element';
