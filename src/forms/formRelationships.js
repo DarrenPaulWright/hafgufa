@@ -367,11 +367,9 @@ const FormRelationshipHandler = function() {
 						return false;
 					}
 				}
-				else {
-					if (!deepEqual(targetValue, relationship.options[targetCount])) {
-						allEquals = false;
-						return false;
-					}
+				else if (!deepEqual(targetValue, relationship.options[targetCount])) {
+					allEquals = false;
+					return false;
 				}
 			}
 		});

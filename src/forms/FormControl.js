@@ -161,11 +161,10 @@ Object.assign(FormControl.prototype, {
 
 						return true;
 					}
-					else {
-						this.error('');
 
-						return isFocused;
-					}
+					this.error('');
+
+					return isFocused;
 				});
 		}
 	}),

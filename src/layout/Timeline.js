@@ -324,9 +324,9 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 				if (self[PARENT_SPAN] && self[PARENT_SPAN] === self[SPAN]) {
 					return false;
 				}
-				else {
-					slides = self[buildSlides]();
-				}
+
+				slides = self[buildSlides]();
+
 
 				if (self[PARENT_SPAN]) {
 					subSpans = self[SPAN].subSpans

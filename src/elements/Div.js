@@ -83,13 +83,11 @@ export default class Div extends Control {
 						parent.appendChild(content);
 					}
 				}
+				else if (isNumber(appendAt)) {
+					parent.children[appendAt].insertAdjacentHTML('beforebegin', content);
+				}
 				else {
-					if (isNumber(appendAt)) {
-						parent.children[appendAt].insertAdjacentHTML('beforebegin', content);
-					}
-					else {
-						parent.insertAdjacentHTML('beforeend', content);
-					}
+					parent.insertAdjacentHTML('beforeend', content);
 				}
 			}
 

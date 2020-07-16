@@ -12,8 +12,7 @@ export const filteredTitle = (collection, filterText) => {
 		else if (!first && second) {
 			return 1;
 		}
-		else {
-			return (a.title || '').localeCompare(b.title || '');
-		}
+
+		return (a.title || '').localeCompare(b.title || '');
 	});
 };

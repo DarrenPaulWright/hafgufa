@@ -125,9 +125,8 @@ const setZoom = () => {
 		else if (IS_TABLET) {
 			return '1.5vmin';
 		}
-		else {
-			return '3.5vmin';
-		}
+
+		return '3.5vmin';
 	};
 
 	document.documentElement.style[FONT_SIZE] = getBodyFontSize();

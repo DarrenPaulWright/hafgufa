@@ -341,9 +341,8 @@ export default class VirtualList extends FocusMixin(Control) {
 			else if (self.snapToLeadingEdge() && !self.isAtEnd()) {
 				return self[CURRENT_STEP_OFFSET] + (self[CURRENT_SCROLL_OFFSET] % self[ITEM_SIZE]) + self[INNER_PADDING][self[POSITION_ORIGIN]];
 			}
-			else {
-				return self[CURRENT_STEP_OFFSET] + self[INNER_PADDING][self[POSITION_ORIGIN]];
-			}
+
+			return self[CURRENT_STEP_OFFSET] + self[INNER_PADDING][self[POSITION_ORIGIN]];
 		};
 
 		self[INNER_PADDING].set(self.css(PADDING) || 0);
@@ -404,63 +403,61 @@ export default class VirtualList extends FocusMixin(Control) {
 		if (self[IS_RENDERING]) {
 			self[IS_RENDERING_REQUESTED] = startIndex;
 		}
-		else {
-			if (self[CONTROL_RECYCLER] && self[CONTROL_RECYCLER].control()) {
-				endIndex = Math.min(self[TOTAL_ITEMS] - 1, startIndex + self[CACHED_ITEMS_LENGTH]);
+		else if (self[CONTROL_RECYCLER] && self[CONTROL_RECYCLER].control()) {
+			endIndex = Math.min(self[TOTAL_ITEMS] - 1, startIndex + self[CACHED_ITEMS_LENGTH]);
 
-				self[IS_RENDERING] = true;
+			self[IS_RENDERING] = true;
 
-				if (startIndex * self[ITEM_SIZE] > self[CURRENT_STEP_OFFSET] + (2 * STEP_SIZE)) {
-					self[CURRENT_STEP_OFFSET] += STEP_SIZE;
-					self[setVirtualContentSizes]();
-					self[resetVirtualizedItemPositions]();
+			if (startIndex * self[ITEM_SIZE] > self[CURRENT_STEP_OFFSET] + (2 * STEP_SIZE)) {
+				self[CURRENT_STEP_OFFSET] += STEP_SIZE;
+				self[setVirtualContentSizes]();
+				self[resetVirtualizedItemPositions]();
+			}
+			else if (self[CURRENT_STEP_OFFSET] && (startIndex * self[ITEM_SIZE] < self[CURRENT_STEP_OFFSET] + STEP_SIZE)) {
+				self[CURRENT_STEP_OFFSET] -= STEP_SIZE;
+				self[setVirtualContentSizes]();
+				self[resetVirtualizedItemPositions]();
+			}
+
+			if (endIndex < self[CURRENT_START_INDEX] || startIndex > self[CURRENT_END_INDEX]) {
+				if (self.isFocused()) {
+					self.isFocused(true);
 				}
-				else if (self[CURRENT_STEP_OFFSET] && (startIndex * self[ITEM_SIZE] < self[CURRENT_STEP_OFFSET] + STEP_SIZE)) {
-					self[CURRENT_STEP_OFFSET] -= STEP_SIZE;
-					self[setVirtualContentSizes]();
-					self[resetVirtualizedItemPositions]();
+				self[CONTROL_RECYCLER].discardAllControls();
+
+				forRange(startIndex, endIndex, (index) => self[renderItem](index));
+
+				if (startIndex === 0) {
+					self[setAltExtentValue]();
 				}
+			}
+			else {
+				forRange(self[CURRENT_START_INDEX], startIndex - 1, discardControl);
 
-				if (endIndex < self[CURRENT_START_INDEX] || startIndex > self[CURRENT_END_INDEX]) {
-					if (self.isFocused()) {
-						self.isFocused(true);
-					}
-					self[CONTROL_RECYCLER].discardAllControls();
+				forRange(endIndex + 1, self[CURRENT_END_INDEX], discardControl);
 
-					forRange(startIndex, endIndex, (index) => self[renderItem](index));
+				forRangeRight(self[CURRENT_START_INDEX] - 1, startIndex, (index) => self[renderItem](index, true));
 
-					if (startIndex === 0) {
-						self[setAltExtentValue]();
-					}
-				}
-				else {
-					forRange(self[CURRENT_START_INDEX], startIndex - 1, discardControl);
+				forRange(self[CURRENT_END_INDEX] + 1, endIndex, (index) => self[renderItem](index));
+			}
 
-					forRange(endIndex + 1, self[CURRENT_END_INDEX], discardControl);
+			self[IS_RENDERING] = false;
 
-					forRangeRight(self[CURRENT_START_INDEX] - 1, startIndex, (index) => self[renderItem](index, true));
+			if (self[IS_RENDERING_REQUESTED] !== false) {
+				const newStartIndex = clone(self[IS_RENDERING_REQUESTED]);
+				self[IS_RENDERING_REQUESTED] = false;
+				self[renderChunk](newStartIndex);
+			}
 
-					forRange(self[CURRENT_END_INDEX] + 1, endIndex, (index) => self[renderItem](index));
-				}
+			if (!self.isVirtualized() && endIndex > -1) {
+				self.updateItemPositions();
+			}
 
-				self[IS_RENDERING] = false;
+			self[CURRENT_START_INDEX] = startIndex;
+			self[CURRENT_END_INDEX] = endIndex;
 
-				if (self[IS_RENDERING_REQUESTED] !== false) {
-					const newStartIndex = clone(self[IS_RENDERING_REQUESTED]);
-					self[IS_RENDERING_REQUESTED] = false;
-					self[renderChunk](newStartIndex);
-				}
-
-				if (!self.isVirtualized() && endIndex > -1) {
-					self.updateItemPositions();
-				}
-
-				self[CURRENT_START_INDEX] = startIndex;
-				self[CURRENT_END_INDEX] = endIndex;
-
-				if (self.onLayoutChange()) {
-					self.onLayoutChange()();
-				}
+			if (self.onLayoutChange()) {
+				self.onLayoutChange()();
 			}
 		}
 	}

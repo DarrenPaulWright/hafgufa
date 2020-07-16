@@ -183,11 +183,9 @@ export default (Base) => {
 
 					self[HEADING].title(title);
 				}
-				else {
-					if (self[HEADING]) {
-						self[HEADING].remove();
-						self[HEADING] = null;
-					}
+				else if (self[HEADING]) {
+					self[HEADING].remove();
+					self[HEADING] = null;
 				}
 
 				self.classes('has-heading', Boolean(title));

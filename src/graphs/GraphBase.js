@@ -337,11 +337,9 @@ Object.assign(GraphBase.prototype, {
 				maxWidth: MAX_TOOLTIP_WIDTH
 			});
 		}
-		else {
-			if (self[TOOLTIP]) {
-				self[TOOLTIP].remove();
-				self[TOOLTIP] = null;
-			}
+		else if (self[TOOLTIP]) {
+			self[TOOLTIP].remove();
+			self[TOOLTIP] = null;
 		}
 	},
 

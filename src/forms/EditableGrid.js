@@ -320,9 +320,8 @@ export default class EditableGrid extends FormControl {
 			if (isArray(controlValue)) {
 				return (controlValue.length === 0 || (controlValue.length === 1 && controlValue[0].id === self[CURRENT_PREFILL_VALUES][prefillId]));
 			}
-			else {
-				return (!controlValue || controlValue === self[CURRENT_PREFILL_VALUES][prefillId]);
-			}
+
+			return (!controlValue || controlValue === self[CURRENT_PREFILL_VALUES][prefillId]);
 		};
 
 		const prefillControl = (control, id, value) => {

@@ -100,11 +100,9 @@ Object.assign(IsWorking.prototype, {
 				}
 				this[LABEL].content(label);
 			}
-			else {
-				if (this[LABEL]) {
-					this[LABEL].remove();
-					this[LABEL] = null;
-				}
+			else if (this[LABEL]) {
+				this[LABEL].remove();
+				this[LABEL] = null;
 			}
 		}
 	})

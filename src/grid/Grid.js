@@ -657,9 +657,8 @@ export default class Grid extends Control {
 							else if (minValue) {
 								return actualValue >= minValue;
 							}
-							else {
-								return actualValue <= maxValue;
-							}
+
+							return actualValue <= maxValue;
 						};
 						break;
 					case COLUMN_TYPES.DATE:
@@ -1175,15 +1174,13 @@ export default class Grid extends Control {
 				else if (self.onMultiSelect() && thisEvent.shiftKey) {
 					self[SELECTED_ROWS] = getShiftSelection();
 				}
+				else if (isSelected || self[SELECTED_ROWS].length > 1) {
+					self[SELECTED_ROWS] = [id];
+					self[LAST_SELECTED_ROW] = id;
+				}
 				else {
-					if (isSelected || self[SELECTED_ROWS].length > 1) {
-						self[SELECTED_ROWS] = [id];
-						self[LAST_SELECTED_ROW] = id;
-					}
-					else {
-						self[SELECTED_ROWS] = [];
-						self[LAST_SELECTED_ROW] = '';
-					}
+					self[SELECTED_ROWS] = [];
+					self[LAST_SELECTED_ROW] = '';
 				}
 
 				self[SELECTED_ROWS] = self[SELECTED_ROWS].reduce((result, item) => {
@@ -1342,10 +1339,8 @@ Object.assign(Grid.prototype, {
 							currentGroup.isCollapsed = getIsCollapsed(groupBy.isCollapsed, currentGroup);
 						}
 					}
-					else {
-						if (!row.isHidden) {
-							output.push(row);
-						}
+					else if (!row.isHidden) {
+						output.push(row);
 					}
 				}
 			}

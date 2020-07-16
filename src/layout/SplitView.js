@@ -259,11 +259,9 @@ Object.assign(SplitView.prototype, {
 					});
 				}
 			}
-			else {
-				if (self[RESIZER]) {
-					self[RESIZER].remove();
-					self[RESIZER] = null;
-				}
+			else if (self[RESIZER]) {
+				self[RESIZER].remove();
+				self[RESIZER] = null;
 			}
 
 			self.resize();

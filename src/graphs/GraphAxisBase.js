@@ -120,17 +120,15 @@ export default class GraphAxisBase extends GraphBase {
 							(index) => round((minValue + (index * interval)), intervalAccuracy)
 						);
 					}
-					else {
-						if (dataObject.data) {
-							output = dataObject.data.map((d) => {
-								if (d.label) {
-									return d.label.toString ? d.label.toString() : d.label;
-								}
-								else if (d.x) {
-									return d.x.toString ? d.x.toString() : d.x;
-								}
-							});
-						}
+					else if (dataObject.data) {
+						output = dataObject.data.map((d) => {
+							if (d.label) {
+								return d.label.toString ? d.label.toString() : d.label;
+							}
+							else if (d.x) {
+								return d.x.toString ? d.x.toString() : d.x;
+							}
+						});
 					}
 					break;
 				case SCALE_TYPES.LINEAR:

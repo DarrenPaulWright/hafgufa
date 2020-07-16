@@ -127,11 +127,9 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		if (self.isMulti() || self.isImage()) {
 			self[FILE_INPUT].container(self);
 		}
-		else {
-			if (self[FILE_INPUT]) {
-				self[FILE_INPUT].remove();
-				self[FILE_INPUT] = null;
-			}
+		else if (self[FILE_INPUT]) {
+			self[FILE_INPUT].remove();
+			self[FILE_INPUT] = null;
 		}
 
 		if (!self.canEdit()) {

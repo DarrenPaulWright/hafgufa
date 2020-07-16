@@ -125,20 +125,18 @@ export default class Conversion extends FormControl {
 				self[TO_TEXT_INPUT].value(round(newValue, self.fractionDigits() || 1));
 			}
 		}
+		else if (newValue === '') {
+			self[FROM_TEXT_INPUT].value('');
+		}
 		else {
-			if (newValue === '') {
-				self[FROM_TEXT_INPUT].value('');
+			if (self[TO_FACTOR].ADD_AFTER) {
+				newValue -= self[TO_FACTOR].ADD_AFTER;
 			}
-			else {
-				if (self[TO_FACTOR].ADD_AFTER) {
-					newValue -= self[TO_FACTOR].ADD_AFTER;
-				}
-				newValue = newValue / conversionFactor;
-				if (self[FROM_FACTOR].ADD_AFTER) {
-					newValue += self[FROM_FACTOR].ADD_AFTER;
-				}
-				self[FROM_TEXT_INPUT].value(round(newValue, self.fractionDigits()));
+			newValue = newValue / conversionFactor;
+			if (self[FROM_FACTOR].ADD_AFTER) {
+				newValue += self[FROM_FACTOR].ADD_AFTER;
 			}
+			self[FROM_TEXT_INPUT].value(round(newValue, self.fractionDigits()));
 		}
 	}
 

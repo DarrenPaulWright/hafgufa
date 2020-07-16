@@ -184,12 +184,10 @@ export default class Picker extends FormControl {
 					return false;
 				}
 			}
-			else {
-				if (!options2.children[childIndex] ||
+			else if (!options2.children[childIndex] ||
 					options1.children[childIndex].id !== options2.children[childIndex].id ||
 					options1.children[childIndex].isEnabled !== options2.children[childIndex].isEnabled) {
-					return false;
-				}
+				return false;
 			}
 		}
 
@@ -635,16 +633,14 @@ export default class Picker extends FormControl {
 					}
 				});
 			}
-			else {
-				if (item.id === toggleItem.id) {
-					if (self[checkSelected](item.id)) {
-						isSelected = true;
-						if (self.canUnselect()) {
-							unselectItem(item);
-						}
+			else if (item.id === toggleItem.id) {
+				if (self[checkSelected](item.id)) {
+					isSelected = true;
+					if (self.canUnselect()) {
+						unselectItem(item);
 					}
-					isFound = true;
 				}
+				isFound = true;
 			}
 
 			return isFound;
@@ -1106,9 +1102,8 @@ Object.assign(Picker.prototype, {
 
 			return self[ARE_ALL_SELECTED_ITEMS_ACCOUNTED_FOR];
 		}
-		else {
-			return clone(self[SELECTED_ITEMS]);
-		}
+
+		return clone(self[SELECTED_ITEMS]);
 	},
 
 	/**

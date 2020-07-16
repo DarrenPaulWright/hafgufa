@@ -230,9 +230,8 @@ Object.assign(DateInput.prototype, {
 
 					return true;
 				}
-				else {
-					this.error('');
-				}
+
+				this.error('');
 			});
 		}
 	}),
@@ -247,9 +246,8 @@ Object.assign(DateInput.prototype, {
 
 					return true;
 				}
-				else {
-					this.error('');
-				}
+
+				this.error('');
 			});
 		}
 	}),

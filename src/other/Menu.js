@@ -45,18 +45,16 @@ const eachChild = function(collection, onEachChild, settings = {}) {
 			}
 			return isCancelled;
 		}
-		else {
-			if (innerCollection && innerCollection[childProperty]) {
-				returnValue = each(innerCollection[childProperty], depth + 1, innerCollection);
-				if (settings.onEachParent) {
-					settings.onEachParent(innerCollection, depth);
-				}
-				return returnValue;
+
+		if (innerCollection && innerCollection[childProperty]) {
+			returnValue = each(innerCollection[childProperty], depth + 1, innerCollection);
+			if (settings.onEachParent) {
+				settings.onEachParent(innerCollection, depth);
 			}
-			else {
-				return onEachChild(innerCollection, depth, parent);
-			}
+			return returnValue;
 		}
+
+		return onEachChild(innerCollection, depth, parent);
 	};
 
 	each(collection, 0);

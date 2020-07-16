@@ -587,9 +587,8 @@ Object.assign(Tags.prototype, {
 						title: suggestion.trim()
 					};
 				}
-				else {
-					return suggestion;
-				}
+
+				return suggestion;
 			});
 
 			self.suggestions(suggestions.reduce((result, suggestion) => {

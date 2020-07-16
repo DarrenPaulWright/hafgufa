@@ -381,9 +381,8 @@ Object.assign(Control.prototype, {
 			if (attribute !== undefined) {
 				return this.element.getAttribute(attribute);
 			}
-			else {
-				return getAttributes(this.element);
-			}
+
+			return getAttributes(this.element);
 		}
 	}),
 
