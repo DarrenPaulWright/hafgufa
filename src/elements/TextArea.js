@@ -11,8 +11,8 @@ import Control from './../Control.js';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.rows]
+ * @param {object} settings
+ * @param {string} [settings.rows]
  */
 export default class TextArea extends Control {
 	constructor(settings = {}) {

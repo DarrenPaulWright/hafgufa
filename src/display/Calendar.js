@@ -52,11 +52,12 @@ const DAYS = Symbol();
 
 /**
  * Display a calendar layout of a month.
+ *
  * @module Calendar
  * @extends Control
  * @constructor
  *
- * @param {Object} settings - Accepts all control settings plus:
+ * @param {object} settings - Accepts all control settings plus:
  */
 export default class Calendar extends Control {
 	constructor(settings = {}) {
@@ -97,6 +98,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Sets the month to the previous month. Wraps to the previous year if appropriate.
+	 *
 	 * @function gotoPreviousMonth
 	 */
 	[gotoPreviousMonth]() {
@@ -113,6 +115,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Sets the month to the next month. Wraps to the next year if appropriate.
+	 *
 	 * @function gotoNextMonth
 	 */
 	[gotoNextMonth]() {
@@ -129,6 +132,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Builds picker options for the month picker formatted according to the monthFormat option
+	 *
 	 * @function buildMonthOptions
 	 */
 	[buildMonthOptions]() {
@@ -160,6 +164,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Builds picker options for the year picker based on the current year range options
+	 *
 	 * @function buildYearOptions
 	 */
 	[buildYearOptions]() {
@@ -192,6 +197,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Builds the header controls (month pickers and year picker)
+	 *
 	 * @function buildHeader
 	 */
 	[buildHeader]() {
@@ -294,6 +300,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Builds the weekday display (Sun, Mon, Tue...)
+	 *
 	 * @function buildWeekDays
 	 */
 	[buildWeekDays]() {
@@ -317,6 +324,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * The callback function when a day button gets clicked. Sets the selected date and updates the appropriate UI.
+	 *
 	 * @function onClickDay
 	 * @param {Button} button
 	 */
@@ -338,6 +346,7 @@ export default class Calendar extends Control {
 
 	/**
 	 * Builds all the buttons for the days.
+	 *
 	 * @function buildDays
 	 */
 	[buildDays]() {

@@ -112,7 +112,7 @@ const resizeContainer = Symbol();
  * @extends Removable
  * @constructor
  *
- * @param {Object} settings - An object where keys are methods and values are arguments.
+ * @param {object} settings - An object where keys are methods and values are arguments.
  */
 export default class Control extends Removable {
 	constructor(settings = {}) {
@@ -175,6 +175,7 @@ export default class Control extends Removable {
 
 	/**
 	 * Update the elements id attribute with the current id and idSuffix.
+	 *
 	 * @function updateElementId
 	 */
 	[updateElementId]() {
@@ -185,6 +186,7 @@ export default class Control extends Removable {
 
 	/**
 	 * Set a click event that stops propagation.
+	 *
 	 * @function setPropagationClickEvent
 	 */
 	[setPropagationClickEvent]() {
@@ -212,9 +214,9 @@ export default class Control extends Removable {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [type]
+	 * @param {string} [type]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	get type() {
 		return _(this).type;
@@ -249,9 +251,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String}  [newContainer]
+	 * @param {string}  [newContainer]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	container: methodElement({
 		enforce(newValue, oldValue) {
@@ -329,9 +331,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [newId] - A unique id
+	 * @param {string} [newId] - A unique id
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	id: methodString({
 		set(id) {
@@ -353,24 +355,23 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [newIdSuffix]
+	 * @param {string} [newIdSuffix]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	idSuffix: methodString({
 		set: updateElementId
 	}),
 
 	/**
-	 * Get or set an attribute of the main element of this control
+	 * Get or set an attribute of the main element of this control.
 	 *
 	 * @method attr
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} attribute - The attribute to get or set
-	 * @param {String} [value]  - If provided then set this as the value of the property, if not provided then return
-	 *    the attribute's value.
+	 * @param {string} attribute - The attribute to get or set
+	 * @param {string} [value] - If provided then set this as the value of the property, if not provided then return the attribute's value.
 	 */
 	attr: methodKeyValue({
 		set(attribute, value) {
@@ -393,8 +394,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} property - The style property to get or set
-	 * @param {String} [value]  - If provided then set this as the value of the property, if not provided then return
+	 * @param {string} property - The style property to get or set
+	 * @param {string} [value] - If provided then set this as the value of the property, if not provided then return
 	 *    the computed style.
 	 */
 	css: methodKeyValue({
@@ -417,7 +418,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [className] - A space separated list of css classes
+	 * @param {string} [className] - A space separated list of css classes
 	 *
 	 * @returns {this}
 	 */
@@ -434,7 +435,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [className] - A space separated list of css classes
+	 * @param {string} [className] - A space separated list of css classes
 	 *
 	 * @returns {this}
 	 */
@@ -451,8 +452,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String}  [classes]    - A space separated list of css classes
-	 * @param {Boolean} [performAdd] - If true then add the classes, if false then remove the classes
+	 * @param {string}  [classes] - A space separated list of css classes
+	 * @param {boolean} [performAdd] - If true then add the classes, if false then remove the classes
 	 *
 	 * @returns {this}
 	 */
@@ -479,9 +480,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [newPadding]
+	 * @param {string} [newPadding]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	padding: methodThickness({
 		init: new Thickness('initial'),
@@ -497,9 +498,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} [newMargin]
+	 * @param {string} [newMargin]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	margin: methodThickness({
 		init: new Thickness('initial'),
@@ -515,7 +516,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [minWidth] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [minWidth] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -533,7 +534,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [width] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [width] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -563,7 +564,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [maxWidth] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [maxWidth] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -581,7 +582,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [newMinHeight] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [newMinHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -599,7 +600,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [newHeight] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [newHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -629,7 +630,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String|CssSize} [newMaxHeight] - Must be a string that parses as valid css.
+	 * @param {string|CssSize} [newMaxHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -647,9 +648,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
-	 * @returns {Boolean|this} - Only returned if no value is provided
+	 * @returns {boolean|this} - Only returned if no value is provided
 	 */
 	isEnabled: methodBoolean({
 		init: true,
@@ -671,9 +672,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {Boolean} [newStopPropagation]
+	 * @param {boolean} [newStopPropagation]
 	 *
-	 * @returns {Boolean|this}
+	 * @returns {boolean|this}
 	 */
 	stopPropagation: methodBoolean({
 		set: setPropagationClickEvent
@@ -686,9 +687,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
-	 * @returns {Boolean|this} - Only returned if no value is provided
+	 * @returns {boolean|this} - Only returned if no value is provided
 	 */
 	isVisible: methodBoolean({
 		init: true,
@@ -715,9 +716,9 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
-	 * @returns {Boolean|this} - Only returned if no value is provided
+	 * @returns {boolean|this} - Only returned if no value is provided
 	 */
 	isDisplayed: methodBoolean({
 		init: true,
@@ -744,7 +745,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} eventName
+	 * @param {string} eventName
 	 * @param {Function} handler
 	 *
 	 * @returns {this}
@@ -779,7 +780,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} eventName
+	 * @param {string} eventName
 	 *
 	 * @returns {this}
 	 */
@@ -809,7 +810,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {String} eventName
+	 * @param {string} eventName
 	 * @param {Function} [handler] - if provided, then the event will only be removed if this handler matches the one
 	 *    provided in the "on" method.
 	 * @param {boolean} [performAdd=true] - true adds a listener, false removes it.
@@ -846,7 +847,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @param {Boolean} [isFocused]
+	 * @param {boolean} [isFocused]
 	 *
 	 * @returns {boolean|this}
 	 */
@@ -878,7 +879,7 @@ Object.assign(Control.prototype, {
 	 * @instance
 	 *
 	 * @param {Function} callback
-	 * @param {Boolean} callImmediately - if true then execute the callback immediately
+	 * @param {boolean} callImmediately - if true then execute the callback immediately
 	 *
 	 * @returns {queue}
 	 */

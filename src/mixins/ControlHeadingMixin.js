@@ -21,10 +21,12 @@ const HEADING = Symbol();
 export const CONTENT_CONTAINER = Symbol();
 
 /**
- * Provides a Heading control and a content container
+ * Provides a Heading control and a content container.
  *
  * @module ControlHeadingMixin
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class ControlHeadingMixin extends Base {
@@ -59,10 +61,11 @@ export default (Base) => {
 
 		/**
 		 * The content container element
+		 *
 		 * @method contentContainer
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @returns {Object}
+		 * @returns {object}
 		 */
 		get contentContainer() {
 			return this[CONTENT_CONTAINER];
@@ -84,8 +87,8 @@ export default (Base) => {
 		 * @method canCollapse
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {Boolean} [newCanCollapse]
-		 * @returns {Boolean|this}
+		 * @param {boolean} [newCanCollapse]
+		 * @returns {boolean|this}
 		 */
 		canCollapse: methodBoolean({
 			set(newValue) {
@@ -114,8 +117,8 @@ export default (Base) => {
 		 * @method isCollapsed
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {Boolean} [newIsCollapsed]
-		 * @returns {Boolean|this}
+		 * @param {boolean} [newIsCollapsed]
+		 * @returns {boolean|this}
 		 */
 		isCollapsed: methodBoolean({
 			set(isCollapsed) {
@@ -139,8 +142,8 @@ export default (Base) => {
 		 * @method onCollapse
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {function} [newOnCollapse]
-		 * @returns {function|this}
+		 * @param {Function} [newOnCollapse]
+		 * @returns {Function|this}
 		 */
 		onCollapse: methodFunction(),
 
@@ -231,10 +234,11 @@ export default (Base) => {
 
 		/**
 		 * Adds an icon left of the title
+		 *
 		 * @method headingIcon
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {String} headingIcon
+		 * @param {string} headingIcon
 		 */
 		headingIcon: methodString({
 			set(headingIcon) {
@@ -251,7 +255,7 @@ export default (Base) => {
 		 * @member module:ControlHeadingAddon
 		 * @instance
 		 *
-		 * @param {String} headingImage
+		 * @param {string} headingImage
 		 */
 		headingImage: methodString({
 			set(headingImage) {
@@ -263,10 +267,11 @@ export default (Base) => {
 
 		/**
 		 * Adds buttons on the right side of the heading.
+		 *
 		 * @method headingButtons
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {String} headingButton
+		 * @param {string} headingButton
 		 */
 		headingButtons: methodArray({
 			set(headingButtons) {
@@ -278,11 +283,12 @@ export default (Base) => {
 
 		/**
 		 * Makes the title inline with the control
+		 *
 		 * @method singleLine
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @param {Boolean} [newSingleLine]
-		 * @returns {Boolean|this}
+		 * @param {boolean} [newSingleLine]
+		 * @returns {boolean|this}
 		 */
 		singleLine: methodBoolean({
 			set(newValue) {
@@ -295,10 +301,11 @@ export default (Base) => {
 
 		/**
 		 * Get the heading control
+		 *
 		 * @method getHeading
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @returns {Object}
+		 * @returns {object}
 		 */
 		getHeading() {
 			return this[HEADING];

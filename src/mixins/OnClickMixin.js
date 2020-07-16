@@ -34,10 +34,12 @@ const buildLink = (url) => {
 };
 
 /**
- * Adds onClick, click, and url methods to a control
+ * Adds onClick, click, and url methods to a control.
  *
  * @module OnClickMixin
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class OnClickMixin extends Base {

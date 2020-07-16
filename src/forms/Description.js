@@ -14,9 +14,9 @@ const COLUMNS_CLASS = 'columns';
  * @extends FormControl
  * @constructor
  *
- * @param {Object}  settings                    - Accepts all control and FormControl settings plus:
- * @param {String}  [settings.description]      - The default description to display
- * @param {Number}  [settings.textWidth]        - The width of the description text (not the control width)
+ * @param {object} settings - Accepts all control and FormControl settings plus:
+ * @param {string} [settings.description] - The default description to display
+ * @param {number} [settings.textWidth] - The width of the description text (not the control width)
  */
 export default class Description extends FormControl {
 	constructor(settings = {}) {
@@ -36,8 +36,8 @@ Object.assign(Description.prototype, {
 	 * @method value
 	 * @member module:Description
 	 * @instance
-	 * @param {String} [value]
-	 * @returns {String|this}
+	 * @param {string} [value]
+	 * @returns {string|this}
 	 */
 	value: methodString({
 		set(value) {
@@ -49,8 +49,8 @@ Object.assign(Description.prototype, {
 	 * @method textWidth
 	 * @member module:Description
 	 * @instance
-	 * @param {String} [newTextWidth]
-	 * @returns {String|this}
+	 * @param {string} [newTextWidth]
+	 * @returns {string|this}
 	 */
 	textWidth: methodString({
 		init: AUTO,
@@ -63,8 +63,8 @@ Object.assign(Description.prototype, {
 	 * @method align
 	 * @member module:Description
 	 * @instance
-	 * @param {String} [newAlign] - Applys directly to the css property text-align.
-	 * @returns {String|this}
+	 * @param {string} [newAlign] - Applys directly to the css property text-align.
+	 * @returns {string|this}
 	 */
 	align: methodString({
 		init: LEFT,
@@ -92,7 +92,7 @@ Object.assign(Description.prototype, {
 	 * @method isFocused
 	 * @member module:Description
 	 * @instance
-	 * @returns {Boolean} - Always returns false.
+	 * @returns {boolean} - Always returns false.
 	 */
 	isFocused() {
 		return false;

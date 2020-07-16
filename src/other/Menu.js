@@ -89,7 +89,7 @@ const ARE_ALL_SELECTED = Symbol();
  * @extends Popup
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Menu extends Popup {
 	constructor(settings = {}) {

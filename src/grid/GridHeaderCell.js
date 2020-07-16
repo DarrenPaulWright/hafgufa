@@ -47,7 +47,7 @@ const removeControls = Symbol();
  * @class GridHeaderCell
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class GridHeaderCell extends ContextMenuMixin(Control) {
 	constructor(settings = {}) {
@@ -95,6 +95,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Build a picker control and add it to the cell
+	 *
 	 * @function buildDropDownFilter
 	 */
 	[buildDropDownFilter]() {
@@ -113,6 +114,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Build a tag control and add it to the cell
+	 *
 	 * @function buildAutoCompleteFilter
 	 */
 	[buildAutoCompleteFilter]() {
@@ -140,6 +142,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Build two text controls for min and max and add it to the cell
+	 *
 	 * @function buildNumberFilter
 	 */
 	[buildNumberFilter]() {
@@ -176,7 +179,8 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Apply a filter to the grid
-	 * @function applyOrFilter
+	 *
+	 * @param values
 	 */
 	[applyOrFilter](values) {
 		const self = this;
@@ -197,6 +201,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Build a checkbox and add it to the cell
+	 *
 	 * @function addCheckBox
 	 */
 	[addCheckBox]() {
@@ -232,6 +237,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 	/**
 	 * Build the context menu for this cell.
+	 *
 	 * @function setContextMenu
 	 */
 	[setContextMenu]() {
@@ -312,8 +318,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method label
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {String} [label]
-	 * @returns {String|this}
+	 * @param {string} [label]
+	 * @returns {string|this}
 	 */
 	label: methodString({
 		set(newValue) {
@@ -325,8 +331,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method dataType
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {String} [dataType]
-	 * @returns {String|this}
+	 * @param {string} [dataType]
+	 * @returns {string|this}
 	 */
 	dataType: methodEnum({
 		init: COLUMN_TYPES.NONE,
@@ -352,8 +358,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method canSort
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {Boolean} [canSort]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [canSort]
+	 * @returns {boolean|this}
 	 */
 	canSort: methodBoolean({
 		set(canSort) {
@@ -383,8 +389,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method sortDirection
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {String} [sortDirection]
-	 * @returns {String|this}
+	 * @param {string} [sortDirection]
+	 * @returns {string|this}
 	 */
 	sortDirection: methodEnum({
 		init: SORT_TYPES.NONE,
@@ -405,8 +411,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method filterType
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {String} [filterType]
-	 * @returns {String|this}
+	 * @param {string} [filterType]
+	 * @returns {string|this}
 	 */
 	filterType: methodEnum({
 		init: FILTER_TYPES.NONE,
@@ -435,8 +441,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method filter
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {String} [filter]
-	 * @returns {String|this}
+	 * @param {string} [filter]
+	 * @returns {string|this}
 	 */
 	filter: methodString({
 		set(newValue) {
@@ -474,8 +480,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {Boolean} [isAllRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isAllRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
 		set: setCheckBoxValue
@@ -485,8 +491,8 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {Boolean} [isSomeRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isSomeRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({
 		set: setCheckBoxValue

@@ -37,8 +37,8 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method defaultSettings
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {Object} [newDefaultSettings]
-	 * @returns {Object|this}
+	 * @param {object} [newDefaultSettings]
+	 * @returns {object|this}
 	 */
 	defaultSettings: methodObject({
 		other: undefined
@@ -46,11 +46,12 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * If there are discarded controls available then return one of those, otherwise instantiate a new control.
+	 *
 	 * @method getRecycledControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {Boolean} [doPrepend=false]
-	 * @returns {Object}
+	 * @param {boolean} [doPrepend=false]
+	 * @returns {object}
 	 */
 	getRecycledControl(doPrepend = false) {
 		const Control = this.control();
@@ -71,11 +72,12 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Get a visible control with a specific id
+	 *
 	 * @method getControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {String} [id]
-	 * @returns {Object}
+	 * @param {string} [id]
+	 * @returns {object}
 	 */
 	getControl(id) {
 		return this[VISIBLES].find((control) => control.id() === id);
@@ -83,10 +85,11 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Get an Array of all the visible controls
+	 *
 	 * @method getRenderedControls
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	getRenderedControls() {
 		return this[VISIBLES];
@@ -94,11 +97,12 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Calls a callback for each rendered control
+	 *
 	 * @method each
 	 * @member module:ControlRecycler
 	 * @instance
 	 * @param {Function} [callback] - provides a reference to the control and the index
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	each(callback) {
 		this[VISIBLES].forEach(callback);
@@ -113,7 +117,7 @@ Object.assign(ControlRecycler.prototype, {
 	 *
 	 * @param {Function} [callback] - provides a reference to the control and the index
 	 *
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	map(callback) {
 		return this[VISIBLES].map(callback);
@@ -121,10 +125,11 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Discard a control that matches a specific id
+	 *
 	 * @method discardControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {String} [id]
+	 * @param {string} [id]
 	 */
 	discardControl(id) {
 		const index = this[VISIBLES].findIndex((control) => control.id() === id);
@@ -137,6 +142,7 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Discard all the controls that are currently visible.
+	 *
 	 * @method discardAllControls
 	 * @member module:ControlRecycler
 	 * @instance
@@ -154,10 +160,10 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 *
-	 * @param {Number} [controlOffset]
-	 * @param {Boolean} [canCreateNew=false]
+	 * @param {number} [controlOffset]
+	 * @param {boolean} [canCreateNew=false]
 	 *
-	 * @returns {Object}
+	 * @returns {object}
 	 */
 	getControlAtOffset(controlOffset, canCreateNew = false) {
 		return this[VISIBLES][controlOffset] || canCreateNew && this.getRecycledControl();
@@ -165,10 +171,11 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Gets the total number of controls that are currently visible.
+	 *
 	 * @method totalVisibleControls
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @returns {Number}
+	 * @returns {number}
 	 */
 	totalVisibleControls() {
 		return this[VISIBLES].length;
@@ -176,6 +183,7 @@ Object.assign(ControlRecycler.prototype, {
 
 	/**
 	 * Prepares itself for deletion and removes all the controls it contains
+	 *
 	 * @method remove
 	 * @member module:ControlRecycler
 	 * @instance

@@ -49,7 +49,7 @@ const clearMenu = Symbol();
  * @module DrawerMenu
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class DrawerMenu extends FocusMixin(Control) {
 	constructor(settings = {}) {

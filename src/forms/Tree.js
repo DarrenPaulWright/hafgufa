@@ -45,7 +45,7 @@ const toggleExpanded = Symbol();
  * @mixes FocusMixin
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Tree extends FormControl {
 	constructor(settings = {}) {
@@ -99,7 +99,9 @@ export default class Tree extends FormControl {
 
 	/**
 	 * Applies branch data to the appropriate methods on heading.
-	 * @function renderRow
+	 *
+	 * @param heading
+	 * @param branchData
 	 */
 	[renderRow](heading, branchData) {
 		const self = this;
@@ -124,7 +126,6 @@ export default class Tree extends FormControl {
 
 	/**
 	 * Process the "value" data into something the virtual list control can consume
-	 * @function processBranches
 	 */
 	[processBranches]() {
 		const self = this;
@@ -193,7 +194,8 @@ export default class Tree extends FormControl {
 
 	/**
 	 * Create a temporary branch control to measure the width.
-	 * @function preMeasureRowWidth
+	 *
+	 * @param branchData
 	 */
 	[preMeasureRowWidth](branchData) {
 		const self = this;
@@ -215,8 +217,9 @@ export default class Tree extends FormControl {
 	}
 
 	/**
-	 * Callback function for when a branch is selected
-	 * @function toggleSelected
+	 * Callback function for when a branch is selected.
+	 *
+	 * @param heading
 	 */
 	[toggleSelected](heading) {
 		const self = this;
@@ -244,8 +247,9 @@ export default class Tree extends FormControl {
 	}
 
 	/**
-	 * Callback function for when a branch is expanded
-	 * @function toggleExpanded
+	 * Callback function for when a branch is expanded.
+	 *
+	 * @param heading
 	 */
 	[toggleExpanded](heading) {
 		const self = this;
@@ -291,6 +295,7 @@ Object.assign(Tree.prototype, {
 
 	/**
 	 * Get or set the array of branch data objects
+	 *
 	 * @method branches
 	 * @member module:Tree
 	 * @instance
@@ -303,6 +308,7 @@ Object.assign(Tree.prototype, {
 
 	/**
 	 * Get or set a function that gets called whenever the visible layout changes
+	 *
 	 * @method onLayoutChange
 	 * @member module:Tree
 	 * @instance
@@ -316,6 +322,7 @@ Object.assign(Tree.prototype, {
 	/**
 	 * Get or set a function that gets called whenever a selectable branch is selected. If set then normal selection
 	 * alogic is bypassed.
+	 *
 	 * @method onSelect
 	 * @member module:Tree
 	 * @instance
@@ -328,6 +335,7 @@ Object.assign(Tree.prototype, {
 
 	/**
 	 * Set the height of the list to the height of the contents.
+	 *
 	 * @method fitHeightToContents
 	 * @member module:VirtualList
 	 * @instance

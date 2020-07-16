@@ -46,7 +46,7 @@ const buildTooltipText = Symbol();
  * @class GraphBase
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {

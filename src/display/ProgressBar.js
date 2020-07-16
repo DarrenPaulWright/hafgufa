@@ -43,7 +43,7 @@ const updateProgress = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class ProgressBar extends ControlHeadingMixin(Control) {
 	constructor(settings = {}) {
@@ -271,8 +271,8 @@ Object.assign(ProgressBar.prototype, {
 	 * @method showBigNumbers
 	 * @member module:ProgressBar
 	 * @instance
-	 * @param {Boolean} [showBigNumbers]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [showBigNumbers]
+	 * @returns {boolean|this}
 	 */
 	showBigNumbers: methodBoolean({
 		set: updateBigNumbers
@@ -282,8 +282,8 @@ Object.assign(ProgressBar.prototype, {
 	 * @method showInlineNumbers
 	 * @member module:ProgressBar
 	 * @instance
-	 * @param {Boolean} [showInlineNumbers]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [showInlineNumbers]
+	 * @returns {boolean|this}
 	 */
 	showInlineNumbers: methodBoolean({
 		set: updateTitles

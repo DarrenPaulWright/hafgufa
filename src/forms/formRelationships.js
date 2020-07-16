@@ -4,6 +4,7 @@ import { deepEqual, erase, get } from 'object-agent';
 /**
  * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
  * a singleton so that all callbacks added are processed together.
+ *
  * @module formRelationships
  */
 const FormRelationshipHandler = function() {
@@ -13,31 +14,30 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Add a relationship
+	 *
 	 * @method add
 	 * @member module:formRelationships
 	 * @instance
-	 * @param {Object}           [newData]
-	 * @param {Object}           newData.control                            - A valid js reference back to the control
-	 *     adding this relationship
-	 * @param {String}           newData.controlId                          - unique id of the control adding this
-	 *     relationship
-	 * @param {Object[]}         newData.relationships
-	 * @param {String}           newData.relationships.targetId
-	 * @param {String[]}         newData.relationships.targetIds
-	 * @param {Number|String}    newData.relationships.type                 - 'int' | 'text'
-	 * @param {String}           newData.relationships.condition            - 'equals|anyEquals|greaterThan'
-	 * @param {Array.<Object[]>} newData.relationships.ranges               - Only use this if caseThen.value or
-	 *     caseElse.value is sumRange. Each inner array corresponds to one of the target controls in the same order
-	 *     provided in targetIds
-	 * @param {Number}           newData.relationships.ranges.bottom
-	 * @param {Number}           newData.relationships.ranges.top
-	 * @param {Number}           newData.relationships.ranges.score
-	 * @param {Object}           newData.relationships.caseThen
-	 * @param {Boolean}          newData.relationships.caseThen.isEnabled
-	 * @param {String}           newData.relationships.caseThen.value       - 'value|sum|sumRange|null' | literal
-	 * @param {Object}           newData.relationships.caseElse
-	 * @param {Boolean}          newData.relationships.caseElse.isEnabled
-	 * @param {String}           newData.relationships.caseElse. value      - 'value|sum|sumRange|null' | literal
+	 * @param {object} [newData]
+	 * @param {object} newData.control - A valid js reference back to the control adding this relationship
+	 * @param {string} newData.controlId - unique id of the control adding this relationship
+	 * @param {object[]} newData.relationships
+	 * @param {string} newData.relationships.targetId
+	 * @param {string[]} newData.relationships.targetIds
+	 * @param {number|string} newData.relationships.type - 'int' | 'text'
+	 * @param {string} newData.relationships.condition - 'equals|anyEquals|greaterThan'
+	 * @param {Array.<object[]>} newData.relationships.ranges - Only use this if caseThen.value or
+	 * caseElse.value is sumRange. Each inner array corresponds to one of the target controls in the same order
+	 * provided in targetIds
+	 * @param {number} newData.relationships.ranges.bottom
+	 * @param {number} newData.relationships.ranges.top
+	 * @param {number} newData.relationships.ranges.score
+	 * @param {object} newData.relationships.caseThen
+	 * @param {boolean} newData.relationships.caseThen.isEnabled
+	 * @param {string} newData.relationships.caseThen.value - 'value|sum|sumRange|null' | literal
+	 * @param {object} newData.relationships.caseElse
+	 * @param {boolean} newData.relationships.caseElse.isEnabled
+	 * @param {String} newData.relationships.caseElse. value - 'value|sum|sumRange|null' | literal
 	 * @returns {Number} - A unique id that should be used to reference this relationship in the future
 	 */
 	self.add = (newData) => {
@@ -53,10 +53,11 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Remove a relationship
+	 *
 	 * @method remove
 	 * @member module:formRelationships
 	 * @instance
-	 * @param {Number} id - The formRelationshipId passed back when the relationship is first added.
+	 * @param {number} id - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.remove = (id) => {
 		relationships = relationships.filter((item) => item.id !== id);
@@ -64,10 +65,11 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Force formRelationships to process all relationships or the relationships on one control
+	 *
 	 * @method trigger
 	 * @member module:formRelationships
 	 * @instance
-	 * @param {Number} [id] - The formRelationshipId passed back when the relationship is first added.
+	 * @param {number} [id] - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.trigger = (id) => {
 		if (id) {
@@ -80,14 +82,15 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Update the value of a property of a relationship
+	 *
 	 * @method update
 	 * @member module:formRelationships
 	 * @instance
-	 * @param {Number} id                    - The formRelationshipId passed back when the relationship is first added.
-	 * @param {Object} updateObject
-	 * @param {String} updateObject.name     - The name of the relationship to be updated
-	 * @param {String} updateObject.property - The property to be updated
-	 * @param {String} updateObject.value    - The new value of the property to be updated
+	 * @param {number} id - The formRelationshipId passed back when the relationship is first added.
+	 * @param {object} updateObject
+	 * @param {string} updateObject.name - The name of the relationship to be updated
+	 * @param {string} updateObject.property - The property to be updated
+	 * @param {string} updateObject.value - The new value of the property to be updated
 	 */
 	self.update = (id, updateObject) => {
 		const relationship = relationships.find((item) => item.id === id);
@@ -100,6 +103,7 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Process all relationships on all controls. This function is debounced to prevent being executed by multiple
 	 * controls at the same time.
+	 *
 	 * @function processAllRelationships
 	 */
 	const processAllRelationships = debounce(() => {
@@ -110,8 +114,9 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Process the relationships for one control
+	 *
 	 * @function processRelationships
-	 * @param {Object} data - The original data object passed into formRelationships.add
+	 * @param {object} data - The original data object passed into formRelationships.add
 	 */
 	const processRelationships = (data) => {
 		data.relationships.forEach((relationship) => {
@@ -219,9 +224,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Get the value of a control.
+	 *
 	 * @function getValue
-	 * @param {Object} target - A reference to a control
-	 * @returns {String} - If the control returns an array of values then only get the first value
+	 * @param {object} target - A reference to a control
+	 * @returns {string} - If the control returns an array of values then only get the first value
 	 */
 	const getValue = (target) => {
 		let targetValue = target.value();
@@ -235,11 +241,12 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Get the value of a control if the expected data type is int.
+	 *
 	 * @function getIntValue
-	 * @param {Object} target - A reference to a control
-	 * @returns {Number} - If the control returns an array of values then only get the first value. If the control
-	 *     returns an object with an id property, use the id property. If the value is a string with at least one '.',
-	 *     then return everything after the last '.'. (eg. 'myControl.10.3' will return 3)
+	 * @param {object} target - A reference to a control
+	 * @returns {number} - If the control returns an array of values then only get the first value. If the control
+	 * returns an object with an id property, use the id property. If the value is a string with at least one '.',
+	 * then return everything after the last '.'. (eg. 'myControl.10.3' will return 3)
 	 */
 	const getIntValue = (target) => {
 		let targetValue = target.value();
@@ -262,15 +269,19 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Determines if the target control has a value.
+	 *
+	 * @param relationship
 	 * @function exists
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const exists = (relationship) => relationship.targetValues.length > 0 && typeof relationship.targetValues[0] !== 'undefined';
 
 	/**
 	 * Determines if the target controls value is equal to the value provided in relationship.options.
+	 *
+	 * @param relationship
 	 * @function simpleEquals
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const simpleEquals = (relationship) => {
 		const target = get(relationship.targetValues.find((item) => item.id), 'id');
@@ -280,8 +291,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Determines if the target controls value is equal to a value in the array provided in relationship.options.
+	 *
+	 * @param relationship
 	 * @function simpleInArray
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const simpleInArray = (relationship) => {
 		let inArray = false;
@@ -300,8 +313,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Determines if the values of all the target controls are greater than the value provided in relationship.options.
+	 *
+	 * @param relationship
 	 * @function allGreaterThan
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const allGreaterThan = (relationship) => {
 		let areAllGreaterThan = true;
@@ -322,8 +337,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Determines if the values of all the target controls are equal to the value provided in relationship.options.
+	 *
+	 * @param relationship
 	 * @function allEquals
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const allEquals = (relationship) => {
 		let allEquals = true;
@@ -364,8 +381,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Determines if the values of any of the target controls are equal to the value provided in relationship.options.
+	 *
+	 * @param relationship
 	 * @function anyEquals
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	const anyEquals = (relationship) => {
 		let anyEquals = false;
@@ -402,11 +421,12 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Process 'caseThen' or 'caseElse' depending on the outcome of the condition
+	 *
 	 * @function processThen
-	 * @param {String} caseThen
-	 * @param {Object} control
-	 * @param {Object} relationship
-	 * @param {Object} data
+	 * @param {string} caseThen
+	 * @param {object} control
+	 * @param {object} relationship
+	 * @param {object} data
 	 */
 	const processThen = (caseThen, control, relationship, data) => {
 		let isNested = true;
@@ -455,9 +475,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Calulate the value based on the sumRange object
+	 *
 	 * @function sumRange
 	 * @param {Array} relationshipRanges
-	 * @param {String} values
+	 * @param {string} values
 	 */
 	const sumRange = (relationshipRanges, values) => {
 		let sum = 0;
@@ -500,9 +521,10 @@ const FormRelationshipHandler = function() {
 
 	/**
 	 * Gets a reference to a control given that controls id
+	 *
 	 * @function getControlById
-	 * @param {String} controlId
-	 * @return {Object|Boolean} - If no control is found that matches the provided id then return false.
+	 * @param {string} controlId
+	 * @return {object|boolean} - If no control is found that matches the provided id then return false.
 	 */
 	const getControlById = (controlId) => {
 		if (controlId) {

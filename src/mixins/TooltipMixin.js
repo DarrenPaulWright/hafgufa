@@ -13,10 +13,12 @@ const showTooltip = Symbol();
 const removeTooltip = Symbol();
 
 /**
- * Adds a tooltip method to a control
+ * Adds a tooltip method to a control.
  *
  * @mixin TooltipMixin
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class TooltipMixin extends Base {

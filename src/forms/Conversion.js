@@ -24,16 +24,15 @@ const setValue = Symbol();
 
 /**
  * Display a control with both Meters and Feet input fields.
+ *
  * @module Conversion
  * @extends FormControl
  * @constructor
  *
- * @param {Object} settings                - Accepts all control and FormControl settings plus:
- * @param {String} settings.fromType       - The unit to display in the left text field. See
- *     Conversion.CONVERSION_TYPES
- * @param {String} settings.toType         - The unit to display in the right text field. See
- *     Conversion.CONVERSION_TYPES
- * @param {Int}    settings.fractionDigits - Number of decimal places to display.
+ * @param {object} settings - Accepts all control and FormControl settings plus:
+ * @param {string} settings.fromType - The unit to display in the left text field. See Conversion.CONVERSION_TYPES
+ * @param {string} settings.toType - The unit to display in the right text field. See Conversion.CONVERSION_TYPES
+ * @param {Int} settings.fractionDigits - Number of decimal places to display.
  */
 export default class Conversion extends FormControl {
 	constructor(settings = {}) {
@@ -147,8 +146,8 @@ export default class Conversion extends FormControl {
 	 * @method value
 	 * @member module:Conversion
 	 * @instance
-	 * @param {String} [value]
-	 * @returns {String|this}
+	 * @param {string} [value]
+	 * @returns {string|this}
 	 */
 	value(value) {
 		const self = this;

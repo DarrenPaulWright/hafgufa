@@ -9,10 +9,12 @@ let contextMenuStart;
 const removeMenu = Symbol();
 
 /**
- * Adds methods for a context menu
+ * Adds methods for a context menu.
  *
  * @module ContextMenuAddon
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class ContextMenuMixin extends Base {

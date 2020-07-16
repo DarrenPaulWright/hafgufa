@@ -20,10 +20,12 @@ const stop = function() {
 const _ = new PrivateVars();
 
 /**
- * Delays the rendering of a control
+ * Delays the rendering of a control.
  *
  * @module DelayedRenderMixin
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class DelayedRenderMixin extends Base {
@@ -41,6 +43,7 @@ export default (Base) => {
 	Object.assign(DelayedRenderMixin.prototype, {
 		/**
 		 * Get or set the render delay time
+		 *
 		 * @method delay
 		 * @member module:DelayedRenderMixin
 		 * @instance

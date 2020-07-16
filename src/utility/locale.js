@@ -18,9 +18,9 @@ const locale = {
 	 * @memberOf locale
 	 * @default {English: 'en-us'}
 	 *
-	 * @param {Object} languages - An object with supported languages. Keys should be human readable names, the values are used when loading files
+	 * @param {object} languages - An object with supported languages. Keys should be human readable names, the values are used when loading files
 	 *
-	 * @returns {Object}
+	 * @returns {object}
 	 */
 	languages: methodObject({
 		init: { English: 'en-US' },
@@ -44,9 +44,9 @@ const locale = {
 	 * @method language
 	 * @memberOf locale
 	 *
-	 * @param {String} language
+	 * @param {string} language
 	 *
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	language: methodString({
 		set(language) {
@@ -61,9 +61,9 @@ const locale = {
 	 * @memberOf locale
 	 * @default '[path]-[lang].json'
 	 *
-	 * @param {String} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
+	 * @param {string} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
 	 *
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	urlFormat: methodString({
 		init: '[path]-[lang].json'
@@ -74,11 +74,11 @@ const locale = {
 	 * @method load
 	 * @memberOf locale
 	 *
-	 * @param {...String} url - One are more strings of files to load. The strings are formatted with locale.urlFormat.
+	 * @param {...string} urls - One are more strings of files to load. The strings are formatted with locale.urlFormat.
 	 *
-	 * @returns {String}
+	 * @returns {string}
 	 */
-	load(...args) {
+	load(...urls) {
 		const format = locale.urlFormat();
 		const language = locale.language().toLowerCase();
 		const options = {
@@ -87,7 +87,7 @@ const locale = {
 		};
 
 		return new Promise((resolve) => {
-			Promise.all(args.map((path) => {
+			Promise.all(urls.map((path) => {
 					const url = format.replace('[path]', path).replace('[lang]', language);
 
 					return fetch(url, options)
@@ -107,7 +107,7 @@ const locale = {
 	 * @method set
 	 * @memberOf locale
 	 *
-	 * @param {Object} newStrings
+	 * @param {object} newStrings
 	 */
 	set(newStrings) {
 		assign(strings, newStrings);
@@ -118,10 +118,10 @@ const locale = {
 	 * @method get
 	 * @memberOf locale
 	 *
-	 * @param {String} key - The key for a string
-	 * @param {Object} [replacer] - Replaces tags in strings with values. Keys should match a tag in the string wrapped like <tag>.
+	 * @param {string} key - The key for a string
+	 * @param {object} [replacer] - Replaces tags in strings with values. Keys should match a tag in the string wrapped like <tag>.
 	 *
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	get(key, replacer) {
 		let output = strings[key] || '';
@@ -140,7 +140,7 @@ const locale = {
 	 * @method onLanguageChange
 	 * @memberOf locale
 	 *
-	 * @param {function} callback
+	 * @param {Function} callback
 	 *
 	 * @returns {Queue}
 	 */

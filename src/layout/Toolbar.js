@@ -13,11 +13,12 @@ const getButton = Symbol();
 
 /**
  * Displays a toolbar that accepts and positions content such as buttons.
+ *
  * @module Toolbar
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Toolbar extends Control {
 	constructor(settings = {}) {

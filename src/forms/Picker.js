@@ -72,7 +72,7 @@ const showDialog = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Picker extends FormControl {
 	constructor(settings = {}) {
@@ -138,10 +138,10 @@ export default class Picker extends FormControl {
 	 *
 	 * @function areValuesEqual
 	 *
-	 * @param {Object} values1
-	 * @param {Object} values2
+	 * @param {object} values1
+	 * @param {object} values2
 	 *
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	static [areValuesEqual](values1, values2) {
 		if (values1.length !== values2.length) {
@@ -158,10 +158,11 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Iterates through two sets of options and determines if they are the same.
+	 *
 	 * @function areOptionsEqual
-	 * @param {Object} options1
-	 * @param {Object} options2
-	 * @returns {Boolean}
+	 * @param {object} options1
+	 * @param {object} options2
+	 * @returns {boolean}
 	 */
 	static [areOptionsEqual](options1, options2) {
 		if (!options1 || !options2) {
@@ -197,8 +198,9 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Update the selected Items with all the data from the available options.
+	 *
 	 * @param {Array}    newValue
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	[updateSelectedItems](newValue) {
 		const self = this;
@@ -258,8 +260,9 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Iterates through the options and determines if anything is multiselect.
+	 *
 	 * @function processNewOptions
-	 * @param {Object} values
+	 * @param {object} values
 	 */
 	[processNewOptions](values) {
 		const self = this;
@@ -307,8 +310,9 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Check to see if a particular option is selected
+	 *
 	 * @function checkSelected
-	 * @param {String} id - An option's id value
+	 * @param {string} id - An option's id value
 	 */
 	[checkSelected](id) {
 		return !!this[SELECTED_ITEMS].find((item) => item.id === id);
@@ -380,6 +384,7 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Layout the buttons in the grouped buttons area
+	 *
 	 * @function updateGroupedButtonsLayout
 	 */
 	[updateGroupedButtonsLayout]() {
@@ -578,7 +583,9 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Saves an item to the selected items list, removes any other items that aren't within a multiselect area.
-	 * @function toggleSelectedItem
+	 *
+	 * @param itemId
+	 * @param skipUpdate
 	 */
 	[toggleSelectedItem](itemId, skipUpdate = false) {
 		const self = this;
@@ -668,10 +675,11 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Finds an option given that option's id
+	 *
 	 * @function getItem
-	 * @param {String} itemId - The id of an option
-	 * @param {String} itemTitle - The title property of an option
-	 * @returns {Object} - An option.
+	 * @param {string} itemId - The id of an option
+	 * @param {string} itemTitle - The title property of an option
+	 * @returns {object} - An option.
 	 */
 	[getItem](itemId, itemTitle) {
 		const self = this;
@@ -745,6 +753,7 @@ export default class Picker extends FormControl {
 
 	/**
 	 * If the popup exists, hide it. Otherwise show it.
+	 *
 	 * @function toggleMenu
 	 */
 	[toggleMenu]() {
@@ -760,6 +769,7 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Show the popup.
+	 *
 	 * @function showMenu
 	 */
 	[showMenu]() {
@@ -812,6 +822,7 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Tell the popup to prepare to be removed.
+	 *
 	 * @function hideMenu
 	 */
 	[hideMenu]() {
@@ -870,8 +881,10 @@ export default class Picker extends FormControl {
 	}
 
 	/**
-	 * Show the dialog when the add/edit button is clicked
-	 * @function showDialog
+	 * Show the dialog when the add/edit button is clicked.
+	 *
+	 * @param itemId
+	 * @param newTitle
 	 */
 	[showDialog](itemId, newTitle) {
 		const self = this;
@@ -979,11 +992,12 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Set or reset the options.
+	 *
 	 * @method options
 	 * @member module:Picker
 	 * @instance
-	 * @param {Object} newOptions - See initial input options.
-	 * @returns {Object|this}
+	 * @param {object} newOptions - See initial input options.
+	 * @returns {object|this}
 	 */
 	options: methodAny({
 		init: {
@@ -1024,6 +1038,7 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Set which items get displayed in the grouped buttons.
+	 *
 	 * @method preferred
 	 * @member module:Picker
 	 * @instance
@@ -1036,6 +1051,7 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Callback that is called after the options method is called.
+	 *
 	 * @method onOptionsChange
 	 * @member module:Picker
 	 * @instance
@@ -1045,18 +1061,18 @@ Object.assign(Picker.prototype, {
 	onOptionsChange: methodFunction(),
 
 	/**
-	 * Get or set the value of this control
+	 * Get or set the value of this control.
 	 *
 	 * @method value
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @param {String|Array} [newValue]      - Can be a comma delimited string of values or an array of values.
-	 * @param {Boolean} [isForcedSave=false] - Normally this control won't save a new value if it has focus, a 'true'
-	 *     value here will override this functionality and save anyway.
+	 * @param {string|Array} [newValue] - Can be a comma delimited string of values or an array of values.
+	 * @param {boolean} [isForcedSave=false] - Normally this control won't save a new value if it has focus, a 'true'
+	 * value here will override this functionality and save anyway.
 	 *
-	 * @returns {Boolean|String} - If a new value doesn't match an option then 'false' is returned. If no value is
-	 *     provided then the current value is returned.
+	 * @returns {boolean|string} - If a new value doesn't match an option then 'false' is returned. If no value is
+	 * provided then the current value is returned.
 	 */
 	value(newValue, isForcedSave) {
 		const self = this;
@@ -1097,6 +1113,7 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Get the width of the grouped buttons.
+	 *
 	 * @method getContentWidth
 	 * @member module:Picker
 	 * @instance
@@ -1107,6 +1124,7 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Selects all options
+	 *
 	 * @method selectAll
 	 * @member module:Picker
 	 * @instance
@@ -1129,6 +1147,7 @@ Object.assign(Picker.prototype, {
 
 	/**
 	 * Unselects all selected options
+	 *
 	 * @method unselectAll
 	 * @member module:Picker
 	 * @instance
@@ -1147,8 +1166,8 @@ Object.assign(Picker.prototype, {
 	 * @method canUnselect
 	 * @member module:Picker
 	 * @instance
-	 * @param {Boolean} canUnselect
-	 * @returns {Boolean|this}
+	 * @param {boolean} canUnselect
+	 * @returns {boolean|this}
 	 */
 	canUnselect: methodBoolean({
 		init: true
@@ -1206,9 +1225,9 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @param {Boolean} showSelectedItems
+	 * @param {boolean} showSelectedItems
 	 *
-	 * @returns {Boolean|this}
+	 * @returns {boolean|this}
 	 */
 	showSelectedItems: methodBoolean({
 		init: true
@@ -1225,9 +1244,9 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @param {Boolean} canFilterSelectedOnly
+	 * @param {boolean} canFilterSelectedOnly
 	 *
-	 * @returns {Boolean|this}
+	 * @returns {boolean|this}
 	 */
 	canFilterSelectedOnly: methodBoolean(),
 

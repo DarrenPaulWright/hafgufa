@@ -31,10 +31,11 @@ const clearSearchBar = Symbol();
 
 /**
  * Display a search button that shows or hides a search bar.
+ *
  * @module SearchBar
  * @constructor
  *
- * @param {Object} settings                           -
+ * @param {object} settings
  */
 export default class SearchBar extends Control {
 	constructor(settings = {}) {
@@ -168,7 +169,7 @@ Object.assign(SearchBar.prototype, {
 	 * @method onChange
 	 * @member module:SearchBar
 	 * @instance
-	 * @param {function} [callback]
+	 * @param {Function} [callback]
 	 * @returns {queue}
 	 */
 	onChange: methodQueue(),
@@ -213,6 +214,7 @@ Object.assign(SearchBar.prototype, {
 
 	/**
 	 * Set focus on the text input element.
+	 *
 	 * @method focus
 	 * @member module:SearchBar
 	 * @instance
@@ -223,10 +225,11 @@ Object.assign(SearchBar.prototype, {
 
 	/**
 	 * See if this control has focus.
+	 *
 	 * @method isFocused
 	 * @member module:SearchBar
 	 * @instance
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	isFocused() {
 		return (this[SEARCH_BAR] ? this[SEARCH_BAR].isFocused() : false) || this[MENU_BUTTON] ? this[MENU_BUTTON].isFocused() : false;

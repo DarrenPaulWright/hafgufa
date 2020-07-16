@@ -11,7 +11,7 @@ import './Header.less';
  * @extends Container
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Header extends Container {
 	constructor(settings = {}) {

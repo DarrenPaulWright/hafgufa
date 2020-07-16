@@ -53,7 +53,7 @@ const maxRowCallback = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class TextInput extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
@@ -88,6 +88,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 
 	/**
 	 * Calculate the width of the text element if there is a prefix or suffix or textWidth
+	 *
 	 * @function positionElements
 	 */
 	[positionElements]() {
@@ -194,8 +195,8 @@ Object.assign(TextInput.prototype, {
 	 * @method isPassword
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Boolean} [newIsPassword]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newIsPassword]
+	 * @returns {boolean|this}
 	 */
 	isPassword: methodBoolean({
 		set(isPassword) {
@@ -326,8 +327,8 @@ Object.assign(TextInput.prototype, {
 	 * @method isInt
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Boolean} [newMaxValue]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newMaxValue]
+	 * @returns {boolean|this}
 	 */
 	isInt: methodBoolean({
 		set() {
@@ -352,8 +353,8 @@ Object.assign(TextInput.prototype, {
 	 * @method isNumber
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Boolean} [newMaxValue]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newMaxValue]
+	 * @returns {boolean|this}
 	 */
 	isNumber: methodBoolean({
 		set() {
@@ -378,8 +379,8 @@ Object.assign(TextInput.prototype, {
 	 * @method totalNumberDigits
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Boolean} [newMaxValue]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newMaxValue]
+	 * @returns {boolean|this}
 	 */
 	maxNumberDigits: methodInteger({
 		other: undefined,
@@ -412,8 +413,8 @@ Object.assign(TextInput.prototype, {
 	 * @method maxFractionDigits
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Boolean} [newMaxValue]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newMaxValue]
+	 * @returns {boolean|this}
 	 */
 	maxFractionDigits: methodInteger({
 		other: undefined,
@@ -439,8 +440,8 @@ Object.assign(TextInput.prototype, {
 	 * @method placeholder
 	 * @member module:TextInput
 	 * @instance
-	 * @param {String} [newPlaceholder]
-	 * @returns {String|this}
+	 * @param {string} [newPlaceholder]
+	 * @returns {string|this}
 	 */
 	placeholder: methodString({
 		set(newValue) {
@@ -452,8 +453,8 @@ Object.assign(TextInput.prototype, {
 	 * @method prefix
 	 * @member module:TextInput
 	 * @instance
-	 * @param {String} [newPrefix]
-	 * @returns {String|this}
+	 * @param {string} [newPrefix]
+	 * @returns {string|this}
 	 */
 	prefix: methodString({
 		set(prefix) {
@@ -486,8 +487,8 @@ Object.assign(TextInput.prototype, {
 	 * @method suffix
 	 * @member module:TextInput
 	 * @instance
-	 * @param {String} [newPrefix]
-	 * @returns {String|this}
+	 * @param {string} [newPrefix]
+	 * @returns {string|this}
 	 */
 	suffix: methodString({
 		set(suffix) {
@@ -519,8 +520,8 @@ Object.assign(TextInput.prototype, {
 	 * @method value
 	 * @member module:TextInput
 	 * @instance
-	 * @param {String} [value]
-	 * @returns {String|this}
+	 * @param {string} [value]
+	 * @returns {string|this}
 	 */
 	value(value) {
 		const self = this;
@@ -540,6 +541,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * Get a reference to the text input element.
+	 *
 	 * @method getInput
 	 * @member module:TextInput
 	 * @instance
@@ -550,6 +552,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * Adds a callback that is triggered when the user hits the enter key when this control is focused
+	 *
 	 * @method onEnter
 	 * @member module:TextInput
 	 * @instance

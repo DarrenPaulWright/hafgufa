@@ -79,7 +79,7 @@ const keyDownEvent = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
+ * @param {object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
  */
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
@@ -152,7 +152,7 @@ export default class Heading extends FocusMixin(Control) {
 	}
 
 	/**
-	 * @function mainClickEvent
+	 * @param event
 	 */
 	[mainClickEvent](event) {
 		const self = this;
@@ -167,7 +167,8 @@ export default class Heading extends FocusMixin(Control) {
 
 	/**
 	 * Toggle the selected state of this heading and fire the onSelect callback
-	 * @function toggleChecked
+	 *
+	 * @param event
 	 */
 	[toggleChecked](event) {
 		const self = this;
@@ -201,7 +202,8 @@ export default class Heading extends FocusMixin(Control) {
 
 	/**
 	 * Toggle the expanded state of this heading and fire the onExpand callback
-	 * @function toggleIsExpanded
+	 *
+	 * @param event
 	 */
 	[toggleIsExpanded](event) {
 		const self = this;
@@ -250,11 +252,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the displayed title for this heading
+	 *
 	 * @method title
 	 * @member module:Heading
 	 * @instance
-	 * @param {String} [title]
-	 * @returns {String|this}
+	 * @param {string} [title]
+	 * @returns {string|this}
 	 */
 	title: methodString({
 		set(title) {
@@ -269,9 +272,9 @@ Object.assign(Heading.prototype, {
 	 * @member module:Heading
 	 * @instance
 	 *
-	 * @param {String} [subTitle]
+	 * @param {string} [subTitle]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	subTitle: methodString({
 		set(subTitle) {
@@ -302,9 +305,9 @@ Object.assign(Heading.prototype, {
 	 * @member module:Heading
 	 * @instance
 	 *
-	 * @param {String} [error]
+	 * @param {string} [error]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	error: methodString({
 		set(error) {
@@ -330,11 +333,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the displayed icon for this heading
+	 *
 	 * @method icon
 	 * @member module:Heading
 	 * @instance
-	 * @param {String} icon
-	 * @returns {String|this}
+	 * @param {string} icon
+	 * @returns {string|this}
 	 */
 	icon: methodString({
 		set(newValue) {
@@ -361,11 +365,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set tooltip string for the icon
+	 *
 	 * @method iconTooltip
 	 * @member module:Heading
 	 * @instance
-	 * @param {String} iconTooltip
-	 * @returns {String|this}
+	 * @param {string} iconTooltip
+	 * @returns {string|this}
 	 */
 	iconTooltip: methodString({
 		set(iconTooltip) {
@@ -377,11 +382,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the displayed image for this heading
+	 *
 	 * @method image
 	 * @member module:Heading
 	 * @instance
-	 * @param {String} image
-	 * @returns {String|this}
+	 * @param {string} image
+	 * @returns {string|this}
 	 */
 	image: methodString({
 		set(image) {
@@ -406,6 +412,7 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the data array to build buttons on the right side of the header.
+	 *
 	 * @method buttons
 	 * @member module:Heading
 	 * @instance
@@ -457,11 +464,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the selectable state for this heading
+	 *
 	 * @method isSelectable
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} isSelectable
-	 * @returns {Boolean|this}
+	 * @param {boolean} isSelectable
+	 * @returns {boolean|this}
 	 */
 	isSelectable: methodBoolean({
 		set(newValue) {
@@ -476,11 +484,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the selected state for this heading
+	 *
 	 * @method isSelected
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} isSelected
-	 * @returns {Boolean|this}
+	 * @param {boolean} isSelected
+	 * @returns {boolean|this}
 	 */
 	isSelected: methodBoolean({
 		set(newValue) {
@@ -496,11 +505,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the indeterminate state for this heading
+	 *
 	 * @method isIndeterminate
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} isIndeterminate
-	 * @returns {Boolean|this}
+	 * @param {boolean} isIndeterminate
+	 * @returns {boolean|this}
 	 */
 	isIndeterminate: methodBoolean({
 		set(isIndeterminate) {
@@ -515,11 +525,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the expandable state for this heading
+	 *
 	 * @method isExpandable
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} isExpandable
-	 * @returns {Boolean|this}
+	 * @param {boolean} isExpandable
+	 * @returns {boolean|this}
 	 */
 	isExpandable: methodBoolean({
 		set() {
@@ -532,11 +543,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the expanded state for this heading
+	 *
 	 * @method isExpanded
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} isExpanded
-	 * @returns {Boolean|this}
+	 * @param {boolean} isExpanded
+	 * @returns {boolean|this}
 	 */
 	isExpanded: methodBoolean({
 		set() {
@@ -547,21 +559,23 @@ Object.assign(Heading.prototype, {
 	/**
 	 * Get or set a boolean that determines if clicking the main area of the
 	 *      header should expand or
+	 *
 	 * @method shouldMainClickExpand
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} shouldMainClickExpand
-	 * @returns {Boolean|this}
+	 * @param {boolean} shouldMainClickExpand
+	 * @returns {boolean|this}
 	 */
 	shouldMainClickExpand: methodBoolean(),
 
 	/**
 	 * Get or set the visibility of the expander on this heading
+	 *
 	 * @method showExpander
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} showExpander
-	 * @returns {Boolean|this}
+	 * @param {boolean} showExpander
+	 * @returns {boolean|this}
 	 */
 	showExpander: methodBoolean({
 		set(newValue) {
@@ -588,11 +602,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the visibility of the checkbox on this heading
+	 *
 	 * @method showCheckbox
 	 * @member module:Heading
 	 * @instance
-	 * @param {Boolean} showCheckbox
-	 * @returns {Boolean|this}
+	 * @param {boolean} showCheckbox
+	 * @returns {boolean|this}
 	 */
 	showCheckbox: methodBoolean({
 		set(showCheckbox) {
@@ -620,6 +635,7 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the onSelect callback for this heading
+	 *
 	 * @method onSelect
 	 * @member module:Heading
 	 * @instance
@@ -634,6 +650,7 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set the onExpand callback for this heading
+	 *
 	 * @method onExpand
 	 * @member module:Heading
 	 * @instance
@@ -646,11 +663,12 @@ Object.assign(Heading.prototype, {
 
 	/**
 	 * Get or set data relavent to this header.
+	 *
 	 * @method data
 	 * @member module:Heading
 	 * @instance
-	 * @param {Object} data
-	 * @returns {Object|this}
+	 * @param {object} data
+	 * @returns {object|this}
 	 */
 	data: methodObject({
 		other: undefined

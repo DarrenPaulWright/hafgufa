@@ -44,7 +44,7 @@ const setFocusIndex = Symbol();
  * @mixes FocusMixin
  * @constructor
  *
- * @param {Object} settings - Accepts all control and FormControl options plus:
+ * @param {object} settings - Accepts all control and FormControl options plus:
  */
 export default class GroupedButtons extends FormControl {
 	constructor(settings = {}) {
@@ -119,7 +119,11 @@ export default class GroupedButtons extends FormControl {
 
 	/**
 	 * Button click callback. Manages selection state.
-	 * @function onButtonClick
+	 *
+	 * @private
+	 *
+	 * @param button
+	 * @param event
 	 */
 	[onButtonClick](button, event) {
 		const self = this;
@@ -157,6 +161,7 @@ export default class GroupedButtons extends FormControl {
 
 	/**
 	 * Get the appropriate width for each button.
+	 *
 	 * @function getButtonWidthSetting
 	 */
 	[getButtonWidthSetting]() {
@@ -165,7 +170,12 @@ export default class GroupedButtons extends FormControl {
 
 	/**
 	 * Build a single button and add it to the DOM at a specific location
-	 * @function buildButton
+	 *
+	 * @private
+	 *
+	 * @param settings
+	 * @param doSaveData
+	 * @param insertIndex
 	 */
 	[buildButton](settings, doSaveData, insertIndex) {
 		const self = this;
@@ -201,7 +211,6 @@ export default class GroupedButtons extends FormControl {
 
 	/**
 	 * Set the toggled state of all buttons based on the current value.
-	 * @function setAllButtonToggles
 	 */
 	[setAllButtonToggles]() {
 		const self = this;
@@ -263,8 +272,9 @@ export default class GroupedButtons extends FormControl {
 	}
 
 	/**
-	 * Sets focus on the current focus Button
-	 * @function setFocusIndex
+	 * Sets focus on the current focus Button.
+	 *
+	 * @param {number} index
 	 */
 	[setFocusIndex](index) {
 		if (this.buttons().length >= index + 1) {
@@ -279,8 +289,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method value
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {Array|String} [value]
-	 * @returns {Array|String|this}
+	 * @param {Array|string} [value]
+	 * @returns {Array|string|this}
 	 */
 	value: methodAny({
 		enforce(newValue) {
@@ -300,7 +310,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @member module:GroupedButtons
 	 * @instance
 	 *
-	 * @param {Object} buttonSettings
+	 * @param {object} buttonSettings
 	 * @param {Int}    [insertIndex]
 	 *
 	 * @returns {this}
@@ -322,7 +332,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method removeButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {String} id
+	 * @param {string} id
 	 * @returns {this}
 	 */
 	removeButton(id) {
@@ -354,8 +364,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method getButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {String}    id
-	 * @returns {Object}
+	 * @param {string}    id
+	 * @returns {object}
 	 */
 	getButton(id) {
 		return this[BUTTON_RECYCLER].getControl(id);
@@ -400,8 +410,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method isSelectable
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {Boolean} [isSelectable]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isSelectable]
+	 * @returns {boolean|this}
 	 */
 	isSelectable: methodBoolean({
 		init: true,
@@ -418,8 +428,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method isMultiSelect
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {Boolean} [isMultiSelect]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isMultiSelect]
+	 * @returns {boolean|this}
 	 */
 	isMultiSelect: methodBoolean({
 		set() {
@@ -433,8 +443,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method orientation
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @param {String} [orientation]
-	 * @returns {String|this}
+	 * @param {string} [orientation]
+	 * @returns {string|this}
 	 */
 	orientation: methodEnum({
 		init: ORIENTATION.HORIZONTAL,

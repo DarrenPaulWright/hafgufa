@@ -10,8 +10,8 @@ import Control from './../Control.js';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.text]
+ * @param {object} settings
+ * @param {string} [settings.text]
  */
 export default class Span extends Control {
 	constructor(settings = {}) {

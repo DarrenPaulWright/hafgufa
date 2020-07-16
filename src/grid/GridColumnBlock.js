@@ -29,7 +29,7 @@ const updateRow = Symbol();
  * @module GridColumnBlock
  * @constructor
  *
- * @param {Object} settings - Same settings as {@link module:Grid}
+ * @param {object} settings - Same settings as {@link module:Grid}
  */
 export default class GridColumnBlock extends Control {
 	constructor(settings = {}) {
@@ -149,8 +149,8 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Boolean} [isAllRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isAllRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
 		set(newValue) {
@@ -162,8 +162,8 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Boolean} [isSomeRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isSomeRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({
 		set(newValue) {
@@ -174,10 +174,11 @@ Object.assign(GridColumnBlock.prototype, {
 	/**
 	 * Delete all the rows currently displayed and build new ones. If no new rows are provided, show the empty contents
 	 * message.
+	 *
 	 * @method rows
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Object} newRows - This is the final result of {@link module:Grid#sort}
+	 * @param {object} newRows - This is the final result of {@link module:Grid#sort}
 	 */
 	rows(newRows) {
 		const self = this;
@@ -191,10 +192,11 @@ Object.assign(GridColumnBlock.prototype, {
 
 	/**
 	 * Auto-scroll to a row.
+	 *
 	 * @method scrollToRowIndex
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Number} rowIndex - index of a row that is currently displayed
+	 * @param {number} rowIndex - index of a row that is currently displayed
 	 */
 	scrollToRowIndex(rowIndex) {
 		this[VIRTUAL_LIST].scrollToIndex(rowIndex);
@@ -204,8 +206,8 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isFiltered
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Boolean} [newIsFiltered]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newIsFiltered]
+	 * @returns {boolean|this}
 	 */
 	isFiltered: methodBoolean(),
 

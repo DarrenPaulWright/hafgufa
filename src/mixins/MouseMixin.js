@@ -6,6 +6,8 @@ import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js
  *
  * @module MouseMixin
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class MouseMixin extends Base {

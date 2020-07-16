@@ -16,7 +16,7 @@ import './Group.less';
  * @extends Container
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Group extends MergeContentContainerMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
@@ -44,9 +44,9 @@ Object.assign(Group.prototype, {
 	 * @member module:Group
 	 * @instance
 	 *
-	 * @param {String} [newPadding]
+	 * @param {string} [newPadding]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	padding: methodThickness({
 		init: new Thickness('0.25rem 0.6rem 0.5rem'),

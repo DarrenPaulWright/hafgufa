@@ -32,7 +32,7 @@ const ICON_POSITIONS = new Enum({
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
 	constructor(settings = {}) {
@@ -70,11 +70,12 @@ Object.assign(Button.prototype, {
 
 	/**
 	 * Set the button label.
+	 *
 	 * @method label
 	 * @member module:Button
 	 * @instance
-	 * @param {String} newLabel - A none-HTML string
-	 * @returns {String|this}
+	 * @param {string} newLabel - A none-HTML string
+	 * @returns {string|this}
 	 */
 	label: methodString({
 		init: undefined,
@@ -101,10 +102,11 @@ Object.assign(Button.prototype, {
 
 	/**
 	 * Set the button alt text.
+	 *
 	 * @method alt
 	 * @member module:Button
 	 * @instance
-	 * @param {String} newTitle - A none-HTML string
+	 * @param {string} newTitle - A none-HTML string
 	 * @returns {this}
 	 */
 	alt: methodString({
@@ -124,9 +126,9 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {String} newSrc - URL for an image.
+	 * @param {string} newSrc - URL for an image.
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	icon: methodString({
 		set(newValue) {
@@ -166,8 +168,8 @@ Object.assign(Button.prototype, {
 	 * @method iconSize
 	 * @member module:Button
 	 * @instance
-	 * @param {String} [iconSize]
-	 * @returns {String|this}
+	 * @param {string} [iconSize]
+	 * @returns {string|this}
 	 */
 	iconSize: methodEnum({
 		init: ICON_SIZES.LARGE,
@@ -183,8 +185,8 @@ Object.assign(Button.prototype, {
 	 * @method iconPosition
 	 * @member module:Button
 	 * @instance
-	 * @param {String} [iconPosition]
-	 * @returns {String|this}
+	 * @param {string} [iconPosition]
+	 * @returns {string|this}
 	 */
 	iconPosition: methodEnum({
 		init: ICON_POSITIONS.LEFT,
@@ -206,9 +208,9 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {String} newSrc - URL for an image.
+	 * @param {string} newSrc - URL for an image.
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	image: methodString({
 		set(image) {
@@ -242,11 +244,12 @@ Object.assign(Button.prototype, {
 
 	/**
 	 * Sets or gets the current toggleable state.
+	 *
 	 * @method isSelectable
 	 * @member module:Button
 	 * @instance
-	 * @param {Boolean} [newisSelectable]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newisSelectable]
+	 * @returns {boolean|this}
 	 */
 	isSelectable: methodBoolean({
 		set(newValue) {
@@ -264,9 +267,9 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @param {Boolean} [newisSelected]
+	 * @param {boolean} [newisSelected]
 	 *
-	 * @returns {Boolean|this}
+	 * @returns {boolean|this}
 	 */
 	isSelected: methodBoolean({
 		set(newValue) {

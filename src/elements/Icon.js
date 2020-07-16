@@ -16,11 +16,12 @@ export const ICON_SIZES = new Enum({
 
 /**
  * Builds a font-awesome icon
+ *
  * @class Icon
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
@@ -42,11 +43,12 @@ Object.assign(Icon.prototype, {
 	 * Icons can be interpolated using bracket syntax:
 	 * 'circle;plus' - a circle with a smaller plus inside
 	 * 'cog;[circle:plus-circle]' - a cog icon with a circle sub-icon with a plus inside
+	 *
 	 * @method icon
 	 * @member module:Icon
 	 * @instance
-	 * @param {String} newIcon
-	 * @returns {String|this}
+	 * @param {string} newIcon
+	 * @returns {string|this}
 	 */
 	icon: methodString({
 		before(oldValue) {
@@ -120,11 +122,12 @@ Object.assign(Icon.prototype, {
 
 	/**
 	 * Set the icon size
+	 *
 	 * @method size
 	 * @member module:Icon
 	 * @instance
-	 * @param {String} newSize - Use Icon ICON_SIZES
-	 * @returns {String|this}
+	 * @param {string} newSize - Use Icon ICON_SIZES
+	 * @returns {string|this}
 	 */
 	size: methodEnum({
 		enum: ICON_SIZES,

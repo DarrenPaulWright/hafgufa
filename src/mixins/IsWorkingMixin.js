@@ -6,6 +6,8 @@ const _ = new PrivateVars();
 /**
  * @module IsWorkingAddon
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class IsWorkingMixin extends Base {

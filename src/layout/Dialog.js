@@ -45,7 +45,7 @@ const IS_AUTO = Symbol();
  * @class Dialog
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Dialog extends Removable {
 	constructor(settings = {}) {
@@ -232,9 +232,9 @@ Object.assign(Dialog.prototype, {
 	 * @member module:Dialog
 	 * @instance
 	 *
-	 * @param {String} [newPadding]
+	 * @param {string} [newPadding]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	padding: methodThickness({
 		init: new Thickness('1rem 1.25rem'),
@@ -245,11 +245,12 @@ Object.assign(Dialog.prototype, {
 
 	/**
 	 * Changes the view of the control to look disabled and prevents mouse and keyboard interaction
+	 *
 	 * @method isEnabled
 	 * @member module:Dialog
 	 * @instance
-	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
-	 * @returns {Boolean|this} - Only returned if no value is provided
+	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @returns {boolean|this} - Only returned if no value is provided
 	 */
 	isEnabled: methodBoolean({
 		init: true,

@@ -23,7 +23,7 @@ const setCountString = Symbol();
  * @module GridFooter
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class GridFooter extends Control {
 	constructor(settings = {}) {
@@ -59,6 +59,7 @@ export default class GridFooter extends Control {
 
 	/**
 	 * Build a string of counts based on various set properties
+	 *
 	 * @function setCountString
 	 */
 	[setCountString]() {
@@ -83,6 +84,7 @@ Object.assign(GridFooter.prototype, {
 	/**
 	 * Add a footer to the grid. The footer will automatically display expand all/collapse all buttons if the rows are
 	 * being grouped.
+	 *
 	 * @method showExpandCollapseButtons
 	 * @member module:GridFooter
 	 * @instance
@@ -123,8 +125,8 @@ Object.assign(GridFooter.prototype, {
 	 * @method countSuffix
 	 * @member module:GridFooter
 	 * @instance
-	 * @param {String} [countSuffix]
-	 * @returns {String|this}
+	 * @param {string} [countSuffix]
+	 * @returns {string|this}
 	 */
 	countSuffix: methodString({
 		init: 'items',
@@ -137,8 +139,8 @@ Object.assign(GridFooter.prototype, {
 	 * @method count
 	 * @member module:GridFooter
 	 * @instance
-	 * @param {String} [count]
-	 * @returns {String|this}
+	 * @param {string} [count]
+	 * @returns {string|this}
 	 */
 	count: methodInteger({
 		init: 0,
@@ -149,8 +151,8 @@ Object.assign(GridFooter.prototype, {
 	 * @method groupSuffixes
 	 * @member module:GridFooter
 	 * @instance
-	 * @param {String} [groupSuffixes]
-	 * @returns {String|this}
+	 * @param {string} [groupSuffixes]
+	 * @returns {string|this}
 	 */
 	groupSuffixes: methodArray({
 		init: [],
@@ -161,8 +163,8 @@ Object.assign(GridFooter.prototype, {
 	 * @method groupCounts
 	 * @member module:GridFooter
 	 * @instance
-	 * @param {String} [groupCounts]
-	 * @returns {String|this}
+	 * @param {string} [groupCounts]
+	 * @returns {string|this}
 	 */
 	groupCounts: methodArray({
 		set: setCountString

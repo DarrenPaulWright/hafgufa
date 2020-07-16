@@ -38,7 +38,7 @@ const updateLightBox = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @param {Object}        settings
+ * @param {object}        settings
  */
 export default class FilePicker extends IsWorkingMixin(FormControl) {
 	constructor(settings = {}) {
@@ -218,9 +218,9 @@ Object.assign(FilePicker.prototype, {
 	 * @member module:FilePicker
 	 * @instance
 	 *
-	 * @param {Number} [value]
+	 * @param {number} [value]
 	 *
-	 * @returns {Number|this}
+	 * @returns {number|this}
 	 */
 	value: methodArray({
 		set(value) {
@@ -311,11 +311,12 @@ Object.assign(FilePicker.prototype, {
 
 	/**
 	 * Get or Set the size of the preview image.
+	 *
 	 * @method previewSize
 	 * @member module:FilePicker
 	 * @instance
-	 * @param {Number} [previewSize] - FilePicker.PREVIEW_SIZES
-	 * @returns {Number|this}
+	 * @param {number} [previewSize] - FilePicker.PREVIEW_SIZES
+	 * @returns {number|this}
 	 */
 	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
@@ -338,11 +339,12 @@ Object.assign(FilePicker.prototype, {
 
 	/**
 	 * Get or Set if this control should accept multiple files
+	 *
 	 * @method isMulti
 	 * @member module:FilePicker
 	 * @instance
-	 * @param {Boolean} [isMulti]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isMulti]
+	 * @returns {boolean|this}
 	 */
 	isMulti: methodBoolean({
 		set(isMulti) {
@@ -357,10 +359,11 @@ Object.assign(FilePicker.prototype, {
 
 	/**
 	 * Determines if this control has focus
+	 *
 	 * @method isFocused
 	 * @member module:FilePicker
 	 * @instance
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	isFocused() {
 		return false;

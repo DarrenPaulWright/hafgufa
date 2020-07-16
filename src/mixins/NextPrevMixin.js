@@ -21,7 +21,7 @@ const onShowButtons = Symbol();
  * @mixin NextPrevMixin
  * @constructor
  *
- * @param {class} [Base]
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class NextPrevMixin extends Base {
@@ -45,6 +45,7 @@ export default (Base) => {
 
 		/**
 		 * Update the isVisible value of the buttons
+		 *
 		 * @function updateButtons
 		 */
 		[updateButtons]() {
@@ -155,13 +156,13 @@ export default (Base) => {
 		}),
 
 		/**
-		 * Get or set the size of the icons on the buttons
+		 * Get or set the size of the icons on the buttons.
 		 *
 		 * @method buttonIconSize
 		 * @memberOf NextPrevMixin
 		 * @instance
 		 *
-		 * @param {string} - see Icon ICON_SIZES
+		 * @param {string} iconSize - see Icon ICON_SIZES
 		 *
 		 * @returns {string|this}
 		 */

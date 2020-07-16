@@ -238,9 +238,9 @@ Object.assign(Tabs.prototype, {
 	 * @param {string}   [newTabs.title]
 	 * @param {string}   [newTabs.icon]
 	 * @param {string}   [newTabs.group]
-	 * @param {function} [newTabs.content] - content is applied before onClick is called
-	 * @param {function} [newTabs.onClick]
-	 * @param {function} [newTabs.onRemove]
+	 * @param {Function} [newTabs.content] - content is applied before onClick is called
+	 * @param {Function} [newTabs.onClick]
+	 * @param {Function} [newTabs.onRemove]
 	 *
 	 * @returns {Array|this}
 	 */

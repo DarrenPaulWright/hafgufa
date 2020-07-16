@@ -15,7 +15,7 @@ const setBlurEvent = Symbol();
  * @mixin FocusMixin
  * @constructor
  *
- * @param {class} [Base]
+ * @param {Function} Base - The class to extend
  */
 export default (Base) => {
 	class FocusMixin extends Base {
@@ -33,7 +33,7 @@ export default (Base) => {
 		/**
 		 * Callback that is called when the control gets focus
 		 *
-		 * @function onFocusCallback
+		 * @param event
 		 */
 		[onFocusCallback](event) {
 			const self = this;
@@ -55,7 +55,7 @@ export default (Base) => {
 		/**
 		 * Callback that is called when the control loses focus
 		 *
-		 * @function onBlurCallback
+		 * @param event
 		 */
 		[onBlurCallback](event) {
 			const self = this;
@@ -112,6 +112,7 @@ export default (Base) => {
 
 		/**
 		 * Set focus on the text input element.
+		 *
 		 * @method focus
 		 * @member module:FocusMixin
 		 * @instance
@@ -122,6 +123,7 @@ export default (Base) => {
 
 		/**
 		 * Remove focus from this control if it is focused.
+		 *
 		 * @method blur
 		 * @member module:FocusMixin
 		 * @instance
@@ -133,10 +135,14 @@ export default (Base) => {
 
 		/**
 		 * See if this control has focus.
+		 *
 		 * @method isFocused
 		 * @member module:FocusMixin
 		 * @instance
-		 * @returns {Boolean}
+		 *
+		 * @param {boolean} [doFocus]
+		 *
+		 * @returns {boolean}
 		 */
 		isFocused(doFocus) {
 			const self = this;
@@ -194,6 +200,7 @@ export default (Base) => {
 	Object.assign(FocusMixin.prototype, {
 		/**
 		 * Adds a callback that is triggered when the control gets focus
+		 *
 		 * @method onFocus
 		 * @member module:FocusMixin
 		 * @instance
@@ -206,6 +213,7 @@ export default (Base) => {
 
 		/**
 		 * Adds a callback that is triggered when the control loses focus
+		 *
 		 * @method onBlur
 		 * @member module:FocusMixin
 		 * @instance

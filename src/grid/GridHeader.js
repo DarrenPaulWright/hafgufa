@@ -21,7 +21,7 @@ const sortColumn = Symbol();
  * @module GridHeader
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class GridHeader extends Control {
 	constructor(settings = {}) {
@@ -53,8 +53,9 @@ export default class GridHeader extends Control {
 
 	/**
 	 * Apply css classes to appropriate column labels to show the sort state and call grid.sort().
+	 *
 	 * @function sortColumn
-	 * @param {Object} headerCellControl
+	 * @param {object} headerCellControl
 	 */
 	[sortColumn](headerCellControl) {
 		const self = this;
@@ -165,8 +166,8 @@ Object.assign(GridHeader.prototype, {
 	 * @method desiredWidth
 	 * @member module:GridHeader
 	 * @instance
-	 * @param {Number} desiredWidth
-	 * @returns {Number} - The actual width used
+	 * @param {number} desiredWidth
+	 * @returns {number} - The actual width used
 	 */
 	desiredWidth(desiredWidth) {
 		const self = this;
@@ -222,8 +223,8 @@ Object.assign(GridHeader.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Boolean} [isAllRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isAllRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
 		set(isAllRowsSelected) {
@@ -237,8 +238,8 @@ Object.assign(GridHeader.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @param {Boolean} [isSomeRowsSelected]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isSomeRowsSelected]
+	 * @returns {boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({
 		set(isSomeRowsSelected) {
@@ -252,8 +253,8 @@ Object.assign(GridHeader.prototype, {
 	 * @method scrollbarWidth
 	 * @member module:GridHeader
 	 * @instance
-	 * @param {Number} [scrollbarWidth]
-	 * @returns {Number|this}
+	 * @param {number} [scrollbarWidth]
+	 * @returns {number|this}
 	 */
 	scrollbarWidth: methodNumber({
 		init: 0

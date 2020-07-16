@@ -46,7 +46,7 @@ const refresh = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings - Accepts all control settings plus:
+ * @param {object} settings - Accepts all control settings plus:
  */
 export default class GridRow extends Control {
 	constructor(settings = {}) {
@@ -82,7 +82,6 @@ export default class GridRow extends Control {
 
 	/**
 	 * Render the contents of a normal row.
-	 * @function renderCells
 	 */
 	[renderCells]() {
 		const self = this;
@@ -124,8 +123,7 @@ export default class GridRow extends Control {
 	}
 
 	/**
-	 * Remove the contents of a normal row
-	 * @function hideCells
+	 * Remove the contents of a normal row.
 	 */
 	[hideCells]() {
 		const self = this;
@@ -137,7 +135,6 @@ export default class GridRow extends Control {
 
 	/**
 	 * Render the contents of a group header.
-	 * @function renderGroupHeading
 	 */
 	[renderGroupHeading]() {
 		const self = this;
@@ -175,8 +172,7 @@ export default class GridRow extends Control {
 	}
 
 	/**
-	 * Remove the contents of a group header
-	 * @function hideGroupHeading
+	 * Remove the contents of a group header.
 	 */
 	[hideGroupHeading]() {
 		const self = this;
@@ -188,7 +184,6 @@ export default class GridRow extends Control {
 
 	/**
 	 * Reset the row width. Takes in to account group depth.
-	 * @function resetRowWidth
 	 */
 	[resetRowWidth]() {
 		const self = this;
@@ -197,7 +192,8 @@ export default class GridRow extends Control {
 
 	/**
 	 * Calculate the width of a cell at a given index.
-	 * @function calculateCellWidth
+	 *
+	 * @param cellIndex
 	 */
 	[calculateCellWidth](cellIndex) {
 		const self = this;
@@ -213,7 +209,6 @@ export default class GridRow extends Control {
 
 	/**
 	 * Sets or removes the click events for the row.
-	 * @function setClickEvent
 	 */
 	[setClickEvent]() {
 		const self = this;
@@ -256,10 +251,11 @@ export default class GridRow extends Control {
 Object.assign(GridRow.prototype, {
 	/**
 	 * Update the widths of all cells in this row to corresponding values stored in the Array "columns".
+	 *
 	 * @method updateWidth
 	 * @member module:GridRow
 	 * @instance
-	 * @param {Number} availableWidth
+	 * @param {number} availableWidth
 	 * @returns {this}
 	 */
 	updateWidth(availableWidth) {
@@ -283,8 +279,8 @@ Object.assign(GridRow.prototype, {
 	 * @method rowData
 	 * @member module:GridRow
 	 * @instance
-	 * @param {Boolean} newData
-	 * @returns {Boolean|this}
+	 * @param {boolean} newData
+	 * @returns {boolean|this}
 	 */
 	rowData: methodObject({
 		init: {},
@@ -328,7 +324,7 @@ Object.assign(GridRow.prototype, {
 	 * @method columns
 	 * @member module:GridRow
 	 * @instance
-	 * @param {Object[]} newColumns
+	 * @param {object[]} newColumns
 	 * @returns {this}
 	 */
 	columns: methodArray({
@@ -339,8 +335,8 @@ Object.assign(GridRow.prototype, {
 	 * @method isSelected
 	 * @member module:GridRow
 	 * @instance
-	 * @param {Boolean} newIsSelected
-	 * @returns {Boolean|this}
+	 * @param {boolean} newIsSelected
+	 * @returns {boolean|this}
 	 */
 	isSelected: methodBoolean({
 		set(isSelected) {
@@ -356,8 +352,8 @@ Object.assign(GridRow.prototype, {
 	 * @method isIndeterminate
 	 * @member module:GridRow
 	 * @instance
-	 * @param {Boolean} newIsSelected
-	 * @returns {Boolean|this}
+	 * @param {boolean} newIsSelected
+	 * @returns {boolean|this}
 	 */
 	isIndeterminate: methodBoolean({
 		set(newValue) {

@@ -14,7 +14,7 @@ const pushHistory = Symbol();
  * @class LocalHistory
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class LocalHistory {
 	constructor(settings = {}) {
@@ -28,9 +28,9 @@ export default class LocalHistory {
 	/**
 	 * Add or replace a history object on the history stack.
 	 *
-	 * @function pushHistory
+	 * @param {object} historyObject
 	 *
-	 * @return {Boolean} - Successful push = 'true'; Failed push = 'false'
+	 * @return {boolean} - Successful push = 'true'; Failed push = 'false'
 	 */
 	[pushHistory](historyObject) {
 		const self = this;
@@ -59,6 +59,7 @@ export default class LocalHistory {
 
 	/**
 	 * Save an object to history.
+	 *
 	 * @method push
 	 * @member module:LocalHistory
 	 * @instance
@@ -70,6 +71,7 @@ export default class LocalHistory {
 
 	/**
 	 * Replace the most recent object in history.
+	 *
 	 * @method replace
 	 * @member module:LocalHistory
 	 * @instance
@@ -84,10 +86,11 @@ export default class LocalHistory {
 
 	/**
 	 * Undo and return the most recent history object.
+	 *
 	 * @method undo
 	 * @member module:LocalHistory
 	 * @instance
-	 * @return {Object} - Object added through 'push' or 'replace'.
+	 * @return {object} - Object added through 'push' or 'replace'.
 	 */
 	undo() {
 		const self = this;
@@ -119,10 +122,11 @@ export default class LocalHistory {
 
 	/**
 	 * Check if this instance has any history.
+	 *
 	 * @method hasHistory
 	 * @member module:LocalHistory
 	 * @instance
-	 * @return {Boolean}
+	 * @return {boolean}
 	 */
 	hasHistory() {
 		return this[CURRENT_INDEX] > NO_ITEMS_INDEX + 1;
@@ -135,7 +139,7 @@ export default class LocalHistory {
 	 * @member module:LocalHistory
 	 * @instance
 	 *
-	 * @return {Boolean}
+	 * @return {boolean}
 	 */
 	hasFuture() {
 		return this[HISTORY].length > this[CURRENT_INDEX] + 1;
@@ -143,6 +147,7 @@ export default class LocalHistory {
 
 	/**
 	 * Delete all history objects.
+	 *
 	 * @method clear
 	 * @member module:LocalHistory
 	 * @instance

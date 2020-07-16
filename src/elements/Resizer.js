@@ -78,7 +78,7 @@ const setMinMaxOffsets = Symbol();
  * @extends DragMixin
  * @extends Control
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Resizer extends DragMixin(Control) {
 	constructor(settings = {}) {
@@ -202,9 +202,9 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [splitOffset]
+	 * @param {string} [splitOffset]
 	 *
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	splitOffset: methodCssSize({
 		set(splitOffset) {
@@ -224,9 +224,9 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [newMinOffset]
+	 * @param {string} [newMinOffset]
 	 *
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	minOffset: methodCssSize({
 		init: new CssSize(),
@@ -243,9 +243,9 @@ Object.assign(Resizer.prototype, {
 	 * @member module:Resizer
 	 * @instance
 	 *
-	 * @param {String} [maxOffset]
+	 * @param {string} [maxOffset]
 	 *
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	maxOffset: methodCssSize({
 		init: new CssSize('100%'),

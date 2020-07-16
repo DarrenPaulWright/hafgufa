@@ -10,6 +10,7 @@ const _ = new PrivateVars();
 
 /**
  * Adds remove methods to a module.
+ *
  * @class Removable
  * @constructor
  */
@@ -22,6 +23,7 @@ export default class Removable {
 
 	/**
 	 * If the returned value is true then remove has been called.
+	 *
 	 * @method isRemoved
 	 * @member module:Removable
 	 * @instance
@@ -50,6 +52,7 @@ Object.assign(Removable.prototype, {
 
 	/**
 	 * Calls all the onRemove callbacks and sets isRemoved to true
+	 *
 	 * @method remove
 	 * @member module:Removable
 	 * @instance
@@ -102,6 +105,7 @@ Object.assign(Removable.prototype, {
 Object.assign(Removable.prototype, {
 	/**
 	 * Adds a callback that gets called before any fade animations
+	 *
 	 * @method onPreRemove
 	 * @member module:Removable
 	 * @instance
@@ -111,6 +115,7 @@ Object.assign(Removable.prototype, {
 	onPreRemove: methodQueue(),
 	/**
 	 * Adds a callback to the remove method
+	 *
 	 * @method onRemove
 	 * @member module:Removable
 	 * @instance

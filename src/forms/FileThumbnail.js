@@ -62,7 +62,7 @@ const hideDeleteButton = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class FileThumbnail extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
@@ -126,11 +126,12 @@ export default class FileThumbnail extends IsWorkingMixin(Control) {
 Object.assign(FileThumbnail.prototype, {
 	/**
 	 * Get or Set the size of the preview image.
+	 *
 	 * @method previewSize
 	 * @member module:FileThumbnail
 	 * @instance
-	 * @param {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
-	 * @returns {String|this}
+	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
+	 * @returns {string|this}
 	 */
 	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
@@ -141,11 +142,12 @@ Object.assign(FileThumbnail.prototype, {
 
 	/**
 	 * Get or Set the source url for the thumbnail image.
+	 *
 	 * @method imageSource
 	 * @member module:FileThumbnail
 	 * @instance
-	 * @param {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
-	 * @returns {String|this}
+	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
+	 * @returns {string|this}
 	 */
 	imageSource: methodAny({
 		set(newValue) {

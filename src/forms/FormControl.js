@@ -27,8 +27,8 @@ const ON_CHANGE = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} type
- * @param {Object} settings
+ * @param {object} type
+ * @param {object} settings
  */
 export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
@@ -70,11 +70,13 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @params [ignoreDelay=false]
-	 * @params [skipCallback=false]
-	 * @params [isHardTrigger=true]
+	 * @param {boolean} [ignoreDelay=false] - trigger the change immediately
+	 * @param {boolean} [skipCallback=false] - don't trigger an onChange event
+	 * @param {boolean} [isHardTrigger=true] - force a change event even if the value hasn't changed
+	 *
+	 * @returns {object} this
 	 */
-	triggerChange(ignoreDelay, skipCallback, isHardTrigger = true) {
+	triggerChange(ignoreDelay = false, skipCallback = false, isHardTrigger = true) {
 		const self = this;
 
 		if (!self.isRemoved) {
@@ -100,13 +102,13 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	}
 
 	/**
-	 * Updates a previously set relationship. See {@link module:formRelationships#update}
+	 * Updates a previously set relationship. See {@link module:formRelationships#update}.
 	 *
 	 * @method updateRelationship
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @param {Object} updateObject
+	 * @param {object} updateObject
 	 */
 	updateRelationship(updateObject) {
 		if (arguments.length) {
@@ -142,9 +144,9 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @param {Boolean} [isRequired]
+	 * @param {boolean} [isRequired]
 	 *
-	 * @returns {Boolean|this}
+	 * @returns {boolean|this}
 	 */
 	isRequired: methodBoolean({
 		set(isRequired) {
@@ -216,7 +218,7 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @param {function} [callback]
+	 * @param {Function} [callback]
 	 *
 	 * @returns {queue}
 	 */

@@ -11,11 +11,11 @@ const search = {
 	 * @static
 	 * @function find
 	 *
-	 * @param {String}  needle - The string you want to find
-	 * @param {String}  haystack - The string you want to find matches in
+	 * @param {string}  needle - The string you want to find
+	 * @param {string}  haystack - The string you want to find matches in
 	 * @param {boolean} [breakOnSpaces=true]
 	 *
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	find(needle, haystack, breakOnSpaces) {
 		haystack = haystack.toLowerCase();

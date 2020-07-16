@@ -48,7 +48,7 @@ const positionViews = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class SplitView extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
@@ -156,10 +156,11 @@ export default class SplitView extends IsWorkingMixin(Control) {
 
 	/**
 	 * Get a reference to the first view element
+	 *
 	 * @method firstView
 	 * @member module:SplitView
 	 * @instance
-	 * @returns {Object}
+	 * @returns {object}
 	 */
 	firstView() {
 		return this[FIRST_VIEW];
@@ -167,10 +168,11 @@ export default class SplitView extends IsWorkingMixin(Control) {
 
 	/**
 	 * Get a reference to the second view element
+	 *
 	 * @method secondView
 	 * @member module:SplitView
 	 * @instance
-	 * @returns {Object}
+	 * @returns {object}
 	 */
 	secondView() {
 		return this[SECOND_VIEW];
@@ -180,10 +182,11 @@ export default class SplitView extends IsWorkingMixin(Control) {
 Object.assign(SplitView.prototype, {
 	/**
 	 * Set or Get the layout orientation of this control. Use SplitView.ORIENTATION
+	 *
 	 * @method orientation
 	 * @member module:SplitView
 	 * @instance
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	orientation: methodEnum({
 		init: ORIENTATION.COLUMNS,
@@ -207,10 +210,11 @@ Object.assign(SplitView.prototype, {
 
 	/**
 	 * Set or Get the split offset of this control.
+	 *
 	 * @method splitOffset
 	 * @member module:SplitView
 	 * @instance
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	splitOffset: methodCssSize({
 		set(splitOffset) {
@@ -226,10 +230,11 @@ Object.assign(SplitView.prototype, {
 	/**
 	 * Set or Get the isResizable property of this control. If true then a grabbable resizer allows the user to set the
 	 * splitOffset.
+	 *
 	 * @method isResizeable
 	 * @member module:SplitView
 	 * @instance
-	 * @returns {String|Object}
+	 * @returns {string|object}
 	 */
 	isResizable: methodBoolean({
 		set(isResizable) {
@@ -267,11 +272,12 @@ Object.assign(SplitView.prototype, {
 
 	/**
 	 * Set or Get the minimum offset when resizing.
+	 *
 	 * @method minOffset
 	 * @member module:SplitView
 	 * @instance
-	 * @param {Number} [newMinOffset]
-	 * @returns {Number|Object}
+	 * @param {number} [newMinOffset]
+	 * @returns {number|object}
 	 */
 	minOffset: methodCssSize({
 		set(minOffset) {
@@ -285,11 +291,12 @@ Object.assign(SplitView.prototype, {
 
 	/**
 	 * Set or Get the maximum offset when resizing.
+	 *
 	 * @method maxOffset
 	 * @member module:SplitView
 	 * @instance
-	 * @param {Number} [newMaxOffset]
-	 * @returns {Number|Object}
+	 * @param {number} [newMaxOffset]
+	 * @returns {number|object}
 	 */
 	maxOffset: methodCssSize({
 		set(maxOffset) {

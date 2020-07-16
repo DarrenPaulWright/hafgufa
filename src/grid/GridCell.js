@@ -41,11 +41,12 @@ const removeTooltip = Symbol();
 
 /**
  * Controls the display of one cell in the grid control
+ *
  * @module GridCell
  * @extends Control
  * @constructor
  *
- * @param {Object}   settings - Accepts all control settings plus:
+ * @param {object}   settings - Accepts all control settings plus:
  */
 export default class GridCell extends Control {
 	constructor(settings = {}) {
@@ -75,6 +76,7 @@ export default class GridCell extends Control {
 
 	/**
 	 * Checks if the text fits within the cell or not, shows a tooltip with the rest of the text if not.
+	 *
 	 * @function checkOverflow
 	 */
 	[checkOverflow]() {
@@ -113,7 +115,8 @@ export default class GridCell extends Control {
 
 	/**
 	 * Add action buttons to the cell.
-	 * @function addActionButtons
+	 *
+	 * @param content
 	 */
 	[addActionButtons](content) {
 		const self = this;
@@ -158,6 +161,7 @@ export default class GridCell extends Control {
 
 	/**
 	 * Show a tooltip
+	 *
 	 * @function showTooltip
 	 */
 	[showTooltip]() {
@@ -175,6 +179,7 @@ export default class GridCell extends Control {
 
 	/**
 	 * Remove the tooltip
+	 *
 	 * @function removeTooltip
 	 */
 	[removeTooltip]() {
@@ -192,8 +197,8 @@ Object.assign(GridCell.prototype, {
 	 * @method isChild
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Object} [data]
-	 * @returns {Object|this}
+	 * @param {object} [data]
+	 * @returns {object|this}
 	 */
 	rowData: methodObject({
 		init: {}
@@ -203,8 +208,8 @@ Object.assign(GridCell.prototype, {
 	 * @method dataType
 	 * @member module:GridCell
 	 * @instance
-	 * @param {String} [dataType]
-	 * @returns {String|this}
+	 * @param {string} [dataType]
+	 * @returns {string|this}
 	 */
 	dataType: methodEnum({
 		init: COLUMN_TYPES.NONE,
@@ -221,8 +226,8 @@ Object.assign(GridCell.prototype, {
 	 * @method content
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Object} [content]
-	 * @returns {Object|this}
+	 * @param {object} [content]
+	 * @returns {object|this}
 	 */
 	content: methodObject({
 		set(content) {
@@ -307,7 +312,7 @@ Object.assign(GridCell.prototype, {
 	 * @method displayType
 	 * @member module:GridCell
 	 * @instance
-	 * @returns {String}
+	 * @returns {string}
 	 */
 	displayType() {
 		return this[DISPLAY_TYPE];
@@ -319,8 +324,8 @@ Object.assign(GridCell.prototype, {
 	 * @method isSelected
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Boolean} isSelected
-	 * @returns {Boolean|this}
+	 * @param {boolean} isSelected
+	 * @returns {boolean|this}
 	 */
 	isSelected: methodBoolean({
 		set(isSelected) {
@@ -336,8 +341,8 @@ Object.assign(GridCell.prototype, {
 	 * @method wordWrap
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Boolean} newCanWordWrap
-	 * @returns {Boolean|this}
+	 * @param {boolean} newCanWordWrap
+	 * @returns {boolean|this}
 	 */
 	wordWrap: methodBoolean({
 		set(newValue) {
@@ -349,8 +354,8 @@ Object.assign(GridCell.prototype, {
 	 * @method textAlign
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Boolean} newTextAlign
-	 * @returns {Boolean|this}
+	 * @param {boolean} newTextAlign
+	 * @returns {boolean|this}
 	 */
 	textAlign: methodEnum({
 		init: CELL_ALIGNMENT.NONE,
@@ -368,8 +373,8 @@ Object.assign(GridCell.prototype, {
 	 * @method isEnabled
 	 * @member module:GridCell
 	 * @instance
-	 * @param {Boolean} newIsEnabled
-	 * @returns {Boolean|this}
+	 * @param {boolean} newIsEnabled
+	 * @returns {boolean|this}
 	 */
 	isEnabled: methodBoolean({
 		init: true
@@ -379,8 +384,8 @@ Object.assign(GridCell.prototype, {
 	 * @method tooltip
 	 * @member module:GridCell
 	 * @instance
-	 * @param {String} newTooltip
-	 * @returns {String|this}
+	 * @param {string} newTooltip
+	 * @returns {string|this}
 	 */
 	tooltip: methodString({
 		set(newValue) {

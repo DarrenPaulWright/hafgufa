@@ -41,13 +41,14 @@ const CURRENT_SIZE = Symbol();
 
 /**
  * Displays an animation while isWorking is true.
+ *
  * @class IsWorking
  * @extends Control
  * @constructor
  *
- * @param {Object}        settings            - Accepts all controlBase settings plus:
- * @param {String}        settings.label
- * @param {Boolean}       settings.isWorking
+ * @param {object}        settings -            - Accepts all controlBase settings plus:
+ * @param {string}        settings.label
+ * @param {boolean}       settings.isWorking
  */
 export default class IsWorking extends DelayedRenderMixin(Control) {
 	constructor(settings = {}) {
@@ -82,11 +83,12 @@ export default class IsWorking extends DelayedRenderMixin(Control) {
 Object.assign(IsWorking.prototype, {
 	/**
 	 * Set or Get the label of this control.
+	 *
 	 * @method label
 	 * @member module:IsWorking
 	 * @instance
-	 * @param {String} newLabel
-	 * @returns {String|this}
+	 * @param {string} newLabel
+	 * @returns {string|this}
 	 */
 	label: methodString({
 		set(label) {

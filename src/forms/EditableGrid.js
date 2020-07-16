@@ -55,18 +55,19 @@ const buildDialogButtons = Symbol();
 const showDialog = Symbol();
 
 /**
- * display a grid control that allows the user to add new data and edit existing data.
+ * Display a grid control that allows the user to add new data and edit existing data.
+ *
  * @module EditableGrid
  * @extends FormControl
  * @constructor
  *
- * @param {Object}   settings                 - Accepts all control and FormControl settings plus:
- * @param {Array}    [settings.columns[]]     - Grid control columns
- * @param {Array}    [settings.columns[].showDescriptionOnEdit]
- * @param {Function} [settings.onDelete]      - Callback for when an item is deleted. If not provided, onChange will be triggered.
+ * @param {object} settings - Accepts all control and FormControl settings plus:
+ * @param {Array} [settings.columns[]] - Grid control columns
+ * @param {Array} [settings.columns[].showDescriptionOnEdit]
+ * @param {Function} [settings.onDelete] - Callback for when an item is deleted. If not provided, onChange will be triggered.
  * @param {boolean} [settings.autoGenerateIds=true]
  * @param {boolean} [settings.showAddAnother=true]
- * @param {String}   [settings.dialogWidth=34rem]
+ * @param {string} [settings.dialogWidth=34rem]
  */
 export default class EditableGrid extends FormControl {
 	constructor(settings = {}) {

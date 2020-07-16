@@ -5,12 +5,12 @@ import locale from './locale.js';
 /**
  * @class SoftDelete
  *
- * @param {Object} settings
- * @param {String} settings.title
- * @param {String} settings.value
- * @param {function} [settings.onDo] - Called after the value is cloned
- * @param {function} settings.onUndo - Called if the user clicks the toast. the clone of the original value is provided as an argument.
- * @param {function} [settings.onCommit] - Called if the toast is removed without onUndo being called
+ * @param {object} settings
+ * @param {string} settings.title
+ * @param {string} settings.value
+ * @param {Function} [settings.onDo] - Called after the value is cloned
+ * @param {Function} settings.onUndo - Called if the user clicks the toast. the clone of the original value is provided as an argument.
+ * @param {Function} [settings.onCommit] - Called if the toast is removed without onUndo being called
  */
 export default function(settings = {}) {
 	let prev = clone(settings.value);

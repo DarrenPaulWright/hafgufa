@@ -1,5 +1,6 @@
 /**
  * All of the control types.
+ *
  * @returns {object}
  */
 const controlTypes = {

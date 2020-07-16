@@ -56,7 +56,7 @@ const isValidMimeType = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class FileInput extends Control {
 	constructor(settings = {}) {
@@ -222,11 +222,12 @@ Object.assign(FileInput.prototype, {
 
 	/**
 	 * Get or Set if this input should accept multiple files
+	 *
 	 * @method isMulti
 	 * @member module:FileInput
 	 * @instance
-	 * @param {Boolean} [isMulti]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [isMulti]
+	 * @returns {boolean|this}
 	 */
 	isMulti: methodBoolean({
 		set(newValue) {
@@ -236,11 +237,12 @@ Object.assign(FileInput.prototype, {
 
 	/**
 	 * Get or Set the size of the preview image.
+	 *
 	 * @method previewSize
 	 * @member module:FileInput
 	 * @instance
-	 * @param {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
-	 * @returns {String|this}
+	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
+	 * @returns {string|this}
 	 */
 	previewSize: methodEnum({
 		enum: PREVIEW_SIZES,
@@ -251,6 +253,7 @@ Object.assign(FileInput.prototype, {
 
 	/**
 	 * Get or Set a function that gets called when a file is selected via user input
+	 *
 	 * @method onPreLoad
 	 * @memberof module:FilePicker
 	 * @instance
@@ -261,6 +264,7 @@ Object.assign(FileInput.prototype, {
 
 	/**
 	 * Get or Set a function that gets called when a file is loaded via user input
+	 *
 	 * @method onLoad
 	 * @member module:FileInput
 	 * @instance

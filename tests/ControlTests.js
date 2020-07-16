@@ -13,6 +13,10 @@ const CONTROL = Symbol();
 const TEST_UTIL = Symbol();
 const SETTINGS = Symbol();
 
+/**
+ * @param object
+ * @param callback
+ */
 function forIn(object, callback) {
 	const allProps = ['constructor', '__defineGetter__', '__defineSetter__'];
 	let proto = Object.getPrototypeOf(object);

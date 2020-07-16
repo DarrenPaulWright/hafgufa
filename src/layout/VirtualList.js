@@ -149,7 +149,7 @@ const setExtent = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class VirtualList extends FocusMixin(Control) {
 	constructor(settings = {}) {
@@ -265,7 +265,7 @@ export default class VirtualList extends FocusMixin(Control) {
 	 * @name setItemSize
 	 * @private
 	 *
-	 * @param {Object} control  - must be a control that inherits from module:ControlBase
+	 * @param {object} control -  - must be a control that inherits from module:ControlBase
 	 */
 	[setItemSize](control) {
 		const self = this;
@@ -295,7 +295,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Set the size of the virtual content div and determine the caching size.
-	 * @function setScrollSize
+	 *
+	 * @name setScrollSize
+	 * @private
 	 */
 	[setScrollSize]() {
 		const self = this;
@@ -323,8 +325,10 @@ export default class VirtualList extends FocusMixin(Control) {
 	}
 
 	/**
-	 * Set the size of the virtual content div
-	 * @function setVirtualContentSizes
+	 * Set the size of the virtual content div.
+	 *
+	 * @name setVirtualContentSizes
+	 * @private
 	 */
 	[setVirtualContentSizes]() {
 		const self = this;
@@ -353,7 +357,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Set the position of each of the currently rendered items.
-	 * @function resetVirtualizedItemPositions
+	 *
+	 * @name resetVirtualizedItemPositions
+	 * @private
 	 */
 	[resetVirtualizedItemPositions]() {
 		const self = this;
@@ -369,8 +375,11 @@ export default class VirtualList extends FocusMixin(Control) {
 	/**
 	 * Render a chunk of items based on a start index and the caching size. Only remove items that don't need to be
 	 * displayed and only add new items.
-	 * @function renderChunk
-	 * @param {Number} startIndex
+	 *
+	 * @name renderChunk
+	 * @private
+	 *
+	 * @param {number} startIndex - The index to start rendering at
 	 */
 	[renderChunk](startIndex) {
 		const self = this;
@@ -458,10 +467,13 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Render a specific item.
-	 * @function renderItem
-	 * @param {Number}  index
-	 * @param {Boolean} doPrepend
-	 * @param {Boolean} doSetSize
+	 *
+	 * @name renderItem
+	 * @private
+	 *
+	 * @param {number}  index
+	 * @param {boolean} doPrepend
+	 * @param {boolean} doSetSize
 	 */
 	[renderItem](index, doPrepend, doSetSize) {
 		const self = this;
@@ -525,8 +537,11 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Set the position to the current offset and increment the current offset for the next item.
-	 * @function setItemPosition
-	 * @param {Number}  index
+	 *
+	 * @name setItemPosition
+	 * @private
+	 *
+	 * @param {number}  index
 	 */
 	[setItemPosition](index) {
 		const self = this;
@@ -540,7 +555,11 @@ export default class VirtualList extends FocusMixin(Control) {
 	/**
 	 * Whenever the list is scrolled save the position and only rerender the contents if we've moved at least half of
 	 * the viewport height.
-	 * @function onScroll
+	 *
+	 * @name onScroll
+	 * @private
+	 *
+	 * @param event
 	 */
 	[onScroll](event) {
 		const self = this;
@@ -557,7 +576,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Calculate the new start position and render.
-	 * @function render
+	 *
+	 * @name render
+	 * @private
 	 */
 	[render]() {
 		const self = this;
@@ -583,7 +604,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Display a message that there are no items to display.
-	 * @function showEmptyContentMessage
+	 *
+	 * @name showEmptyContentMessage
+	 * @private
 	 */
 	[showEmptyContentMessage]() {
 		const self = this;
@@ -602,6 +625,12 @@ export default class VirtualList extends FocusMixin(Control) {
 		}
 	}
 
+	/**
+	 * Update the size of the empty content message.
+	 *
+	 * @name updateEmptyContentSize
+	 * @private
+	 */
 	[updateEmptyContentSize]() {
 		const self = this;
 
@@ -614,7 +643,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Remove the empty content message.
-	 * @function removeEmptyContentMessage
+	 *
+	 * @name removeEmptyContentMessage
+	 * @private
 	 */
 	[removeEmptyContentMessage]() {
 		const self = this;
@@ -627,7 +658,11 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Set focus on an item. if the item is not rendered, scroll to it first.
-	 * @function focusItem
+	 *
+	 * @name focusItem
+	 * @private
+	 *
+	 * @param {number} index
 	 */
 	[focusItem](index) {
 		const self = this;
@@ -653,7 +688,11 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Scroll to a specific offset.
-	 * @function setScroll
+	 *
+	 * @name setScroll
+	 * @private
+	 *
+	 * @param offset
 	 */
 	[setScroll](offset) {
 		const self = this;
@@ -672,7 +711,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Get the alt size of the first rendered item.
-	 * @function getFirstItemAltSize
+	 *
+	 * @name getFirstItemAltSize
+	 * @private
 	 */
 	[getFirstItemAltSize]() {
 		const self = this;
@@ -683,7 +724,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Determines what the alt size should be for each item.
-	 * @function setAltExtentValue
+	 *
+	 * @name setAltExtentValue
+	 * @private
 	 */
 	[setAltExtentValue]() {
 		const self = this;
@@ -699,7 +742,9 @@ export default class VirtualList extends FocusMixin(Control) {
 
 	/**
 	 * Prepare the list for either horizontal or vertical positioning.
-	 * @function setExtent
+	 *
+	 * @name setExtent
+	 * @private
 	 */
 	[setExtent]() {
 		const self = this;
@@ -744,9 +789,9 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 *
-	 * @param {function} [onLayoutChange]
+	 * @param {Function} [onLayoutChange]
 	 *
-	 * @returns {function|this}
+	 * @returns {Function|this}
 	 */
 	onLayoutChange: methodFunction({
 		other: null
@@ -754,6 +799,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Get or set whether the list is rendered vertically or horizontally
+	 *
 	 * @method isHorizontal
 	 * @member module:VirtualList
 	 * @instance
@@ -777,11 +823,12 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Get or set the data for the items. Setting new data forces a refresh of the list.
+	 *
 	 * @method itemData
 	 * @member module:VirtualList
 	 * @instance
-	 * @param {Object[]} [newItemData]
-	 * @returns {Object[]|this}
+	 * @param {object[]} [newItemData]
+	 * @returns {object[]|this}
 	 */
 	itemData: methodArray({
 		set(newValue) {
@@ -799,8 +846,8 @@ Object.assign(VirtualList.prototype, {
 	 * @method isVirtualized
 	 * @member module:VirtualList
 	 * @instance
-	 * @param {Boolean} [newIsVirtualized]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [newIsVirtualized]
+	 * @returns {boolean|this}
 	 */
 	isVirtualized: methodBoolean({
 		init: true
@@ -826,11 +873,12 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Get or set the list item control.
+	 *
 	 * @method itemControl
 	 * @member module:VirtualList
 	 * @instance
-	 * @param {Object} [newControl]
-	 * @returns {Object|this}
+	 * @param {object} [newControl]
+	 * @returns {object|this}
 	 */
 	itemControl: methodFunction({
 		bind: false,
@@ -849,9 +897,9 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 *
-	 * @param {Number} [newExtraRenderedItemsRatio]
+	 * @param {number} [newExtraRenderedItemsRatio]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	extraRenderedItemsRatio: methodNumber({
 		init: 0.1,
@@ -867,9 +915,9 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 *
-	 * @param {Object} [newOptions]
+	 * @param {object} [newOptions]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	itemDefaultSettings: methodObject({
 		set(newValue) {
@@ -880,6 +928,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Set a callback function that gets executed whenever an item is rendered.
+	 *
 	 * @method onItemRender
 	 * @member module:VirtualList
 	 * @instance
@@ -898,7 +947,7 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 *
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	getRenderedControls() {
 		return this[CONTROL_RECYCLER].getRenderedControls();
@@ -911,7 +960,7 @@ Object.assign(VirtualList.prototype, {
 	 * @member module:VirtualList
 	 * @instance
 	 *
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	firstVisibleItem() {
 		const self = this;
@@ -929,6 +978,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Updates the offsets of each item when isVirtualized is false.
+	 *
 	 * @method updateItemPositions
 	 * @member module:VirtualList
 	 * @instance
@@ -951,6 +1001,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Set the height of the list to the height of the contents.
+	 *
 	 * @method fitHeightToContents
 	 * @member module:VirtualList
 	 * @instance
@@ -964,10 +1015,11 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Auto-scroll to an item.
+	 *
 	 * @method scrollToIndex
 	 * @member module:VirtualList
 	 * @instance
-	 * @param {Number} index - index of an item that is currently displayed
+	 * @param {number} index - index of an item that is currently displayed
 	 */
 	scrollToIndex(index) {
 		const self = this;
@@ -1102,6 +1154,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * Remove all the items and re-render them at the current scroll position.
+	 *
 	 * @method refresh
 	 * @member module:VirtualList
 	 * @instance

@@ -53,6 +53,7 @@ const selectSuggestion = Symbol();
 
 /**
  * A control for adding tags.
+ *
  * @module Tags
  * @constructor
  */
@@ -154,6 +155,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 
 	/**
 	 * When the text control loses focus, save the contents as a tag
+	 *
 	 * @function onBlurTextInput
 	 */
 	[onBlurTextInput]() {
@@ -170,8 +172,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * When the text control changes content, set the width
-	 * @function onChangeTextInput
+	 * When the text control changes content, set the width.
+	 *
+	 * @param newValue
 	 */
 	[onChangeTextInput](newValue) {
 		const self = this;
@@ -192,7 +195,6 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 
 	/**
 	 * Save the current value of the text control
-	 * @function saveTextChanges
 	 */
 	[saveTextChanges]() {
 		const self = this;
@@ -233,8 +235,12 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * Add a new tag to the end of the list of tags
-	 * @function addTag
+	 * Add a new tag to the end of the list of tags.
+	 *
+	 * @param value
+	 * @param typedInput
+	 * @param skipCallback
+	 * @param isHardTrigger
 	 */
 	[addTag](value, typedInput, skipCallback, isHardTrigger) {
 		const self = this;
@@ -304,7 +310,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 
 	/**
 	 * Place the text control somewhere in the list of tags.
-	 * @function moveTextInputTo
+	 *
+	 * @param offset
+	 * @param newValue
 	 */
 	[moveTextInputTo](offset, newValue) {
 		const self = this;
@@ -333,7 +341,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 
 	/**
 	 * When done editing, update the tag info and display the tag.
-	 * @function updateTag
+	 *
+	 * @param newValue
+	 * @param typedInput
 	 */
 	[updateTag](newValue, typedInput) {
 		const self = this;
@@ -360,8 +370,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * Remove a tag
-	 * @function removeTag
+	 * Remove a tag.
+	 *
+	 * @param data
 	 */
 	[removeTag](data) {
 		const self = this;
@@ -384,8 +395,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * Remove all tags
-	 * @function removeAllTags
+	 * Remove all tags.
 	 */
 	[removeAllTags]() {
 		const self = this;
@@ -397,8 +407,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * Build the base suggestion popup with virtual list control
-	 * @function buildSuggestionPopup
+	 * Build the base suggestion popup with virtual list control.
 	 */
 	[buildSuggestionPopup]() {
 		const self = this;
@@ -448,8 +457,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * Determine which suggestions to put in the popup and add them
-	 * @function updateSuggestionsList
+	 * Determine which suggestions to put in the popup and add them.
 	 */
 	[updateSuggestionsList]() {
 		const self = this;
@@ -490,8 +498,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 	}
 
 	/**
-	 * When a suggestion is clicked save it's value as a tag
-	 * @function selectSuggestion
+	 * When a suggestion is clicked save it's value as a tag.
+	 *
+	 * @param suggestionId
 	 */
 	[selectSuggestion](suggestionId) {
 		const self = this;
@@ -511,8 +520,8 @@ Object.assign(Tags.prototype, {
 	 * @method value
 	 * @member module:Tags
 	 * @instance
-	 * @param {String} [value]
-	 * @returns {String|this}
+	 * @param {string} [value]
+	 * @returns {string|this}
 	 */
 	value: methodArray({
 		set(newValue) {
@@ -556,6 +565,7 @@ Object.assign(Tags.prototype, {
 
 	/**
 	 * Get or set an array of suggestions.
+	 *
 	 * @method suggestions
 	 * @member module:Tags
 	 * @instance
@@ -598,8 +608,8 @@ Object.assign(Tags.prototype, {
 	 * @method suggestionsDataSource
 	 * @member module:Tags
 	 * @instance
-	 * @param {String} [newSuggestionsDataSource]
-	 * @returns {String|this}
+	 * @param {string} [newSuggestionsDataSource]
+	 * @returns {string|this}
 	 */
 	// suggestionsDataSource: methodObject({
 	// 	init: {},
@@ -624,8 +634,8 @@ Object.assign(Tags.prototype, {
 	 * @method placeholder
 	 * @member module:Tags
 	 * @instance
-	 * @param {String} [newPlaceholder]
-	 * @returns {String|this}
+	 * @param {string} [newPlaceholder]
+	 * @returns {string|this}
 	 */
 	placeholder: methodString({
 		set(newValue) {
@@ -635,11 +645,12 @@ Object.assign(Tags.prototype, {
 
 	/**
 	 * Get or set whether the user input should be broken into seperate tags when a space is present in the input
+	 *
 	 * @method breakOnSpaces
 	 * @member module:Tags
 	 * @instance
-	 * @param {Boolean} [breakOnSpaces]
-	 * @returns {Boolean|this}
+	 * @param {boolean} [breakOnSpaces]
+	 * @returns {boolean|this}
 	 */
 	breakOnSpaces: methodBoolean()
 });

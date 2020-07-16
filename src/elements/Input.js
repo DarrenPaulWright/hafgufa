@@ -26,8 +26,8 @@ const AVAILABLE_TYPES = new Enum({
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.type]
+ * @param {object} settings
+ * @param {string} [settings.type]
  */
 export default class Input extends Control {
 	constructor(settings = {}) {

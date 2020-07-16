@@ -14,7 +14,7 @@ const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class BackDrop extends Control {
 	constructor(settings = {}) {

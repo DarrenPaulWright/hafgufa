@@ -14,7 +14,7 @@ const addLayout = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Div extends Control {
 	constructor(settings = {}) {
@@ -32,8 +32,8 @@ export default class Div extends Control {
 	 *
 	 * @function addLayout
 	 *
-	 * @param {Object[]} content    - Takes a JSON array of objects with control settings
-	 * @param {String}   [appendAt]
+	 * @param {object[]} content -    - Takes a JSON array of objects with control settings
+	 * @param {string}   [appendAt]
 	 */
 	[addLayout](content, appendAt) {
 		const self = this;
@@ -54,8 +54,8 @@ export default class Div extends Control {
 	 *
 	 * @function addContent
 	 *
-	 * @param {Object[]} content    - Takes a JSON array of objects with control settings
-	 * @param {String}   [appendAt]
+	 * @param {object[]} content -    - Takes a JSON array of objects with control settings
+	 * @param {string}   [appendAt]
 	 */
 	[addContent](content, appendAt) {
 		const self = this;
@@ -104,9 +104,9 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {String} id
+	 * @param {string} id
 	 *
-	 * @returns {Object}
+	 * @returns {object}
 	 */
 	get(id) {
 		return this[CHILD_CONTROLS].get(id);
@@ -119,7 +119,7 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {Object[]} content - An Array of control objects. Look at each control for options.
+	 * @param {object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	content(content) {
 		this[CHILD_CONTROLS].remove();
@@ -136,7 +136,7 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {Object[]} content - An Array of control objects. Look at each control for options.
+	 * @param {object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	append(content) {
 		this[addContent](content);
@@ -151,7 +151,7 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {Object[]} content - An Array of control objects. Look at each control for options.
+	 * @param {object[]} content - An Array of control objects. Look at each control for options.
 	 */
 	prepend(content) {
 		this[addContent](content, 0);
@@ -170,7 +170,7 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {function} callback
+	 * @param {Function} callback
 	 * @param {boolean}  [skipDeep=false] - if true then only iterate on immediate children
 	 */
 	each(callback, skipDeep = false) {
@@ -191,7 +191,7 @@ export default class Div extends Control {
 	 * @member module:Div
 	 * @instance
 	 *
-	 * @param {function} callback
+	 * @param {Function} callback
 	 */
 	map(callback) {
 		return this[CHILD_CONTROLS].map(callback);

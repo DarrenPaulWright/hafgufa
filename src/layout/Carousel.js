@@ -31,7 +31,7 @@ const fitToSlide = Symbol();
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Carousel extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
@@ -128,9 +128,9 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @param {function}
+	 * @param {Function}
 	 *
-	 * @returns {function|this}
+	 * @returns {Function|this}
 	 */
 	slideControl: methodFunction({
 		set(slideControl) {
@@ -181,9 +181,9 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @param {function}
+	 * @param {Function}
 	 *
-	 * @returns {function|this}
+	 * @returns {Function|this}
 	 */
 	onSlideRender: methodFunction({
 		set(onSlideRender) {
@@ -238,7 +238,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @returns {Object[]}
+	 * @returns {object[]}
 	 */
 	getRenderedControls() {
 		return this[VIRTUAL_LIST].getRenderedControls();
@@ -252,9 +252,9 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @param {Number} [extraRenderedItemsRatio]
+	 * @param {number} [extraRenderedItemsRatio]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	extraRenderedItemsRatio: methodNumber({
 		init: 0.1,

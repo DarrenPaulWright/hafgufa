@@ -34,11 +34,12 @@ const POPUP = Symbol();
 
 /**
  * Display date and/or time fields with corresponding smart pickers.
+ *
  * @module DateInput
  * @extends FormControl
  * @constructor
  *
- * @param {Object} settings - Accepts all control and FormControl settings plus:
+ * @param {object} settings - Accepts all control and FormControl settings plus:
  */
 export default class DateInput extends FormControl {
 	constructor(settings = {}) {

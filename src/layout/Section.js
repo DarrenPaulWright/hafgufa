@@ -16,7 +16,7 @@ import './Section.less';
  * @extends Container
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Section extends MergeContentContainerMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
@@ -44,9 +44,9 @@ Object.assign(Section.prototype, {
 	 * @member module:Section
 	 * @instance
 	 *
-	 * @param {String} [newPadding]
+	 * @param {string} [newPadding]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	padding: methodThickness({
 		init: new Thickness('1.25rem'),

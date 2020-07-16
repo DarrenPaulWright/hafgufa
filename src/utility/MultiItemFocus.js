@@ -29,9 +29,9 @@ export default class MultiItemFocus {
 	}
 
 	/**
-	 * Manage keyboard navigation
+	 * Manage keyboard navigation.
 	 *
-	 * @function onKeyDown
+	 * @param {Event} event - keydown event
 	 */
 	[onKeyDown](event) {
 		switch (event.keyCode || event.which) {

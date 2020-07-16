@@ -17,7 +17,7 @@ const NAME = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @param {Object}  settings
+ * @param {object}  settings
  */
 export default class Radios extends FormControl {
 	constructor(settings = {}) {
@@ -40,8 +40,8 @@ Object.assign(Radios.prototype, {
 	 * @method value
 	 * @member module:Radio
 	 * @instance
-	 * @param {Array|String} [value]
-	 * @returns {Array|String|this}
+	 * @param {Array|string} [value]
+	 * @returns {Array|string|this}
 	 */
 	value: methodString({
 		init: '',

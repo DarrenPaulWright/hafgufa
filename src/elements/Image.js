@@ -25,9 +25,9 @@ export const FIT = new Enum({
  * @extends Control
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.source]
- * @param {String} [settings.fit]
+ * @param {object} settings
+ * @param {string} [settings.source]
+ * @param {string} [settings.fit]
  */
 export default class Image extends Control {
 	constructor(settings = {}) {

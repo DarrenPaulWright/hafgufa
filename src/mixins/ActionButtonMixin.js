@@ -4,7 +4,14 @@ import Button from '../elements/Button.js';
 import Div from '../elements/Div.js';
 import Span from '../elements/Span.js';
 import { CLEAR_ICON } from '../icons.js';
-import { LINE_HEIGHT, PADDING_RIGHT, POSITION, RELATIVE, TAB_INDEX, TAB_INDEX_DISABLED } from '../utility/domConstants.js';
+import {
+	LINE_HEIGHT,
+	PADDING_RIGHT,
+	POSITION,
+	RELATIVE,
+	TAB_INDEX,
+	TAB_INDEX_DISABLED
+} from '../utility/domConstants.js';
 import './ActionButtonMixin.less';
 
 const _ = new PrivateVars();
@@ -14,8 +21,11 @@ const addRightContainer = Symbol();
 
 /**
  * Adds an action button and count text.
+ *
  * @module ActionButtonAddon
  * @constructor
+ *
+ * @param {Function} Base - The class to extend
  */
 export default function(Base) {
 	class ActionButtonMixin extends Base {
@@ -109,9 +119,9 @@ export default function(Base) {
 		 * @member module:ActionButtonAddon
 		 * @instance
 		 *
-		 * @param {String} [actionButton]
+		 * @param {string} [actionButton]
 		 *
-		 * @returns {String|this}
+		 * @returns {string|this}
 		 */
 		actionButtonIcon: methodString({
 			set: refreshActionButton
@@ -122,9 +132,9 @@ export default function(Base) {
 		 * @member module:ActionButtonAddon
 		 * @instance
 		 *
-		 * @param {String} [actionButton]
+		 * @param {string} [actionButton]
 		 *
-		 * @returns {String|this}
+		 * @returns {string|this}
 		 */
 		actionButtonLabel: methodString({
 			set: refreshActionButton
@@ -148,9 +158,9 @@ export default function(Base) {
 		 * @member module:ActionButtonAddon
 		 * @instance
 		 *
-		 * @param {Boolean} [isActionButtonAutoHide]
+		 * @param {boolean} [isActionButtonAutoHide]
 		 *
-		 * @returns {Boolean|this}
+		 * @returns {boolean|this}
 		 */
 		isActionButtonAutoHide: methodBoolean({
 			init: true,
@@ -162,9 +172,9 @@ export default function(Base) {
 		 * @member module:ActionButtonAddon
 		 * @instance
 		 *
-		 * @param {Boolean} [isActionButtonEnabled]
+		 * @param {boolean} [isActionButtonEnabled]
 		 *
-		 * @returns {Boolean|this}
+		 * @returns {boolean|this}
 		 */
 		isActionButtonEnabled: methodBoolean({
 			init: true,
@@ -178,9 +188,9 @@ export default function(Base) {
 		 * @member module:ActionButtonAddon
 		 * @instance
 		 *
-		 * @param {String} [countText]
+		 * @param {string} [countText]
 		 *
-		 * @returns {String|this}
+		 * @returns {string|this}
 		 */
 		countText: methodString({
 			set(countText) {

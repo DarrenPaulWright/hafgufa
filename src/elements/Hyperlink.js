@@ -12,8 +12,8 @@ import './Hyperlink.less';
  * @extends ControlBase
  * @constructor
  *
- * @param {Object} settings
- * @param {String} [settings.text]
+ * @param {object} settings
+ * @param {string} [settings.text]
  */
 export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {

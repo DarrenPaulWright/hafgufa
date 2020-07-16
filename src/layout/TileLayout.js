@@ -157,7 +157,7 @@ const calculateColumns = Symbol();
  * @class TileLayout
  * @constructor
  *
- * @param {Object} [settings]
+ * @param {object} [settings]
  */
 export default class TileLayout extends Container {
 	constructor(settings = {}) {
@@ -485,7 +485,8 @@ export default class TileLayout extends Container {
 
 	/**
 	 * Place all the controls in the layout.
-	 * @function placeControls
+	 *
+	 * @param startIndex
 	 */
 	[placeControls](startIndex) {
 		const self = this;
@@ -745,6 +746,7 @@ export default class TileLayout extends Container {
 Object.assign(TileLayout.prototype, {
 	/**
 	 * Run initialization code to get the control ready to use.
+	 *
 	 * @function calculateColumns
 	 */
 	[calculateColumns]: debounce(function() {
@@ -800,9 +802,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {String} [newTileWidth]
+	 * @param {string} [newTileWidth]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	tileWidth: methodCssSize({
 		init: new CssSize('14rem'),
@@ -816,9 +818,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {String} [newTileMargin]
+	 * @param {string} [newTileMargin]
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	tileMargin: methodCssSize({
 		init: new CssSize('0.6rem'),
@@ -832,9 +834,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {String} [columnAlign] - TILE_COLUMN_ALIGN
+	 * @param {string} [columnAlign] - TILE_COLUMN_ALIGN
 	 *
-	 * @returns {String|this}
+	 * @returns {string|this}
 	 */
 	columnAlign: methodEnum({
 		enum: TILE_COLUMN_ALIGN,
@@ -884,9 +886,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {Object} [tileControl]
+	 * @param {object} [tileControl]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	tileControl: methodFunction({
 		set(tileControl) {
@@ -902,9 +904,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {Object} [tileDefaultSettings]
+	 * @param {object} [tileDefaultSettings]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	tileDefaultSettings: methodObject({
 		set(defaultSettings) {
@@ -937,9 +939,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {Object[]} [tileData]
+	 * @param {object[]} [tileData]
 	 *
-	 * @returns {Object[]|this}
+	 * @returns {object[]|this}
 	 */
 	tileData: methodArray({
 		set() {
@@ -958,9 +960,9 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @param {Number} [newExtraRenderedItemsRatio]
+	 * @param {number} [newExtraRenderedItemsRatio]
 	 *
-	 * @returns {Object|this}
+	 * @returns {object|this}
 	 */
 	extraRenderedItemsRatio: methodNumber({
 		init: 1,

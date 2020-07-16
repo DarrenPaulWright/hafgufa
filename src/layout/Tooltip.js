@@ -12,18 +12,19 @@ const POPUP = Symbol();
 
 /**
  * Displays a tooltip anchored to an object or the mouse.
+ *
  * @module Tooltip
  * @constructor
  *
- * @param {Object}    settings
- * @param {String}    settings.anchor
+ * @param {object}    settings
+ * @param {string}    settings.anchor
  * @param {DockPoint} settings.anchorDockPoint
  * @param {DockPoint} settings.tooltipDockPoint
- * @param {String}    settings.content
- * @param {String}    [settings.title]
- * @param {String}    [settings.classes]
- * @param {String}    [settings.maxWidth]
- * @param {Number}    [settings.delay=0.2] - Number of seconds before showing the tooltip. If remove is called before
+ * @param {string}    settings.content
+ * @param {string}    [settings.title]
+ * @param {string}    [settings.classes]
+ * @param {string}    [settings.maxWidth]
+ * @param {number}    [settings.delay=0.2] - Number of seconds before showing the tooltip. If remove is called before
  *    the delay is done then the popup will never be built.
  */
 export default class Tooltip extends DelayedRenderMixin(Removable) {

@@ -57,7 +57,7 @@ const layout = Symbol();
  * @extends Container
  * @constructor
  *
- * @param {Object} settings
+ * @param {object} settings
  */
 export default class Drawer extends Container {
 	constructor(settings = {}) {
