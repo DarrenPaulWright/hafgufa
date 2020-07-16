@@ -124,12 +124,12 @@ describe('GridColumnBlock', () => {
 
 	describe('rows', () => {
 		it('should return the row data when a button is clicked after setting rows', () => {
-			let testVar = '';
+			let testValue = '';
 			const onRowClick = (rowData) => {
-				testVar = rowData.something;
+				testValue = rowData.something;
 			};
 			const onTrashClick = (rowData) => {
-				testVar = rowData.id + '_trash';
+				testValue = rowData.id + '_trash';
 			};
 
 			testUtil.control = new GridColumnBlock({
@@ -205,7 +205,7 @@ describe('GridColumnBlock', () => {
 
 			testUtil.simulateClick(testUtil.all('button')[5]);
 
-			assert.is(testVar, '3_trash');
+			assert.is(testValue, '3_trash');
 		});
 	});
 

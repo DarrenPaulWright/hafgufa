@@ -3,7 +3,7 @@ import { assert } from 'type-enforcer';
 import { isString } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../index.js';
 import GridCell from '../../src/grid/GridCell.js';
-import { COLUMN_TYPES, CELL_ALIGNMENT, DISPLAY_TYPES } from '../../src/grid/gridConstants.js';
+import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from '../../src/grid/gridConstants.js';
 import getAttributes from '../../src/utility/dom/getAttributes.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -355,7 +355,7 @@ describe('GridCell', () => {
 		});
 
 		it('should call the button onclick event when a button is clicked', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
@@ -367,24 +367,24 @@ describe('GridCell', () => {
 					}, {
 						icon: 'trash',
 						onClick() {
-							testVar++;
+							testValue++;
 						}
 					}]
 				});
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should call the onSelect callback when a button is clicked', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
 				dataType: COLUMN_TYPES.ACTIONS,
 				onSelect() {
-					testVar = 2;
+					testValue = 2;
 				}
 			})
 				.content({
@@ -393,14 +393,14 @@ describe('GridCell', () => {
 					}, {
 						icon: 'trash',
 						onClick() {
-							testVar++;
+							testValue++;
 						}
 					}]
 				});
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.is(testVar, 2);
+			assert.is(testValue, 2);
 		});
 
 		it('should disable all buttons if isEnabled is set to false', () => {
@@ -468,7 +468,7 @@ describe('GridCell', () => {
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over', () => {
-			const testVar = 0;
+			const testValue = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
@@ -484,11 +484,11 @@ describe('GridCell', () => {
 
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OVER_EVENT);
 
-			assert.is(testVar, 0);
+			assert.is(testValue, 0);
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over and then out', () => {
-			const testVar = 0;
+			const testValue = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
@@ -505,7 +505,7 @@ describe('GridCell', () => {
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OVER_EVENT);
 			testUtil.trigger(testUtil.nth('button', 0), MOUSE_OUT_EVENT);
 
-			assert.is(testVar, 0);
+			assert.is(testValue, 0);
 		});
 
 		it('should have a checkox if datatype is set to CHECKBOX and content is set twice', () => {
@@ -696,12 +696,12 @@ describe('GridCell', () => {
 		});
 
 		it('should call the onSelect callback with true when an unchecked checkbox is clicked', () => {
-			let testVar = null;
+			let testValue = null;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
 				onSelect(isChecked) {
-					testVar = isChecked;
+					testValue = isChecked;
 				}
 			})
 				.dataType(COLUMN_TYPES.CHECKBOX)
@@ -709,16 +709,16 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar === true, true);
+			assert.is(testValue === true, true);
 		});
 
 		it('should call the onSelect callback with false when a checked checkbox is clicked', () => {
-			let testVar = null;
+			let testValue = null;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
 				onSelect(isChecked) {
-					testVar = isChecked;
+					testValue = isChecked;
 				}
 			})
 				.dataType(COLUMN_TYPES.CHECKBOX)
@@ -727,16 +727,16 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar === false, true);
+			assert.is(testValue === false, true);
 		});
 
 		it('should call the onSelect callback with true when a checked checkbox is clicked twice', () => {
-			let testVar = null;
+			let testValue = null;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
 				onSelect(isChecked) {
-					testVar = isChecked;
+					testValue = isChecked;
 				}
 			})
 				.dataType(COLUMN_TYPES.CHECKBOX)
@@ -746,16 +746,16 @@ describe('GridCell', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar === true, true);
+			assert.is(testValue === true, true);
 		});
 
 		it('should call the onSelect callback with an event object when a checkbox is clicked', () => {
-			let testVar = null;
+			let testValue = null;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
 				onSelect(isChecked, event) {
-					testVar = event;
+					testValue = event;
 				}
 			})
 				.dataType(COLUMN_TYPES.CHECKBOX)
@@ -763,7 +763,7 @@ describe('GridCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar.target.nodeName === 'INPUT', true);
+			assert.is(testValue.target.nodeName === 'INPUT', true);
 		});
 	});
 

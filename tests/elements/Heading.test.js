@@ -228,7 +228,7 @@ describe('Heading', () => {
 		});
 
 		it('should return the set data object first in the click event for buttons', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
@@ -243,13 +243,13 @@ describe('Heading', () => {
 			testUtil.control.buttons([{
 				label: 'test 1',
 				onClick(data) {
-					testVar = data.testProp;
+					testValue = data.testProp;
 				}
 			}]);
 
 			testUtil.simulateClick(testUtil.first('.icon-button'));
 
-			assert.is(testVar, 2);
+			assert.is(testValue, 2);
 		});
 
 		it('should accept a function for a buttons isEnabled property', () => {
@@ -522,7 +522,7 @@ describe('Heading', () => {
 		});
 
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
-			const testVar = 1;
+			const testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container
@@ -530,45 +530,45 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should execute the onSelect callback when clicked', () => {
-			let testVar = 1;
+			let testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isSelectable: true,
 				onSelect() {
-					testVar = 2;
+					testValue = 2;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 2);
+			assert.is(testValue, 2);
 		});
 	});
 
 	describe('.onExpand', () => {
 		it('should NOT execute the onExpand callback when the expander is clicked if isExpandable is false', () => {
-			let testVar = 1;
+			let testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isExpandable: false,
 				onExpand() {
-					testVar = 2;
+					testValue = 2;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should NOT execute the onExpand callback when the expander is clicked if onExpand is not set', () => {
-			const testVar = 1;
+			const testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
@@ -577,56 +577,56 @@ describe('Heading', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should execute the onExpand callback when the expander is clicked', () => {
-			let testVar = 1;
+			let testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isExpandable: true,
 				onExpand() {
-					testVar = 2;
+					testValue = 2;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 2);
+			assert.is(testValue, 2);
 		});
 
 		it('should NOT execute the onSelect callback when the expander is clicked', () => {
-			let testVar = 1;
+			let testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isExpandable: true,
 				onSelect() {
-					testVar = 2;
+					testValue = 2;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should execute the onExpand callback when the branch is clicked and isSelectable is false', () => {
-			let testVar = 1;
+			let testValue = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isExpandable: true,
 				isSelectable: false,
 				onExpand() {
-					testVar = 2;
+					testValue = 2;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 2);
+			assert.is(testValue, 2);
 		});
 	});
 

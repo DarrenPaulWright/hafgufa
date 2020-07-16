@@ -134,39 +134,39 @@ describe('GridFooter', () => {
 		});
 
 		it('should call onCollapseAllGroups with false when the expand all button is clicked', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
 				onCollapseAllGroups(doCollapse) {
-					testVar = doCollapse;
+					testValue = doCollapse;
 				}
 			});
 
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 0));
 
-			assert.is(testVar === false, true);
+			assert.is(testValue === false, true);
 		});
 
 		it('should call onCollapseAllGroups with true when the collapse all button is clicked', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
 				onCollapseAllGroups(doCollapse) {
-					testVar = doCollapse;
+					testValue = doCollapse;
 				}
 			});
 
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 1));
 
-			assert.is(testVar === true, true);
+			assert.is(testValue === true, true);
 		});
 
 		it('should not throw an error when the expand all button is clicked', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container
@@ -175,11 +175,11 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 0));
 
-			assert.is(testVar === undefined, true);
+			assert.is(testValue === undefined, true);
 		});
 
 		it('should not throw an error when the collapse all button is clicked', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container
@@ -188,7 +188,7 @@ describe('GridFooter', () => {
 			testUtil.control.showExpandCollapseButtons();
 			testUtil.simulateClick(testUtil.nth('.icon-button', 1));
 
-			assert.is(testVar === undefined, true);
+			assert.is(testValue === undefined, true);
 		});
 	});
 });

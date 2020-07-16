@@ -112,39 +112,39 @@ describe('Button', () => {
 
 	describe('.onMouseEnter', () => {
 		it('should call the callback when the mouse enters the button', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Button({
 				container: testUtil.container,
 				onMouseEnter() {
-					testVar = this;
+					testValue = this;
 				}
 			});
 
 			testUtil.trigger(testUtil.control.element, 'mouseenter');
 
-			assert.is(testUtil.control, testVar);
+			assert.is(testUtil.control, testValue);
 		});
 	});
 
 	describe('.onMouseLeave', () => {
 		it('should call the callback when the mouse leaves the button', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Button({
 				container: testUtil.container,
 				onMouseEnter() {
-					testVar = 'fail';
+					testValue = 'fail';
 				},
 				onMouseLeave() {
-					testVar = this;
+					testValue = this;
 				}
 			});
 
 			testUtil.trigger(testUtil.control.element, 'mouseenter');
 			testUtil.trigger(testUtil.control.element, 'mouseleave');
 
-			assert.is(testUtil.control, testVar);
+			assert.is(testUtil.control, testValue);
 		});
 	});
 });

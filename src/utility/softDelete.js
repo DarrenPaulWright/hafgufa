@@ -13,7 +13,7 @@ import locale from './locale.js';
  * @param {Function} [settings.onCommit] - Called if the toast is removed without onUndo being called
  */
 export default function(settings = {}) {
-	let prev = clone(settings.value);
+	let previous = clone(settings.value);
 	let isUndone = false;
 
 	if (settings.onDo) {
@@ -25,13 +25,13 @@ export default function(settings = {}) {
 		subTitle: locale.get('clickToUndo'),
 		onClick() {
 			isUndone = true;
-			settings.onUndo(prev);
+			settings.onUndo(previous);
 		},
 		onRemove() {
 			if (!isUndone && settings.onCommit) {
 				settings.onCommit();
 			}
-			prev = null;
+			previous = null;
 		}
 	});
 }

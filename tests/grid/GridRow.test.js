@@ -267,12 +267,12 @@ describe('GridRow', () => {
 		});
 
 		it('should call the settings.onExpandCollapseGroup callback when the row is a header and it is clicked', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new GridRow({
 				container: testUtil.container,
 				onExpandCollapseGroup() {
-					testVar++;
+					testValue++;
 				}
 			})
 				.rowData({
@@ -283,58 +283,64 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
-		it('should call the settings.onSelectGroup callback when the row is a header and its checkbox is clicked', () => {
-			let testVar = 0;
+		it(
+			'should call the settings.onSelectGroup callback when the row is a header and its checkbox is clicked',
+			() => {
+				let testValue = 0;
 
-			testUtil.control = new GridRow({
-				container: testUtil.container,
-				onSelectGroup() {
-					testVar++;
-				}
-			})
-				.columns([{
-					type: COLUMN_TYPES.CHECKBOX,
-					order: 0
-				}])
-				.rowData({
-					groupId: 1,
-					title: 'test title',
-					image() {
+				testUtil.control = new GridRow({
+					container: testUtil.container,
+					onSelectGroup() {
+						testValue++;
 					}
 				})
-				.groupId(1);
+					.columns([{
+						type: COLUMN_TYPES.CHECKBOX,
+						order: 0
+					}])
+					.rowData({
+						groupId: 1,
+						title: 'test title',
+						image() {
+						}
+					})
+					.groupId(1);
 
-			testUtil.simulateClick(testUtil.first('.checkbox'));
+				testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar, 1);
-		});
+				assert.is(testValue, 1);
+			}
+		);
 
-		it('should have a hidden header control if the row is a header and then it is set to a normal row again', () => {
-			testUtil.control = new GridRow({
-				container: testUtil.container
-			})
-				.rowData({
-					groupId: 1,
-					title: 'test title'
+		it(
+			'should have a hidden header control if the row is a header and then it is set to a normal row again',
+			() => {
+				testUtil.control = new GridRow({
+					container: testUtil.container
 				})
-				.groupId(1);
+					.rowData({
+						groupId: 1,
+						title: 'test title'
+					})
+					.groupId(1);
 
-			testUtil.control.columns([{
-					type: COLUMN_TYPES.TEXT,
-					order: 0
-				}])
-				.rowData({
-					columns: [{
-						text: 'test'
-					}]
-				})
-				.groupId(0);
+				testUtil.control.columns([{
+						type: COLUMN_TYPES.TEXT,
+						order: 0
+					}])
+					.rowData({
+						columns: [{
+							text: 'test'
+						}]
+					})
+					.groupId(0);
 
-			assert.is(testUtil.count('.heading.display-none'), 1);
-		});
+				assert.is(testUtil.count('.heading.display-none'), 1);
+			}
+		);
 
 		it('should not have cells if the row is first set to a normal row with cells and then a header', () => {
 			testUtil.control = new GridRow({
@@ -672,9 +678,9 @@ describe('GridRow', () => {
 
 	describe('.onSelect', () => {
 		it('should call the onSelect callback when clicked', () => {
-			let testVar = 0;
+			let testValue = 0;
 			const onRowClick = () => {
-				testVar++;
+				testValue++;
 			};
 
 			testUtil.control = new GridRow({
@@ -684,13 +690,13 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.control.element);
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should call the onSelect callback when a button is clicked', () => {
-			let testVar = 0;
+			let testValue = 0;
 			const onRowClick = () => {
-				testVar++;
+				testValue++;
 			};
 
 			testUtil.control = new GridRow({
@@ -715,7 +721,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.nth('button', 1));
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should have class "clickable" if onSelect is set', () => {
@@ -731,9 +737,9 @@ describe('GridRow', () => {
 		});
 
 		it('should return the rowData when a button is clicked after setting rowData twice', () => {
-			let testVar = '';
+			let testValue = '';
 			const onRowClick = (rowData) => {
-				testVar = rowData.something;
+				testValue = rowData.something;
 			};
 
 			testUtil.control = new GridRow({
@@ -764,7 +770,7 @@ describe('GridRow', () => {
 
 			testUtil.simulateClick(testUtil.first('button'));
 
-			assert.is(testVar, 'else');
+			assert.is(testValue, 'else');
 		});
 	});
 });

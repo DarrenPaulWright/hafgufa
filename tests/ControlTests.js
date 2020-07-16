@@ -18,14 +18,14 @@ const SETTINGS = Symbol();
  * @param callback
  */
 function forIn(object, callback) {
-	const allProps = ['constructor', '__defineGetter__', '__defineSetter__'];
+	const allProperties = ['constructor', '__defineGetter__', '__defineSetter__'];
 	let proto = Object.getPrototypeOf(object);
 
 	while (proto) {
 		Object.getOwnPropertyNames(proto)
 			.forEach((key) => {
-				if (isFunction(proto[key]) && !allProps.includes(key)) {
-					allProps.push(key);
+				if (isFunction(proto[key]) && !allProperties.includes(key)) {
+					allProperties.push(key);
 					callback(key);
 				}
 			});

@@ -71,7 +71,7 @@ describe('Radios', () => {
 		});
 
 		it('should call the onChange callback when a radio is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Radios({
 				container: testUtil.container,
@@ -80,18 +80,18 @@ describe('Radios', () => {
 					value: '1',
 					isChecked: false,
 					onChange() {
-						testVar = 'test';
+						testValue = 'test';
 					}
 				}]
 			});
 
 			testUtil.simulateClick(testUtil.first('.radio'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onChecked callback when a radio is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Radios({
 				container: testUtil.container,
@@ -100,7 +100,7 @@ describe('Radios', () => {
 					value: '1',
 					isChecked: false,
 					onChange() {
-						testVar = 'test';
+						testValue = 'test';
 					}
 				}, {
 					content: 'option2',
@@ -111,7 +111,7 @@ describe('Radios', () => {
 
 			testUtil.simulateClick(testUtil.first('.radio'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 	});
 });

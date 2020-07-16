@@ -82,11 +82,11 @@ describe('Menu', () => {
 		});
 
 		it('should call settings.onSelect if a menuItem is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Menu({
 				onSelect(item) {
-					testVar = item;
+					testValue = item;
 				},
 				menuItems: [{
 					id: 'test',
@@ -102,7 +102,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.is(testVar, 'test2');
+			assert.is(testValue, 'test2');
 		});
 
 		it('should remove itself when a menu item is clicked', () => {
@@ -126,7 +126,7 @@ describe('Menu', () => {
 			assert.is(testUtil.count('.context-menu'), 0);
 		});
 
-		it.skip('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
+		it('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
 			testUtil.control = new Menu({
 				onSelect() {
 				},
@@ -148,7 +148,7 @@ describe('Menu', () => {
 			assert.is(testUtil.count('.menu'), 1);
 		});
 
-		it.skip('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
+		it('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
 			testUtil.control = new Menu({
 				onSelect() {
 				},

@@ -172,20 +172,20 @@ describe('Calendar', () => {
 
 	describe('OnDateSelected', () => {
 		it('should execute the onDateSelected callback when a day is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				onDateSelected() {
-					testVar = 'test';
+					testValue = 'test';
 				}
 			});
 
-			assert.is(testVar, '');
+			assert.is(testValue, '');
 
 			testUtil.simulateClick(testUtil.nth('.day-button', 10));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should show the next month when a day on the next month is clicked', () => {

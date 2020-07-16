@@ -200,20 +200,20 @@ export default class Tree extends FormControl {
 	[preMeasureRowWidth](branchData) {
 		const self = this;
 
-		let tempBranchControl = new Heading({
+		let temporaryBranchControl = new Heading({
 			container: self,
 			width: AUTO
 		});
 		let newWidth;
 
-		tempBranchControl.css(POSITION, ABSOLUTE);
-		self[renderRow](tempBranchControl, branchData);
+		temporaryBranchControl.css(POSITION, ABSOLUTE);
+		self[renderRow](temporaryBranchControl, branchData);
 
-		newWidth = tempBranchControl.borderWidth() * ROW_WIDTH_BUFFER_RATIO;
+		newWidth = temporaryBranchControl.borderWidth() * ROW_WIDTH_BUFFER_RATIO;
 		self[VIRTUAL_LIST].width(newWidth);
 
-		tempBranchControl.remove();
-		tempBranchControl = null;
+		temporaryBranchControl.remove();
+		temporaryBranchControl = null;
 	}
 
 	/**

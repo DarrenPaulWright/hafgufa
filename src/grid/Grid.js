@@ -116,9 +116,13 @@ export default class Grid extends Control {
 			isAutoHeight: settings.height === AUTO,
 			isVirtualized: settings.isVirtualized,
 			wordWrap: settings.wordWrap,
-			onSort: (direction, columnNum) => self[sort](direction, columnNum),
+			onSort: (direction, columnIndex) => self[sort](direction, columnIndex),
 			onFilter: (value, columnId) => self[filter](value, columnId),
-			onGetFilterData: (filterType, columnNum, callback) => self[getFilterData](filterType, columnNum, callback),
+			onGetFilterData: (filterType, columnIndex, callback) => self[getFilterData](
+				filterType,
+				columnIndex,
+				callback
+			),
 			onSelectGroup: (control) => self[selectGroup](control),
 			onSelectAllGroups: (isSelected) => self[selectAllGroups](isSelected),
 			onExpandCollapseGroup: (group) => self[expandCollapseGroup](group),
@@ -700,9 +704,9 @@ export default class Grid extends Control {
 	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#rows}.
 	 *
 	 * @param {string} direction - 'asc' or 'desc'
-	 * @param {number} columnNum - column index of the column to be sorted
+	 * @param {number} columnIndex - column index of the column to be sorted
 	 */
-	[sort](direction, columnNum) {
+	[sort](direction, columnIndex) {
 		const self = this;
 
 		const sortGroups = (a, b) => {
@@ -737,7 +741,7 @@ export default class Grid extends Control {
 			let currentColumn;
 
 			self.columns().forEach((column) => {
-				if (column.id === columnNum) {
+				if (column.id === columnIndex) {
 					if (direction !== undefined) {
 						column.direction = direction;
 					}
@@ -814,22 +818,22 @@ export default class Grid extends Control {
 	 * Get data to populate the filter UI controls.
 	 *
 	 * @param {string} filterType
-	 * @param {number} columnNum
+	 * @param {number} columnIndex
 	 * @param {Function} callback
 	 */
-	[getFilterData](filterType, columnNum, callback) {
+	[getFilterData](filterType, columnIndex, callback) {
 		const self = this;
 		const output = [];
 
 		const buildDropDownFilters = () => {
 			self[eachChild](self[GROUPED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnNum].text)) {
-					output.push(rowCellData.cells[columnNum].text);
+				if (!output.includes(rowCellData.cells[columnIndex].text)) {
+					output.push(rowCellData.cells[columnIndex].text);
 				}
 			});
 
-			if (self.columns()[columnNum].sortFunctionAsc) {
-				output.sort(self.columns()[columnNum].sortFunctionAsc);
+			if (self.columns()[columnIndex].sortFunctionAsc) {
+				output.sort(self.columns()[columnIndex].sortFunctionAsc);
 			}
 			else {
 				output.sort(List.comparers.string.asc);
@@ -838,21 +842,21 @@ export default class Grid extends Control {
 
 		const buildAutoCompleteFilters = () => {
 			self[eachChild](self[FILTERED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnNum].text) && rowCellData.cells[columnNum].text !== '') {
-					output.push(rowCellData.cells[columnNum].text);
+				if (!output.includes(rowCellData.cells[columnIndex].text) && rowCellData.cells[columnIndex].text !== '') {
+					output.push(rowCellData.cells[columnIndex].text);
 				}
 			});
 		};
 
 		const buildDateFilters = () => {
 			self[eachChild](self[FILTERED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnNum].text) && rowCellData.cells[columnNum].text !== '') {
-					output.push(rowCellData.cells[columnNum].text);
+				if (!output.includes(rowCellData.cells[columnIndex].text) && rowCellData.cells[columnIndex].text !== '') {
+					output.push(rowCellData.cells[columnIndex].text);
 				}
 			});
 
-			if (self.columns()[columnNum].sortFunctionAsc) {
-				output.sort((a, b) => self.columns()[columnNum].sortFunctionAsc(a.date, b.date));
+			if (self.columns()[columnIndex].sortFunctionAsc) {
+				output.sort((a, b) => self.columns()[columnIndex].sortFunctionAsc(a.date, b.date));
 			}
 			else {
 				output.sort(compare('date'));

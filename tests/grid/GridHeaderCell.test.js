@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
-import { COLUMN_TYPES, SORT_TYPES, FILTER_TYPES } from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../../src/grid/gridConstants.js';
 import GridHeaderCell from '../../src/grid/GridHeaderCell.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -74,36 +74,36 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onSelect callback with true when a checkbox is clicked', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				dataType: COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
-					testVar = newValue;
+					testValue = newValue;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar === true, true);
+			assert.is(testValue === true, true);
 		});
 
 		it('should call the onSelect callback with false when a checkbox is clicked a second time', () => {
-			let testVar;
+			let testValue;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				dataType: COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
-					testVar = newValue;
+					testValue = newValue;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar === false, true);
+			assert.is(testValue === false, true);
 		});
 	});
 
@@ -210,20 +210,20 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onSort callback when sortDirection is set and the label is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				canSort: true,
 				onSort() {
-					testVar = 'test';
+					testValue = 'test';
 				}
 			});
 
 			testUtil.control.sortDirection(SORT_TYPES.ASC);
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 	});
 
@@ -245,12 +245,12 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onGetFilterOptions callback when filterType is set to AUTO_COMPLETE', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
-					testVar = 'test';
+					testValue = 'test';
 					callback(['test']);
 				}
 			})
@@ -258,7 +258,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should build a picker control when filterType is set to DROPDOWN', () => {
@@ -271,18 +271,18 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onGetFilterOptions callback when filterType is set to DROPDOWN', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
-					testVar = 'test';
+					testValue = 'test';
 					callback([]);
 				}
 			})
 				.filterType(FILTER_TYPES.DROPDOWN);
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should build a picker control when filterType is set to DATE', () => {
@@ -366,35 +366,38 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onFilter callback once when the filter method is set', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onFilter() {
-					testVar++;
+					testValue++;
 				}
 			});
 
 			testUtil.control.filter('asdf');
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
-		it('should call the onFilter callback once when the filter method is set and filterType is AUTO_COMPLETE', () => {
-			let testVar = '';
+		it(
+			'should call the onFilter callback once when the filter method is set and filterType is AUTO_COMPLETE',
+			() => {
+				let testValue = '';
 
-			testUtil.control = new GridHeaderCell({
-				container: testUtil.container,
-				filterType: FILTER_TYPES.AUTO_COMPLETE,
-				onFilter(filterValue) {
-					testVar = filterValue;
-				}
-			});
+				testUtil.control = new GridHeaderCell({
+					container: testUtil.container,
+					filterType: FILTER_TYPES.AUTO_COMPLETE,
+					onFilter(filterValue) {
+						testValue = filterValue;
+					}
+				});
 
-			testUtil.control.filter('asdf');
+				testUtil.control.filter('asdf');
 
-			assert.is(testVar, 'asdf');
-		});
+				assert.is(testValue, 'asdf');
+			}
+		);
 
 		it('should return a filter when an AUTO_COMPLETE filter control is set', () => {
 			testUtil.control = new GridHeaderCell({
@@ -411,36 +414,36 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onFilter callback when an AUTO_COMPLETE filter control is set', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				filterType: FILTER_TYPES.AUTO_COMPLETE,
 				onFilter() {
-					testVar = 'test';
+					testValue = 'test';
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onFilter callback once when the filter method is set and filterType is DROPDOWN', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				filterType: FILTER_TYPES.DROPDOWN,
 				onFilter(filterValue) {
-					testVar = filterValue;
+					testValue = filterValue;
 				}
 			});
 
 			testUtil.control.filter('asdf');
 
-			assert.is(testVar, 'asdf');
+			assert.is(testValue, 'asdf');
 		});
 
 		it('should return a filter value when a DROPDOWN filter control is set', () => {
@@ -459,12 +462,12 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onFilter callback when a DROPDOWN filter control is set', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onFilter() {
-					testVar = 'test';
+					testValue = 'test';
 				},
 				onGetFilterOptions(type, id, callback) {
 					callback(['test']);
@@ -475,23 +478,23 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.popup-button'));
 			testUtil.simulateClick(testUtil.first('.menu .heading', true));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onFilter callback once when the filter method is set and filterType is NUMBER', () => {
-			let testVar = 0;
+			let testValue = 0;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				filterType: FILTER_TYPES.NUMBER,
 				onFilter() {
-					testVar++;
+					testValue++;
 				}
 			});
 
 			testUtil.control.filter('asdf');
 
-			assert.is(testVar, 1);
+			assert.is(testValue, 1);
 		});
 
 		it('should return a filter value when a NUMBER filter control is set', () => {
@@ -517,13 +520,13 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onFilter callback when a NUMBER filter control is set', () => {
-			let testVar = '';
+			let testValue = '';
 			let inputs;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onFilter(filterValue) {
-					testVar = filterValue;
+					testValue = filterValue;
 				}
 			})
 				.filterType(FILTER_TYPES.NUMBER);
@@ -538,32 +541,35 @@ describe('GridHeaderCell', () => {
 
 			return wait(210)
 				.then(() => {
-					assert.is(testVar, '5,10');
+					assert.is(testValue, '5,10');
 				});
 		});
 
-		it('should have a filter value of empty string when a NUMBER filter control is set and then set to nothing', () => {
-			let testVar = '';
-			let inputs;
+		it(
+			'should have a filter value of empty string when a NUMBER filter control is set and then set to nothing',
+			() => {
+				let testValue = '';
+				let inputs;
 
-			testUtil.control = new GridHeaderCell({
-				container: testUtil.container,
-				onFilter(filterValue) {
-					testVar = filterValue;
-				}
-			})
-				.filterType(FILTER_TYPES.NUMBER);
+				testUtil.control = new GridHeaderCell({
+					container: testUtil.container,
+					onFilter(filterValue) {
+						testValue = filterValue;
+					}
+				})
+					.filterType(FILTER_TYPES.NUMBER);
 
-			inputs = testUtil.all('input');
+				inputs = testUtil.all('input');
 
-			inputs[0].value = '5';
-			testUtil.trigger(inputs[0], 'change');
+				inputs[0].value = '5';
+				testUtil.trigger(inputs[0], 'change');
 
-			inputs[0].value = '';
-			testUtil.trigger(inputs[0], 'change');
+				inputs[0].value = '';
+				testUtil.trigger(inputs[0], 'change');
 
-			assert.is(testVar, '');
-		});
+				assert.is(testValue, '');
+			}
+		);
 	});
 
 	describe('SelectableColumns', () => {
@@ -668,14 +674,14 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call settings.onColumnChange when the fourth option in the context menu is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				label: 'column label',
 				canSort: true,
 				onColumnChange(itemId) {
-					testVar = itemId;
+					testValue = itemId;
 				},
 				selectableColumns: [{
 					id: 'test',
@@ -696,7 +702,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 3, true));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.ASC when the first option in the context menu is clicked', () => {

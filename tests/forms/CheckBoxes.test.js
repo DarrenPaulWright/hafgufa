@@ -63,7 +63,7 @@ describe('CheckBoxes', () => {
 		});
 
 		it('should call the onChange callback when a checkbox is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new CheckBoxes({
 				container: testUtil.container,
@@ -72,18 +72,18 @@ describe('CheckBoxes', () => {
 					value: '1',
 					isChecked: false,
 					onChange() {
-						testVar = 'test';
+						testValue = 'test';
 					}
 				}]
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onChecked callback when a checkbox is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new CheckBoxes({
 				container: testUtil.container,
@@ -92,18 +92,18 @@ describe('CheckBoxes', () => {
 					value: '1',
 					isChecked: false,
 					onChange() {
-						testVar = 'test';
+						testValue = 'test';
 					}
 				}]
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onUnChecked callback when a checkbox is clicked twice', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new CheckBoxes({
 				container: testUtil.container,
@@ -112,7 +112,7 @@ describe('CheckBoxes', () => {
 					value: '1',
 					isChecked: false,
 					onChange() {
-						testVar = 'test';
+						testValue = 'test';
 					}
 				}]
 			});
@@ -120,11 +120,11 @@ describe('CheckBoxes', () => {
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVar, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onChecked callback with an event when a checkbox is clicked', () => {
-			let testVar = '';
+			let testValue = '';
 
 			testUtil.control = new CheckBoxes({
 				container: testUtil.container,
@@ -133,14 +133,14 @@ describe('CheckBoxes', () => {
 					value: '1',
 					isChecked: false,
 					onChange(isChecked, event) {
-						testVar = event;
+						testValue = event;
 					}
 				}]
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(typeof testVar, 'object');
+			assert.is(typeof testValue, 'object');
 		});
 	});
 });

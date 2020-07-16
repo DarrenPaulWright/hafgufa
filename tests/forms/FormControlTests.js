@@ -83,65 +83,65 @@ export default class FormControlTests extends ControlHeadingMixinTests {
 		if (settings.onChange) {
 			describe('FormControl .onChange (+)', () => {
 				it('should NOT call the onChange callback when the value is set via the .value method', () => {
-					let testVar = 0;
+					let testValue = 0;
 
 					settings.onChange.buildControl();
 					self[TEST_UTIL].control.onChange(() => {
-						testVar++;
+						testValue++;
 					});
 
 					self[TEST_UTIL].control.changeDelay(0);
 					self[TEST_UTIL].control.value(settings.onChange.validValue);
 
-					assert.is(testVar, 0);
+					assert.is(testValue, 0);
 				});
 
 				it(
 					'should call the onChange callback when the value is set via the .value method and triggerChange is called',
 					() => {
-						let testVar = 0;
+						let testValue = 0;
 
 						settings.onChange.buildControl();
 						self[TEST_UTIL].control.onChange(() => {
-							testVar++;
+							testValue++;
 						});
 
 						self[TEST_UTIL].control.value(settings.onChange.validValue);
 						self[TEST_UTIL].control.triggerChange(true);
 
-						assert.is(testVar, 1);
+						assert.is(testValue, 1);
 					}
 				);
 
 				it('should call the onChange callback when the value is set via the DOM', () => {
-					let testVar = 0;
+					let testValue = 0;
 
 					settings.onChange.buildControl();
 					self[TEST_UTIL].control.onChange(() => {
-						testVar++;
+						testValue++;
 					});
 
 					self[TEST_UTIL].control.changeDelay(0);
 					settings.onChange.setValueViaDom();
 
-					assert.is(testVar, 1);
+					assert.is(testValue, 1);
 				});
 
 				it(
 					'should call the onChange callback when the value is set via the DOM and triggerChange is called',
 					() => {
-						let testVar = 0;
+						let testValue = 0;
 
 						settings.onChange.buildControl();
 						self[TEST_UTIL].control.onChange(() => {
-							testVar++;
+							testValue++;
 						});
 
 						self[TEST_UTIL].control.changeDelay(0);
 						settings.onChange.setValueViaDom();
 						self[TEST_UTIL].control.triggerChange(true);
 
-						assert.is(testVar, 2);
+						assert.is(testValue, 2);
 					}
 				);
 
@@ -149,33 +149,33 @@ export default class FormControlTests extends ControlHeadingMixinTests {
 					it(
 						'should NOT call the onChange callback when the value is set via the DOM to the same value',
 						() => {
-							let testVar = 0;
+							let testValue = 0;
 
 							settings.onChange.buildControl();
 							self[TEST_UTIL].control.onChange(() => {
-								testVar++;
+								testValue++;
 							});
 
 							self[TEST_UTIL].control.changeDelay(0);
 							self[TEST_UTIL].control.value(settings.onChange.validValue);
 							settings.onChange.setValueViaDom();
 
-							assert.is(testVar, 1);
+							assert.is(testValue, 1);
 						}
 					);
 				}
 
 				it('should call the onChange callback when triggerChange is called', () => {
-					let testVar = 0;
+					let testValue = 0;
 
 					settings.onChange.buildControl();
 					self[TEST_UTIL].control.onChange(() => {
-						testVar++;
+						testValue++;
 					});
 
 					self[TEST_UTIL].control.triggerChange(true);
 
-					assert.is(testVar, 1);
+					assert.is(testValue, 1);
 				});
 			});
 		}

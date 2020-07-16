@@ -340,7 +340,7 @@ describe('GridHeader', () => {
 
 	describe('Callbacks', () => {
 		it('should call the onSort callback when a column is sorted', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -350,17 +350,17 @@ describe('GridHeader', () => {
 					canSort: true
 				}],
 				onSort(sortDirection) {
-					testVal = sortDirection;
+					testValue = sortDirection;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, SORT_TYPES.ASC);
+			assert.is(testValue, SORT_TYPES.ASC);
 		});
 
 		it('should call the onSort callback when a column is sorted twice', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -370,18 +370,18 @@ describe('GridHeader', () => {
 					canSort: true
 				}],
 				onSort(sortDirection) {
-					testVal = sortDirection;
+					testValue = sortDirection;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, SORT_TYPES.DESC);
+			assert.is(testValue, SORT_TYPES.DESC);
 		});
 
 		it('should call the onSort callback when a column is sorted three times', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -391,7 +391,7 @@ describe('GridHeader', () => {
 					canSort: true
 				}],
 				onSort(sortDirection) {
-					testVal = sortDirection;
+					testValue = sortDirection;
 				}
 			});
 
@@ -399,7 +399,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, SORT_TYPES.NONE);
+			assert.is(testValue, SORT_TYPES.NONE);
 		});
 
 		it('should set the first column sort direction to none when a second column is sorted', () => {
@@ -425,7 +425,7 @@ describe('GridHeader', () => {
 		});
 
 		it('should call the onSelectAllGroups callback when a checkbox is clicked', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -434,17 +434,17 @@ describe('GridHeader', () => {
 					type: COLUMN_TYPES.CHECKBOX
 				}],
 				onSelectAllGroups() {
-					testVal = 'test';
+					testValue = 'test';
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
 
-			assert.is(testVal, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onGetFilterData callback when a filter control is built', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -455,15 +455,15 @@ describe('GridHeader', () => {
 					canFilter: true
 				}],
 				onGetFilterData() {
-					testVal = 'test';
+					testValue = 'test';
 				}
 			});
 
-			assert.is(testVal, 'test');
+			assert.is(testValue, 'test');
 		});
 
 		it('should call the onFilter callback when a filter is set', () => {
-			let testVal = '';
+			let testValue = '';
 
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -474,14 +474,14 @@ describe('GridHeader', () => {
 					canFilter: true
 				}],
 				onFilter() {
-					testVal = 'test';
+					testValue = 'test';
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 			addTag('test1');
 
-			assert.is(testVal, 'test');
+			assert.is(testValue, 'test');
 		});
 	});
 
@@ -610,6 +610,5 @@ describe('GridHeader', () => {
 
 			assert.is(lastCellWidth, 37);
 		});
-
 	});
 });

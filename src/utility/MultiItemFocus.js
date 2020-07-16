@@ -7,7 +7,7 @@ const CONTAINER = Symbol();
 const onKeyDown = Symbol();
 const setFocus = Symbol();
 const next = Symbol();
-const prev = Symbol();
+const previous = Symbol();
 
 /**
  * Maintains the focus index of multiple subItems. Adds an event listener for arrow keys to navigate items.
@@ -38,7 +38,7 @@ export default class MultiItemFocus {
 			case keyCodes('left'):
 			case keyCodes('up'):
 				event.preventDefault();
-				this[prev]();
+				this[previous]();
 				break;
 			case keyCodes('right'):
 			case keyCodes('down'):
@@ -72,7 +72,7 @@ export default class MultiItemFocus {
 	 *
 	 * @function prev
 	 */
-	[prev]() {
+	[previous]() {
 		this.current(Math.max(this.current() - 1, 0));
 		this[setFocus]();
 	}
