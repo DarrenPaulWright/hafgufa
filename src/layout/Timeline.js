@@ -36,7 +36,7 @@ import {
 import Control from '../Control.js';
 import Div from '../elements/Div.js';
 import IsWorkingMixin from '../mixins/IsWorkingMixin.js';
-import NextPrevMixin from '../mixins/NextPrevMixin.js';
+import NextPreviousMixin from '../mixins/NextPreviousMixin.js';
 import { BOTTOM, MOUSE_WHEEL_EVENT, TOP } from '../utility/domConstants.js';
 import clamp from '../utility/math/clamp.js';
 import setDefaults from '../utility/setDefaults.js';
@@ -190,7 +190,7 @@ const buildSlides = Symbol();
 const renderSpan = Symbol();
 const getSpanOffset = Symbol();
 
-export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
+export default class Timeline extends IsWorkingMixin(NextPreviousMixin(Control)) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			canZoom: true

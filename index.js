@@ -97,7 +97,7 @@ export { default as DelayedRenderMixin } from './src/mixins/DelayedRenderMixin.j
 export { default as DragMixin } from './src/mixins/DragMixin.js';
 export { default as FocusMixin } from './src/mixins/FocusMixin.js';
 export { default as IsWorkingMixin } from './src/mixins/IsWorkingMixin.js';
-export { default as NextPrevMixin } from './src/mixins/NextPrevMixin.js';
+export { default as NextPrevMixin } from './src/mixins/NextPreviousMixin.js';
 export { default as OnClickMixin } from './src/mixins/OnClickMixin.js';
 export { default as Removable } from './src/mixins/Removable.js';
 export { default as TooltipMixin } from './src/mixins/TooltipMixin.js';

@@ -12,7 +12,7 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control.js';
 import controlTypes from '../controlTypes.js';
-import NextPrevMixin from '../mixins/NextPrevMixin.js';
+import NextPreviousMixin from '../mixins/NextPreviousMixin.js';
 import { PADDING_BOTTOM, PADDING_LEFT, PADDING_RIGHT, PADDING_TOP, SPACE } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Carousel.less';
@@ -33,7 +33,7 @@ const fitToSlide = Symbol();
  *
  * @param {object} settings
  */
-export default class Carousel extends NextPrevMixin(Control) {
+export default class Carousel extends NextPreviousMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.CAROUSEL,

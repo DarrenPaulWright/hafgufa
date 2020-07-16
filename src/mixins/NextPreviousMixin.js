@@ -24,7 +24,7 @@ const onShowButtons = Symbol();
  * @param {Function} Base - The class to extend
  */
 export default (Base) => {
-	class NextPrevMixin extends Base {
+	class NextPreviousMixin extends Base {
 		constructor(settings = {}) {
 			super(settings);
 
@@ -89,7 +89,7 @@ export default (Base) => {
 		}
 	}
 
-	Object.assign(NextPrevMixin.prototype, {
+	Object.assign(NextPreviousMixin.prototype, {
 		/**
 		 * Get or set whether the buttons should be viewed
 		 *
@@ -183,5 +183,5 @@ export default (Base) => {
 		})
 	});
 
-	return NextPrevMixin;
+	return NextPreviousMixin;
 };
