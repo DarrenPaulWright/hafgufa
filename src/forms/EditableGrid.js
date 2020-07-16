@@ -473,7 +473,7 @@ export default class EditableGrid extends FormControl {
 
 		if (self[GRID].columns()) {
 			self[GRID].columns().forEach((column, columnCount) => {
-				let controlType = self[getControlType](column);
+				const controlType = self[getControlType](column);
 
 				if (!rowData.originalData.values[columnCount]) {
 					rowData.originalData.values[columnCount] = {

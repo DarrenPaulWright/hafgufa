@@ -48,7 +48,7 @@ const setFocusIndex = Symbol();
  */
 export default class GroupedButtons extends FormControl {
 	constructor(settings = {}) {
-		let buttonContainer = new Div({
+		const buttonContainer = new Div({
 			classes: 'grouped-buttons-wrapper'
 		});
 
@@ -127,7 +127,7 @@ export default class GroupedButtons extends FormControl {
 	 */
 	[onButtonClick](button, event) {
 		const self = this;
-		let buttonData = self.buttons().find((item) => item.id === button.id());
+		const buttonData = self.buttons().find((item) => item.id === button.id());
 		let currentValue;
 
 		self[MULTI_ITEM_FOCUS].current(buttonData);

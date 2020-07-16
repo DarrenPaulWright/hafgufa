@@ -132,7 +132,7 @@ export default class Drawer extends Container {
 
 	[addTouch]() {
 		const self = this;
-		let [swipeOpenEvent, swipeCloseEvent] = self[swipeEvents]();
+		const [swipeOpenEvent, swipeCloseEvent] = self[swipeEvents]();
 
 		self[removeTouch]();
 

@@ -266,8 +266,8 @@ export default class Slider extends FormControl {
 		const self = this;
 		const min = self.min();
 		const max = self.max();
-		let percent = Math.min(offset / self[LOCATION_SIZE], 1);
-		let value = percent * (max - min) + min;
+		const percent = Math.min(offset / self[LOCATION_SIZE], 1);
+		const value = percent * (max - min) + min;
 
 		return self[setValueToIncrement](value);
 	}
@@ -290,7 +290,7 @@ export default class Slider extends FormControl {
 		let start = 0;
 
 		self[THUMBS].forEach((thumb, index) => {
-			let value = self[getValueAtOffset](self[OFFSETS][index]);
+			const value = self[getValueAtOffset](self[OFFSETS][index]);
 
 			thumb.tooltip(self.buildTooltip()(value));
 

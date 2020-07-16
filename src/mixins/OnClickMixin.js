@@ -47,7 +47,7 @@ export default (Base) => {
 			const self = this;
 
 			const clickHandler = (event) => {
-				let url = self.url();
+				const url = self.url();
 
 				if (self.isSelectable && self.isSelectable()) {
 					self.isSelected(!self.isSelected());

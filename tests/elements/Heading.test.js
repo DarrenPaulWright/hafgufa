@@ -522,7 +522,7 @@ describe('Heading', () => {
 		});
 
 		it('should NOT execute the onSelect callback when clicked if not set', () => {
-			let testVar = 1;
+			const testVar = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container
@@ -568,7 +568,7 @@ describe('Heading', () => {
 		});
 
 		it('should NOT execute the onExpand callback when the expander is clicked if onExpand is not set', () => {
-			let testVar = 1;
+			const testVar = 1;
 
 			testUtil.control = new Heading({
 				container: testUtil.container,

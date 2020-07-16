@@ -50,7 +50,7 @@ const toggleExpanded = Symbol();
 export default class Tree extends FormControl {
 	constructor(settings = {}) {
 		let self;
-		let virtualList = new VirtualList({
+		const virtualList = new VirtualList({
 			height: settings.height ? HUNDRED_PERCENT : AUTO,
 			width: HUNDRED_PERCENT,
 			minWidth: settings.minWidth,

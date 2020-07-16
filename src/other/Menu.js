@@ -295,7 +295,7 @@ export default class Menu extends Popup {
 		self[HAS_IDENTICAL_FILTERED_ITEM] = false;
 		self[ARE_ALL_SELECTED] = true;
 
-		let menuItems = self[getFilteredContent](self.menuItems());
+		const menuItems = self[getFilteredContent](self.menuItems());
 
 		self.get(TREE_ID)
 			.branches(menuItems)

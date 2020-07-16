@@ -53,7 +53,7 @@ const clearMenu = Symbol();
  */
 export default class DrawerMenu extends FocusMixin(Control) {
 	constructor(settings = {}) {
-		let menuButton = new Button({
+		const menuButton = new Button({
 			classes: 'header-button',
 			label: settings.label !== undefined ? settings.label : locale.get('menu'),
 			icon: MENU_ICON,
@@ -97,7 +97,7 @@ export default class DrawerMenu extends FocusMixin(Control) {
 
 	[buildMenu]() {
 		const self = this;
-		let menuItems = self.menuItems();
+		const menuItems = self.menuItems();
 		const headerControl = self.headerControl();
 		const headerSettings = self.headerSettings();
 		const footerContent = self.footerContent();

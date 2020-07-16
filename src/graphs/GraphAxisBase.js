@@ -167,7 +167,7 @@ export default class GraphAxisBase extends GraphBase {
 	[updateData]() {
 		const self = this;
 		const padding = self.graphPadding();
-		let data = self.data();
+		const data = self.data();
 
 		const buildXAxis = () => {
 			let labelSize = 0;

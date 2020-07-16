@@ -59,7 +59,7 @@ const selectSuggestion = Symbol();
  */
 export default class Tags extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
-		let listContainer = new Div({
+		const listContainer = new Div({
 			classes: 'tags-list-container clearfix',
 			on: {
 				click() {

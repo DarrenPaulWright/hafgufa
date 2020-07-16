@@ -714,7 +714,7 @@ export default class TileLayout extends Container {
 					for (let index = startIndex; index < self[TILE_OFFSETS].length; index++) {
 						self[findNextOffset](null, index, true);
 
-						let control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].id);
+						const control = self[CONTROL_RECYCLER].getControl(self.tileData()[index].id);
 						if (control) {
 							self[placeControl](control, index);
 						}

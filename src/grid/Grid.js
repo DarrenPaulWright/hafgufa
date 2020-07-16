@@ -286,7 +286,7 @@ export default class Grid extends Control {
 				column.type === COLUMN_TYPES.DATE_TIME ||
 				column.type === COLUMN_TYPES.TIME
 			) {
-				let value = column.path ? get(rowData, column.path) : cell.date;
+				const value = column.path ? get(rowData, column.path) : cell.date;
 
 				cell.date = enforceDate(value, '', true);
 
@@ -1289,7 +1289,7 @@ Object.assign(Grid.prototype, {
 			if (self.groupBy().length > depth) {
 				const groupColumn = self.groupBy()[depth].property;
 				let currentGroup = {};
-				let groupBy = self.groupBy()[depth];
+				const groupBy = self.groupBy()[depth];
 
 				input.sort(compare(self.groupBy()[depth].property));
 

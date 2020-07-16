@@ -26,7 +26,7 @@ const findLink = (self, theme, env) => {
 	let themeLink;
 
 	if (links) {
-		for (let link of links) {
+		for (const link of links) {
 			if (link.href.match(href)) {
 				themeLink = link;
 				break;
@@ -38,7 +38,7 @@ const findLink = (self, theme, env) => {
 };
 
 const getCurrentTheme = (self) => {
-	let themeLink = findLink(self, WORD, WORD);
+	const themeLink = findLink(self, WORD, WORD);
 	let theme;
 	let env;
 

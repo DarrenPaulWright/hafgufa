@@ -468,7 +468,7 @@ describe('GridCell', () => {
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over', () => {
-			let testVar = 0;
+			const testVar = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
@@ -488,7 +488,7 @@ describe('GridCell', () => {
 		});
 
 		it('should not throw an error if buttons are provided and a button is moused over and then out', () => {
-			let testVar = 0;
+			const testVar = 0;
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,

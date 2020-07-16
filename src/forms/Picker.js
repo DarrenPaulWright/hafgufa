@@ -846,7 +846,7 @@ export default class Picker extends FormControl {
 
 	[deleteItem](item) {
 		const self = this;
-		let options = self.options();
+		const options = self.options();
 		let wasSelected = false;
 
 		softDelete({
