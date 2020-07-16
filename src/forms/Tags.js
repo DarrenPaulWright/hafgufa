@@ -581,7 +581,7 @@ Object.assign(Tags.prototype, {
 
 			suggestions = suggestions.map((suggestion) => {
 				if (isString(suggestion)) {
-					suggestion = suggestion.replace(/[^0-9a-z]/gi, '');
+					suggestion = suggestion.replace(/[^\da-z]/gi, '');
 					return {
 						id: suggestion.trim(),
 						title: suggestion.trim()

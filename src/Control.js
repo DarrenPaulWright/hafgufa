@@ -190,7 +190,7 @@ export default class Control extends Removable {
 	[updateElementId]() {
 		const self = this;
 
-		self.attr('id', self.id() ? `${self.id()}${self.idSuffix()}`.replace(/[^A-Za-z0-9_:\.-]/g, '') : null);
+		self.attr('id', self.id() ? `${self.id()}${self.idSuffix()}`.replace(/[^\w.:-]/g, '') : null);
 	}
 
 	/**

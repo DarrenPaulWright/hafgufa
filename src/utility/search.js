@@ -41,7 +41,7 @@ const search = {
 			.map((orString) => {
 				return (orString.match(REGEX) || [])
 					.map((item) => {
-						return item.replace(/^[" ]+|[" ]+$/g, '');
+						return item.replace(/^[ "]+|[ "]+$/g, '');
 					});
 			});
 	}

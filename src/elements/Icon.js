@@ -91,7 +91,7 @@ Object.assign(Icon.prototype, {
 				if (main.length === 1) {
 					self.element.textContent = main;
 
-					if (/[a-zA-Z0-9]/.test(main)) {
+					if (/[\dA-Za-z]/.test(main)) {
 						self.addClass('text');
 					}
 				}
