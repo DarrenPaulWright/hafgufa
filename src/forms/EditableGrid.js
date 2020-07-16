@@ -244,7 +244,7 @@ export default class EditableGrid extends FormControl {
 			if (!rowFound) {
 				self[CURRENT_VALUE].push({
 					values: initializeNewCells(),
-					id: id,
+					id,
 					edited: true
 				});
 			}
@@ -261,7 +261,7 @@ export default class EditableGrid extends FormControl {
 				}
 				else {
 					newRowCells[stubColumnIndex] = {
-						id: id,
+						id,
 						text: ''
 					};
 				}

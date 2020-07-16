@@ -279,7 +279,7 @@ Object.assign(Tabs.prototype, {
 				});
 
 				self[TABS].push({
-					group: group,
+					group,
 					id: tabId,
 					order: index,
 					data: tab

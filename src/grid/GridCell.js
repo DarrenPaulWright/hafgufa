@@ -105,7 +105,7 @@ export default class GridCell extends Control {
 			self[CHILD_CONTROLS].remove();
 			new control({
 				container: self,
-				id: id,
+				id,
 				...settings
 			});
 		}

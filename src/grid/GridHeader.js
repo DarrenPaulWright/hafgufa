@@ -135,7 +135,7 @@ Object.assign(GridHeader.prototype, {
 					canSort: column.canSort,
 					filter: column.filter || '',
 					dataType: column.type,
-					filterType: filterType,
+					filterType,
 					sortDirection: column.direction,
 					selectableColumns: self.selectableColumns()
 				});

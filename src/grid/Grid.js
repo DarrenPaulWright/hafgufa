@@ -1147,7 +1147,7 @@ export default class Grid extends Control {
 			const items = new Collection(self[FLATTENED_ROWS]).sliceBy({
 				id: self[LAST_SELECTED_ROW]
 			}, {
-				id: id
+				id
 			});
 
 			return items.map((item) => item.groupId === undefined ? item.id : null).filter(Boolean);
@@ -1321,7 +1321,7 @@ Object.assign(Grid.prototype, {
 								isSelected: row.isSelected,
 								groupId: currentId,
 								children: [],
-								depth: depth,
+								depth,
 								buttons: groupBy.buttons,
 								image: groupBy.image,
 								footerSuffix: groupBy.footerSuffix,

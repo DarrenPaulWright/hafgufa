@@ -55,7 +55,7 @@ describe('ControlManager', () => {
 	it('should get a nested control by id', () => {
 		const container = new Container();
 		const div = new Div({
-			container: container,
+			container,
 			id: 'test'
 		});
 
@@ -67,7 +67,7 @@ describe('ControlManager', () => {
 	it('should return undefined if a control can\'t be found', () => {
 		const container = new Container();
 		new Div({
-			container: container,
+			container,
 			id: 'test'
 		});
 

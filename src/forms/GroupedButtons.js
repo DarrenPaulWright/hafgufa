@@ -252,7 +252,7 @@ export default class GroupedButtons extends FormControl {
 
 			if (!shadows.length || shadows[shadows.length - 1].isSelected !== isSelected) {
 				shadows.push({
-					isSelected: isSelected,
+					isSelected,
 					size: control[CURRENT_ORIENTATION_READ]()
 				});
 			}

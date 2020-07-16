@@ -249,7 +249,7 @@ class Popup extends MergeContentContainerMixin(Container) {
 		return {
 			offset: pos.offset,
 			size: pos.size,
-			didSwitch: didSwitch
+			didSwitch
 		};
 	}
 

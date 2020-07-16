@@ -48,8 +48,8 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			div = new Div({id: '3'});
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), div]);
+			div = new Div({ id: '3' });
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), div]);
 			div.id('4');
 		}
 	});
@@ -60,7 +60,7 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), new Div({id: '3'})]);
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), new Div({ id: '3' })]);
 		}
 	});
 
@@ -70,7 +70,7 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), new Div({id: '3'})]);
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), new Div({ id: '3' })]);
 		}
 	});
 
@@ -80,7 +80,7 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), new Div({id: '3'})]);
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), new Div({ id: '3' })]);
 		}
 	});
 
@@ -90,8 +90,8 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			div = new Div({id: '3'});
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), div]);
+			div = new Div({ id: '3' });
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), div]);
 		}
 	});
 
@@ -101,7 +101,7 @@ suite('ControlManager', () => {
 		...benchSettings,
 		onCycle() {
 			manager = new ControlManager();
-			manager.add([new Div({id: '1'}), new Div({id: '2'}), new Div({id: '3'})]);
+			manager.add([new Div({ id: '1' }), new Div({ id: '2' }), new Div({ id: '3' })]);
 		}
 	});
 });

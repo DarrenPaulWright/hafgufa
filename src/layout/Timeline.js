@@ -381,7 +381,7 @@ export default class Timeline extends IsWorkingMixin(NextPrevMixin(Control)) {
 
 			slides.push({
 				id: 'span_' + title,
-				title: title,
+				title,
 				events: [],
 				start: exporter(self[SPAN].startOf(currentValue)),
 				end: exporter(self[SPAN].endOf(new Date(currentValue.valueOf() + (self[SPAN].length * (self[PARENT_MULTIPLIER] - 1)))))

@@ -535,7 +535,7 @@ export default class ControlTests {
 				window.addEventListener(CLICK_EVENT, containerClick);
 
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
-					stopPropagation: stopPropagation
+					stopPropagation
 				}));
 
 				self[TEST_UTIL].control.on(CLICK_EVENT, controlClick);

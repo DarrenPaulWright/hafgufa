@@ -32,7 +32,7 @@ describe('Conversion', () => {
 
 	formControlTests.run(['changeDelay'], ['focus'], {
 		onChange: {
-			buildControl: function() {
+			buildControl() {
 				testUtil.control = new Conversion({
 					container: testUtil.container,
 					fromType: Conversion.CONVERSION_TYPES.WEIGHT.POUNDS,
@@ -40,7 +40,7 @@ describe('Conversion', () => {
 				});
 			},
 			validValue: '4',
-			setValueViaDom: function() {
+			setValueViaDom() {
 				const input = getFromInput();
 				input.value = '4';
 				testUtil.trigger(input, 'change');

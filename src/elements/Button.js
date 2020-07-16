@@ -112,7 +112,7 @@ Object.assign(Button.prototype, {
 	alt: methodString({
 		set(alt) {
 			this.attr({
-				alt: alt,
+				alt,
 				title: alt
 			});
 		}

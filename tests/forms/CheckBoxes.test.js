@@ -11,7 +11,7 @@ describe('CheckBoxes', () => {
 
 	formControlTests.run(undefined, undefined, {
 		onChange: {
-			buildControl: function() {
+			buildControl() {
 				testUtil.control = new CheckBoxes({
 					container: testUtil.container,
 					values: [{
@@ -22,7 +22,7 @@ describe('CheckBoxes', () => {
 				});
 			},
 			validValue: '1',
-			setValueViaDom: function() {
+			setValueViaDom() {
 				testUtil.simulateClick(testUtil.first('.checkbox'));
 			}
 		}

@@ -160,7 +160,7 @@ describe('Tree', () => {
 		it('should have a value of "1" if the branch with id of 1 is clicked', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
@@ -183,7 +183,7 @@ describe('Tree', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
 				isMultiSelect: true,
-				branches: branches
+				branches
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
@@ -195,7 +195,7 @@ describe('Tree', () => {
 		it('should have a value of [1] if the value is set to [1]', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			testUtil.control.value([1]);
@@ -206,7 +206,7 @@ describe('Tree', () => {
 		it('should have a value of [1] if the value is set to the number 1', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			testUtil.control.value(1);
@@ -217,7 +217,7 @@ describe('Tree', () => {
 		it('should have a value of [1,2] if the value is set to a string "1,2"', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			testUtil.control.value('1,2');
@@ -228,7 +228,7 @@ describe('Tree', () => {
 		it('should have a value of [] if the value is set to the number 1 and then an empty string', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			testUtil.control.value(1);
@@ -262,7 +262,7 @@ describe('Tree', () => {
 
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches
+				branches
 			});
 
 			rowHeight = parseFloat(testUtil.first('.heading').style.height, 10);
@@ -274,7 +274,7 @@ describe('Tree', () => {
 		it('should have a height 50px if the height is set to 50px even if there are more rows than fit', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches,
+				branches,
 				height: '50px'
 			});
 
@@ -288,7 +288,7 @@ describe('Tree', () => {
 
 			testUtil.control = new Tree({
 				container: testUtil.container,
-				branches: branches,
+				branches,
 				height: '50px'
 			});
 

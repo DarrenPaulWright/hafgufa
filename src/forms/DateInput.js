@@ -127,7 +127,7 @@ export default class DateInput extends FormControl {
 						self[onDateInputChange](value);
 					},
 					navButtonClass: 'icon-button',
-					selectedDate: selectedDate,
+					selectedDate,
 					minDate: self.minDate(),
 					maxDate: self.maxDate()
 				}],

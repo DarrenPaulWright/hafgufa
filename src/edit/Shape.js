@@ -93,13 +93,13 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 
 		return new DragPoint({
 			container: self.container(),
-			css: { cursor: cursor },
-			isCircle: isCircle,
+			css: { cursor },
+			isCircle,
 			onDragStart() {
 				self[IS_RESIZING] = true;
 				initialBounds = self.bounds();
 			},
-			onDrag: onDrag,
+			onDrag,
 			onDragEnd() {
 				self[IS_RESIZING] = false;
 				self[detectChange](initialBounds);

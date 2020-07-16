@@ -134,7 +134,7 @@ export default class SearchBar extends Control {
 		};
 
 		self[TAGS] = new Tags({
-			container: container,
+			container,
 			breakOnSpaces: self.breakOnSpaces(),
 			placeholder: locale.get('search'),
 			suggestions: self.suggestions(),

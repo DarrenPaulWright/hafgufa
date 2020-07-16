@@ -159,7 +159,7 @@ Object.assign(TextInput.prototype, {
 			else {
 				self[INPUT] = new TextArea({
 					container: self,
-					rows: rows
+					rows
 				});
 				self.changeDelay(ON_CHANGE_DELAY_LONG);
 			}

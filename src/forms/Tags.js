@@ -295,9 +295,9 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 			heading.resize(true);
 
 			self[CURRENT_TAGS].push({
-				heading: heading,
+				heading,
 				id: value.id,
-				typedInput: typedInput
+				typedInput
 			});
 
 			self[moveTextInputTo](self[CURRENT_TAGS].length - 1);
