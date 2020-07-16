@@ -5,7 +5,7 @@ import controlTypes from '../controlTypes.js';
 import d3Helper from '../utility/d3Helper.js';
 import { CLICK_EVENT, HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
-import * as graphConstants from './graphConstants.js';
+import { DURATION, FADE_OPACITY, HILITE_OPACITY, START_OPACITY } from './graphConstants.js';
 import './Legend.less';
 
 const ITEM_OFFSET = 20;
@@ -54,16 +54,16 @@ export default class Legend extends Control {
 		self.onMouseOverItem(() => {
 			d3Helper.fade(
 				self[ITEM_ELEMENTS].selectAll('.legend-dots'),
-				graphConstants.DURATION,
-				graphConstants.FADE_OPACITY
+				DURATION,
+				FADE_OPACITY
 			);
-			d3Helper.fade(select(this).select('.legend-dots'), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+			d3Helper.fade(select(this).select('.legend-dots'), DURATION, HILITE_OPACITY);
 		});
 		self.onMouseOutItem(() => {
 			d3Helper.fade(
 				self[ITEM_ELEMENTS].selectAll('.legend-dots'),
-				graphConstants.DURATION,
-				graphConstants.START_OPACITY
+				DURATION,
+				START_OPACITY
 			);
 		});
 
@@ -159,7 +159,7 @@ Object.assign(Legend.prototype, {
 					.style('fill', (d) => self.itemColor(d))
 					.attr('cx', RADIUS + CHECKBOX_OFFSET)
 					.attr('cy', -1)
-					.style(OPACITY, graphConstants.START_OPACITY)
+					.style(OPACITY, START_OPACITY)
 					.attr('r', RADIUS);
 
 				self[TEXT] = self[ITEM_ELEMENTS]

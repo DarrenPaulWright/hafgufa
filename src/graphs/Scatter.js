@@ -5,7 +5,7 @@ import d3Helper from '../utility/d3Helper.js';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import GraphAxisBase from './GraphAxisBase.js';
-import * as graphConstants from './graphConstants.js';
+import { DURATION, HILITE_OPACITY, START_OPACITY, FADE_OPACITY } from './graphConstants.js';
 import './Scatter.less';
 
 const MAX_DOT_STROKE_WIDTH = 16;
@@ -78,19 +78,19 @@ export default class Scatter extends GraphAxisBase {
 
 		self.data().forEach((dataObject) => {
 			if (dataObject.dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS) {
-				d3Helper.fade(self[DOTS], graphConstants.DURATION, 0);
+				d3Helper.fade(self[DOTS], DURATION, 0);
 				d3Helper.fade(
 					self[DOTS].filter((d) => d.z === item),
-					graphConstants.DURATION,
-					graphConstants.HILITE_OPACITY
+					DURATION,
+					HILITE_OPACITY
 				);
 			}
 			else if (dataObject.dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS_RANGE) {
-				d3Helper.fade(self[RANGES], graphConstants.DURATION, 0);
+				d3Helper.fade(self[RANGES], DURATION, 0);
 				d3Helper.fade(
 					self[RANGES].filter((d) => d.z === item),
-					graphConstants.DURATION,
-					graphConstants.HILITE_OPACITY
+					DURATION,
+					HILITE_OPACITY
 				);
 			}
 		});
@@ -120,8 +120,8 @@ export default class Scatter extends GraphAxisBase {
 	}
 
 	[fadeItemsNormal](items) {
-		d3Helper.fade(items, graphConstants.DURATION, 0);
-		d3Helper.fade(items.filter(this[isVisibleItem]), graphConstants.DURATION, graphConstants.START_OPACITY);
+		d3Helper.fade(items, DURATION, 0);
+		d3Helper.fade(items.filter(this[isVisibleItem]), DURATION, START_OPACITY);
 	}
 
 	[onMouseOverDatum](d, item, dataType) {
@@ -130,7 +130,7 @@ export default class Scatter extends GraphAxisBase {
 		self.tooltip(item, d, dataType);
 
 		if (self[DOTS]) {
-			d3Helper.fade(self[DOTS].filter(self[isVisibleItem]), graphConstants.DURATION, graphConstants.FADE_OPACITY);
+			d3Helper.fade(self[DOTS].filter(self[isVisibleItem]), DURATION, FADE_OPACITY);
 
 			if (dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS_RANGE) {
 				d3Helper.fade(self[DOTS].filter((datum) => self[isVisibleItem](d) &&
@@ -138,14 +138,14 @@ export default class Scatter extends GraphAxisBase {
 					datum.x >= d.xMin &&
 					datum.y <= d.yMax &&
 					datum.y >= d.yMin &&
-					datum.z === d.z), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+					datum.z === d.z), DURATION, HILITE_OPACITY);
 			}
 		}
 		if (self[RANGES]) {
 			d3Helper.fade(
 				self[RANGES].filter(self[isVisibleItem]),
-				graphConstants.DURATION,
-				graphConstants.FADE_OPACITY
+				DURATION,
+				FADE_OPACITY
 			);
 
 			if (dataType === GraphAxisBase.DATA_TYPES.FOUR_AXIS) {
@@ -154,11 +154,11 @@ export default class Scatter extends GraphAxisBase {
 					datum.xMax >= d.x &&
 					datum.yMin <= d.y &&
 					datum.yMax >= d.y &&
-					datum.z === d.z), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+					datum.z === d.z), DURATION, HILITE_OPACITY);
 			}
 		}
 
-		d3Helper.fade(select(item), graphConstants.DURATION, graphConstants.HILITE_OPACITY);
+		d3Helper.fade(select(item), DURATION, HILITE_OPACITY);
 	}
 
 	[onMouseOutDatum]() {
@@ -221,7 +221,7 @@ export default class Scatter extends GraphAxisBase {
 
 		const calculateRangeHeight = (d) => Math.abs(yScale(d.yMax) - yScale(d.yMin));
 
-		const getOpacity = (d) => self[isVisibleItem](d) ? graphConstants.START_OPACITY : 0;
+		const getOpacity = (d) => self[isVisibleItem](d) ? START_OPACITY : 0;
 
 		if (self[SVG]) {
 			self[UNIQUE_Z_VALUES] = [];
@@ -264,12 +264,12 @@ export default class Scatter extends GraphAxisBase {
 						.on(MOUSE_OVER_EVENT, null)
 						.on(MOUSE_OUT_EVENT, null)
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', 0)
 						.remove();
 
 					self[DOTS].transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', calculateRadius)
 						.attr('stroke-width', calculateStrokeWidth)
 						.style(OPACITY, getOpacity)
@@ -286,7 +286,7 @@ export default class Scatter extends GraphAxisBase {
 						.attr('cy', calculateY)
 						.attr('r', 0)
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', calculateRadius)
 						.attr('stroke-width', calculateStrokeWidth);
 				}
@@ -303,12 +303,12 @@ export default class Scatter extends GraphAxisBase {
 						.on(MOUSE_OVER_EVENT, null)
 						.on(MOUSE_OUT_EVENT, null)
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', 0)
 						.remove();
 
 					self[DOTS].transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', calculateRadius)
 						.attr('stroke-width', calculateStrokeWidth)
 						.style(OPACITY, getOpacity)
@@ -331,7 +331,7 @@ export default class Scatter extends GraphAxisBase {
 							self[onMouseOutDatum]();
 						})
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('r', calculateRadius)
 						.attr('stroke-width', calculateStrokeWidth);
 				}
@@ -343,13 +343,13 @@ export default class Scatter extends GraphAxisBase {
 						.on(MOUSE_OVER_EVENT, null)
 						.on(MOUSE_OUT_EVENT, null)
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr(WIDTH, 0)
 						.attr(HEIGHT, 0)
 						.remove();
 
 					self[RANGES].transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.style(OPACITY, getOpacity)
 						.attr('x', calculateRangeX)
 						.attr('y', calculateRangeY)
@@ -377,7 +377,7 @@ export default class Scatter extends GraphAxisBase {
 							self[onMouseOutDatum]();
 						})
 						.transition()
-						.duration(graphConstants.DURATION)
+						.duration(DURATION)
 						.attr('x', calculateRangeX)
 						.attr('y', calculateRangeY)
 						.attr(WIDTH, calculateRangeWidth)

@@ -2,7 +2,7 @@ import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { EditableGrid } from '../../index.js';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import TestUtil from '../TestUtil.js';
 import FormControlTests from './FormControlTests.js';
 
@@ -55,7 +55,7 @@ describe('EditableGrid', () => {
 				width: HUNDRED_PERCENT,
 				height: '30rem',
 				columns: [{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					size: '*'
 				}]
 			});

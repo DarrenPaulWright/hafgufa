@@ -1,7 +1,7 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES, SORT_TYPES, FILTER_TYPES } from '../../src/grid/gridConstants.js';
 import GridHeaderCell from '../../src/grid/GridHeaderCell.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -48,15 +48,15 @@ describe('GridHeaderCell', () => {
 	describe('DataType', () => {
 		testUtil.testMethod({
 			methodName: 'dataType',
-			defaultValue: gridConstants.COLUMN_TYPES.NONE,
-			testValue: gridConstants.COLUMN_TYPES.DATE,
-			secondTestValue: gridConstants.COLUMN_TYPES.TEXT
+			defaultValue: COLUMN_TYPES.NONE,
+			testValue: COLUMN_TYPES.DATE,
+			secondTestValue: COLUMN_TYPES.TEXT
 		});
 
 		it('should build a checkbox if dataType is set to checkbox', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			});
 
 			assert.is(testUtil.count('input[type=checkbox]'), 1);
@@ -65,10 +65,10 @@ describe('GridHeaderCell', () => {
 		it('should remove the checkbox if dataType is set back to none', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			});
 
-			testUtil.control.dataType(gridConstants.COLUMN_TYPES.NONE);
+			testUtil.control.dataType(COLUMN_TYPES.NONE);
 
 			assert.is(testUtil.count('input[type=checkbox]'), 0);
 		});
@@ -78,7 +78,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
+				dataType: COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
 					testVar = newValue;
 				}
@@ -94,7 +94,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
+				dataType: COLUMN_TYPES.CHECKBOX,
 				onSelect(newValue) {
 					testVar = newValue;
 				}
@@ -142,7 +142,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to DESC when the label is clicked twice', () => {
@@ -154,7 +154,7 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.heading'));
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection back to NONE when the label is clicked thrice', () => {
@@ -167,23 +167,23 @@ describe('GridHeaderCell', () => {
 			testUtil.simulateClick(testUtil.first('.heading'));
 			testUtil.simulateClick(testUtil.first('.heading'));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.NONE);
 		});
 	});
 
 	describe('SortDirection', () => {
 		testUtil.testMethod({
 			methodName: 'sortDirection',
-			defaultValue: gridConstants.SORT_TYPES.NONE,
-			testValue: gridConstants.SORT_TYPES.ASC,
-			secondTestValue: gridConstants.SORT_TYPES.DESC
+			defaultValue: SORT_TYPES.NONE,
+			testValue: SORT_TYPES.ASC,
+			secondTestValue: SORT_TYPES.DESC
 		});
 
 		it('should NOT have class "sort-asc" if sortDirection is set to asc and canSort is false', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				canSort: false,
-				sortDirection: gridConstants.SORT_TYPES.ASC
+				sortDirection: SORT_TYPES.ASC
 			});
 
 			assert.is(testUtil.count('label.sort-asc'), 0);
@@ -193,7 +193,7 @@ describe('GridHeaderCell', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				canSort: true,
-				sortDirection: gridConstants.SORT_TYPES.ASC
+				sortDirection: SORT_TYPES.ASC
 			});
 
 			assert.is(testUtil.count('.heading.sort-asc'), 1);
@@ -203,7 +203,7 @@ describe('GridHeaderCell', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				canSort: true,
-				sortDirection: gridConstants.SORT_TYPES.DESC
+				sortDirection: SORT_TYPES.DESC
 			});
 
 			assert.is(testUtil.count('.heading.sort-desc'), 1);
@@ -220,7 +220,7 @@ describe('GridHeaderCell', () => {
 				}
 			});
 
-			testUtil.control.sortDirection(gridConstants.SORT_TYPES.ASC);
+			testUtil.control.sortDirection(SORT_TYPES.ASC);
 			testUtil.simulateClick(testUtil.first('.heading'));
 
 			assert.is(testVar, 'test');
@@ -230,15 +230,15 @@ describe('GridHeaderCell', () => {
 	describe('FilterType', () => {
 		testUtil.testMethod({
 			methodName: 'filterType',
-			defaultValue: gridConstants.FILTER_TYPES.NONE,
-			testValue: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
-			secondTestValue: gridConstants.FILTER_TYPES.DROPDOWN
+			defaultValue: FILTER_TYPES.NONE,
+			testValue: FILTER_TYPES.AUTO_COMPLETE,
+			secondTestValue: FILTER_TYPES.DROPDOWN
 		});
 
 		it('should build a tag control when filterType is set to AUTO_COMPLETE', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE
+				filterType: FILTER_TYPES.AUTO_COMPLETE
 			});
 
 			assert.is(testUtil.count('.tags'), 1);
@@ -254,7 +254,7 @@ describe('GridHeaderCell', () => {
 					callback(['test']);
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.AUTO_COMPLETE);
+				.filterType(FILTER_TYPES.AUTO_COMPLETE);
 
 			testUtil.simulateClick(testUtil.first('.tags-list-container'));
 
@@ -264,7 +264,7 @@ describe('GridHeaderCell', () => {
 		it('should build a picker control when filterType is set to DROPDOWN', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.DROPDOWN
+				filterType: FILTER_TYPES.DROPDOWN
 			});
 
 			assert.is(testUtil.count('.grouped-buttons'), 1);
@@ -280,7 +280,7 @@ describe('GridHeaderCell', () => {
 					callback([]);
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.DROPDOWN);
+				.filterType(FILTER_TYPES.DROPDOWN);
 
 			assert.is(testVar, 'test');
 		});
@@ -288,7 +288,7 @@ describe('GridHeaderCell', () => {
 		it('should build a picker control when filterType is set to DATE', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.DATE
+				filterType: FILTER_TYPES.DATE
 			});
 
 			assert.is(testUtil.count('.grouped-buttons'), 1);
@@ -297,7 +297,7 @@ describe('GridHeaderCell', () => {
 		it('should set the width of a picker control when filterType is set to DATE and resize is called', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.DATE,
+				filterType: FILTER_TYPES.DATE,
 				width: '100px'
 			});
 
@@ -309,10 +309,10 @@ describe('GridHeaderCell', () => {
 		it('should remove all filter controls when filterType is set back to NONE', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.DATE
+				filterType: FILTER_TYPES.DATE
 			});
 
-			testUtil.control.filterType(gridConstants.FILTER_TYPES.NONE);
+			testUtil.control.filterType(FILTER_TYPES.NONE);
 
 			assert.is(testUtil.count('.form-control'), 0);
 		});
@@ -320,8 +320,8 @@ describe('GridHeaderCell', () => {
 		it('should build two text controls when filterType is set to NUMBER', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER,
-				filterType: gridConstants.FILTER_TYPES.NUMBER
+				dataType: COLUMN_TYPES.NUMBER,
+				filterType: FILTER_TYPES.NUMBER
 			});
 
 			assert.is(testUtil.count('input[type=text]'), 2);
@@ -330,8 +330,8 @@ describe('GridHeaderCell', () => {
 		it('should have default widths set on the two filters when filterType is set to NUMBER', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER,
-				filterType: gridConstants.FILTER_TYPES.NUMBER,
+				dataType: COLUMN_TYPES.NUMBER,
+				filterType: FILTER_TYPES.NUMBER,
 				width: '100px'
 			});
 
@@ -342,8 +342,8 @@ describe('GridHeaderCell', () => {
 		it('should have equal widths set on the two NUMBER filters after resize is called when filterType is set to NUMBER', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER,
-				filterType: gridConstants.FILTER_TYPES.NUMBER,
+				dataType: COLUMN_TYPES.NUMBER,
+				filterType: FILTER_TYPES.NUMBER,
 				width: '200px'
 			});
 
@@ -385,7 +385,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
+				filterType: FILTER_TYPES.AUTO_COMPLETE,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
@@ -399,7 +399,7 @@ describe('GridHeaderCell', () => {
 		it('should return a filter when an AUTO_COMPLETE filter control is set', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
+				filterType: FILTER_TYPES.AUTO_COMPLETE,
 				onFilter() {
 				}
 			});
@@ -415,7 +415,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
+				filterType: FILTER_TYPES.AUTO_COMPLETE,
 				onFilter() {
 					testVar = 'test';
 				}
@@ -432,7 +432,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.DROPDOWN,
+				filterType: FILTER_TYPES.DROPDOWN,
 				onFilter(filterValue) {
 					testVar = filterValue;
 				}
@@ -450,7 +450,7 @@ describe('GridHeaderCell', () => {
 					callback(['test']);
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.DROPDOWN);
+				.filterType(FILTER_TYPES.DROPDOWN);
 
 			testUtil.simulateClick(testUtil.first('.popup-button'));
 			testUtil.simulateClick(testUtil.first('.menu .heading', true));
@@ -470,7 +470,7 @@ describe('GridHeaderCell', () => {
 					callback(['test']);
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.DROPDOWN);
+				.filterType(FILTER_TYPES.DROPDOWN);
 
 			testUtil.simulateClick(testUtil.first('.popup-button'));
 			testUtil.simulateClick(testUtil.first('.menu .heading', true));
@@ -483,7 +483,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				filterType: gridConstants.FILTER_TYPES.NUMBER,
+				filterType: FILTER_TYPES.NUMBER,
 				onFilter() {
 					testVar++;
 				}
@@ -500,7 +500,7 @@ describe('GridHeaderCell', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container
 			})
-				.filterType(gridConstants.FILTER_TYPES.NUMBER);
+				.filterType(FILTER_TYPES.NUMBER);
 
 			inputs = testUtil.all('input');
 
@@ -526,7 +526,7 @@ describe('GridHeaderCell', () => {
 					testVar = filterValue;
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.NUMBER);
+				.filterType(FILTER_TYPES.NUMBER);
 
 			inputs = testUtil.all('input');
 
@@ -552,7 +552,7 @@ describe('GridHeaderCell', () => {
 					testVar = filterValue;
 				}
 			})
-				.filterType(gridConstants.FILTER_TYPES.NUMBER);
+				.filterType(FILTER_TYPES.NUMBER);
 
 			inputs = testUtil.all('input');
 
@@ -710,7 +710,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 0, true));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.ASC);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.ASC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.DESC when the second option in the context menu is clicked', () => {
@@ -724,7 +724,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 1, true));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.DESC);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.DESC);
 		});
 
 		it('should set sortDirection to gridConstants.SORT_TYPES.NONE when the third option in the context menu is clicked', () => {
@@ -738,7 +738,7 @@ describe('GridHeaderCell', () => {
 
 			testUtil.simulateClick(testUtil.nth('.menu .heading', 2, true));
 
-			assert.is(testUtil.control.sortDirection(), gridConstants.SORT_TYPES.NONE);
+			assert.is(testUtil.control.sortDirection(), SORT_TYPES.NONE);
 		});
 	});
 
@@ -752,7 +752,7 @@ describe('GridHeaderCell', () => {
 		it('should have a checked checkbox if dataType is set to checkbox and isAllRowsSelected is true', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
+				dataType: COLUMN_TYPES.CHECKBOX,
 				isAllRowsSelected: true
 			});
 
@@ -762,7 +762,7 @@ describe('GridHeaderCell', () => {
 		it('should have an unchecked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
+				dataType: COLUMN_TYPES.CHECKBOX,
 				isAllRowsSelected: true
 			});
 
@@ -774,7 +774,7 @@ describe('GridHeaderCell', () => {
 		it('should have a checked checkbox if dataType is set to checkbox and isAllRowsSelected is true then false then true', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			});
 
 			testUtil.control.isAllRowsSelected(true);
@@ -787,7 +787,7 @@ describe('GridHeaderCell', () => {
 		it('should not throw an error if isAllRowsSelected is set when the datatype is something other than checkbox', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER,
+				dataType: COLUMN_TYPES.NUMBER,
 				isAllRowsSelected: true
 			});
 
@@ -805,7 +805,7 @@ describe('GridHeaderCell', () => {
 		it('should have a checkbox with indeterminate set to true if dataType is set to checkbox and isSomeRowsSelected is true', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX,
+				dataType: COLUMN_TYPES.CHECKBOX,
 				isSomeRowsSelected: true
 			});
 
@@ -815,7 +815,7 @@ describe('GridHeaderCell', () => {
 		it('should not throw an error if isSomeRowsSelected is set when the datatype is something other than checkbox', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER,
+				dataType: COLUMN_TYPES.NUMBER,
 				isSomeRowsSelected: true
 			});
 

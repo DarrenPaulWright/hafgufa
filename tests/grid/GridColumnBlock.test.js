@@ -1,7 +1,7 @@
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
 import GridColumnBlock from '../../src/grid/GridColumnBlock.js';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
@@ -44,12 +44,12 @@ describe('GridColumnBlock', () => {
 				columns: [{
 					id: 'test',
 					title: 'test',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
+					type: COLUMN_TYPES.CHECKBOX
 				}, {
 					id: 'test2',
 					title: 'test 2',
 					canSort: true,
-					type: gridConstants.COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT
 				}],
 				selectableColumns: [{
 					id: 'test',
@@ -81,10 +81,10 @@ describe('GridColumnBlock', () => {
 					container: testUtil.container,
 					columns: [{
 						title: 'test 1',
-						type: gridConstants.COLUMN_TYPES.CHECKBOX
+						type: COLUMN_TYPES.CHECKBOX
 					}, {
 						title: 'test 2',
-						type: gridConstants.COLUMN_TYPES.TEXT
+						type: COLUMN_TYPES.TEXT
 					}],
 					isAllRowsSelected: true
 				});
@@ -109,10 +109,10 @@ describe('GridColumnBlock', () => {
 					container: testUtil.container,
 					columns: [{
 						title: 'test 1',
-						type: gridConstants.COLUMN_TYPES.CHECKBOX
+						type: COLUMN_TYPES.CHECKBOX
 					}, {
 						title: 'test 2',
-						type: gridConstants.COLUMN_TYPES.TEXT
+						type: COLUMN_TYPES.TEXT
 					}],
 					isSomeRowsSelected: true
 				});
@@ -140,10 +140,10 @@ describe('GridColumnBlock', () => {
 				height: '30rem'
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					id: '0'
 				}, {
-					type: gridConstants.COLUMN_TYPES.ACTIONS,
+					type: COLUMN_TYPES.ACTIONS,
 					currentWidth: 120,
 					id: '1',
 					buttons: [{

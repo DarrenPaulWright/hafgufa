@@ -1,5 +1,5 @@
 import { assert } from 'type-enforcer';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import GridRow from '../../src/grid/GridRow.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -18,15 +18,15 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 80,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 120,
 					order: 1
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 160,
 					order: 2
 				}])
@@ -52,15 +52,15 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 80,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 120,
 					order: 1
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					currentWidth: 160,
 					order: 2
 				}])
@@ -117,10 +117,10 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 1
 				}])
 				.rowData({
@@ -178,7 +178,7 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
 				.rowData({
@@ -200,7 +200,7 @@ describe('GridRow', () => {
 				isIndeterminate: true
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
 				.rowData({
@@ -219,7 +219,7 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
 				.rowData({
@@ -296,7 +296,7 @@ describe('GridRow', () => {
 				}
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
 				.rowData({
@@ -323,7 +323,7 @@ describe('GridRow', () => {
 				.groupId(1);
 
 			testUtil.control.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}])
 				.rowData({
@@ -347,7 +347,7 @@ describe('GridRow', () => {
 				});
 
 			testUtil.control.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}])
 				.rowData({
@@ -375,13 +375,13 @@ describe('GridRow', () => {
 					}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 1
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 2
 				}]);
 
@@ -393,13 +393,13 @@ describe('GridRow', () => {
 				container: testUtil.container
 			})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 1
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 2
 				}])
 				.rowData({
@@ -413,10 +413,10 @@ describe('GridRow', () => {
 				});
 
 			testUtil.control.columns([{
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 0
 				}, {
-					type: gridConstants.COLUMN_TYPES.TEXT,
+					type: COLUMN_TYPES.TEXT,
 					order: 1
 				}])
 				.rowData({
@@ -452,7 +452,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					id: 0,
 					order: 0
 				}])
@@ -469,7 +469,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}])
 				.isSelected(false);
@@ -487,7 +487,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -506,7 +506,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -526,7 +526,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -546,7 +546,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -566,7 +566,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -585,7 +585,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -605,7 +605,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -625,7 +625,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -645,7 +645,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.CHECKBOX,
+					type: COLUMN_TYPES.CHECKBOX,
 					order: 0
 				}]);
 
@@ -701,7 +701,7 @@ describe('GridRow', () => {
 					cells: [{}]
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.ACTIONS,
+					type: COLUMN_TYPES.ACTIONS,
 					id: 0,
 					buttons: [{
 						icon: 'circle',
@@ -746,7 +746,7 @@ describe('GridRow', () => {
 					something: 'interesting'
 				})
 				.columns([{
-					type: gridConstants.COLUMN_TYPES.ACTIONS,
+					type: COLUMN_TYPES.ACTIONS,
 					currentWidth: 120,
 					id: 0,
 					buttons: [{

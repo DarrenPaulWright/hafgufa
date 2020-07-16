@@ -3,7 +3,7 @@ import { assert } from 'type-enforcer';
 import { isString } from 'type-enforcer-ui';
 import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../index.js';
 import GridCell from '../../src/grid/GridCell.js';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES, CELL_ALIGNMENT, DISPLAY_TYPES } from '../../src/grid/gridConstants.js';
 import getAttributes from '../../src/utility/dom/getAttributes.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -40,15 +40,15 @@ describe('GridCell', () => {
 			defaultSettings: {
 				container: testUtil.container
 			},
-			defaultValue: gridConstants.COLUMN_TYPES.NONE,
-			testValue: gridConstants.COLUMN_TYPES.CHECKBOX,
-			secondTestValue: gridConstants.COLUMN_TYPES.TEXT
+			defaultValue: COLUMN_TYPES.NONE,
+			testValue: COLUMN_TYPES.CHECKBOX,
+			secondTestValue: COLUMN_TYPES.TEXT
 		});
 
 		it('should remove a toolbar if previously set to ACTIONS', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -56,7 +56,7 @@ describe('GridCell', () => {
 					}]
 				});
 
-			testUtil.control.dataType(gridConstants.COLUMN_TYPES.TEXT);
+			testUtil.control.dataType(COLUMN_TYPES.TEXT);
 
 			assert.is(testUtil.count('.toolbar'), 0);
 		});
@@ -64,11 +64,11 @@ describe('GridCell', () => {
 		it('should remove a checkbox if previously set to CHECKBOX', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			})
 				.content({});
 
-			testUtil.control.dataType(gridConstants.COLUMN_TYPES.TEXT);
+			testUtil.control.dataType(COLUMN_TYPES.TEXT);
 
 			assert.is(testUtil.count('.checkboxes'), 0);
 		});
@@ -275,7 +275,7 @@ describe('GridCell', () => {
 			it('should render the content provided when dataType is ' + typeString, () => {
 				testUtil.control = new GridCell({
 					container: testUtil.container,
-					dataType: gridConstants.COLUMN_TYPES[typeString]
+					dataType: COLUMN_TYPES[typeString]
 				})
 					.content(inputContent);
 
@@ -285,11 +285,11 @@ describe('GridCell', () => {
 			it('should have textAlign of ' + textAlign + ' when dataType is ' + typeString, () => {
 				testUtil.control = new GridCell({
 					container: testUtil.container,
-					dataType: gridConstants.COLUMN_TYPES[typeString]
+					dataType: COLUMN_TYPES[typeString]
 				})
 					.content(inputContent);
 
-				assert.is(testUtil.control.textAlign(), gridConstants.CELL_ALIGNMENT[textAlign]);
+				assert.is(testUtil.control.textAlign(), CELL_ALIGNMENT[textAlign]);
 			});
 
 			testTypes.forEach((testType) => {
@@ -297,12 +297,12 @@ describe('GridCell', () => {
 					testType.type, () => {
 					testUtil.control = new GridCell({
 						container: testUtil.container,
-						dataType: gridConstants.COLUMN_TYPES[typeString]
+						dataType: COLUMN_TYPES[typeString]
 					})
 						.content(inputContent);
 
 					testUtil.control
-						.dataType(gridConstants.COLUMN_TYPES[testType.type])
+						.dataType(COLUMN_TYPES[testType.type])
 						.content(testType.content);
 
 					compareContent(testUtil.control.element, testType.output);
@@ -317,7 +317,7 @@ describe('GridCell', () => {
 		it('should render buttons when dataType is ACTIONS and button definitions are provided', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -333,7 +333,7 @@ describe('GridCell', () => {
 		it('should render only the second buttons when dataType is ACTIONS and button definitions are provided twice', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -359,7 +359,7 @@ describe('GridCell', () => {
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -382,7 +382,7 @@ describe('GridCell', () => {
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS,
+				dataType: COLUMN_TYPES.ACTIONS,
 				onSelect() {
 					testVar = 2;
 				}
@@ -406,7 +406,7 @@ describe('GridCell', () => {
 		it('should disable all buttons if isEnabled is set to false', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS,
+				dataType: COLUMN_TYPES.ACTIONS,
 				isEnabled: false
 			})
 				.content({
@@ -425,7 +425,7 @@ describe('GridCell', () => {
 		it('should disable a specific button if specified', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -446,7 +446,7 @@ describe('GridCell', () => {
 		it('should add a title to a button if the button is disabled and a title is provided', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -472,7 +472,7 @@ describe('GridCell', () => {
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -492,7 +492,7 @@ describe('GridCell', () => {
 
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: [{
@@ -511,7 +511,7 @@ describe('GridCell', () => {
 		it('should have a checkox if datatype is set to CHECKBOX and content is set twice', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			})
 				.content({
 					text: ''
@@ -529,113 +529,113 @@ describe('GridCell', () => {
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.TEXT', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.TEXT
+				dataType: COLUMN_TYPES.TEXT
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.EMAIL', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.EMAIL
+				dataType: COLUMN_TYPES.EMAIL
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.LINK', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.LINK
+				dataType: COLUMN_TYPES.LINK
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.NUMBER', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.NUMBER
+				dataType: COLUMN_TYPES.NUMBER
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.DATE', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.DATE
+				dataType: COLUMN_TYPES.DATE
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.DATE_TIME', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.DATE_TIME
+				dataType: COLUMN_TYPES.DATE_TIME
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.TIME', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.TIME
+				dataType: COLUMN_TYPES.TIME
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.TEXT);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.TEXT);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.IMAGE if dataType is set to gridConstants.COLUMN_TYPES.IMAGE', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.IMAGE
+				dataType: COLUMN_TYPES.IMAGE
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.IMAGE);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.BUTTONS if dataType is set to gridConstants.COLUMN_TYPES.ACTIONS', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.ACTIONS
+				dataType: COLUMN_TYPES.ACTIONS
 			})
 				.content({
 					columnButtons: []
 				});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.BUTTONS);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.BUTTONS);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.CHECKBOX if dataType is set to gridConstants.COLUMN_TYPES.CHECKBOX', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.CHECKBOX
+				dataType: COLUMN_TYPES.CHECKBOX
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.CHECKBOX);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.CHECKBOX);
 		});
 
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.IMAGE if dataType is set to gridConstants.COLUMN_TYPES.IMAGE', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.IMAGE
+				dataType: COLUMN_TYPES.IMAGE
 			})
 				.content({});
 
-			assert.is(testUtil.control.displayType(), gridConstants.DISPLAY_TYPES.IMAGE);
+			assert.is(testUtil.control.displayType(), DISPLAY_TYPES.IMAGE);
 		});
 	});
 
@@ -653,7 +653,7 @@ describe('GridCell', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({})
 				.isSelected(true);
 
@@ -665,7 +665,7 @@ describe('GridCell', () => {
 				container: testUtil.container
 			})
 				.isSelected(true)
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({});
 
 			assert.is(testUtil.count('.checkbox.checked'), 1);
@@ -675,7 +675,7 @@ describe('GridCell', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({})
 				.isSelected(false);
 
@@ -686,7 +686,7 @@ describe('GridCell', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({})
 				.isSelected(true);
 
@@ -704,7 +704,7 @@ describe('GridCell', () => {
 					testVar = isChecked;
 				}
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
@@ -721,7 +721,7 @@ describe('GridCell', () => {
 					testVar = isChecked;
 				}
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({})
 				.isSelected(true);
 
@@ -739,7 +739,7 @@ describe('GridCell', () => {
 					testVar = isChecked;
 				}
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({})
 				.isSelected(true);
 
@@ -758,7 +758,7 @@ describe('GridCell', () => {
 					testVar = event;
 				}
 			})
-				.dataType(gridConstants.COLUMN_TYPES.CHECKBOX)
+				.dataType(COLUMN_TYPES.CHECKBOX)
 				.content({});
 
 			testUtil.simulateClick(testUtil.first('.checkbox'));
@@ -781,7 +781,7 @@ describe('GridCell', () => {
 		it('should have a tooltip if the text doesn\'t fit in the cell', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.TEXT,
+				dataType: COLUMN_TYPES.TEXT,
 				width: '50px'
 			})
 				.content({
@@ -796,7 +796,7 @@ describe('GridCell', () => {
 		it('should have a trimmed tooltip if the text doesn\'t fit in the cell and is more than 600 characters', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				dataType: gridConstants.COLUMN_TYPES.TEXT,
+				dataType: COLUMN_TYPES.TEXT,
 				width: '50px'
 			})
 				.content({
@@ -815,18 +815,18 @@ describe('GridCell', () => {
 			defaultSettings: {
 				container: testUtil.container
 			},
-			defaultValue: gridConstants.CELL_ALIGNMENT.NONE,
-			testValue: gridConstants.CELL_ALIGNMENT.CENTER,
-			secondTestValue: gridConstants.CELL_ALIGNMENT.RIGHT,
+			defaultValue: CELL_ALIGNMENT.NONE,
+			testValue: CELL_ALIGNMENT.CENTER,
+			secondTestValue: CELL_ALIGNMENT.RIGHT,
 			testValueClass: [{
 				class: 'align-right',
-				testValue: gridConstants.CELL_ALIGNMENT.RIGHT
+				testValue: CELL_ALIGNMENT.RIGHT
 			}, {
 				class: 'align-center',
-				testValue: gridConstants.CELL_ALIGNMENT.CENTER
+				testValue: CELL_ALIGNMENT.CENTER
 			}, {
 				class: 'align-left',
-				testValue: gridConstants.CELL_ALIGNMENT.LEFT
+				testValue: CELL_ALIGNMENT.LEFT
 			}]
 		});
 	});
@@ -923,7 +923,7 @@ describe('GridCell', () => {
 		it('should have the class "align-right" after resetClasses is called if textAlign is set', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
-				textAlign: gridConstants.CELL_ALIGNMENT.RIGHT,
+				textAlign: CELL_ALIGNMENT.RIGHT,
 				classes: 'test'
 			});
 

@@ -6,7 +6,7 @@ import { ATTR_X, ATTR_Y, CLASS, HEIGHT, OPACITY, WIDTH } from '../utility/domCon
 import setDefaults from '../utility/setDefaults.js';
 import './Bar.less';
 import GraphAxisBase from './GraphAxisBase.js';
-import * as graphConstants from './graphConstants.js';
+import { DURATION } from './graphConstants.js';
 
 const GRADIENT_ID = 'bar-gradient';
 const BAR_LABEL_OFFSET = 4;
@@ -136,7 +136,7 @@ export default class Bar extends GraphAxisBase {
 				// Remove old bars
 				self[BARS].exit()
 					.transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_Y, getFinalY)
 					.attr(HEIGHT, 0)
 					.remove();
@@ -144,14 +144,14 @@ export default class Bar extends GraphAxisBase {
 				// Remove old barLabels
 				self[BAR_LABELS].exit()
 					.transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_Y, getFinalY)
 					.style(OPACITY, 0)
 					.remove();
 
 				// Update existing bars
 				self[BARS].transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_X, getBarX)
 					.attr(ATTR_Y, getBarY)
 					.attr(WIDTH, xScale.bandwidth())
@@ -159,7 +159,7 @@ export default class Bar extends GraphAxisBase {
 
 				// Update existing barLabels
 				self[BAR_LABELS].transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_X, getBarLabelX)
 					.attr(ATTR_Y, getBarLabelY)
 					.attr(CLASS, getBarLabelClass)
@@ -178,7 +178,7 @@ export default class Bar extends GraphAxisBase {
 					.attr(WIDTH, xScale.bandwidth())
 					.attr(HEIGHT, 0)
 					.transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_Y, getBarY)
 					.attr(HEIGHT, getBarHeight);
 
@@ -194,7 +194,7 @@ export default class Bar extends GraphAxisBase {
 					.attr(CLASS, getBarLabelClass)
 					.text(getBarLabelText)
 					.transition()
-					.duration(graphConstants.DURATION)
+					.duration(DURATION)
 					.attr(ATTR_Y, getBarLabelY)
 					.style(OPACITY, 1);
 			}

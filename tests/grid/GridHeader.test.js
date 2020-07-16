@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
-import * as gridConstants from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES, SORT_TYPES, FILTER_TYPES } from '../../src/grid/gridConstants.js';
 import GridHeader from '../../src/grid/GridHeader.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -232,7 +232,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT
 				}]
 			});
 
@@ -246,7 +246,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.EMAIL
+					type: COLUMN_TYPES.EMAIL
 				}]
 			});
 
@@ -260,7 +260,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.DATE
+					type: COLUMN_TYPES.DATE
 				}]
 			});
 
@@ -274,7 +274,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: false,
-					type: gridConstants.COLUMN_TYPES.DATE
+					type: COLUMN_TYPES.DATE
 				}]
 			});
 
@@ -288,7 +288,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.DATE_TIME
+					type: COLUMN_TYPES.DATE_TIME
 				}]
 			});
 
@@ -302,7 +302,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.TIME
+					type: COLUMN_TYPES.TIME
 				}]
 			});
 
@@ -316,7 +316,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: gridConstants.COLUMN_TYPES.NUMBER
+					type: COLUMN_TYPES.NUMBER
 				}]
 			});
 
@@ -330,7 +330,7 @@ describe('GridHeader', () => {
 					title: 'test 1',
 					size: '*',
 					canFilter: false,
-					type: gridConstants.COLUMN_TYPES.NUMBER
+					type: COLUMN_TYPES.NUMBER
 				}]
 			});
 
@@ -356,7 +356,7 @@ describe('GridHeader', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, gridConstants.SORT_TYPES.ASC);
+			assert.is(testVal, SORT_TYPES.ASC);
 		});
 
 		it('should call the onSort callback when a column is sorted twice', () => {
@@ -377,7 +377,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, gridConstants.SORT_TYPES.DESC);
+			assert.is(testVal, SORT_TYPES.DESC);
 		});
 
 		it('should call the onSort callback when a column is sorted three times', () => {
@@ -399,7 +399,7 @@ describe('GridHeader', () => {
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 			testUtil.simulateClick(testUtil.nth('.heading', 0));
 
-			assert.is(testVal, gridConstants.SORT_TYPES.NONE);
+			assert.is(testVal, SORT_TYPES.NONE);
 		});
 
 		it('should set the first column sort direction to none when a second column is sorted', () => {
@@ -431,7 +431,7 @@ describe('GridHeader', () => {
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
+					type: COLUMN_TYPES.CHECKBOX
 				}],
 				onSelectAllGroups() {
 					testVal = 'test';
@@ -450,8 +450,8 @@ describe('GridHeader', () => {
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.TEXT,
-					filterType: gridConstants.FILTER_TYPES.DROPDOWN,
+					type: COLUMN_TYPES.TEXT,
+					filterType: FILTER_TYPES.DROPDOWN,
 					canFilter: true
 				}],
 				onGetFilterData() {
@@ -469,8 +469,8 @@ describe('GridHeader', () => {
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.TEXT,
-					filterType: gridConstants.FILTER_TYPES.AUTO_COMPLETE,
+					type: COLUMN_TYPES.TEXT,
+					filterType: FILTER_TYPES.AUTO_COMPLETE,
 					canFilter: true
 				}],
 				onFilter() {
@@ -503,12 +503,12 @@ describe('GridHeader', () => {
 				columns: [{
 					id: 'test',
 					title: 'test',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
+					type: COLUMN_TYPES.CHECKBOX
 				}, {
 					id: 'test2',
 					title: 'test 2',
 					canSort: true,
-					type: gridConstants.COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT
 				}],
 				selectableColumns: [{
 					id: 'test',
@@ -538,10 +538,10 @@ describe('GridHeader', () => {
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
+					type: COLUMN_TYPES.CHECKBOX
 				}, {
 					title: 'test 2',
-					type: gridConstants.COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT
 				}],
 				isAllRowsSelected: true
 			});
@@ -563,10 +563,10 @@ describe('GridHeader', () => {
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
-					type: gridConstants.COLUMN_TYPES.CHECKBOX
+					type: COLUMN_TYPES.CHECKBOX
 				}, {
 					title: 'test 2',
-					type: gridConstants.COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT
 				}],
 				isSomeRowsSelected: true
 			});
