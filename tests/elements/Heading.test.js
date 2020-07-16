@@ -37,7 +37,7 @@ describe('Heading', () => {
 				title: 'test 1'
 			});
 
-			assert.is(testUtil.first('.heading span').innerText, 'test 1');
+			assert.is(testUtil.first('.heading span').textContent, 'test 1');
 		});
 	});
 

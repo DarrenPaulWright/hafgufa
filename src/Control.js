@@ -270,7 +270,7 @@ Object.assign(Control.prototype, {
 				const _self = _(self);
 
 				if (container && container.contains(self.element)) {
-					container.removeChild(self.element);
+					self.element.remove();
 
 					if (container[CONTROL_PROP]) {
 						container[CONTROL_PROP][CHILD_CONTROLS].discard(self);
@@ -293,7 +293,7 @@ Object.assign(Control.prototype, {
 						container.insertBefore(self.element, _self.append.nextSibling);
 					}
 					else {
-						container.appendChild(self.element);
+						container.append(self.element);
 					}
 
 					erase(_self, 'append');
@@ -309,7 +309,7 @@ Object.assign(Control.prototype, {
 					erase(_self, 'appendAt');
 				}
 				else {
-					container.appendChild(self.element);
+					container.append(self.element);
 				}
 
 				if (container[CONTROL_PROP]) {

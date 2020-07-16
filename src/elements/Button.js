@@ -156,7 +156,7 @@ Object.assign(Button.prototype, {
 					self.element.insertBefore(self[CHILD_CONTROLS].get(ICON_ID).element, self.element.firstChild);
 				}
 				else {
-					self.element.appendChild(self[CHILD_CONTROLS].get(ICON_ID).element);
+					self.element.append(self[CHILD_CONTROLS].get(ICON_ID).element);
 				}
 			}
 
@@ -234,7 +234,7 @@ Object.assign(Button.prototype, {
 						.insertBefore(this[CHILD_CONTROLS].get(IMAGE_ID).element, this.element.firstChild);
 				}
 				else {
-					this.element.appendChild(this[CHILD_CONTROLS].get(IMAGE_ID).element);
+					this.element.append(this[CHILD_CONTROLS].get(IMAGE_ID).element);
 				}
 			}
 

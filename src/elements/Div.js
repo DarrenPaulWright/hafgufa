@@ -80,7 +80,7 @@ export default class Div extends Control {
 						parent.insertBefore(content, parent.children[appendAt]);
 					}
 					else {
-						parent.appendChild(content);
+						parent.append(content);
 					}
 				}
 				else if (isNumber(appendAt)) {

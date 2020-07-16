@@ -21,7 +21,7 @@ const buildHref = (self, theme, env, isRegEx = false) => {
 };
 
 const findLink = (self, theme, env) => {
-	const links = HEAD.getElementsByTagName('link');
+	const links = HEAD.querySelectorAll('link');
 	const href = buildHref(self, theme, env, true);
 	let themeLink;
 
@@ -68,7 +68,7 @@ const newLink = (self, prevLink, isThemeChange) => {
 	};
 	const appendLink = () => {
 		try {
-			HEAD.appendChild(link);
+			HEAD.append(link);
 		}
 		catch (error) {
 			console.error(error);
@@ -99,7 +99,7 @@ const newLink = (self, prevLink, isThemeChange) => {
 	link.href = buildHref(self);
 	link.onload = () => {
 		if (prevLink) {
-			prevLink.parentNode.removeChild(prevLink);
+			prevLink.remove();
 		}
 
 		done();
@@ -147,7 +147,7 @@ class Theme {
 
 		if (!IS_DESKTOP) {
 			const tag = document.createElement('meta');
-			HEAD.appendChild(tag);
+			HEAD.append(tag);
 			tag.setAttribute('name', 'viewport');
 			tag.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
 		}

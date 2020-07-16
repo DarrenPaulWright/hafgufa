@@ -26,9 +26,9 @@ export default class TestUtil {
 		beforeEach(function() {
 			self.allEvents.length = 0;
 			self[CONTAINER] = isSvg ?
-				document.createElementNS(`http://www.w3.org/2000/svg`, 'svg') :
+				document.createElementNS('http://www.w3.org/2000/svg', 'svg') :
 				document.createElement('div');
-			document.body.appendChild(self[CONTAINER]);
+			document.body.append(self[CONTAINER]);
 		});
 
 		afterEach(function() {
