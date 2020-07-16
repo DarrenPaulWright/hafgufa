@@ -44,7 +44,7 @@ export default (Base) => {
 		 * @method delay
 		 * @member module:DelayedRenderMixin
 		 * @instance
-		 * @arg {number} delay
+		 * @param {number} delay
 		 * @returns {number|this}
 		 */
 		delay: methodNumber({

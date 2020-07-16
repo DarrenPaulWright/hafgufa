@@ -25,7 +25,7 @@ const RENDERED_HEIGHT = Symbol();
  * @extends GraphAxisBase
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Bar extends GraphAxisBase {
 	constructor(settings = {}) {

@@ -16,7 +16,7 @@ const LABEL = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Score extends FormControl {
 	constructor(settings = {}) {
@@ -45,7 +45,7 @@ Object.assign(Score.prototype, {
 	 * @method value
 	 * @member module:Score
 	 * @instance
-	 * @arg {Number} [value]
+	 * @param {Number} [value]
 	 * @returns {Number|this}
 	 */
 	value: methodNumber({

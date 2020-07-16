@@ -45,7 +45,7 @@ const IS_AUTO = Symbol();
  * @class Dialog
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Dialog extends Removable {
 	constructor(settings = {}) {
@@ -232,7 +232,7 @@ Object.assign(Dialog.prototype, {
 	 * @member module:Dialog
 	 * @instance
 	 *
-	 * @arg {String} [newPadding]
+	 * @param {String} [newPadding]
 	 *
 	 * @returns {String|this}
 	 */
@@ -248,7 +248,7 @@ Object.assign(Dialog.prototype, {
 	 * @method isEnabled
 	 * @member module:Dialog
 	 * @instance
-	 * @arg   {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
 	isEnabled: methodBoolean({

@@ -15,9 +15,9 @@ let currentCallTotal = 0;
 /**
  * Prioritize a new call
  * @function prioritizeCall
- * @arg {string} type
- * @arg {string} url
- * @arg {Object} settings
+ * @param {string} type
+ * @param {string} url
+ * @param {Object} settings
  */
 const prioritizeCall = (type, url, settings = {}) => new Promise((resolve, reject) => {
 	const handleResponse = (callback) => (value) => {
@@ -72,8 +72,8 @@ export default {
 	 * @method get
 	 * @member module:ajax
 	 * @static
-	 * @arg {String} url - url to call
-	 * @arg {Object} settings
+	 * @param {String} url - url to call
+	 * @param {Object} settings
 	 */
 	get(url, settings) {
 		return prioritizeCall(TYPE.GET, url, settings);
@@ -84,8 +84,8 @@ export default {
 	 * @method get
 	 * @member module:ajax
 	 * @static
-	 * @arg {String} url - url to call
-	 * @arg {Object} settings
+	 * @param {String} url - url to call
+	 * @param {Object} settings
 	 */
 	patch(url, settings) {
 		return prioritizeCall(TYPE.PATCH, url, settings);
@@ -96,8 +96,8 @@ export default {
 	 * @method get
 	 * @member module:ajax
 	 * @static
-	 * @arg {String} url - url to call
-	 * @arg {Object} settings
+	 * @param {String} url - url to call
+	 * @param {Object} settings
 	 */
 	put(url, settings) {
 		return prioritizeCall(TYPE.PUT, url, settings);
@@ -108,8 +108,8 @@ export default {
 	 * @method post
 	 * @member module:ajax
 	 * @static
-	 * @arg {String} url - url to call
-	 * @arg {Object} settings
+	 * @param {String} url - url to call
+	 * @param {Object} settings
 	 */
 	post(url, settings) {
 		return prioritizeCall(TYPE.POST, url, settings);
@@ -120,8 +120,8 @@ export default {
 	 * @method delete
 	 * @member module:ajax
 	 * @static
-	 * @arg {String} url - url to call
-	 * @arg {Object} settings
+	 * @param {String} url - url to call
+	 * @param {Object} settings
 	 */
 	delete(url, settings) {
 		return prioritizeCall(TYPE.DELETE, url, settings);

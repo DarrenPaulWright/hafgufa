@@ -45,9 +45,9 @@ const CURRENT_SIZE = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object}        settings            - Accepts all controlBase settings plus:
- * @arg {String}        settings.label
- * @arg {Boolean}       settings.isWorking
+ * @param {Object}        settings            - Accepts all controlBase settings plus:
+ * @param {String}        settings.label
+ * @param {Boolean}       settings.isWorking
  */
 export default class IsWorking extends DelayedRenderMixin(Control) {
 	constructor(settings = {}) {
@@ -85,7 +85,7 @@ Object.assign(IsWorking.prototype, {
 	 * @method label
 	 * @member module:IsWorking
 	 * @instance
-	 * @arg {String} newLabel
+	 * @param {String} newLabel
 	 * @returns {String|this}
 	 */
 	label: methodString({

@@ -31,7 +31,7 @@ const fitToSlide = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Carousel extends NextPrevMixin(Control) {
 	constructor(settings = {}) {
@@ -128,7 +128,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {function}
+	 * @param {function}
 	 *
 	 * @returns {function|this}
 	 */
@@ -146,7 +146,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {object[]}
+	 * @param {object[]}
 	 *
 	 * @returns {object[]|this}
 	 */
@@ -163,7 +163,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {object}
+	 * @param {object}
 	 *
 	 * @returns {object|this}
 	 */
@@ -181,7 +181,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {function}
+	 * @param {function}
 	 *
 	 * @returns {function|this}
 	 */
@@ -203,7 +203,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {string}
+	 * @param {string}
 	 *
 	 * @returns {string|this}
 	 */
@@ -220,7 +220,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {boolean}
+	 * @param {boolean}
 	 *
 	 * @returns {boolean|this}
 	 */
@@ -252,7 +252,7 @@ Object.assign(Carousel.prototype, {
 	 * @member module:Carousel
 	 * @instance
 	 *
-	 * @arg {Number} [extraRenderedItemsRatio]
+	 * @param {Number} [extraRenderedItemsRatio]
 	 *
 	 * @returns {Object|this}
 	 */

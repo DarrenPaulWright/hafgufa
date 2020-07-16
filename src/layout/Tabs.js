@@ -233,14 +233,14 @@ Object.assign(Tabs.prototype, {
 	 * @member module:Tabs
 	 * @instance
 	 *
-	 * @arg {Array}    [newTabs]
-	 * @arg {string}   [newTabs.id]
-	 * @arg {string}   [newTabs.title]
-	 * @arg {string}   [newTabs.icon]
-	 * @arg {string}   [newTabs.group]
-	 * @arg {function} [newTabs.content] - content is applied before onClick is called
-	 * @arg {function} [newTabs.onClick]
-	 * @arg {function} [newTabs.onRemove]
+	 * @param {Array}    [newTabs]
+	 * @param {string}   [newTabs.id]
+	 * @param {string}   [newTabs.title]
+	 * @param {string}   [newTabs.icon]
+	 * @param {string}   [newTabs.group]
+	 * @param {function} [newTabs.content] - content is applied before onClick is called
+	 * @param {function} [newTabs.onClick]
+	 * @param {function} [newTabs.onRemove]
 	 *
 	 * @returns {Array|this}
 	 */

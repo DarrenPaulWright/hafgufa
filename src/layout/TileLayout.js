@@ -157,7 +157,7 @@ const calculateColumns = Symbol();
  * @class TileLayout
  * @constructor
  *
- * @arg {Object} [settings]
+ * @param {Object} [settings]
  */
 export default class TileLayout extends Container {
 	constructor(settings = {}) {
@@ -800,7 +800,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {String} [newTileWidth]
+	 * @param {String} [newTileWidth]
 	 *
 	 * @returns {String|this}
 	 */
@@ -816,7 +816,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {String} [newTileMargin]
+	 * @param {String} [newTileMargin]
 	 *
 	 * @returns {String|this}
 	 */
@@ -832,7 +832,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {String} [columnAlign] - TILE_COLUMN_ALIGN
+	 * @param {String} [columnAlign] - TILE_COLUMN_ALIGN
 	 *
 	 * @returns {String|this}
 	 */
@@ -849,7 +849,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {number} [minColumns]
+	 * @param {number} [minColumns]
 	 *
 	 * @returns {number|this}
 	 */
@@ -866,7 +866,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {number} [maxColumns]
+	 * @param {number} [maxColumns]
 	 *
 	 * @returns {number|this}
 	 */
@@ -884,7 +884,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {Object} [tileControl]
+	 * @param {Object} [tileControl]
 	 *
 	 * @returns {Object|this}
 	 */
@@ -902,7 +902,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {Object} [tileDefaultSettings]
+	 * @param {Object} [tileDefaultSettings]
 	 *
 	 * @returns {Object|this}
 	 */
@@ -921,7 +921,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {Function} callback
+	 * @param {Function} callback
 	 *
 	 * @returns {Function|this}
 	 */
@@ -937,7 +937,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {Object[]} [tileData]
+	 * @param {Object[]} [tileData]
 	 *
 	 * @returns {Object[]|this}
 	 */
@@ -958,7 +958,7 @@ Object.assign(TileLayout.prototype, {
 	 * @member module:TileLayout
 	 * @instance
 	 *
-	 * @arg {Number} [newExtraRenderedItemsRatio]
+	 * @param {Number} [newExtraRenderedItemsRatio]
 	 *
 	 * @returns {Object|this}
 	 */

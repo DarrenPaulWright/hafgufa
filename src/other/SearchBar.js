@@ -34,7 +34,7 @@ const clearSearchBar = Symbol();
  * @module SearchBar
  * @constructor
  *
- * @arg {Object} settings                           -
+ * @param {Object} settings                           -
  */
 export default class SearchBar extends Control {
 	constructor(settings = {}) {
@@ -168,7 +168,7 @@ Object.assign(SearchBar.prototype, {
 	 * @method onChange
 	 * @member module:SearchBar
 	 * @instance
-	 * @arg {function} [callback]
+	 * @param {function} [callback]
 	 * @returns {queue}
 	 */
 	onChange: methodQueue(),

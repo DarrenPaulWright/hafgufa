@@ -20,7 +20,7 @@ export default (Base) => {
 		 * @instance
 		 * @chainable
 		 *
-		 * @arg {Function} [callback]
+		 * @param {Function} [callback]
 		 *
 		 * @returns {Function|this}
 		 */
@@ -39,7 +39,7 @@ export default (Base) => {
 		 * @instance
 		 * @chainable
 		 *
-		 * @arg {Function} [callback]
+		 * @param {Function} [callback]
 		 *
 		 * @returns {Function|this}
 		 */

@@ -79,14 +79,14 @@ const updateSelectState = Symbol();
  * @module Grid
  * @constructor
  *
- * @arg {Object}   settings                                     -
- * @arg {Boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
- * @arg {String} [settings.isVirtualized=true] - If set to false then all rows will be rendered and row heights can be variable.
+ * @param {Object}   settings                                     -
+ * @param {Boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
+ * @param {String} [settings.isVirtualized=true] - If set to false then all rows will be rendered and row heights can be variable.
  *
  *
  *
- * @arg {Object}   [settings.footer]                            -
- * @arg {String}   [settings.footer.countSuffix=items]          - What do the rows represent?
+ * @param {Object}   [settings.footer]                            -
+ * @param {String}   [settings.footer.countSuffix=items]          - What do the rows represent?
  */
 export default class Grid extends Control {
 	constructor(settings = {}) {
@@ -218,7 +218,7 @@ export default class Grid extends Control {
 	/**
 	 * Execute a callback when the grid is done rendering
 	 * @function whenDoneRendering
-	 * @arg {Function} callback
+	 * @param {Function} callback
 	 */
 	[whenDoneRendering](callback) {
 		const self = this;
@@ -331,8 +331,8 @@ export default class Grid extends Control {
 	/**
 	 * Execute a callback for all rows
 	 * @function eachChild
-	 * @arg   {Object}   item     - use groupedRows
-	 * @arg   {Function} callback
+	 * @param {Object}   item     - use groupedRows
+	 * @param {Function} callback
 	 * @returns {Boolean} - returns whatever the callback returns; return false in the callback to stop the callback
 	 *    from working on other children
 	 */
@@ -354,9 +354,9 @@ export default class Grid extends Control {
 	/**
 	 * Execute a callback on each group
 	 * @function eachGroup
-	 * @arg {Object}   item     - use groupedRows
-	 * @arg {Function} callback - provides the group, that groups children, and that groups nested depth
-	 * @arg {Number} [depth=0]     - returned in the callback, lets you know how deeply nested the row is
+	 * @param {Object}   item     - use groupedRows
+	 * @param {Function} callback - provides the group, that groups children, and that groups nested depth
+	 * @param {Number} [depth=0]     - returned in the callback, lets you know how deeply nested the row is
 	 */
 	[eachGroup](item, callback, depth) {
 		const self = this;
@@ -378,7 +378,7 @@ export default class Grid extends Control {
 	/**
 	 * Toggle the checked state of a group
 	 * @function selectGroup
-	 * @arg {Object} control
+	 * @param {Object} control
 	 */
 	[selectGroup](control) {
 		const self = this;
@@ -449,7 +449,7 @@ export default class Grid extends Control {
 	/**
 	 * Set the expanded state of a group
 	 * @function expandCollapseGroup
-	 * @arg {Object} control
+	 * @param {Object} control
 	 */
 	[expandCollapseGroup](control) {
 		const self = this;
@@ -472,7 +472,7 @@ export default class Grid extends Control {
 	/**
 	 * Collapse all open groups
 	 * @function expandCollapseAllGroups
-	 * @arg {Boolean} isCollapsed - true will collapse, false will expand
+	 * @param {Boolean} isCollapsed - true will collapse, false will expand
 	 */
 	[expandCollapseAllGroups](isCollapsed) {
 		const self = this;
@@ -486,8 +486,8 @@ export default class Grid extends Control {
 	/**
 	 * Save the collapsed state of a group
 	 * @function saveCollapsedState
-	 * @arg {Object} group - must be a pointer to an actual group
-	 * @arg {boolean} isCollapsed
+	 * @param {Object} group - must be a pointer to an actual group
+	 * @param {boolean} isCollapsed
 	 */
 	[saveCollapsedState](group, isCollapsed) {
 		const self = this;
@@ -507,7 +507,7 @@ export default class Grid extends Control {
 	/**
 	 * Get the collapsed state of a group
 	 * @function getCollapsedState
-	 * @arg {Object} group - must be a pointer to an actual group
+	 * @param {Object} group - must be a pointer to an actual group
 	 */
 	[getCollapsedState](group) {
 		return !this[CURRENT_EXPANDED_GROUPS].includes(group.title);
@@ -516,7 +516,7 @@ export default class Grid extends Control {
 	/**
 	 * Count all the children of a group
 	 * @function getChildrenCount
-	 * @arg {Object} group - must be a pointer to an actual group
+	 * @param {Object} group - must be a pointer to an actual group
 	 */
 	[getChildrenCount](group) {
 		const self = this;
@@ -543,7 +543,7 @@ export default class Grid extends Control {
 	/**
 	 * Count all the groups within a group
 	 * @function getGroupCount
-	 * @arg {Object} group - must be a pointer to an actual group
+	 * @param {Object} group - must be a pointer to an actual group
 	 */
 	[getGroupCount](group) {
 		let output = 0;
@@ -562,7 +562,7 @@ export default class Grid extends Control {
 	/**
 	 * Find the containing group of the provided row and tell the view to expand that group
 	 * @function expandGroupOfRow
-	 * @arg {Object} row
+	 * @param {Object} row
 	 */
 	[expandGroupOfRow](row) {
 		const self = this;
@@ -593,8 +593,8 @@ export default class Grid extends Control {
 	/**
 	 * Filter rows from each group
 	 * @function filter
-	 * @arg {String} value - filter string
-	 * @arg {Number} columnId
+	 * @param {String} value - filter string
+	 * @param {Number} columnId
 	 */
 	[filter](value, columnId) {
 		const self = this;
@@ -702,8 +702,8 @@ export default class Grid extends Control {
 	/**
 	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#rows}
 	 * @function sort
-	 * @arg   {String}   direction  - 'asc' or 'desc'
-	 * @arg   {Number}   columnNum  - column index of the column to be sorted
+	 * @param {String}   direction  - 'asc' or 'desc'
+	 * @param {Number}   columnNum  - column index of the column to be sorted
 	 */
 	[sort](direction, columnNum) {
 		const self = this;
@@ -815,9 +815,9 @@ export default class Grid extends Control {
 	/**
 	 * Get data to populate the filter UI controls
 	 * @function getFilterData
-	 * @arg   {String}   filterType
-	 * @arg   {number}   columnNum
-	 * @arg   {function}   callback
+	 * @param {String}   filterType
+	 * @param {number}   columnNum
+	 * @param {function}   callback
 	 */
 	[getFilterData](filterType, columnNum, callback) {
 		const self = this;
@@ -896,7 +896,7 @@ export default class Grid extends Control {
 	 * @method getRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches a row
+	 * @param {Object} search - An object that matches a row
 	 * @return {Object}
 	 */
 	getRow(search) {
@@ -908,24 +908,24 @@ export default class Grid extends Control {
 	 * @method addRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object}   rowData
-	 * @arg {Object[]} rowData.cells
-	 * @arg {String}   [rowData.cells[].text]
-	 * @arg {String}   [rowData.cells[].src]        - use this if the column type is image
-	 * @arg {String}   [rowData.cells[].icon]       - an icon to include with a text column type
-	 * @arg {Boolean}  [rowData.cells[].link]       - path to download this image or the file that it represents
+	 * @param {Object}   rowData
+	 * @param {Object[]} rowData.cells
+	 * @param {String}   [rowData.cells[].text]
+	 * @param {String}   [rowData.cells[].src]        - use this if the column type is image
+	 * @param {String}   [rowData.cells[].icon]       - an icon to include with a text column type
+	 * @param {Boolean}  [rowData.cells[].link]       - path to download this image or the file that it represents
 	 *    (creates clickable image)
-	 * @arg {String}   [rowData.cells[].classes]    - A space separated list of css classes to apply to this cell
-	 * @arg {String}   [rowData.cells[].width]
-	 * @arg {String}   [rowData.cells[].margin]
+	 * @param {String}   [rowData.cells[].classes]    - A space separated list of css classes to apply to this cell
+	 * @param {String}   [rowData.cells[].width]
+	 * @param {String}   [rowData.cells[].margin]
 	 *    is applied to this cell
-	 * @arg {Boolean}  [rowData.cells[].validationState] - Must be in VALIDATION_STATES
-	 * @arg {String}   [rowData.classes]            - A space separated list of cssclasses to apply to this row
-	 * @arg {Boolean}  [rowData.disabled]
+	 * @param {Boolean}  [rowData.cells[].validationState] - Must be in VALIDATION_STATES
+	 * @param {String}   [rowData.classes]            - A space separated list of cssclasses to apply to this row
+	 * @param {Boolean}  [rowData.disabled]
 	 *    is applied to this row
-	 * @arg {Boolean}  [rowData.validationState]    - Must be in VALIDATION_STATES
-	 * @arg {Object[]} [rowData.buttons]
-	 * @arg {String}   [rowData.buttons[].disabled] - Disables the corresponding button on this row
+	 * @param {Boolean}  [rowData.validationState]    - Must be in VALIDATION_STATES
+	 * @param {Object[]} [rowData.buttons]
+	 * @param {String}   [rowData.buttons[].disabled] - Disables the corresponding button on this row
 	 */
 	addRow(rowData) {
 		const self = this;
@@ -950,7 +950,7 @@ export default class Grid extends Control {
 	 * @method addRows
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object[]} newRows - Array of rowData objects. Same data structure as addRow.
+	 * @param {Object[]} newRows - Array of rowData objects. Same data structure as addRow.
 	 */
 	addRows(newRows) {
 		if (newRows) {
@@ -963,7 +963,7 @@ export default class Grid extends Control {
 	 * @method removeRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches a row
+	 * @param {Object} search - An object that matches a row
 	 */
 	removeRow(search) {
 		this[removeRow](this[ROWS].findIndex(search));
@@ -974,7 +974,7 @@ export default class Grid extends Control {
 	 * @method removeRows
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} search - An object that matches rows
+	 * @param {Object} search - An object that matches rows
 	 */
 	removeRows(search) {
 		const self = this;
@@ -990,7 +990,7 @@ export default class Grid extends Control {
 	 * @method removeRows
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object[]} newRows - An array of row objects.
+	 * @param {Object[]} newRows - An array of row objects.
 	 */
 	rows(newRows) {
 		const self = this;
@@ -1028,9 +1028,9 @@ export default class Grid extends Control {
 	 * @method updateCellData
 	 * @member module:Grid
 	 * @instance
-	 * @arg   {String|Number} editId    - id of the row being updated
-	 * @arg   {Number} columnIndex - column index of the cell being updated
-	 * @arg   {String|Number|Object} newValue    - the new value to save
+	 * @param {String|Number} editId    - id of the row being updated
+	 * @param {Number} columnIndex - column index of the cell being updated
+	 * @param {String|Number|Object} newValue    - the new value to save
 	 */
 	updateCellData(id, columnIndex, newValue) {
 		const self = this;
@@ -1059,8 +1059,8 @@ export default class Grid extends Control {
 	 * @method updateRowData
 	 * @member module:Grid
 	 * @instance
-	 * @arg   {String|Number} id
-	 * @arg   {object} newData
+	 * @param {String|Number} id
+	 * @param {object} newData
 	 */
 	updateRowData(id, newData) {
 		const self = this;
@@ -1121,9 +1121,9 @@ export default class Grid extends Control {
 	 * @method selectRow
 	 * @member module:Grid
 	 * @instance
-	 * @arg {String} id
-	 * @arg {boolean} isSelected
-	 * @arg {boolean} skipRender
+	 * @param {String} id
+	 * @param {boolean} isSelected
+	 * @param {boolean} skipRender
 	 */
 	selectRow(id, isSelected, skipRender, event) {
 		const self = this;
@@ -1220,7 +1220,7 @@ export default class Grid extends Control {
 	 * @method focus
 	 * @member module:Grid
 	 * @instance
-	 * @arg {Object} focusObject - must be an object that matches the row data in some way
+	 * @param {Object} focusObject - must be an object that matches the row data in some way
 	 */
 	focus(focusObject) {
 		const self = this;
@@ -1371,24 +1371,24 @@ Object.assign(Grid.prototype, {
 	 * @method columns
 	 * @memberOf Grid
 	 *
-	 * @arg {Object[]} columns
-	 * @arg {String} columns[].type - Available types: text, email, int, date, time, datetime, actions, image, custom.
-	 * @arg {String} [columns[].size="1*"] - May be a fixed width like '3rem' or a percent like '30%'. Percents are calculated from the remaining width after all the fixed width columns are calculated.
-	 * @arg {String} [columns[].align] - See Grid.CELL_ALIGNMENT
-	 * @arg {String} [columns[].title] - Displayed title for the column.
-	 * @arg {Boolean} [columns[].canSort=false] - 'True' will make the header clickable, draw the arrows indicating that this column is sortable, and when clicked will sort based on the column type.
-	 * @arg {String} [columns[].defaultSort] - 'asc' or 'desc': only use this on the column that should be sorted when the grid first loads.
-	 * @arg {Function} [columns[].sortFunctionAsc] - Override for the 'asc' sort function. If "type" is "custom" and canSort is true, then this must be provided.
-	 * @arg {Function} [columns[].sortFunctionDesc] - Override for the 'desc' sort function. If "type" is "custom" and canSort is true, then this must be provided.
-	 * @arg {Boolean} [columns[].canFilter=false] - 'True' will add a filter control to the header that automatically filters when the user interacts with it.
-	 * @arg {String} [columns[].filterType] - Available types: dropdown, autoComplete, date, custom.
-	 * @arg {Function} [columns[].canHide=false] - If true then the user can hide this column via a context menu
-	 * @arg {Function} [columns[].isHidden=false] - If true then hide the column unless the user selects it from the context menu
-	 * @arg {String} [columns[].minWidth=5rem]
-	 * @arg {Object[]} [columns[].buttons] - Only for column type 'actions'. These buttons will appear on every row.
-	 * @arg {String}   columns[].buttons[].src - Applied to the src attribute of the image
-	 * @arg {Function} columns[].buttons[].onClick - Called on click
-	 * @arg {String}   [columns[].buttons[].title] - Applied to title and alt attributes
+	 * @param {Object[]} columns
+	 * @param {String} columns[].type - Available types: text, email, int, date, time, datetime, actions, image, custom.
+	 * @param {String} [columns[].size="1*"] - May be a fixed width like '3rem' or a percent like '30%'. Percents are calculated from the remaining width after all the fixed width columns are calculated.
+	 * @param {String} [columns[].align] - See Grid.CELL_ALIGNMENT
+	 * @param {String} [columns[].title] - Displayed title for the column.
+	 * @param {Boolean} [columns[].canSort=false] - 'True' will make the header clickable, draw the arrows indicating that this column is sortable, and when clicked will sort based on the column type.
+	 * @param {String} [columns[].defaultSort] - 'asc' or 'desc': only use this on the column that should be sorted when the grid first loads.
+	 * @param {Function} [columns[].sortFunctionAsc] - Override for the 'asc' sort function. If "type" is "custom" and canSort is true, then this must be provided.
+	 * @param {Function} [columns[].sortFunctionDesc] - Override for the 'desc' sort function. If "type" is "custom" and canSort is true, then this must be provided.
+	 * @param {Boolean} [columns[].canFilter=false] - 'True' will add a filter control to the header that automatically filters when the user interacts with it.
+	 * @param {String} [columns[].filterType] - Available types: dropdown, autoComplete, date, custom.
+	 * @param {Function} [columns[].canHide=false] - If true then the user can hide this column via a context menu
+	 * @param {Function} [columns[].isHidden=false] - If true then hide the column unless the user selects it from the context menu
+	 * @param {String} [columns[].minWidth=5rem]
+	 * @param {Object[]} [columns[].buttons] - Only for column type 'actions'. These buttons will appear on every row.
+	 * @param {String}   columns[].buttons[].src - Applied to the src attribute of the image
+	 * @param {Function} columns[].buttons[].onClick - Called on click
+	 * @param {String}   [columns[].buttons[].title] - Applied to title and alt attributes
 	 */
 	// TODO: enforce inidividual column data via a Schema
 	columns: methodArray({
@@ -1445,24 +1445,24 @@ Object.assign(Grid.prototype, {
 	 * @method groupBy
 	 * @memberOf Grid
 	 *
-	 * @arg {Object[]} [groupBy]                           -
-	 * @arg {String}   [groupBy[].groupItemData]           - Data associated with the group.
-	 * @arg {String}   [groupBy[].property=Title]          - Corresponds to a property attached to each row.
-	 * @arg {String}   [groupBy[].footerSuffix=Categories] - A title to use in the footer for the count of
+	 * @param {Object[]} [groupBy]                           -
+	 * @param {String}   [groupBy[].groupItemData]           - Data associated with the group.
+	 * @param {String}   [groupBy[].property=Title]          - Corresponds to a property attached to each row.
+	 * @param {String}   [groupBy[].footerSuffix=Categories] - A title to use in the footer for the count of
 	 *    groups.
-	 * @arg {String}   [groupBy[].type]                    - May be: text, int, date.
-	 * @arg {String}   [groupBy[].sort]                    - If 'none' then don't sort this group
-	 * @arg {Function} [groupBy[].image]                   - The function must return a string of the url to an
+	 * @param {String}   [groupBy[].type]                    - May be: text, int, date.
+	 * @param {String}   [groupBy[].sort]                    - If 'none' then don't sort this group
+	 * @param {Function} [groupBy[].image]                   - The function must return a string of the url to an
 	 *    image or falsy
-	 * @arg {Function} [groupBy[].isCollapsed]             - The function must return a Boolean
-	 * @arg {Object[]} [groupBy[].buttons]                 - Optional buttons to show on the right hand side of
+	 * @param {Function} [groupBy[].isCollapsed]             - The function must return a Boolean
+	 * @param {Object[]} [groupBy[].buttons]                 - Optional buttons to show on the right hand side of
 	 *    the group header.
-	 * @arg {String}   groupBy[].buttons.image             - URL for an image
-	 * @arg {String}   [groupBy[].buttons.title]           - String applied to the "alt" and "title" attributes
+	 * @param {String}   groupBy[].buttons.image             - URL for an image
+	 * @param {String}   [groupBy[].buttons.title]           - String applied to the "alt" and "title" attributes
 	 *    of the button
-	 * @arg {String}   [groupBy[].buttons.classes]         - A space separated list of css classes to apply to
+	 * @param {String}   [groupBy[].buttons.classes]         - A space separated list of css classes to apply to
 	 *    this button
-	 * @arg {Function} [groupBy[].buttons.onClick]         - A function to be called when the button is clicked
+	 * @param {Function} [groupBy[].buttons.onClick]         - A function to be called when the button is clicked
 	 */
 	groupBy: methodArray({
 		set(groupBy) {

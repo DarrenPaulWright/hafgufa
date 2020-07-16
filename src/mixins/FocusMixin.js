@@ -15,7 +15,7 @@ const setBlurEvent = Symbol();
  * @mixin FocusMixin
  * @constructor
  *
- * @arg {class} [Base]
+ * @param {class} [Base]
  */
 export default (Base) => {
 	class FocusMixin extends Base {
@@ -197,7 +197,7 @@ export default (Base) => {
 		 * @method onFocus
 		 * @member module:FocusMixin
 		 * @instance
-		 * @arg {Function} callback
+		 * @param {Function} callback
 		 * @returns {queue}
 		 */
 		onFocus: methodQueue({
@@ -209,7 +209,7 @@ export default (Base) => {
 		 * @method onBlur
 		 * @member module:FocusMixin
 		 * @instance
-		 * @arg {Function} callback
+		 * @param {Function} callback
 		 * @returns {queue}
 		 */
 		onBlur: methodQueue({

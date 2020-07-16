@@ -6,7 +6,7 @@ import { isFloat } from 'type-enforcer-ui';
  * @function accuracy
  * @static
  *
- * @arg {Number} number
+ * @param {Number} number
  */
 export default (number) => {
 	let e = 1;

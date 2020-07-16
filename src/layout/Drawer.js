@@ -57,7 +57,7 @@ const layout = Symbol();
  * @extends Container
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Drawer extends Container {
 	constructor(settings = {}) {
@@ -263,7 +263,7 @@ Object.assign(Drawer.prototype, {
 	 * @member class:Drawer
 	 * @instance
 	 *
-	 * @arg {string} [side] - Must be a dockPoint
+	 * @param {string} [side] - Must be a dockPoint
 	 *
 	 * @returns {string|this}
 	 */

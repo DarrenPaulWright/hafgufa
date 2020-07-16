@@ -90,7 +90,7 @@ export default (Base) => {
 		 * @member module:OnClickAddon
 		 * @instance
 		 *
-		 * @arg {string|element} content
+		 * @param {string|element} content
 		 *
 		 * @returns {string|element|this}
 		 */
@@ -118,7 +118,7 @@ export default (Base) => {
 		 * @method onClick
 		 * @member module:OnClickAddon
 		 * @instance
-		 * @arg {Function} [callback]
+		 * @param {Function} [callback]
 		 * @returns {Function|this}
 		 */
 		onClick: methodFunction({

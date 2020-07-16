@@ -28,7 +28,7 @@ export default (Base) => {
 		 * @member module:IsWorkingAddon
 		 * @instance
 		 *
-		 * @arg   {boolean} [isWorking]
+		 * @param {boolean} [isWorking]
 		 *
 		 * @returns {boolean|this}
 		 */
@@ -63,7 +63,7 @@ export default (Base) => {
 		 * @member module:IsWorkingAddon
 		 * @instance
 		 *
-		 * @arg   {string} [isWorkingLabel]
+		 * @param {string} [isWorkingLabel]
 		 *
 		 * @returns {string|this}
 		 */

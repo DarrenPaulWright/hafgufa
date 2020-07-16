@@ -79,7 +79,7 @@ const keyDownEvent = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
+ * @param {Object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
  */
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
@@ -253,7 +253,7 @@ Object.assign(Heading.prototype, {
 	 * @method title
 	 * @member module:Heading
 	 * @instance
-	 * @arg {String} [title]
+	 * @param {String} [title]
 	 * @returns {String|this}
 	 */
 	title: methodString({
@@ -269,7 +269,7 @@ Object.assign(Heading.prototype, {
 	 * @member module:Heading
 	 * @instance
 	 *
-	 * @arg {String} [subTitle]
+	 * @param {String} [subTitle]
 	 *
 	 * @returns {String|this}
 	 */
@@ -302,7 +302,7 @@ Object.assign(Heading.prototype, {
 	 * @member module:Heading
 	 * @instance
 	 *
-	 * @arg {String} [error]
+	 * @param {String} [error]
 	 *
 	 * @returns {String|this}
 	 */
@@ -333,7 +333,7 @@ Object.assign(Heading.prototype, {
 	 * @method icon
 	 * @member module:Heading
 	 * @instance
-	 * @arg {String} icon
+	 * @param {String} icon
 	 * @returns {String|this}
 	 */
 	icon: methodString({
@@ -364,7 +364,7 @@ Object.assign(Heading.prototype, {
 	 * @method iconTooltip
 	 * @member module:Heading
 	 * @instance
-	 * @arg {String} iconTooltip
+	 * @param {String} iconTooltip
 	 * @returns {String|this}
 	 */
 	iconTooltip: methodString({
@@ -380,7 +380,7 @@ Object.assign(Heading.prototype, {
 	 * @method image
 	 * @member module:Heading
 	 * @instance
-	 * @arg {String} image
+	 * @param {String} image
 	 * @returns {String|this}
 	 */
 	image: methodString({
@@ -409,7 +409,7 @@ Object.assign(Heading.prototype, {
 	 * @method buttons
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Array} [buttons] - See Toolbar.addButton for settings of each item in array.
+	 * @param {Array} [buttons] - See Toolbar.addButton for settings of each item in array.
 	 * @returns {Array|this}
 	 */
 	buttons: methodArray({
@@ -460,7 +460,7 @@ Object.assign(Heading.prototype, {
 	 * @method isSelectable
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} isSelectable
+	 * @param {Boolean} isSelectable
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: methodBoolean({
@@ -479,7 +479,7 @@ Object.assign(Heading.prototype, {
 	 * @method isSelected
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} isSelected
+	 * @param {Boolean} isSelected
 	 * @returns {Boolean|this}
 	 */
 	isSelected: methodBoolean({
@@ -499,7 +499,7 @@ Object.assign(Heading.prototype, {
 	 * @method isIndeterminate
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} isIndeterminate
+	 * @param {Boolean} isIndeterminate
 	 * @returns {Boolean|this}
 	 */
 	isIndeterminate: methodBoolean({
@@ -518,7 +518,7 @@ Object.assign(Heading.prototype, {
 	 * @method isExpandable
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} isExpandable
+	 * @param {Boolean} isExpandable
 	 * @returns {Boolean|this}
 	 */
 	isExpandable: methodBoolean({
@@ -535,7 +535,7 @@ Object.assign(Heading.prototype, {
 	 * @method isExpanded
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} isExpanded
+	 * @param {Boolean} isExpanded
 	 * @returns {Boolean|this}
 	 */
 	isExpanded: methodBoolean({
@@ -550,7 +550,7 @@ Object.assign(Heading.prototype, {
 	 * @method shouldMainClickExpand
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} shouldMainClickExpand
+	 * @param {Boolean} shouldMainClickExpand
 	 * @returns {Boolean|this}
 	 */
 	shouldMainClickExpand: methodBoolean(),
@@ -560,7 +560,7 @@ Object.assign(Heading.prototype, {
 	 * @method showExpander
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} showExpander
+	 * @param {Boolean} showExpander
 	 * @returns {Boolean|this}
 	 */
 	showExpander: methodBoolean({
@@ -591,7 +591,7 @@ Object.assign(Heading.prototype, {
 	 * @method showCheckbox
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Boolean} showCheckbox
+	 * @param {Boolean} showCheckbox
 	 * @returns {Boolean|this}
 	 */
 	showCheckbox: methodBoolean({
@@ -623,7 +623,7 @@ Object.assign(Heading.prototype, {
 	 * @method onSelect
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Function} onSelect
+	 * @param {Function} onSelect
 	 * @returns {Function|this}
 	 */
 	onSelect: methodQueue({
@@ -637,7 +637,7 @@ Object.assign(Heading.prototype, {
 	 * @method onExpand
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Function} onExpand
+	 * @param {Function} onExpand
 	 * @returns {Function|this}
 	 */
 	onExpand: methodFunction({
@@ -649,7 +649,7 @@ Object.assign(Heading.prototype, {
 	 * @method data
 	 * @member module:Heading
 	 * @instance
-	 * @arg {Object} data
+	 * @param {Object} data
 	 * @returns {Object|this}
 	 */
 	data: methodObject({

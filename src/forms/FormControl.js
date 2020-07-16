@@ -27,8 +27,8 @@ const ON_CHANGE = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} type
- * @arg {Object} settings
+ * @param {Object} type
+ * @param {Object} settings
  */
 export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)) {
 	constructor(settings = {}) {
@@ -106,7 +106,7 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @arg {Object} updateObject
+	 * @param {Object} updateObject
 	 */
 	updateRelationship(updateObject) {
 		if (arguments.length) {
@@ -142,7 +142,7 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @arg   {Boolean} [isRequired]
+	 * @param {Boolean} [isRequired]
 	 *
 	 * @returns {Boolean|this}
 	 */
@@ -179,7 +179,7 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @arg   {int} newDelay - Milliseconds
+	 * @param {int} newDelay - Milliseconds
 	 *
 	 * @returns {int|this}
 	 */
@@ -216,7 +216,7 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @arg {function} [callback]
+	 * @param {function} [callback]
 	 *
 	 * @returns {queue}
 	 */

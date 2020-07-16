@@ -45,7 +45,7 @@ const removeTooltip = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object}   settings - Accepts all control settings plus:
+ * @param {Object}   settings - Accepts all control settings plus:
  */
 export default class GridCell extends Control {
 	constructor(settings = {}) {
@@ -192,7 +192,7 @@ Object.assign(GridCell.prototype, {
 	 * @method isChild
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Object} [data]
+	 * @param {Object} [data]
 	 * @returns {Object|this}
 	 */
 	rowData: methodObject({
@@ -203,7 +203,7 @@ Object.assign(GridCell.prototype, {
 	 * @method dataType
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {String} [dataType]
+	 * @param {String} [dataType]
 	 * @returns {String|this}
 	 */
 	dataType: methodEnum({
@@ -221,7 +221,7 @@ Object.assign(GridCell.prototype, {
 	 * @method content
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Object} [content]
+	 * @param {Object} [content]
 	 * @returns {Object|this}
 	 */
 	content: methodObject({
@@ -319,7 +319,7 @@ Object.assign(GridCell.prototype, {
 	 * @method isSelected
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Boolean} isSelected
+	 * @param {Boolean} isSelected
 	 * @returns {Boolean|this}
 	 */
 	isSelected: methodBoolean({
@@ -336,7 +336,7 @@ Object.assign(GridCell.prototype, {
 	 * @method wordWrap
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Boolean} newCanWordWrap
+	 * @param {Boolean} newCanWordWrap
 	 * @returns {Boolean|this}
 	 */
 	wordWrap: methodBoolean({
@@ -349,7 +349,7 @@ Object.assign(GridCell.prototype, {
 	 * @method textAlign
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Boolean} newTextAlign
+	 * @param {Boolean} newTextAlign
 	 * @returns {Boolean|this}
 	 */
 	textAlign: methodEnum({
@@ -368,7 +368,7 @@ Object.assign(GridCell.prototype, {
 	 * @method isEnabled
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {Boolean} newIsEnabled
+	 * @param {Boolean} newIsEnabled
 	 * @returns {Boolean|this}
 	 */
 	isEnabled: methodBoolean({
@@ -379,7 +379,7 @@ Object.assign(GridCell.prototype, {
 	 * @method tooltip
 	 * @member module:GridCell
 	 * @instance
-	 * @arg {String} newTooltip
+	 * @param {String} newTooltip
 	 * @returns {String|this}
 	 */
 	tooltip: methodString({

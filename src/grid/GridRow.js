@@ -46,7 +46,7 @@ const refresh = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings - Accepts all control settings plus:
+ * @param {Object} settings - Accepts all control settings plus:
  */
 export default class GridRow extends Control {
 	constructor(settings = {}) {
@@ -259,7 +259,7 @@ Object.assign(GridRow.prototype, {
 	 * @method updateWidth
 	 * @member module:GridRow
 	 * @instance
-	 * @arg {Number} availableWidth
+	 * @param {Number} availableWidth
 	 * @returns {this}
 	 */
 	updateWidth(availableWidth) {
@@ -283,7 +283,7 @@ Object.assign(GridRow.prototype, {
 	 * @method rowData
 	 * @member module:GridRow
 	 * @instance
-	 * @arg {Boolean} newData
+	 * @param {Boolean} newData
 	 * @returns {Boolean|this}
 	 */
 	rowData: methodObject({
@@ -328,7 +328,7 @@ Object.assign(GridRow.prototype, {
 	 * @method columns
 	 * @member module:GridRow
 	 * @instance
-	 * @arg {Object[]} newColumns
+	 * @param {Object[]} newColumns
 	 * @returns {this}
 	 */
 	columns: methodArray({
@@ -339,7 +339,7 @@ Object.assign(GridRow.prototype, {
 	 * @method isSelected
 	 * @member module:GridRow
 	 * @instance
-	 * @arg {Boolean} newIsSelected
+	 * @param {Boolean} newIsSelected
 	 * @returns {Boolean|this}
 	 */
 	isSelected: methodBoolean({
@@ -356,7 +356,7 @@ Object.assign(GridRow.prototype, {
 	 * @method isIndeterminate
 	 * @member module:GridRow
 	 * @instance
-	 * @arg {Boolean} newIsSelected
+	 * @param {Boolean} newIsSelected
 	 * @returns {Boolean|this}
 	 */
 	isIndeterminate: methodBoolean({

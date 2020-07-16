@@ -32,7 +32,7 @@ const ICON_POSITIONS = new Enum({
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
 	constructor(settings = {}) {
@@ -63,7 +63,7 @@ Object.assign(Button.prototype, {
 	 * @method value
 	 * @member module:Button
 	 * @instance
-	 * @arg {anything} [value]
+	 * @param {anything} [value]
 	 * @returns {*|this}
 	 */
 	value: methodAny(),
@@ -73,7 +73,7 @@ Object.assign(Button.prototype, {
 	 * @method label
 	 * @member module:Button
 	 * @instance
-	 * @arg {String} newLabel - A none-HTML string
+	 * @param {String} newLabel - A none-HTML string
 	 * @returns {String|this}
 	 */
 	label: methodString({
@@ -104,7 +104,7 @@ Object.assign(Button.prototype, {
 	 * @method alt
 	 * @member module:Button
 	 * @instance
-	 * @arg {String} newTitle - A none-HTML string
+	 * @param {String} newTitle - A none-HTML string
 	 * @returns {this}
 	 */
 	alt: methodString({
@@ -124,7 +124,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @arg {String} newSrc - URL for an image.
+	 * @param {String} newSrc - URL for an image.
 	 *
 	 * @returns {String|this}
 	 */
@@ -166,7 +166,7 @@ Object.assign(Button.prototype, {
 	 * @method iconSize
 	 * @member module:Button
 	 * @instance
-	 * @arg {String} [iconSize]
+	 * @param {String} [iconSize]
 	 * @returns {String|this}
 	 */
 	iconSize: methodEnum({
@@ -183,7 +183,7 @@ Object.assign(Button.prototype, {
 	 * @method iconPosition
 	 * @member module:Button
 	 * @instance
-	 * @arg {String} [iconPosition]
+	 * @param {String} [iconPosition]
 	 * @returns {String|this}
 	 */
 	iconPosition: methodEnum({
@@ -206,7 +206,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @arg {String} newSrc - URL for an image.
+	 * @param {String} newSrc - URL for an image.
 	 *
 	 * @returns {String|this}
 	 */
@@ -245,7 +245,7 @@ Object.assign(Button.prototype, {
 	 * @method isSelectable
 	 * @member module:Button
 	 * @instance
-	 * @arg {Boolean} [newisSelectable]
+	 * @param {Boolean} [newisSelectable]
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: methodBoolean({
@@ -264,7 +264,7 @@ Object.assign(Button.prototype, {
 	 * @member module:Button
 	 * @instance
 	 *
-	 * @arg {Boolean} [newisSelected]
+	 * @param {Boolean} [newisSelected]
 	 *
 	 * @returns {Boolean|this}
 	 */

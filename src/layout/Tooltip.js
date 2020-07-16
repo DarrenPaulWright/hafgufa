@@ -15,15 +15,15 @@ const POPUP = Symbol();
  * @module Tooltip
  * @constructor
  *
- * @arg {Object}    settings
- * @arg {String}    settings.anchor
- * @arg {DockPoint} settings.anchorDockPoint
- * @arg {DockPoint} settings.tooltipDockPoint
- * @arg {String}    settings.content
- * @arg {String}    [settings.title]
- * @arg {String}    [settings.classes]
- * @arg {String}    [settings.maxWidth]
- * @arg {Number}    [settings.delay=0.2] - Number of seconds before showing the tooltip. If remove is called before
+ * @param {Object}    settings
+ * @param {String}    settings.anchor
+ * @param {DockPoint} settings.anchorDockPoint
+ * @param {DockPoint} settings.tooltipDockPoint
+ * @param {String}    settings.content
+ * @param {String}    [settings.title]
+ * @param {String}    [settings.classes]
+ * @param {String}    [settings.maxWidth]
+ * @param {Number}    [settings.delay=0.2] - Number of seconds before showing the tooltip. If remove is called before
  *    the delay is done then the popup will never be built.
  */
 export default class Tooltip extends DelayedRenderMixin(Removable) {

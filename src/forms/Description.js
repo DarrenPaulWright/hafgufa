@@ -14,9 +14,9 @@ const COLUMNS_CLASS = 'columns';
  * @extends FormControl
  * @constructor
  *
- * @arg {Object}  settings                    - Accepts all control and FormControl settings plus:
- * @arg {String}  [settings.description]      - The default description to display
- * @arg {Number}  [settings.textWidth]        - The width of the description text (not the control width)
+ * @param {Object}  settings                    - Accepts all control and FormControl settings plus:
+ * @param {String}  [settings.description]      - The default description to display
+ * @param {Number}  [settings.textWidth]        - The width of the description text (not the control width)
  */
 export default class Description extends FormControl {
 	constructor(settings = {}) {
@@ -36,7 +36,7 @@ Object.assign(Description.prototype, {
 	 * @method value
 	 * @member module:Description
 	 * @instance
-	 * @arg {String} [value]
+	 * @param {String} [value]
 	 * @returns {String|this}
 	 */
 	value: methodString({
@@ -49,7 +49,7 @@ Object.assign(Description.prototype, {
 	 * @method textWidth
 	 * @member module:Description
 	 * @instance
-	 * @arg {String} [newTextWidth]
+	 * @param {String} [newTextWidth]
 	 * @returns {String|this}
 	 */
 	textWidth: methodString({
@@ -63,7 +63,7 @@ Object.assign(Description.prototype, {
 	 * @method align
 	 * @member module:Description
 	 * @instance
-	 * @arg {String} [newAlign] - Applys directly to the css property text-align.
+	 * @param {String} [newAlign] - Applys directly to the css property text-align.
 	 * @returns {String|this}
 	 */
 	align: methodString({
@@ -78,7 +78,7 @@ Object.assign(Description.prototype, {
 	 * @member module:Description
 	 * @instance
 	 *
-	 * @arg {boolean} [isColumns]
+	 * @param {boolean} [isColumns]
 	 *
 	 * @returns {boolean|this}
 	 */

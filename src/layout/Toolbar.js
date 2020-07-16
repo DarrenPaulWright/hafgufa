@@ -17,7 +17,7 @@ const getButton = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Toolbar extends Control {
 	constructor(settings = {}) {

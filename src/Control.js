@@ -112,7 +112,7 @@ const resizeContainer = Symbol();
  * @extends Removable
  * @constructor
  *
- * @arg {Object} settings - An object where keys are methods and values are arguments.
+ * @param {Object} settings - An object where keys are methods and values are arguments.
  */
 export default class Control extends Removable {
 	constructor(settings = {}) {
@@ -212,7 +212,7 @@ export default class Control extends Removable {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [type]
+	 * @param {String} [type]
 	 *
 	 * @returns {String|this}
 	 */
@@ -249,7 +249,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String}  [newContainer]
+	 * @param {String}  [newContainer]
 	 *
 	 * @returns {Object|this}
 	 */
@@ -329,7 +329,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newId] - A unique id
+	 * @param {String} [newId] - A unique id
 	 *
 	 * @returns {String|this}
 	 */
@@ -353,7 +353,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newIdSuffix]
+	 * @param {String} [newIdSuffix]
 	 *
 	 * @returns {String|this}
 	 */
@@ -368,8 +368,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} attribute - The attribute to get or set
-	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
+	 * @param {String} attribute - The attribute to get or set
+	 * @param {String} [value]  - If provided then set this as the value of the property, if not provided then return
 	 *    the attribute's value.
 	 */
 	attr: methodKeyValue({
@@ -393,8 +393,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} property - The style property to get or set
-	 * @arg {String} [value]  - If provided then set this as the value of the property, if not provided then return
+	 * @param {String} property - The style property to get or set
+	 * @param {String} [value]  - If provided then set this as the value of the property, if not provided then return
 	 *    the computed style.
 	 */
 	css: methodKeyValue({
@@ -417,7 +417,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [className] - A space separated list of css classes
+	 * @param {String} [className] - A space separated list of css classes
 	 *
 	 * @returns {this}
 	 */
@@ -434,7 +434,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [className] - A space separated list of css classes
+	 * @param {String} [className] - A space separated list of css classes
 	 *
 	 * @returns {this}
 	 */
@@ -451,8 +451,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String}  [classes]    - A space separated list of css classes
-	 * @arg {Boolean} [performAdd] - If true then add the classes, if false then remove the classes
+	 * @param {String}  [classes]    - A space separated list of css classes
+	 * @param {Boolean} [performAdd] - If true then add the classes, if false then remove the classes
 	 *
 	 * @returns {this}
 	 */
@@ -479,7 +479,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newPadding]
+	 * @param {String} [newPadding]
 	 *
 	 * @returns {String|this}
 	 */
@@ -497,7 +497,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} [newMargin]
+	 * @param {String} [newMargin]
 	 *
 	 * @returns {String|this}
 	 */
@@ -515,7 +515,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [minWidth] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [minWidth] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -533,7 +533,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [width] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [width] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -563,7 +563,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [maxWidth] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [maxWidth] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -581,7 +581,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [newMinHeight] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [newMinHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -599,7 +599,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [newHeight] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [newHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -629,7 +629,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String|CssSize} [newMaxHeight] - Must be a string that parses as valid css.
+	 * @param {String|CssSize} [newMaxHeight] - Must be a string that parses as valid css.
 	 *
 	 * @returns {CssSize|this}
 	 */
@@ -647,7 +647,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg   {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
@@ -671,7 +671,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {Boolean} [newStopPropagation]
+	 * @param {Boolean} [newStopPropagation]
 	 *
 	 * @returns {Boolean|this}
 	 */
@@ -686,7 +686,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg   {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
@@ -715,7 +715,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg   {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
+	 * @param {Boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 *
 	 * @returns {Boolean|this} - Only returned if no value is provided
 	 */
@@ -744,8 +744,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} eventName
-	 * @arg {Function} handler
+	 * @param {String} eventName
+	 * @param {Function} handler
 	 *
 	 * @returns {this}
 	 */
@@ -779,7 +779,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} eventName
+	 * @param {String} eventName
 	 *
 	 * @returns {this}
 	 */
@@ -809,10 +809,10 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {String} eventName
-	 * @arg {Function} [handler] - if provided, then the event will only be removed if this handler matches the one
+	 * @param {String} eventName
+	 * @param {Function} [handler] - if provided, then the event will only be removed if this handler matches the one
 	 *    provided in the "on" method.
-	 * @arg {boolean} [performAdd=true] - true adds a listener, false removes it.
+	 * @param {boolean} [performAdd=true] - true adds a listener, false removes it.
 	 *
 	 * @returns {this}
 	 */
@@ -846,7 +846,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {Boolean} [isFocused]
+	 * @param {Boolean} [isFocused]
 	 *
 	 * @returns {boolean|this}
 	 */
@@ -877,8 +877,8 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {Function} callback
-	 * @arg {Boolean} callImmediately - if true then execute the callback immediately
+	 * @param {Function} callback
+	 * @param {Boolean} callImmediately - if true then execute the callback immediately
 	 *
 	 * @returns {queue}
 	 */
@@ -891,7 +891,7 @@ Object.assign(Control.prototype, {
 	 * @member module:Control
 	 * @instance
 	 *
-	 * @arg {boolean} [isForced=false] - if true a resize will happen immediately
+	 * @param {boolean} [isForced=false] - if true a resize will happen immediately
 	 */
 	resize(isForced) {
 		const self = this;

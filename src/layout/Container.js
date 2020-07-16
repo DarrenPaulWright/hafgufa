@@ -13,7 +13,7 @@ import './Container.less';
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Container extends IsWorkingMixin(FocusMixin(Div)) {
 	constructor(settings = {}) {

@@ -19,7 +19,7 @@ const CONTAINER = Symbol();
  * @extends Label
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Radio extends FocusMixin(Label) {
 	constructor(settings = {}) {

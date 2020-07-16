@@ -38,7 +38,7 @@ const VISIBLE_ITEMS = Symbol();
  * @extends GraphAxisBase
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Scatter extends GraphAxisBase {
 	constructor(settings = {}) {

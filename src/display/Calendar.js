@@ -56,7 +56,7 @@ const DAYS = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings - Accepts all control settings plus:
+ * @param {Object} settings - Accepts all control settings plus:
  */
 export default class Calendar extends Control {
 	constructor(settings = {}) {
@@ -318,7 +318,7 @@ export default class Calendar extends Control {
 	/**
 	 * The callback function when a day button gets clicked. Sets the selected date and updates the appropriate UI.
 	 * @function onClickDay
-	 * @arg   {Button} button
+	 * @param {Button} button
 	 */
 	[onClickDay](button) {
 		const self = this;
@@ -403,7 +403,7 @@ Object.assign(Calendar.prototype, {
 	 * @method month
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Int} newMonth - Accepts 0 to 11
+	 * @param {Int} newMonth - Accepts 0 to 11
 	 * @returns {Int|this}
 	 */
 	month: methodInteger({
@@ -421,7 +421,7 @@ Object.assign(Calendar.prototype, {
 	 * @method year
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Int} newYear
+	 * @param {Int} newYear
 	 * @returns {Int|this}
 	 */
 	year: methodInteger({
@@ -437,7 +437,7 @@ Object.assign(Calendar.prototype, {
 	 * @method onDateSelected
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Function} newOnDateSelected
+	 * @param {Function} newOnDateSelected
 	 * @returns {Function|this}
 	 */
 	onDateSelected: methodFunction({
@@ -449,7 +449,7 @@ Object.assign(Calendar.prototype, {
 	 * @method selectedDate
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Date} newSelectedDate
+	 * @param {Date} newSelectedDate
 	 * @returns {Date|this}
 	 */
 	selectedDate: methodDate({
@@ -464,7 +464,7 @@ Object.assign(Calendar.prototype, {
 	 * @member module:Calendar
 	 * @instance
 	 *
-	 * @arg {String} newWeekdayFormat - Default is 'EEE'
+	 * @param {String} newWeekdayFormat - Default is 'EEE'
 	 *
 	 * @returns {String|this}
 	 */
@@ -481,7 +481,7 @@ Object.assign(Calendar.prototype, {
 	 * @method monthFormat
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {String} newMonthFormat - Default is 'MMM'
+	 * @param {String} newMonthFormat - Default is 'MMM'
 	 * @returns {String|this}
 	 */
 	monthFormat: methodString({
@@ -494,7 +494,7 @@ Object.assign(Calendar.prototype, {
 	 * @method yearRangePast
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Int} newYearRangePast - Minimum value is 0
+	 * @param {Int} newYearRangePast - Minimum value is 0
 	 * @returns {Int|this}
 	 */
 	yearRangePast: methodInteger({
@@ -508,7 +508,7 @@ Object.assign(Calendar.prototype, {
 	 * @method yearRangeFuture
 	 * @member module:Calendar
 	 * @instance
-	 * @arg {Int} newYearRangeFuture - Minimum value is 0
+	 * @param {Int} newYearRangeFuture - Minimum value is 0
 	 * @returns {Int|this}
 	 */
 	yearRangeFuture: methodInteger({

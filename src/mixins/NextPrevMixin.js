@@ -21,7 +21,7 @@ const onShowButtons = Symbol();
  * @mixin NextPrevMixin
  * @constructor
  *
- * @arg {class} [Base]
+ * @param {class} [Base]
  */
 export default (Base) => {
 	class NextPrevMixin extends Base {
@@ -96,7 +96,7 @@ export default (Base) => {
 		 * @memberOf NextPrevMixin
 		 * @instance
 		 *
-		 * @arg {boolean}
+		 * @param {boolean}
 		 *
 		 * @returns {boolean|this}
 		 */
@@ -161,7 +161,7 @@ export default (Base) => {
 		 * @memberOf NextPrevMixin
 		 * @instance
 		 *
-		 * @arg {string} - see Icon ICON_SIZES
+		 * @param {string} - see Icon ICON_SIZES
 		 *
 		 * @returns {string|this}
 		 */

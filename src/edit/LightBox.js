@@ -64,7 +64,7 @@ const renderImages = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class LightBox extends Control {
 	constructor(settings = {}) {

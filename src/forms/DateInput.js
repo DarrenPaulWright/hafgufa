@@ -38,7 +38,7 @@ const POPUP = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @arg {Object} settings - Accepts all control and FormControl settings plus:
+ * @param {Object} settings - Accepts all control and FormControl settings plus:
  */
 export default class DateInput extends FormControl {
 	constructor(settings = {}) {

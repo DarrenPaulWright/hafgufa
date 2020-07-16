@@ -29,7 +29,7 @@ const updateRow = Symbol();
  * @module GridColumnBlock
  * @constructor
  *
- * @arg {Object} settings - Same settings as {@link module:Grid}
+ * @param {Object} settings - Same settings as {@link module:Grid}
  */
 export default class GridColumnBlock extends Control {
 	constructor(settings = {}) {
@@ -122,7 +122,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method columns
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Array} [columns]
+	 * @param {Array} [columns]
 	 * @returns {Array|this}
 	 */
 	columns: methodArray({
@@ -136,7 +136,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method selectableColumns
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Array} [selectableColumns]
+	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
 	selectableColumns: methodArray({
@@ -149,7 +149,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Boolean} [isAllRowsSelected]
+	 * @param {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
@@ -162,7 +162,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Boolean} [isSomeRowsSelected]
+	 * @param {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({
@@ -177,7 +177,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method rows
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Object} newRows - This is the final result of {@link module:Grid#sort}
+	 * @param {Object} newRows - This is the final result of {@link module:Grid#sort}
 	 */
 	rows(newRows) {
 		const self = this;
@@ -194,7 +194,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method scrollToRowIndex
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Number} rowIndex - index of a row that is currently displayed
+	 * @param {Number} rowIndex - index of a row that is currently displayed
 	 */
 	scrollToRowIndex(rowIndex) {
 		this[VIRTUAL_LIST].scrollToIndex(rowIndex);
@@ -204,7 +204,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * @method isFiltered
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Boolean} [newIsFiltered]
+	 * @param {Boolean} [newIsFiltered]
 	 * @returns {Boolean|this}
 	 */
 	isFiltered: methodBoolean(),

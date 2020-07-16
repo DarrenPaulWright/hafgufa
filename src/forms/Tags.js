@@ -511,7 +511,7 @@ Object.assign(Tags.prototype, {
 	 * @method value
 	 * @member module:Tags
 	 * @instance
-	 * @arg {String} [value]
+	 * @param {String} [value]
 	 * @returns {String|this}
 	 */
 	value: methodArray({
@@ -559,10 +559,10 @@ Object.assign(Tags.prototype, {
 	 * @method suggestions
 	 * @member module:Tags
 	 * @instance
-	 * @arg {Array} [suggestions] - Can be an array of strings or objects
-	 * @arg {Array} suggestions.id - Must be a unique id
-	 * @arg {Array} suggestions.title - The main string to display
-	 * @arg {Array} [suggestions.subTitle] - A subTitle or alternate text to display
+	 * @param {Array} [suggestions] - Can be an array of strings or objects
+	 * @param {Array} suggestions.id - Must be a unique id
+	 * @param {Array} suggestions.title - The main string to display
+	 * @param {Array} [suggestions.subTitle] - A subTitle or alternate text to display
 	 * @returns {Array|this}
 	 */
 	suggestions: methodArray({
@@ -598,7 +598,7 @@ Object.assign(Tags.prototype, {
 	 * @method suggestionsDataSource
 	 * @member module:Tags
 	 * @instance
-	 * @arg {String} [newSuggestionsDataSource]
+	 * @param {String} [newSuggestionsDataSource]
 	 * @returns {String|this}
 	 */
 	// suggestionsDataSource: methodObject({
@@ -624,7 +624,7 @@ Object.assign(Tags.prototype, {
 	 * @method placeholder
 	 * @member module:Tags
 	 * @instance
-	 * @arg {String} [newPlaceholder]
+	 * @param {String} [newPlaceholder]
 	 * @returns {String|this}
 	 */
 	placeholder: methodString({
@@ -638,7 +638,7 @@ Object.assign(Tags.prototype, {
 	 * @method breakOnSpaces
 	 * @member module:Tags
 	 * @instance
-	 * @arg {Boolean} [breakOnSpaces]
+	 * @param {Boolean} [breakOnSpaces]
 	 * @returns {Boolean|this}
 	 */
 	breakOnSpaces: methodBoolean()

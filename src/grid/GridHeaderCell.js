@@ -47,7 +47,7 @@ const removeControls = Symbol();
  * @class GridHeaderCell
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class GridHeaderCell extends ContextMenuMixin(Control) {
 	constructor(settings = {}) {
@@ -312,7 +312,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method label
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {String} [label]
+	 * @param {String} [label]
 	 * @returns {String|this}
 	 */
 	label: methodString({
@@ -325,7 +325,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method dataType
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {String} [dataType]
+	 * @param {String} [dataType]
 	 * @returns {String|this}
 	 */
 	dataType: methodEnum({
@@ -352,7 +352,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method canSort
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {Boolean} [canSort]
+	 * @param {Boolean} [canSort]
 	 * @returns {Boolean|this}
 	 */
 	canSort: methodBoolean({
@@ -383,7 +383,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method sortDirection
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {String} [sortDirection]
+	 * @param {String} [sortDirection]
 	 * @returns {String|this}
 	 */
 	sortDirection: methodEnum({
@@ -405,7 +405,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method filterType
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {String} [filterType]
+	 * @param {String} [filterType]
 	 * @returns {String|this}
 	 */
 	filterType: methodEnum({
@@ -435,7 +435,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method filter
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {String} [filter]
+	 * @param {String} [filter]
 	 * @returns {String|this}
 	 */
 	filter: methodString({
@@ -463,7 +463,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method selectableColumns
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {Array} [selectableColumns]
+	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
 	selectableColumns: methodArray({
@@ -474,7 +474,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {Boolean} [isAllRowsSelected]
+	 * @param {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
@@ -485,7 +485,7 @@ Object.assign(GridHeaderCell.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @arg {Boolean} [isSomeRowsSelected]
+	 * @param {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({

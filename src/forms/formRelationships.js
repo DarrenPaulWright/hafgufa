@@ -16,28 +16,28 @@ const FormRelationshipHandler = function() {
 	 * @method add
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Object}           [newData]
-	 * @arg {Object}           newData.control                            - A valid js reference back to the control
+	 * @param {Object}           [newData]
+	 * @param {Object}           newData.control                            - A valid js reference back to the control
 	 *     adding this relationship
-	 * @arg {String}           newData.controlId                          - unique id of the control adding this
+	 * @param {String}           newData.controlId                          - unique id of the control adding this
 	 *     relationship
-	 * @arg {Object[]}         newData.relationships
-	 * @arg {String}           newData.relationships.targetId
-	 * @arg {String[]}         newData.relationships.targetIds
-	 * @arg {Number|String}    newData.relationships.type                 - 'int' | 'text'
-	 * @arg {String}           newData.relationships.condition            - 'equals|anyEquals|greaterThan'
-	 * @arg {Array.<Object[]>} newData.relationships.ranges               - Only use this if caseThen.value or
+	 * @param {Object[]}         newData.relationships
+	 * @param {String}           newData.relationships.targetId
+	 * @param {String[]}         newData.relationships.targetIds
+	 * @param {Number|String}    newData.relationships.type                 - 'int' | 'text'
+	 * @param {String}           newData.relationships.condition            - 'equals|anyEquals|greaterThan'
+	 * @param {Array.<Object[]>} newData.relationships.ranges               - Only use this if caseThen.value or
 	 *     caseElse.value is sumRange. Each inner array corresponds to one of the target controls in the same order
 	 *     provided in targetIds
-	 * @arg {Number}           newData.relationships.ranges.bottom
-	 * @arg {Number}           newData.relationships.ranges.top
-	 * @arg {Number}           newData.relationships.ranges.score
-	 * @arg {Object}           newData.relationships.caseThen
-	 * @arg {Boolean}          newData.relationships.caseThen.isEnabled
-	 * @arg {String}           newData.relationships.caseThen.value       - 'value|sum|sumRange|null' | literal
-	 * @arg {Object}           newData.relationships.caseElse
-	 * @arg {Boolean}          newData.relationships.caseElse.isEnabled
-	 * @arg {String}           newData.relationships.caseElse. value      - 'value|sum|sumRange|null' | literal
+	 * @param {Number}           newData.relationships.ranges.bottom
+	 * @param {Number}           newData.relationships.ranges.top
+	 * @param {Number}           newData.relationships.ranges.score
+	 * @param {Object}           newData.relationships.caseThen
+	 * @param {Boolean}          newData.relationships.caseThen.isEnabled
+	 * @param {String}           newData.relationships.caseThen.value       - 'value|sum|sumRange|null' | literal
+	 * @param {Object}           newData.relationships.caseElse
+	 * @param {Boolean}          newData.relationships.caseElse.isEnabled
+	 * @param {String}           newData.relationships.caseElse. value      - 'value|sum|sumRange|null' | literal
 	 * @returns {Number} - A unique id that should be used to reference this relationship in the future
 	 */
 	self.add = (newData) => {
@@ -56,7 +56,7 @@ const FormRelationshipHandler = function() {
 	 * @method remove
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} id - The formRelationshipId passed back when the relationship is first added.
+	 * @param {Number} id - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.remove = (id) => {
 		relationships = relationships.filter((item) => item.id !== id);
@@ -67,7 +67,7 @@ const FormRelationshipHandler = function() {
 	 * @method trigger
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} [id] - The formRelationshipId passed back when the relationship is first added.
+	 * @param {Number} [id] - The formRelationshipId passed back when the relationship is first added.
 	 */
 	self.trigger = (id) => {
 		if (id) {
@@ -83,11 +83,11 @@ const FormRelationshipHandler = function() {
 	 * @method update
 	 * @member module:formRelationships
 	 * @instance
-	 * @arg {Number} id                    - The formRelationshipId passed back when the relationship is first added.
-	 * @arg {Object} updateObject
-	 * @arg {String} updateObject.name     - The name of the relationship to be updated
-	 * @arg {String} updateObject.property - The property to be updated
-	 * @arg {String} updateObject.value    - The new value of the property to be updated
+	 * @param {Number} id                    - The formRelationshipId passed back when the relationship is first added.
+	 * @param {Object} updateObject
+	 * @param {String} updateObject.name     - The name of the relationship to be updated
+	 * @param {String} updateObject.property - The property to be updated
+	 * @param {String} updateObject.value    - The new value of the property to be updated
 	 */
 	self.update = (id, updateObject) => {
 		const relationship = relationships.find((item) => item.id === id);
@@ -111,7 +111,7 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Process the relationships for one control
 	 * @function processRelationships
-	 * @arg {Object} data - The original data object passed into formRelationships.add
+	 * @param {Object} data - The original data object passed into formRelationships.add
 	 */
 	const processRelationships = (data) => {
 		data.relationships.forEach((relationship) => {
@@ -220,7 +220,7 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Get the value of a control.
 	 * @function getValue
-	 * @arg {Object} target - A reference to a control
+	 * @param {Object} target - A reference to a control
 	 * @returns {String} - If the control returns an array of values then only get the first value
 	 */
 	const getValue = (target) => {
@@ -236,7 +236,7 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Get the value of a control if the expected data type is int.
 	 * @function getIntValue
-	 * @arg {Object} target - A reference to a control
+	 * @param {Object} target - A reference to a control
 	 * @returns {Number} - If the control returns an array of values then only get the first value. If the control
 	 *     returns an object with an id property, use the id property. If the value is a string with at least one '.',
 	 *     then return everything after the last '.'. (eg. 'myControl.10.3' will return 3)
@@ -403,10 +403,10 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Process 'caseThen' or 'caseElse' depending on the outcome of the condition
 	 * @function processThen
-	 * @arg {String} caseThen
-	 * @arg {Object} control
-	 * @arg {Object} relationship
-	 * @arg {Object} data
+	 * @param {String} caseThen
+	 * @param {Object} control
+	 * @param {Object} relationship
+	 * @param {Object} data
 	 */
 	const processThen = (caseThen, control, relationship, data) => {
 		let isNested = true;
@@ -456,8 +456,8 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Calulate the value based on the sumRange object
 	 * @function sumRange
-	 * @arg {Array} relationshipRanges
-	 * @arg {String} values
+	 * @param {Array} relationshipRanges
+	 * @param {String} values
 	 */
 	const sumRange = (relationshipRanges, values) => {
 		let sum = 0;
@@ -501,7 +501,7 @@ const FormRelationshipHandler = function() {
 	/**
 	 * Gets a reference to a control given that controls id
 	 * @function getControlById
-	 * @arg {String} controlId
+	 * @param {String} controlId
 	 * @return {Object|Boolean} - If no control is found that matches the provided id then return false.
 	 */
 	const getControlById = (controlId) => {

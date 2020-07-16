@@ -18,7 +18,7 @@ const locale = {
 	 * @memberOf locale
 	 * @default {English: 'en-us'}
 	 *
-	 * @arg {Object} languages - An object with supported languages. Keys should be human readable names, the values are used when loading files
+	 * @param {Object} languages - An object with supported languages. Keys should be human readable names, the values are used when loading files
 	 *
 	 * @returns {Object}
 	 */
@@ -44,7 +44,7 @@ const locale = {
 	 * @method language
 	 * @memberOf locale
 	 *
-	 * @arg {String} language
+	 * @param {String} language
 	 *
 	 * @returns {String}
 	 */
@@ -61,7 +61,7 @@ const locale = {
 	 * @memberOf locale
 	 * @default '[path]-[lang].json'
 	 *
-	 * @arg {String} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
+	 * @param {String} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
 	 *
 	 * @returns {String}
 	 */
@@ -74,7 +74,7 @@ const locale = {
 	 * @method load
 	 * @memberOf locale
 	 *
-	 * @arg {...String} url - One are more strings of files to load. The strings are formatted with locale.urlFormat.
+	 * @param {...String} url - One are more strings of files to load. The strings are formatted with locale.urlFormat.
 	 *
 	 * @returns {String}
 	 */
@@ -107,7 +107,7 @@ const locale = {
 	 * @method set
 	 * @memberOf locale
 	 *
-	 * @arg {Object} newStrings
+	 * @param {Object} newStrings
 	 */
 	set(newStrings) {
 		assign(strings, newStrings);
@@ -118,8 +118,8 @@ const locale = {
 	 * @method get
 	 * @memberOf locale
 	 *
-	 * @arg {String} key - The key for a string
-	 * @arg {Object} [replacer] - Replaces tags in strings with values. Keys should match a tag in the string wrapped like <tag>.
+	 * @param {String} key - The key for a string
+	 * @param {Object} [replacer] - Replaces tags in strings with values. Keys should match a tag in the string wrapped like <tag>.
 	 *
 	 * @returns {String}
 	 */
@@ -140,7 +140,7 @@ const locale = {
 	 * @method onLanguageChange
 	 * @memberOf locale
 	 *
-	 * @arg {function} callback
+	 * @param {function} callback
 	 *
 	 * @returns {Queue}
 	 */

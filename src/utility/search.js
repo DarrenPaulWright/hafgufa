@@ -11,9 +11,9 @@ const search = {
 	 * @static
 	 * @function find
 	 *
-	 * @arg   {String}  needle - The string you want to find
-	 * @arg   {String}  haystack - The string you want to find matches in
-	 * @arg   {boolean} [breakOnSpaces=true]
+	 * @param {String}  needle - The string you want to find
+	 * @param {String}  haystack - The string you want to find matches in
+	 * @param {boolean} [breakOnSpaces=true]
 	 *
 	 * @returns {Boolean}
 	 */

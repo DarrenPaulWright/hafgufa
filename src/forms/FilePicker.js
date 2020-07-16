@@ -38,7 +38,7 @@ const updateLightBox = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @arg {Object}        settings
+ * @param {Object}        settings
  */
 export default class FilePicker extends IsWorkingMixin(FormControl) {
 	constructor(settings = {}) {
@@ -218,7 +218,7 @@ Object.assign(FilePicker.prototype, {
 	 * @member module:FilePicker
 	 * @instance
 	 *
-	 * @arg {Number} [value]
+	 * @param {Number} [value]
 	 *
 	 * @returns {Number|this}
 	 */
@@ -271,7 +271,7 @@ Object.assign(FilePicker.prototype, {
 	 * @member module:FilePicker
 	 * @instance
 	 *
-	 * @arg {boolean} [isQuickEdit]
+	 * @param {boolean} [isQuickEdit]
 	 *
 	 * @returns {boolean|this}
 	 */
@@ -314,7 +314,7 @@ Object.assign(FilePicker.prototype, {
 	 * @method previewSize
 	 * @member module:FilePicker
 	 * @instance
-	 * @arg {Number} [previewSize] - FilePicker.PREVIEW_SIZES
+	 * @param {Number} [previewSize] - FilePicker.PREVIEW_SIZES
 	 * @returns {Number|this}
 	 */
 	previewSize: methodEnum({
@@ -341,7 +341,7 @@ Object.assign(FilePicker.prototype, {
 	 * @method isMulti
 	 * @member module:FilePicker
 	 * @instance
-	 * @arg {Boolean} [isMulti]
+	 * @param {Boolean} [isMulti]
 	 * @returns {Boolean|this}
 	 */
 	isMulti: methodBoolean({

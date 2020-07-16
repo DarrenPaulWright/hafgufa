@@ -44,7 +44,7 @@ const setFocusIndex = Symbol();
  * @mixes FocusMixin
  * @constructor
  *
- * @arg {Object} settings - Accepts all control and FormControl options plus:
+ * @param {Object} settings - Accepts all control and FormControl options plus:
  */
 export default class GroupedButtons extends FormControl {
 	constructor(settings = {}) {
@@ -279,7 +279,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method value
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {Array|String} [value]
+	 * @param {Array|String} [value]
 	 * @returns {Array|String|this}
 	 */
 	value: methodAny({
@@ -300,8 +300,8 @@ Object.assign(GroupedButtons.prototype, {
 	 * @member module:GroupedButtons
 	 * @instance
 	 *
-	 * @arg {Object} buttonSettings
-	 * @arg {Int}    [insertIndex]
+	 * @param {Object} buttonSettings
+	 * @param {Int}    [insertIndex]
 	 *
 	 * @returns {this}
 	 */
@@ -322,7 +322,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method removeButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {String} id
+	 * @param {String} id
 	 * @returns {this}
 	 */
 	removeButton(id) {
@@ -354,7 +354,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method getButton
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {String}    id
+	 * @param {String}    id
 	 * @returns {Object}
 	 */
 	getButton(id) {
@@ -367,7 +367,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method buttons
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {Array} [buttons]
+	 * @param {Array} [buttons]
 	 * @returns {Array|this}
 	 */
 	buttons: methodArray({
@@ -400,7 +400,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method isSelectable
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {Boolean} [isSelectable]
+	 * @param {Boolean} [isSelectable]
 	 * @returns {Boolean|this}
 	 */
 	isSelectable: methodBoolean({
@@ -418,7 +418,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method isMultiSelect
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {Boolean} [isMultiSelect]
+	 * @param {Boolean} [isMultiSelect]
 	 * @returns {Boolean|this}
 	 */
 	isMultiSelect: methodBoolean({
@@ -433,7 +433,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method orientation
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @arg {String} [orientation]
+	 * @param {String} [orientation]
 	 * @returns {String|this}
 	 */
 	orientation: methodEnum({

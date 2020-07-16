@@ -14,7 +14,7 @@ const pushHistory = Symbol();
  * @class LocalHistory
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class LocalHistory {
 	constructor(settings = {}) {
@@ -62,7 +62,7 @@ export default class LocalHistory {
 	 * @method push
 	 * @member module:LocalHistory
 	 * @instance
-	 * @arg {Function} historyObject - Object to be returned when 'undo' is called.
+	 * @param {Function} historyObject - Object to be returned when 'undo' is called.
 	 */
 	push(historyObject) {
 		return this[pushHistory](historyObject);
@@ -73,7 +73,7 @@ export default class LocalHistory {
 	 * @method replace
 	 * @member module:LocalHistory
 	 * @instance
-	 * @arg {Function} historyObject - Object to be returned when 'undo' is called.
+	 * @param {Function} historyObject - Object to be returned when 'undo' is called.
 	 */
 	replace(historyObject) {
 		const hasHistory = this.hasHistory();

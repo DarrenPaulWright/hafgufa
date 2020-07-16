@@ -48,7 +48,7 @@ const positionViews = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class SplitView extends IsWorkingMixin(Control) {
 	constructor(settings = {}) {
@@ -270,7 +270,7 @@ Object.assign(SplitView.prototype, {
 	 * @method minOffset
 	 * @member module:SplitView
 	 * @instance
-	 * @arg {Number} [newMinOffset]
+	 * @param {Number} [newMinOffset]
 	 * @returns {Number|Object}
 	 */
 	minOffset: methodCssSize({
@@ -288,7 +288,7 @@ Object.assign(SplitView.prototype, {
 	 * @method maxOffset
 	 * @member module:SplitView
 	 * @instance
-	 * @arg {Number} [newMaxOffset]
+	 * @param {Number} [newMaxOffset]
 	 * @returns {Number|Object}
 	 */
 	maxOffset: methodCssSize({

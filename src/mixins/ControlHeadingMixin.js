@@ -84,7 +84,7 @@ export default (Base) => {
 		 * @method canCollapse
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {Boolean} [newCanCollapse]
+		 * @param {Boolean} [newCanCollapse]
 		 * @returns {Boolean|this}
 		 */
 		canCollapse: methodBoolean({
@@ -114,7 +114,7 @@ export default (Base) => {
 		 * @method isCollapsed
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {Boolean} [newIsCollapsed]
+		 * @param {Boolean} [newIsCollapsed]
 		 * @returns {Boolean|this}
 		 */
 		isCollapsed: methodBoolean({
@@ -139,7 +139,7 @@ export default (Base) => {
 		 * @method onCollapse
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {function} [newOnCollapse]
+		 * @param {function} [newOnCollapse]
 		 * @returns {function|this}
 		 */
 		onCollapse: methodFunction(),
@@ -151,7 +151,7 @@ export default (Base) => {
 		 * @member module:ControlHeadingAddon
 		 * @instance
 		 *
-		 * @arg {string} title - Plain text or html string.
+		 * @param {string} title - Plain text or html string.
 		 *
 		 * @returns {string|this}
 		 */
@@ -198,7 +198,7 @@ export default (Base) => {
 		 * @member module:ControlHeadingAddon
 		 * @instance
 		 *
-		 * @arg {string} subTitle - Plain text or html string.
+		 * @param {string} subTitle - Plain text or html string.
 		 *
 		 * @returns {string|this}
 		 */
@@ -217,7 +217,7 @@ export default (Base) => {
 		 * @member module:ControlHeadingAddon
 		 * @instance
 		 *
-		 * @arg {string} [error]
+		 * @param {string} [error]
 		 *
 		 * @returns {string|this}
 		 */
@@ -234,7 +234,7 @@ export default (Base) => {
 		 * @method headingIcon
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {String} headingIcon
+		 * @param {String} headingIcon
 		 */
 		headingIcon: methodString({
 			set(headingIcon) {
@@ -251,7 +251,7 @@ export default (Base) => {
 		 * @member module:ControlHeadingAddon
 		 * @instance
 		 *
-		 * @arg {String} headingImage
+		 * @param {String} headingImage
 		 */
 		headingImage: methodString({
 			set(headingImage) {
@@ -266,7 +266,7 @@ export default (Base) => {
 		 * @method headingButtons
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {String} headingButton
+		 * @param {String} headingButton
 		 */
 		headingButtons: methodArray({
 			set(headingButtons) {
@@ -281,7 +281,7 @@ export default (Base) => {
 		 * @method singleLine
 		 * @member module:ControlHeadingAddon
 		 * @instance
-		 * @arg {Boolean} [newSingleLine]
+		 * @param {Boolean} [newSingleLine]
 		 * @returns {Boolean|this}
 		 */
 		singleLine: methodBoolean({

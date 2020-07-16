@@ -10,8 +10,8 @@ import Control from './../Control';
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
- * @arg {String} [settings.text]
+ * @param {Object} settings
+ * @param {String} [settings.text]
  */
 export default class Span extends Control {
 	constructor(settings = {}) {
@@ -32,7 +32,7 @@ Object.assign(Span.prototype, {
 	 * @member module:Span
 	 * @instance
 	 *
-	 * @arg {string|element} content
+	 * @param {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */
@@ -48,7 +48,7 @@ Object.assign(Span.prototype, {
 	 * @member module:Span
 	 * @instance
 	 *
-	 * @arg {string|element} content
+	 * @param {string|element} content
 	 *
 	 * @returns {string|element|this}
 	 */

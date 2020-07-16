@@ -11,8 +11,8 @@ import Control from './../Control';
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
- * @arg {String} [settings.rows]
+ * @param {Object} settings
+ * @param {String} [settings.rows]
  */
 export default class TextArea extends Control {
 	constructor(settings = {}) {
@@ -33,7 +33,7 @@ Object.assign(TextArea.prototype, {
 	 * @member module:TextArea
 	 * @instance
 	 *
-	 * @arg {int} rows
+	 * @param {int} rows
 	 *
 	 * @returns {int|this}
 	 */

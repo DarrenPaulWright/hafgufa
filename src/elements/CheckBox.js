@@ -12,7 +12,7 @@ import Radio, { INPUT } from './Radio';
  * @extends Radio
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class CheckBox extends Radio {
 	constructor(settings = {}) {

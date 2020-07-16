@@ -23,7 +23,7 @@ const setCountString = Symbol();
  * @module GridFooter
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class GridFooter extends Control {
 	constructor(settings = {}) {
@@ -123,7 +123,7 @@ Object.assign(GridFooter.prototype, {
 	 * @method countSuffix
 	 * @member module:GridFooter
 	 * @instance
-	 * @arg {String} [countSuffix]
+	 * @param {String} [countSuffix]
 	 * @returns {String|this}
 	 */
 	countSuffix: methodString({
@@ -137,7 +137,7 @@ Object.assign(GridFooter.prototype, {
 	 * @method count
 	 * @member module:GridFooter
 	 * @instance
-	 * @arg {String} [count]
+	 * @param {String} [count]
 	 * @returns {String|this}
 	 */
 	count: methodInteger({
@@ -149,7 +149,7 @@ Object.assign(GridFooter.prototype, {
 	 * @method groupSuffixes
 	 * @member module:GridFooter
 	 * @instance
-	 * @arg {String} [groupSuffixes]
+	 * @param {String} [groupSuffixes]
 	 * @returns {String|this}
 	 */
 	groupSuffixes: methodArray({
@@ -161,7 +161,7 @@ Object.assign(GridFooter.prototype, {
 	 * @method groupCounts
 	 * @member module:GridFooter
 	 * @instance
-	 * @arg {String} [groupCounts]
+	 * @param {String} [groupCounts]
 	 * @returns {String|this}
 	 */
 	groupCounts: methodArray({
@@ -172,7 +172,7 @@ Object.assign(GridFooter.prototype, {
 	 * @method onCollapseAllGroups
 	 * @member module:GridFooter
 	 * @instance
-	 * @arg {Function} [onCollapseAllGroups]
+	 * @param {Function} [onCollapseAllGroups]
 	 * @returns {Function|this}
 	 */
 	onCollapseAllGroups: methodFunction({

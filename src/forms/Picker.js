@@ -72,7 +72,7 @@ const showDialog = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Picker extends FormControl {
 	constructor(settings = {}) {
@@ -138,8 +138,8 @@ export default class Picker extends FormControl {
 	 *
 	 * @function areValuesEqual
 	 *
-	 * @arg {Object} values1
-	 * @arg {Object} values2
+	 * @param {Object} values1
+	 * @param {Object} values2
 	 *
 	 * @returns {Boolean}
 	 */
@@ -159,8 +159,8 @@ export default class Picker extends FormControl {
 	/**
 	 * Iterates through two sets of options and determines if they are the same.
 	 * @function areOptionsEqual
-	 * @arg {Object} options1
-	 * @arg {Object} options2
+	 * @param {Object} options1
+	 * @param {Object} options2
 	 * @returns {Boolean}
 	 */
 	static [areOptionsEqual](options1, options2) {
@@ -197,7 +197,7 @@ export default class Picker extends FormControl {
 
 	/**
 	 * Update the selected Items with all the data from the available options.
-	 * @arg   {Array}    newValue
+	 * @param {Array}    newValue
 	 * @returns {Object[]}
 	 */
 	[updateSelectedItems](newValue) {
@@ -259,7 +259,7 @@ export default class Picker extends FormControl {
 	/**
 	 * Iterates through the options and determines if anything is multiselect.
 	 * @function processNewOptions
-	 * @arg {Object} values
+	 * @param {Object} values
 	 */
 	[processNewOptions](values) {
 		const self = this;
@@ -308,7 +308,7 @@ export default class Picker extends FormControl {
 	/**
 	 * Check to see if a particular option is selected
 	 * @function checkSelected
-	 * @arg {String} id - An option's id value
+	 * @param {String} id - An option's id value
 	 */
 	[checkSelected](id) {
 		return !!this[SELECTED_ITEMS].find((item) => item.id === id);
@@ -669,8 +669,8 @@ export default class Picker extends FormControl {
 	/**
 	 * Finds an option given that option's id
 	 * @function getItem
-	 * @arg {String} itemId - The id of an option
-	 * @arg {String} itemTitle - The title property of an option
+	 * @param {String} itemId - The id of an option
+	 * @param {String} itemTitle - The title property of an option
 	 * @returns {Object} - An option.
 	 */
 	[getItem](itemId, itemTitle) {
@@ -982,7 +982,7 @@ Object.assign(Picker.prototype, {
 	 * @method options
 	 * @member module:Picker
 	 * @instance
-	 * @arg {Object} newOptions - See initial input options.
+	 * @param {Object} newOptions - See initial input options.
 	 * @returns {Object|this}
 	 */
 	options: methodAny({
@@ -1027,7 +1027,7 @@ Object.assign(Picker.prototype, {
 	 * @method preferred
 	 * @member module:Picker
 	 * @instance
-	 * @arg {Array} preferred - Prioritized array of option id's.
+	 * @param {Array} preferred - Prioritized array of option id's.
 	 * @returns {Array|this}
 	 */
 	preferred: methodArray({
@@ -1039,7 +1039,7 @@ Object.assign(Picker.prototype, {
 	 * @method onOptionsChange
 	 * @member module:Picker
 	 * @instance
-	 * @arg {Function} [callback]
+	 * @param {Function} [callback]
 	 * @returns {Function|this}
 	 */
 	onOptionsChange: methodFunction(),
@@ -1051,8 +1051,8 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {String|Array} [newValue]      - Can be a comma delimited string of values or an array of values.
-	 * @arg {Boolean} [isForcedSave=false] - Normally this control won't save a new value if it has focus, a 'true'
+	 * @param {String|Array} [newValue]      - Can be a comma delimited string of values or an array of values.
+	 * @param {Boolean} [isForcedSave=false] - Normally this control won't save a new value if it has focus, a 'true'
 	 *     value here will override this functionality and save anyway.
 	 *
 	 * @returns {Boolean|String} - If a new value doesn't match an option then 'false' is returned. If no value is
@@ -1147,7 +1147,7 @@ Object.assign(Picker.prototype, {
 	 * @method canUnselect
 	 * @member module:Picker
 	 * @instance
-	 * @arg {Boolean} canUnselect
+	 * @param {Boolean} canUnselect
 	 * @returns {Boolean|this}
 	 */
 	canUnselect: methodBoolean({
@@ -1161,7 +1161,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {string} defaultButtonText
+	 * @param {string} defaultButtonText
 	 *
 	 * @returns {string|this}
 	 */
@@ -1176,7 +1176,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {string} defaultButtonIcon
+	 * @param {string} defaultButtonIcon
 	 *
 	 * @returns {string|this}
 	 */
@@ -1191,7 +1191,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {string} emptyButtonText
+	 * @param {string} emptyButtonText
 	 *
 	 * @returns {string|this}
 	 */
@@ -1206,7 +1206,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {Boolean} showSelectedItems
+	 * @param {Boolean} showSelectedItems
 	 *
 	 * @returns {Boolean|this}
 	 */
@@ -1225,7 +1225,7 @@ Object.assign(Picker.prototype, {
 	 * @member module:Picker
 	 * @instance
 	 *
-	 * @arg {Boolean} canFilterSelectedOnly
+	 * @param {Boolean} canFilterSelectedOnly
 	 *
 	 * @returns {Boolean|this}
 	 */

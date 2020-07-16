@@ -40,7 +40,7 @@ export default (Base) => {
 		 * @memberof ContextMenuMixin
 		 * @instance
 		 *
-		 * @arg {Array|null} contextMenu
+		 * @param {Array|null} contextMenu
 		 *
 		 * @returns {Array|this}
 		 */
@@ -96,7 +96,7 @@ export default (Base) => {
 		 * @memberof ContextMenuMixin
 		 * @instance
 		 *
-		 * @arg {Function} onContextMenuChange
+		 * @param {Function} onContextMenuChange
 		 *
 		 * @returns {Function|this}
 		 */

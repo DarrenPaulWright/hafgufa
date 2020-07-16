@@ -30,7 +30,7 @@ const toggleItem = Symbol();
  * @module Donut
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Legend extends Control {
 	constructor(settings = {}) {

@@ -20,7 +20,7 @@ export const ICON_SIZES = new Enum({
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Icon extends TooltipMixin(Control) {
 	constructor(settings = {}) {
@@ -45,7 +45,7 @@ Object.assign(Icon.prototype, {
 	 * @method icon
 	 * @member module:Icon
 	 * @instance
-	 * @arg {String} newIcon
+	 * @param {String} newIcon
 	 * @returns {String|this}
 	 */
 	icon: methodString({
@@ -123,7 +123,7 @@ Object.assign(Icon.prototype, {
 	 * @method size
 	 * @member module:Icon
 	 * @instance
-	 * @arg {String} newSize - Use Icon ICON_SIZES
+	 * @param {String} newSize - Use Icon ICON_SIZES
 	 * @returns {String|this}
 	 */
 	size: methodEnum({

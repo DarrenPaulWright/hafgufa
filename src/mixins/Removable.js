@@ -105,7 +105,7 @@ Object.assign(Removable.prototype, {
 	 * @method onPreRemove
 	 * @member module:Removable
 	 * @instance
-	 * @arg {Function} callback
+	 * @param {Function} callback
 	 * @returns {this}
 	 */
 	onPreRemove: methodQueue(),
@@ -114,7 +114,7 @@ Object.assign(Removable.prototype, {
 	 * @method onRemove
 	 * @member module:Removable
 	 * @instance
-	 * @arg {Function} callback
+	 * @param {Function} callback
 	 * @returns {this}
 	 */
 	onRemove: methodQueue()

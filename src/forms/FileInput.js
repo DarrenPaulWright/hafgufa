@@ -56,7 +56,7 @@ const isValidMimeType = Symbol();
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class FileInput extends Control {
 	constructor(settings = {}) {
@@ -225,7 +225,7 @@ Object.assign(FileInput.prototype, {
 	 * @method isMulti
 	 * @member module:FileInput
 	 * @instance
-	 * @arg {Boolean} [isMulti]
+	 * @param {Boolean} [isMulti]
 	 * @returns {Boolean|this}
 	 */
 	isMulti: methodBoolean({
@@ -239,7 +239,7 @@ Object.assign(FileInput.prototype, {
 	 * @method previewSize
 	 * @member module:FileInput
 	 * @instance
-	 * @arg {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
+	 * @param {String} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {String|this}
 	 */
 	previewSize: methodEnum({
@@ -254,7 +254,7 @@ Object.assign(FileInput.prototype, {
 	 * @method onPreLoad
 	 * @memberof module:FilePicker
 	 * @instance
-	 * @arg {Function} [onLoad]
+	 * @param {Function} [onLoad]
 	 * @returns {Function|this}
 	 */
 	onPreLoad: methodFunction(),
@@ -264,7 +264,7 @@ Object.assign(FileInput.prototype, {
 	 * @method onLoad
 	 * @member module:FileInput
 	 * @instance
-	 * @arg {Function} [onLoad]
+	 * @param {Function} [onLoad]
 	 * @returns {Function|this}
 	 */
 	onLoad: methodFunction()

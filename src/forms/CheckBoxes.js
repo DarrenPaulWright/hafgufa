@@ -15,7 +15,7 @@ const CHECK_BOXES = Symbol();
  * @module CheckBox
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class CheckBoxes extends FormControl {
 	constructor(settings = {}) {
@@ -43,7 +43,7 @@ Object.assign(CheckBoxes.prototype, {
 	 * @method value
 	 * @member module:CheckBox
 	 * @instance
-	 * @arg {Array|String} [value]
+	 * @param {Array|String} [value]
 	 * @returns {Array|String|this}
 	 */
 	value: methodAny({

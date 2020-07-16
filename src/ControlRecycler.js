@@ -26,7 +26,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method control
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {constructor} [newControl]
+	 * @param {constructor} [newControl]
 	 * @returns {constructor|this}
 	 */
 	control: methodFunction({
@@ -37,7 +37,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method defaultSettings
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {Object} [newDefaultSettings]
+	 * @param {Object} [newDefaultSettings]
 	 * @returns {Object|this}
 	 */
 	defaultSettings: methodObject({
@@ -49,7 +49,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getRecycledControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg   {Boolean} [doPrepend=false]
+	 * @param {Boolean} [doPrepend=false]
 	 * @returns {Object}
 	 */
 	getRecycledControl(doPrepend = false) {
@@ -74,7 +74,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {String} [id]
+	 * @param {String} [id]
 	 * @returns {Object}
 	 */
 	getControl(id) {
@@ -97,7 +97,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method each
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {Function} [callback] - provides a reference to the control and the index
+	 * @param {Function} [callback] - provides a reference to the control and the index
 	 * @returns {Object[]}
 	 */
 	each(callback) {
@@ -111,7 +111,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 *
-	 * @arg {Function} [callback] - provides a reference to the control and the index
+	 * @param {Function} [callback] - provides a reference to the control and the index
 	 *
 	 * @returns {Object[]}
 	 */
@@ -124,7 +124,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method discardControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @arg {String} [id]
+	 * @param {String} [id]
 	 */
 	discardControl(id) {
 		const index = this[VISIBLES].findIndex((control) => control.id() === id);
@@ -154,8 +154,8 @@ Object.assign(ControlRecycler.prototype, {
 	 * @member module:ControlRecycler
 	 * @instance
 	 *
-	 * @arg {Number} [controlOffset]
-	 * @arg {Boolean} [canCreateNew=false]
+	 * @param {Number} [controlOffset]
+	 * @param {Boolean} [canCreateNew=false]
 	 *
 	 * @returns {Object}
 	 */

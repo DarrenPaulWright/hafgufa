@@ -37,7 +37,7 @@ const LINE_PIVOT_ARC = Symbol();
  * @extends GraphBase
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class Donut extends GraphBase {
 	constructor(settings = {}) {

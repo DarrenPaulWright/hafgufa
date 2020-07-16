@@ -21,7 +21,7 @@ const sortColumn = Symbol();
  * @module GridHeader
  * @constructor
  *
- * @arg {Object} settings
+ * @param {Object} settings
  */
 export default class GridHeader extends Control {
 	constructor(settings = {}) {
@@ -54,7 +54,7 @@ export default class GridHeader extends Control {
 	/**
 	 * Apply css classes to appropriate column labels to show the sort state and call grid.sort().
 	 * @function sortColumn
-	 * @arg {Object} headerCellControl
+	 * @param {Object} headerCellControl
 	 */
 	[sortColumn](headerCellControl) {
 		const self = this;
@@ -77,7 +77,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method columns
 	 * @member module:GridHeader
 	 * @instance
-	 * @arg {Array} [columns]
+	 * @param {Array} [columns]
 	 * @returns {Array|this}
 	 */
 	columns: methodArray({
@@ -150,7 +150,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method selectableColumns
 	 * @member module:GridHeader
 	 * @instance
-	 * @arg {Array} [selectableColumns]
+	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
 	 */
 	selectableColumns: methodArray({
@@ -165,7 +165,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method desiredWidth
 	 * @member module:GridHeader
 	 * @instance
-	 * @arg {Number} desiredWidth
+	 * @param {Number} desiredWidth
 	 * @returns {Number} - The actual width used
 	 */
 	desiredWidth(desiredWidth) {
@@ -222,7 +222,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method isAllRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Boolean} [isAllRowsSelected]
+	 * @param {Boolean} [isAllRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isAllRowsSelected: methodBoolean({
@@ -237,7 +237,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method isSomeRowsSelected
 	 * @member module:GridColumnBlock
 	 * @instance
-	 * @arg {Boolean} [isSomeRowsSelected]
+	 * @param {Boolean} [isSomeRowsSelected]
 	 * @returns {Boolean|this}
 	 */
 	isSomeRowsSelected: methodBoolean({
@@ -252,7 +252,7 @@ Object.assign(GridHeader.prototype, {
 	 * @method scrollbarWidth
 	 * @member module:GridHeader
 	 * @instance
-	 * @arg {Number} [scrollbarWidth]
+	 * @param {Number} [scrollbarWidth]
 	 * @returns {Number|this}
 	 */
 	scrollbarWidth: methodNumber({

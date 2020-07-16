@@ -60,13 +60,13 @@ const showDialog = Symbol();
  * @extends FormControl
  * @constructor
  *
- * @arg {Object}   settings                 - Accepts all control and FormControl settings plus:
- * @arg {Array}    [settings.columns[]]     - Grid control columns
- * @arg {Array}    [settings.columns[].showDescriptionOnEdit]
- * @arg {Function} [settings.onDelete]      - Callback for when an item is deleted. If not provided, onChange will be triggered.
- * @arg {boolean} [settings.autoGenerateIds=true]
- * @arg {boolean} [settings.showAddAnother=true]
- * @arg {String}   [settings.dialogWidth=34rem]
+ * @param {Object}   settings                 - Accepts all control and FormControl settings plus:
+ * @param {Array}    [settings.columns[]]     - Grid control columns
+ * @param {Array}    [settings.columns[].showDescriptionOnEdit]
+ * @param {Function} [settings.onDelete]      - Callback for when an item is deleted. If not provided, onChange will be triggered.
+ * @param {boolean} [settings.autoGenerateIds=true]
+ * @param {boolean} [settings.showAddAnother=true]
+ * @param {String}   [settings.dialogWidth=34rem]
  */
 export default class EditableGrid extends FormControl {
 	constructor(settings = {}) {

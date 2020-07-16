@@ -26,8 +26,8 @@ const AVAILABLE_TYPES = new Enum({
  * @extends Control
  * @constructor
  *
- * @arg {Object} settings
- * @arg {String} [settings.type]
+ * @param {Object} settings
+ * @param {String} [settings.type]
  */
 export default class Input extends Control {
 	constructor(settings = {}) {
@@ -55,7 +55,7 @@ Object.assign(Input.prototype, {
 	 * @member module:Input
 	 * @instance
 	 *
-	 * @arg {string|element} inputType
+	 * @param {string|element} inputType
 	 *
 	 * @returns {string|this}
 	 */
