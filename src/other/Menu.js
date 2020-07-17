@@ -116,8 +116,8 @@ export default class Menu extends Popup {
 		}));
 
 		const self = this;
-		self.addClass(MENU_CLASS);
-		self.width(AUTO);
+		self.addClass(MENU_CLASS)
+			.width(AUTO);
 
 		currentMenu = self;
 
@@ -126,8 +126,10 @@ export default class Menu extends Popup {
 				if (self.onSelect()) {
 					self.onSelect()(item);
 				}
+
 				item = self.menuItems().find((menuItem) => menuItem.id === item);
-				if (!item || !(settings.keepMenuOpen || item.keepMenuOpen)) {
+
+				if (item === undefined || !(settings.keepMenuOpen === true || item.keepMenuOpen === true)) {
 					self.remove();
 				}
 			},

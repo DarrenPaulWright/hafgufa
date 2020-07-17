@@ -145,7 +145,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.is(testUtil.count('.menu'), 1);
+			assert.is(testUtil.count('.menu', true), 1);
 		});
 
 		it('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
@@ -167,7 +167,7 @@ describe('Menu', () => {
 
 			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
 
-			assert.is(testUtil.count('.menu'), 1);
+			assert.is(testUtil.count('.menu', true), 1);
 		});
 	});
 });
