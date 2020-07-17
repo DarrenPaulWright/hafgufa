@@ -262,16 +262,14 @@ export default class Calendar extends Control {
 			self[buildMonthOptions]();
 			self[buildYearOptions]();
 
-			self[HEADER].get(PREV_BUTTON_ID).isEnabled(
-				self[range].minYear === undefined ||
-				self[range].minYear < year ||
-				self[range].minMonth < month
-			);
-			self[HEADER].get(NEXT_BUTTON_ID).isEnabled(
-				self[range].maxYear === undefined ||
-				self[range].maxYear > year ||
-				self[range].maxMonth > month
-			);
+			self[HEADER].get(PREV_BUTTON_ID)
+				.isEnabled(self[range].minYear === undefined ||
+					self[range].minYear < year ||
+					self[range].minMonth < month);
+			self[HEADER].get(NEXT_BUTTON_ID)
+				.isEnabled(self[range].maxYear === undefined ||
+					self[range].maxYear > year ||
+					self[range].maxMonth > month);
 		}
 	}
 
@@ -385,7 +383,6 @@ export default class Calendar extends Control {
 			}
 			if (currentDay.getMonth() !== self.month()) {
 				classes += DIFFERENT_MONTH_CLASS;
-
 			}
 
 			self[DAYS][dayIndex]

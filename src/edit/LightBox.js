@@ -153,9 +153,9 @@ export default class LightBox extends Control {
 
 	[positionMainImage]() {
 		const self = this;
-		const imageSelectorHeight = self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID) ? self[INTERACTION_LAYER].get(
-			LIGHT_BOX_CAROUSEL_ID)
-			.height() * CAROUSEL_SLIDE_PERCENT : self[TOOLBAR_HEIGHT];
+		const imageSelectorHeight = self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID) ?
+			self[INTERACTION_LAYER].get(LIGHT_BOX_CAROUSEL_ID).height() * CAROUSEL_SLIDE_PERCENT :
+			self[TOOLBAR_HEIGHT];
 
 		self[IMAGE_LAYER]
 			.css(PADDING_TOP, self[TOOLBAR_HEIGHT] + IMAGE_MARGIN + PIXELS)

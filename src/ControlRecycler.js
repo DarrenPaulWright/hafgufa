@@ -191,7 +191,7 @@ Object.assign(ControlRecycler.prototype, {
 	remove() {
 		this[DISCARDED].forEach((control) => control.remove());
 		this[DISCARDED].length = 0;
-		
+
 		this[VISIBLES].forEach((control) => control.remove());
 		this[VISIBLES].length = 0;
 	}

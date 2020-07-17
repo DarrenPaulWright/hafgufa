@@ -108,4 +108,4 @@ export default (Base) => {
 	});
 
 	return ContextMenuMixin;
-}
+};

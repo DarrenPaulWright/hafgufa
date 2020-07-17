@@ -81,4 +81,4 @@ export default (Base) => {
 	});
 
 	return IsWorkingMixin;
-}
+};

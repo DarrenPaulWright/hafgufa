@@ -757,7 +757,6 @@ export default class Grid extends Control {
 			});
 
 			if (currentColumn && (direction !== undefined || currentColumn.direction !== SORT_TYPES.NONE)) {
-
 				sortWithinGroups(self[FILTERED_ROWS], currentColumn);
 			}
 		};
@@ -1165,7 +1164,6 @@ export default class Grid extends Control {
 			if (selectedRow) {
 				if (self.onMultiSelect() && thisEvent.ctrlKey ||
 					!thisEvent.shiftKey && thisEvent.target && thisEvent.target.nodeName === 'INPUT') {
-
 					if (isSelected) {
 						self[SELECTED_ROWS].push(id);
 					}

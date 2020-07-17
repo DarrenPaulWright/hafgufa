@@ -311,4 +311,4 @@ export default (Base) => {
 	});
 
 	return ControlHeadingMixin;
-}
+};

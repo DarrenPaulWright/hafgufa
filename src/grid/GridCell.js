@@ -86,7 +86,6 @@ export default class GridCell extends Control {
 		if (self[DISPLAY_TYPE] === DISPLAY_TYPES.TEXT &&
 			self.element &&
 			self.element.scrollWidth > self.borderWidth()) {
-
 			if (displayText.length > MAX_TOOLTIP_LENGTH) {
 				displayText = displayText.slice(0, MAX_TOOLTIP_LENGTH) + ELLIPSIS;
 			}
@@ -145,7 +144,6 @@ export default class GridCell extends Control {
 
 			if (buttonData.disabled || !self.isEnabled() ||
 				(content.buttons && content.buttons[buttonIndex] && content.buttons[buttonIndex].disabled)) {
-
 				button.isEnabled(false);
 
 				if (buttonData.disabled && buttonData.disabled.title) {

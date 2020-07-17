@@ -232,7 +232,6 @@ export default class Heading extends FocusMixin(Control) {
 			this[toggleChecked](event);
 		}
 	}
-
 }
 
 Object.assign(Heading.prototype, {

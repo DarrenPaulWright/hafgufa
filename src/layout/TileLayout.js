@@ -723,7 +723,6 @@ export default class TileLayout extends Container {
 				}
 
 				if (self[RENDER_CUTOFF_TOP] > self[PREVIOUS_CUTTOFF_BOTTOM] || self[RENDER_CUTTOFF_BOTTOM] < self[PREVIOUS_CUTTOFF_TOP] || self[PREVIOUS_CUTTOFF_BOTTOM] === 0 || self[TILE_OFFSETS].length === 0) {
-
 					self[CONTROL_RECYCLER].discardAllControls();
 					self[RENDERED_CONTROLS].length = 0;
 					self[CUTOFF_INDEX_TOP] = -1;

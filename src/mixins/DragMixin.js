@@ -616,4 +616,4 @@ export default (Base) => {
 	});
 
 	return DragMixin;
-}
+};

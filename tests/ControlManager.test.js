@@ -287,5 +287,4 @@ describe('ControlManager', () => {
 
 		assert.is(manager.length, 0);
 	});
-
 });

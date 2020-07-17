@@ -698,8 +698,10 @@ export default class VirtualList extends FocusMixin(Control) {
 		self[CURRENT_SCROLL_OFFSET] = clamp(
 			offset,
 			0,
-			(self[ITEM_SIZE] * self[TOTAL_ITEMS]) - self[VIEWPORT_SIZE] + self.startOffset()
-			.toPixels(true) + self.endOffset().toPixels(true)
+			(self[ITEM_SIZE] * self[TOTAL_ITEMS]) -
+			self[VIEWPORT_SIZE] +
+			self.startOffset().toPixels(true) +
+			self.endOffset().toPixels(true)
 		);
 
 		d3Helper.animate(self)
@@ -1190,7 +1192,6 @@ Object.assign(VirtualList.prototype, {
 				self[MULTI_ITEM_FOCUS] = new MultiItemFocus(self)
 					.onSetFocus((index) => self[focusItem](index))
 					.length(self[TOTAL_ITEMS]);
-
 			}
 			else {
 				self.attr(TAB_INDEX, TAB_INDEX_DISABLED);

@@ -327,7 +327,6 @@ export default class Timeline extends IsWorkingMixin(NextPreviousMixin(Control))
 
 				slides = self[buildSlides]();
 
-
 				if (self[PARENT_SPAN]) {
 					subSpans = self[SPAN].subSpans
 						.map((subSpan) => subSpan * self[PARENT_SPAN].subSpans[0])
@@ -521,7 +520,6 @@ Object.assign(Timeline.prototype, {
 
 			self[VIRTUAL_LIST]
 				.set(MOUSE_WHEEL_EVENT, onMouseWheel, canZoom);
-
 		}
 	}),
 	maxZoom: methodEnum({

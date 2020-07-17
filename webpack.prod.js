@@ -1,9 +1,9 @@
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const config = require('./webpack.config');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const config = require('./webpack.config');
 
 module.exports = merge(config, {
 	mode: 'production',
@@ -22,7 +22,7 @@ module.exports = merge(config, {
 					cssDeclarationSorter: false
 				},
 				canPrint: true
-			}),
+			})
 		]
 	},
 	plugins: [

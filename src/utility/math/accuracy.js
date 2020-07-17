@@ -20,4 +20,4 @@ export default (number) => {
 		accuracy++;
 	}
 	return accuracy;
-}
+};

@@ -475,11 +475,10 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 			});
 
 			if (currentTypedInput) {
-				filteredSuggestions = filteredSuggestions.filter((suggestion) => search.find(
-					currentTypedInput,
-					suggestion.title || ''
-					) ||
-					search.find(currentTypedInput, suggestion.subTitle || ''));
+				filteredSuggestions = filteredSuggestions.filter((suggestion) => {
+					return search.find(currentTypedInput, suggestion.title || '') ||
+						search.find(currentTypedInput, suggestion.subTitle || '');
+				});
 				filteredTitle(filteredSuggestions, currentTypedInput);
 			}
 

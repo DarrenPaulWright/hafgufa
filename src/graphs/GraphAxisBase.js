@@ -182,15 +182,13 @@ export default class GraphAxisBase extends GraphBase {
 					switch (self.xScaleType()) {
 						case SCALE_TYPES.BAND:
 							g.call(axisBottom(self[X_SCALE])
-								.tickFormat((l) => l + self.xSuffix())
-							);
+								.tickFormat((l) => l + self.xSuffix()));
 							break;
 						case SCALE_TYPES.LINEAR:
 							g.call(axisTop(self[X_SCALE])
 								.tickSize(self[RENDERED_HEIGHT] - self.xAxisSize())
 								.ticks(self[getOptimalTicks](self[RENDERED_WIDTH], self[X_SCALE], self.xInterval()))
-								.tickFormat((l) => l + self.xSuffix())
-							);
+								.tickFormat((l) => l + self.xSuffix()));
 							g.selectAll('.tick text')
 								.attr('alignment-baseline', 'middle')
 								.attr('text-anchor', 'middle')
@@ -231,15 +229,13 @@ export default class GraphAxisBase extends GraphBase {
 					switch (self.yScaleType()) {
 						case SCALE_TYPES.BAND:
 							g.call(axisLeft(self[Y_SCALE])
-								.tickFormat((l) => l + self.ySuffix())
-							);
+								.tickFormat((l) => l + self.ySuffix()));
 							break;
 						case SCALE_TYPES.LINEAR:
 							g.call(axisRight(self[Y_SCALE])
 								.tickSize(self[RENDERED_WIDTH] - self.yAxisSize())
 								.ticks(self[getOptimalTicks](self[RENDERED_HEIGHT], self[Y_SCALE], self.yInterval()))
-								.tickFormat((l) => l + self.ySuffix())
-							);
+								.tickFormat((l) => l + self.ySuffix()));
 							g.selectAll('.tick text')
 								.attr('alignment-baseline', 'middle')
 								.attr('text-anchor', 'end')

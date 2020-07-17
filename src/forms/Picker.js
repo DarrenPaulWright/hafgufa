@@ -186,8 +186,8 @@ export default class Picker extends FormControl {
 				}
 			}
 			else if (!options2.children[childIndex] ||
-					options1.children[childIndex].id !== options2.children[childIndex].id ||
-					options1.children[childIndex].isEnabled !== options2.children[childIndex].isEnabled) {
+				options1.children[childIndex].id !== options2.children[childIndex].id ||
+				options1.children[childIndex].isEnabled !== options2.children[childIndex].isEnabled) {
 				return false;
 			}
 		}

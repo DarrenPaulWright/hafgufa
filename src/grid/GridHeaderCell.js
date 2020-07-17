@@ -266,18 +266,16 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			}];
 		}
 
-		menuOptions = menuOptions.concat(
-			self.selectableColumns()
-				.map((column) => !column.title ? null : {
-					id: CONTEXT_MENU_COLUMN_PREFIX + column.id,
-					title: column.title,
-					isSelectable: true,
-					isSelected: !column.isHidden,
-					classes: '',
-					keepMenuOpen: true
-				})
-				.filter(Boolean)
-		);
+		menuOptions = menuOptions.concat(self.selectableColumns()
+			.map((column) => !column.title ? null : {
+				id: CONTEXT_MENU_COLUMN_PREFIX + column.id,
+				title: column.title,
+				isSelectable: true,
+				isSelected: !column.isHidden,
+				classes: '',
+				keepMenuOpen: true
+			})
+			.filter(Boolean));
 
 		self.contextMenu(menuOptions);
 	}
