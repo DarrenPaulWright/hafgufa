@@ -88,7 +88,7 @@ export default class Legend extends Control {
 	}
 
 	[setCheckedCharacter](d) {
-		return this[UNCHECKED_ITEMS].includes(d) ? '\uf096' : '\uf14a';
+		return this[UNCHECKED_ITEMS].includes(d) ? '\uF096' : '\uF14A';
 	}
 
 	[toggleItem](d) {

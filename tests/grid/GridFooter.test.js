@@ -134,7 +134,7 @@ describe('GridFooter', () => {
 		});
 
 		it('should call onCollapseAllGroups with false when the expand all button is clicked', () => {
-			let testValue;
+			let testValue = null;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
@@ -150,7 +150,7 @@ describe('GridFooter', () => {
 		});
 
 		it('should call onCollapseAllGroups with true when the collapse all button is clicked', () => {
-			let testValue;
+			let testValue = null;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
@@ -166,7 +166,7 @@ describe('GridFooter', () => {
 		});
 
 		it('should not throw an error when the expand all button is clicked', () => {
-			let testValue;
+			let testValue = null;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container
@@ -179,7 +179,7 @@ describe('GridFooter', () => {
 		});
 
 		it('should not throw an error when the collapse all button is clicked', () => {
-			let testValue;
+			let testValue = null;
 
 			testUtil.control = new GridFooter({
 				container: testUtil.container

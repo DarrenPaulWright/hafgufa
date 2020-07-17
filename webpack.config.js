@@ -30,7 +30,7 @@ const config = {
 		splitChunks: {
 			cacheGroups: {
 				vendor: {
-					test: /[/\\]node_modules[/\\]/,
+					test: /[/\\]node_modules[/\\]/u,
 					name: 'vendor',
 					chunks: 'all'
 				}
@@ -51,7 +51,7 @@ const config = {
 			minify: {
 				collapseWhitespace: true
 			},
-			excludeAssets: [/.*desktop.js/, /.*mobile.js/]
+			excludeAssets: [/.*desktop.js/u, /.*mobile.js/u]
 		}),
 		new ThemesPlugin({
 			filename: 'styles/[name].min.css',
@@ -84,9 +84,9 @@ const config = {
 	],
 	module: {
 		rules: [{
-			test: /\.js$/,
+			test: /\.js$/u,
 			enforce: 'pre',
-			exclude: /node_modules/,
+			exclude: /node_modules/u,
 			use: [{
 				loader: 'eslint-loader',
 				options: {
@@ -96,8 +96,8 @@ const config = {
 				}
 			}]
 		}, {
-			test: /\.js$/,
-			exclude: /node_modules/,
+			test: /\.js$/u,
+			exclude: /node_modules/u,
 			loader: 'babel-loader'
 		}]
 	}

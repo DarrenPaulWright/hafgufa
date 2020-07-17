@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
-import { COLUMN_TYPES, SORT_TYPES, FILTER_TYPES } from '../../src/grid/gridConstants.js';
+import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../../src/grid/gridConstants.js';
 import GridHeader from '../../src/grid/GridHeader.js';
 import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
@@ -65,9 +65,6 @@ describe('GridHeader', () => {
 		});
 
 		it('should set the width of flexible width columns proportionally', () => {
-			let firstCellWidth;
-			let secondCellWidth;
-
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
@@ -89,16 +86,13 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
-			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
+			const firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			const secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
 
 		it('should accept % or * for flexible width columns', () => {
-			let firstCellWidth;
-			let secondCellWidth;
-
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
@@ -118,16 +112,13 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
-			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
+			const firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			const secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
 
 		it('should accept an asterisk without a number as a width value', () => {
-			let firstCellWidth;
-			let secondCellWidth;
-
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
@@ -147,8 +138,8 @@ describe('GridHeader', () => {
 
 			testUtil.control.desiredWidth(400);
 
-			firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
-			secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
+			const firstCellWidth = testUtil.nth('.grid-header-cell', 0).offsetWidth;
+			const secondCellWidth = testUtil.nth('.grid-header-cell', 1).offsetWidth;
 
 			assert.is(firstCellWidth, secondCellWidth * 3);
 		});
@@ -584,8 +575,6 @@ describe('GridHeader', () => {
 		});
 
 		it('should add scrollbarWidth to the width of the last column control', () => {
-			let lastCellWidth;
-
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
@@ -606,7 +595,7 @@ describe('GridHeader', () => {
 			testUtil.control.scrollbarWidth(17);
 			testUtil.control.desiredWidth(200);
 
-			lastCellWidth = testUtil.nth('.grid-header-cell', 2).offsetWidth;
+			const lastCellWidth = testUtil.nth('.grid-header-cell', 2).offsetWidth;
 
 			assert.is(lastCellWidth, 37);
 		});

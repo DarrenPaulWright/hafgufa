@@ -190,7 +190,7 @@ export default class Control extends Removable {
 	[updateElementId]() {
 		const self = this;
 
-		self.attr('id', self.id() ? `${self.id()}${self.idSuffix()}`.replace(/[^\w.:-]/g, '') : null);
+		self.attr('id', self.id() ? `${self.id()}${self.idSuffix()}`.replace(/[^\w.:-]/ug, '') : null);
 	}
 
 	/**
@@ -308,7 +308,10 @@ Object.assign(Control.prototype, {
 					erase(_self, 'append');
 				}
 				else if (_self.prepend !== undefined) {
-					container.insertBefore(self.element, isElement(_self.prepend) ? _self.prepend : container.firstChild);
+					container.insertBefore(
+						self.element,
+						isElement(_self.prepend) ? _self.prepend : container.firstChild
+					);
 
 					erase(_self, 'prepend');
 				}

@@ -33,15 +33,15 @@ const search = {
 		});
 	},
 	parseNeedle: (string, breakOnSpaces = true) => {
-		const SPACES_REGEX = /[^\s",;]+|"([^"]*)"/g;
-		const NO_SPACES_REGEX = /[^,;]+/g;
+		const SPACES_REGEX = /[^\s",;]+|"([^"]*)"/ug;
+		const NO_SPACES_REGEX = /[^,;]+/ug;
 		const REGEX = breakOnSpaces ? SPACES_REGEX : NO_SPACES_REGEX;
 
 		return string.split(' OR ')
 			.map((orString) => {
 				return (orString.match(REGEX) || [])
 					.map((item) => {
-						return item.replace(/^[ "]+|[ "]+$/g, '');
+						return item.replace(/^[ "]+|[ "]+$/ug, '');
 					});
 			});
 	}

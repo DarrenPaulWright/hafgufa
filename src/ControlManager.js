@@ -77,7 +77,9 @@ export default class ControlManager {
 	}
 
 	get(id) {
-		return this[IDS][id] || this[CONTROLS].reduce((result, data) => result || data.control.get !== undefined && data.control.get(id), undefined);
+		return this[IDS][id] || this[CONTROLS].reduce((result, data) => {
+			return result || (data.control.get !== undefined && data.control.get(id));
+		}, undefined);
 	}
 
 	each(callback) {

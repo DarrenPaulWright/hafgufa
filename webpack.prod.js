@@ -15,7 +15,7 @@ module.exports = merge(config, {
 				sourceMap: true
 			}),
 			new OptimizeCssAssetsPlugin({
-				assetNameRegExp: /\.min\.css$/g,
+				assetNameRegExp: /\.min\.css$/ug,
 				cssProcessor: require('cssnano'),
 				cssProcessorOptions: {
 					preset: 'default',

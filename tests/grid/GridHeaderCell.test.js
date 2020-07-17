@@ -74,7 +74,7 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onSelect callback with true when a checkbox is clicked', () => {
-			let testValue;
+			let testValue = false;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
@@ -90,7 +90,7 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should call the onSelect callback with false when a checkbox is clicked a second time', () => {
-			let testValue;
+			let testValue = true;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
@@ -498,14 +498,12 @@ describe('GridHeaderCell', () => {
 		});
 
 		it('should return a filter value when a NUMBER filter control is set', () => {
-			let inputs;
-
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container
 			})
 				.filterType(FILTER_TYPES.NUMBER);
 
-			inputs = testUtil.all('input');
+			const inputs = testUtil.all('input');
 
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
@@ -521,7 +519,6 @@ describe('GridHeaderCell', () => {
 
 		it('should call the onFilter callback when a NUMBER filter control is set', () => {
 			let testValue = '';
-			let inputs;
 
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
@@ -531,7 +528,7 @@ describe('GridHeaderCell', () => {
 			})
 				.filterType(FILTER_TYPES.NUMBER);
 
-			inputs = testUtil.all('input');
+			const inputs = testUtil.all('input');
 
 			inputs[0].value = '5';
 			testUtil.trigger(inputs[0], 'change');
@@ -549,7 +546,6 @@ describe('GridHeaderCell', () => {
 			'should have a filter value of empty string when a NUMBER filter control is set and then set to nothing',
 			() => {
 				let testValue = '';
-				let inputs;
 
 				testUtil.control = new GridHeaderCell({
 					container: testUtil.container,
@@ -559,7 +555,7 @@ describe('GridHeaderCell', () => {
 				})
 					.filterType(FILTER_TYPES.NUMBER);
 
-				inputs = testUtil.all('input');
+				const inputs = testUtil.all('input');
 
 				inputs[0].value = '5';
 				testUtil.trigger(inputs[0], 'change');
