@@ -38,11 +38,14 @@ describe('ControlRecycler', () => {
 	});
 
 	describe('GetControls', () => {
-		it('should NOT return an instance of a control when getRecycledControl is called if no control has been defined', () => {
-			testUtil.control = new ControlRecycler();
+		it(
+			'should NOT return an instance of a control when getRecycledControl is called if no control has been defined',
+			() => {
+				testUtil.control = new ControlRecycler();
 
-			assert.is(testUtil.control.getRecycledControl(), undefined);
-		});
+				assert.is(testUtil.control.getRecycledControl(), undefined);
+			}
+		);
 
 		it('should return an instance of a control when getRecycledControl is called', () => {
 			testUtil.control = new ControlRecycler({
@@ -72,25 +75,28 @@ describe('ControlRecycler', () => {
 			assert.is(testUtil.control.totalVisibleControls(), 2);
 		});
 
-		it('should return an instance of a recycled control when getRecycledControl is called after the control is discarded', () => {
-			let initialControl;
-			let secondControl;
+		it(
+			'should return an instance of a recycled control when getRecycledControl is called after the control is discarded',
+			() => {
+				let initialControl;
+				let secondControl;
 
-			testUtil.control = new ControlRecycler({
-				control: Button,
-				defaultSettings: {
-					container: 'body'
-				}
-			});
+				testUtil.control = new ControlRecycler({
+					control: Button,
+					defaultSettings: {
+						container: 'body'
+					}
+				});
 
-			initialControl = testUtil.control.getRecycledControl();
+				initialControl = testUtil.control.getRecycledControl();
 
-			testUtil.control.discardAllControls();
+				testUtil.control.discardAllControls();
 
-			secondControl = testUtil.control.getRecycledControl();
+				secondControl = testUtil.control.getRecycledControl();
 
-			assert.is(initialControl, secondControl);
-		});
+				assert.is(initialControl, secondControl);
+			}
+		);
 
 		it('should return the instance of a specific control when getControl is called', () => {
 			let secondControl;
@@ -113,26 +119,29 @@ describe('ControlRecycler', () => {
 			assert.is(secondControl, thirdControl);
 		});
 
-		it('should return an array with two controls when getRenderedControls is called after three conrols have been instantiated and one discarded', () => {
-			let secondControl;
+		it(
+			'should return an array with two controls when getRenderedControls is called after three conrols have been instantiated and one discarded',
+			() => {
+				let secondControl;
 
-			testUtil.control = new ControlRecycler({
-				control: Button,
-				defaultSettings: {
-					container: 'body'
-				}
-			});
+				testUtil.control = new ControlRecycler({
+					control: Button,
+					defaultSettings: {
+						container: 'body'
+					}
+				});
 
-			testUtil.control.getRecycledControl();
-			secondControl = testUtil.control.getRecycledControl();
-			testUtil.control.getRecycledControl();
+				testUtil.control.getRecycledControl();
+				secondControl = testUtil.control.getRecycledControl();
+				testUtil.control.getRecycledControl();
 
-			secondControl.id('test');
+				secondControl.id('test');
 
-			testUtil.control.discardControl('test');
+				testUtil.control.discardControl('test');
 
-			assert.is(testUtil.control.getRenderedControls().length, 2);
-		});
+				assert.is(testUtil.control.getRenderedControls().length, 2);
+			}
+		);
 
 		it('should 2 when totalVisibleControls is called ther are two visible controls', () => {
 			let secondControl;
@@ -155,12 +164,7 @@ describe('ControlRecycler', () => {
 			assert.is(testUtil.control.totalVisibleControls(), 2);
 		});
 
-		it('should get the appropriate control when getControlAtOffset is called', () => {
-			let initialControl;
-			let secondControl;
-			let thirdControl;
-			let fourthControl;
-
+		it('should get the appropriate control when getControlAtIndex is called', () => {
 			testUtil.control = new ControlRecycler({
 				control: Button,
 				defaultSettings: {
@@ -168,11 +172,11 @@ describe('ControlRecycler', () => {
 				}
 			});
 
-			initialControl = testUtil.control.getRecycledControl();
-			secondControl = testUtil.control.getRecycledControl();
-			thirdControl = testUtil.control.getRecycledControl();
+			const initialControl = testUtil.control.getRecycledControl();
+			const secondControl = testUtil.control.getRecycledControl();
+			const thirdControl = testUtil.control.getRecycledControl();
 
-			fourthControl = testUtil.control.getControlAtOffset(1);
+			const fourthControl = testUtil.control.getControlAtIndex(1);
 
 			assert.notIs(initialControl, fourthControl);
 			assert.is(secondControl, fourthControl);

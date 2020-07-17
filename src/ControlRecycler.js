@@ -9,36 +9,46 @@ const DISCARDED = Symbol();
  *
  * @class ControlRecycler
  * @constructor
+ *
+ * @param {object} settings
  */
 export default class ControlRecycler {
-	constructor(settings) {
+	constructor(settings = {}) {
 		this[VISIBLES] = [];
 		this[DISCARDED] = [];
 
-		if (settings !== undefined) {
-			applySettings(this, settings);
-		}
+		applySettings(this, settings);
 	}
 }
 
 Object.assign(ControlRecycler.prototype, {
 	/**
+	 * A reference to a Control.
+	 *
 	 * @method control
 	 * @member module:ControlRecycler
 	 * @instance
+	 * @chainable
+	 *
 	 * @param {constructor} [newControl]
-	 * @returns {constructor|this}
+	 *
+	 * @returns {constructor}
 	 */
 	control: methodFunction({
 		bind: false
 	}),
 
 	/**
+	 * Default settings to be applied to controls when created.
+	 *
 	 * @method defaultSettings
 	 * @member module:ControlRecycler
 	 * @instance
+	 * @chainable
+	 *
 	 * @param {object} [newDefaultSettings]
-	 * @returns {object|this}
+	 *
+	 * @returns {object}
 	 */
 	defaultSettings: methodObject({
 		other: undefined
@@ -50,14 +60,18 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method getRecycledControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {boolean} [doPrepend=false]
+	 *
+	 * @param {boolean} [doPrepend=false] - Add the control to the beginning fo the stack
+	 *
 	 * @returns {object}
 	 */
 	getRecycledControl(doPrepend = false) {
 		const Control = this.control();
 
 		if (Control !== undefined) {
-			const control = this[DISCARDED].length !== 0 && this[DISCARDED].shift() || new Control(clone(this.defaultSettings()));
+			const control = this[DISCARDED].length === 0 ?
+				new Control(clone(this.defaultSettings())) :
+				this[DISCARDED].shift();
 
 			if (doPrepend) {
 				this[VISIBLES].unshift(control);
@@ -71,12 +85,14 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Get a visible control with a specific id
+	 * Get a visible control with a specific id.
 	 *
 	 * @method getControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {string} [id]
+	 *
+	 * @param {string} id - The id of the control
+	 *
 	 * @returns {object}
 	 */
 	getControl(id) {
@@ -84,11 +100,12 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Get an Array of all the visible controls
+	 * Get an array of all the visible controls.
 	 *
 	 * @method getRenderedControls
 	 * @member module:ControlRecycler
 	 * @instance
+	 *
 	 * @returns {object[]}
 	 */
 	getRenderedControls() {
@@ -96,20 +113,25 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Calls a callback for each rendered control
+	 * Calls a callback for each rendered control.
 	 *
 	 * @method each
 	 * @member module:ControlRecycler
 	 * @instance
+	 * @chainable
+	 *
 	 * @param {Function} [callback] - provides a reference to the control and the index
-	 * @returns {object[]}
+	 *
+	 * @returns {object} this
 	 */
 	each(callback) {
 		this[VISIBLES].forEach(callback);
+
+		return this;
 	},
 
 	/**
-	 * Calls a callback for each rendered control, returns the resulting array
+	 * Calls a callback for each rendered control, returns the resulting array.
 	 *
 	 * @method map
 	 * @member module:ControlRecycler
@@ -124,12 +146,16 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Discard a control that matches a specific id
+	 * Discard a control that matches a specific id.
 	 *
 	 * @method discardControl
 	 * @member module:ControlRecycler
 	 * @instance
-	 * @param {string} [id]
+	 * @chainable
+	 *
+	 * @param {string} id - The id of the control
+	 *
+	 * @returns {object} this
 	 */
 	discardControl(id) {
 		const index = this[VISIBLES].findIndex((control) => control.id() === id);
@@ -138,6 +164,8 @@ Object.assign(ControlRecycler.prototype, {
 			this[DISCARDED].push(this[VISIBLES][index].container(null));
 			this[VISIBLES].splice(index, 1);
 		}
+
+		return this;
 	},
 
 	/**
@@ -146,27 +174,33 @@ Object.assign(ControlRecycler.prototype, {
 	 * @method discardAllControls
 	 * @member module:ControlRecycler
 	 * @instance
+	 * @chainable
+	 *
+	 * @returns {object} this
 	 */
 	discardAllControls() {
 		while (this[VISIBLES].length > 0) {
 			this[DISCARDED].push(this[VISIBLES].pop().container(null));
 		}
+
+		return this;
 	},
 
 	/**
 	 * Get a reference to a control at a specific offset.
 	 *
-	 * @method getControlAtOffset
+	 * @method getControlAtIndex
 	 * @member module:ControlRecycler
 	 * @instance
 	 *
-	 * @param {number} [controlOffset]
-	 * @param {boolean} [canCreateNew=false]
+	 * @param {number} [index] - Index of the control
+	 * @param {boolean} [canCreateNew=false] - Create a new control if there isn't one at index
 	 *
 	 * @returns {object}
 	 */
-	getControlAtOffset(controlOffset, canCreateNew = false) {
-		return this[VISIBLES][controlOffset] || canCreateNew && this.getRecycledControl();
+	getControlAtIndex(index, canCreateNew = false) {
+		return this[VISIBLES][index] ||
+			(canCreateNew && this.getRecycledControl());
 	},
 
 	/**
@@ -182,7 +216,7 @@ Object.assign(ControlRecycler.prototype, {
 	},
 
 	/**
-	 * Prepares itself for deletion and removes all the controls it contains
+	 * Prepares itself for deletion and removes all the controls it contains.
 	 *
 	 * @method remove
 	 * @member module:ControlRecycler

@@ -542,7 +542,7 @@ export default class VirtualList extends FocusMixin(Control) {
 	 */
 	[setItemPosition](index) {
 		const self = this;
-		const control = self[CONTROL_RECYCLER].getControlAtOffset(index);
+		const control = self[CONTROL_RECYCLER].getControlAtIndex(index);
 
 		control.css(self[POSITION_ORIGIN], self[CURRENT_ITEM_OFFSET] + PIXELS);
 
@@ -672,7 +672,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[setScroll](index * self[ITEM_SIZE] - (self[VIEWPORT_SIZE] - self[ITEM_SIZE]));
 		}
 		else {
-			control = self[CONTROL_RECYCLER].getControlAtOffset(index - self[CURRENT_START_INDEX]);
+			control = self[CONTROL_RECYCLER].getControlAtIndex(index - self[CURRENT_START_INDEX]);
 
 			if (control) {
 				if (parseInt(control.css(TOP), 10) < (self[CURRENT_SCROLL_OFFSET] + self[ITEM_SIZE])) {
@@ -716,7 +716,7 @@ export default class VirtualList extends FocusMixin(Control) {
 	 */
 	[getFirstItemAltSize]() {
 		const self = this;
-		const item = self[CONTROL_RECYCLER].getControlAtOffset(0);
+		const item = self[CONTROL_RECYCLER].getControlAtIndex(0);
 
 		return item ? item[self[ALT_EXTENT] === HEIGHT ? 'borderHeight' : 'borderWidth']() + PIXELS : AUTO;
 	}

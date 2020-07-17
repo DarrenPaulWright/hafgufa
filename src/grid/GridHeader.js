@@ -128,7 +128,7 @@ Object.assign(GridHeader.prototype, {
 				}
 				column.minWidth = column.isFixedWidth ? null : (parseInt(column.minWidth || MIN_COLUMN_WIDTH, 10));
 
-				applySettings(self[CELL_RECYCLER].getControlAtOffset(index, true), {
+				applySettings(self[CELL_RECYCLER].getControlAtIndex(index, true), {
 					container: self.element,
 					id: column.id,
 					label: column.title,
@@ -142,7 +142,7 @@ Object.assign(GridHeader.prototype, {
 			});
 
 			for (let index = columns.length; index < self[CELL_RECYCLER].totalVisibleControls(); index++) {
-				self[CELL_RECYCLER].getControlAtOffset(index).container(null);
+				self[CELL_RECYCLER].getControlAtIndex(index).container(null);
 			}
 		}
 	}),

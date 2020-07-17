@@ -111,7 +111,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 	}
 
 	[getArrowWidth]() {
-		return this[CONTROLS].totalVisibleControls() ? this[CONTROLS].getControlAtOffset(0).borderHeight() : 0;
+		return this[CONTROLS].totalVisibleControls() ? this[CONTROLS].getControlAtIndex(0).borderHeight() : 0;
 	}
 
 	[layout]() {
@@ -209,7 +209,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 					title.push(step.title);
 				}
 
-				self[CONTROLS].getControlAtOffset(index)
+				self[CONTROLS].getControlAtIndex(index)
 					.title(title.join(': '));
 
 				title.length = 0;
