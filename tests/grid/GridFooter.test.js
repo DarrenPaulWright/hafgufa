@@ -166,29 +166,25 @@ describe('GridFooter', () => {
 		});
 
 		it('should not throw an error when the expand all button is clicked', () => {
-			let testValue = null;
-
 			testUtil.control = new GridFooter({
 				container: testUtil.container
 			});
 
-			testUtil.control.showExpandCollapseButtons();
-			testUtil.simulateClick(testUtil.nth('.icon-button', 0));
-
-			assert.is(testValue === undefined, true);
+			assert.notThrows(() => {
+				testUtil.control.showExpandCollapseButtons();
+				testUtil.simulateClick(testUtil.nth('.icon-button', 0));
+			});
 		});
 
 		it('should not throw an error when the collapse all button is clicked', () => {
-			let testValue = null;
-
 			testUtil.control = new GridFooter({
 				container: testUtil.container
 			});
 
-			testUtil.control.showExpandCollapseButtons();
-			testUtil.simulateClick(testUtil.nth('.icon-button', 1));
-
-			assert.is(testValue === undefined, true);
+			assert.notThrows(() => {
+				testUtil.control.showExpandCollapseButtons();
+				testUtil.simulateClick(testUtil.nth('.icon-button', 1));
+			});
 		});
 	});
 });
