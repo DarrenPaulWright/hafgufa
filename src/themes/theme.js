@@ -8,7 +8,7 @@ const NAME_TAG = '[name]';
 const ENV_TAG = '[env]';
 const WORD = '(.+)';
 
-const buildHref = (self, theme, env, isRegEx = false) => {
+const buildHref = (self, theme, environment, isRegEx = false) => {
 	let path = self.path();
 
 	if (isRegEx) {
@@ -17,12 +17,12 @@ const buildHref = (self, theme, env, isRegEx = false) => {
 
 	return path
 		.replace(NAME_TAG, theme || self.theme())
-		.replace(ENV_TAG, env || self.env());
+		.replace(ENV_TAG, environment || self.env());
 };
 
-const findLink = (self, theme, env) => {
+const findLink = (self, theme, environment) => {
 	const links = HEAD.querySelectorAll('link');
-	const href = buildHref(self, theme, env, true);
+	const href = buildHref(self, theme, environment, true);
 	let themeLink;
 
 	if (links) {
@@ -40,7 +40,7 @@ const findLink = (self, theme, env) => {
 const getCurrentTheme = (self) => {
 	const themeLink = findLink(self, WORD, WORD);
 	let theme;
-	let env;
+	let environment;
 
 	if (themeLink) {
 		const linkMatch = themeLink.href.match(buildHref(self, WORD, WORD, true));
@@ -50,14 +50,14 @@ const getCurrentTheme = (self) => {
 			theme = linkMatch[pathMatch.indexOf(NAME_TAG) + 1];
 		}
 		if (pathMatch.includes(ENV_TAG)) {
-			env = linkMatch[pathMatch.indexOf(ENV_TAG) + 1];
+			environment = linkMatch[pathMatch.indexOf(ENV_TAG) + 1];
 		}
 	}
 
-	return { theme, env };
+	return { theme, environment };
 };
 
-const newLink = (self, prevLink, isThemeChange) => {
+const newLink = (self, previousLink, isThemeChange) => {
 	let isWorking;
 	const done = () => {
 		windowResize.trigger();
@@ -98,8 +98,8 @@ const newLink = (self, prevLink, isThemeChange) => {
 	link.rel = 'stylesheet';
 	link.href = buildHref(self);
 	link.onload = () => {
-		if (prevLink) {
-			prevLink.remove();
+		if (previousLink) {
+			previousLink.remove();
 		}
 
 		done();
@@ -132,7 +132,7 @@ const setZoom = () => {
 	document.documentElement.style[FONT_SIZE] = getBodyFontSize();
 };
 
-const ENV = Symbol();
+const ENVIRONMENT = Symbol();
 const PATH = Symbol();
 const THEME = Symbol();
 const THEMES = Symbol();
@@ -142,7 +142,7 @@ class Theme {
 	constructor() {
 		const self = this;
 
-		self[ENV] = IS_DESKTOP ? 'desktop' : 'mobile';
+		self[ENVIRONMENT] = IS_DESKTOP ? 'desktop' : 'mobile';
 		self[PATH] = '/styles/[name].[env].min.css';
 
 		if (!IS_DESKTOP) {
@@ -176,7 +176,7 @@ class Theme {
 
 			const current = getCurrentTheme(self);
 			self[THEME] = current.theme;
-			if (self[ENV] !== current.env) {
+			if (self[ENVIRONMENT] !== current.environment) {
 				newLink(self, findLink(self, current.theme, WORD));
 			}
 
@@ -198,20 +198,20 @@ class Theme {
 		return self[ON_LOAD];
 	}
 
-	env(env) {
+	env(environment) {
 		const self = this;
 
 		if (arguments.length) {
-			if (env !== self[ENV]) {
-				const prevLink = findLink(self, self.theme(), self[ENV]);
-				self[ENV] = env;
-				newLink(self, prevLink);
+			if (environment !== self[ENVIRONMENT]) {
+				const previousLink = findLink(self, self.theme(), self[ENVIRONMENT]);
+				self[ENVIRONMENT] = environment;
+				newLink(self, previousLink);
 			}
 
 			return self;
 		}
 
-		return self[ENV];
+		return self[ENVIRONMENT];
 	}
 
 	theme(theme) {
@@ -219,9 +219,9 @@ class Theme {
 
 		if (arguments.length) {
 			if (self.themes().includes(theme) && theme !== self[THEME]) {
-				const prevLink = findLink(self, self[THEME], self.env());
+				const previousLink = findLink(self, self[THEME], self.env());
 				self[THEME] = theme;
-				newLink(self, prevLink, true);
+				newLink(self, previousLink, true);
 			}
 
 			return self;
