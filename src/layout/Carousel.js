@@ -39,7 +39,7 @@ export default class Carousel extends NextPreviousMixin(Control) {
 			type: controlTypes.CAROUSEL,
 			height: AUTO
 		}, settings, {
-			NextPrevMixin: {
+			NextPreviousMixin: {
 				onShowButtons(onChange, buttonWidth) {
 					self[BUTTON_SIZE] = buttonWidth;
 

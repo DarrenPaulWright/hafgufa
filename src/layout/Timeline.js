@@ -195,7 +195,7 @@ export default class Timeline extends IsWorkingMixin(NextPreviousMixin(Control))
 		super(setDefaults({
 			canZoom: true
 		}, settings, {
-			NextPrevMixin: {
+			NextPreviousMixin: {
 				onShowButtons(onChange) {
 					self[VIRTUAL_LIST].onLayoutChange(onChange);
 				},
