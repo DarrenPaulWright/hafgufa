@@ -43,7 +43,7 @@ import {
 	WINDOW,
 	Z_INDEX
 } from '../utility/domConstants.js';
-import * as mouse from '../utility/mouse.js';
+import mousePosition from '../utility/mousePosition.js';
 import setDefaults from '../utility/setDefaults.js';
 import Container from './Container.js';
 import './Popup.less';
@@ -468,8 +468,8 @@ class Popup extends MergeContentContainerMixin(Container) {
 			anchorDockHeight = Popup[getDockPointOffsetHeight](self.anchorDockPoint(), anchor);
 		}
 		else if (anchor === Popup.MOUSE) {
-			anchorLeft = mouse.x;
-			anchorTop = mouse.y;
+			anchorLeft = mousePosition.x;
+			anchorTop = mousePosition.y;
 
 			if (!self.canTrackMouse()) {
 				BODY.removeEventListener(MOUSE_MOVE_EVENT, self[onMouseMove]);
