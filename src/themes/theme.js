@@ -12,7 +12,9 @@ const buildHref = (self, theme, environment, isRegEx = false) => {
 	let path = self.path();
 
 	if (isRegEx) {
-		path = path.replace(/\./ug, '\\.').replace(/\//ug, '\\/');
+		path = path
+			.replace(/\./ug, '\\.')
+			.replace(/\//ug, '\\/');
 	}
 
 	return path
@@ -44,7 +46,7 @@ const getCurrentTheme = (self) => {
 
 	if (themeLink) {
 		const linkMatch = themeLink.href.match(buildHref(self, WORD, WORD, true));
-		const pathMatch = self.path().match(/(\[[^\]]+])/ug);
+		const pathMatch = self.path().match(/(\[[^\]]+\])/ug);
 
 		if (pathMatch.includes(NAME_TAG)) {
 			theme = linkMatch[pathMatch.indexOf(NAME_TAG) + 1];
