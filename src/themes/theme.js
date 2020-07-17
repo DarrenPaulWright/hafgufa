@@ -159,7 +159,7 @@ class Theme {
 	path(path) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			self[PATH] = path;
 
 			return self;
@@ -171,7 +171,7 @@ class Theme {
 	themes(themes) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			self[THEMES] = themes;
 
 			const current = getCurrentTheme(self);
@@ -189,7 +189,7 @@ class Theme {
 	onLoad(onLoad) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			self[ON_LOAD] = onLoad;
 
 			return self;
@@ -201,7 +201,7 @@ class Theme {
 	env(environment) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (environment !== self[ENVIRONMENT]) {
 				const previousLink = findLink(self, self.theme(), self[ENVIRONMENT]);
 				self[ENVIRONMENT] = environment;
@@ -217,7 +217,7 @@ class Theme {
 	theme(theme) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (self.themes().includes(theme) && theme !== self[THEME]) {
 				const previousLink = findLink(self, self[THEME], self.env());
 				self[THEME] = theme;

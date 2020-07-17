@@ -17,7 +17,7 @@ export default class Rect extends SvgControl {
 	}
 
 	x(x) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			this.attr('x', x);
 
 			return this;
@@ -27,7 +27,7 @@ export default class Rect extends SvgControl {
 	}
 
 	y(y) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			this.attr('y', y);
 
 			return this;

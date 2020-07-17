@@ -115,7 +115,7 @@ Object.assign(Legend.prototype, {
 			const TEXT_X = (RADIUS * 2) + TEXT_PADDING + CHECKBOX_OFFSET;
 			const getY = (d, index) => ((index + 1) * ITEM_OFFSET) + PADDING + RADIUS;
 
-			if (newValue.length) {
+			if (newValue.length !== 0) {
 				self[ITEMS] = newValue[0].items;
 				self[D3_COLOR] = color(self.color());
 

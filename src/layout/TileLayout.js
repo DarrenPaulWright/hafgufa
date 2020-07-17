@@ -496,7 +496,7 @@ export default class TileLayout extends Container {
 
 		const cleanUp = () => {
 			const bottom = Math.max(...self[COLUMN_OFFSETS]);
-			const isLast = (self.total() || self.tileData().length) === self[CUTOFF_INDEX_BOTTOM] + 1;
+			const isLast = (self.total() || self.tileData().length !== 0) === self[CUTOFF_INDEX_BOTTOM] + 1;
 
 			if (bottom > self[CURRENT_SCROLL_HEIGHT] || isLast) {
 				self[CURRENT_SCROLL_HEIGHT] = bottom + (isLast ? 0 : self[LAYOUT_HEIGHT]);

@@ -232,7 +232,7 @@ export default class Scatter extends GraphAxisBase {
 				}
 			});
 
-			if (self[UNIQUE_Z_VALUES].length) {
+			if (self[UNIQUE_Z_VALUES].length !== 0) {
 				self[UNIQUE_Z_VALUES] = self[UNIQUE_Z_VALUES].reduce((result, item) => {
 					if (!result.includes(item)) {
 						result.push(item);

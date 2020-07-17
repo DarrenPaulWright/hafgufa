@@ -405,13 +405,13 @@ export default class EditableGrid extends FormControl {
 					showAll: enforceBoolean(column.showAll, true),
 					showSelectAll: column.showSelectAll,
 					onChange(newValue) {
-						if (newValue.length) {
+						if (newValue.length !== 0) {
 							cellData.text = newValue.map((item) => item.title).join(', ');
 						}
 						else {
 							cellData.text = '';
 						}
-						if (newValue.length) {
+						if (newValue.length !== 0) {
 							self[prefill](column.editOptions, this, newValue[0]);
 						}
 						self[onEditControlChange](cellData, rowData.id, columnCount);
@@ -568,7 +568,7 @@ export default class EditableGrid extends FormControl {
 		let newGridRow;
 		let output = [];
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (self.processDataIn()) {
 				newValue = self.processDataIn()(newValue);
 			}

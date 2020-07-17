@@ -111,7 +111,7 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	 * @param {object} updateObject
 	 */
 	updateRelationship(updateObject) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			formRelationships.update(self[RELATIONSHIP_ID], updateObject);
 		}
 	}

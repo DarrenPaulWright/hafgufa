@@ -99,7 +99,7 @@ export default class ControlManager {
 			input.id === undefined && !(input = self[IDS][input]) || input.remove();
 		}
 		else {
-			while (self[CONTROLS].length) {
+			while (self[CONTROLS].length !== 0) {
 				self[CONTROLS][0].control.remove();
 			}
 		}

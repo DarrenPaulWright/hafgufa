@@ -526,7 +526,7 @@ Object.assign(TextInput.prototype, {
 	value(value) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (!self.isFocused()) {
 				self[INPUT].value(value);
 				self.triggerChange(true, true, false);

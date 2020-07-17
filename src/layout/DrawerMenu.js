@@ -115,7 +115,7 @@ export default class DrawerMenu extends FocusMixin(Control) {
 			});
 		}
 
-		if (menuItems.length) {
+		if (menuItems.length !== 0) {
 			self[TREE] = new Tree({
 				container: self[DRAWER],
 				width: HUNDRED_PERCENT,
@@ -127,7 +127,7 @@ export default class DrawerMenu extends FocusMixin(Control) {
 			});
 		}
 
-		if (footerContent.length) {
+		if (footerContent.length !== 0) {
 			self[FOOTER] = new Div({
 				container: self[DRAWER],
 				classes: 'footer',

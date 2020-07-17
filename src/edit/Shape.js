@@ -111,7 +111,7 @@ export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMi
 	bounds(bounds) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			const [point1, point2] = bounds;
 
 			self.width(Math.abs(point1.x - point2.x))

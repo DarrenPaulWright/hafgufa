@@ -130,7 +130,7 @@ export default class Donut extends GraphBase {
 		let data = self.data();
 		const mainColor = color(self.color());
 
-		if (data.length) {
+		if (data.length !== 0) {
 			data = data[0].data ? data[0].data.sort(compare('value', true)) : [];
 
 			self[SVG].select('.slices')

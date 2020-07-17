@@ -182,7 +182,7 @@ export default class EditPolygon extends Shape {
 	points(points) {
 		const _self = _(this);
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			_self.pathinator.import(points);
 			this[updatePath]();
 

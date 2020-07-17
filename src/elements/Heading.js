@@ -423,7 +423,7 @@ Object.assign(Heading.prototype, {
 		set(newValue) {
 			const self = this;
 
-			if (newValue.length) {
+			if (newValue.length !== 0) {
 				if (!self[CHILD_CONTROLS].get(TOOLBAR)) {
 					new Toolbar({
 						id: TOOLBAR,

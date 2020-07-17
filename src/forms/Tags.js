@@ -181,7 +181,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 
 		self[FAKE_INPUT].text(newValue);
 
-		if (self[CURRENT_TAGS].length || newValue.length) {
+		if (self[CURRENT_TAGS].length || newValue.length !== 0) {
 			self[TEXT_INPUT].width(self[FAKE_INPUT].borderWidth() + self[TEXT_INPUT].paddingWidth + 8);
 		}
 		else {
@@ -465,7 +465,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 		const currentTypedInput = self[TEXT_INPUT].value();
 		const tags = self[CURRENT_TAGS].map((item) => item.id);
 
-		if (!self.isRemoved && filteredSuggestions.length) {
+		if (!self.isRemoved && filteredSuggestions.length !== 0) {
 			if (self[CURRENT_EDIT_OFFSET] !== null) {
 				tags.splice(self[CURRENT_EDIT_OFFSET], 1);
 			}
@@ -482,7 +482,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 				filteredTitle(filteredSuggestions, currentTypedInput);
 			}
 
-			if (filteredSuggestions.length) {
+			if (filteredSuggestions.length !== 0) {
 				if (self[SUGGESTION_MENU]) {
 					self[SUGGESTION_MENU].menuItems(filteredSuggestions);
 				}

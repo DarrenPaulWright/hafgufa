@@ -69,7 +69,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 		applySettings(self, settings);
 
-		if (!self.selectableColumns().length) {
+		if (self.selectableColumns().length === 0) {
 			self[setContextMenu]();
 		}
 

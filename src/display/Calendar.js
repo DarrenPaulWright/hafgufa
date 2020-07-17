@@ -228,7 +228,7 @@ export default class Calendar extends Control {
 					id: MONTH_PICKER_ID,
 					width: AUTO,
 					onChange(newValue) {
-						if (newValue.length) {
+						if (newValue.length !== 0) {
 							self.month(parseInt(newValue[0].id, 10));
 						}
 						self.isFocused(true);
@@ -239,7 +239,7 @@ export default class Calendar extends Control {
 					id: YEAR_PICKER_ID,
 					width: AUTO,
 					onChange(newValue) {
-						if (newValue.length) {
+						if (newValue.length !== 0) {
 							self.year(parseInt(newValue[0].id, 10));
 						}
 						self.isFocused(true);

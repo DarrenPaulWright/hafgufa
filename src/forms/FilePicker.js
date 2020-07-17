@@ -229,7 +229,7 @@ Object.assign(FilePicker.prototype, {
 			self[FILES].forEach((file) => {
 				self[buildThumbnail](file, true);
 			});
-			if (!self[FILES].length) {
+			if (self[FILES].length === 0) {
 				self[buildFileInput]();
 			}
 		},

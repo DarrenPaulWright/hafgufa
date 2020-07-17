@@ -9,7 +9,7 @@ const SOURCES = Symbol();
 const SECONDS_PER_FRAME = Symbol();
 
 const methodProperty = (property) => function(value) {
-	if (arguments.length) {
+	if (arguments.length !== 0) {
 		this.element[property] = value;
 		return this;
 	}

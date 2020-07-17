@@ -298,7 +298,7 @@ export default class Picker extends FormControl {
 			rankedItems.sort(compare(RANK_KEY));
 		}
 
-		if (rankedItems.length) {
+		if (rankedItems.length !== 0) {
 			self.preferred(clone(rankedItems));
 			rankedItems.length = 0;
 		}
@@ -535,7 +535,7 @@ export default class Picker extends FormControl {
 					removeButton(preferredItem.id, preferredItem.renderWidth);
 
 					if (self.contentContainer.totalButtons() === 0) {
-						if (self[SELECTED_ITEMS].length) {
+						if (self[SELECTED_ITEMS].length !== 0) {
 							registerSelectedButton();
 						}
 						else if (self[POPUP_BUTTON].label() === '' && self.defaultButtonText()) {

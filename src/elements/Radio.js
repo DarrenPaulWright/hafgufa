@@ -51,7 +51,7 @@ export default class Radio extends FocusMixin(Label) {
 	}
 
 	content(content) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (!this[CONTAINER]) {
 				this[CONTAINER] = new Div({
 					container: this

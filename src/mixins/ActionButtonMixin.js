@@ -50,7 +50,7 @@ export default function(Base) {
 					}
 
 					_self.actionButton
-						.isDisplayed(!self.isActionButtonAutoHide() || !!self.value().length)
+						.isDisplayed(!self.isActionButtonAutoHide() || self.value().length !== 0)
 						.isEnabled(self.isActionButtonEnabled())
 						.icon(self.actionButtonIcon())
 						.label(self.actionButtonLabel())

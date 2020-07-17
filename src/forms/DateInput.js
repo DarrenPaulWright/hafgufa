@@ -165,7 +165,7 @@ Object.assign(DateInput.prototype, {
 	value(newValue) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			newValue = enforceDate(newValue, '', true);
 			self[DATE_INPUT].value(formatDate(newValue, self.dateFormat()));
 

@@ -443,7 +443,7 @@ export default (Base) => {
 		position(x, y) {
 			const self = this;
 
-			if (arguments.length) {
+			if (arguments.length !== 0) {
 				let transform = '';
 
 				const setScrollPosition = (scrollOrigin, dragPosition, start, end) => {

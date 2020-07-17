@@ -466,7 +466,7 @@ Object.assign(Control.prototype, {
 	 * @returns {this}
 	 */
 	classes(classes, performAdd = true) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			if (isString(classes) && this.isRemoved !== true) {
 				performAdd = enforceBoolean(performAdd, true) ? 'add' : 'remove';
 

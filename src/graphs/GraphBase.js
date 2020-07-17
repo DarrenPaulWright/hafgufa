@@ -77,7 +77,7 @@ export default class GraphBase extends IsWorkingMixin(ControlHeadingMixin(Contro
 			}
 
 			self.onUpdateSize().trigger(null, [renderWidth, renderHeight]);
-			if (self.data().length) {
+			if (self.data().length !== 0) {
 				self.onUpdateData().trigger();
 			}
 		});
@@ -347,7 +347,7 @@ Object.assign(GraphBase.prototype, {
 		set(newValue) {
 			const self = this;
 
-			if (newValue.length) {
+			if (newValue.length !== 0) {
 				if (!self[LEGEND]) {
 					self[LEGEND] = new Legend({
 						container: self.svgElement(),

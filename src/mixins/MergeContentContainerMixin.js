@@ -39,7 +39,7 @@ export default (Base) => {
 		}
 
 		isWorking(isWorking) {
-			if (arguments.length) {
+			if (arguments.length !== 0) {
 				this[CONTENT_CONTAINER].isWorking(isWorking);
 				return this;
 			}
@@ -48,7 +48,7 @@ export default (Base) => {
 		}
 
 		isWorkingLabel(label) {
-			if (arguments.length) {
+			if (arguments.length !== 0) {
 				this[CONTENT_CONTAINER].isWorkingLabel(label);
 				return this;
 			}

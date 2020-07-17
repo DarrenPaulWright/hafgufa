@@ -17,7 +17,7 @@ export default class Polygon extends SvgControl {
 	}
 
 	points(points) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			this.attr('points', points || '0,0');
 
 			return this;
@@ -27,7 +27,7 @@ export default class Polygon extends SvgControl {
 	}
 
 	pathLength(pathLength) {
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			this.attr('pathLength', pathLength);
 
 			return this;

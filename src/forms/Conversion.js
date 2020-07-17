@@ -150,7 +150,7 @@ export default class Conversion extends FormControl {
 	value(value) {
 		const self = this;
 
-		if (arguments.length) {
+		if (arguments.length !== 0) {
 			self[FROM_TEXT_INPUT].value(value);
 			self[setValue](value, true);
 

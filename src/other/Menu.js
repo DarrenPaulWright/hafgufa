@@ -252,7 +252,7 @@ export default class Menu extends Popup {
 		items = items.filter((item) => {
 			if (item.children) {
 				item.children = self[getFilteredContent](item.children);
-				if (item.children.length) {
+				if (item.children.length !== 0) {
 					return true;
 				}
 			}

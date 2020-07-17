@@ -113,7 +113,7 @@ const removeSlice = (sliceId) => {
 		id: sliceId
 	});
 
-	if (!slices.length) {
+	if (slices.length === 0) {
 		wrapper.remove();
 		wrapper = null;
 	}

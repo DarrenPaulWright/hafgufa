@@ -146,7 +146,7 @@ export default class Slider extends FormControl {
 					thumb.position(self[OFFSETS][index], 0);
 				});
 
-				if (self.onSlide().length) {
+				if (self.onSlide().length !== 0) {
 					self.onSlide().trigger(null, [self[OFFSETS].map((offset) => self[getValueAtOffset](offset))]);
 				}
 			},
@@ -191,7 +191,7 @@ export default class Slider extends FormControl {
 			if (self[OFFSETS][thumbIndex] !== offset.x) {
 				self[OFFSETS][thumbIndex] = offset.x;
 				self[positionRange]();
-				if (self.onSlide().length) {
+				if (self.onSlide().length !== 0) {
 					self.onSlide().trigger(null, [self[OFFSETS].map((offset) => self[getValueAtOffset](offset))]);
 				}
 			}
@@ -247,7 +247,7 @@ export default class Slider extends FormControl {
 	[removeThumb]() {
 		const self = this;
 
-		if (self[THUMBS].length) {
+		if (self[THUMBS].length !== 0) {
 			self[THUMBS].pop().remove();
 		}
 	}

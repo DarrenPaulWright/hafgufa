@@ -96,7 +96,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 
 		self[CONTROLS].discardAllControls();
 
-		if (steps && steps.length) {
+		if (steps && steps.length !== 0) {
 			steps.forEach((step) => {
 				self[CONTROLS].getRecycledControl()
 					.container(self[BAR_CONTAINER])
@@ -198,7 +198,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 		const self = this;
 		const steps = self.steps();
 
-		if (steps && steps.length) {
+		if (steps && steps.length !== 0) {
 			steps.forEach((step, index) => {
 				const title = [];
 
