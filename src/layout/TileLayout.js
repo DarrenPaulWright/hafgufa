@@ -647,7 +647,7 @@ export default class TileLayout extends Container {
 
 		const addToBottom = () => new Promise((resolve) => {
 			if (self[RENDER_CUTTOFF_BOTTOM] > self[PREVIOUS_CUTTOFF_BOTTOM]) {
-				return forRange(self[CUTOFF_INDEX_BOTTOM] + 1, total - 1, (index) => new Promise((resolve2, reject) => {
+				forRange(self[CUTOFF_INDEX_BOTTOM] + 1, total - 1, (index) => new Promise((resolve2, reject) => {
 					self[renderTile](index)
 						.then(() => {
 							if (self[TILE_OFFSETS][index].y > self[RENDER_CUTTOFF_BOTTOM]) {
