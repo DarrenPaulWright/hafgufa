@@ -156,7 +156,7 @@ const calculateColumns = Symbol();
  * Displays a masonry style layout control.
  *
  * @class TileLayout
- * @constructor
+ * @class
  *
  * @param {object} [settings]
  */

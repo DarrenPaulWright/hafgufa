@@ -55,7 +55,7 @@ const DAYS = Symbol();
  *
  * @module Calendar
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control settings plus:
  */

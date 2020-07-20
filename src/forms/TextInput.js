@@ -51,7 +51,7 @@ const maxRowCallback = Symbol();
  *
  * @class TextInput
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings
  */
@@ -141,8 +141,8 @@ Object.assign(TextInput.prototype, {
 	 * @method rows
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Int} [newRows]
-	 * @returns {Int|this}
+	 * @param {number.int} [newRows]
+	 * @returns {number.int|this}
 	 */
 	rows: methodInteger({
 		set(rows) {
@@ -219,8 +219,8 @@ Object.assign(TextInput.prototype, {
 	 * @method minLength
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Int} [newMinLength]
-	 * @returns {Int|this}
+	 * @param {number.int} [newMinLength]
+	 * @returns {number.int|this}
 	 */
 	minLength: methodInteger({
 		other: undefined,
@@ -243,8 +243,8 @@ Object.assign(TextInput.prototype, {
 	 * @method maxLength
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Int} [newMaxLength]
-	 * @returns {Int|this}
+	 * @param {number.int} [newMaxLength]
+	 * @returns {number.int|this}
 	 */
 	maxLength: methodInteger({
 		set(newValue) {
@@ -269,8 +269,8 @@ Object.assign(TextInput.prototype, {
 	 * @method minValue
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Int} [newMinValue]
-	 * @returns {Int|this}
+	 * @param {number.int} [newMinValue]
+	 * @returns {number.int|this}
 	 */
 	minValue: methodInteger({
 		other: undefined,
@@ -298,8 +298,8 @@ Object.assign(TextInput.prototype, {
 	 * @method maxValue
 	 * @member module:TextInput
 	 * @instance
-	 * @param {Int} [newMaxValue]
-	 * @returns {Int|this}
+	 * @param {number.int} [newMaxValue]
+	 * @returns {number.int|this}
 	 */
 	maxValue: methodInteger({
 		other: undefined,

@@ -119,7 +119,7 @@ const resizeContainer = Symbol();
  *
  * @class Control
  * @extends Removable
- * @constructor
+ * @class
  *
  * @param {object} settings - An object where keys are methods and values are arguments.
  */

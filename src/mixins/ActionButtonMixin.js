@@ -23,7 +23,7 @@ const addRightContainer = Symbol();
  * Adds an action button and count text.
  *
  * @module ActionButtonAddon
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

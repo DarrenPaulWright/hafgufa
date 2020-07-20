@@ -8,7 +8,7 @@ import Control from './../Control.js';
  *
  * @class Span
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  * @param {string} [settings.text]

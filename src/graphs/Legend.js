@@ -28,7 +28,7 @@ const toggleItem = Symbol();
 
 /**
  * @module Donut
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

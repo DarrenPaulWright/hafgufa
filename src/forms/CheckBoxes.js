@@ -13,7 +13,7 @@ const CHECK_BOXES = Symbol();
  * Display a list of check boxes.
  *
  * @module CheckBox
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

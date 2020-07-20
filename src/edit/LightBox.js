@@ -62,7 +62,7 @@ const renderImages = Symbol();
  *
  * @class LightBox
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

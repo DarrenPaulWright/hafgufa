@@ -10,7 +10,7 @@ import './Hyperlink.less';
  *
  * @module Hyperlink
  * @extends ControlBase
- * @constructor
+ * @class
  *
  * @param {object} settings
  * @param {string} [settings.text]

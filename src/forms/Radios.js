@@ -15,7 +15,7 @@ const NAME = Symbol();
  *
  * @module Radio
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object}  settings
  */

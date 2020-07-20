@@ -30,7 +30,7 @@ const ICON_POSITIONS = new Enum({
  *
  * @class Button
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

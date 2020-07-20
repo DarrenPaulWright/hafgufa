@@ -44,7 +44,7 @@ const CURRENT_SIZE = Symbol();
  *
  * @class IsWorking
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object}        settings -            - Accepts all controlBase settings plus:
  * @param {string}        settings.label

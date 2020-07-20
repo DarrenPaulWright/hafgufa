@@ -55,7 +55,7 @@ const selectSuggestion = Symbol();
  * A control for adding tags.
  *
  * @module Tags
- * @constructor
+ * @class
  */
 export default class Tags extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {

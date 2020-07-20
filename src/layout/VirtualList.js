@@ -147,7 +147,7 @@ const setExtent = Symbol();
  *
  * @class VirtualList
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

@@ -14,7 +14,7 @@ import './Section.less';
  *
  * @class Section
  * @extends Container
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

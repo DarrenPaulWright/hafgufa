@@ -93,7 +93,7 @@ const positionArrow = Symbol();
  *
  * @class Popup
  * @extends Container
- * @constructor
+ * @class
  *
  * @param {object}        settings - Accepts all controlBase settings plus:
  * @param {string}        [settings.classes] - A space separated list of css classes to apply to the popup.

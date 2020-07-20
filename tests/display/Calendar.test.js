@@ -50,8 +50,8 @@ describe('Calendar', () => {
 					container: testUtil.container
 				});
 
-				testUtil.control.month(0);
-				initialLength = testUtil.count('.different-month');
+			testUtil.control.month(0);
+			initialLength = testUtil.count('.different-month');
 
 			testUtil.control.month(1);
 
@@ -221,7 +221,7 @@ describe('Calendar', () => {
 
 			testDate.setFullYear(testDate.getFullYear() + 1);
 
-				testUtil.control = new Calendar({
+			testUtil.control = new Calendar({
 					container: testUtil.container
 				})
 				.selectedDate(testDate);

@@ -14,7 +14,7 @@ const LABEL = Symbol();
  *
  * @class Score
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

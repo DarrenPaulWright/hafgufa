@@ -5,7 +5,7 @@ import d3Helper from '../utility/d3Helper.js';
 import { HEIGHT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT, OPACITY, WIDTH } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import GraphAxisBase from './GraphAxisBase.js';
-import { DURATION, HILITE_OPACITY, START_OPACITY, FADE_OPACITY } from './graphConstants.js';
+import { DURATION, FADE_OPACITY, HILITE_OPACITY, START_OPACITY } from './graphConstants.js';
 import './Scatter.less';
 
 const MAX_DOT_STROKE_WIDTH = 16;
@@ -36,7 +36,7 @@ const VISIBLE_ITEMS = Symbol();
 /**
  * @class Scatter
  * @extends GraphAxisBase
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

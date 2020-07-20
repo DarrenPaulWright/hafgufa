@@ -12,7 +12,7 @@ const BACKDROP_CLASS = ABSOLUTE_CLASS + 'backdrop';
  *
  * @class BackDrop
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

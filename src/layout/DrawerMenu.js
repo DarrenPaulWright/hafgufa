@@ -47,7 +47,7 @@ const clearMenu = Symbol();
  * Display a main drawer menu.
  *
  * @module DrawerMenu
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

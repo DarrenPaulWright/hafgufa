@@ -12,7 +12,7 @@ const removeMenu = Symbol();
  * Adds methods for a context menu.
  *
  * @module ContextMenuAddon
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

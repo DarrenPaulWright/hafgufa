@@ -5,7 +5,7 @@ const _ = new PrivateVars();
 
 /**
  * @module IsWorkingAddon
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

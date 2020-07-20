@@ -36,7 +36,7 @@ const updateLightBox = Symbol();
  *
  * @class FilePicker
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object}        settings
  */

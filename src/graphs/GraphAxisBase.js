@@ -37,7 +37,7 @@ const RENDERED_HEIGHT = Symbol();
 /**
  * @class GraphAxisBase
  * @extends GraphBase
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

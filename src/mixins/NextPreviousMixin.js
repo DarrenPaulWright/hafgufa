@@ -19,7 +19,7 @@ const onShowButtons = Symbol();
  * Adds next and prev buttons to a control.
  *
  * @mixin NextPreviousMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */
@@ -70,7 +70,7 @@ export default (Base) => {
 		 * Go to previous
 		 *
 		 * @method prev
-		 * @memberOf NextPreviousMixin
+		 * @memberof NextPreviousMixin
 		 * @instance
 		 */
 		prev() {
@@ -81,7 +81,7 @@ export default (Base) => {
 		 * Go to next
 		 *
 		 * @method next
-		 * @memberOf NextPreviousMixin
+		 * @memberof NextPreviousMixin
 		 * @instance
 		 */
 		next() {
@@ -94,7 +94,7 @@ export default (Base) => {
 		 * Get or set whether the buttons should be viewed
 		 *
 		 * @method showButtons
-		 * @memberOf NextPreviousMixin
+		 * @memberof NextPreviousMixin
 		 * @instance
 		 *
 		 * @param {boolean}
@@ -159,7 +159,7 @@ export default (Base) => {
 		 * Get or set the size of the icons on the buttons.
 		 *
 		 * @method buttonIconSize
-		 * @memberOf NextPreviousMixin
+		 * @memberof NextPreviousMixin
 		 * @instance
 		 *
 		 * @param {string} iconSize - see Icon ICON_SIZES

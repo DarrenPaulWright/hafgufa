@@ -27,12 +27,12 @@ const setValue = Symbol();
  *
  * @module Conversion
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  * @param {string} settings.fromType - The unit to display in the left text field. See Conversion.CONVERSION_TYPES
  * @param {string} settings.toType - The unit to display in the right text field. See Conversion.CONVERSION_TYPES
- * @param {Int} settings.fractionDigits - Number of decimal places to display.
+ * @param {number.int} settings.fractionDigits - Number of decimal places to display.
  */
 export default class Conversion extends FormControl {
 	constructor(settings = {}) {
@@ -176,8 +176,8 @@ export default class Conversion extends FormControl {
 	 * @method changeDelay
 	 * @member module:Conversion
 	 * @instance
-	 * @param {Int} [newDelay]
-	 * @returns {Int|this}
+	 * @param {number.int} [newDelay]
+	 * @returns {number.int|this}
 	 */
 	changeDelay(newDelay) {
 		const self = this;

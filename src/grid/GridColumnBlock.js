@@ -27,7 +27,7 @@ const updateRow = Symbol();
  * Handles the view of the {@link module:Grid}.
  *
  * @module GridColumnBlock
- * @constructor
+ * @class
  *
  * @param {object} settings - Same settings as {@link module:Grid}
  */

@@ -43,7 +43,7 @@ const toggleExpanded = Symbol();
  * @class Tree
  * @extends FormControl
  * @mixes FocusMixin
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

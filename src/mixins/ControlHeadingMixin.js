@@ -24,7 +24,7 @@ export const CONTENT_CONTAINER = Symbol();
  * Provides a Heading control and a content container.
  *
  * @module ControlHeadingMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

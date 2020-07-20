@@ -55,7 +55,7 @@ const layout = Symbol();
  *
  * @class Drawer
  * @extends Container
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

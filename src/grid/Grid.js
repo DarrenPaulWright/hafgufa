@@ -79,7 +79,7 @@ const updateSelectState = Symbol();
  * A data grid control.
  *
  * @module Grid
- * @constructor
+ * @class
  *
  * @param {object} [settings] - A settings object
  * @param {boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
@@ -902,7 +902,7 @@ export default class Grid extends Control {
 	 *
 	 * @param {object} search - An object that matches a row
 	 *
-	 * @return {object}
+	 * @returns {object}
 	 */
 	getRow(search) {
 		return this[ROWS].find(search);
@@ -1383,7 +1383,7 @@ Object.assign(Grid.prototype, {
 
 	/**
 	 * @method columns
-	 * @memberOf Grid
+	 * @memberof Grid
 	 *
 	 * @param {object[]} columns
 	 * @param {string} columns[].type - Available types: text, email, int, date, time, datetime, actions, image, custom.
@@ -1457,7 +1457,7 @@ Object.assign(Grid.prototype, {
 	}),
 	/**
 	 * @method groupBy
-	 * @memberOf Grid
+	 * @memberof Grid
 	 *
 	 * @param {object[]} [groupBy] -
 	 * @param {string}   [groupBy[].groupItemData] - Data associated with the group.

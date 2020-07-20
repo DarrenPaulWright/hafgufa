@@ -33,7 +33,7 @@ const clearSearchBar = Symbol();
  * Display a search button that shows or hides a search bar.
  *
  * @module SearchBar
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

@@ -16,7 +16,7 @@ const getButton = Symbol();
  *
  * @module Toolbar
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

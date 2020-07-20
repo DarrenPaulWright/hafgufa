@@ -12,7 +12,7 @@ const _ = new PrivateVars();
  * Adds remove methods to a module.
  *
  * @class Removable
- * @constructor
+ * @class
  */
 export default class Removable {
 	constructor() {

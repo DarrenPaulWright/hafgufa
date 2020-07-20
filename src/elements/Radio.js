@@ -17,7 +17,7 @@ const CONTAINER = Symbol();
  *
  * @class Radio
  * @extends Label
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

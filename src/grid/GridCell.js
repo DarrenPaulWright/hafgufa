@@ -44,7 +44,7 @@ const removeTooltip = Symbol();
  *
  * @module GridCell
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object}   settings - Accepts all control settings plus:
  */

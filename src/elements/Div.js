@@ -12,7 +12,7 @@ const addLayout = Symbol();
  *
  * @class Div
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

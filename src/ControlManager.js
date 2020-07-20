@@ -8,7 +8,7 @@ const IDS = Symbol();
 
 /**
  * @class ControlManager
- * @constructor
+ * @class
  */
 export default class ControlManager {
 	constructor() {

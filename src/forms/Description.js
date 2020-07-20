@@ -12,7 +12,7 @@ const COLUMNS_CLASS = 'columns';
  *
  * @class Description
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  * @param {string} [settings.description] - The default description to display

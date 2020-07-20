@@ -37,7 +37,7 @@ const buildLink = (url) => {
  * Adds onClick, click, and url methods to a control.
  *
  * @module OnClickMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

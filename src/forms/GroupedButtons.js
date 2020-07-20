@@ -42,7 +42,7 @@ const setFocusIndex = Symbol();
  * @class GroupedButtons
  * @extends FormControl
  * @mixes FocusMixin
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control and FormControl options plus:
  */
@@ -311,7 +311,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @instance
 	 *
 	 * @param {object} buttonSettings
-	 * @param {Int}    [insertIndex]
+	 * @param {number.int}    [insertIndex]
 	 *
 	 * @returns {this}
 	 */
@@ -396,7 +396,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * @method totalButtons
 	 * @member module:GroupedButtons
 	 * @instance
-	 * @returns {Int}
+	 * @returns {number.int}
 	 */
 	totalButtons() {
 		return this.buttons().length;

@@ -9,7 +9,7 @@ const CONTEXT_MENU_CLASS = 'context-menu';
  * Builds a context menu
  *
  * @module ContextMenu
- * @constructor
+ * @class
  *
  * @param {object} settings - All the settings for Popup plus the following:
  * @param {object} settings.menuItems - see Tree.branches

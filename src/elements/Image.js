@@ -23,7 +23,7 @@ export const FIT = new Enum({
  *
  * @class Image
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  * @param {string} [settings.source]

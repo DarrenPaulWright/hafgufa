@@ -45,7 +45,7 @@ const removeControls = Symbol();
  * Handles the layout of a single grid header cell control
  *
  * @class GridHeaderCell
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

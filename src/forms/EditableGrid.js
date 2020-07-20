@@ -59,7 +59,7 @@ const showDialog = Symbol();
  *
  * @module EditableGrid
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  * @param {Array} [settings.columns[]] - Grid control columns

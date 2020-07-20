@@ -523,7 +523,7 @@ const FormRelationshipHandler = function() {
 	 *
 	 * @function getControlById
 	 * @param {string} controlId
-	 * @return {object|boolean} - If no control is found that matches the provided id then return false.
+	 * @returns {object|boolean} - If no control is found that matches the provided id then return false.
 	 */
 	const getControlById = (controlId) => {
 		if (controlId) {

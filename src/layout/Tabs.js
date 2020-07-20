@@ -34,7 +34,7 @@ const onTabClick = Symbol();
  *
  * @class Tabs
  * @extends Container
- * @constructor
+ * @class
  *
  * @args {object} [settings]
  */

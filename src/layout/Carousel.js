@@ -29,7 +29,7 @@ const fitToSlide = Symbol();
  *
  * @class Carousel
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

@@ -41,7 +41,7 @@ const updateProgress = Symbol();
 /**
  * @class ProgressBar
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */
@@ -258,8 +258,8 @@ Object.assign(ProgressBar.prototype, {
 	 * @method currentStep
 	 * @member module:ProgressBar
 	 * @instance
-	 * @param {Int} [currentStep]
-	 * @returns {Int|this}
+	 * @param {number.int} [currentStep]
+	 * @returns {number.int|this}
 	 */
 	currentStep: methodInteger({
 		init: 1,

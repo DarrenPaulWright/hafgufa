@@ -24,7 +24,7 @@ const AVAILABLE_TYPES = new Enum({
  *
  * @class Input
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  * @param {string} [settings.type]

@@ -13,7 +13,7 @@ const setBlurEvent = Symbol();
  * Adds focus and blur related methods to a control.
  *
  * @mixin FocusMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

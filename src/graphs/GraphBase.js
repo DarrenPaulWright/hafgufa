@@ -44,7 +44,7 @@ const buildTooltipText = Symbol();
 
 /**
  * @class GraphBase
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

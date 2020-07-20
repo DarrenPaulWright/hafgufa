@@ -15,7 +15,7 @@ const locale = {
 	 * Supported languages. If the [browser language](https://github.com/gummesson/get-browser-language) matches a supported language, then locale.language is set to that language, which can be overridden by calling locale.language after setting locale.languages
 	 *
 	 * @method languages
-	 * @memberOf locale
+	 * @memberof locale
 	 * @default {English: 'en-us'}
 	 *
 	 * @param {object} languages - An object with supported languages. Keys should be human readable names, the values are used when loading files
@@ -42,7 +42,7 @@ const locale = {
 	 * The language used when loading files. Sets the lang attribute of the HTML tag to the language.
 	 *
 	 * @method language
-	 * @memberOf locale
+	 * @memberof locale
 	 *
 	 * @param {string} language
 	 *
@@ -58,7 +58,7 @@ const locale = {
 	 * A format string used by locale.load.
 	 *
 	 * @method urlFormat
-	 * @memberOf locale
+	 * @memberof locale
 	 * @default '[path]-[lang].json'
 	 *
 	 * @param {string} urlFormat - Has two tags, [path] which gets replaced by the path provided when clling locale.load, and [lang] which gets replaced by the lowercase value in locale.langugage
@@ -72,7 +72,7 @@ const locale = {
 	 * Loads .json files from a server and saves them for recall via locale.get.
 	 *
 	 * @method load
-	 * @memberOf locale
+	 * @memberof locale
 	 *
 	 * @param {...string} urls - One are more strings of files to load. The strings are formatted with locale.urlFormat.
 	 *
@@ -105,7 +105,7 @@ const locale = {
 	 * Set some strings directly. This function is called by locale.load after files are loaded.
 	 *
 	 * @method set
-	 * @memberOf locale
+	 * @memberof locale
 	 *
 	 * @param {object} newStrings
 	 */
@@ -116,7 +116,7 @@ const locale = {
 	 * Get named strings that have been added via locale.load or locale.set. Convert tags in localized strings into text
 	 *
 	 * @method get
-	 * @memberOf locale
+	 * @memberof locale
 	 *
 	 * @param {string} key - The key for a string
 	 * @param {object} [replacer] - Replaces tags in strings with values. Keys should match a tag in the string wrapped like <tag>.
@@ -138,7 +138,7 @@ const locale = {
 	 * Add a callback to be called whenever locale.language changes
 	 *
 	 * @method onLanguageChange
-	 * @memberOf locale
+	 * @memberof locale
 	 *
 	 * @param {Function} callback
 	 *

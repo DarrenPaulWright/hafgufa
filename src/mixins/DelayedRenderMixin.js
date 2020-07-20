@@ -23,7 +23,7 @@ const _ = new PrivateVars();
  * Delays the rendering of a control.
  *
  * @module DelayedRenderMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

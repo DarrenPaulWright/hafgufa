@@ -60,7 +60,7 @@ const hideDeleteButton = Symbol();
  *
  * @module FileThumbnail
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

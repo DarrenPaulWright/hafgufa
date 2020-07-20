@@ -14,7 +14,7 @@ import './Group.less';
  *
  * @class Group
  * @extends Container
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

@@ -54,7 +54,7 @@ const isValidMimeType = Symbol();
  *
  * @module FileInput
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

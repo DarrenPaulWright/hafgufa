@@ -11,7 +11,7 @@ import './Container.less';
 /**
  * @class Container
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

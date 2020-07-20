@@ -37,7 +37,7 @@ const POPUP = Symbol();
  *
  * @module DateInput
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  */

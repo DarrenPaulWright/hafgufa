@@ -8,7 +8,7 @@ const DISCARDED = Symbol();
  * Instead of creating and destroying controls in rapid succession, recycle them!
  *
  * @class ControlRecycler
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

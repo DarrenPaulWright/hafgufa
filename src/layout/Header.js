@@ -9,7 +9,7 @@ import './Header.less';
  *
  * @class Header
  * @extends Container
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

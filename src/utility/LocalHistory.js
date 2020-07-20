@@ -12,7 +12,7 @@ const pushHistory = Symbol();
  * A simple way to track and manipulate history objects.
  *
  * @class LocalHistory
- * @constructor
+ * @class
  *
  * @param {object} settings
  */
@@ -30,7 +30,7 @@ export default class LocalHistory {
 	 *
 	 * @param {object} historyObject
 	 *
-	 * @return {boolean} - Successful push = 'true'; Failed push = 'false'
+	 * @returns {boolean} - Successful push = 'true'; Failed push = 'false'
 	 */
 	[pushHistory](historyObject) {
 		const self = this;
@@ -90,7 +90,7 @@ export default class LocalHistory {
 	 * @method undo
 	 * @member module:LocalHistory
 	 * @instance
-	 * @return {object} - Object added through 'push' or 'replace'.
+	 * @returns {object} - Object added through 'push' or 'replace'.
 	 */
 	undo() {
 		const self = this;
@@ -126,7 +126,7 @@ export default class LocalHistory {
 	 * @method hasHistory
 	 * @member module:LocalHistory
 	 * @instance
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hasHistory() {
 		return this[CURRENT_INDEX] > NO_ITEMS_INDEX + 1;
@@ -139,7 +139,7 @@ export default class LocalHistory {
 	 * @member module:LocalHistory
 	 * @instance
 	 *
-	 * @return {boolean}
+	 * @returns {boolean}
 	 */
 	hasFuture() {
 		return this[HISTORY].length > this[CURRENT_INDEX] + 1;

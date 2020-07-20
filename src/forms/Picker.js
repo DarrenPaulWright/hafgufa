@@ -71,7 +71,7 @@ const showDialog = Symbol();
  *
  * @class Picker
  * @extends FormControl
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

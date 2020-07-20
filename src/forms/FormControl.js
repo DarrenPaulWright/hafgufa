@@ -25,7 +25,7 @@ const ON_CHANGE = Symbol();
  *
  * @class FormControl
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} type
  * @param {object} settings
@@ -180,9 +180,9 @@ Object.assign(FormControl.prototype, {
 	 * @member module:FormControlBase
 	 * @instance
 	 *
-	 * @param {int} newDelay - Milliseconds
+	 * @param {number.int} newDelay - Milliseconds
 	 *
-	 * @returns {int|this}
+	 * @returns {number.int|this}
 	 */
 	changeDelay: methodInteger({
 		min: 0,

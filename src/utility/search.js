@@ -11,7 +11,7 @@ const search = {
 	/**
 	 * Search a string for each word in the search.
 	 *
-	 * @memberOf module:search
+	 * @memberof module:search
 	 * @static
 	 * @function find
 	 *
@@ -39,7 +39,7 @@ const search = {
 	/**
 	 * Parse a search string.
 	 *
-	 * @memberOf module:search
+	 * @memberof module:search
 	 * @static
 	 * @function parseNeedle
 	 *

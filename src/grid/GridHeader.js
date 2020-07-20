@@ -19,7 +19,7 @@ const sortColumn = Symbol();
  * Handles the layout of grid header cell controls
  *
  * @module GridHeader
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

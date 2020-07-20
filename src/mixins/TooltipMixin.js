@@ -16,7 +16,7 @@ const removeTooltip = Symbol();
  * Adds a tooltip method to a control.
  *
  * @mixin TooltipMixin
- * @constructor
+ * @class
  *
  * @param {Function} Base - The class to extend
  */

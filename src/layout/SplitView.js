@@ -46,7 +46,7 @@ const positionViews = Symbol();
  *
  * @class SplitView
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

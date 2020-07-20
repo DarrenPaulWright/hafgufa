@@ -19,7 +19,7 @@ export const ICON_SIZES = new Enum({
  *
  * @class Icon
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings
  */

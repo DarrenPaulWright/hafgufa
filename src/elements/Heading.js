@@ -78,7 +78,7 @@ const keyDownEvent = Symbol();
  *
  * @control Heading
  * @extends Control
- * @constructor
+ * @class
  *
  * @param {object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
  */
