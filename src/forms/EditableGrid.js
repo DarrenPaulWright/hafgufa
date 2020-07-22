@@ -146,7 +146,6 @@ export default class EditableGrid extends FormControl {
 	[saveDialogData](row) {
 		const self = this;
 		let isValid = true;
-		const columns = self[GRID].columns();
 
 		if (self[ADD_NEW_DIALOG]) {
 			self[ADD_NEW_DIALOG].each((control) => {

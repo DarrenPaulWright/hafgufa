@@ -53,7 +53,6 @@ class Theme {
 	}
 
 	[links]() {
-		const self = this;
 		const links = HEAD.querySelectorAll('link');
 
 		return (href) => {
@@ -121,8 +120,6 @@ class Theme {
 	}
 
 	[addLink](href, onLoad) {
-		const self = this;
-
 		const link = document.createElement('link');
 		link.rel = 'stylesheet';
 		link.href = href;
@@ -201,7 +198,7 @@ class Theme {
 		};
 
 		self.themes().forEach((theme) => {
-			ENVIRONMENTS.forEach((environment) => {
+			environments.forEach((environment) => {
 				checkLink(self[buildHref](theme, environment));
 			});
 		});
