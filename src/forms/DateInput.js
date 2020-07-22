@@ -162,19 +162,19 @@ export default class DateInput extends FormControl {
 }
 
 Object.assign(DateInput.prototype, {
-	value(newValue) {
+	value(value) {
 		const self = this;
 
 		if (arguments.length !== 0) {
-			newValue = enforceDate(newValue, '', true);
-			self[DATE_INPUT].value(formatDate(newValue, self.dateFormat()));
+			value = enforceDate(value, '', true);
+			self[DATE_INPUT].value(value === '' ? '' : formatDate(value, self.dateFormat()));
 
 			return self;
 		}
 
-		const value = parse(self[DATE_INPUT].value(), self.dateFormat(), new Date());
+		const output = parse(self[DATE_INPUT].value(), self.dateFormat(), new Date());
 
-		return isValid(value) ? value : undefined;
+		return isValid(output) ? output : undefined;
 	},
 
 	focus() {
