@@ -1,173 +1,139 @@
-import { delay } from 'async-agent';
-import { windowResize } from 'type-enforcer-ui';
-import IsWorking from '../display/IsWorking.js';
+import { methodQueue, methodString } from 'type-enforcer-ui';
 import { IS_DESKTOP, IS_TABLET } from '../utility/browser.js';
-import { BODY, FONT_SIZE, HEAD } from '../utility/domConstants.js';
+import { FONT_SIZE, HEAD } from '../utility/domConstants.js';
 
 const NAME_TAG = '[name]';
 const ENV_TAG = '[env]';
 const WORD = '(.+)';
+const ENVIRONMENTS = ['desktop', 'mobile'];
 
-const buildHref = (self, theme, environment, isRegEx = false) => {
-	let path = self.path();
+const addMeta = Symbol();
+const buildHref = Symbol();
+const links = Symbol();
+const findLink = Symbol();
+const getCurrentTheme = Symbol();
+const switchLinks = Symbol();
+const setZoom = Symbol();
+const addLink = Symbol();
 
-	if (isRegEx) {
-		path = path
-			.replace(/\./ug, '\\.')
-			.replace(/\//ug, '\\/');
+const ENVIRONMENT = Symbol();
+const THEME = Symbol();
+const THEMES = Symbol();
+
+class Theme {
+	constructor() {
+		this[ENVIRONMENT] = ENVIRONMENTS[IS_DESKTOP ? 0 : 1];
+		this[THEMES] = [];
+
+		this[addMeta]();
 	}
 
-	return path
-		.replace(NAME_TAG, theme || self.theme())
-		.replace(ENV_TAG, environment || self.env());
-};
+	[addMeta]() {
+		if (!IS_DESKTOP) {
+			this.setViewport('width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
+		}
 
-const findLink = (self, theme, environment) => {
-	const links = HEAD.querySelectorAll('link');
-	const href = buildHref(self, theme, environment, true);
-	let themeLink;
+		window.addEventListener('orientationchange', this[setZoom].bind(this));
+		this[setZoom]();
+	}
 
-	if (links) {
-		for (const link of links) {
-			if (link.href.match(href)) {
-				themeLink = link;
-				break;
+	[buildHref](theme = this.theme(), environment = this.environment(), isForRegEx = false) {
+		const self = this;
+		let path = self.path();
+
+		if (isForRegEx) {
+			path = path
+				.replace(/\./ug, '\\.')
+				.replace(/\//ug, '\\/');
+		}
+
+		return path
+			.replace(NAME_TAG, theme)
+			.replace(ENV_TAG, environment);
+	}
+
+	[links]() {
+		const self = this;
+		const links = HEAD.querySelectorAll('link');
+
+		return (href) => {
+			if (links) {
+				for (const link of links) {
+					if (link.href.match(href)) {
+						return link;
+					}
+				}
+			}
+		};
+	}
+
+	[findLink](theme, environment) {
+		return this[links]()(this[buildHref](theme, environment, true));
+	}
+
+	[getCurrentTheme]() {
+		const self = this;
+		const themeLink = self[findLink](WORD, WORD);
+		let theme;
+		let environment;
+
+		if (themeLink) {
+			const linkMatch = themeLink.href.match(self[buildHref](WORD, WORD, true));
+			const pathMatch = self.path().match(/(\[[^\]]+\])/ug);
+
+			if (pathMatch.includes(NAME_TAG)) {
+				theme = linkMatch[pathMatch.indexOf(NAME_TAG) + 1];
+			}
+			if (pathMatch.includes(ENV_TAG)) {
+				environment = linkMatch[pathMatch.indexOf(ENV_TAG) + 1];
 			}
 		}
+
+		return { theme, environment };
 	}
 
-	return themeLink;
-};
+	[switchLinks](previousLink) {
+		const self = this;
+		const currentLink = self[findLink]();
+		const onDone = () => {
+			if (previousLink) {
+				previousLink.disabled = true;
+			}
 
-const getCurrentTheme = (self) => {
-	const themeLink = findLink(self, WORD, WORD);
-	let theme;
-	let environment;
+			if (self.onLoad()) {
+				self.onLoad().trigger(null, [self.theme()]);
+			}
+		};
 
-	if (themeLink) {
-		const linkMatch = themeLink.href.match(buildHref(self, WORD, WORD, true));
-		const pathMatch = self.path().match(/(\[[^\]]+\])/ug);
-
-		if (pathMatch.includes(NAME_TAG)) {
-			theme = linkMatch[pathMatch.indexOf(NAME_TAG) + 1];
+		if (currentLink === undefined) {
+			self[addLink](self[buildHref](), onDone);
 		}
-		if (pathMatch.includes(ENV_TAG)) {
-			environment = linkMatch[pathMatch.indexOf(ENV_TAG) + 1];
+		else {
+			currentLink.disabled = false;
+			onDone();
 		}
 	}
 
-	return { theme, environment };
-};
+	[setZoom]() {
+		const bodyFontSize = IS_DESKTOP ? '100%' : (IS_TABLET ? '1.5vmin' : '3.5vmin');
 
-const newLink = (self, previousLink, isThemeChange) => {
-	let isWorking;
-	const done = () => {
-		windowResize.trigger();
+		document.documentElement.style[FONT_SIZE] = bodyFontSize;
+	}
 
-		if (isThemeChange) {
-			isWorking.remove();
-		}
-	};
-	const appendLink = () => {
+	[addLink](href, onLoad) {
+		const self = this;
+
+		const link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.href = href;
+		link.onload = onLoad;
+
 		try {
 			HEAD.append(link);
 		}
 		catch (error) {
 			console.error(error);
 		}
-
-		done();
-	};
-
-	if (isThemeChange) {
-		isWorking = new IsWorking({
-			container: BODY,
-			isWorking: true,
-			label: 'Changing Theme',
-			fade: true,
-			css: {
-				background: 'black',
-				color: 'white',
-				'z-index': '10000000'
-			},
-			onRemove() {
-				isWorking = null;
-			}
-		});
-	}
-
-	const link = document.createElement('link');
-	link.rel = 'stylesheet';
-	link.href = buildHref(self);
-	link.onload = () => {
-		if (previousLink) {
-			previousLink.remove();
-		}
-
-		done();
-
-		if (self.onLoad()) {
-			self.onLoad()(self.theme());
-		}
-	};
-
-	if (isThemeChange) {
-		delay(appendLink, 200);
-	}
-	else {
-		appendLink();
-	}
-};
-
-const setZoom = () => {
-	const getBodyFontSize = () => {
-		if (IS_DESKTOP) {
-			return '100%';
-		}
-		else if (IS_TABLET) {
-			return '1.5vmin';
-		}
-
-		return '3.5vmin';
-	};
-
-	document.documentElement.style[FONT_SIZE] = getBodyFontSize();
-};
-
-const ENVIRONMENT = Symbol();
-const PATH = Symbol();
-const THEME = Symbol();
-const THEMES = Symbol();
-const ON_LOAD = Symbol();
-
-class Theme {
-	constructor() {
-		const self = this;
-
-		self[ENVIRONMENT] = IS_DESKTOP ? 'desktop' : 'mobile';
-		self[PATH] = '/styles/[name].[env].min.css';
-
-		if (!IS_DESKTOP) {
-			const tag = document.createElement('meta');
-			HEAD.append(tag);
-			tag.setAttribute('name', 'viewport');
-			tag.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0');
-		}
-
-		window.addEventListener('orientationchange', setZoom);
-		setZoom();
-	}
-
-	path(path) {
-		const self = this;
-
-		if (arguments.length !== 0) {
-			self[PATH] = path;
-
-			return self;
-		}
-
-		return self[PATH];
 	}
 
 	themes(themes) {
@@ -176,10 +142,11 @@ class Theme {
 		if (arguments.length !== 0) {
 			self[THEMES] = themes;
 
-			const current = getCurrentTheme(self);
+			const current = self[getCurrentTheme]();
 			self[THEME] = current.theme;
+
 			if (self[ENVIRONMENT] !== current.environment) {
-				newLink(self, findLink(self, current.theme, WORD));
+				self[switchLinks](self[findLink](current.theme, WORD));
 			}
 
 			return self;
@@ -188,26 +155,14 @@ class Theme {
 		return self[THEMES];
 	}
 
-	onLoad(onLoad) {
-		const self = this;
-
-		if (arguments.length !== 0) {
-			self[ON_LOAD] = onLoad;
-
-			return self;
-		}
-
-		return self[ON_LOAD];
-	}
-
-	env(environment) {
+	environment(environment) {
 		const self = this;
 
 		if (arguments.length !== 0) {
 			if (environment !== self[ENVIRONMENT]) {
-				const previousLink = findLink(self, self.theme(), self[ENVIRONMENT]);
+				const previousLink = self[findLink](self.theme(), self[ENVIRONMENT]);
 				self[ENVIRONMENT] = environment;
-				newLink(self, previousLink);
+				self[switchLinks](previousLink);
 			}
 
 			return self;
@@ -221,9 +176,9 @@ class Theme {
 
 		if (arguments.length !== 0) {
 			if (self.themes().includes(theme) && theme !== self[THEME]) {
-				const previousLink = findLink(self, self[THEME], self.env());
+				const previousLink = self[findLink](self[THEME], self.environment());
 				self[THEME] = theme;
-				newLink(self, previousLink, true);
+				self[switchLinks](previousLink);
 			}
 
 			return self;
@@ -231,7 +186,46 @@ class Theme {
 
 		return self[THEME];
 	}
+
+	preload() {
+		const self = this;
+		const environments = self.path().includes(ENV_TAG) ? ENVIRONMENTS : [''];
+		const currentLinks = self[links]();
+
+		const checkLink = (href) => {
+			if (currentLinks(href) !== undefined) {
+				self[addLink](href, function() {
+					this.disabled = true;
+				});
+			}
+		};
+
+		self.themes().forEach((theme) => {
+			ENVIRONMENTS.forEach((environment) => {
+				checkLink(self[buildHref](theme, environment));
+			});
+		});
+
+		return self;
+	}
+
+	setViewport(viewport) {
+		let tag = HEAD.querySelector('meta[name="viewport"]');
+
+		if (tag === undefined) {
+			tag = document.createElement('meta');
+			tag.setAttribute('name', 'viewport');
+			HEAD.append(tag);
+		}
+
+		tag.setAttribute('content', viewport);
+	}
 }
+
+Object.assign(Theme.prototype, {
+	path: methodString({ init: '/styles/[name].[env].min.css' }),
+	onLoad: methodQueue()
+});
 
 const theme = new Theme();
 
