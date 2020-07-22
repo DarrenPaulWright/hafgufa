@@ -1,9 +1,8 @@
-import { clone, erase, forOwn, set } from 'object-agent';
+import { get, set } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
 	AUTO,
-	enforceBoolean,
 	HUNDRED_PERCENT,
 	isArray,
 	methodBoolean,
@@ -17,41 +16,30 @@ import Grid from '../grid/Grid.js';
 import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../grid/gridConstants.js';
 import { ADD_ICON, DELETE_ICON } from '../icons.js';
 import Dialog from '../layout/Dialog.js';
-import assign from '../utility/assign.js';
 import { MARGIN_TOP } from '../utility/domConstants.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
-import Conversion from './Conversion.js';
+import DateInput from './DateInput.js';
 import Description from './Description.js';
 import './EditableGrid.less';
 import FormControl from './FormControl.js';
 import Picker from './Picker.js';
 import TextInput from './TextInput.js';
 
-const NEW_ROW_ID = 'new';
 const ADD_BUTTON_MARGIN_TOP = 6;
 
 const CURRENT_VALUE = Symbol();
 const GRID = Symbol();
 const ADD_NEW_BUTTON = Symbol();
 const ADD_NEW_DIALOG = Symbol();
-const IS_WAITING_FOR_ROW_ID = Symbol();
-const IS_DATA_DIRTY = Symbol();
 const IS_EDITING = Symbol();
-const CURRENT_PREFILL_VALUES = Symbol();
 
 const deleteItem = Symbol();
-const getCurrentValueWithNewRowId = Symbol();
-const getUniqueNewRowId = Symbol();
-const updateDialogControls = Symbol();
-const updateGrid = Symbol();
-const onEditControlChange = Symbol();
-const filterOptions = Symbol();
-const prefill = Symbol();
-const addControl = Symbol();
-const getControlType = Symbol();
+const buildControlSettings = Symbol();
+const getControlForDialog = Symbol();
 const buildDialogContent = Symbol();
 const buildDialogButtons = Symbol();
+const saveDialogData = Symbol();
 const showDialog = Symbol();
 
 /**
@@ -65,7 +53,6 @@ const showDialog = Symbol();
  * @param {Array} [settings.columns[]] - Grid control columns
  * @param {Array} [settings.columns[].showDescriptionOnEdit]
  * @param {Function} [settings.onDelete] - Callback for when an item is deleted. If not provided, onChange will be triggered.
- * @param {boolean} [settings.autoGenerateIds=true]
  * @param {boolean} [settings.showAddAnother=true]
  * @param {string} [settings.dialogWidth=34rem]
  */
@@ -74,15 +61,13 @@ export default class EditableGrid extends FormControl {
 		super(setDefaults({
 			type: controlTypes.EDITABLE_GRID,
 			width: HUNDRED_PERCENT,
-			height: AUTO
+			height: AUTO,
+			showAddButton: true
 		}, settings));
 
 		const self = this;
 		self[CURRENT_VALUE] = [];
-		self[IS_WAITING_FOR_ROW_ID] = false;
-		self[IS_DATA_DIRTY] = false;
 		self[IS_EDITING] = false;
-		self[CURRENT_PREFILL_VALUES] = {};
 
 		self.addClass('editable-grid');
 
@@ -90,27 +75,22 @@ export default class EditableGrid extends FormControl {
 			container: self,
 			columns: settings.columns,
 			height: settings.height === AUTO ? AUTO : '14rem',
-			onSelect: (id) => self[showDialog](id),
-			hideFooter: true
-		});
-
-		self[ADD_NEW_BUTTON] = new Button({
-			container: self.element,
-			classes: 'form-button add-new-button',
-			label: locale.get('addNew') || '',
-			icon: ADD_ICON,
-			onClick() {
-				self[showDialog]();
+			onSelect(id) {
+				self[showDialog](id);
 			},
-			css: set({}, MARGIN_TOP, ADD_BUTTON_MARGIN_TOP)
+			hideFooter: true
 		});
 
 		applySettings(self, settings, [], ['value']);
 
 		self.onResize(() => {
 				if (!self.height().isAuto) {
+					const addNewButtonHeight = self[ADD_NEW_BUTTON] ?
+						self[ADD_NEW_BUTTON].outerHeight() :
+						0;
+
 					self[GRID]
-						.height(self.innerHeight() - self.contentContainer.element.offsetTop - self[ADD_NEW_BUTTON].outerHeight())
+						.height(self.innerHeight() - self.contentContainer.element.offsetTop - addNewButtonHeight)
 						.resize();
 				}
 			})
@@ -121,16 +101,15 @@ export default class EditableGrid extends FormControl {
 			});
 	}
 
-	[deleteItem](rowData) {
+	[deleteItem](row) {
 		const self = this;
 		let isDeleted = true;
-		let rowValue = self[CURRENT_VALUE].find((item) => item.id === rowData.id);
+		let rowValue = self[CURRENT_VALUE].find((item) => item.id === row.id);
 
 		self[GRID].clearSelected();
-		self[GRID].removeRow({
-			id: rowData.id
-		});
-		self[CURRENT_VALUE] = self[CURRENT_VALUE].filter((value) => value.id !== rowData.id);
+		self[GRID].removeRow({ id: row.id });
+
+		self[CURRENT_VALUE] = self[CURRENT_VALUE].filter((item) => item.id !== row.id);
 		self.triggerChange();
 
 		if (self[ADD_NEW_DIALOG]) {
@@ -142,7 +121,7 @@ export default class EditableGrid extends FormControl {
 			subTitle: locale.get('clickToUndo'),
 			onClick() {
 				isDeleted = false;
-				self[GRID].addRow(rowData);
+				self[GRID].addRow(row);
 				self[CURRENT_VALUE].push(rowValue);
 				self.triggerChange();
 			},
@@ -153,7 +132,7 @@ export default class EditableGrid extends FormControl {
 						self.onDelete()({
 							id: self.id(),
 							control: self,
-							value: rowData.id
+							value: row.id
 						});
 					}
 					else {
@@ -164,352 +143,152 @@ export default class EditableGrid extends FormControl {
 		});
 	}
 
-	[getCurrentValueWithNewRowId]() {
+	[saveDialogData](row) {
 		const self = this;
-		let newGridRow;
-
-		self[CURRENT_VALUE].forEach((gridRow) => {
-			if (gridRow.id === NEW_ROW_ID) {
-				newGridRow = gridRow;
-				return false;
-			}
-			return true;
-		});
-
-		return newGridRow;
-	}
-
-	[getUniqueNewRowId](newValue) {
-		const self = this;
-		const currentRowIds = self[CURRENT_VALUE].map((item) => item.id);
-		let newRowId;
-
-		newValue.some((value) => {
-			if (!currentRowIds.includes(value.id)) {
-				newRowId = value.id;
-				return true;
-			}
-		});
-
-		return newRowId;
-	}
-
-	[updateDialogControls](id, newValueRow) {
-		const self = this;
+		let isValid = true;
+		const columns = self[GRID].columns();
 
 		if (self[ADD_NEW_DIALOG]) {
-			self[ADD_NEW_DIALOG].each((control, index) => {
-				control.id = id;
-				control.value(newValueRow.values[index].text);
-			});
-		}
-	}
+			self[ADD_NEW_DIALOG].each((control) => {
+				control.validate();
 
-	[updateGrid]() {
-		const self = this;
-
-		self[GRID].rows(self[CURRENT_VALUE] = self[CURRENT_VALUE].map((row) => {
-			return {
-				cells: row.values ? row.values.map((cell) => {
-					return {
-						...cell,
-						id: row.id
-					};
-				}) : [],
-				id: row.id,
-				originalData: row,
-				edited: row.edited || self[CURRENT_VALUE].edited,
-				values: row.values
-			};
-		}));
-	}
-
-	[onEditControlChange](cellData, id, columnIndex) {
-		const self = this;
-
-		const setRowIdAndUpdateCellData = () => {
-			let rowFound = false;
-
-			cellData.id = id;
-
-			self[CURRENT_VALUE].forEach((row) => {
-				if (row.id === cellData.id) {
-					rowFound = true;
-					row.values[columnIndex] = cellData;
-					row.edited = true;
-					return false;
+				if (isValid) {
+					isValid = control.error() === '';
 				}
 			});
 
-			if (!rowFound) {
-				self[CURRENT_VALUE].push({
-					values: initializeNewCells(),
-					id,
-					edited: true
-				});
-			}
-
-			self[updateGrid]();
-		};
-
-		const initializeNewCells = () => {
-			const newRowCells = [];
-
-			for (let stubColumnIndex = 0; stubColumnIndex < self[GRID].columns().length; stubColumnIndex++) {
-				if (stubColumnIndex === columnIndex) {
-					newRowCells[stubColumnIndex] = cellData;
+			if (isValid) {
+				if (self[IS_EDITING]) {
+					if (self.onRowChange()) {
+						self.onRowChange()(self.mapDataOut() ? self.mapDataOut()(row) : row);
+					}
+					self[GRID].updateRowData(row.id, row);
 				}
 				else {
-					newRowCells[stubColumnIndex] = {
-						id,
-						text: ''
-					};
+					if (self.onAdd()) {
+						self.onAdd()(self.mapDataOut() ? self.mapDataOut()(row) : row);
+					}
+					self[CURRENT_VALUE].push(row);
+					self[GRID].addRow(row);
 				}
-			}
 
-			return newRowCells;
-		};
-
-		if (self[IS_WAITING_FOR_ROW_ID]) {
-			self[IS_DATA_DIRTY] = true;
-			setRowIdAndUpdateCellData();
-		}
-		else {
-			if (id === NEW_ROW_ID) {
-				self[IS_WAITING_FOR_ROW_ID] = true;
-				cellData.id = NEW_ROW_ID;
-				self[CURRENT_VALUE].push({
-					values: initializeNewCells(),
-					id: NEW_ROW_ID,
-					edited: true
-				});
-				self[updateGrid]();
-				self[GRID].selectRow(NEW_ROW_ID);
+				self.triggerChange();
+				self[ADD_NEW_DIALOG].remove();
 			}
-			else {
-				setRowIdAndUpdateCellData();
-			}
-			self.triggerChange();
 		}
 	}
 
-	[filterOptions](values, column) {
-		if (!column.editOptions.filterOptionsByContent) {
-			return values;
-		}
-
-		const newChildren = [];
-		let output;
-
-		values.children.forEach((child) => {
-			newChildren.push(child);
-		});
-
-		output = clone(values);
-		output.children = newChildren;
-
-		return output;
-	}
-
-	[prefill](editOptions, changedControl, newValue) {
+	[buildControlSettings](control, column, row) {
 		const self = this;
 
-		const hasOverRideableValue = (control, prefillId) => {
-			const controlValue = control.value();
+		const onChange = (value) => {
+			set(row, column.path, value);
 
-			if (isArray(controlValue)) {
-				return (controlValue.length === 0 || (controlValue.length === 1 && controlValue[0].id === self[CURRENT_PREFILL_VALUES][prefillId]));
+			if (self[IS_EDITING]) {
+				self[GRID].updateRowData(row.id, row);
+				self.triggerChange();
 			}
-
-			return (!controlValue || controlValue === self[CURRENT_PREFILL_VALUES][prefillId]);
 		};
 
-		const prefillControl = (control, id, value) => {
-			control.value(value);
-			control.triggerChange(true);
-			self[CURRENT_PREFILL_VALUES][id] = value;
-		};
-
-		if (editOptions) {
-			forOwn(editOptions.prefill, (prefillValue, prefillId) => {
-				const control = self[ADD_NEW_DIALOG].get(prefillId);
-
-				if (control && hasOverRideableValue(control, prefillId)) {
-					if (prefillValue === null) {
-						prefillControl(control, prefillId, newValue);
-					}
-					else if (prefillValue.store && editOptions.dataSource) {
-						editOptions.dataSource.store.get(changedControl.id())
-							.then((localItem) => prefillValue.store.getTitle(localItem[prefillValue.key]))
-							.then((title) => {
-								prefillControl(control, prefillId, title.id);
-							});
-					}
-				}
-			});
-		}
-	}
-
-	[addControl](type, column, rowData, columnCount) {
-		const self = this;
-		const editOptions = column.editOptions || {};
 		const controlSettings = {
+			...column.editOptions,
+			control,
+			id: column.path,
 			title: column.title,
 			width: HUNDRED_PERCENT,
-			isEnabled: (editOptions.isEnabled === undefined) ? true : editOptions.isEnabled && !self[IS_EDITING],
-			isRequired: editOptions.isRequired
+			isEnabled: (column.editOptions.isEnabled === undefined) ?
+				true :
+				column.editOptions.isEnabled && !self[IS_EDITING],
+			value: get(row, column.path) || column.editOptions.value || '',
+			onChange
 		};
-		const cellData = rowData.originalData.values[columnCount];
 
-		editOptions.defaultValue = editOptions.defaultValue || '';
-
-		switch (type) {
-			case controlTypes.TEXT:
-			case controlTypes.EMAIL:
-			case controlTypes.LINK:
-			case controlTypes.NUMBER:
-				assign(controlSettings, {
-					control: TextInput,
-					textWidth: editOptions.textWidth || '14rem',
-					onChange(newValue) {
-						cellData.text = newValue;
-						self[prefill](column.editOptions, this, newValue);
-						self[onEditControlChange](cellData, rowData.id, columnCount, newValue);
-					},
-					value: cellData.text || editOptions.defaultValue
-				});
-				break;
-			case controlTypes.DESCRIPTION:
-				assign(controlSettings, {
-					control: Description,
-					textWidth: editOptions.textWidth || '20rem',
-					isEnabled: true,
-					isRequired: false,
-					value: cellData.text || editOptions.defaultValue
-				});
-				break;
-			case controlTypes.CONVERSION:
-				assign(controlSettings, {
-					control: Conversion,
-					onChange(newValue) {
-						cellData.text = newValue;
-						self[prefill](column.editOptions, this, newValue);
-						self[onEditControlChange](cellData, rowData.id, columnCount, newValue);
-					},
-					value: cellData.text || editOptions.defaultValue
-				});
-				break;
-			case controlTypes.PICKER:
-				assign(controlSettings, {
-					control: Picker,
-					showAll: enforceBoolean(column.showAll, true),
-					showSelectAll: column.showSelectAll,
-					onChange(newValue) {
-						if (newValue.length !== 0) {
-							cellData.text = newValue.map((item) => item.title).join(', ');
-						}
-						else {
-							cellData.text = '';
-						}
-						if (newValue.length !== 0) {
-							self[prefill](column.editOptions, this, newValue[0]);
-						}
-						self[onEditControlChange](cellData, rowData.id, columnCount);
-					},
-					value: cellData.text || editOptions.defaultValue
-				});
-
-				if (editOptions.dataSource) {
-					erase(editOptions, 'options');
-					erase(editOptions, 'preferred');
-				}
-				else {
-					editOptions.options = self[filterOptions](editOptions.options, column, cellData);
-				}
-
-				break;
+		if (control === Description) {
+			controlSettings.isEnabled = true;
+			controlSettings.isRequired = false;
 		}
-
-		assign(controlSettings, editOptions);
+		else if (control === Picker) {
+			controlSettings.onChange = (value) => {
+				onChange(value.length === 0 ?
+					'' :
+					value.map((item) => item.title).join(', '));
+			};
+		}
+		else if (control === TextInput) {
+			if (controlSettings.textWidth === undefined) {
+				controlSettings.textWidth = '14rem';
+			}
+		}
+		else if (control === DateInput) {
+			controlSettings.dateFormat = column.type === COLUMN_TYPES.DATE ?
+				self.dateFormat() :
+				(column.type === COLUMN_TYPES.TIME ?
+					self.timeFormat() :
+					self.dateFormat() + ' ' + self.timeFormat());
+			console.log('controlSettings:', controlSettings);
+		}
 
 		return controlSettings;
 	}
 
-	[getControlType](column) {
+	[getControlForDialog](column) {
 		const self = this;
-		let controlType;
+		const isDateType = column.type === COLUMN_TYPES.DATE ||
+			column.type === COLUMN_TYPES.TIME ||
+			column.type === COLUMN_TYPES.DATE_TIME;
 
-		if (
-			column.type === COLUMN_TYPES.TEXT ||
-			column.type === COLUMN_TYPES.EMAIL ||
-			column.type === COLUMN_TYPES.LINK ||
-			column.type === COLUMN_TYPES.NUMBER
-		) {
-			if (column.showDescriptionOnEdit && self[IS_EDITING]) {
-				controlType = controlTypes.DESCRIPTION;
-			}
-			else if (column.filterType === FILTER_TYPES.DROPDOWN) {
-				controlType = controlTypes.PICKER;
-			}
-			else if (column.editOptions && column.editOptions.controlType) {
-				controlType = column.editOptions.controlType;
-			}
-			else {
-				controlType = controlTypes.TEXT;
+		if (column.canEdit !== false) {
+			if (
+				isDateType ||
+				column.type === COLUMN_TYPES.TEXT ||
+				column.type === COLUMN_TYPES.EMAIL ||
+				column.type === COLUMN_TYPES.LINK ||
+				column.type === COLUMN_TYPES.NUMBER
+			) {
+				if (column.showDescriptionOnEdit === true && self[IS_EDITING]) {
+					return Description;
+				}
+				if (isDateType) {
+					return DateInput;
+				}
+				if (column.filterType === FILTER_TYPES.DROPDOWN) {
+					return Picker;
+				}
+				if (column.editOptions.control) {
+					return column.editOptions.control;
+				}
+
+				return TextInput;
 			}
 		}
-
-		return controlType;
 	}
 
-	[buildDialogContent](rowData = {}) {
+	[buildDialogContent](row) {
 		const self = this;
 		const output = [];
 
-		rowData.originalData = rowData.originalData || {};
-		rowData.originalData.values = rowData.originalData.values || [];
-		rowData.id = rowData.id || (self.autoGenerateIds() ? shortid.generate() : NEW_ROW_ID);
-		self[CURRENT_PREFILL_VALUES] = {};
-
 		if (self[GRID].columns()) {
-			self[GRID].columns().forEach((column, columnCount) => {
-				const controlType = self[getControlType](column);
+			self[GRID].columns()
+				.forEach((column) => {
+					const control = self[getControlForDialog](column);
 
-				if (!rowData.originalData.values[columnCount]) {
-					rowData.originalData.values[columnCount] = {
-						text: ''
-					};
-				}
-
-				if (controlType) {
-					output.push(self[addControl](
-						controlType,
-						column,
-						rowData,
-						columnCount
-					));
-				}
-			});
+					if (control) {
+						output.push(self[buildControlSettings](control, column, row));
+					}
+				});
 		}
 
 		return output;
 	}
 
-	[buildDialogButtons](rowData) {
+	[buildDialogButtons](row) {
 		const self = this;
 
 		const buttons = [{
 			label: locale.get('done'),
 			classes: 'action-button',
 			onClick() {
-				if (self[CURRENT_VALUE]) {
-					self[CURRENT_VALUE].forEach((row) => {
-						row.edited = false;
-					});
-				}
-				if (self[ADD_NEW_DIALOG]) {
-					self[ADD_NEW_DIALOG].remove();
-				}
+				self[saveDialogData](row);
 			}
 		}];
 
@@ -518,20 +297,20 @@ export default class EditableGrid extends FormControl {
 				label: locale.get('addAnother'),
 				classes: 'action-button',
 				onClick() {
-					self[ADD_NEW_DIALOG].remove();
+					self[saveDialogData](row);
 					self[showDialog]();
 				}
 			});
 		}
 
-		if (self[IS_EDITING]) {
+		if (self[IS_EDITING] && self.canDelete()) {
 			buttons.push({
 				label: locale.get('delete'),
 				classes: 'form-button',
 				align: 'right',
 				icon: DELETE_ICON,
 				onClick() {
-					self[deleteItem](rowData);
+					self[deleteItem](row);
 				}
 			});
 		}
@@ -541,9 +320,15 @@ export default class EditableGrid extends FormControl {
 
 	[showDialog](id) {
 		const self = this;
-		const rowData = self[CURRENT_VALUE].find((row) => row.id === id);
 
-		self[IS_EDITING] = !!rowData;
+		self[IS_EDITING] = id !== undefined;
+
+		const row = self[IS_EDITING] ?
+			self[CURRENT_VALUE].find((item) => item.id === id) :
+			{
+				id: shortid.generate(),
+				cells: self[GRID].columns().map(() => ({ text: '' }))
+			};
 
 		if (self[ADD_NEW_DIALOG]) {
 			self[ADD_NEW_DIALOG].remove();
@@ -551,22 +336,27 @@ export default class EditableGrid extends FormControl {
 
 		self[ADD_NEW_DIALOG] = new Dialog({
 			title: self[IS_EDITING] ? locale.get('edit') : locale.get('addDialogTitle'),
-			footer: {
-				buttons: self[buildDialogButtons](rowData)
-			},
-			content: self[buildDialogContent](rowData),
+			width: self.dialogWidth(),
+			footer: { buttons: self[buildDialogButtons](row) },
+			content: self[buildDialogContent](row),
 			onRemove() {
 				self[GRID].clearSelected();
 				self[ADD_NEW_DIALOG] = null;
 			}
 		});
+
+		self[ADD_NEW_DIALOG].each((control) => {
+			control.isFocused(true);
+			return true;
+		});
+
+		self[ADD_NEW_DIALOG].resize();
 	}
 
 	value(newValue) {
 		const self = this;
 		let newRowId;
-		let newGridRow;
-		let output = [];
+		let output = self[CURRENT_VALUE];
 
 		if (arguments.length !== 0) {
 			if (self.processDataIn()) {
@@ -574,33 +364,14 @@ export default class EditableGrid extends FormControl {
 			}
 
 			if (isArray(newValue)) {
-				if (self[IS_WAITING_FOR_ROW_ID]) {
-					newRowId = self[getUniqueNewRowId](newValue);
-					if (newRowId) {
-						newGridRow = self[getCurrentValueWithNewRowId]();
-						if (newGridRow) {
-							self[updateDialogControls](newRowId, newGridRow);
-						}
-					}
-					self[IS_WAITING_FOR_ROW_ID] = false;
-				}
+				self[CURRENT_VALUE] = self.mapDataIn() === undefined ?
+					newValue :
+					newValue.map(self.mapDataIn());
 
-				if (self.mapDataIn()) {
-					self[CURRENT_VALUE] = newValue.map(self.mapDataIn());
-				}
-				else {
-					self[CURRENT_VALUE] = newValue;
-				}
-
-				self[updateGrid]();
+				self[GRID].rows(self[CURRENT_VALUE]);
 
 				if (newRowId) {
 					self[GRID].selectRow(newRowId);
-				}
-
-				if (self[IS_DATA_DIRTY]) {
-					self.triggerChange();
-					self[IS_DATA_DIRTY] = false;
 				}
 			}
 
@@ -608,47 +379,38 @@ export default class EditableGrid extends FormControl {
 		}
 
 		if (self.mapDataOut()) {
-			output = self[CURRENT_VALUE].map(self.mapDataOut());
+			output = output.map(self.mapDataOut());
 		}
 
 		if (self.processDataOut()) {
-			output = self.processDataOut()(self.mapDataOut() ? output : self[CURRENT_VALUE]);
-		}
-
-		if (!(self.mapDataOut() || self.processDataOut())) {
-			self[CURRENT_VALUE].forEach((row) => {
-				const rowOutput = {
-					id: row.id === NEW_ROW_ID ? '' : row.id,
-					edited: row.edited || false,
-					values: []
-				};
-
-				row.values.forEach((cell, count) => {
-					if (count < self[GRID].columns().length) {
-						rowOutput.values.push({
-							id: cell.id === NEW_ROW_ID ? '' : cell.id,
-							text: cell.text || ''
-						});
-					}
-				});
-
-				output.push(rowOutput);
-			});
+			output = self.processDataOut()(output);
 		}
 
 		return output;
 	}
 
 	disableAddButton() {
-		this[ADD_NEW_BUTTON].isEnabled(false);
+		if (this[ADD_NEW_BUTTON]) {
+			this[ADD_NEW_BUTTON].isEnabled(false);
+		}
 	}
 
 	enableAddButton() {
-		this[ADD_NEW_BUTTON].isEnabled(true);
+		if (this[ADD_NEW_BUTTON]) {
+			this[ADD_NEW_BUTTON].isEnabled(true);
+		}
 	}
 
 	columns(columns) {
+		columns.forEach((column) => {
+			column.editOptions = column.editOptions || {};
+		});
+
 		this[GRID].columns(columns);
+	}
+
+	add() {
+		this[showDialog]();
 	}
 }
 
@@ -661,11 +423,39 @@ Object.assign(EditableGrid.prototype, {
 
 	processDataOut: methodFunction(),
 
+	showAddButton: methodBoolean({
+		init: false,
+		set(showAddButton) {
+			const self = this;
+
+			self.classes('has-add-button', showAddButton);
+
+			if (showAddButton) {
+				self[ADD_NEW_BUTTON] = new Button({
+					container: self.element,
+					classes: 'form-button add-new-button',
+					label: locale.get('addNew') || '',
+					icon: ADD_ICON,
+					onClick() {
+						self.add();
+					},
+					css: set({}, MARGIN_TOP, ADD_BUTTON_MARGIN_TOP)
+				});
+			}
+			else if (self[ADD_NEW_BUTTON]) {
+				self[ADD_NEW_BUTTON].remove();
+				self[ADD_NEW_BUTTON] = null;
+			}
+
+			self.resize();
+		}
+	}),
+
 	showAddAnother: methodBoolean({
 		init: true
 	}),
 
-	autoGenerateIds: methodBoolean({
+	canDelete: methodBoolean({
 		init: true
 	}),
 
@@ -673,7 +463,19 @@ Object.assign(EditableGrid.prototype, {
 		init: '34rem'
 	}),
 
-	onDelete: methodFunction()
+	onAdd: methodFunction(),
+
+	onRowChange: methodFunction(),
+
+	onDelete: methodFunction(),
+
+	dateFormat: methodString({
+		init: 'MM/dd/yyyy'
+	}),
+
+	timeFormat: methodString({
+		init: 'hh:mm:ss'
+	})
 });
 
 EditableGrid.COLUMN_TYPES = COLUMN_TYPES;

@@ -30,15 +30,14 @@ describe('EditableGrid', () => {
 				columns: [{
 					title: 'test',
 					type: 'text',
-					size: HUNDRED_PERCENT
+					size: HUNDRED_PERCENT,
+					path: 'test'
 				}]
 			});
 
 			testUtil.control.value([{
 				id: '1',
-				values: [{
-					text: 'asdf'
-				}]
+				test: 'asdf'
 			}]);
 
 			return wait(1)
@@ -56,25 +55,20 @@ describe('EditableGrid', () => {
 				height: '30rem',
 				columns: [{
 					type: COLUMN_TYPES.TEXT,
-					size: '*'
+					size: '*',
+					path: 'test'
 				}]
 			});
 
 			testUtil.control.value([{
 				id: '1',
-				values: [{
-					text: 'text 1'
-				}]
+				test: 'text 1'
 			}, {
 				id: '2',
-				values: [{
-					text: 'text 2'
-				}]
+				test: 'text 2'
 			}, {
 				id: '3',
-				values: [{
-					text: 'text 3'
-				}]
+				test: 'text 3'
 			}]);
 
 			return wait(1)
@@ -96,6 +90,7 @@ describe('EditableGrid', () => {
 					type: 'text',
 					filterType: 'dropDown',
 					size: HUNDRED_PERCENT,
+					path: 'test',
 					editOptions: {
 						options: {
 							isMultiSelect: false,
@@ -127,7 +122,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
+					assert.is(testUtil.control.value()[0].cells[0].text, 'test option 2');
 				});
 		});
 
@@ -139,6 +134,7 @@ describe('EditableGrid', () => {
 					type: 'text',
 					filterType: 'dropDown',
 					size: HUNDRED_PERCENT,
+					path: 'test',
 					editOptions: {
 						options: {
 							isMultiSelect: true,
@@ -170,7 +166,7 @@ describe('EditableGrid', () => {
 					//close the dialog
 					testUtil.first('.action-button', true).click();
 
-					assert.is(testUtil.control.value()[0].values[0].text, 'test option, test option 2');
+					assert.is(testUtil.control.value()[0].cells[0].text, 'test option, test option 2');
 				});
 		});
 
@@ -184,6 +180,7 @@ describe('EditableGrid', () => {
 						type: 'text',
 						filterType: 'dropDown',
 						size: '50%',
+						path: 'test',
 						editOptions: {
 							options: {
 								isMultiSelect: false,
@@ -206,6 +203,7 @@ describe('EditableGrid', () => {
 						type: 'text',
 						filterType: 'dropDown',
 						size: '50%',
+						path: 'test2',
 						editOptions: {
 							options: {
 								isMultiSelect: true,
@@ -237,7 +235,7 @@ describe('EditableGrid', () => {
 						//close the dialog
 						testUtil.first('.action-button', true).click();
 
-						assert.is(testUtil.control.value()[0].values[0].text, 'test option 2');
+						assert.is(testUtil.control.value()[0].cells[0].text, 'test option 2');
 					});
 			}
 		);
@@ -252,6 +250,7 @@ describe('EditableGrid', () => {
 						type: 'text',
 						filterType: 'dropDown',
 						size: '50%',
+						path: 'test',
 						editOptions: {
 							options: {
 								isMultiSelect: false,
@@ -274,6 +273,7 @@ describe('EditableGrid', () => {
 						type: 'text',
 						filterType: 'dropDown',
 						size: '50%',
+						path: 'test2',
 						editOptions: {
 							options: {
 								isMultiSelect: true,
@@ -305,7 +305,7 @@ describe('EditableGrid', () => {
 						//close the dialog
 						testUtil.first('.action-button', true).click();
 
-						assert.is(testUtil.control.value()[0].values[1].text, 'test option, test option 2');
+						assert.is(testUtil.control.value()[0].cells[1].text, 'test option, test option 2');
 					});
 			}
 		);

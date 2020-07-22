@@ -1,12 +1,14 @@
 
 .editable-grid {
-	.grid-header {
-		border-top-left-radius: @editableGridBorderRadius;
-		border-top-right-radius: @editableGridBorderRadius;
-	}
+	&.has-add-button {
+		.grid-header {
+			border-top-left-radius: @editableGridBorderRadius;
+			border-top-right-radius: @editableGridBorderRadius;
+		}
 
-	.virtual-list {
-		border-bottom-left-radius: @editableGridBorderRadius;
-		border-bottom-right-radius: @editableGridBorderRadius;
+		.virtual-list {
+			border-bottom-left-radius: @editableGridBorderRadius;
+			border-bottom-right-radius: @editableGridBorderRadius;
+		}
 	}
 }
