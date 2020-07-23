@@ -291,8 +291,10 @@ class Popup extends MergeContentContainerMixin(Container) {
 		};
 
 		self[onMouseMove] = () => {
-			self[IS_ACTIVE] = false;
-			self[positionPopup]();
+			if (self.canTrackMouse()) {
+				self[IS_ACTIVE] = false;
+				self[positionPopup]();
+			}
 		};
 
 		self[onEscapeKey] = (event) => {
@@ -572,6 +574,7 @@ Object.assign(Popup.prototype, {
 			}
 			else if (anchor === Popup.MOUSE) {
 				BODY.addEventListener(MOUSE_MOVE_EVENT, self[onMouseMove]);
+				self[positionPopup]();
 			}
 		}
 	}),

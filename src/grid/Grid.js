@@ -1381,6 +1381,7 @@ Object.assign(Grid.prototype, {
 		self[filter]();
 	}),
 
+	// TODO: enforce inidividual column data via a Schema
 	/**
 	 * @method columns
 	 * @memberof Grid
@@ -1404,7 +1405,6 @@ Object.assign(Grid.prototype, {
 	 * @param {Function} columns[].buttons[].onClick - Called on click
 	 * @param {string}   [columns[].buttons[].title] - Applied to title and alt attributes
 	 */
-	// TODO: enforce inidividual column data via a Schema
 	columns: methodArray({
 		enforce(columns, oldValue) {
 			if (!isArray(columns)) {
