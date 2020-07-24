@@ -228,7 +228,7 @@ Object.assign(TextInput.prototype, {
 			const self = this;
 
 			self.onValidate((value, isFocused) => {
-				if (isFocused === false && self.minLength() > value.length) {
+				if (isFocused === false && value !== '' && self.minLength() > value.length) {
 					self.error(locale.get('invalidMinLength', {
 						minLength: self.minLength()
 					}));
@@ -279,11 +279,7 @@ Object.assign(TextInput.prototype, {
 
 			self.isNumber(true)
 				.onValidate((value, isFocused) => {
-					if (
-						isFocused === false &&
-						value !== '' &&
-						self.minValue() > value
-					) {
+					if (isFocused === false && value !== '' && self.minValue() > value) {
 						self.error(locale.get('invalidMinValue', {
 							minValue: self.minValue()
 						}));
@@ -308,11 +304,7 @@ Object.assign(TextInput.prototype, {
 
 			self.isNumber(true)
 				.onValidate((value, isFocused) => {
-					if (
-						isFocused === false &&
-						value !== '' &&
-						self.maxValue() < value
-					) {
+					if (isFocused === false && value !== '' && self.maxValue() < value) {
 						self.error(locale.get('invalidMaxValue', {
 							maxValue: self.maxValue()
 						}));
