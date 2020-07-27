@@ -280,6 +280,10 @@ export default class Grid extends Control {
 			) {
 				setStringValue('text', cell, column);
 			}
+			else if (column.type === COLUMN_TYPES.OPTIONS) {
+				setStringValue('value', cell, column);
+				cell.text = column.options[cell.value] || '';
+			}
 			else if (column.type === COLUMN_TYPES.IMAGE) {
 				setStringValue('src', cell, column);
 			}
@@ -641,6 +645,7 @@ export default class Grid extends Control {
 			if (column.filter && !column.isHidden) {
 				switch (column.type) {
 					case COLUMN_TYPES.TEXT:
+					case COLUMN_TYPES.OPTIONS:
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:
 						filterFunction = (row) => {
@@ -1424,6 +1429,11 @@ Object.assign(Grid.prototype, {
 				};
 
 				switch (column.type) {
+					case COLUMN_TYPES.OPTIONS:
+						column.sortFunctionAsc = column.sortFunctionAsc || List.comparers.string.asc;
+						column.sortFunctionDesc = column.sortFunctionDesc || List.comparers.string.desc;
+						column.filterType = column.filterType || FILTER_TYPES.DROPDOWN;
+						break;
 					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:

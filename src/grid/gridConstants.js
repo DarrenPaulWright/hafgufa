@@ -2,6 +2,7 @@ import { Enum } from 'type-enforcer-ui';
 
 export const COLUMN_TYPES = new Enum({
 	TEXT: 'text',
+	OPTIONS: 'options',
 	EMAIL: 'email',
 	LINK: 'link',
 	NUMBER: 'number',

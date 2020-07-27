@@ -235,6 +235,7 @@ Object.assign(GridCell.prototype, {
 
 			switch (self.dataType()) {
 				case COLUMN_TYPES.TEXT:
+				case COLUMN_TYPES.OPTIONS:
 					self[getControl]('gridSpan', Span)
 						.text(content.text || '');
 					break;

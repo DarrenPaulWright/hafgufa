@@ -1,4 +1,4 @@
-import { get, set } from 'object-agent';
+import { forOwnReduce, get, set } from 'object-agent';
 import shortid from 'shortid';
 import {
 	applySettings,
@@ -209,11 +209,21 @@ export default class EditableGrid extends FormControl {
 		}
 		else if (control === Picker) {
 			controlSettings.onChange = (value) => {
-				onChange(value.length === 0 ? '' : value.map((item) => item.title).join(', '));
+				if (column.type === COLUMN_TYPES.OPTIONS) {
+					onChange(value.length === 0 ? '' : value[0].id);
+				}
+				else {
+					onChange(value.length === 0 ? '' : value.map((item) => item.title).join(', '));
+				}
 			};
 
 			if (isFunction(controlSettings.options)) {
-				controlSettings.options = controlSettings.options.call(self, row.id);
+				controlSettings.options = controlSettings.options.call(self, row.id, column.options);
+			}
+			else if (column.type === COLUMN_TYPES.OPTIONS) {
+				controlSettings.options = forOwnReduce(column.options, (result, title, id) => {
+					result.push({ id, title });
+				}, []);
 			}
 		}
 		else if (control === TextInput) {
@@ -242,6 +252,7 @@ export default class EditableGrid extends FormControl {
 			if (
 				isDateType ||
 				column.type === COLUMN_TYPES.TEXT ||
+				column.type === COLUMN_TYPES.OPTIONS ||
 				column.type === COLUMN_TYPES.EMAIL ||
 				column.type === COLUMN_TYPES.LINK ||
 				column.type === COLUMN_TYPES.NUMBER

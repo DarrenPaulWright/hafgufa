@@ -3,7 +3,7 @@ import Control from '../Control.js';
 import ControlRecycler from '../ControlRecycler.js';
 import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
-import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from './gridConstants.js';
+import { SORT_TYPES } from './gridConstants.js';
 import './GridHeader.less';
 import GridHeaderCell from './GridHeaderCell.js';
 
@@ -89,8 +89,6 @@ Object.assign(GridHeader.prototype, {
 			self[TOTAL_FLEXIBLE_COLUMN_WIDTH] = 0;
 
 			columns.forEach((column, index) => {
-				let filterType;
-
 				column.size = column.size || '1*';
 
 				if (!column.size.includes('*') && !column.size.includes('%')) {
@@ -112,20 +110,6 @@ Object.assign(GridHeader.prototype, {
 					self[TOTAL_FLEXIBLE_COLUMN_WIDTH] += parseInt(column.size, 10);
 				}
 
-				switch (column.type) {
-					case COLUMN_TYPES.TEXT:
-					case COLUMN_TYPES.EMAIL:
-						filterType = column.canFilter ? column.filterType || FILTER_TYPES.AUTO_COMPLETE : null;
-						break;
-					case COLUMN_TYPES.NUMBER:
-						filterType = column.canFilter ? column.filterType || FILTER_TYPES.NUMBER : null;
-						break;
-					case COLUMN_TYPES.DATE:
-					case COLUMN_TYPES.DATE_TIME:
-					case COLUMN_TYPES.TIME:
-						filterType = column.canFilter ? FILTER_TYPES.DATE : null;
-						break;
-				}
 				column.minWidth = column.isFixedWidth ? null : (parseInt(column.minWidth || MIN_COLUMN_WIDTH, 10));
 
 				applySettings(self[CELL_RECYCLER].getControlAtIndex(index, true), {
@@ -135,7 +119,7 @@ Object.assign(GridHeader.prototype, {
 					canSort: column.canSort,
 					filter: column.filter || '',
 					dataType: column.type,
-					filterType,
+					filterType: column.canFilter ? column.filterType : null,
 					sortDirection: column.direction,
 					selectableColumns: self.selectableColumns()
 				});
