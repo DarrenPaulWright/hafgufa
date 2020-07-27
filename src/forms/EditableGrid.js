@@ -224,7 +224,6 @@ export default class EditableGrid extends FormControl {
 				(column.type === COLUMN_TYPES.TIME ?
 					self.timeFormat() :
 					self.dateFormat() + ' ' + self.timeFormat());
-			console.log('controlSettings:', controlSettings);
 		}
 
 		return controlSettings;
@@ -272,6 +271,10 @@ export default class EditableGrid extends FormControl {
 					const control = self[getControlForDialog](column);
 
 					if (control) {
+						if (!self[IS_EDITING]) {
+							set(row, column.path, column.editOptions.value || '');
+						}
+
 						output.push(self[buildControlSettings](control, column, row));
 					}
 				});
