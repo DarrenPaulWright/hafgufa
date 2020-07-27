@@ -5,6 +5,7 @@ import {
 	AUTO,
 	HUNDRED_PERCENT,
 	isArray,
+	isFunction,
 	methodBoolean,
 	methodFunction,
 	methodString
@@ -208,10 +209,12 @@ export default class EditableGrid extends FormControl {
 		}
 		else if (control === Picker) {
 			controlSettings.onChange = (value) => {
-				onChange(value.length === 0 ?
-					'' :
-					value.map((item) => item.title).join(', '));
+				onChange(value.length === 0 ? '' : value.map((item) => item.title).join(', '));
 			};
+
+			if (isFunction(controlSettings.options)) {
+				controlSettings.options = controlSettings.options.call(self, row.id);
+			}
 		}
 		else if (control === TextInput) {
 			if (controlSettings.textWidth === undefined) {
