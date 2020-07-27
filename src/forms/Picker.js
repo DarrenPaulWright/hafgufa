@@ -379,6 +379,8 @@ export default class Picker extends FormControl {
 			self[toggleSelectedItem](buttonId);
 			WINDOW.dispatchEvent(new Event(CLICK_EVENT));
 		}
+
+		self.resize(true);
 	}
 
 	/**
