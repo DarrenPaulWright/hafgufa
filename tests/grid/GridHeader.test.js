@@ -216,116 +216,49 @@ describe('GridHeader', () => {
 	});
 
 	describe('FilterTypes', () => {
-		it('should set a default filter type of autocomplete if canFilter is true and column type is text', () => {
+		it('should render a tags control if filterType is AUTO_COMPLETE', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: COLUMN_TYPES.TEXT
+					type: COLUMN_TYPES.TEXT,
+					filterType: FILTER_TYPES.AUTO_COMPLETE
 				}]
 			});
 
 			assert.is(testUtil.count('.tags'), 1);
 		});
 
-		it('should set a default filter type of autocomplete if canFilter is true and column type is email', () => {
+		it('should render a picker if filterType is DATE', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: COLUMN_TYPES.EMAIL
-				}]
-			});
-
-			assert.is(testUtil.count('.tags'), 1);
-		});
-
-		it('should set a default filter type of date if canFilter is true and column type is date', () => {
-			testUtil.control = new GridHeader({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: true,
-					type: COLUMN_TYPES.DATE
+					type: COLUMN_TYPES.DATE,
+					filterType: FILTER_TYPES.DATE
 				}]
 			});
 
 			assert.is(testUtil.count('.grouped-buttons'), 1);
 		});
 
-		it('should NOT set a default filter type of date if canFilter is false and column type is date', () => {
-			testUtil.control = new GridHeader({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: false,
-					type: COLUMN_TYPES.DATE
-				}]
-			});
-
-			assert.is(testUtil.count('.grouped-buttons'), 0);
-		});
-
-		it('should set a default filter type of date if canFilter is true and column type is datetime', () => {
+		it('should render two text inputs if filterType is NUMBER', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
 				columns: [{
 					title: 'test 1',
 					size: '*',
 					canFilter: true,
-					type: COLUMN_TYPES.DATE_TIME
-				}]
-			});
-
-			assert.is(testUtil.count('.grouped-buttons'), 1);
-		});
-
-		it('should set a default filter type of date if canFilter is true and column type is time', () => {
-			testUtil.control = new GridHeader({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: true,
-					type: COLUMN_TYPES.TIME
-				}]
-			});
-
-			assert.is(testUtil.count('.grouped-buttons'), 1);
-		});
-
-		it('should set a default filter type of number if canFilter is true and column type is number', () => {
-			testUtil.control = new GridHeader({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: true,
-					type: COLUMN_TYPES.NUMBER
+					type: COLUMN_TYPES.NUMBER,
+					filterType: FILTER_TYPES.NUMBER
 				}]
 			});
 
 			assert.is(testUtil.count('input[type=text]'), 2);
-		});
-
-		it('should NOT set a default filter type of number if canFilter is false and column type is number', () => {
-			testUtil.control = new GridHeader({
-				container: testUtil.container,
-				columns: [{
-					title: 'test 1',
-					size: '*',
-					canFilter: false,
-					type: COLUMN_TYPES.NUMBER
-				}]
-			});
-
-			assert.is(testUtil.count('input[type=text]'), 0);
 		});
 	});
 
