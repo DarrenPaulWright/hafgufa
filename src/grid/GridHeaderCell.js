@@ -525,10 +525,7 @@ Object.assign(GridHeaderCell.prototype, {
 					self.onGetFilterOptions()(self.filterType(), self.id(), (items) => {
 						self[FILTER_CONTROL].options({
 							isMultiSelect: self.filterType() !== FILTER_TYPES.DATE,
-							children: items.map((value) => ({
-								id: value || 'undefined',
-								title: value || '-'
-							}))
+							children: items
 						});
 					});
 					break;

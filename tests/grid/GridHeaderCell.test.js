@@ -450,7 +450,10 @@ describe('GridHeaderCell', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
 				onGetFilterOptions(type, id, callback) {
-					callback(['test']);
+					callback([{
+						id: 'test',
+						title: 'test'
+					}]);
 				}
 			})
 				.filterType(FILTER_TYPES.DROPDOWN);
@@ -470,7 +473,10 @@ describe('GridHeaderCell', () => {
 					testValue = 'test';
 				},
 				onGetFilterOptions(type, id, callback) {
-					callback(['test']);
+					callback([{
+						id: 'test',
+						title: 'test'
+					}]);
 				}
 			})
 				.filterType(FILTER_TYPES.DROPDOWN);

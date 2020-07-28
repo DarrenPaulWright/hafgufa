@@ -1,7 +1,7 @@
 import { debounce } from 'async-agent';
 import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fns';
 import { Collection, compare, List } from 'hord';
-import { clone, deepEqual, erase, get } from 'object-agent';
+import { clone, deepEqual, erase, forOwn, get } from 'object-agent';
 import shortid from 'shortid';
 import { isFunction } from 'type-enforcer';
 import {
@@ -643,9 +643,20 @@ export default class Grid extends Control {
 			let filterFunction;
 
 			if (column.filter && !column.isHidden) {
+				let values;
+
 				switch (column.type) {
-					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.OPTIONS:
+						values = column.filter.split(' OR ');
+						filterFunction = (row) => {
+							return (
+									column.filter === 'undefined' &&
+									!row.cells[column.id].text
+								) ||
+								values.includes(row.cells[column.id].value);
+						};
+						break;
+					case COLUMN_TYPES.TEXT:
 					case COLUMN_TYPES.EMAIL:
 					case COLUMN_TYPES.LINK:
 						filterFunction = (row) => {
@@ -828,21 +839,30 @@ export default class Grid extends Control {
 	 */
 	[getFilterData](filterType, columnIndex, callback) {
 		const self = this;
-		const output = [];
+		let output = [];
 
 		const buildDropDownFilters = () => {
-			self[eachChild](self[GROUPED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnIndex].text)) {
-					output.push(rowCellData.cells[columnIndex].text);
-				}
-			});
+			const column = self.columns()[columnIndex];
 
-			if (self.columns()[columnIndex].sortFunctionAsc) {
-				output.sort(self.columns()[columnIndex].sortFunctionAsc);
+			if (column.type === COLUMN_TYPES.OPTIONS) {
+				forOwn(column.options, (title, id) => {
+					output.push({ id, title });
+				});
 			}
 			else {
-				output.sort(List.comparers.string.asc);
+				self[eachChild](self[GROUPED_ROWS], (rowCellData) => {
+					if (!output.includes(rowCellData.cells[columnIndex].text)) {
+						output.push(rowCellData.cells[columnIndex].text);
+					}
+				});
+
+				output = output.map((value) => ({
+					id: value || 'undefined',
+					title: value || '-'
+				}));
 			}
+
+			output.sort(compare('title'));
 		};
 
 		const buildAutoCompleteFilters = () => {
