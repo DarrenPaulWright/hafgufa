@@ -117,7 +117,7 @@ export default class Grid extends Control {
 			isAutoHeight: settings.height === AUTO,
 			isVirtualized: settings.isVirtualized,
 			wordWrap: settings.wordWrap,
-			onSort: (direction, columnIndex) => self[sort](direction, columnIndex),
+			onSort: (sortDirection, columnIndex) => self[sort](sortDirection, columnIndex),
 			onFilter: (value, columnId) => self[filter](value, columnId),
 			onGetFilterData: (filterType, columnIndex, callback) => self[getFilterData](
 				filterType,
@@ -709,10 +709,10 @@ export default class Grid extends Control {
 	/**
 	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#rows}.
 	 *
-	 * @param {string} direction - 'asc' or 'desc'
+	 * @param {string} sortDirection - 'asc' or 'desc'
 	 * @param {number} columnIndex - column index of the column to be sorted
 	 */
-	[sort](direction, columnIndex) {
+	[sort](sortDirection, columnIndex) {
 		const self = this;
 
 		const sortGroups = (a, b) => {
@@ -729,9 +729,9 @@ export default class Grid extends Control {
 		};
 
 		const sortWithinGroups = (filteredRows, column) => {
-			const sortFunction = column.direction === SORT_TYPES.ASC ? column.sortFunctionAsc : column.sortFunctionDesc;
+			const sortFunction = column.sortDirection === SORT_TYPES.ASC ? column.sortFunctionAsc : column.sortFunctionDesc;
 
-			if (column.direction !== SORT_TYPES.NONE) {
+			if (column.sortDirection !== SORT_TYPES.NONE) {
 				self[eachGroup](filteredRows, (group, rows) => {
 					rows.sort((a, b) => sortGroups(a, b) || sortFunction(
 						a.cells[column.id][column.sortKey] || '',
@@ -748,20 +748,20 @@ export default class Grid extends Control {
 
 			self.columns().forEach((column) => {
 				if (column.id === columnIndex) {
-					if (direction !== undefined) {
-						column.direction = direction;
+					if (sortDirection !== undefined) {
+						column.sortDirection = sortDirection;
 					}
 					currentColumn = column;
 				}
-				else if (direction !== undefined) {
-					column.direction = SORT_TYPES.NONE;
+				else if (sortDirection !== undefined) {
+					column.sortDirection = SORT_TYPES.NONE;
 				}
-				else if (column.direction !== SORT_TYPES.NONE) {
+				else if (column.sortDirection !== SORT_TYPES.NONE) {
 					currentColumn = column;
 				}
 			});
 
-			if (currentColumn && (direction !== undefined || currentColumn.direction !== SORT_TYPES.NONE)) {
+			if (currentColumn && (sortDirection !== undefined || currentColumn.sortDirection !== SORT_TYPES.NONE)) {
 				sortWithinGroups(self[FILTERED_ROWS], currentColumn);
 			}
 		};
@@ -1425,7 +1425,7 @@ Object.assign(Grid.prototype, {
 					canSort: enforceBoolean(column.canSort, false),
 					filterType: enforceEnum(column.filterType, FILTER_TYPES, FILTER_TYPES.TEXT),
 					canFilter: enforceBoolean(column.canFilter, false),
-					direction: enforceEnum(column.defaultSort, SORT_TYPES, SORT_TYPES.NONE)
+					sortDirection: enforceEnum(column.defaultSort, SORT_TYPES, SORT_TYPES.NONE)
 				};
 
 				switch (column.type) {

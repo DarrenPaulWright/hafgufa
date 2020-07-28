@@ -120,7 +120,7 @@ Object.assign(GridHeader.prototype, {
 					filter: column.filter || '',
 					dataType: column.type,
 					filterType: column.canFilter ? column.filterType : null,
-					sortDirection: column.direction,
+					sortDirection: column.sortDirection,
 					selectableColumns: self.selectableColumns()
 				});
 			});
