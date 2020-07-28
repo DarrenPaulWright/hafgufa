@@ -354,9 +354,6 @@ export default class Grid extends Control {
 				}
 			}
 		}
-		else {
-			return callback(item);
-		}
 	}
 
 	/**
@@ -883,18 +880,16 @@ export default class Grid extends Control {
 		};
 
 		self[whenDoneRendering](() => {
-			if (self[FILTERED_ROWS].children && self[FILTERED_ROWS].children.length > 0) {
-				switch (filterType) {
-					case FILTER_TYPES.DROPDOWN:
-						buildDropDownFilters();
-						break;
-					case FILTER_TYPES.AUTO_COMPLETE:
-						buildAutoCompleteFilters();
-						break;
-					case FILTER_TYPES.DATE:
-						buildDateFilters();
-						break;
-				}
+			switch (filterType) {
+				case FILTER_TYPES.DROPDOWN:
+					buildDropDownFilters();
+					break;
+				case FILTER_TYPES.AUTO_COMPLETE:
+					buildAutoCompleteFilters();
+					break;
+				case FILTER_TYPES.DATE:
+					buildDateFilters();
+					break;
 			}
 
 			callback(output);
