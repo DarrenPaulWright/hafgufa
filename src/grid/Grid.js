@@ -3,7 +3,7 @@ import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fn
 import { Collection, compare, List } from 'hord';
 import { clone, deepEqual, erase, forOwn, get } from 'object-agent';
 import shortid from 'shortid';
-import { isFunction } from 'type-enforcer';
+import { enforceNumber, isFunction } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -667,19 +667,13 @@ export default class Grid extends Control {
 						};
 						break;
 					case COLUMN_TYPES.NUMBER:
+						values = column.filter.split(',');
+						values[0] = enforceNumber(values[0], -Infinity, true);
+						values[1] = enforceNumber(values[1], Infinity, true);
 						filterFunction = (row) => {
-							const minValue = column.filter.split(',')[0];
-							const maxValue = column.filter.split(',')[1];
-							const actualValue = row.cells[column.id].text;
+							const actualValue = row.cells[column.id].text * 1;
 
-							if (minValue && maxValue) {
-								return actualValue >= minValue && actualValue <= maxValue;
-							}
-							else if (minValue) {
-								return actualValue >= minValue;
-							}
-
-							return actualValue <= maxValue;
+							return actualValue >= values[0] && actualValue <= values[1];
 						};
 						break;
 					case COLUMN_TYPES.DATE:
