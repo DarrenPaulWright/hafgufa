@@ -247,13 +247,13 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		if (self.canSort()) {
 			menuOptions = [{
 				id: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.ASC,
-				title: 'Sort ' + self.label() + ' ascending',
+				title: 'Sort ' + self.title() + ' ascending',
 				icon: SORT_AMOUNT_ASC_ICON,
 				isSelectable: false,
 				classes: ''
 			}, {
 				id: CONTEXT_MENU_SORT_PREFIX + SORT_TYPES.DESC,
-				title: 'Sort ' + self.label() + ' descending',
+				title: 'Sort ' + self.title() + ' descending',
 				icon: SORT_AMOUNT_DESC_ICON,
 				isSelectable: false,
 				classes: ''
@@ -313,15 +313,17 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 Object.assign(GridHeaderCell.prototype, {
 	/**
-	 * @method label
+	 * @method title
 	 * @member module:GridHeaderCell
 	 * @instance
-	 * @param {string} [label]
+	 *
+	 * @param {string} [title]
+	 *
 	 * @returns {string|this}
 	 */
-	label: methodString({
-		set(newValue) {
-			this[HEADING].title(newValue);
+	title: methodString({
+		set(title) {
+			this[HEADING].title(title);
 		}
 	}),
 

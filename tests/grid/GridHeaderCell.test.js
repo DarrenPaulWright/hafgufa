@@ -21,7 +21,7 @@ describe('GridHeaderCell', () => {
 
 	describe('Label', () => {
 		testUtil.testMethod({
-			methodName: 'label',
+			methodName: 'title',
 			defaultValue: '',
 			testValue: 'test',
 			secondTestValue: 'another'
@@ -35,10 +35,10 @@ describe('GridHeaderCell', () => {
 			assert.is(testUtil.count('.heading'), 1);
 		});
 
-		it('should have a label element with label text in it', () => {
+		it('should have a label element with title text in it', () => {
 			testUtil.control = new GridHeaderCell({
 				container: testUtil.container,
-				label: 'title'
+				title: 'title'
 			});
 
 			assert.is(testUtil.first('.heading span').textContent, 'title');

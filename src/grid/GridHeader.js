@@ -113,9 +113,9 @@ Object.assign(GridHeader.prototype, {
 				column.minWidth = column.isFixedWidth ? null : (parseInt(column.minWidth || MIN_COLUMN_WIDTH, 10));
 
 				applySettings(self[CELL_RECYCLER].getControlAtIndex(index, true), {
-					container: self.element,
+					container: self,
 					id: column.id,
-					label: column.title,
+					title: column.title,
 					canSort: column.canSort,
 					filter: column.filter || '',
 					dataType: column.type,
