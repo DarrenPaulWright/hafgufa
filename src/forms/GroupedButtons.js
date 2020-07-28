@@ -215,7 +215,6 @@ export default class GroupedButtons extends FormControl {
 	[setAllButtonToggles]() {
 		const self = this;
 		const currentValue = self.value() || [];
-		let isChanged = false;
 		let isSelected;
 
 		self[BUTTON_RECYCLER].each((button, index) => {
@@ -228,15 +227,12 @@ export default class GroupedButtons extends FormControl {
 
 			if (button.isSelected() !== isSelected) {
 				button.isSelected(isSelected);
-				isChanged = true;
 			}
 
 			button.attr(TAB_INDEX, index === 0 ? TAB_INDEX_ENABLED : TAB_INDEX_DISABLED);
 		});
 
-		if (isChanged) {
-			self.resize(true);
-		}
+		self.resize(true);
 	}
 
 	[setGroupShadows]() {
