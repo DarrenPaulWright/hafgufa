@@ -40,14 +40,14 @@
 }
 
 .required {
-	.heading > #title {
+	.heading {
 		font-weight: @formControlRequiredTitleFontWeight;
 
 		&:before {
 			content: @asteriskIcon;
 			color: @formControlRequiredAsteriskFontColor;
 			line-height: 0;
-			vertical-align: middle;
+			vertical-align: super;
 			font-weight: @formControlRequiredAsteriskFontWeight;
 			margin-right: 0.3em;
 		}

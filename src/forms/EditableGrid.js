@@ -371,7 +371,6 @@ export default class EditableGrid extends FormControl {
 
 	value(newValue) {
 		const self = this;
-		let newRowId;
 		let output = self[CURRENT_VALUE];
 
 		if (arguments.length !== 0) {
@@ -385,10 +384,6 @@ export default class EditableGrid extends FormControl {
 					newValue.map(self.mapDataIn());
 
 				self[GRID].rows(self[CURRENT_VALUE]);
-
-				if (newRowId) {
-					self[GRID].selectRow(newRowId);
-				}
 			}
 
 			return self;
