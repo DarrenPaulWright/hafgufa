@@ -17,6 +17,7 @@ import Heading, { HEADING_LEVELS } from '../elements/Heading.js';
 import { CLEAR_ICON } from '../icons.js';
 import Toolbar from '../layout/Toolbar.js';
 import Removable from '../mixins/Removable.js';
+import { IS_PHONE } from '../utility/browser.js';
 import { ABSOLUTE_CLASS, BODY, MARGIN_BOTTOM, MARGIN_TOP } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import Container from './Container.js';
@@ -51,8 +52,11 @@ export default class Dialog extends Removable {
 	constructor(settings = {}) {
 		super(setDefaults({
 			width: '30rem',
-			height: AUTO
-		}, settings));
+			height: AUTO,
+			margin: IS_PHONE ? '1rem' : '3rem'
+		}, settings, {
+			maxWidth: '94vw'
+		}));
 
 		const self = this;
 
