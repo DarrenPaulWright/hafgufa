@@ -160,6 +160,7 @@ export default class Tabs extends MergeContentContainerMixin(Control) {
 					self[CURRENT_TAB].id
 				);
 			}
+			self.resize(true);
 		}
 		self[SHOULD_SKIP_NEXT_ON_CLICK] = false;
 		self.resize();
