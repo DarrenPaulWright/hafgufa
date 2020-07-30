@@ -231,7 +231,7 @@ Object.assign(DrawerMenu.prototype, {
 				isAnimated: !IS_DESKTOP,
 				dock: self.drawerDock().primary(),
 				overlap: !IS_DESKTOP,
-				isOpen: true,
+				isOpen: false,
 				onOpen() {
 					defer(() => {
 						if (!IS_DESKTOP) {
