@@ -65,7 +65,7 @@ export default (Base) => {
 				_self.isFocused = false;
 
 				defer(() => {
-					if (!_self.isFocused) {
+					if (!_self.isFocused && !self.isFocused()) {
 						_self.isAllBlurred = true;
 						self.onBlur().trigger(null, [event]);
 					}

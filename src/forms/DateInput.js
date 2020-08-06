@@ -1,4 +1,3 @@
-import { defer } from 'async-agent';
 import {
 	format as formatDate,
 	getHours,
@@ -17,6 +16,7 @@ import Button from '../elements/Button.js';
 import TextInput from '../forms/TextInput.js';
 import { CALENDAR_ICON } from '../icons.js';
 import Popup from '../layout/Popup.js';
+import assign from '../utility/assign.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl.js';
@@ -29,7 +29,6 @@ const onDateInputChange = Symbol();
 
 const DATE_INPUT = Symbol();
 const NOW_BUTTON = Symbol();
-const IS_FOCUSED = Symbol();
 const POPUP = Symbol();
 
 /**
@@ -46,50 +45,41 @@ export default class DateInput extends FormControl {
 		super(setDefaults({
 			type: controlTypes.DATE,
 			width: AUTO
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new TextInput({
+					width: '16ch',
+					onChange(value) {
+						self[onDateInputChange](value);
+					},
+					onFocus() {
+						self[buildDatePicker]();
+					},
+					actionButtonIcon: CALENDAR_ICON,
+					isActionButtonAutoHide: false,
+					actionButtonOnClick() {
+						this.isFocused(false)
+							.isFocused(true);
+					},
+					stopPropagation: true
+				}),
+				hasChildren: true,
+				getFocus() {
+					return self[DATE_INPUT].isFocused() || (self[POPUP] && self[POPUP].isFocused()) || false;
+				}
+			})
+		}));
 
 		const self = this;
-		self[IS_FOCUSED] = false;
-		self.addClass('date-input');
-
-		self[DATE_INPUT] = new TextInput({
-			container: self,
-			width: '16ch',
-			onChange(value) {
-				self[onDateInputChange](value);
-			},
-			onFocus() {
-				self[IS_FOCUSED] = true;
-
-				self[buildDatePicker]();
-
-				if (settings.onFocus) {
-					settings.onFocus(self);
-				}
-			},
-			onBlur() {
-				self[IS_FOCUSED] = false;
-
+		self.addClass('date-input')
+			.onBlur(() => {
 				if (self[POPUP]) {
 					self[POPUP].remove();
 				}
+			});
 
-				if (settings.onBlur) {
-					defer(() => {
-						if (!self[IS_FOCUSED]) {
-							settings.onBlur(self);
-						}
-					});
-				}
-			},
-			actionButtonIcon: CALENDAR_ICON,
-			isActionButtonAutoHide: false,
-			actionButtonOnClick() {
-				this.isFocused(false)
-					.isFocused(true);
-			},
-			stopPropagation: true
-		});
+		self[DATE_INPUT] = settings.FocusMixin.mainControl;
+		self[DATE_INPUT].container(self);
 
 		applySettings(self, settings);
 	}
@@ -177,10 +167,6 @@ Object.assign(DateInput.prototype, {
 		return isValid(output) ? output : undefined;
 	},
 
-	focus() {
-		this[DATE_INPUT].isFocused(true);
-	},
-
 	showNowButton: methodBoolean({
 		set(showNowButton) {
 			const self = this;
@@ -205,20 +191,6 @@ Object.assign(DateInput.prototype, {
 	showDatePicker: methodBoolean({
 		init: true
 	}),
-
-	isFocused(isFocused) {
-		const self = this;
-
-		if (self) {
-			if (isFocused !== undefined) {
-				self[DATE_INPUT].isFocused(isFocused);
-
-				return self;
-			}
-
-			return self[IS_FOCUSED];
-		}
-	},
 
 	minDate: methodDate({
 		set(minDate) {
