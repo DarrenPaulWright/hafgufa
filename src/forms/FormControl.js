@@ -129,6 +129,7 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 		const self = this;
 
 		if (self.onValidate()) {
+			self.error('');
 			self.onValidate().trigger(null, [self.value(), self.isFocused()]);
 		}
 

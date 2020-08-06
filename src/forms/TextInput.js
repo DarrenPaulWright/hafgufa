@@ -255,7 +255,7 @@ Object.assign(TextInput.prototype, {
 			self.onValidate((value, isFocused) => {
 				if (isFocused === false && self.maxLength() < value.length) {
 					self.error(locale.get('invalidMaxLength', {
-						minLength: self.maxLength()
+						maxLength: self.maxLength()
 					}));
 
 					return true;
@@ -416,7 +416,9 @@ Object.assign(TextInput.prototype, {
 
 			self.onValidate((value, isFocused) => {
 				if (isFocused === false && value !== '') {
-					if (self.maxFractionDigits() < value.split('.')[1].length) {
+					const fractionDigits = value.split('.')[1];
+
+					if (fractionDigits && self.maxFractionDigits() < fractionDigits.length) {
 						self.error(locale.get('invalidNumberFractionDigits', {
 							maxFractionDigits: self.maxFractionDigits()
 						}));
