@@ -1,6 +1,6 @@
 import { arc, color, pie, select, sum } from 'd3';
 import { compare } from 'hord';
-import { applySettings, Point } from 'type-enforcer-ui';
+import { applySettings, methodBoolean, Point } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Donut.less';
@@ -149,7 +149,9 @@ export default class Donut extends GraphBase {
 				.enter()
 				.append('text')
 				.attr('dy', '.35em')
-				.html((sliceData) => sliceData.data.label)
+				.html((sliceData) => {
+					return sliceData.data.label + (self.showCount() ? ': ' + sliceData.data.value : '');
+				})
 				.attr('transform', (sliceData) => {
 					const isOnRight = midAngle(sliceData) < Math.PI;
 					const pos = self[LINE_PIVOT_ARC].centroid(sliceData);
@@ -186,3 +188,7 @@ export default class Donut extends GraphBase {
 		}
 	}
 }
+
+Object.assign(Donut.prototype, {
+	showCount: methodBoolean()
+});
