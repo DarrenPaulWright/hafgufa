@@ -18,8 +18,7 @@ const sortColumn = Symbol();
 /**
  * Handles the layout of grid header cell controls
  *
- * @module GridHeader
- * @class
+ * @class GridHeader
  *
  * @param {object} settings
  */
@@ -193,11 +192,13 @@ Object.assign(GridHeader.prototype, {
 				extraWidth = self.scrollbarWidth();
 			}
 
-			self[CELL_RECYCLER].getControl(column.id)
-				.minWidth(column.currentWidth + extraWidth)
-				.width(column.currentWidth + extraWidth)
-				.maxWidth(column.currentWidth + extraWidth)
-				.resize();
+			if (self[CELL_RECYCLER].getControl(column.id)) {
+				self[CELL_RECYCLER].getControl(column.id)
+					.minWidth(column.currentWidth + extraWidth)
+					.width(column.currentWidth + extraWidth)
+					.maxWidth(column.currentWidth + extraWidth)
+					.resize();
+			}
 		});
 
 		return totalUsedWidth;

@@ -349,8 +349,8 @@ describe('GridHeaderCell', () => {
 
 			testUtil.control.resize(true);
 
-			assert.is(getComputedStyle(testUtil.nth('.text-input', 0)).width, '98px');
-			assert.is(getComputedStyle(testUtil.nth('.text-input', 1)).width, '98px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 0)).width, '97px');
+			assert.is(getComputedStyle(testUtil.nth('.text-input', 1)).width, '97px');
 		});
 	});
 

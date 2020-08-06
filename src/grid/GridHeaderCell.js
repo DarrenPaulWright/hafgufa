@@ -67,7 +67,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 			canWrap: true
 		});
 
-		applySettings(self, settings);
+		applySettings(self, settings, [], ['filter']);
 
 		if (self.selectableColumns().length === 0) {
 			self[setContextMenu]();
@@ -80,7 +80,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 			if (self[FILTER_CONTROL]) {
 				if (self.dataType() === COLUMN_TYPES.NUMBER) {
-					newWidth = Math.floor((self.innerWidth() - 4) / 2);
+					newWidth = Math.floor((self.innerWidth() - 6) / 2);
 					self[FILTER_CONTROL].width(newWidth);
 					self[FILTER_CONTROL_2]
 						.width(newWidth)
@@ -110,6 +110,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		});
 
 		self.updateFilter();
+		self[setFilterValue]();
 	}
 
 	/**
@@ -511,7 +512,7 @@ Object.assign(GridHeaderCell.prototype, {
 	updateFilter() {
 		const self = this;
 
-		if (self.onGetFilterOptions()) {
+		if (self.onGetFilterOptions() && self[FILTER_CONTROL]) {
 			switch (self.filterType()) {
 				case FILTER_TYPES.AUTO_COMPLETE:
 					self.onGetFilterOptions()(self.filterType(), self.id(), (items) => {

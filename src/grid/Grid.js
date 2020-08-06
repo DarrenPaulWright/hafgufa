@@ -620,6 +620,10 @@ export default class Grid extends Control {
 		const self = this;
 		const previousColumns = clone(self.columns());
 
+		if (self[ROWS].length === 0) {
+			return;
+		}
+
 		const filterWithinGroups = (filteredRows, filterFunction) => filteredRows.filter((item) => {
 			let output = false;
 

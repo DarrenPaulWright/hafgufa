@@ -74,21 +74,23 @@ export default class GridColumnBlock extends Control {
 		applySettings(self, settings);
 
 		self.onResize((width, height) => {
-				self[GRID_HEADER].scrollbarWidth(self[VIRTUAL_LIST].element.offsetWidth - self[VIRTUAL_LIST].element.clientWidth);
-				self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(width);
-				self[GRID_HEADER].width(self[RENDERED_WIDTH]);
-				self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);
+				if (self[GRID_HEADER]) {
+					self[GRID_HEADER].scrollbarWidth(self[VIRTUAL_LIST].element.offsetWidth - self[VIRTUAL_LIST].element.clientWidth);
+					self[RENDERED_WIDTH] = self[GRID_HEADER].desiredWidth(width);
+					self[GRID_HEADER].width(self[RENDERED_WIDTH]);
+					self[VIRTUAL_LIST].width(self[RENDERED_WIDTH]);
 
-				self[VIRTUAL_LIST].getRenderedControls().forEach((rowControl) => {
-					rowControl.columns(self[GRID_HEADER].columns());
-					rowControl.updateWidth(self[RENDERED_WIDTH]);
-				});
+					self[VIRTUAL_LIST].getRenderedControls().forEach((rowControl) => {
+						rowControl.columns(self[GRID_HEADER].columns());
+						rowControl.updateWidth(self[RENDERED_WIDTH]);
+					});
 
-				if (self.height().isAuto) {
-					self[VIRTUAL_LIST].height(AUTO);
-				}
-				else {
-					self[VIRTUAL_LIST].height((height - self[GRID_HEADER].borderHeight()) + PIXELS);
+					if (self.height().isAuto) {
+						self[VIRTUAL_LIST].height(AUTO);
+					}
+					else {
+						self[VIRTUAL_LIST].height((height - self[GRID_HEADER].borderHeight()) + PIXELS);
+					}
 				}
 			})
 			.onRemove(() => {
