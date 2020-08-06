@@ -255,6 +255,10 @@ export default class Grid extends Control {
 		const setStringValue = (key, cell, column) => {
 			let value = column.path ? get(rowData, column.path) : cell[key];
 
+			if (isFunction(column[key])) {
+				value = column[key](value);
+			}
+
 			if (isArray(value)) {
 				value = value.join(', ');
 			}
@@ -305,21 +309,33 @@ export default class Grid extends Control {
 				cell.date = cell.date || parseISO(cell.original);
 
 				if (isValid(cell.date)) {
-					switch (column.type) {
-						case COLUMN_TYPES.DATE:
-							cell.text = formatDate(cell.date, self.dateFormat());
-							break;
-						case COLUMN_TYPES.DATE_TIME:
-							cell.text = formatRelative(cell.date, new Date());
-							break;
-						case COLUMN_TYPES.TIME:
-							cell.text = formatDate(cell.date, self.timeFormat());
-							break;
+					if (isFunction(column.text)) {
+						cell.text = column.text(cell.date);
+					}
+					else {
+						switch (column.type) {
+							case COLUMN_TYPES.DATE:
+								cell.text = formatDate(cell.date, self.dateFormat());
+								break;
+							case COLUMN_TYPES.DATE_TIME:
+								cell.text = formatRelative(cell.date, new Date());
+								break;
+							case COLUMN_TYPES.TIME:
+								cell.text = formatDate(cell.date, self.timeFormat());
+								break;
+						}
 					}
 				}
 				else {
 					cell.text = '-';
 				}
+			}
+
+			if (isString(column.classes)) {
+				cell.classes = column.classes;
+			}
+			else if (isFunction(column.classes)) {
+				cell.classes = column.classes(cell.text);
 			}
 		});
 	}
