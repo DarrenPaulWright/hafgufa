@@ -121,7 +121,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 		const maxHeight = self[CONTROLS].getRenderedControls()
 			.reduce((result, step) => {
 				step.height(AUTO);
-				result = Math.max(step.borderHeight(), maxHeight);
+				result = Math.max(step.borderHeight(), result);
 				step.height(HUNDRED_PERCENT);
 				return result;
 			}, 0);
