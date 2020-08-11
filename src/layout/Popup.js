@@ -123,8 +123,8 @@ class Popup extends MergeContentContainerMixin(Container) {
 
 		const self = this;
 
-		self[CAN_SLIDE_HORIZONTAL] = false;
-		self[CAN_SLIDE_VERTICAL] = false;
+		self[CAN_SLIDE_HORIZONTAL] = true;
+		self[CAN_SLIDE_VERTICAL] = true;
 		self[IS_MOUSE_OVER] = true;
 
 		self.addClass(POPUP_CLASS)
