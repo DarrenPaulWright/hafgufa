@@ -1,3 +1,4 @@
+import { defer } from 'async-agent';
 import { erase, set } from 'object-agent';
 import {
 	applySettings,
@@ -88,6 +89,10 @@ export default class Tree extends FormControl {
 		self[SHOW_CHECKBOXES_ON_GROUPS] = false;
 
 		self.onResize((width, height) => {
+			if (self.title() !== '') {
+				height -= self.getHeading().borderHeight();
+			}
+
 			virtualList
 				.minWidth(self.minWidth())
 				.maxWidth(self.maxWidth())
@@ -289,6 +294,11 @@ Object.assign(Tree.prototype, {
 			else {
 				self[processBranches]();
 				self[VIRTUAL_LIST].refresh();
+
+				defer(() => {
+					const index = self.branches().findIndex((item) => item.id === value[0]);
+					self[VIRTUAL_LIST].scrollToIndex(index);
+				});
 			}
 		}
 	}),
