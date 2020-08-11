@@ -78,8 +78,8 @@ const updateSelectState = Symbol();
 /**
  * A data grid control.
  *
- * @module Grid
- * @class
+ * @class Grid
+ * @extends Control
  *
  * @param {object} [settings] - A settings object
  * @param {boolean} [settings.wordWrap=false] - If 'false' then each cell will clip it's text and add an ellipsis.
@@ -729,7 +729,7 @@ export default class Grid extends Control {
 	}
 
 	/**
-	 * Sort the filtered rows within each group. When done call {@link module:GridColumnBlock#rows}.
+	 * Sort the filtered rows within each group. When done call {@link GridColumnBlock#rows}.
 	 *
 	 * @param {string} sortDirection - 'asc' or 'desc'
 	 * @param {number} columnIndex - column index of the column to be sorted
@@ -931,7 +931,7 @@ export default class Grid extends Control {
 	 * Get a clone of the first matching row from the grid.
 	 *
 	 * @method getRow
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 *
 	 * @param {object} search - An object that matches a row
@@ -946,7 +946,7 @@ export default class Grid extends Control {
 	 * Add a row to the grid without affecting the other rows.
 	 *
 	 * @method addRow
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 *
 	 * @param {object}   rowData
@@ -987,7 +987,7 @@ export default class Grid extends Control {
 	 * Add multiple rows to the grid at one time
 	 *
 	 * @method addRows
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {object[]} newRows - Array of rowData objects. Same data structure as addRow.
 	 */
@@ -1001,7 +1001,7 @@ export default class Grid extends Control {
 	 * Remove the first matching row from the grid
 	 *
 	 * @method removeRow
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {object} search - An object that matches a row
 	 */
@@ -1013,7 +1013,7 @@ export default class Grid extends Control {
 	 * Remove matching rows from the grid
 	 *
 	 * @method removeRows
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {object} search - An object that matches rows
 	 */
@@ -1030,7 +1030,7 @@ export default class Grid extends Control {
 	 * Set the rows in the grid. Merges data into current rows and renders them.
 	 *
 	 * @method removeRows
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {object[]} newRows - An array of row objects.
 	 */
@@ -1069,7 +1069,7 @@ export default class Grid extends Control {
 	 * Save new data into a specified cell.
 	 *
 	 * @method updateCellData
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 *
 	 * @param {string} id - id of the row being updated
@@ -1102,7 +1102,7 @@ export default class Grid extends Control {
 	 * Save new data into a specified cell
 	 *
 	 * @method updateRowData
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {string|number} id
 	 * @param {object} newData
@@ -1133,7 +1133,7 @@ export default class Grid extends Control {
 	 * Delete all the rows and display a 'no content' warning.
 	 *
 	 * @method emptyContent
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 */
 	emptyContent() {
@@ -1148,7 +1148,7 @@ export default class Grid extends Control {
 	 * Look for rows that are currently selected and change them back to not being selected.
 	 *
 	 * @method clearSelected
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 */
 	clearSelected() {
@@ -1167,7 +1167,7 @@ export default class Grid extends Control {
 	 * Set the selected state of a row.
 	 *
 	 * @method selectRow
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 *
 	 * @param {string} id
@@ -1238,7 +1238,7 @@ export default class Grid extends Control {
 	 * If onSelect or onMultiSelect is set, then this will select the first rendered row (after sorting).
 	 *
 	 * @method selectFirstRow
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 */
 	selectFirstRow() {
@@ -1267,7 +1267,7 @@ export default class Grid extends Control {
 	 * Focus on a specific row. Expand groups and scroll to the row if necessary.
 	 *
 	 * @method focus
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 * @param {object} focusObject - must be an object that matches the row data in some way
 	 */
@@ -1292,7 +1292,7 @@ export default class Grid extends Control {
 	 * Refresh the display
 	 *
 	 * @method refresh
-	 * @member module:Grid
+	 * @memberOf Grid
 	 * @instance
 	 */
 	refresh() {
@@ -1418,7 +1418,7 @@ Object.assign(Grid.prototype, {
 	// TODO: enforce inidividual column data via a Schema
 	/**
 	 * @method columns
-	 * @memberof Grid
+	 * @memberOf Grid
 	 *
 	 * @param {object[]} columns
 	 * @param {string} columns[].type - Available types: text, email, int, date, time, datetime, actions, image, custom.
@@ -1496,7 +1496,7 @@ Object.assign(Grid.prototype, {
 	}),
 	/**
 	 * @method groupBy
-	 * @memberof Grid
+	 * @memberOf Grid
 	 *
 	 * @param {object[]} [groupBy] -
 	 * @param {string}   [groupBy[].groupItemData] - Data associated with the group.

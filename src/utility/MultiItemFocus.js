@@ -13,7 +13,6 @@ const previous = Symbol();
  * Maintains the focus index of multiple subItems. Adds an event listener for arrow keys to navigate items.
  *
  * @class MultiItemFocus
- * @class
  *
  * @param {element} container
  */
@@ -81,7 +80,7 @@ export default class MultiItemFocus {
 	 * Focus the first item
 	 *
 	 * @method first
-	 * @member class:MultiItemFocus
+	 * @memberOf MultiItemFocus
 	 * @instance
 	 */
 	first() {
@@ -93,7 +92,7 @@ export default class MultiItemFocus {
 	 * Prep for removal
 	 *
 	 * @method remove
-	 * @member class:MultiItemFocus
+	 * @memberOf MultiItemFocus
 	 * @instance
 	 */
 	remove() {
@@ -106,7 +105,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 * Get or set the current focused item
 	 *
 	 * @method current
-	 * @member class:MultiItemFocus
+	 * @memberOf MultiItemFocus
 	 * @instance
 	 *
 	 * @param {number.int} [current]
@@ -121,7 +120,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 * Get or set a function to call when focus changes
 	 *
 	 * @method onSetFocus
-	 * @member class:MultiItemFocus
+	 * @memberOf MultiItemFocus
 	 * @instance
 	 *
 	 * @param {Function} [onSetFocus]
@@ -134,7 +133,7 @@ Object.assign(MultiItemFocus.prototype, {
 	 * Get or set the total items that can be focused
 	 *
 	 * @method length
-	 * @member class:MultiItemFocus
+	 * @memberOf MultiItemFocus
 	 * @instance
 	 *
 	 * @param {number.int} [length]

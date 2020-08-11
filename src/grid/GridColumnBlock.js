@@ -24,12 +24,11 @@ const RENDERED_WIDTH = Symbol();
 const updateRow = Symbol();
 
 /**
- * Handles the view of the {@link module:Grid}.
+ * Handles the view of the {@link Grid}.
  *
- * @module GridColumnBlock
- * @class
+ * @class GridColumnBlock
  *
- * @param {object} settings - Same settings as {@link module:Grid}
+ * @param {object} settings - Same settings as {@link Grid}
  */
 export default class GridColumnBlock extends Control {
 	constructor(settings = {}) {
@@ -122,7 +121,7 @@ export default class GridColumnBlock extends Control {
 Object.assign(GridColumnBlock.prototype, {
 	/**
 	 * @method columns
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {Array} [columns]
 	 * @returns {Array|this}
@@ -136,7 +135,7 @@ Object.assign(GridColumnBlock.prototype, {
 
 	/**
 	 * @method selectableColumns
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
@@ -149,7 +148,7 @@ Object.assign(GridColumnBlock.prototype, {
 
 	/**
 	 * @method isAllRowsSelected
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {boolean} [isAllRowsSelected]
 	 * @returns {boolean|this}
@@ -162,7 +161,7 @@ Object.assign(GridColumnBlock.prototype, {
 
 	/**
 	 * @method isSomeRowsSelected
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {boolean} [isSomeRowsSelected]
 	 * @returns {boolean|this}
@@ -178,9 +177,9 @@ Object.assign(GridColumnBlock.prototype, {
 	 * message.
 	 *
 	 * @method rows
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
-	 * @param {object} newRows - This is the final result of {@link module:Grid#sort}
+	 * @param {object} newRows - This is the final result of {@link Grid#sort}
 	 */
 	rows(newRows) {
 		const self = this;
@@ -196,7 +195,7 @@ Object.assign(GridColumnBlock.prototype, {
 	 * Auto-scroll to a row.
 	 *
 	 * @method scrollToRowIndex
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {number} rowIndex - index of a row that is currently displayed
 	 */
@@ -206,7 +205,7 @@ Object.assign(GridColumnBlock.prototype, {
 
 	/**
 	 * @method isFiltered
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {boolean} [newIsFiltered]
 	 * @returns {boolean|this}

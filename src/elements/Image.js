@@ -23,7 +23,6 @@ export const FIT = new Enum({
  *
  * @class Image
  * @extends Control
- * @class
  *
  * @param {object} settings
  * @param {string} [settings.source]
@@ -48,7 +47,7 @@ Object.assign(Image.prototype, {
 	 * Set or get the source property fo the image
 	 *
 	 * @method source
-	 * @member module:Image
+	 * @memberOf Image
 	 * @instance
 	 *
 	 * @param {string} content
@@ -66,7 +65,7 @@ Object.assign(Image.prototype, {
 	 * Set or get the "fit" type of this image.
 	 *
 	 * @method content
-	 * @member module:Image
+	 * @memberOf Image
 	 * @instance
 	 *
 	 * @param {string|element} content

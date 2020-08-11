@@ -119,7 +119,6 @@ const resizeContainer = Symbol();
  *
  * @class Control
  * @extends Removable
- * @class
  *
  * @param {object} settings - An object where keys are methods and values are arguments.
  */
@@ -220,7 +219,7 @@ export default class Control extends Removable {
 	 * The "type" of control.
 	 *
 	 * @method type
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [type]
@@ -257,7 +256,7 @@ Object.assign(Control.prototype, {
 	 * Set the containing DOM element and append element to it.
 	 *
 	 * @method container
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string}  [newContainer]
@@ -340,7 +339,7 @@ Object.assign(Control.prototype, {
 	 * Set the id attribute.
 	 *
 	 * @method id
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [newId] - A unique id
@@ -364,7 +363,7 @@ Object.assign(Control.prototype, {
 	 * A string to append to the end of the id.
 	 *
 	 * @method idSuffix
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [newIdSuffix]
@@ -379,7 +378,7 @@ Object.assign(Control.prototype, {
 	 * Get or set an attribute of the main element of this control.
 	 *
 	 * @method attr
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} attribute - The attribute to get or set
@@ -402,7 +401,7 @@ Object.assign(Control.prototype, {
 	 * Get or set a css style property on the main element of this control
 	 *
 	 * @method css
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} property - The style property to get or set
@@ -426,7 +425,7 @@ Object.assign(Control.prototype, {
 	 * Set classes on the main element
 	 *
 	 * @method addClass
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [className] - A space separated list of css classes
@@ -443,7 +442,7 @@ Object.assign(Control.prototype, {
 	 * Remove classes from the main element
 	 *
 	 * @method removeClass
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [className] - A space separated list of css classes
@@ -460,7 +459,7 @@ Object.assign(Control.prototype, {
 	 * Add or remove classes from the main element
 	 *
 	 * @method removeClass
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string}  [classes] - A space separated list of css classes
@@ -488,7 +487,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the padding of the main element.
 	 *
 	 * @method padding
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [newPadding]
@@ -506,7 +505,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the margin of the main element.
 	 *
 	 * @method margin
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} [newMargin]
@@ -524,7 +523,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the minWidth of the main element (NOT including padding and borders).
 	 *
 	 * @method minWidth
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [minWidth] - Must be a string that parses as valid css.
@@ -542,7 +541,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the width of the main element (NOT including padding and borders).
 	 *
 	 * @method width
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [width] - Must be a string that parses as valid css.
@@ -572,7 +571,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the maxWidth of the main element (NOT including padding and borders).
 	 *
 	 * @method maxWidth
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [maxWidth] - Must be a string that parses as valid css.
@@ -590,7 +589,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the minHeight of the main element (NOT including padding and borders).
 	 *
 	 * @method minHeight
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [newMinHeight] - Must be a string that parses as valid css.
@@ -608,7 +607,7 @@ Object.assign(Control.prototype, {
 	 * The height of the main element (NOT including padding and borders).
 	 *
 	 * @method height
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [newHeight] - Must be a string that parses as valid css.
@@ -638,7 +637,7 @@ Object.assign(Control.prototype, {
 	 * Get or set the maxHeight of the main element (NOT including padding and borders).
 	 *
 	 * @method maxHeight
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string|CssSize} [newMaxHeight] - Must be a string that parses as valid css.
@@ -656,7 +655,7 @@ Object.assign(Control.prototype, {
 	 * Changes the view of the control to look disabled and prevents mouse and keyboard interaction
 	 *
 	 * @method isEnabled
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
@@ -680,7 +679,7 @@ Object.assign(Control.prototype, {
 
 	/**
 	 * @method stopPropagation
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [newStopPropagation]
@@ -695,7 +694,7 @@ Object.assign(Control.prototype, {
 	 * Hides the control when true
 	 *
 	 * @method isVisisble
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
@@ -724,7 +723,7 @@ Object.assign(Control.prototype, {
 	 * Hides the control when true
 	 *
 	 * @method isDisplayed
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
@@ -753,7 +752,7 @@ Object.assign(Control.prototype, {
 	 * Set an event listener
 	 *
 	 * @method on
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} eventName
@@ -788,7 +787,7 @@ Object.assign(Control.prototype, {
 	 * Remove an event listener.
 	 *
 	 * @method off
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} eventName
@@ -818,7 +817,7 @@ Object.assign(Control.prototype, {
 	 * Add or Remove an event listener.
 	 *
 	 * @method set
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {string} eventName
@@ -855,7 +854,7 @@ Object.assign(Control.prototype, {
 	 * The focused state of this control.
 	 *
 	 * @method isFocused
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [isFocused]
@@ -886,7 +885,7 @@ Object.assign(Control.prototype, {
 	 * Adds a callback to the onResize method
 	 *
 	 * @method onResize
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {Function} callback
@@ -900,7 +899,7 @@ Object.assign(Control.prototype, {
 	 * Trigger a resize on this control. This method is throttled by default
 	 *
 	 * @method resize
-	 * @member module:Control
+	 * @memberOf Control
 	 * @instance
 	 *
 	 * @param {boolean} [isForced=false] - if true a resize will happen immediately

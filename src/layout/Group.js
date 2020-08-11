@@ -13,8 +13,9 @@ import './Group.less';
  * Display a visual group with children form controls.
  *
  * @class Group
+ * @mixes MergeContentContainerMixin
+ * @mixes ControlHeadingMixin
  * @extends Container
- * @class
  *
  * @param {object} settings
  */
@@ -41,7 +42,7 @@ Object.assign(Group.prototype, {
 	 * Get or set the padding of the content container.
 	 *
 	 * @method padding
-	 * @member module:Group
+	 * @memberOf Group
 	 * @instance
 	 *
 	 * @param {string} [newPadding]

@@ -8,7 +8,6 @@ import Control from './../Control.js';
  *
  * @class Label
  * @extends Control
- * @class
  *
  * @param {object} settings
  * @param {string} [settings.text]
@@ -31,7 +30,7 @@ Object.assign(Label.prototype, {
 	 * Set or get the label content.
 	 *
 	 * @method content
-	 * @member module:Label
+	 * @memberOf Label
 	 * @instance
 	 *
 	 * @param {string|element} content

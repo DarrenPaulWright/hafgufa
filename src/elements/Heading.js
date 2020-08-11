@@ -77,10 +77,10 @@ const keyDownEvent = Symbol();
  * A generic header control.
  *
  * @control Heading
+ * @mixes FocusMixin
  * @extends Control
- * @class
  *
- * @param {object} settings - Accepts all controlBase settings plus settings for any of the methods on this control.
+ * @param {object} settings
  */
 export default class Heading extends FocusMixin(Control) {
 	constructor(settings = {}) {
@@ -254,7 +254,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the displayed title for this heading
 	 *
 	 * @method title
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {string} [title]
 	 * @returns {string|this}
@@ -269,7 +269,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the displayed subTitle for this heading
 	 *
 	 * @method subTitle
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 *
 	 * @param {string} [subTitle]
@@ -302,7 +302,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the displayed error for this heading
 	 *
 	 * @method error
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 *
 	 * @param {string} [error]
@@ -335,7 +335,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the displayed icon for this heading
 	 *
 	 * @method icon
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {string} icon
 	 * @returns {string|this}
@@ -367,7 +367,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set tooltip string for the icon
 	 *
 	 * @method iconTooltip
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {string} iconTooltip
 	 * @returns {string|this}
@@ -384,7 +384,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the displayed image for this heading
 	 *
 	 * @method image
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {string} image
 	 * @returns {string|this}
@@ -414,7 +414,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the data array to build buttons on the right side of the header.
 	 *
 	 * @method buttons
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {Array} [buttons] - See Toolbar.addButton for settings of each item in array.
 	 * @returns {Array|this}
@@ -466,7 +466,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the selectable state for this heading
 	 *
 	 * @method isSelectable
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} isSelectable
 	 * @returns {boolean|this}
@@ -486,7 +486,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the selected state for this heading
 	 *
 	 * @method isSelected
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} isSelected
 	 * @returns {boolean|this}
@@ -507,7 +507,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the indeterminate state for this heading
 	 *
 	 * @method isIndeterminate
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} isIndeterminate
 	 * @returns {boolean|this}
@@ -527,7 +527,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the expandable state for this heading
 	 *
 	 * @method isExpandable
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} isExpandable
 	 * @returns {boolean|this}
@@ -545,7 +545,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the expanded state for this heading
 	 *
 	 * @method isExpanded
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} isExpanded
 	 * @returns {boolean|this}
@@ -561,7 +561,7 @@ Object.assign(Heading.prototype, {
 	 *      header should expand or
 	 *
 	 * @method shouldMainClickExpand
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} shouldMainClickExpand
 	 * @returns {boolean|this}
@@ -572,7 +572,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the visibility of the expander on this heading
 	 *
 	 * @method showExpander
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} showExpander
 	 * @returns {boolean|this}
@@ -604,7 +604,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the visibility of the checkbox on this heading
 	 *
 	 * @method showCheckbox
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {boolean} showCheckbox
 	 * @returns {boolean|this}
@@ -637,7 +637,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the onSelect callback for this heading
 	 *
 	 * @method onSelect
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {Function} onSelect
 	 * @returns {Function|this}
@@ -652,7 +652,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set the onExpand callback for this heading
 	 *
 	 * @method onExpand
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {Function} onExpand
 	 * @returns {Function|this}
@@ -665,7 +665,7 @@ Object.assign(Heading.prototype, {
 	 * Get or set data relavent to this header.
 	 *
 	 * @method data
-	 * @member module:Heading
+	 * @memberOf Heading
 	 * @instance
 	 * @param {object} data
 	 * @returns {object|this}

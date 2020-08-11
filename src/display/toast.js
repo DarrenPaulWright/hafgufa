@@ -21,6 +21,12 @@ const DURATION = Symbol();
 const stopTimer = Symbol();
 const startTimer = Symbol();
 
+/**
+ * @class Slice
+ * @mixes ContextMenuMixin
+ * @extends Heading
+ * @private
+ */
 class Slice extends ContextMenuMixin(Heading) {
 	constructor(settings) {
 		super(assign(settings, {

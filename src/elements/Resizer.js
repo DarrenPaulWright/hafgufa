@@ -167,7 +167,7 @@ Object.assign(Resizer.prototype, {
 	 * The direction that the resizer should stretch, not the direction it drags
 	 *
 	 * @method orientation
-	 * @member module:Resizer
+	 * @memberOf Resizer
 	 * @instance
 	 *
 	 * @param {string} orientation
@@ -199,7 +199,7 @@ Object.assign(Resizer.prototype, {
 	 * Set or Get the split offset of this control.
 	 *
 	 * @method splitOffset
-	 * @member module:Resizer
+	 * @memberOf Resizer
 	 * @instance
 	 *
 	 * @param {string} [splitOffset]
@@ -221,7 +221,7 @@ Object.assign(Resizer.prototype, {
 	 * Set or Get the minimum offset when resizing.
 	 *
 	 * @method minOffset
-	 * @member module:Resizer
+	 * @memberOf Resizer
 	 * @instance
 	 *
 	 * @param {string} [newMinOffset]
@@ -240,7 +240,7 @@ Object.assign(Resizer.prototype, {
 	 * Set or Get the maximum offset when resizing.
 	 *
 	 * @method maxOffset
-	 * @member module:Resizer
+	 * @memberOf Resizer
 	 * @instance
 	 *
 	 * @param {string} [maxOffset]

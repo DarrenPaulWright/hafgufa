@@ -53,9 +53,8 @@ const DAYS = Symbol();
 /**
  * Display a calendar layout of a month.
  *
- * @module Calendar
+ * @class Calendar
  * @extends Control
- * @class
  *
  * @param {object} settings - Accepts all control settings plus:
  */
@@ -407,7 +406,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set the currently displayed month
 	 * @method month
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Int} newMonth - Accepts 0 to 11
 	 * @returns {Int|this}
@@ -425,7 +424,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set the currently displayed year
 	 * @method year
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Int} newYear
 	 * @returns {Int|this}
@@ -441,7 +440,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set a callback that gets executed when the user clicks on a day button
 	 * @method onDateSelected
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Function} newOnDateSelected
 	 * @returns {Function|this}
@@ -453,7 +452,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set the currently selected date.
 	 * @method selectedDate
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Date} newSelectedDate
 	 * @returns {Date|this}
@@ -467,7 +466,7 @@ Object.assign(Calendar.prototype, {
 	 * The format string for weekdays
 	 *
 	 * @method weekdayFormat
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 *
 	 * @param {String} newWeekdayFormat - Default is 'EEE'
@@ -485,7 +484,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * The format string for months
 	 * @method monthFormat
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {String} newMonthFormat - Default is 'MMM'
 	 * @returns {String|this}
@@ -498,7 +497,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set the number of past years to display in the year picker
 	 * @method yearRangePast
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Int} newYearRangePast - Minimum value is 0
 	 * @returns {Int|this}
@@ -512,7 +511,7 @@ Object.assign(Calendar.prototype, {
 	/*
 	 * Get or Set the number of future years to display in the year picker
 	 * @method yearRangeFuture
-	 * @member module:Calendar
+	 * @memberOf Calendar
 	 * @instance
 	 * @param {Int} newYearRangeFuture - Minimum value is 0
 	 * @returns {Int|this}

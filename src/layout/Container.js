@@ -10,8 +10,9 @@ import './Container.less';
 
 /**
  * @class Container
- * @extends Control
- * @class
+ * @mixes IsWorkingMixin
+ * @mixes FocusMixin
+ * @extends Div
  *
  * @param {object} settings
  */

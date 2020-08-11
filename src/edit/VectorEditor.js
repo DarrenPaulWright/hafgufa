@@ -29,6 +29,13 @@ const startDrawing = Symbol();
 const updateDrawing = Symbol();
 const stopDrawing = Symbol();
 
+/**
+ * @class VectorEditor
+ * @mixes ContextMenuMixin
+ * @extends Svg
+ *
+ * @param {object} [settings]
+ */
 export default class VectorEditor extends ContextMenuMixin(Svg) {
 	constructor(settings = {}) {
 		super(setDefaults({

@@ -16,8 +16,8 @@ const CONTAINER = Symbol();
  * A single radio button with label.
  *
  * @class Radio
+ * @mixes FocusMixin
  * @extends Label
- * @class
  *
  * @param {object} settings
  */

@@ -36,8 +36,7 @@ const buildLink = (url) => {
 /**
  * Adds onClick, click, and url methods to a control.
  *
- * @module OnClickMixin
- * @class
+ * @mixin OnClickMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -73,7 +72,7 @@ export default (Base) => {
 		 * Issue a click event on this control.
 		 *
 		 * @method click
-		 * @member module:OnClickAddon
+		 * @memberOf OnClickMixin
 		 * @instance
 		 *
 		 * @returns {this}
@@ -89,7 +88,7 @@ export default (Base) => {
 		 * If an @ is in the string then it is treated like an email, otherwise automatically adds http:// when clicked if not provided.
 		 *
 		 * @method url
-		 * @member module:OnClickAddon
+		 * @memberOf OnClickMixin
 		 * @instance
 		 *
 		 * @param {string|element} content
@@ -118,7 +117,7 @@ export default (Base) => {
 		 * An onClick callback.
 		 *
 		 * @method onClick
-		 * @member module:OnClickAddon
+		 * @memberOf OnClickMixin
 		 * @instance
 		 * @param {Function} [callback]
 		 * @returns {Function|this}

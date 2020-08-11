@@ -12,7 +12,6 @@ const pushHistory = Symbol();
  * A simple way to track and manipulate history objects.
  *
  * @class LocalHistory
- * @class
  *
  * @param {object} settings
  */
@@ -61,7 +60,7 @@ export default class LocalHistory {
 	 * Save an object to history.
 	 *
 	 * @method push
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 * @param {Function} historyObject - Object to be returned when 'undo' is called.
 	 */
@@ -73,7 +72,7 @@ export default class LocalHistory {
 	 * Replace the most recent object in history.
 	 *
 	 * @method replace
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 * @param {Function} historyObject - Object to be returned when 'undo' is called.
 	 */
@@ -88,7 +87,7 @@ export default class LocalHistory {
 	 * Undo and return the most recent history object.
 	 *
 	 * @method undo
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 * @returns {object} - Object added through 'push' or 'replace'.
 	 */
@@ -124,7 +123,7 @@ export default class LocalHistory {
 	 * Check if this instance has any history.
 	 *
 	 * @method hasHistory
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 * @returns {boolean}
 	 */
@@ -136,7 +135,7 @@ export default class LocalHistory {
 	 * Check if this instance has any future items.
 	 *
 	 * @method hasFuture
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 *
 	 * @returns {boolean}
@@ -149,7 +148,7 @@ export default class LocalHistory {
 	 * Delete all history objects.
 	 *
 	 * @method clear
-	 * @member module:LocalHistory
+	 * @memberOf LocalHistory
 	 * @instance
 	 */
 	clear() {

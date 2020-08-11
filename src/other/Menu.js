@@ -85,7 +85,6 @@ const ARE_ALL_SELECTED = Symbol();
  *
  * @class Menu
  * @extends Popup
- * @class
  *
  * @param {object} settings
  */

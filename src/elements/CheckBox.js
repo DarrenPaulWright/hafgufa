@@ -10,7 +10,6 @@ import Radio, { INPUT } from './Radio.js';
  *
  * @class CheckBox
  * @extends Radio
- * @class
  *
  * @param {object} settings
  */

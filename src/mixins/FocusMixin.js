@@ -13,7 +13,6 @@ const setBlurEvent = Symbol();
  * Adds focus and blur related methods to a control.
  *
  * @mixin FocusMixin
- * @class
  *
  * @param {Function} Base - The class to extend
  */
@@ -114,7 +113,7 @@ export default (Base) => {
 		 * Set focus on the text input element.
 		 *
 		 * @method focus
-		 * @member module:FocusMixin
+		 * @memberOf FocusMixin
 		 * @instance
 		 */
 		focus() {
@@ -125,7 +124,7 @@ export default (Base) => {
 		 * Remove focus from this control if it is focused.
 		 *
 		 * @method blur
-		 * @member module:FocusMixin
+		 * @memberOf FocusMixin
 		 * @instance
 		 * @returns {this}
 		 */
@@ -137,7 +136,7 @@ export default (Base) => {
 		 * See if this control has focus.
 		 *
 		 * @method isFocused
-		 * @member module:FocusMixin
+		 * @memberOf FocusMixin
 		 * @instance
 		 *
 		 * @param {boolean} [doFocus]
@@ -202,7 +201,7 @@ export default (Base) => {
 		 * Adds a callback that is triggered when the control gets focus
 		 *
 		 * @method onFocus
-		 * @member module:FocusMixin
+		 * @memberOf FocusMixin
 		 * @instance
 		 * @param {Function} callback
 		 * @returns {queue}
@@ -215,7 +214,7 @@ export default (Base) => {
 		 * Adds a callback that is triggered when the control loses focus
 		 *
 		 * @method onBlur
-		 * @member module:FocusMixin
+		 * @memberOf FocusMixin
 		 * @instance
 		 * @param {Function} callback
 		 * @returns {queue}

@@ -18,8 +18,8 @@ export const ICON_SIZES = new Enum({
  * Builds a font-awesome icon
  *
  * @class Icon
+ * @mixes TooltipMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -45,7 +45,7 @@ Object.assign(Icon.prototype, {
 	 * 'cog;[circle:plus-circle]' - a cog icon with a circle sub-icon with a plus inside
 	 *
 	 * @method icon
-	 * @member module:Icon
+	 * @memberOf Icon
 	 * @instance
 	 * @param {string} newIcon
 	 * @returns {string|this}
@@ -124,7 +124,7 @@ Object.assign(Icon.prototype, {
 	 * Set the icon size
 	 *
 	 * @method size
-	 * @member module:Icon
+	 * @memberOf Icon
 	 * @instance
 	 * @param {string} newSize - Use Icon ICON_SIZES
 	 * @returns {string|this}

@@ -33,8 +33,8 @@ const onTabClick = Symbol();
  * Displays a tabbed content control.
  *
  * @class Tabs
+ * @mixes MergeContentContainerMixin
  * @extends Container
- * @class
  *
  * @args {object} [settings]
  */
@@ -231,7 +231,7 @@ Object.assign(Tabs.prototype, {
 
 	/**
 	 * @method tabs
-	 * @member module:Tabs
+	 * @memberOf Tabs
 	 * @instance
 	 *
 	 * @param {Array}    [newTabs]

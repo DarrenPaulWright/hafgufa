@@ -55,7 +55,6 @@ const layout = Symbol();
  *
  * @class Drawer
  * @extends Container
- * @class
  *
  * @param {object} settings
  */
@@ -260,7 +259,7 @@ Object.assign(Drawer.prototype, {
 	 * The side of the container that the drawer should open from.
 	 *
 	 * @method dock
-	 * @member class:Drawer
+	 * @memberOf Drawer
 	 * @instance
 	 *
 	 * @param {string} [side] - Must be a dockPoint

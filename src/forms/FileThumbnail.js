@@ -58,9 +58,9 @@ const hideDeleteButton = Symbol();
 /**
  * Display a file thumbnail.
  *
- * @module FileThumbnail
+ * @class FileThumbnail
+ * @mixes IsWorkingMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -128,7 +128,7 @@ Object.assign(FileThumbnail.prototype, {
 	 * Get or Set the size of the preview image.
 	 *
 	 * @method previewSize
-	 * @member module:FileThumbnail
+	 * @memberOf FileThumbnail
 	 * @instance
 	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {string|this}
@@ -144,7 +144,7 @@ Object.assign(FileThumbnail.prototype, {
 	 * Get or Set the source url for the thumbnail image.
 	 *
 	 * @method imageSource
-	 * @member module:FileThumbnail
+	 * @memberOf FileThumbnail
 	 * @instance
 	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {string|this}

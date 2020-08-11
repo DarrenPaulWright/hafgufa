@@ -15,6 +15,16 @@ const IS_RESIZING = Symbol();
 const detectChange = Symbol();
 export const initDragPoint = Symbol();
 
+/**
+ * @class Shape
+ * @mixes MouseMixin
+ * @mixes FocusMixin
+ * @mixes DragMixin
+ * @mixes ContextMenuMixin
+ * @extends G
+ *
+ * @param {object} [settings]
+ */
 export default class Shape extends MouseMixin(FocusMixin(DragMixin(ContextMenuMixin(G)))) {
 	constructor(settings) {
 		super(setDefaults({

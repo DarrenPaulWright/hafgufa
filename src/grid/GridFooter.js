@@ -20,8 +20,7 @@ const setCountString = Symbol();
 /**
  * Builds a footer for the grid control.
  *
- * @module GridFooter
- * @class
+ * @class GridFooter
  *
  * @param {object} settings
  */
@@ -86,7 +85,7 @@ Object.assign(GridFooter.prototype, {
 	 * being grouped.
 	 *
 	 * @method showExpandCollapseButtons
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 */
 	showExpandCollapseButtons() {
@@ -123,7 +122,7 @@ Object.assign(GridFooter.prototype, {
 
 	/**
 	 * @method countSuffix
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 * @param {string} [countSuffix]
 	 * @returns {string|this}
@@ -137,7 +136,7 @@ Object.assign(GridFooter.prototype, {
 
 	/**
 	 * @method count
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 * @param {string} [count]
 	 * @returns {string|this}
@@ -149,7 +148,7 @@ Object.assign(GridFooter.prototype, {
 
 	/**
 	 * @method groupSuffixes
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 * @param {string} [groupSuffixes]
 	 * @returns {string|this}
@@ -161,7 +160,7 @@ Object.assign(GridFooter.prototype, {
 
 	/**
 	 * @method groupCounts
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 * @param {string} [groupCounts]
 	 * @returns {string|this}
@@ -172,7 +171,7 @@ Object.assign(GridFooter.prototype, {
 
 	/**
 	 * @method onCollapseAllGroups
-	 * @member module:GridFooter
+	 * @memberOf GridFooter
 	 * @instance
 	 * @param {Function} [onCollapseAllGroups]
 	 * @returns {Function|this}

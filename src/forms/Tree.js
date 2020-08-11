@@ -44,7 +44,6 @@ const toggleExpanded = Symbol();
  * @class Tree
  * @extends FormControl
  * @mixes FocusMixin
- * @class
  *
  * @param {object} settings
  */
@@ -275,7 +274,7 @@ export default class Tree extends FormControl {
 Object.assign(Tree.prototype, {
 	/**
 	 * @method value
-	 * @member module:Tree
+	 * @memberOf Tree
 	 * @instance
 	 * @param {Array} [value]
 	 * @returns {Array|this}
@@ -307,7 +306,7 @@ Object.assign(Tree.prototype, {
 	 * Get or set the array of branch data objects
 	 *
 	 * @method branches
-	 * @member module:Tree
+	 * @memberOf Tree
 	 * @instance
 	 * @param {Array} branches
 	 * @returns {Array|this}
@@ -320,7 +319,7 @@ Object.assign(Tree.prototype, {
 	 * Get or set a function that gets called whenever the visible layout changes
 	 *
 	 * @method onLayoutChange
-	 * @member module:Tree
+	 * @memberOf Tree
 	 * @instance
 	 * @param {Function} onLayoutChange
 	 * @returns {Function|this}
@@ -334,7 +333,7 @@ Object.assign(Tree.prototype, {
 	 * alogic is bypassed.
 	 *
 	 * @method onSelect
-	 * @member module:Tree
+	 * @memberOf Tree
 	 * @instance
 	 * @param {Function} onSelect
 	 * @returns {Function|this}
@@ -347,7 +346,7 @@ Object.assign(Tree.prototype, {
 	 * Set the height of the list to the height of the contents.
 	 *
 	 * @method fitHeightToContents
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @returns {this}
 	 */

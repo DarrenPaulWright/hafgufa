@@ -14,9 +14,8 @@ const getButton = Symbol();
 /**
  * Displays a toolbar that accepts and positions content such as buttons.
  *
- * @module Toolbar
+ * @class Toolbar
  * @extends Control
- * @class
  *
  * @param {object} settings
  */

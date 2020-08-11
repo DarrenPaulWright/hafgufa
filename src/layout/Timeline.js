@@ -190,6 +190,12 @@ const buildSlides = Symbol();
 const renderSpan = Symbol();
 const getSpanOffset = Symbol();
 
+/**
+ * @class Timeline
+ * @mixes IsWorkingMixin
+ * @mixes NextPreviousMixin
+ * @extends Control
+ */
 export default class Timeline extends IsWorkingMixin(NextPreviousMixin(Control)) {
 	constructor(settings = {}) {
 		super(setDefaults({

@@ -23,7 +23,6 @@ const RENDERED_HEIGHT = Symbol();
 /**
  * @class Bar
  * @extends GraphAxisBase
- * @class
  *
  * @param {object} settings
  */

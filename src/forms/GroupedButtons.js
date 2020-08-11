@@ -42,7 +42,6 @@ const setFocusIndex = Symbol();
  * @class GroupedButtons
  * @extends FormControl
  * @mixes FocusMixin
- * @class
  *
  * @param {object} settings - Accepts all control and FormControl options plus:
  */
@@ -283,7 +282,7 @@ export default class GroupedButtons extends FormControl {
 Object.assign(GroupedButtons.prototype, {
 	/**
 	 * @method value
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {Array|string} [value]
 	 * @returns {Array|string|this}
@@ -303,7 +302,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Add a single button to this control
 	 *
 	 * @method addButton
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 *
 	 * @param {object} buttonSettings
@@ -326,7 +325,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Remove a single button from this control
 	 *
 	 * @method removeButton
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {string} id
 	 * @returns {this}
@@ -346,7 +345,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Remove all the buttons from this control
 	 *
 	 * @method removeAllButtons
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @returns {this}
 	 */
@@ -358,7 +357,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Get a previously added button by id
 	 *
 	 * @method getButton
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {string}    id
 	 * @returns {object}
@@ -371,7 +370,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * The buttons in this control.
 	 *
 	 * @method buttons
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {Array} [buttons]
 	 * @returns {Array|this}
@@ -390,7 +389,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Gets the total number of rendered buttons in this control
 	 *
 	 * @method totalButtons
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @returns {number.int}
 	 */
@@ -404,7 +403,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * but each button will still fire click callbacks.
 	 *
 	 * @method isSelectable
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {boolean} [isSelectable]
 	 * @returns {boolean|this}
@@ -422,7 +421,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * Determines whether multiple buttons can be toggled at the same time or not.
 	 *
 	 * @method isMultiSelect
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {boolean} [isMultiSelect]
 	 * @returns {boolean|this}
@@ -437,7 +436,7 @@ Object.assign(GroupedButtons.prototype, {
 	 * The layout direction of the buttons. Use GroupedButtons.ORIENTATION to set.
 	 *
 	 * @method orientation
-	 * @member module:GroupedButtons
+	 * @memberOf GroupedButtons
 	 * @instance
 	 * @param {string} [orientation]
 	 * @returns {string|this}

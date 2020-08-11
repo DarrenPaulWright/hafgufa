@@ -26,7 +26,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	icon() {
 		const self = this;
 
-		describe('ControlHeadingAddon .icon', () => {
+		describe('ControlHeadingMixin .icon', () => {
 			it('should show a font-awesome icon as provided', () => {
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: 'Test Title',
@@ -49,7 +49,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	title() {
 		const self = this;
 
-		describe('ControlHeadingAddon .title', () => {
+		describe('ControlHeadingMixin .title', () => {
 			it('should show a title as provided', () => {
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE
@@ -75,7 +75,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	subTitle() {
 		const self = this;
 
-		describe('ControlHeadingAddon .subTitle', () => {
+		describe('ControlHeadingMixin .subTitle', () => {
 			it('should show a subTitle as provided if a title is also provided', () => {
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 					title: TEST_TITLE,
@@ -90,7 +90,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	error() {
 		const self = this;
 
-		describe('ControlHeadingAddon .error', () => {
+		describe('ControlHeadingMixin .error', () => {
 			self[TEST_UTIL].testMethod({
 				methodName: 'error',
 				defaultSettings: {
@@ -137,7 +137,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	singleLine() {
 		const self = this;
 
-		describe('ControlHeadingAddon .singleLine', () => {
+		describe('ControlHeadingMixin .singleLine', () => {
 			const SINGLE_LINE_CLASS = 'single-line';
 
 			self[TEST_UTIL].testMethod({
@@ -155,7 +155,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	headingButtons() {
 		const self = this;
 
-		describe('ControlHeadingAddon .headingButtons', () => {
+		describe('ControlHeadingMixin .headingButtons', () => {
 			const testButton = [{
 				icon: 'circle'
 			}];
@@ -213,7 +213,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	canCollapse() {
 		const self = this;
 
-		describe('ControlHeadingAddon .canCollapse', () => {
+		describe('ControlHeadingMixin .canCollapse', () => {
 			self[TEST_UTIL].testMethod({
 				methodName: 'canCollapse',
 				defaultSettings: {
@@ -228,7 +228,7 @@ export default class ControlHeadingMixinTests extends ControlTests {
 	isCollapsed() {
 		const self = this;
 
-		describe('ControlHeadingAddon .isCollapsed', () => {
+		describe('ControlHeadingMixin .isCollapsed', () => {
 			self[TEST_UTIL].testMethod({
 				methodName: 'isCollapsed',
 				defaultSettings: {

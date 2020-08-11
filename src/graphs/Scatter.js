@@ -36,7 +36,6 @@ const VISIBLE_ITEMS = Symbol();
 /**
  * @class Scatter
  * @extends GraphAxisBase
- * @class
  *
  * @param {object} settings
  */

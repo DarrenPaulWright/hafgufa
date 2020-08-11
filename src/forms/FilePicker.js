@@ -35,8 +35,8 @@ const updateLightBox = Symbol();
  * Display a control that picks files from the device and loads them.
  *
  * @class FilePicker
+ * @mixes IsWorkingMixin
  * @extends FormControl
- * @class
  *
  * @param {object}        settings
  */
@@ -213,7 +213,7 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 Object.assign(FilePicker.prototype, {
 	/**
 	 * @method value
-	 * @member module:FilePicker
+	 * @memberOf FilePicker
 	 * @instance
 	 *
 	 * @param {number} [value]
@@ -266,7 +266,7 @@ Object.assign(FilePicker.prototype, {
 	 * If true and isImage is true then show the LightBox immediately when files are added
 	 *
 	 * @method isQuickEdit
-	 * @member module:FilePicker
+	 * @memberOf FilePicker
 	 * @instance
 	 *
 	 * @param {boolean} [isQuickEdit]
@@ -311,7 +311,7 @@ Object.assign(FilePicker.prototype, {
 	 * Get or Set the size of the preview image.
 	 *
 	 * @method previewSize
-	 * @member module:FilePicker
+	 * @memberOf FilePicker
 	 * @instance
 	 * @param {number} [previewSize] - FilePicker.PREVIEW_SIZES
 	 * @returns {number|this}
@@ -339,7 +339,7 @@ Object.assign(FilePicker.prototype, {
 	 * Get or Set if this control should accept multiple files
 	 *
 	 * @method isMulti
-	 * @member module:FilePicker
+	 * @memberOf FilePicker
 	 * @instance
 	 * @param {boolean} [isMulti]
 	 * @returns {boolean|this}
@@ -359,7 +359,7 @@ Object.assign(FilePicker.prototype, {
 	 * Determines if this control has focus
 	 *
 	 * @method isFocused
-	 * @member module:FilePicker
+	 * @memberOf FilePicker
 	 * @instance
 	 * @returns {boolean}
 	 */

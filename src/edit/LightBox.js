@@ -41,6 +41,12 @@ const IMAGE_MARGIN = 8;
 const CAROUSEL_SLIDE_PERCENT = 0.4;
 const CAROUSEL_HIDE_DELAY_TIME = 500;
 
+/**
+ * @class DragImage
+ * @mixes DragMixin
+ * @extends Image
+ * @private
+ */
 class DragImage extends DragMixin(Image) {
 }
 
@@ -62,7 +68,6 @@ const renderImages = Symbol();
  *
  * @class LightBox
  * @extends Control
- * @class
  *
  * @param {object} settings
  */

@@ -40,8 +40,8 @@ const updateProgress = Symbol();
 
 /**
  * @class ProgressBar
+ * @mixes ControlHeadingMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -226,7 +226,7 @@ export default class ProgressBar extends ControlHeadingMixin(Control) {
 Object.assign(ProgressBar.prototype, {
 	/**
 	 * @method progress
-	 * @member module:ProgressBar
+	 * @memberOf ProgressBar
 	 * @instance
 	 * @param {number} [progress]
 	 * @returns {number|this}
@@ -245,7 +245,7 @@ Object.assign(ProgressBar.prototype, {
 
 	/**
 	 * @method steps
-	 * @member module:ProgressBar
+	 * @memberOf ProgressBar
 	 * @instance
 	 * @param {Array} [steps]
 	 * @returns {Array|this}
@@ -256,7 +256,7 @@ Object.assign(ProgressBar.prototype, {
 
 	/**
 	 * @method currentStep
-	 * @member module:ProgressBar
+	 * @memberOf ProgressBar
 	 * @instance
 	 * @param {number.int} [currentStep]
 	 * @returns {number.int|this}
@@ -269,7 +269,7 @@ Object.assign(ProgressBar.prototype, {
 
 	/**
 	 * @method showBigNumbers
-	 * @member module:ProgressBar
+	 * @memberOf ProgressBar
 	 * @instance
 	 * @param {boolean} [showBigNumbers]
 	 * @returns {boolean|this}
@@ -280,7 +280,7 @@ Object.assign(ProgressBar.prototype, {
 
 	/**
 	 * @method showInlineNumbers
-	 * @member module:ProgressBar
+	 * @memberOf ProgressBar
 	 * @instance
 	 * @param {boolean} [showInlineNumbers]
 	 * @returns {boolean|this}

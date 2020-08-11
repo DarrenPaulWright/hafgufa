@@ -22,8 +22,7 @@ const _ = new PrivateVars();
 /**
  * Delays the rendering of a control.
  *
- * @module DelayedRenderMixin
- * @class
+ * @mixin DelayedRenderMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -45,7 +44,7 @@ export default (Base) => {
 		 * Get or set the render delay time
 		 *
 		 * @method delay
-		 * @member module:DelayedRenderMixin
+		 * @memberOf DelayedRenderMixin
 		 * @instance
 		 * @param {number} delay
 		 * @returns {number|this}

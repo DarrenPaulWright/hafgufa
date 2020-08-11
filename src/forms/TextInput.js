@@ -50,8 +50,8 @@ const maxRowCallback = Symbol();
  * A text input control
  *
  * @class TextInput
+ * @mixes ActionButtonMixin
  * @extends FormControl
- * @class
  *
  * @param {object} settings
  */
@@ -139,7 +139,7 @@ export default class TextInput extends ActionButtonMixin(FormControl) {
 Object.assign(TextInput.prototype, {
 	/**
 	 * @method rows
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {number.int} [newRows]
 	 * @returns {number.int|this}
@@ -193,7 +193,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method isPassword
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {boolean} [newIsPassword]
 	 * @returns {boolean|this}
@@ -217,7 +217,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method minLength
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {number.int} [newMinLength]
 	 * @returns {number.int|this}
@@ -241,7 +241,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method maxLength
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {number.int} [newMaxLength]
 	 * @returns {number.int|this}
@@ -267,7 +267,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method minValue
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {number.int} [newMinValue]
 	 * @returns {number.int|this}
@@ -292,7 +292,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method maxValue
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {number.int} [newMaxValue]
 	 * @returns {number.int|this}
@@ -317,7 +317,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method isInt
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {boolean} [newMaxValue]
 	 * @returns {boolean|this}
@@ -343,7 +343,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method isNumber
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {boolean} [newMaxValue]
 	 * @returns {boolean|this}
@@ -369,7 +369,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method totalNumberDigits
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {boolean} [newMaxValue]
 	 * @returns {boolean|this}
@@ -403,7 +403,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method maxFractionDigits
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {boolean} [newMaxValue]
 	 * @returns {boolean|this}
@@ -432,7 +432,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method placeholder
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {string} [newPlaceholder]
 	 * @returns {string|this}
@@ -445,7 +445,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method prefix
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {string} [newPrefix]
 	 * @returns {string|this}
@@ -479,7 +479,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method suffix
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {string} [newPrefix]
 	 * @returns {string|this}
@@ -512,7 +512,7 @@ Object.assign(TextInput.prototype, {
 
 	/**
 	 * @method value
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {string} [value]
 	 * @returns {string|this}
@@ -537,7 +537,7 @@ Object.assign(TextInput.prototype, {
 	 * Get a reference to the text input element.
 	 *
 	 * @method getInput
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 */
 	getInput() {
@@ -548,7 +548,7 @@ Object.assign(TextInput.prototype, {
 	 * Adds a callback that is triggered when the user hits the enter key when this control is focused
 	 *
 	 * @method onEnter
-	 * @member module:TextInput
+	 * @memberOf TextInput
 	 * @instance
 	 * @param {Function} callback
 	 * @returns {this}

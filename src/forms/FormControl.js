@@ -24,8 +24,9 @@ const ON_CHANGE = Symbol();
  * Code used by most form controls.
  *
  * @class FormControl
+ * @mixes FocusMixin
+ * @mixes ControlHeadingMixin
  * @extends Control
- * @class
  *
  * @param {object} type
  * @param {object} settings
@@ -67,7 +68,7 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	 * Trigger an onChange event.
 	 *
 	 * @method triggerChange
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @param {boolean} [ignoreDelay=false] - trigger the change immediately
@@ -102,10 +103,10 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	}
 
 	/**
-	 * Updates a previously set relationship. See {@link module:formRelationships#update}.
+	 * Updates a previously set relationship. See {@link formRelationships#update}.
 	 *
 	 * @method updateRelationship
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @param {object} updateObject
@@ -120,7 +121,7 @@ export default class FormControl extends FocusMixin(ControlHeadingMixin(Control)
 	 * Execute validation queue on this control
 	 *
 	 * @method validate
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @returns {this}
@@ -142,7 +143,7 @@ Object.assign(FormControl.prototype, {
 	 * Changes the view of the title to express whether this control is required or not.
 	 *
 	 * @method isRequired
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @param {boolean} [isRequired]
@@ -178,7 +179,7 @@ Object.assign(FormControl.prototype, {
 	 * Change the delay for the onChange callback.
 	 *
 	 * @method changeDelay
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @param {number.int} newDelay - Milliseconds
@@ -215,7 +216,7 @@ Object.assign(FormControl.prototype, {
 	 * going for a long period of time, then onChange will be triggered every 15 seconds.
 	 *
 	 * @method onChange
-	 * @member module:FormControlBase
+	 * @memberOf FormControl
 	 * @instance
 	 *
 	 * @param {Function} [callback]

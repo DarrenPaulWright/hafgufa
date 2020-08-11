@@ -42,9 +42,8 @@ const refresh = Symbol();
 /**
  * Controls the display of one row in the grid control
  *
- * @module GridRow
+ * @class GridRow
  * @extends Control
- * @class
  *
  * @param {object} settings - Accepts all control settings plus:
  */
@@ -253,7 +252,7 @@ Object.assign(GridRow.prototype, {
 	 * Update the widths of all cells in this row to corresponding values stored in the Array "columns".
 	 *
 	 * @method updateWidth
-	 * @member module:GridRow
+	 * @memberOf GridRow
 	 * @instance
 	 * @param {number} availableWidth
 	 * @returns {this}
@@ -277,7 +276,7 @@ Object.assign(GridRow.prototype, {
 
 	/**
 	 * @method rowData
-	 * @member module:GridRow
+	 * @memberOf GridRow
 	 * @instance
 	 * @param {boolean} newData
 	 * @returns {boolean|this}
@@ -322,7 +321,7 @@ Object.assign(GridRow.prototype, {
 
 	/**
 	 * @method columns
-	 * @member module:GridRow
+	 * @memberOf GridRow
 	 * @instance
 	 * @param {object[]} newColumns
 	 * @returns {this}
@@ -333,7 +332,7 @@ Object.assign(GridRow.prototype, {
 
 	/**
 	 * @method isSelected
-	 * @member module:GridRow
+	 * @memberOf GridRow
 	 * @instance
 	 * @param {boolean} newIsSelected
 	 * @returns {boolean|this}
@@ -350,7 +349,7 @@ Object.assign(GridRow.prototype, {
 
 	/**
 	 * @method isIndeterminate
-	 * @member module:GridRow
+	 * @memberOf GridRow
 	 * @instance
 	 * @param {boolean} newIsSelected
 	 * @returns {boolean|this}

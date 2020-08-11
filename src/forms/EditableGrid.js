@@ -46,9 +46,8 @@ const showDialog = Symbol();
 /**
  * Display a grid control that allows the user to add new data and edit existing data.
  *
- * @module EditableGrid
+ * @class EditableGrid
  * @extends FormControl
- * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  * @param {Array} [settings.columns[]] - Grid control columns

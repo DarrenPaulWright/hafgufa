@@ -12,7 +12,6 @@ const COLUMNS_CLASS = 'columns';
  *
  * @class Description
  * @extends FormControl
- * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  * @param {string} [settings.description] - The default description to display
@@ -34,7 +33,7 @@ export default class Description extends FormControl {
 Object.assign(Description.prototype, {
 	/**
 	 * @method value
-	 * @member module:Description
+	 * @memberOf Description
 	 * @instance
 	 * @param {string} [value]
 	 * @returns {string|this}
@@ -47,7 +46,7 @@ Object.assign(Description.prototype, {
 
 	/**
 	 * @method textWidth
-	 * @member module:Description
+	 * @memberOf Description
 	 * @instance
 	 * @param {string} [newTextWidth]
 	 * @returns {string|this}
@@ -61,7 +60,7 @@ Object.assign(Description.prototype, {
 
 	/**
 	 * @method align
-	 * @member module:Description
+	 * @memberOf Description
 	 * @instance
 	 * @param {string} [newAlign] - Applys directly to the css property text-align.
 	 * @returns {string|this}
@@ -75,7 +74,7 @@ Object.assign(Description.prototype, {
 
 	/**
 	 * @method isColumns
-	 * @member module:Description
+	 * @memberOf Description
 	 * @instance
 	 *
 	 * @param {boolean} [isColumns]
@@ -90,7 +89,7 @@ Object.assign(Description.prototype, {
 
 	/**
 	 * @method isFocused
-	 * @member module:Description
+	 * @memberOf Description
 	 * @instance
 	 * @returns {boolean} - Always returns false.
 	 */

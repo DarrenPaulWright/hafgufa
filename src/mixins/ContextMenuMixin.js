@@ -11,8 +11,7 @@ const removeMenu = Symbol();
 /**
  * Adds methods for a context menu.
  *
- * @module ContextMenuAddon
- * @class
+ * @mixin ContextMenuMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -39,7 +38,7 @@ export default (Base) => {
 		 * Get or set the options for a context menu
 		 *
 		 * @method contextMenu
-		 * @memberof ContextMenuMixin
+		 * @memberOf ContextMenuMixin
 		 * @instance
 		 *
 		 * @param {Array|null} contextMenu
@@ -95,7 +94,7 @@ export default (Base) => {
 		 * Get or set a callback function that gets called whenever a contextmenu item is clicked
 		 *
 		 * @method onContextMenuChange
-		 * @memberof ContextMenuMixin
+		 * @memberOf ContextMenuMixin
 		 * @instance
 		 *
 		 * @param {Function} onContextMenuChange

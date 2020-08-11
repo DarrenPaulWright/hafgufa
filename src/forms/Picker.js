@@ -71,7 +71,6 @@ const showDialog = Symbol();
  *
  * @class Picker
  * @extends FormControl
- * @class
  *
  * @param {object} settings
  */
@@ -991,7 +990,7 @@ Object.assign(Picker.prototype, {
 	 * Set or reset the options.
 	 *
 	 * @method options
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 * @param {object} newOptions - See initial input options.
 	 * @returns {object|this}
@@ -1037,7 +1036,7 @@ Object.assign(Picker.prototype, {
 	 * Set which items get displayed in the grouped buttons.
 	 *
 	 * @method preferred
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 * @param {Array} preferred - Prioritized array of option id's.
 	 * @returns {Array|this}
@@ -1050,7 +1049,7 @@ Object.assign(Picker.prototype, {
 	 * Callback that is called after the options method is called.
 	 *
 	 * @method onOptionsChange
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 * @param {Function} [callback]
 	 * @returns {Function|this}
@@ -1061,7 +1060,7 @@ Object.assign(Picker.prototype, {
 	 * Get or set the value of this control.
 	 *
 	 * @method value
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {string|Array} [newValue] - Can be a comma delimited string of values or an array of values.
@@ -1111,7 +1110,7 @@ Object.assign(Picker.prototype, {
 	 * Get the width of the grouped buttons.
 	 *
 	 * @method getContentWidth
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 */
 	getContentWidth() {
@@ -1122,7 +1121,7 @@ Object.assign(Picker.prototype, {
 	 * Selects all options
 	 *
 	 * @method selectAll
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 */
 	selectAll() {
@@ -1145,7 +1144,7 @@ Object.assign(Picker.prototype, {
 	 * Unselects all selected options
 	 *
 	 * @method unselectAll
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 */
 	unselectAll() {
@@ -1160,7 +1159,7 @@ Object.assign(Picker.prototype, {
 	 * Determines if a selected value can be unselected.
 	 *
 	 * @method canUnselect
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 * @param {boolean} canUnselect
 	 * @returns {boolean|this}
@@ -1173,7 +1172,7 @@ Object.assign(Picker.prototype, {
 	 * Text to display on the popup button if no items are selected or showSelectedItems is false
 	 *
 	 * @method defaultButtonText
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {string} defaultButtonText
@@ -1188,7 +1187,7 @@ Object.assign(Picker.prototype, {
 	 * Icon to display on the popup button if no items are selected or showSelectedItems is false
 	 *
 	 * @method defaultButtonIcon
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {string} defaultButtonIcon
@@ -1203,7 +1202,7 @@ Object.assign(Picker.prototype, {
 	 * Text to display in the popup button if there are no options
 	 *
 	 * @method emptyButtonText
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {string} emptyButtonText
@@ -1218,7 +1217,7 @@ Object.assign(Picker.prototype, {
 	 * If true then shows the selected items on the popup button
 	 *
 	 * @method showSelectedItems
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {boolean} showSelectedItems
@@ -1237,7 +1236,7 @@ Object.assign(Picker.prototype, {
 	 * If true then a checkbox is shown in the popup that allows to filter the items to see only selected ones.
 	 *
 	 * @method canFilterSelectedOnly
-	 * @member module:Picker
+	 * @memberOf Picker
 	 * @instance
 	 *
 	 * @param {boolean} canFilterSelectedOnly

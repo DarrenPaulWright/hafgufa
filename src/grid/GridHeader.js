@@ -75,7 +75,7 @@ export default class GridHeader extends Control {
 Object.assign(GridHeader.prototype, {
 	/**
 	 * @method columns
-	 * @member module:GridHeader
+	 * @memberOf GridHeader
 	 * @instance
 	 * @param {Array} [columns]
 	 * @returns {Array|this}
@@ -132,7 +132,7 @@ Object.assign(GridHeader.prototype, {
 
 	/**
 	 * @method selectableColumns
-	 * @member module:GridHeader
+	 * @memberOf GridHeader
 	 * @instance
 	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
@@ -147,7 +147,7 @@ Object.assign(GridHeader.prototype, {
 
 	/**
 	 * @method desiredWidth
-	 * @member module:GridHeader
+	 * @memberOf GridHeader
 	 * @instance
 	 * @param {number} desiredWidth
 	 * @returns {number} - The actual width used
@@ -206,7 +206,7 @@ Object.assign(GridHeader.prototype, {
 
 	/**
 	 * @method isAllRowsSelected
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {boolean} [isAllRowsSelected]
 	 * @returns {boolean|this}
@@ -221,7 +221,7 @@ Object.assign(GridHeader.prototype, {
 
 	/**
 	 * @method isSomeRowsSelected
-	 * @member module:GridColumnBlock
+	 * @memberOf GridColumnBlock
 	 * @instance
 	 * @param {boolean} [isSomeRowsSelected]
 	 * @returns {boolean|this}
@@ -236,7 +236,7 @@ Object.assign(GridHeader.prototype, {
 
 	/**
 	 * @method scrollbarWidth
-	 * @member module:GridHeader
+	 * @memberOf GridHeader
 	 * @instance
 	 * @param {number} [scrollbarWidth]
 	 * @returns {number|this}

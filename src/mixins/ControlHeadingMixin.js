@@ -23,8 +23,7 @@ export const CONTENT_CONTAINER = Symbol();
 /**
  * Provides a Heading control and a content container.
  *
- * @module ControlHeadingMixin
- * @class
+ * @mixin ControlHeadingMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -63,7 +62,7 @@ export default (Base) => {
 		 * The content container element
 		 *
 		 * @method contentContainer
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @returns {object}
 		 */
@@ -85,7 +84,7 @@ export default (Base) => {
 
 		/**
 		 * @method canCollapse
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {boolean} [newCanCollapse]
 		 * @returns {boolean|this}
@@ -115,7 +114,7 @@ export default (Base) => {
 
 		/**
 		 * @method isCollapsed
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {boolean} [newIsCollapsed]
 		 * @returns {boolean|this}
@@ -140,7 +139,7 @@ export default (Base) => {
 
 		/**
 		 * @method onCollapse
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {Function} [newOnCollapse]
 		 * @returns {Function|this}
@@ -151,7 +150,7 @@ export default (Base) => {
 		 * Adds a title above the control
 		 *
 		 * @method title
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 *
 		 * @param {string} title - Plain text or html string.
@@ -196,7 +195,7 @@ export default (Base) => {
 		 * Adds a status message to the right of the title, inline.
 		 *
 		 * @method subTitle
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 *
 		 * @param {string} subTitle - Plain text or html string.
@@ -215,7 +214,7 @@ export default (Base) => {
 		 * Adds a error message to the right of the title and subtitle, inline.
 		 *
 		 * @method error
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 *
 		 * @param {string} [error]
@@ -234,7 +233,7 @@ export default (Base) => {
 		 * Adds an icon left of the title
 		 *
 		 * @method headingIcon
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {string} headingIcon
 		 */
@@ -250,7 +249,7 @@ export default (Base) => {
 		 * Adds an image to the left of the title
 		 *
 		 * @method headingImage
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 *
 		 * @param {string} headingImage
@@ -267,7 +266,7 @@ export default (Base) => {
 		 * Adds buttons on the right side of the heading.
 		 *
 		 * @method headingButtons
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {string} headingButton
 		 */
@@ -283,7 +282,7 @@ export default (Base) => {
 		 * Makes the title inline with the control
 		 *
 		 * @method singleLine
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @param {boolean} [newSingleLine]
 		 * @returns {boolean|this}
@@ -301,7 +300,7 @@ export default (Base) => {
 		 * Get the heading control
 		 *
 		 * @method getHeading
-		 * @member module:ControlHeadingAddon
+		 * @memberOf ControlHeadingMixin
 		 * @instance
 		 * @returns {object}
 		 */

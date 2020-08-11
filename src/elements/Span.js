@@ -8,7 +8,6 @@ import Control from './../Control.js';
  *
  * @class Span
  * @extends Control
- * @class
  *
  * @param {object} settings
  * @param {string} [settings.text]
@@ -29,7 +28,7 @@ Object.assign(Span.prototype, {
 	 * Set or get the span text.
 	 *
 	 * @method text
-	 * @member module:Span
+	 * @memberOf Span
 	 * @instance
 	 *
 	 * @param {string|element} content
@@ -45,7 +44,7 @@ Object.assign(Span.prototype, {
 	 * Set or get the span HTML.
 	 *
 	 * @method html
-	 * @member module:Span
+	 * @memberOf Span
 	 * @instance
 	 *
 	 * @param {string|element} content

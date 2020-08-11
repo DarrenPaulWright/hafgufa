@@ -43,10 +43,10 @@ const CURRENT_SIZE = Symbol();
  * Displays an animation while isWorking is true.
  *
  * @class IsWorking
+ * @mixes DelayedRenderMixin
  * @extends Control
- * @class
  *
- * @param {object}        settings -            - Accepts all controlBase settings plus:
+ * @param {object}        settings
  * @param {string}        settings.label
  * @param {boolean}       settings.isWorking
  */
@@ -85,7 +85,7 @@ Object.assign(IsWorking.prototype, {
 	 * Set or Get the label of this control.
 	 *
 	 * @method label
-	 * @member module:IsWorking
+	 * @memberOf IsWorking
 	 * @instance
 	 * @param {string} newLabel
 	 * @returns {string|this}

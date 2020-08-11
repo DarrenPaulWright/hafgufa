@@ -53,6 +53,13 @@ const startDrag = Symbol();
 const onDrag = Symbol();
 const stopDrag = Symbol();
 
+/**
+ * Adds Drag Functionality
+ *
+ * @mixin DragMixin
+ *
+ * @param {Function} Base - The class to extend
+ */
 export default (Base) => {
 	class DragMixin extends Base {
 		constructor(settings = {}) {

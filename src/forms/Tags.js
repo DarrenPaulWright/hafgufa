@@ -54,8 +54,11 @@ const selectSuggestion = Symbol();
 /**
  * A control for adding tags.
  *
- * @module Tags
- * @class
+ * @class Tags
+ * @mixes ActionButtonMixin
+ * @extends FormControl
+ *
+ * @param {object} [settings]
  */
 export default class Tags extends ActionButtonMixin(FormControl) {
 	constructor(settings = {}) {
@@ -517,7 +520,7 @@ export default class Tags extends ActionButtonMixin(FormControl) {
 Object.assign(Tags.prototype, {
 	/**
 	 * @method value
-	 * @member module:Tags
+	 * @memberOf Tags
 	 * @instance
 	 * @param {string} [value]
 	 * @returns {string|this}
@@ -566,7 +569,7 @@ Object.assign(Tags.prototype, {
 	 * Get or set an array of suggestions.
 	 *
 	 * @method suggestions
-	 * @member module:Tags
+	 * @memberOf Tags
 	 * @instance
 	 * @param {Array} [suggestions] - Can be an array of strings or objects
 	 * @param {Array} suggestions.id - Must be a unique id
@@ -604,7 +607,7 @@ Object.assign(Tags.prototype, {
 
 	/**
 	 * @method suggestionsDataSource
-	 * @member module:Tags
+	 * @memberOf Tags
 	 * @instance
 	 * @param {string} [newSuggestionsDataSource]
 	 * @returns {string|this}
@@ -630,7 +633,7 @@ Object.assign(Tags.prototype, {
 
 	/**
 	 * @method placeholder
-	 * @member module:Tags
+	 * @memberOf Tags
 	 * @instance
 	 * @param {string} [newPlaceholder]
 	 * @returns {string|this}
@@ -645,7 +648,7 @@ Object.assign(Tags.prototype, {
 	 * Get or set whether the user input should be broken into seperate tags when a space is present in the input
 	 *
 	 * @method breakOnSpaces
-	 * @member module:Tags
+	 * @memberOf Tags
 	 * @instance
 	 * @param {boolean} [breakOnSpaces]
 	 * @returns {boolean|this}

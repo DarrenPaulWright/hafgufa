@@ -9,7 +9,6 @@ import Control from './../Control.js';
  *
  * @class TextArea
  * @extends Control
- * @class
  *
  * @param {object} settings
  * @param {string} [settings.rows]
@@ -30,7 +29,7 @@ Object.assign(TextArea.prototype, {
 	 * Set or get the rows.
 	 *
 	 * @method rows
-	 * @member module:TextArea
+	 * @memberOf TextArea
 	 * @instance
 	 *
 	 * @param {number.int} rows

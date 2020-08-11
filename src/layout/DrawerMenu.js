@@ -46,8 +46,9 @@ const clearMenu = Symbol();
 /**
  * Display a main drawer menu.
  *
- * @module DrawerMenu
- * @class
+ * @class DrawerMenu
+ * @mixes FocusMixin
+ * @extends Control
  *
  * @param {object} settings
  */

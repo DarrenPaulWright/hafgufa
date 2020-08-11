@@ -146,8 +146,8 @@ const setExtent = Symbol();
  * Only render the items in a list that are visible to the user
  *
  * @class VirtualList
+ * @mixes FocusMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -265,7 +265,7 @@ export default class VirtualList extends FocusMixin(Control) {
 	 * @name setItemSize
 	 * @private
 	 *
-	 * @param {object} control -  - must be a control that inherits from module:ControlBase
+	 * @param {object} control - must be a control that inherits from Control
 	 */
 	[setItemSize](control) {
 		const self = this;
@@ -785,7 +785,7 @@ Object.assign(VirtualList.prototype, {
 	 * A callback that gets called whenever the layout changes
 	 *
 	 * @method onLayoutChange
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {Function} [onLayoutChange]
@@ -800,7 +800,7 @@ Object.assign(VirtualList.prototype, {
 	 * Get or set whether the list is rendered vertically or horizontally
 	 *
 	 * @method isHorizontal
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {boolean} [isHorizontal]
 	 * @returns {boolean|this}
@@ -824,7 +824,7 @@ Object.assign(VirtualList.prototype, {
 	 * Get or set the data for the items. Setting new data forces a refresh of the list.
 	 *
 	 * @method itemData
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {object[]} [newItemData]
 	 * @returns {object[]|this}
@@ -843,7 +843,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * @method isVirtualized
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {boolean} [newIsVirtualized]
 	 * @returns {boolean|this}
@@ -854,7 +854,7 @@ Object.assign(VirtualList.prototype, {
 
 	/**
 	 * @method itemSize
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {string} [newItemSize]
 	 * @returns {string|this}
@@ -874,7 +874,7 @@ Object.assign(VirtualList.prototype, {
 	 * Get or set the list item control.
 	 *
 	 * @method itemControl
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {object} [newControl]
 	 * @returns {object|this}
@@ -893,7 +893,7 @@ Object.assign(VirtualList.prototype, {
 	 * the items rendered within the viewport).
 	 *
 	 * @method extraRenderedItemsRatio
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {number} [newExtraRenderedItemsRatio]
@@ -911,7 +911,7 @@ Object.assign(VirtualList.prototype, {
 	 * instantiated.
 	 *
 	 * @method itemDefaultSettings
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {object} [newOptions]
@@ -929,7 +929,7 @@ Object.assign(VirtualList.prototype, {
 	 * Set a callback function that gets executed whenever an item is rendered.
 	 *
 	 * @method onItemRender
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {Function} callback
 	 * @returns {Function|this}
@@ -943,7 +943,7 @@ Object.assign(VirtualList.prototype, {
 	 * Get an Array of all the visible controls
 	 *
 	 * @method getRenderedControls
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @returns {object[]}
@@ -956,7 +956,7 @@ Object.assign(VirtualList.prototype, {
 	 * Get first visible item
 	 *
 	 * @method getFirstRenderedItem
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @returns {object[]}
@@ -979,7 +979,7 @@ Object.assign(VirtualList.prototype, {
 	 * Updates the offsets of each item when isVirtualized is false.
 	 *
 	 * @method updateItemPositions
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @returns {this}
 	 */
@@ -1002,7 +1002,7 @@ Object.assign(VirtualList.prototype, {
 	 * Set the height of the list to the height of the contents.
 	 *
 	 * @method fitHeightToContents
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @returns {this}
 	 */
@@ -1016,7 +1016,7 @@ Object.assign(VirtualList.prototype, {
 	 * Auto-scroll to an item.
 	 *
 	 * @method scrollToIndex
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 * @param {number} index - index of an item that is currently displayed
 	 */
@@ -1031,7 +1031,7 @@ Object.assign(VirtualList.prototype, {
 	 * time.
 	 *
 	 * @method nextPage
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 */
 	nextPage() {
@@ -1043,7 +1043,7 @@ Object.assign(VirtualList.prototype, {
 	 * time.
 	 *
 	 * @method prevPage
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 */
 	prevPage() {
@@ -1054,7 +1054,7 @@ Object.assign(VirtualList.prototype, {
 	 * See if the content is scrolled to the beginning
 	 *
 	 * @method isAtStart
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @returns {boolean}
@@ -1067,7 +1067,7 @@ Object.assign(VirtualList.prototype, {
 	 * See if the content is scrolled to the end
 	 *
 	 * @method isAtEnd
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @returns {boolean}
@@ -1101,7 +1101,7 @@ Object.assign(VirtualList.prototype, {
 	 * Hide the scrollbars. This disables all mouse interaction, so other means of navigation must be implemented.
 	 *
 	 * @method hideScrollBars
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {boolean}
@@ -1116,7 +1116,7 @@ Object.assign(VirtualList.prototype, {
 	 * Centers items in the viewport if there are fewer than fit in the viewport
 	 *
 	 * @method isCentered
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {boolean}
@@ -1129,7 +1129,7 @@ Object.assign(VirtualList.prototype, {
 	 * When the user is done scrolling, animate the scroll to the nearest leading edge of an item
 	 *
 	 * @method snapToLeadingEdge
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 *
 	 * @param {boolean}
@@ -1155,7 +1155,7 @@ Object.assign(VirtualList.prototype, {
 	 * Remove all the items and re-render them at the current scroll position.
 	 *
 	 * @method refresh
-	 * @member module:VirtualList
+	 * @memberOf VirtualList
 	 * @instance
 	 */
 	refresh() {

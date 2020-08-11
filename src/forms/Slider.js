@@ -21,6 +21,13 @@ import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl.js';
 import './Slider.less';
 
+/**
+ * @class Thumb
+ * @mixes TooltipMixin
+ * @mixes DragMixin
+ * @extends Button
+ * @private
+ */
 class Thumb extends TooltipMixin(DragMixin(Button)) {
 	constructor(settings = {}) {
 		super({
@@ -49,6 +56,12 @@ Object.assign(Thumb.prototype, {
 	onLeftArrow: methodQueue()
 });
 
+/**
+ * @class Range
+ * @mixes DragMixin
+ * @extends Div
+ * @private
+ */
 class Range extends DragMixin(Div) {
 	constructor(settings = {}) {
 		super(assign(settings, {

@@ -44,7 +44,9 @@ const buildTooltipText = Symbol();
 
 /**
  * @class GraphBase
- * @class
+ * @mixes IsWorkingMixin
+ * @mixes ControlHeadingMixin
+ * @extends Control
  *
  * @param {object} settings
  */

@@ -4,8 +4,7 @@ import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js
 /**
  * Adds onMouseEnter and onMouseLeave methods to a control
  *
- * @module MouseMixin
- * @class
+ * @mixin MouseMixin
  *
  * @param {Function} Base - The class to extend
  */

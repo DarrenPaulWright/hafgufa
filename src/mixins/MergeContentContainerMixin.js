@@ -1,5 +1,10 @@
 import { CONTENT_CONTAINER } from './ControlHeadingMixin.js';
 
+/**
+ * @mixin MergeContentContainerMixin
+ *
+ * @param {Function} Base - The class to extend
+ */
 export default (Base) => {
 	class MergeContentContainerMixin extends Base {
 		get(id) {

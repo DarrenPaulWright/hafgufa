@@ -34,9 +34,8 @@ const POPUP = Symbol();
 /**
  * Display date and/or time fields with corresponding smart pickers.
  *
- * @module DateInput
+ * @class DateInput
  * @extends FormControl
- * @class
  *
  * @param {object} settings - Accepts all control and FormControl settings plus:
  */

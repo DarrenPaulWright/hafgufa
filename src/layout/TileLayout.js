@@ -156,7 +156,6 @@ const calculateColumns = Symbol();
  * Displays a masonry style layout control.
  *
  * @class TileLayout
- * @class
  *
  * @param {object} [settings]
  */
@@ -799,7 +798,7 @@ Object.assign(TileLayout.prototype, {
 	 * The default tile width in rem's
 	 *
 	 * @method tileWidth
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {string} [newTileWidth]
@@ -815,7 +814,7 @@ Object.assign(TileLayout.prototype, {
 	 * The margin to be applied to each tile in rem's
 	 *
 	 * @method tileMargin
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {string} [newTileMargin]
@@ -831,7 +830,7 @@ Object.assign(TileLayout.prototype, {
 	 * Align the columns within the available area
 	 *
 	 * @method columnAlign
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {string} [columnAlign] - TILE_COLUMN_ALIGN
@@ -848,7 +847,7 @@ Object.assign(TileLayout.prototype, {
 	 * The min number of columns to render
 	 *
 	 * @method minColumns
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {number} [minColumns]
@@ -865,7 +864,7 @@ Object.assign(TileLayout.prototype, {
 	 * The max number of columns to render
 	 *
 	 * @method maxColumns
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {number} [maxColumns]
@@ -883,7 +882,7 @@ Object.assign(TileLayout.prototype, {
 	 * otherwise use .content()
 	 *
 	 * @method tileControl
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {object} [tileControl]
@@ -901,7 +900,7 @@ Object.assign(TileLayout.prototype, {
 	 * instantiated.
 	 *
 	 * @method tileDefaultSettings
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {object} [tileDefaultSettings]
@@ -920,7 +919,7 @@ Object.assign(TileLayout.prototype, {
 	 * if .tileControl() is provided.
 	 *
 	 * @method onTileRender
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {Function} callback
@@ -936,7 +935,7 @@ Object.assign(TileLayout.prototype, {
 	 * The data for the tiles. Setting new data forces a refresh of the layout.
 	 *
 	 * @method tileData
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {object[]} [tileData]
@@ -957,7 +956,7 @@ Object.assign(TileLayout.prototype, {
 	 * the items rendered within the viewport).
 	 *
 	 * @method extraRenderedItemsRatio
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 *
 	 * @param {number} [newExtraRenderedItemsRatio]
@@ -979,7 +978,7 @@ Object.assign(TileLayout.prototype, {
 	 * Force a relayout of the tiles
 	 *
 	 * @method refresh
-	 * @member module:TileLayout
+	 * @memberOf TileLayout
 	 * @instance
 	 */
 	refresh: throttle(function() {

@@ -7,6 +7,14 @@ import Rect from '../svg/Rect.js';
 import setDefaults from '../utility/setDefaults.js';
 import './DragPoint.less';
 
+/**
+ * @class DragPoint
+ * @mixes FocusMixin
+ * @mixes DragMixin
+ * @extends G
+ *
+ * @param {object} [settings]
+ */
 export default class DragPoint extends FocusMixin(DragMixin(G)) {
 	constructor(settings = {}) {
 		super(setDefaults({

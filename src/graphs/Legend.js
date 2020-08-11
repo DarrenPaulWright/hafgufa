@@ -27,8 +27,7 @@ const setCheckedCharacter = Symbol();
 const toggleItem = Symbol();
 
 /**
- * @module Donut
- * @class
+ * @class Donut
  *
  * @param {object} settings
  */

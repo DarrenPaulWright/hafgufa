@@ -12,7 +12,6 @@ const addLayout = Symbol();
  *
  * @class Div
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -99,7 +98,7 @@ export default class Div extends Control {
 	 * Get a control in the content container that matches the provided id
 	 *
 	 * @method get
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {string} id
@@ -114,7 +113,7 @@ export default class Div extends Control {
 	 * Add new content to the container after removing all the current controls.
 	 *
 	 * @method content
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {object[]} content - An Array of control objects. Look at each control for options.
@@ -131,7 +130,7 @@ export default class Div extends Control {
 	 * Add new content to the end of this container without removing the current controls.
 	 *
 	 * @method append
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {object[]} content - An Array of control objects. Look at each control for options.
@@ -146,7 +145,7 @@ export default class Div extends Control {
 	 * Add new content to the beginning of this container without removing the current controls.
 	 *
 	 * @method prepend
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {object[]} content - An Array of control objects. Look at each control for options.
@@ -165,7 +164,7 @@ export default class Div extends Control {
 	 * Iterate over each control in this container
 	 *
 	 * @method each
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {Function} callback
@@ -186,7 +185,7 @@ export default class Div extends Control {
 	 * Build a mapped array of each control in this container
 	 *
 	 * @method map
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {Function} callback
@@ -203,7 +202,7 @@ export default class Div extends Control {
 	 * Calls .remove on all of the controls added to this container or a specific control
 	 *
 	 * @method removeContent
-	 * @member module:Div
+	 * @memberOf Div
 	 * @instance
 	 *
 	 * @param {string} id

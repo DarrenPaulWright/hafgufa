@@ -4,8 +4,7 @@ import IsWorking from '../display/IsWorking.js';
 const _ = new PrivateVars();
 
 /**
- * @module IsWorkingAddon
- * @class
+ * @mixin IsWorkingMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -27,7 +26,7 @@ export default (Base) => {
 		 * Toggles the working animation
 		 *
 		 * @method isWorking
-		 * @member module:IsWorkingAddon
+		 * @memberOf IsWorkingMixin
 		 * @instance
 		 *
 		 * @param {boolean} [isWorking]
@@ -62,7 +61,7 @@ export default (Base) => {
 		 * Get or set a string to display in the IsWorking control
 		 *
 		 * @method isWorkingLabel
-		 * @member module:IsWorkingAddon
+		 * @memberOf IsWorkingMixin
 		 * @instance
 		 *
 		 * @param {string} [isWorkingLabel]

@@ -42,9 +42,8 @@ const removeTooltip = Symbol();
 /**
  * Controls the display of one cell in the grid control
  *
- * @module GridCell
+ * @class GridCell
  * @extends Control
- * @class
  *
  * @param {object}   settings - Accepts all control settings plus:
  */
@@ -193,7 +192,7 @@ export default class GridCell extends Control {
 Object.assign(GridCell.prototype, {
 	/**
 	 * @method isChild
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {object} [data]
 	 * @returns {object|this}
@@ -204,7 +203,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method dataType
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {string} [dataType]
 	 * @returns {string|this}
@@ -222,7 +221,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method content
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {object} [content]
 	 * @returns {object|this}
@@ -309,7 +308,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method displayType
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @returns {string}
 	 */
@@ -321,7 +320,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method isSelected
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {boolean} isSelected
 	 * @returns {boolean|this}
@@ -338,7 +337,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method wordWrap
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {boolean} newCanWordWrap
 	 * @returns {boolean|this}
@@ -351,7 +350,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method textAlign
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {boolean} newTextAlign
 	 * @returns {boolean|this}
@@ -370,7 +369,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method isEnabled
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {boolean} newIsEnabled
 	 * @returns {boolean|this}
@@ -381,7 +380,7 @@ Object.assign(GridCell.prototype, {
 
 	/**
 	 * @method tooltip
-	 * @member module:GridCell
+	 * @memberOf GridCell
 	 * @instance
 	 * @param {string} newTooltip
 	 * @returns {string|this}

@@ -44,7 +44,6 @@ const IS_AUTO = Symbol();
  * Display a dialog with a title, content, and a footer.
  *
  * @class Dialog
- * @class
  *
  * @param {object} settings
  */
@@ -233,7 +232,7 @@ Object.assign(Dialog.prototype, {
 	 * Get or set the padding of the content container.
 	 *
 	 * @method padding
-	 * @member module:Dialog
+	 * @memberOf Dialog
 	 * @instance
 	 *
 	 * @param {string} [newPadding]
@@ -251,7 +250,7 @@ Object.assign(Dialog.prototype, {
 	 * Changes the view of the control to look disabled and prevents mouse and keyboard interaction
 	 *
 	 * @method isEnabled
-	 * @member module:Dialog
+	 * @memberOf Dialog
 	 * @instance
 	 * @param {boolean} [input=true] - If a value is provided then set, otherwise get the current state.
 	 * @returns {boolean|this} - Only returned if no value is provided

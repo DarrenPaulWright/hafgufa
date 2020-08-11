@@ -28,8 +28,8 @@ const fitToSlide = Symbol();
  * A horizontal slide viewer.
  *
  * @class Carousel
+ * @mixes NextPreviousMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -125,7 +125,7 @@ Object.assign(Carousel.prototype, {
 	 * Get or set the control to render for each slide
 	 *
 	 * @method slideControl
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {Function}
@@ -143,7 +143,7 @@ Object.assign(Carousel.prototype, {
 	 * Get or set a collection of slide data
 	 *
 	 * @method slideData
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {object[]}
@@ -160,7 +160,7 @@ Object.assign(Carousel.prototype, {
 	 * Get or set an object of settings to use when first initializing a slide
 	 *
 	 * @method slideDefaultSettings
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {object}
@@ -178,7 +178,7 @@ Object.assign(Carousel.prototype, {
 	 * Get or set a callback that gets called as each slide is rendered.
 	 *
 	 * @method onSlideRender
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {Function}
@@ -200,7 +200,7 @@ Object.assign(Carousel.prototype, {
 	 * Get or set a specific width for each slide
 	 *
 	 * @method slideWidth
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {string}
@@ -217,7 +217,7 @@ Object.assign(Carousel.prototype, {
 	 * Fit a single slide at a time in the view.
 	 *
 	 * @method fitToSlide
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {boolean}
@@ -235,7 +235,7 @@ Object.assign(Carousel.prototype, {
 	 * Get an Array of all the visible controls
 	 *
 	 * @method getRenderedControls
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @returns {object[]}
@@ -249,7 +249,7 @@ Object.assign(Carousel.prototype, {
 	 * the items rendered within the viewport).
 	 *
 	 * @method extraRenderedItemsRatio
-	 * @member module:Carousel
+	 * @memberOf Carousel
 	 * @instance
 	 *
 	 * @param {number} [extraRenderedItemsRatio]

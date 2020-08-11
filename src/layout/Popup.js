@@ -92,10 +92,10 @@ const positionArrow = Symbol();
  * Adds a div to the top of the body and positions it relative to an anchor.
  *
  * @class Popup
+ * @mixes MergeContentContainerMixin
  * @extends Container
- * @class
  *
- * @param {object}        settings - Accepts all controlBase settings plus:
+ * @param {object}        settings
  * @param {string}        [settings.classes] - A space separated list of css classes to apply to the popup.
  * @param {object|string} [settings.anchor] - DOM element or 'mouse' to follow the cursor.
  * @param {DockPoint}     [settings.anchorDockPoint] - The dock point on the anchor
@@ -625,7 +625,7 @@ Object.assign(Popup.prototype, {
 	 * instantiated
 	 *
 	 * @method canTrackMouse
-	 * @member module:Popup
+	 * @memberOf Popup
 	 * @instance
 	 * @param {boolean} canTrackMouse
 	 * @returns {boolean|this}

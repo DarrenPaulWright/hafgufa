@@ -22,8 +22,7 @@ const addRightContainer = Symbol();
 /**
  * Adds an action button and count text.
  *
- * @module ActionButtonAddon
- * @class
+ * @mixin ActionButtonMixin
  *
  * @param {Function} Base - The class to extend
  */
@@ -116,7 +115,7 @@ export default function(Base) {
 	Object.assign(ActionButtonMixin.prototype, {
 		/**
 		 * @method actionButtonIcon
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {string} [actionButton]
@@ -129,7 +128,7 @@ export default function(Base) {
 
 		/**
 		 * @method actionButtonLabel
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {string} [actionButton]
@@ -142,7 +141,7 @@ export default function(Base) {
 
 		/**
 		 * @method actionButtonOnClick
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {Function} [actionButton]
@@ -155,7 +154,7 @@ export default function(Base) {
 
 		/**
 		 * @method isActionButtonAutoHide
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {boolean} [isActionButtonAutoHide]
@@ -169,7 +168,7 @@ export default function(Base) {
 
 		/**
 		 * @method isActionButtonEnabled
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {boolean} [isActionButtonEnabled]
@@ -185,7 +184,7 @@ export default function(Base) {
 		 * Adds text on the right side of the input element
 		 *
 		 * @method countText
-		 * @member module:ActionButtonAddon
+		 * @memberOf ActionButtonMixin
 		 * @instance
 		 *
 		 * @param {string} [countText]

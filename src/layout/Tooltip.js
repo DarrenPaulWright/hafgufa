@@ -13,8 +13,9 @@ const POPUP = Symbol();
 /**
  * Displays a tooltip anchored to an object or the mouse.
  *
- * @module Tooltip
- * @class
+ * @class Tooltip
+ * @mixes DelayedRenderMixin
+ * @extends Removable
  *
  * @param {object}    settings
  * @param {string}    settings.anchor

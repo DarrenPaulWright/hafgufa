@@ -8,7 +8,6 @@ const DISCARDED = Symbol();
  * Instead of creating and destroying controls in rapid succession, recycle them!
  *
  * @class ControlRecycler
- * @class
  *
  * @param {object} settings
  */
@@ -26,7 +25,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * A reference to a Control.
 	 *
 	 * @method control
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @chainable
 	 *
@@ -42,7 +41,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Default settings to be applied to controls when created.
 	 *
 	 * @method defaultSettings
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @chainable
 	 *
@@ -58,7 +57,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * If there are discarded controls available then return one of those, otherwise instantiate a new control.
 	 *
 	 * @method getRecycledControl
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 *
 	 * @param {boolean} [doPrepend=false] - Add the control to the beginning fo the stack
@@ -88,7 +87,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Get a visible control with a specific id.
 	 *
 	 * @method getControl
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 *
 	 * @param {string} id - The id of the control
@@ -103,7 +102,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Get an array of all the visible controls.
 	 *
 	 * @method getRenderedControls
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 *
 	 * @returns {object[]}
@@ -116,7 +115,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Calls a callback for each rendered control.
 	 *
 	 * @method each
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @chainable
 	 *
@@ -134,7 +133,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Calls a callback for each rendered control, returns the resulting array.
 	 *
 	 * @method map
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 *
 	 * @param {Function} [callback] - provides a reference to the control and the index
@@ -149,7 +148,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Discard a control that matches a specific id.
 	 *
 	 * @method discardControl
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @chainable
 	 *
@@ -172,7 +171,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Discard all the controls that are currently visible.
 	 *
 	 * @method discardAllControls
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @chainable
 	 *
@@ -190,7 +189,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Get a reference to a control at a specific offset.
 	 *
 	 * @method getControlAtIndex
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 *
 	 * @param {number} [index] - Index of the control
@@ -207,7 +206,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Gets the total number of controls that are currently visible.
 	 *
 	 * @method totalVisibleControls
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 * @returns {number}
 	 */
@@ -219,7 +218,7 @@ Object.assign(ControlRecycler.prototype, {
 	 * Prepares itself for deletion and removes all the controls it contains.
 	 *
 	 * @method remove
-	 * @member module:ControlRecycler
+	 * @memberOf ControlRecycler
 	 * @instance
 	 */
 	remove() {

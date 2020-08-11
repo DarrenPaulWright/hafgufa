@@ -45,7 +45,8 @@ const removeControls = Symbol();
  * Handles the layout of a single grid header cell control
  *
  * @class GridHeaderCell
- * @class
+ * @mixes ContextMenuMixin
+ * @extends Control
  *
  * @param {object} settings
  */
@@ -315,7 +316,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 Object.assign(GridHeaderCell.prototype, {
 	/**
 	 * @method title
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 *
 	 * @param {string} [title]
@@ -330,7 +331,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method dataType
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {string} [dataType]
 	 * @returns {string|this}
@@ -357,7 +358,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method canSort
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {boolean} [canSort]
 	 * @returns {boolean|this}
@@ -388,7 +389,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method sortDirection
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {string} [sortDirection]
 	 * @returns {string|this}
@@ -410,7 +411,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method filterType
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {string} [filterType]
 	 * @returns {string|this}
@@ -440,7 +441,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method filter
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {string} [filter]
 	 * @returns {string|this}
@@ -468,7 +469,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method selectableColumns
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {Array} [selectableColumns]
 	 * @returns {Array|this}
@@ -479,7 +480,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method isAllRowsSelected
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {boolean} [isAllRowsSelected]
 	 * @returns {boolean|this}
@@ -490,7 +491,7 @@ Object.assign(GridHeaderCell.prototype, {
 
 	/**
 	 * @method isSomeRowsSelected
-	 * @member module:GridHeaderCell
+	 * @memberOf GridHeaderCell
 	 * @instance
 	 * @param {boolean} [isSomeRowsSelected]
 	 * @returns {boolean|this}

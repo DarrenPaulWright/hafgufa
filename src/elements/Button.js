@@ -29,8 +29,10 @@ const ICON_POSITIONS = new Enum({
  * Display a button.
  *
  * @class Button
+ * @mixes MouseMixin
+ * @mixes FocusMixin
+ * @mixes OnClickMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -61,7 +63,7 @@ Button.ICON_POSITIONS = ICON_POSITIONS;
 Object.assign(Button.prototype, {
 	/**
 	 * @method value
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {anything} [value]
 	 * @returns {*|this}
@@ -72,7 +74,7 @@ Object.assign(Button.prototype, {
 	 * Set the button label.
 	 *
 	 * @method label
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {string} newLabel - A none-HTML string
 	 * @returns {string|this}
@@ -104,7 +106,7 @@ Object.assign(Button.prototype, {
 	 * Set the button alt text.
 	 *
 	 * @method alt
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {string} newTitle - A none-HTML string
 	 * @returns {this}
@@ -123,7 +125,7 @@ Object.assign(Button.prototype, {
 	 * no src is provided then this will remove the image from the DOM.
 	 *
 	 * @method icon
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 *
 	 * @param {string} newSrc - URL for an image.
@@ -166,7 +168,7 @@ Object.assign(Button.prototype, {
 
 	/**
 	 * @method iconSize
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {string} [iconSize]
 	 * @returns {string|this}
@@ -183,7 +185,7 @@ Object.assign(Button.prototype, {
 
 	/**
 	 * @method iconPosition
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {string} [iconPosition]
 	 * @returns {string|this}
@@ -205,7 +207,7 @@ Object.assign(Button.prototype, {
 	 * no src is provided then this will remove the image from the DOM.
 	 *
 	 * @method setImage
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 *
 	 * @param {string} newSrc - URL for an image.
@@ -246,7 +248,7 @@ Object.assign(Button.prototype, {
 	 * Sets or gets the current toggleable state.
 	 *
 	 * @method isSelectable
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 * @param {boolean} [newisSelectable]
 	 * @returns {boolean|this}
@@ -264,7 +266,7 @@ Object.assign(Button.prototype, {
 	 * Setting this method does not fire the onClick event.
 	 *
 	 * @method isSelected
-	 * @member module:Button
+	 * @memberOf Button
 	 * @instance
 	 *
 	 * @param {boolean} [newisSelected]

@@ -45,8 +45,8 @@ const positionViews = Symbol();
  * Displays a split view where the separator between the two sides is draggable.
  *
  * @class SplitView
+ * @mixes IsWorkingMixin
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -158,7 +158,7 @@ export default class SplitView extends IsWorkingMixin(Control) {
 	 * Get a reference to the first view element
 	 *
 	 * @method firstView
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @returns {object}
 	 */
@@ -170,7 +170,7 @@ export default class SplitView extends IsWorkingMixin(Control) {
 	 * Get a reference to the second view element
 	 *
 	 * @method secondView
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @returns {object}
 	 */
@@ -184,7 +184,7 @@ Object.assign(SplitView.prototype, {
 	 * Set or Get the layout orientation of this control. Use SplitView.ORIENTATION
 	 *
 	 * @method orientation
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @returns {string|object}
 	 */
@@ -212,7 +212,7 @@ Object.assign(SplitView.prototype, {
 	 * Set or Get the split offset of this control.
 	 *
 	 * @method splitOffset
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @returns {string|object}
 	 */
@@ -232,7 +232,7 @@ Object.assign(SplitView.prototype, {
 	 * splitOffset.
 	 *
 	 * @method isResizeable
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @returns {string|object}
 	 */
@@ -272,7 +272,7 @@ Object.assign(SplitView.prototype, {
 	 * Set or Get the minimum offset when resizing.
 	 *
 	 * @method minOffset
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @param {number} [newMinOffset]
 	 * @returns {number|object}
@@ -291,7 +291,7 @@ Object.assign(SplitView.prototype, {
 	 * Set or Get the maximum offset when resizing.
 	 *
 	 * @method maxOffset
-	 * @member module:SplitView
+	 * @memberOf SplitView
 	 * @instance
 	 * @param {number} [newMaxOffset]
 	 * @returns {number|object}

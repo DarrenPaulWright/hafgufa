@@ -3,10 +3,10 @@ import { deepEqual, erase, get } from 'object-agent';
 import { isArray, isString } from 'type-enforcer';
 
 /**
- * Handle relationships between form controls. This is used by {@link module:FormControlBase}. formRelationships is
+ * Handle relationships between form controls. This is used by {@link FormControl}. formRelationships is
  * a singleton so that all callbacks added are processed together.
  *
- * @module formRelationships
+ * @class formRelationships
  */
 const FormRelationshipHandler = function() {
 	const self = this;
@@ -17,7 +17,7 @@ const FormRelationshipHandler = function() {
 	 * Add a relationship
 	 *
 	 * @method add
-	 * @member module:formRelationships
+	 * @memberOf formRelationships
 	 * @instance
 	 * @param {object} [newData]
 	 * @param {object} newData.control - A valid js reference back to the control adding this relationship
@@ -56,7 +56,7 @@ const FormRelationshipHandler = function() {
 	 * Remove a relationship
 	 *
 	 * @method remove
-	 * @member module:formRelationships
+	 * @memberOf formRelationships
 	 * @instance
 	 * @param {number} id - The formRelationshipId passed back when the relationship is first added.
 	 */
@@ -68,7 +68,7 @@ const FormRelationshipHandler = function() {
 	 * Force formRelationships to process all relationships or the relationships on one control
 	 *
 	 * @method trigger
-	 * @member module:formRelationships
+	 * @memberOf formRelationships
 	 * @instance
 	 * @param {number} [id] - The formRelationshipId passed back when the relationship is first added.
 	 */
@@ -85,7 +85,7 @@ const FormRelationshipHandler = function() {
 	 * Update the value of a property of a relationship
 	 *
 	 * @method update
-	 * @member module:formRelationships
+	 * @memberOf formRelationships
 	 * @instance
 	 * @param {number} id - The formRelationshipId passed back when the relationship is first added.
 	 * @param {object} updateObject

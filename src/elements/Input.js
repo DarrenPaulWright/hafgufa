@@ -24,7 +24,6 @@ const AVAILABLE_TYPES = new Enum({
  *
  * @class Input
  * @extends Control
- * @class
  *
  * @param {object} settings
  * @param {string} [settings.type]
@@ -52,7 +51,7 @@ Object.assign(Input.prototype, {
 	 * The input type
 	 *
 	 * @method inputType
-	 * @member module:Input
+	 * @memberOf Input
 	 * @instance
 	 *
 	 * @param {string|element} inputType

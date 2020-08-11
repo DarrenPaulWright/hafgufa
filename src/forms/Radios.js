@@ -13,9 +13,8 @@ const NAME = Symbol();
 /**
  * Display a list of radio controls.
  *
- * @module Radio
+ * @class Radio
  * @extends FormControl
- * @class
  *
  * @param {object}  settings
  */
@@ -38,7 +37,7 @@ export default class Radios extends FormControl {
 Object.assign(Radios.prototype, {
 	/**
 	 * @method value
-	 * @member module:Radio
+	 * @memberOf Radio
 	 * @instance
 	 * @param {Array|string} [value]
 	 * @returns {Array|string|this}

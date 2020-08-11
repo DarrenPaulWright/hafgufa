@@ -52,9 +52,8 @@ const isValidMimeType = Symbol();
 /**
  * Display a styled file input element with file drop support.
  *
- * @module FileInput
+ * @class FileInput
  * @extends Control
- * @class
  *
  * @param {object} settings
  */
@@ -224,7 +223,7 @@ Object.assign(FileInput.prototype, {
 	 * Get or Set if this input should accept multiple files
 	 *
 	 * @method isMulti
-	 * @member module:FileInput
+	 * @memberOf FileInput
 	 * @instance
 	 * @param {boolean} [isMulti]
 	 * @returns {boolean|this}
@@ -239,7 +238,7 @@ Object.assign(FileInput.prototype, {
 	 * Get or Set the size of the preview image.
 	 *
 	 * @method previewSize
-	 * @member module:FileInput
+	 * @memberOf FileInput
 	 * @instance
 	 * @param {string} [previewSize] - FileThumbnail.PREVIEW_SIZES
 	 * @returns {string|this}
@@ -255,7 +254,7 @@ Object.assign(FileInput.prototype, {
 	 * Get or Set a function that gets called when a file is selected via user input
 	 *
 	 * @method onPreLoad
-	 * @memberof module:FilePicker
+	 * @memberOf FileInput
 	 * @instance
 	 * @param {Function} [onLoad]
 	 * @returns {Function|this}
@@ -266,7 +265,7 @@ Object.assign(FileInput.prototype, {
 	 * Get or Set a function that gets called when a file is loaded via user input
 	 *
 	 * @method onLoad
-	 * @member module:FileInput
+	 * @memberOf FileInput
 	 * @instance
 	 * @param {Function} [onLoad]
 	 * @returns {Function|this}

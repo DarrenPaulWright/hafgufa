@@ -8,9 +8,9 @@ import './Hyperlink.less';
 /**
  * Display an anchor element.
  *
- * @module Hyperlink
- * @extends ControlBase
- * @class
+ * @class Hyperlink
+ * @mixes OnClickMixin
+ * @extends Control
  *
  * @param {object} settings
  * @param {string} [settings.text]
@@ -31,7 +31,7 @@ Object.assign(Hyperlink.prototype, {
 	 * The displayed text. This is automatically set to the url when the url is set.
 	 *
 	 * @method text
-	 * @member module:Hyperlink
+	 * @memberOf Hyperlink
 	 * @instance
 	 *
 	 * @param {string|element} content

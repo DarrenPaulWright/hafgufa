@@ -13,8 +13,9 @@ import './Section.less';
  * Display a visual section (collapsible or not) with children controls.
  *
  * @class Section
- * @extends Container
- * @class
+ * @mixes MergeContentContainerMixin
+ * @mixes ControlHeadingMixin
+ * @extends Control
  *
  * @param {object} settings
  */
@@ -41,7 +42,7 @@ Object.assign(Section.prototype, {
 	 * Get or set the padding of the content container.
 	 *
 	 * @method padding
-	 * @member module:Section
+	 * @memberOf Section
 	 * @instance
 	 *
 	 * @param {string} [newPadding]
