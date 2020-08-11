@@ -119,8 +119,8 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 			});
 		}
 		if (self.canDelete()) {
-			thumb.onDelete(() => {
-				self[deleteFile](thumb);
+			thumb.onDelete(function() {
+				self[deleteFile](this);
 			});
 		}
 
