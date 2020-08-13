@@ -351,7 +351,8 @@ export default class VirtualList extends FocusMixin(Control) {
 			self[EXTENT],
 			(totalSize - self[CURRENT_STEP_OFFSET]) + self[INNER_PADDING][self[EXTENT_PADDING]] + PIXELS
 			)
-			.css(self[POSITION_ORIGIN], getOffset() + PIXELS);
+			.css(self[POSITION_ORIGIN], getOffset() + PIXELS)
+			.resize(true);
 	}
 
 	/**
@@ -562,9 +563,10 @@ export default class VirtualList extends FocusMixin(Control) {
 		const self = this;
 
 		event.preventDefault();
-		self[CURRENT_SCROLL_OFFSET] = event.target[self[EXTENT_SCROLL_ORIGIN]];
 
-		if (event.target[self[EXTENT_SCROLL_TOTAL]] - (self[CURRENT_SCROLL_OFFSET] + self.borderHeight()) < self.nearEndThreshold()) {
+		self[CURRENT_SCROLL_OFFSET] = self[CONTENT_CONTAINER].container()[self[EXTENT_SCROLL_ORIGIN]];
+
+		if (self[CONTENT_CONTAINER].container()[self[EXTENT_SCROLL_TOTAL]] - (self[CURRENT_SCROLL_OFFSET] + self.borderHeight()) < self.nearEndThreshold()) {
 			self.onNearEnd().trigger();
 		}
 
@@ -587,7 +589,7 @@ export default class VirtualList extends FocusMixin(Control) {
 			index = Math.max(self.keepAltRows() ? (index - (index % 2)) : index, 0);
 		}
 
-		if (!self.isHorizontal() && self.snapToLeadingEdge()) {
+		if (self.snapToLeadingEdge()) {
 			defer(() => {
 				self[setVirtualContentSizes]();
 			});
@@ -809,12 +811,12 @@ Object.assign(VirtualList.prototype, {
 		set(isHorizontal) {
 			const self = this;
 
-			if (isHorizontal && !self[CONTENT_CONTAINER].restrictVerticalDrag()) {
-				self[CONTENT_CONTAINER]
-					.canDrag(true)
-					.restrictVerticalDrag(true)
-					.scrollOnDrag(true);
-			}
+			self[CONTENT_CONTAINER]
+				.canDrag(true)
+				.restrictVerticalDrag(isHorizontal)
+				.restrictHorizontalDrag(!isHorizontal)
+				.scrollOnDrag(true);
+
 			self[setExtent]();
 			self.refresh();
 		}
@@ -1181,6 +1183,8 @@ Object.assign(VirtualList.prototype, {
 		else {
 			self[showEmptyContentMessage]();
 		}
+
+		return self;
 	},
 
 	isFocusable: methodBoolean({

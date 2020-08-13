@@ -454,35 +454,38 @@ export default (Base) => {
 				let transform = '';
 
 				const setScrollPosition = (scrollOrigin, dragPosition, start, end) => {
-					const isOverStart = self[POSITION][dragPosition] > self[DRAG_BOUNDS][start];
-					const isOverEnd = self[POSITION][dragPosition] < self[DRAG_BOUNDS][end];
+					const position = self[POSITION][dragPosition];
+					const startPosition = self[DRAG_BOUNDS][start];
+					const endPosition = self[DRAG_BOUNDS][end];
+					const isOverStart = position > startPosition;
+					const isOverEnd = position < endPosition;
 					let scrollOffset = 0;
 
 					if (isOverStart) {
-						self[TRANSFORM_OFFSET][dragPosition] = self[POSITION][dragPosition];
+						self[TRANSFORM_OFFSET][dragPosition] = position;
 					}
 					else if (isOverEnd) {
-						self[TRANSFORM_OFFSET][dragPosition] = self[POSITION][dragPosition] - self[DRAG_BOUNDS][end];
-						scrollOffset = Math.round(-self[DRAG_BOUNDS][end]);
+						self[TRANSFORM_OFFSET][dragPosition] = position - endPosition;
+						scrollOffset = Math.round(-endPosition);
 					}
 					else {
 						self[TRANSFORM_OFFSET][dragPosition] = 0;
-						scrollOffset = -self[POSITION][dragPosition];
+						scrollOffset = -position;
 					}
 
 					self.container()[scrollOrigin] = scrollOffset;
 				};
 
-				self[POSITION].x = x;
-				self[POSITION].y = y;
-
 				if (self.restrictHorizontalDrag()) {
-					self[POSITION].x = clamp(self[POSITION].x, self[DRAG_BOUNDS].left, self[DRAG_BOUNDS].right);
+					x = clamp(x, self[DRAG_BOUNDS].left, self[DRAG_BOUNDS].right);
 				}
 
 				if (self.restrictVerticalDrag()) {
-					self[POSITION].y = clamp(self[POSITION].y, self[DRAG_BOUNDS].top, self[DRAG_BOUNDS].bottom);
+					y = clamp(y, self[DRAG_BOUNDS].top, self[DRAG_BOUNDS].bottom);
 				}
+
+				self[POSITION].x = x;
+				self[POSITION].y = y;
 
 				if (!self.isRemoved) {
 					if (self.scrollOnDrag()) {
