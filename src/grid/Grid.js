@@ -53,6 +53,7 @@ const setColumns = Symbol();
 const toggleColumnHidden = Symbol();
 const updateFooter = Symbol();
 const whenDoneRendering = Symbol();
+const preProcessRow = Symbol();
 const preProcessCells = Symbol();
 const removeRow = Symbol();
 const eachChild = Symbol();
@@ -237,6 +238,16 @@ export default class Grid extends Control {
 		else {
 			callback();
 		}
+	}
+
+	[preProcessRow](rowData) {
+		if ('id' in rowData && !isString(rowData.id)) {
+			console.warn('Grid row property id should be a string.');
+		}
+
+		this[preProcessCells](rowData);
+
+		rowData.isSelected = false;
 	}
 
 	/**
@@ -969,13 +980,7 @@ export default class Grid extends Control {
 		const self = this;
 
 		if (rowData) {
-			if ('id' in rowData && !isString(rowData.id)) {
-				console.warn('Grid row property id should be a string.');
-			}
-
-			self[preProcessCells](rowData);
-
-			rowData.isSelected = false;
+			self[preProcessRow](rowData);
 
 			self[ROWS].push(rowData);
 
@@ -1037,26 +1042,35 @@ export default class Grid extends Control {
 	rows(newRows) {
 		const self = this;
 
-		let rowIndex;
-
 		if (newRows) {
-			newRows.forEach((newRow) => {
-				if (self.getRow((row) => row.id === newRow.id)) {
-					self.updateRowData(newRow.id, newRow);
-				}
-				else {
-					self.addRow(newRow);
-				}
-			});
+			if (self[ROWS].length !== 0) {
+				newRows.forEach((newRow) => {
+					if (self.getRow((row) => row.id === newRow.id)) {
+						self.updateRowData(newRow.id, newRow);
+					}
+					else {
+						self.addRow(newRow);
+					}
+				});
 
-			for (rowIndex = 0; rowIndex < self[ROWS].length; rowIndex++) {
-				if (!newRows.find((row) => row.id === self[ROWS][rowIndex].id)) {
-					self.selectRow(self[ROWS][rowIndex].id, false, {
-						ctrlKey: true
-					}, true);
-					self[removeRow](rowIndex);
-					rowIndex--;
+				for (let rowIndex = 0; rowIndex < self[ROWS].length; rowIndex++) {
+					if (!newRows.find((row) => row.id === self[ROWS][rowIndex].id)) {
+						self.selectRow(self[ROWS][rowIndex].id, false, {
+							ctrlKey: true
+						}, true);
+						self[removeRow](rowIndex);
+						rowIndex--;
+					}
 				}
+			}
+			else {
+				newRows.forEach((newRow) => {
+					self[preProcessRow](newRow);
+				});
+
+				self[ROWS] = self[ROWS].concat(newRows);
+
+				self[group]();
 			}
 
 			return self;
