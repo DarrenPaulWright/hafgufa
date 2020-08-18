@@ -2,12 +2,24 @@
 	"name": "hafgufa",
 	"version": "0.15.9",
 	"description": "A javascript ES6+ Frameworkless UI library.",
+	"keywords": [
+		"UI",
+		"UX"
+	],
+	"license": "MIT",
 	"author": {
 		"name": "Darren Paul Wright",
 		"email": "Darren@DarrenPaulWright.com",
 		"url": "https://www.darrenpaulwright.com"
 	},
-	"license": "MIT",
+	"homepage": "https://github.com/DarrenPaulWright/hafgufa#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/DarrenPaulWright/hafgufa.git"
+	},
+	"bugs": {
+		"url": "https://github.com/DarrenPaulWright/hafgufa/issues"
+	},
 	"main": "index.js",
 	"files": [
 		"src",
@@ -24,38 +36,26 @@
 	"browserslist": [
 		"defaults"
 	],
+	"engines": {
+		"node": "9.5.0"
+	},
 	"scripts": {
 		"test": "karma start --single-run",
 		"test-watch": "karma start",
 		"bench": "karma start karma.bench.conf.js",
 		"start": "webpack-dev-server --open --config webpack.dev.js",
 		"build": "webpack --config webpack.prod.js",
-		"preversion": "npm test && npm run docs && git add --all && git diff --staged --quiet || git commit -m \"Updating docs\"",
+		"preversion": "npm test && npm run docs && git add --all && git diff HEAD --quiet || git commit -m \"Updating docs\"",
 		"postversion": "npm publish",
 		"postpublish": "git push --follow-tags",
 		"pre-clean": "rm -rf node_modules && del /f package-lock.json",
-		"clean": "npm run pre-clean && npm install",
-		"update": "ncu -u && npm install",
+		"clean": "npm run pre-clean && npm install && npm audit fix",
+		"update": "ncu -u && git diff --quiet || npm install && npm audit fix",
 		"update-clean": "npm run pre-clean && npm run update",
-		"update-commit": "npm run update && npm test && git add --all && git diff --staged --quiet || git commit -m \"Updating dependencies\"",
-		"update-patch": "npm run update-commit && npm version patch",
+		"update-commit": "npm run update && npm test && git add --all && git diff HEAD --quiet || git commit -m \"Updating dependencies\"",
+		"update-patch": "npm run update && npm test && git add --all && git diff HEAD --quiet || git commit -m \"Updating dependencies\" && npm version patch",
 		"docs": ""
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/DarrenPaulWright/hafgufa.git"
-	},
-	"keywords": [
-		"UI",
-		"UX"
-	],
-	"engines": {
-		"node": "9.5.0"
-	},
-	"bugs": {
-		"url": "https://github.com/DarrenPaulWright/object-agent/issues"
-	},
-	"homepage": "https://github.com/DarrenPaulWright/object-agent#readme",
 	"dependencies": {
 		"async-agent": "^0.5.4",
 		"axios": "^0.19.2",
