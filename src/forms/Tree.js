@@ -352,10 +352,11 @@ Object.assign(Tree.prototype, {
 	 */
 	fitHeightToContents() {
 		const self = this;
+		const headingHeight = (self.title() === '') ? 0 : self.getHeading().borderHeight();
 
 		self[VIRTUAL_LIST].maxHeight(self.maxHeight())
 			.fitHeightToContents();
-		self.height(self[VIRTUAL_LIST].borderHeight());
+		self.height(self[VIRTUAL_LIST].borderHeight() + headingHeight);
 		self[VIRTUAL_LIST].refresh();
 
 		return self;
