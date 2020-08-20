@@ -9,6 +9,7 @@ import TextInput from '../forms/TextInput.js';
 import { NONE_ICON, SORT_AMOUNT_ASC_ICON, SORT_AMOUNT_DESC_ICON } from '../icons.js';
 import ContextMenuMixin from '../mixins/ContextMenuMixin.js';
 import { CLICK_EVENT, MARGIN_LEFT } from '../utility/domConstants.js';
+import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import {
 	COLUMN_TYPES,
@@ -104,7 +105,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 
 		self[FILTER_CONTROL] = new Picker({
 			container: self.element,
-			defaultButtonText: 'Filter',
+			defaultButtonText: locale.get('filter'),
 			onChange(newValue) {
 				self[applyOrFilter](newValue.map((item) => item.id));
 			}
@@ -128,7 +129,8 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 				if (!self[IGNORE_EVENTS]) {
 					self[applyOrFilter](newValue);
 				}
-			}
+			},
+			placeholder: locale.get('filter')
 		});
 		self.updateFilter();
 		self[setFilterValue]();
