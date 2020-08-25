@@ -346,7 +346,7 @@ export default class Grid extends Control {
 				cell.classes = column.classes;
 			}
 			else if (isFunction(column.classes)) {
-				cell.classes = column.classes(cell.text);
+				cell.classes = column.classes(cell.text, rowData, column);
 			}
 		});
 	}
@@ -1043,35 +1043,15 @@ export default class Grid extends Control {
 		const self = this;
 
 		if (newRows) {
-			if (self[ROWS].length !== 0) {
-				newRows.forEach((newRow) => {
-					if (self.getRow((row) => row.id === newRow.id)) {
-						self.updateRowData(newRow.id, newRow);
-					}
-					else {
-						self.addRow(newRow);
-					}
-				});
+			newRows.forEach((newRow) => {
+				self[preProcessRow](newRow);
+			});
 
-				for (let rowIndex = 0; rowIndex < self[ROWS].length; rowIndex++) {
-					if (!newRows.find((row) => row.id === self[ROWS][rowIndex].id)) {
-						self.selectRow(self[ROWS][rowIndex].id, false, {
-							ctrlKey: true
-						}, true);
-						self[removeRow](rowIndex);
-						rowIndex--;
-					}
-				}
-			}
-			else {
-				newRows.forEach((newRow) => {
-					self[preProcessRow](newRow);
-				});
+			self[ROWS].length = 0;
+			self.clearSelected();
+			self[ROWS] = self[ROWS].concat(newRows);
 
-				self[ROWS] = self[ROWS].concat(newRows);
-
-				self[group]();
-			}
+			self[group]();
 
 			return self;
 		}
@@ -1156,6 +1136,8 @@ export default class Grid extends Control {
 		self[ROWS].length = 0;
 		self.clearSelected();
 		self[group]();
+
+		return self;
 	}
 
 	/**
