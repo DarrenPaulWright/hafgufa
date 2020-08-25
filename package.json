@@ -58,7 +58,6 @@
 	},
 	"dependencies": {
 		"async-agent": "^0.5.5",
-		"axios": "^0.19.2",
 		"bowser": "^2.10.0",
 		"d3": "^5.16.0",
 		"date-fns": "^2.15.0",
