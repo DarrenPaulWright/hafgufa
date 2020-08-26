@@ -114,12 +114,10 @@ export default class Tree extends FormControl {
 			.addClass('heading')
 			.isEnabled(heading.isEnabled(), true);
 
-		if (heading.onSelect()) {
-			heading.onSelect().discardAll();
-			heading.onSelect(function() {
-				self[toggleSelected](this);
-			});
-		}
+		heading.onSelect().discardAll();
+		heading.onSelect(function() {
+			self[toggleSelected](this);
+		});
 
 		applySettings(heading, branchData);
 

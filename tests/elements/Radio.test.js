@@ -9,7 +9,7 @@ describe('Radio', () => {
 		mainCssClass: 'radio'
 	});
 
-	controlTests.run(['width', 'height']);
+	controlTests.run(['width', 'height', 'stopPropagation']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

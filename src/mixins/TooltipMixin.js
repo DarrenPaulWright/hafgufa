@@ -42,11 +42,16 @@ export default (Base) => {
 					self[TOOLTIP].resize(true);
 				}
 			}, 50);
+
 			self[removeTooltip] = () => {
 				if (self[TOOLTIP] && !self.isDragging) {
 					self[TOOLTIP].remove();
 				}
 			};
+
+			self.onRemove(() => {
+				self[removeTooltip]();
+			});
 		}
 	}
 

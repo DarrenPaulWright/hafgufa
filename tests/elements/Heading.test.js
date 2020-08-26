@@ -301,6 +301,54 @@ describe('Heading', () => {
 
 			assert.is(testUtil.first('.heading input[type=checkbox]').checked, true);
 		});
+
+		it('should set isSelected to true when clicked', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelected: false
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading'));
+
+			assert.is(testUtil.control.isSelected(), true);
+		});
+
+		it('should set isSelected to true when the checkbox is clicked', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelected: false
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testUtil.control.isSelected(), true);
+		});
+
+		it('should set isSelected to false when clicked', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelected: true
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading'));
+
+			assert.is(testUtil.control.isSelected(), false);
+		});
+
+		it('should set isSelected to false when the checkbox is clicked', () => {
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelected: true
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testUtil.control.isSelected(), false);
+		});
 	});
 
 	describe('.isExpandable', () => {
@@ -539,14 +587,61 @@ describe('Heading', () => {
 			testUtil.control = new Heading({
 				container: testUtil.container,
 				isSelectable: true,
+
 				onSelect() {
-					testValue = 2;
+					testValue++;
 				}
 			});
 
 			testUtil.simulateClick(testUtil.first('.heading'));
 
 			assert.is(testValue, 2);
+		});
+
+		it('should execute the onSelect callback when the checkbox is clicked', () => {
+			let testValue = 1;
+
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelectable: true,
+				onSelect() {
+					testValue++;
+				}
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testValue, 2);
+		});
+
+		it('should execute the onSelect callback after the onSelect callback is changed and the checkbox is clicked', () => {
+			let testValue = 1;
+
+			testUtil.control = new Heading({
+				container: testUtil.container,
+				showCheckbox: true,
+				isSelectable: true,
+				onSelect() {
+					testValue++;
+				}
+			});
+
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testValue, 2);
+
+			testUtil.control.onSelect().discardAll();
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testValue, 2);
+
+			testUtil.control.onSelect(() => {
+				testValue++;
+			});
+			testUtil.simulateClick(testUtil.first('.heading .checkbox'));
+
+			assert.is(testValue, 3);
 		});
 	});
 

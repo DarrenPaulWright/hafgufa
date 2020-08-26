@@ -24,7 +24,8 @@ const CONTAINER = Symbol();
 export default class Radio extends FocusMixin(Label) {
 	constructor(settings = {}) {
 		super(setDefaults({
-			type: controlTypes.RADIO
+			type: controlTypes.RADIO,
+			stopPropagation: true
 		}, settings, {
 			FocusMixin: assign(settings.FocusMixin, {
 				mainControl: new Input()

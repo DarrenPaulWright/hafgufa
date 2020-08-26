@@ -95,6 +95,8 @@ export default class GroupedButtons extends FormControl {
 		self
 			.onRemove(() => {
 				self[MULTI_ITEM_FOCUS].remove();
+				self[BUTTON_RECYCLER].remove();
+				self[SHADOW_RECYCLER].remove();
 			})
 			.onResize(() => {
 				const CURRENT_ORIENTATION = (self.orientation() === ORIENTATION.VERTICAL) ? WIDTH : HEIGHT;

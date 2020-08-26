@@ -52,6 +52,30 @@ describe('Picker', () => {
 		}
 	});
 
+	describe('.value', () => {
+		it('should set the value when an item is clicked in the menu', () => {
+			let testValue = 0;
+
+			testUtil.control = new Picker({
+				container: testUtil.container,
+				options: {
+					isMultiSelect: true,
+					children: clone(testOptions)
+				},
+				onChange() {
+					testValue++;
+				}
+			});
+
+			testUtil.simulateClick(testUtil.first('.popup-button'));
+			testUtil.simulateClick(testUtil.nth('.popup .heading .checkbox', 2, true));
+
+			assert.is(testUtil.control.value().length, 1);
+			assert.is(testUtil.control.value()[0].id, '3');
+			assert.is(testValue, 1);
+		});
+	});
+
 	describe('.showAll', () => {
 		it('should render three buttons if three options are set and showAll is true', () => {
 			testUtil.control = new Picker({

@@ -179,6 +179,25 @@ describe('Tree', () => {
 			assert.is(testUtil.control.value()[0], '1');
 		});
 
+		it('should select an item if a checkbox is clicked', () => {
+			let testValue = 0;
+
+			testUtil.control = new Tree({
+				container: testUtil.container,
+				isMultiSelect: true,
+				branches,
+				onChange(value) {
+					assert.equal(value, ['2']);
+					testValue++;
+				}
+			});
+
+			testUtil.simulateClick(testUtil.nth('.heading .checkbox', 1));
+
+			assert.equal(testUtil.control.value(), ['2']);
+			assert.is(testValue, 1);
+		});
+
 		it('should NOT have a value if a branch is clicked twice', () => {
 			testUtil.control = new Tree({
 				container: testUtil.container,

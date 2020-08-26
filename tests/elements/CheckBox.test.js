@@ -9,7 +9,7 @@ describe('CheckBox', () => {
 		mainCssClass: 'checkbox'
 	});
 
-	controlTests.run(['width', 'height']);
+	controlTests.run(['width', 'height', 'stopPropagation']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

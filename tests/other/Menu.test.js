@@ -127,10 +127,14 @@ describe('Menu', () => {
 		});
 
 		it('should NOT remove itself if settings.keepMenuOpen is true and a menu item is clicked', () => {
+			let testValue = 0;
+
 			testUtil.control = new Menu({
 				onSelect() {
+					testValue++;
 				},
 				keepMenuOpen: true,
+				isMultiSelect: true,
 				menuItems: [{
 					id: 'test',
 					title: 'test'
@@ -143,9 +147,21 @@ describe('Menu', () => {
 				}]
 			});
 
-			testUtil.simulateClick(testUtil.nth('.heading', 1, true));
+			testUtil.simulateClick(testUtil.nth('.heading .checkbox', 1, true));
 
 			assert.is(testUtil.count('.menu', true), 1);
+			assert.is(testValue, 1);
+
+			testUtil.simulateClick(testUtil.nth('.heading .checkbox', 0, true));
+
+			assert.is(testUtil.count('.menu', true), 1);
+			assert.is(testValue, 2);
+
+			testUtil.control.resize(true);
+			testUtil.simulateClick(testUtil.nth('.heading .checkbox', 2, true));
+
+			assert.is(testUtil.count('.menu', true), 1);
+			assert.is(testValue, 3);
 		});
 
 		it('should NOT remove itself if menuItem.keepMenuOpen is true and a menu item is clicked', () => {
