@@ -1523,7 +1523,7 @@ Object.assign(Grid.prototype, {
 	onMultiSelect: methodFunction({
 		set: updateSelectState
 	}),
-	itemsLabel: methodString(),
+	itemsLabel: methodString({ init: 'items' }),
 	hideFooter: methodBoolean({
 		set: updateFooter
 	}),
