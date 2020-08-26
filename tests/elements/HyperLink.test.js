@@ -8,5 +8,5 @@ describe('Hyperlink', () => {
 		focusableElement: 'HyperLink'
 	});
 
-	controlTests.run(['width', 'height']);
+	controlTests.run(['width', 'height', 'stopPropagation']);
 });

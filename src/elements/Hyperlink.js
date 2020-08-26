@@ -19,7 +19,8 @@ export default class Hyperlink extends OnClickMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.HYPERLINK,
-			element: 'a'
+			element: 'a',
+			stopPropagation: true
 		}, settings));
 
 		applySettings(this, settings);
