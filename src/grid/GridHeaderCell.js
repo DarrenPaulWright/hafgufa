@@ -106,6 +106,7 @@ export default class GridHeaderCell extends ContextMenuMixin(Control) {
 		self[FILTER_CONTROL] = new Picker({
 			container: self.element,
 			defaultButtonText: locale.get('filter'),
+			canSelectAll: true,
 			onChange(newValue) {
 				self[applyOrFilter](newValue.map((item) => item.id));
 			}
