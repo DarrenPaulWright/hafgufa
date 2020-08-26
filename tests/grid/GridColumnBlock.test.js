@@ -209,8 +209,6 @@ describe('GridColumnBlock', () => {
 		});
 	});
 
-	// describe('ScrollToRowIndex');
-
 	describe('IsFiltered', () => {
 		testUtil.testMethod({
 			methodName: 'isFiltered',
@@ -218,6 +216,4 @@ describe('GridColumnBlock', () => {
 			testValue: true
 		});
 	});
-
-	// describe('RefreshLayout');
 });

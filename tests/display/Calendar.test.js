@@ -1,3 +1,4 @@
+import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { Calendar } from '../../index.js';
 import ControlTests from '../ControlTests.js';
@@ -47,8 +48,8 @@ describe('Calendar', () => {
 			let initialLength;
 
 			testUtil.control = new Calendar({
-					container: testUtil.container
-				});
+				container: testUtil.container
+			});
 
 			testUtil.control.month(0);
 			initialLength = testUtil.count('.different-month');
@@ -96,7 +97,7 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 11
-				});
+			});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
@@ -107,7 +108,7 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 0
-				});
+			});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
@@ -118,8 +119,8 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 11,
-					year: 2000
-				});
+				year: 2000
+			});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .next-button'));
 
@@ -130,8 +131,8 @@ describe('Calendar', () => {
 			testUtil.control = new Calendar({
 				container: testUtil.container,
 				month: 0,
-					year: 2000
-				});
+				year: 2000
+			});
 
 			testUtil.simulateClick(testUtil.first('.calendar-header .prev-button'));
 
@@ -222,8 +223,8 @@ describe('Calendar', () => {
 			testDate.setFullYear(testDate.getFullYear() + 1);
 
 			testUtil.control = new Calendar({
-					container: testUtil.container
-				})
+				container: testUtil.container
+			})
 				.selectedDate(testDate);
 
 			assert.is(testUtil.count('.day-button.selected'), 0);
@@ -311,7 +312,43 @@ describe('Calendar', () => {
 			assert.is(testUtil.control.yearRangePast(), 0);
 		});
 
-		it('should change the year to whatever past year is selected in the year picker');
+		it('should have the correct number of range years in the year picker when yearRangePast is set', () => {
+			testUtil.control = new Calendar({
+				container: testUtil.container,
+				yearRangePast: 8,
+				yearRangeFuture: 0
+			});
+
+			testUtil.last('.grouped-buttons .form-button').focus();
+			testUtil.last('.grouped-buttons .form-button').click();
+
+			return wait(100)
+				.then(() => {
+					assert.is(testUtil.count('.popup', true), 1);
+					assert.is(testUtil.count('.popup .heading', true), 9);
+					assert.is(testUtil.last('.popup .heading', true).innerText, testUtil.control.year() - 8 + '');
+				});
+		});
+
+		it('should change the year to whatever past year is selected in the year picker', () => {
+			testUtil.control = new Calendar({
+				container: testUtil.container,
+				yearRangePast: 8,
+				yearRangeFuture: 0
+			});
+
+			const year = testUtil.control.year();
+
+			testUtil.last('.grouped-buttons .form-button').focus();
+			testUtil.last('.grouped-buttons .form-button').click();
+
+			return wait(100)
+				.then(() => {
+					testUtil.simulateClick(testUtil.nth('.popup .heading', 1, true));
+
+					assert.is(testUtil.control.year(), year - 1);
+				});
+		});
 	});
 
 	describe('YearRangeFuture', () => {
@@ -331,37 +368,41 @@ describe('Calendar', () => {
 		});
 
 		it('should have the correct number of range years in the year picker when yearRangeFuture is set', () => {
-			// testUtil.control = new Calendar({
-			// 	container: testUtil.container,
-			// 	yearRangeFuture: 20
-			// });
-			//
-			// testUtil.last('.grouped-buttons .form-button').focus();
-			// testUtil.last('.grouped-buttons .form-button').click();
-			//
-			// return wait(1000)
-			// 	.then(() => {
-			// 		assert.is(testUtil.count('.popup'), 1);
-			// 		assert.is(testUtil.count('.popup .form-button'), testUtil.control.yearRangePast() + 21);
-			// 	});
+			testUtil.control = new Calendar({
+				container: testUtil.container,
+				yearRangePast: 0,
+				yearRangeFuture: 10
+			});
+
+			testUtil.last('.grouped-buttons .form-button').focus();
+			testUtil.last('.grouped-buttons .form-button').click();
+
+			return wait(100)
+				.then(() => {
+					assert.is(testUtil.count('.popup', true), 1);
+					assert.is(testUtil.count('.popup .heading', true), 11);
+					assert.is(testUtil.first('.popup .heading', true).innerText, testUtil.control.year() + 10 + '');
+				});
 		});
 
-		it('should set the last year in the year picker to the current year plus yearRangeFuture', () => {
-			// testUtil.control = new Calendar({
-			// 	container: testUtil.container,
-			// 	yearRangeFuture: 20
-			// });
-			//
-			// testUtil.last('.grouped-buttons').click();
-			//
-			// return wait(1000)
-			// 	.then(() => {
-			// 		assert.is(testUtil.last('.popup .form-button span').text(), testUtil.control.year() + 20);
-			// 	});
-		});
+		it('should change the year to whatever future year is selected in the year picker', () => {
+			testUtil.control = new Calendar({
+				container: testUtil.container,
+				yearRangePast: 0,
+				yearRangeFuture: 10
+			});
 
-		it('should change the year to whatever future year is selected in the year picker');
+			const year = testUtil.control.year();
+
+			testUtil.last('.grouped-buttons .form-button').focus();
+			testUtil.last('.grouped-buttons .form-button').click();
+
+			return wait(100)
+				.then(() => {
+					testUtil.simulateClick(testUtil.nth('.popup .heading', 9, true));
+
+					assert.is(testUtil.control.year(), year + 1);
+				});
+		});
 	});
-
-	it('should have a "today" class on the appropriate month');
 });

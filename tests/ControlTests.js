@@ -393,7 +393,6 @@ export default class ControlTests {
 
 		describe('Control minHeight', () => {
 			const TEST_HEIGHT = '200px';
-			// const TEST_HEIGHT = new CssSize('200px');
 
 			it('shouldnt have a minHeight value if no minHeight was set', () => {
 				self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
