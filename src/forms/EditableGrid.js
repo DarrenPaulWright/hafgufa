@@ -77,8 +77,7 @@ export default class EditableGrid extends FormControl {
 			height: settings.height === AUTO ? AUTO : '14rem',
 			onSelect(id) {
 				self[showDialog](id);
-			},
-			hideFooter: true
+			}
 		});
 
 		applySettings(self, settings, [], ['value']);
@@ -456,6 +455,7 @@ Object.assign(EditableGrid.prototype, {
 				self[ADD_NEW_BUTTON].remove();
 				self[ADD_NEW_BUTTON] = null;
 			}
+			self[GRID].hideFooter(!showAddButton);
 
 			self.resize();
 		}
