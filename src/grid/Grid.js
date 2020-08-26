@@ -3,7 +3,7 @@ import { format as formatDate, formatRelative, isValid, parseISO } from 'date-fn
 import { Collection, compare, List } from 'hord';
 import { clone, deepEqual, erase, forOwn, get } from 'object-agent';
 import shortid from 'shortid';
-import { enforceNumber, isFunction } from 'type-enforcer';
+import { enforceNumber, isFunction, isObject } from 'type-enforcer';
 import {
 	applySettings,
 	AUTO,
@@ -381,6 +381,9 @@ export default class Grid extends Control {
 				}
 			}
 		}
+		else if (isObject(item)) {
+			callback(item);
+		}
 	}
 
 	/**
@@ -423,8 +426,8 @@ export default class Grid extends Control {
 			if (group.groupId === localGroup.groupId) {
 				localGroup.isSelected = isSelected;
 
-				self[eachChild](localGroup, (localChild) => {
-					self.selectRow(localChild.id, isSelected, {
+				self[eachChild](localGroup, (row) => {
+					self.selectRow(row.id, isSelected, {
 						ctrlKey: true
 					}, true);
 				});
@@ -450,8 +453,8 @@ export default class Grid extends Control {
 		self[eachGroup](self[GROUPED_ROWS], (localGroup) => {
 			localGroup.isSelected = isSelected;
 
-			self[eachChild](localGroup, (localChild) => {
-				self.selectRow(localChild.id, isSelected, {
+			self[eachChild](localGroup, (row) => {
+				self.selectRow(row.id, isSelected, {
 					ctrlKey: true
 				}, true);
 			});
@@ -876,9 +879,9 @@ export default class Grid extends Control {
 				});
 			}
 			else {
-				self[eachChild](self[GROUPED_ROWS], (rowCellData) => {
-					if (!output.includes(rowCellData.cells[columnIndex].text)) {
-						output.push(rowCellData.cells[columnIndex].text);
+				self[eachChild](self[GROUPED_ROWS], (row) => {
+					if (!output.includes(row.cells[columnIndex].text)) {
+						output.push(row.cells[columnIndex].text);
 					}
 				});
 
@@ -892,17 +895,17 @@ export default class Grid extends Control {
 		};
 
 		const buildAutoCompleteFilters = () => {
-			self[eachChild](self[FILTERED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnIndex].text) && rowCellData.cells[columnIndex].text !== '') {
-					output.push(rowCellData.cells[columnIndex].text);
+			self[eachChild](self[GROUPED_ROWS], (row) => {
+				if (!output.includes(row.cells[columnIndex].text) && row.cells[columnIndex].text !== '') {
+					output.push(row.cells[columnIndex].text);
 				}
 			});
 		};
 
 		const buildDateFilters = () => {
-			self[eachChild](self[FILTERED_ROWS], (rowCellData) => {
-				if (!output.includes(rowCellData.cells[columnIndex].text) && rowCellData.cells[columnIndex].text !== '') {
-					output.push(rowCellData.cells[columnIndex].text);
+			self[eachChild](self[GROUPED_ROWS], (row) => {
+				if (!output.includes(row.cells[columnIndex].text) && row.cells[columnIndex].text !== '') {
+					output.push(row.cells[columnIndex].text);
 				}
 			});
 
@@ -1156,8 +1159,8 @@ export default class Grid extends Control {
 
 		self[SELECTED_ROWS] = [];
 		if (self[FILTERED_ROWS]) {
-			self[eachChild](self[FILTERED_ROWS], (localChild) => {
-				localChild.isSelected = false;
+			self[eachChild](self[FILTERED_ROWS], (row) => {
+				row.isSelected = false;
 			});
 		}
 		self[sort]();
