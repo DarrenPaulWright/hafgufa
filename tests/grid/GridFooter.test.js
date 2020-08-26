@@ -40,11 +40,12 @@ describe('GridFooter', () => {
 		it('should have a string "9 things" when countSuffix is set to "things" and count is 9', () => {
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
+				filterCount: 7,
 				count: 9,
 				countSuffix: 'things'
 			});
 
-			assert.is(testUtil.first('.grid-footer-right').textContent, '9 things');
+			assert.is(testUtil.first('.grid-footer-right').textContent, '7 of 9 things');
 		});
 	});
 
@@ -67,6 +68,7 @@ describe('GridFooter', () => {
 		it('should have a string "9 items" when count is set to 9', () => {
 			testUtil.control = new GridFooter({
 				container: testUtil.container,
+				filterCount: 9,
 				count: 9
 			});
 

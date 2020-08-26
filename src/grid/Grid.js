@@ -735,6 +735,10 @@ export default class Grid extends Control {
 			self[setColumns]();
 		}
 
+		if (self[FOOTER]) {
+			self[FOOTER].filterCount(self[getChildrenCount](self[FILTERED_ROWS])[0]);
+		}
+
 		self[sort]();
 		self[updateFooter]();
 	}

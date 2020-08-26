@@ -73,6 +73,10 @@ export default class GridFooter extends Control {
 			displayString += SPACER;
 		}
 
+		if (self.filterCount() !== self.count()) {
+			displayString += self.filterCount() + ' of ';
+		}
+
 		displayString += self.count() + ' ' + self.countSuffix();
 
 		self[FOOTER_RIGHT].content(displayString);
@@ -124,7 +128,9 @@ Object.assign(GridFooter.prototype, {
 	 * @method countSuffix
 	 * @memberOf GridFooter
 	 * @instance
+	 *
 	 * @param {string} [countSuffix]
+	 *
 	 * @returns {string|this}
 	 */
 	countSuffix: methodString({
@@ -138,10 +144,26 @@ Object.assign(GridFooter.prototype, {
 	 * @method count
 	 * @memberOf GridFooter
 	 * @instance
+	 *
 	 * @param {string} [count]
-	 * @returns {string|this}
+	 *
+	 * @returns {number.int|this}
 	 */
 	count: methodInteger({
+		init: 0,
+		set: setCountString
+	}),
+
+	/**
+	 * @method filterCount
+	 * @memberOf GridFooter
+	 * @instance
+	 *
+	 * @param {string} [count]
+	 *
+	 * @returns {number.int|this}
+	 */
+	filterCount: methodInteger({
 		init: 0,
 		set: setCountString
 	}),
