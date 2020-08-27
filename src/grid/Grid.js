@@ -1526,7 +1526,14 @@ Object.assign(Grid.prototype, {
 	onMultiSelect: methodFunction({
 		set: updateSelectState
 	}),
-	itemsLabel: methodString({ init: 'items' }),
+	itemsLabel: methodString({
+		init: 'items',
+		set(itemsLabel) {
+			if (this[FOOTER]) {
+				this[FOOTER].countSuffix(itemsLabel);
+			}
+		}
+	}),
 	hideFooter: methodBoolean({
 		set: updateFooter
 	}),
