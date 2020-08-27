@@ -473,6 +473,12 @@ Object.assign(EditableGrid.prototype, {
 		init: '34rem'
 	}),
 
+	itemsLabel: methodString({
+		set(itemsLabel) {
+			this[GRID].itemsLabel(itemsLabel);
+		}
+	}),
+
 	onAdd: methodFunction(),
 
 	onRowChange: methodFunction(),
