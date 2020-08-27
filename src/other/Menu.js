@@ -67,7 +67,6 @@ const TREE_ID = 'menuTreeId';
 const FILTER_ID = 'menuFilterId';
 const SELECTED_ONLY_ID = 'menuSelectedOnlyId';
 const SELECT_ALL_ID = 'selectAllId';
-const SELECT_ALL_VALUE = 'selectAll';
 
 const buildHeader = Symbol();
 const setRowCount = Symbol();
@@ -303,7 +302,7 @@ export default class Menu extends Popup {
 			.value(menuItems.map((item) => item.isSelected ? item.id : null).filter(Boolean));
 
 		if (self.canSelectAll()) {
-			self.get(SELECT_ALL_ID).value(self[ARE_ALL_SELECTED] ? SELECT_ALL_VALUE : '');
+			self.get(SELECT_ALL_ID).isChecked(self[ARE_ALL_SELECTED]);
 		}
 
 		self.resize(true);
