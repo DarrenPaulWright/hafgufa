@@ -15,8 +15,7 @@ import {
 } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes.js';
 import Div from '../elements/Div.js';
-import { CONTENT_CONTAINER } from '../mixins/ControlHeadingMixin.js';
-import MergeContentContainerMixin from '../mixins/MergeContentContainerMixin.js';
+import MergeContentContainerMixin, { CONTENT_CONTAINER } from '../mixins/MergeContentContainerMixin.js';
 import {
 	ABSOLUTE,
 	BLOCK,

@@ -1,4 +1,4 @@
-import { CONTENT_CONTAINER } from './ControlHeadingMixin.js';
+export const CONTENT_CONTAINER = Symbol();
 
 /**
  * @mixin MergeContentContainerMixin

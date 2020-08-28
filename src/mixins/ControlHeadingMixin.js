@@ -12,13 +12,13 @@ import {
 import Div from '../elements/Div.js';
 import Heading, { HEADING_LEVELS } from '../elements/Heading.js';
 import { DISPLAY } from '../utility/domConstants.js';
+import { CONTENT_CONTAINER } from './MergeContentContainerMixin.js';
 
 const SINGLE_LINE_CLASS = 'single-line';
 const CAN_COLLAPSE_CLASS = 'can-collapse';
 const COLLAPSED_CLASS = 'collapsed';
 
 const HEADING = Symbol();
-export const CONTENT_CONTAINER = Symbol();
 
 /**
  * Provides a Heading control and a content container.

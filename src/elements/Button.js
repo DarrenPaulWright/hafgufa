@@ -4,6 +4,7 @@ import controlTypes from '../controlTypes.js';
 import FocusMixin from '../mixins/FocusMixin.js';
 import MouseMixin from '../mixins/MouseMixin.js';
 import OnClickMixin from '../mixins/OnClickMixin.js';
+import TooltipMixin from '../mixins/TooltipMixin.js';
 import { INPUT_TYPE } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './Button.less';
@@ -36,7 +37,7 @@ const ICON_POSITIONS = new Enum({
  *
  * @param {object} settings
  */
-export default class Button extends MouseMixin(FocusMixin(OnClickMixin(Control))) {
+export default class Button extends TooltipMixin(MouseMixin(FocusMixin(OnClickMixin(Control)))) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.BUTTON,
