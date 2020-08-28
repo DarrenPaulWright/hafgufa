@@ -10,13 +10,13 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridCell', () => {
 	const testUtil = new TestUtil(GridCell);
-	const controlBaseTests = new ControlTests(GridCell, testUtil);
+	const controlTests = new ControlTests(GridCell, testUtil);
 
 	beforeEach(() => {
 		testUtil.container.classList.add('grid');
 	});
 
-	controlBaseTests.run(['isEnabled']);
+	controlTests.run(['isEnabled']);
 
 	describe('.rowData', () => {
 		testUtil.testMethod({

@@ -7,9 +7,9 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridColumnBlock', () => {
 	const testUtil = new TestUtil(GridColumnBlock);
-	const controlBaseTests = new ControlTests(GridColumnBlock, testUtil);
+	const controlTests = new ControlTests(GridColumnBlock, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('Columns', () => {
 		testUtil.testMethod({

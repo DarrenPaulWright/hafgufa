@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('Carousel', () => {
 	const testUtil = new TestUtil(Carousel);
-	const controlBaseTests = new ControlTests(Carousel, testUtil);
+	const controlTests = new ControlTests(Carousel, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 });

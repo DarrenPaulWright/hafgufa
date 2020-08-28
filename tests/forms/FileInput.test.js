@@ -4,11 +4,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('FileInput', () => {
 	const testUtil = new TestUtil(FileInput);
-	const controlBaseTests = new ControlTests(FileInput, testUtil, {
+	const controlTests = new ControlTests(FileInput, testUtil, {
 		mainCssClass: 'file-input'
 	});
 
-	controlBaseTests.run(['stopPropagation']);
+	controlTests.run(['stopPropagation']);
 
 	describe('IsMulti', () => {
 		testUtil.testMethod({

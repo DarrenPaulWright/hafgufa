@@ -1,6 +1,5 @@
 import displayValue from 'display-value';
 import keyCodes from 'keycodes';
-import shortid from 'shortid';
 import simulant from 'simulant';
 import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
@@ -18,13 +17,12 @@ export default class TestUtil {
 	constructor(Control, isSvg) {
 		const self = this;
 
-		self.allEvents = [];
+		self._allEvents = [];
 		self[CONSTRUCTOR] = Control;
 		self[addEventListenerOverRides]();
-		self.temp = shortid.generate();
 
 		beforeEach(function() {
-			self.allEvents.length = 0;
+			self._allEvents.length = 0;
 			self[CONTAINER] = isSvg ?
 				document.createElementNS('http://www.w3.org/2000/svg', 'svg') :
 				document.createElement('div');
@@ -32,8 +30,9 @@ export default class TestUtil {
 		});
 
 		afterEach(function() {
-			const controlType = `Test: ${this.currentTest.fullTitle()}\nControl: ${self.control ? self.control.type : 'undefined'}\n`;
-			const eventList = () => self.allEvents
+			const controlType = () => `Test: ${this.currentTest.fullTitle()}\nControl: ${self.control ? self.control.type : 'undefined'}\n`;
+
+			const eventList = () => self._allEvents
 				.map((listener) => {
 					const type = listener.element.getAttribute('type');
 
@@ -50,14 +49,14 @@ export default class TestUtil {
 			}
 
 			if (windowResize.length > 1) {
-				throw new Error(`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType}`);
+				throw new Error(`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType()}`);
 			}
 			windowResize.discardAll();
 
-			if (self.allEvents.length !== 0) {
-				throw new Error(`All events should be removed when a control is removed.\n${controlType}Still has these events:\n${eventList()}\n`);
+			if (self._allEvents.length !== 0) {
+				throw new Error(`All events should be removed when a control is removed.\n${controlType()}Still has these events:\n${eventList()}\n`);
 			}
-			self.allEvents.length = 0;
+			self._allEvents.length = 0;
 
 			self.control = null;
 			document.body.textContent = '';
@@ -67,7 +66,10 @@ export default class TestUtil {
 	[addEventListenerOverRides]() {
 		const self = this;
 		const isEqual = (a, b) => {
-			return a.element === b.element && a.name === b.name && a.handler === b.handler && a.useCapture === b.useCapture;
+			return a.element === b.element &&
+				a.name === b.name &&
+				a.handler === b.handler &&
+				a.useCapture === b.useCapture;
 		};
 
 		if (!Element.prototype._addEventListener) {
@@ -78,19 +80,19 @@ export default class TestUtil {
 
 					this._addEventListener(name, handler, useCapture);
 
-					if (self.allEvents.findIndex((event) => isEqual(event, eventObject)) === -1) {
-						self.allEvents.push(eventObject);
+					if (self._allEvents.findIndex((event) => isEqual(event, eventObject)) === -1) {
+						self._allEvents.push(eventObject);
 					}
 				},
 				_removeEventListener: Element.prototype.removeEventListener,
 				removeEventListener(name, handler, useCapture) {
 					const eventObject = { element: this, name, handler, useCapture };
-					const eventIndex = self.allEvents.findIndex((event) => isEqual(event, eventObject));
+					const eventIndex = self._allEvents.findIndex((event) => isEqual(event, eventObject));
 
 					this._removeEventListener(name, handler, useCapture);
 
 					if (eventIndex !== -1) {
-						self.allEvents.splice(eventIndex, 1);
+						self._allEvents.splice(eventIndex, 1);
 					}
 				}
 			});

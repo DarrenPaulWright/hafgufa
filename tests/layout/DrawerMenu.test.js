@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('DrawerMenu', () => {
 	const testUtil = new TestUtil(DrawerMenu);
-	const controlBaseTests = new ControlTests(DrawerMenu, testUtil);
+	const controlTests = new ControlTests(DrawerMenu, testUtil);
 
-	controlBaseTests.run(['onResize']);
+	controlTests.run(['onResize']);
 });

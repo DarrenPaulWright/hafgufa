@@ -8,7 +8,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridHeaderCell', () => {
 	const testUtil = new TestUtil(GridHeaderCell);
-	const controlBaseTests = new ControlTests(GridHeaderCell, testUtil, {
+	const controlTests = new ControlTests(GridHeaderCell, testUtil, {
 		mainCssClass: 'grid-header-cell'
 	});
 
@@ -17,7 +17,7 @@ describe('GridHeaderCell', () => {
 		testUtil.hitEnter();
 	};
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('Label', () => {
 		testUtil.testMethod({

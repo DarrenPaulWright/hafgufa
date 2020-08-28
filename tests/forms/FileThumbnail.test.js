@@ -5,11 +5,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('FileThumbnail', () => {
 	const testUtil = new TestUtil(FileThumbnail);
-	const controlBaseTests = new ControlTests(FileThumbnail, testUtil, {
+	const controlTests = new ControlTests(FileThumbnail, testUtil, {
 		mainCssClass: 'file-thumbnail'
 	});
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('ImageSource', () => {
 		testUtil.testMethod({

@@ -5,11 +5,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridFooter', () => {
 	const testUtil = new TestUtil(GridFooter);
-	const controlBaseTests = new ControlTests(GridFooter, testUtil, {
+	const controlTests = new ControlTests(GridFooter, testUtil, {
 		mainCssClass: 'grid-footer'
 	});
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('Init', () => {
 		it('should have a div with class grid-footer-left', () => {

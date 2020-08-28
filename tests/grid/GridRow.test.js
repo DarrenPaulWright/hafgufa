@@ -6,11 +6,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridRow', () => {
 	const testUtil = new TestUtil(GridRow);
-	const controlBaseTests = new ControlTests(GridRow, testUtil, {
+	const controlTests = new ControlTests(GridRow, testUtil, {
 		mainCssClass: 'grid-row'
 	});
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('.updateWidth', () => {
 		it('should set the widths of cells based on column widths even if the width of the row is set narrower than the total of the cells', () => {

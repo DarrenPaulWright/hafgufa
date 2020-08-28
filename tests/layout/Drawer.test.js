@@ -5,11 +5,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('Drawer', () => {
 	const testUtil = new TestUtil(Drawer);
-	const controlBaseTests = new ControlTests(Drawer, testUtil, {
+	const controlTests = new ControlTests(Drawer, testUtil, {
 		mainCssClass: 'drawer'
 	});
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	beforeEach(() => {
 		testUtil.container.style.width = '1000px';

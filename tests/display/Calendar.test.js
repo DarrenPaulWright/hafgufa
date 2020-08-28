@@ -6,11 +6,11 @@ import TestUtil from '../TestUtil.js';
 
 describe('Calendar', () => {
 	const testUtil = new TestUtil(Calendar);
-	const controlBaseTests = new ControlTests(Calendar, testUtil, {
+	const controlTests = new ControlTests(Calendar, testUtil, {
 		mainCssClass: 'calendar'
 	});
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('Month', () => {
 		testUtil.testMethod({

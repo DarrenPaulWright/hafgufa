@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('TileLayout', () => {
 	const testUtil = new TestUtil(TileLayout);
-	const controlBaseTests = new ControlTests(TileLayout, testUtil);
+	const controlTests = new ControlTests(TileLayout, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 });

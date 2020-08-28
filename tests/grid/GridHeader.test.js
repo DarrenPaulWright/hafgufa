@@ -7,7 +7,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('GridHeader', () => {
 	const testUtil = new TestUtil(GridHeader);
-	const controlBaseTests = new ControlTests(GridHeader, testUtil, {
+	const controlTests = new ControlTests(GridHeader, testUtil, {
 		mainCssClass: 'grid-header'
 	});
 
@@ -16,7 +16,7 @@ describe('GridHeader', () => {
 		testUtil.hitEnter();
 	};
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('Columns', () => {
 		testUtil.testMethod({

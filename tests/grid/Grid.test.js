@@ -6,9 +6,9 @@ import TestUtil from '../TestUtil.js';
 
 describe('Grid', () => {
 	const testUtil = new TestUtil(Grid);
-	const controlBaseTests = new ControlTests(Grid, testUtil);
+	const controlTests = new ControlTests(Grid, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 
 	describe('AddRow', () => {
 		it('should be able to add a simple row without column definitions', () => {

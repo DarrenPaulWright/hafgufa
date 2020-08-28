@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('tabs', () => {
 	const testUtil = new TestUtil(Tabs);
-	const controlBaseTests = new ControlTests(Tabs, testUtil);
+	const controlTests = new ControlTests(Tabs, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 });

@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('LightBox', () => {
 	const testUtil = new TestUtil(LightBox);
-	const controlBaseTests = new ControlTests(LightBox, testUtil);
+	const controlTests = new ControlTests(LightBox, testUtil);
 
-	controlBaseTests.run(['container', 'element']);
+	controlTests.run(['container', 'element']);
 });

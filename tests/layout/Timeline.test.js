@@ -4,7 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('Timeline', () => {
 	const testUtil = new TestUtil(Timeline);
-	const controlBaseTests = new ControlTests(Timeline, testUtil);
+	const controlTests = new ControlTests(Timeline, testUtil);
 
-	controlBaseTests.run();
+	controlTests.run();
 });
