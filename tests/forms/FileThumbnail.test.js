@@ -1,15 +1,12 @@
 import { assert } from 'type-enforcer';
 import { FileThumbnail } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('FileThumbnail', () => {
 	const testUtil = new TestUtil(FileThumbnail);
-	const controlTests = new ControlTests(FileThumbnail, testUtil, {
+	testUtil.run({
 		mainCssClass: 'file-thumbnail'
 	});
-
-	controlTests.run();
 
 	describe('ImageSource', () => {
 		testUtil.testMethod({

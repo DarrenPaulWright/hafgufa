@@ -4,13 +4,10 @@ import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { EditableGrid } from '../../index.js';
 import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('EditableGrid', () => {
 	const testUtil = new TestUtil(EditableGrid);
-	const formControlTests = new FormControlTests(EditableGrid, testUtil);
-
-	formControlTests.run(['width']);
+	testUtil.run({ skipTests: ['width'] });
 
 	describe('Dialogs', () => {
 		it('should display a dialog when the "Add New" button is clicked', () => {

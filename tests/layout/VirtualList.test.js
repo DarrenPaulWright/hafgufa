@@ -1,21 +1,10 @@
 import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
 import { Button, Heading, SCROLL_EVENT, VirtualList } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('VirtualList', () => {
 	const testUtil = new TestUtil(VirtualList);
-	const controlTests = new ControlTests(VirtualList, testUtil, {
-		extraSettings: {
-			itemControl: Button,
-			itemData: [{
-				id: '1',
-				text: 'test'
-			}]
-		},
-		focusableElement: 'button'
-	});
 
 	const VIRTUAL_LIST_CLASS = '.virtual-list';
 	const VIRTUAL_ITEM_CLASS = '.virtual-item';
@@ -29,7 +18,18 @@ describe('VirtualList', () => {
 		id: '3'
 	}];
 
-	controlTests.run(['stopPropagation'], ['focus']);
+	testUtil.run({
+		skipTests: ['stopPropagation'],
+		extraTests: { focus: true },
+		extraSettings: {
+			itemControl: Button,
+			itemData: [{
+				id: '1',
+				text: 'test'
+			}]
+		},
+		focusableElement: 'button'
+	});
 
 	describe('InitialLayout', () => {
 		it('should have a css class called ' + VIRTUAL_LIST_CLASS, () => {

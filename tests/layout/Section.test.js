@@ -1,13 +1,12 @@
 import { assert } from 'type-enforcer';
 import { Section } from '../../index.js';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Section', () => {
 	const testUtil = new TestUtil(Section);
-	const controlHeadingMixinTests = new ControlHeadingMixinTests(Section, testUtil);
-
-	controlHeadingMixinTests.run(['canCollapse', 'isCollapsed']);
+	testUtil.run({
+		skipTests: ['canCollapse', 'isCollapsed']
+	});
 
 	describe('.canCollapse', () => {
 		testUtil.testMethod({

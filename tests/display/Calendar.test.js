@@ -1,16 +1,13 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { Calendar } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Calendar', () => {
 	const testUtil = new TestUtil(Calendar);
-	const controlTests = new ControlTests(Calendar, testUtil, {
+	testUtil.run({
 		mainCssClass: 'calendar'
 	});
-
-	controlTests.run();
 
 	describe('Month', () => {
 		testUtil.testMethod({

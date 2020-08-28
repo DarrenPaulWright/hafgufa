@@ -2,7 +2,6 @@ import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { DateInput, locale } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 locale.set({
 	'dateFormatError': 'The date should be formatted: <dateFormat>',
@@ -12,9 +11,7 @@ locale.set({
 
 describe('DateInput', () => {
 	const testUtil = new TestUtil(DateInput);
-	const formControlTests = new FormControlTests(DateInput, testUtil);
-
-	formControlTests.run();
+	testUtil.run();
 
 	describe('.isFocused', () => {
 		it('should focus the text input when isFocused(true) is called', () => {

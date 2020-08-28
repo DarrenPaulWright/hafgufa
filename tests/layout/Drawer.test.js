@@ -1,15 +1,12 @@
 import { assert } from 'type-enforcer';
 import { Drawer } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Drawer', () => {
 	const testUtil = new TestUtil(Drawer);
-	const controlTests = new ControlTests(Drawer, testUtil, {
+	testUtil.run({
 		mainCssClass: 'drawer'
 	});
-
-	controlTests.run();
 
 	beforeEach(() => {
 		testUtil.container.style.width = '1000px';

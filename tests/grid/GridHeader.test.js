@@ -2,21 +2,19 @@ import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
 import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../../src/grid/gridConstants.js';
 import GridHeader from '../../src/grid/GridHeader.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridHeader', () => {
 	const testUtil = new TestUtil(GridHeader);
-	const controlTests = new ControlTests(GridHeader, testUtil, {
-		mainCssClass: 'grid-header'
-	});
 
 	const addTag = (text) => {
 		testUtil.first('input').value = text;
 		testUtil.hitEnter();
 	};
 
-	controlTests.run();
+	testUtil.run({
+		mainCssClass: 'grid-header'
+	});
 
 	describe('Columns', () => {
 		testUtil.testMethod({

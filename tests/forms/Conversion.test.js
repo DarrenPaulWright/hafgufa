@@ -1,7 +1,6 @@
 import { assert } from 'type-enforcer';
 import { Conversion, locale } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 locale.set({
 	'feetAbbr': 'ft',
@@ -20,30 +19,32 @@ locale.set({
 
 describe('Conversion', () => {
 	const testUtil = new TestUtil(Conversion);
-	const formControlTests = new FormControlTests(Conversion, testUtil, {
-		mainCssClass: 'conversion',
-		focusableElement: 'input[type="text"]',
-		focusableSubElement: 'input[type="text"]'
-	});
 
 	const getFromInput = () => testUtil.first('input[type="text"]');
 
 	const getToInput = () => testUtil.nth('input[type="text"]', 1);
 
-	formControlTests.run(['changeDelay'], ['focus'], {
-		onChange: {
-			buildControl() {
-				testUtil.control = new Conversion({
-					container: testUtil.container,
-					fromType: Conversion.CONVERSION_TYPES.WEIGHT.POUNDS,
-					toType: Conversion.CONVERSION_TYPES.WEIGHT.KILOGRAMS
-				});
-			},
-			validValue: '4',
-			setValueViaDom() {
-				const input = getFromInput();
-				input.value = '4';
-				testUtil.trigger(input, 'change');
+	testUtil.run({
+		skipTests: ['changeDelay'],
+		mainCssClass: 'conversion',
+		focusableElement: 'input[type="text"]',
+		focusableSubElement: 'input[type="text"]',
+		extraTests: {
+			focus: true,
+			onChange: {
+				buildControl() {
+					testUtil.control = new Conversion({
+						container: testUtil.container,
+						fromType: Conversion.CONVERSION_TYPES.WEIGHT.POUNDS,
+						toType: Conversion.CONVERSION_TYPES.WEIGHT.KILOGRAMS
+					});
+				},
+				validValue: '4',
+				setValueViaDom() {
+					const input = getFromInput();
+					input.value = '4';
+					testUtil.trigger(input, 'change');
+				}
 			}
 		}
 	});

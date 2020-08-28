@@ -1,15 +1,13 @@
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT, ContextMenu } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('ContextMenu', () => {
 	const testUtil = new TestUtil(ContextMenu);
-	const controlTests = new ControlTests(ContextMenu, testUtil, {
+	testUtil.run({
+		skipTests: ['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation'],
 		mainCssClass: 'context-menu'
 	});
-
-	controlTests.run(['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation']);
 
 	describe('MenuItems', () => {
 		it('should remove itself if a context menu is envoked elsewhere in the DOM', () => {

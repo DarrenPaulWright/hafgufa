@@ -1,15 +1,12 @@
 import { assert } from 'type-enforcer';
 import { ProgressBar } from '../../index.js';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('ProgressBar', () => {
 	const testUtil = new TestUtil(ProgressBar);
-	const controlHeadingMixinTests = new ControlHeadingMixinTests(ProgressBar, testUtil, {
+	testUtil.run({
 		mainCssClass: 'progress'
 	});
-
-	controlHeadingMixinTests.run();
 
 	describe('.steps', () => {
 		testUtil.testMethod({

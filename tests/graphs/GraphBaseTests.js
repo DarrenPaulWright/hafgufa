@@ -1,20 +1,9 @@
 import { assert } from 'type-enforcer';
 import { Thickness } from 'type-enforcer-ui';
-import ControlHeadingMixinTests from '../mixins/ControlHeadingMixinTests.js';
+import extendsTestRegister from '../extendsTestRegister.js';
+import ExtendsTestRunner, { CONTROL, TEST_UTIL } from '../ExtendsTestRunner.js';
 
-const CONTROL = Symbol();
-const TEST_UTIL = Symbol();
-
-export default class GraphBaseTests extends ControlHeadingMixinTests {
-	constructor(Control, testUtil, settings) {
-		super(Control, testUtil, settings);
-
-		const self = this;
-
-		self[CONTROL] = Control;
-		self[TEST_UTIL] = testUtil;
-	}
-
+export default class GraphBaseTests extends ExtendsTestRunner {
 	svgElement() {
 		const self = this;
 
@@ -67,3 +56,5 @@ export default class GraphBaseTests extends ControlHeadingMixinTests {
 		});
 	}
 }
+
+extendsTestRegister.register('GraphBase', GraphBaseTests);

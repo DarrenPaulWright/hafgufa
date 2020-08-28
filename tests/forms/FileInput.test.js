@@ -1,14 +1,12 @@
 import { FileInput } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('FileInput', () => {
 	const testUtil = new TestUtil(FileInput);
-	const controlTests = new ControlTests(FileInput, testUtil, {
+	testUtil.run({
+		skipTests: ['stopPropagation'],
 		mainCssClass: 'file-input'
 	});
-
-	controlTests.run(['stopPropagation']);
 
 	describe('IsMulti', () => {
 		testUtil.testMethod({

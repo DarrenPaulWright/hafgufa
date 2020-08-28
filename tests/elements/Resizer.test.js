@@ -2,7 +2,6 @@ import { assert } from 'type-enforcer';
 import { CssSize } from 'type-enforcer-ui';
 import { ORIENTATION, Resizer } from '../../index.js';
 import { offsetToPixels, pixelsToOffset } from '../../src/elements/Resizer.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('offsetToPixels', () => {
@@ -51,11 +50,10 @@ describe('pixelsToOffset', () => {
 
 describe('Resizer', () => {
 	const testUtil = new TestUtil(Resizer);
-	const controlTests = new ControlTests(Resizer, testUtil, {
+	testUtil.run({
+		skipTests: ['height', 'width'],
 		mainCssClass: 'resizer'
 	});
-
-	controlTests.run(['height', 'width']);
 
 	beforeEach(() => {
 		testUtil.container.style.width = '1000px';

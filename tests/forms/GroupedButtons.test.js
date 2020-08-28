@@ -1,11 +1,11 @@
 import { assert } from 'type-enforcer';
 import { GroupedButtons } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('GroupedButtons', () => {
 	const testUtil = new TestUtil(GroupedButtons);
-	const formControlTests = new FormControlTests(GroupedButtons, testUtil, {
+	testUtil.run({
+		extraTests: { focus: true },
 		mainCssClass: 'grouped-buttons',
 		extraSettings: {
 			buttons: [{
@@ -18,8 +18,6 @@ describe('GroupedButtons', () => {
 		},
 		focusableElement: 'button'
 	});
-
-	formControlTests.run([], ['focus']);
 
 	describe('.addButton', () => {
 		it('should add a button to the DOM when addButton is called', () => {

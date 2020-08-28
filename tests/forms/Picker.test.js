@@ -3,7 +3,6 @@ import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
 import { Picker } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('Picker', () => {
 	const testUtil = new TestUtil(Picker);
@@ -25,30 +24,30 @@ describe('Picker', () => {
 		title: 'third'
 	}];
 
-	const formControlTests = new FormControlTests(Picker, testUtil, {
+	testUtil.run({
 		extraSettings: {
 			width: HUNDRED_PERCENT,
 			showAll: true,
 			defaultButtonText: 'asdf',
 			options: clone(testOptions)
 		},
-		focusableElement: '.form-button'
-	});
-
-	formControlTests.run([], ['focus'], {
-		onChange: {
-			buildControl() {
-				testUtil.control = new Picker({
-					container: testUtil.container,
-					showAll: true,
-					options: clone(testOptions)
-				});
-			},
-			validValue: 'first',
-			setValueViaDom() {
-				testUtil.simulateClick(testUtil.first('.form-button'));
-			},
-			skipSameValue: true
+		focusableElement: '.form-button',
+		extraTests: {
+			focus: true,
+			onChange: {
+				buildControl() {
+					testUtil.control = new Picker({
+						container: testUtil.container,
+						showAll: true,
+						options: clone(testOptions)
+					});
+				},
+				validValue: 'first',
+				setValueViaDom() {
+					testUtil.simulateClick(testUtil.first('.form-button'));
+				},
+				skipSameValue: true
+			}
 		}
 	});
 

@@ -1,11 +1,11 @@
 import { assert } from 'type-enforcer';
 import { Menu } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Menu', () => {
 	const testUtil = new TestUtil(Menu);
-	const controlTests = new ControlTests(Menu, testUtil, {
+	testUtil.run({
+		skipTests: ['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation'],
 		mainCssClass: 'menu',
 		extraSettings: {
 			menuItems: [{
@@ -17,8 +17,6 @@ describe('Menu', () => {
 		},
 		autoFocus: true
 	});
-
-	controlTests.run(['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation']);
 
 	describe('MenuItems', () => {
 		testUtil.testMethod({

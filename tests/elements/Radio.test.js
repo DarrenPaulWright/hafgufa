@@ -1,15 +1,13 @@
 import { assert } from 'type-enforcer';
 import { Radio } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Radio', () => {
 	const testUtil = new TestUtil(Radio);
-	const controlTests = new ControlTests(Radio, testUtil, {
+	testUtil.run({
+		skipTests: ['width', 'height', 'stopPropagation'],
 		mainCssClass: 'radio'
 	});
-
-	controlTests.run(['width', 'height', 'stopPropagation']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

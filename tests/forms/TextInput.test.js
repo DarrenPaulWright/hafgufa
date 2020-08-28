@@ -1,13 +1,9 @@
 import { assert } from 'type-enforcer';
 import { locale, TextInput } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('TextInput', () => {
 	const testUtil = new TestUtil(TextInput);
-	const formControlTests = new FormControlTests(TextInput, testUtil, {
-		mainCssClass: 'form-control'
-	});
 
 	locale.set({
 		'requiredField': 'Please enter a value',
@@ -21,18 +17,22 @@ describe('TextInput', () => {
 		'invalidMinLength': 'This value should have <maxLength> or more characters'
 	});
 
-	formControlTests.run(['changeDelay'], null, {
-		onChange: {
-			buildControl() {
-				testUtil.control = new TextInput({
-					container: testUtil.container,
-					changeDelay: 0
-				});
-			},
-			validValue: 'test',
-			setValueViaDom() {
-				testUtil.typeText('4');
-				testUtil.trigger(testUtil.getTextInput(), 'change');
+	testUtil.run({
+		skipTests: ['changeDelay'],
+		mainCssClass: 'form-control',
+		extraTests: {
+			onChange: {
+				buildControl() {
+					testUtil.control = new TextInput({
+						container: testUtil.container,
+						changeDelay: 0
+					});
+				},
+				validValue: 'test',
+				setValueViaDom() {
+					testUtil.typeText('4');
+					testUtil.trigger(testUtil.getTextInput(), 'change');
+				}
 			}
 		}
 	});

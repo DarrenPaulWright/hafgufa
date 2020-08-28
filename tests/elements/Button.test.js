@@ -1,15 +1,13 @@
 import { assert } from 'type-enforcer';
 import { Button } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Button', () => {
 	const testUtil = new TestUtil(Button);
-	const controlTests = new ControlTests(Button, testUtil, {
+	testUtil.run({
+		extraTests: { focus: true },
 		focusableElement: 'button'
 	});
-
-	controlTests.run([], ['focus']);
 
 	describe('.label', () => {
 		const TEXT_LABEL = 'This is a button!@#$%^&*()';

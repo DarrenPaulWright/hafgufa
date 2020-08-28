@@ -2,15 +2,12 @@ import { assert } from 'type-enforcer';
 import { AUTO } from 'type-enforcer-ui';
 import { Description, TEXT_ALIGN, WIDTH } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('Description', () => {
 	const testUtil = new TestUtil(Description);
-	const formControlTests = new FormControlTests(Description, testUtil, {
+	testUtil.run({
 		mainCssClass: 'description'
 	});
-
-	formControlTests.run();
 
 	describe('Value', () => {
 		testUtil.testMethod({

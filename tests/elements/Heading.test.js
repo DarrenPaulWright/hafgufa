@@ -1,17 +1,16 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { Heading, MOUSE_ENTER_EVENT } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Heading', () => {
 	const testUtil = new TestUtil(Heading);
-	const controlTests = new ControlTests(Heading, testUtil, {
+	testUtil.run({
+		skipTests: ['stopPropagation'],
+		extraTests: { focus: true },
 		mainCssClass: 'heading',
 		focusableElement: '.heading'
 	});
-
-	controlTests.run(['stopPropagation'], 'focus');
 
 	describe('Init', () => {
 		it('should have a class \'heading\'', () => {

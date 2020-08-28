@@ -1,16 +1,13 @@
 import { assert } from 'type-enforcer';
 import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import GridRow from '../../src/grid/GridRow.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridRow', () => {
 	const testUtil = new TestUtil(GridRow);
-	const controlTests = new ControlTests(GridRow, testUtil, {
+	testUtil.run({
 		mainCssClass: 'grid-row'
 	});
-
-	controlTests.run();
 
 	describe('.updateWidth', () => {
 		it('should set the widths of cells based on column widths even if the width of the row is set narrower than the total of the cells', () => {

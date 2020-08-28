@@ -2,11 +2,12 @@ import { assert } from 'type-enforcer';
 import { PIXELS } from 'type-enforcer-ui';
 import { Tree } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('Tree', () => {
 	const testUtil = new TestUtil(Tree);
-	const formControlTests = new FormControlTests(Tree, testUtil, {
+	testUtil.run({
+		skipTests: ['stopPropagation'],
+		extraTests: { focus: true },
 		mainCssClass: 'tree',
 		extraSettings: {
 			branches: [{
@@ -16,8 +17,6 @@ describe('Tree', () => {
 			}]
 		}
 	});
-
-	formControlTests.run(['stopPropagation'], ['focus']);
 
 	describe('Branches', () => {
 		const flatBranches = [{

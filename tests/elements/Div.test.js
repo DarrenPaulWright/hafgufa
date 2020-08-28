@@ -1,13 +1,10 @@
 import { assert } from 'type-enforcer';
 import { Button, Div } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Div', () => {
 	const testUtil = new TestUtil(Div);
-	const controlTests = new ControlTests(Div, testUtil);
-
-	controlTests.run();
+	testUtil.run();
 
 	describe('.get', () => {
 		it('should find a control inside the container', () => {

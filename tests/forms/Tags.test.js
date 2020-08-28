@@ -3,14 +3,9 @@ import keyCodes from 'keycodes';
 import { assert } from 'type-enforcer';
 import { KEY_DOWN_EVENT, Tags } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('Tags', () => {
 	const testUtil = new TestUtil(Tags);
-	const formControlTests = new FormControlTests(Tags, testUtil, {
-		mainCssClass: 'tags',
-		focusableElement: 'input[type=text]'
-	});
 
 	const addTag = (text) => {
 		testUtil.typeText(text);
@@ -40,17 +35,22 @@ describe('Tags', () => {
 
 	const isPopupRendered = () => testUtil.count('.popup', true) === 1;
 
-	formControlTests.run([], ['focus'], {
-		onChange: {
-			buildControl() {
-				testUtil.control = new Tags({
-					container: testUtil.container
-				});
-			},
-			validValue: 'test',
-			setValueViaDom() {
-				testUtil.control.isFocused(true);
-				addTag('test');
+	testUtil.run({
+		mainCssClass: 'tags',
+		focusableElement: 'input[type=text]',
+		extraTests: {
+			focus: true,
+			onChange: {
+				buildControl() {
+					testUtil.control = new Tags({
+						container: testUtil.container
+					});
+				},
+				validValue: 'test',
+				setValueViaDom() {
+					testUtil.control.isFocused(true);
+					addTag('test');
+				}
 			}
 		}
 	});

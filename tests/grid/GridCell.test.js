@@ -5,18 +5,16 @@ import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../inde
 import GridCell from '../../src/grid/GridCell.js';
 import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from '../../src/grid/gridConstants.js';
 import getAttributes from '../../src/utility/dom/getAttributes.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridCell', () => {
 	const testUtil = new TestUtil(GridCell);
-	const controlTests = new ControlTests(GridCell, testUtil);
 
 	beforeEach(() => {
 		testUtil.container.classList.add('grid');
 	});
 
-	controlTests.run(['isEnabled']);
+	testUtil.run({ skipTests: ['isEnabled'] });
 
 	describe('.rowData', () => {
 		testUtil.testMethod({

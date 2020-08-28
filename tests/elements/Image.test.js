@@ -1,13 +1,10 @@
 import { assert } from 'type-enforcer';
 import { Image } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Image', () => {
 	const testUtil = new TestUtil(Image);
-	const controlTests = new ControlTests(Image, testUtil);
-
-	controlTests.run();
+	testUtil.run();
 
 	describe('.source', () => {
 		it('should set the src attribute of the img when set', () => {

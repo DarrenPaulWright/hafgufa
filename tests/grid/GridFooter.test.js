@@ -1,15 +1,12 @@
 import { assert } from 'type-enforcer';
 import GridFooter from '../../src/grid/GridFooter.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridFooter', () => {
 	const testUtil = new TestUtil(GridFooter);
-	const controlTests = new ControlTests(GridFooter, testUtil, {
+	testUtil.run({
 		mainCssClass: 'grid-footer'
 	});
-
-	controlTests.run();
 
 	describe('Init', () => {
 		it('should have a div with class grid-footer-left', () => {

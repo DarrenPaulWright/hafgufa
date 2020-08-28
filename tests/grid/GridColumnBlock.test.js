@@ -2,14 +2,11 @@ import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
 import GridColumnBlock from '../../src/grid/GridColumnBlock.js';
 import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridColumnBlock', () => {
 	const testUtil = new TestUtil(GridColumnBlock);
-	const controlTests = new ControlTests(GridColumnBlock, testUtil);
-
-	controlTests.run();
+	testUtil.run();
 
 	describe('Columns', () => {
 		testUtil.testMethod({

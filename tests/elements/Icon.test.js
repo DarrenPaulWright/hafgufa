@@ -1,13 +1,10 @@
 import { assert } from 'type-enforcer';
 import { Icon, ICON_SIZES } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('Icon', () => {
 	const testUtil = new TestUtil(Icon);
-	const controlTests = new ControlTests(Icon, testUtil);
-
-	controlTests.run(['width', 'height']);
+	testUtil.run({ skipTests: ['width', 'height'] });
 
 	describe('.icon', () => {
 		it('should render an empty control if no icon is set', () => {

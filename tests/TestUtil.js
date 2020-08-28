@@ -4,6 +4,11 @@ import simulant from 'simulant';
 import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
 import { CLICK_EVENT, KEY_UP_EVENT } from '../index.js';
+import './ControlTests.js';
+import extendsTestRegister from './extendsTestRegister.js';
+import './forms/FormControlTests.js';
+import './graphs/GraphBaseTests.js';
+import './mixins/ControlHeadingMixinTests.js';
 
 const last = (array) => array[array.length - 1];
 
@@ -105,6 +110,38 @@ export default class TestUtil {
 
 	get container() {
 		return this[CONTAINER];
+	}
+
+	run(settings = {}) {
+		const self = this;
+		const testPackages = [];
+
+		const walkPrototype = (constructor, callback) => {
+			const proto = Object.getPrototypeOf(constructor);
+
+			if (proto) {
+				callback(proto.constructor.name);
+				walkPrototype(proto, callback);
+			}
+		};
+
+		const control = new self[CONSTRUCTOR]();
+
+		walkPrototype(control, (name) => {
+			const tests = extendsTestRegister.get(name);
+
+			if (tests) {
+				testPackages.push(tests);
+			}
+		});
+
+		control.remove();
+
+		testPackages.reverse()
+			.forEach((testPackage) => {
+				new testPackage.TestRunner(self[CONSTRUCTOR], self)
+					.run(testPackage.name, settings);
+			});
 	}
 
 	testMethod(settings) {

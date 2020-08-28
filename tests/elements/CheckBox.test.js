@@ -1,15 +1,13 @@
 import { assert } from 'type-enforcer';
 import { CheckBox } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('CheckBox', () => {
 	const testUtil = new TestUtil(CheckBox);
-	const controlTests = new ControlTests(CheckBox, testUtil, {
+	testUtil.run({
+		skipTests: ['width', 'height', 'stopPropagation'],
 		mainCssClass: 'checkbox'
 	});
-
-	controlTests.run(['width', 'height', 'stopPropagation']);
 
 	describe('.name', () => {
 		testUtil.testMethod({

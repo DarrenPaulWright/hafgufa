@@ -1,11 +1,12 @@
 import { assert } from 'type-enforcer';
 import { IsWorking } from '../../index.js';
-import ControlTests from '../ControlTests.js';
 import TestUtil from '../TestUtil.js';
 
 describe('IsWorking', () => {
 	const testUtil = new TestUtil(IsWorking);
-	const controlTests = new ControlTests(IsWorking, testUtil, {
+
+	testUtil.run({
+		skipTests: ['width', 'classes', 'onResize'],
 		mainCssClass: 'is-working',
 		extraSettings: {
 			delay: 0
@@ -16,8 +17,6 @@ describe('IsWorking', () => {
 		fade: false,
 		delay: 0
 	};
-
-	controlTests.run(['width', 'classes', 'onResize']);
 
 	describe('InitialLayout', () => {
 		it('should have a div with a css class called is-working', () => {

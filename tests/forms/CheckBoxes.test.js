@@ -1,29 +1,27 @@
 import { assert } from 'type-enforcer';
 import { CheckBoxes } from '../../index.js';
 import TestUtil from '../TestUtil.js';
-import FormControlTests from './FormControlTests.js';
 
 describe('CheckBoxes', () => {
 	const testUtil = new TestUtil(CheckBoxes);
-	const formControlTests = new FormControlTests(CheckBoxes, testUtil, {
-		mainCssClass: 'checkboxes'
-	});
-
-	formControlTests.run(undefined, undefined, {
-		onChange: {
-			buildControl() {
-				testUtil.control = new CheckBoxes({
-					container: testUtil.container,
-					values: [{
-						content: 'option1',
-						value: '1',
-						isChecked: false
-					}]
-				});
-			},
-			validValue: '1',
-			setValueViaDom() {
-				testUtil.simulateClick(testUtil.first('.checkbox'));
+	testUtil.run({
+		mainCssClass: 'checkboxes',
+		extraTests: {
+			onChange: {
+				buildControl() {
+					testUtil.control = new CheckBoxes({
+						container: testUtil.container,
+						values: [{
+							content: 'option1',
+							value: '1',
+							isChecked: false
+						}]
+					});
+				},
+				validValue: '1',
+				setValueViaDom() {
+					testUtil.simulateClick(testUtil.first('.checkbox'));
+				}
 			}
 		}
 	});
