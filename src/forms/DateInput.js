@@ -43,7 +43,8 @@ export default class DateInput extends FormControl {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.DATE,
-			width: AUTO
+			width: AUTO,
+			dateFormat: 'MM/dd/yyyy'
 		}, settings, {
 			FocusMixin: assign(settings.FocusMixin, {
 				mainControl: new TextInput({
@@ -80,7 +81,13 @@ export default class DateInput extends FormControl {
 		self[DATE_INPUT] = settings.FocusMixin.mainControl;
 		self[DATE_INPUT].container(self);
 
-		applySettings(self, settings);
+		applySettings(self, settings, [], ['isRequired']);
+
+		self.onRemove(() => {
+			if (self[POPUP]) {
+				self[POPUP].remove();
+			}
+		});
 	}
 
 	[buildDatePicker]() {
@@ -135,7 +142,7 @@ export default class DateInput extends FormControl {
 	[onDateInputChange](value) {
 		const self = this;
 
-		if (isValid(value) || value === '') {
+		if (isValid(parse(value, self.dateFormat(), new Date())) || value === '') {
 			if (self[POPUP]) {
 				self[POPUP].remove();
 			}
@@ -224,9 +231,20 @@ Object.assign(DateInput.prototype, {
 	}),
 
 	dateFormat: methodString({
-		init: 'MM/dd/yyyy',
-		set(format) {
-			this[DATE_INPUT].width(format.length + 6 + 'ch');
+		set(dateFormat) {
+			const self = this;
+
+			self[DATE_INPUT].width(dateFormat.length + 6 + 'ch');
+
+			self.onValidate((value, isFocused) => {
+				value = self[DATE_INPUT].value();
+
+				if (isFocused === false && value !== '' && !isValid(parse(value, dateFormat, new Date()))) {
+					self.error(locale.get('dateFormatError', { dateFormat }));
+
+					return true;
+				}
+			});
 		}
 	})
 });
