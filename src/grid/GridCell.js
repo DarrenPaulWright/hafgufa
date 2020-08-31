@@ -1,13 +1,5 @@
 import { repeat } from 'object-agent';
-import {
-	applySettings,
-	DockPoint,
-	methodBoolean,
-	methodEnum,
-	methodFunction,
-	methodObject,
-	methodString
-} from 'type-enforcer-ui';
+import { applySettings, DockPoint, methodBoolean, methodEnum, methodFunction, methodObject } from 'type-enforcer-ui';
 import Control, { CHILD_CONTROLS } from '../Control.js';
 import controlTypes from '../controlTypes.js';
 import CheckBox from '../elements/CheckBox.js';
@@ -16,38 +8,33 @@ import Icon from '../elements/Icon.js';
 import Image from '../elements/Image.js';
 import Span from '../elements/Span.js';
 import Toolbar from '../layout/Toolbar.js';
-import Tooltip from '../layout/Tooltip.js';
-import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
+import TooltipMixin from '../mixins/TooltipMixin.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GridCell.less';
 import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from './gridConstants.js';
 
-const MAX_TOOLTIP_WIDTH = '20rem';
 const MAX_TOOLTIP_LENGTH = 600;
 const ELLIPSIS = '…';
-const TOOLTIP_DELAY_SECONDS = 0.5;
 const CELL_CLASS = 'grid-cell';
 const NO_WRAP_CLASS = 'can-wrap';
 const NO_PADDING_CLASS = 'no-padding';
 
-const TOOLTIP_CONTROL = Symbol();
 const DISPLAY_TYPE = Symbol();
 
 const checkOverflow = Symbol();
 const getControl = Symbol();
 const addActionButtons = Symbol();
-const showTooltip = Symbol();
-const removeTooltip = Symbol();
 
 /**
  * Controls the display of one cell in the grid control
  *
  * @class GridCell
+ * @mixes TooltipMixin
  * @extends Control
  *
  * @param {object}   settings - Accepts all control settings plus:
  */
-export default class GridCell extends Control {
+export default class GridCell extends TooltipMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.GRID_CELL
@@ -63,14 +50,11 @@ export default class GridCell extends Control {
 			'overflow': 'hidden',
 			'text-overflow': 'ellipsis'
 		});
+		self.tooltipDockPoint(DockPoint.POINTS.BOTTOM_CENTER);
 
 		applySettings(self, settings);
 
-		self
-			.onResize(() => self[checkOverflow]())
-			.onRemove(() => {
-				self[removeTooltip]();
-			});
+		self.onResize(() => self[checkOverflow]());
 	}
 
 	/**
@@ -154,38 +138,6 @@ export default class GridCell extends Control {
 				button.label(null);
 			}
 		});
-	}
-
-	/**
-	 * Show a tooltip
-	 *
-	 * @function showTooltip
-	 */
-	[showTooltip]() {
-		const self = this;
-
-		self[TOOLTIP_CONTROL] = new Tooltip({
-			content: self.tooltip(),
-			anchor: self,
-			anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
-			tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
-			maxWidth: MAX_TOOLTIP_WIDTH,
-			delay: TOOLTIP_DELAY_SECONDS
-		});
-	}
-
-	/**
-	 * Remove the tooltip
-	 *
-	 * @function removeTooltip
-	 */
-	[removeTooltip]() {
-		const self = this;
-
-		if (self[TOOLTIP_CONTROL]) {
-			self[TOOLTIP_CONTROL].remove();
-			self[TOOLTIP_CONTROL] = null;
-		}
 	}
 }
 
@@ -376,23 +328,6 @@ Object.assign(GridCell.prototype, {
 	 */
 	isEnabled: methodBoolean({
 		init: true
-	}),
-
-	/**
-	 * @method tooltip
-	 * @memberOf GridCell
-	 * @instance
-	 * @param {string} newTooltip
-	 * @returns {string|this}
-	 */
-	tooltip: methodString({
-		set(newValue) {
-			const self = this;
-
-			self.set(MOUSE_ENTER_EVENT, () => self[showTooltip](), (newValue !== ''));
-			self.set(MOUSE_LEAVE_EVENT, () => self[removeTooltip](), (newValue !== ''));
-			self[removeTooltip]();
-		}
 	}),
 
 	resetClasses() {

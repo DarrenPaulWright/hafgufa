@@ -136,7 +136,7 @@ describe('Heading', () => {
 
 			testUtil.trigger(testUtil.first('i'), MOUSE_ENTER_EVENT);
 
-			return wait(210)
+			return wait(500)
 				.then(() => {
 					assert.is(testUtil.count('.tooltip', true), 1);
 				});

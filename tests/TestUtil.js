@@ -10,6 +10,7 @@ import './forms/FormControlTests.js';
 import './graphs/GraphBaseTests.js';
 import './mixins/ControlHeadingMixinTests.js';
 import './mixins/FocusMixinTests.js';
+import './mixins/TooltipMixinTests.js';
 
 const last = (array) => array[array.length - 1];
 

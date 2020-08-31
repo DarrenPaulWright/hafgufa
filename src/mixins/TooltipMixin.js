@@ -1,4 +1,5 @@
 import { throttle } from 'async-agent';
+import { methodNumber } from 'type-enforcer';
 import { DockPoint, methodAny, methodDockPoint } from 'type-enforcer-ui';
 import Tooltip from '../layout/Tooltip.js';
 import { MOUSE_ENTER_EVENT, MOUSE_LEAVE_EVENT } from '../utility/domConstants.js';
@@ -33,6 +34,7 @@ export default (Base) => {
 						anchor: self,
 						anchorDockPoint: self.tooltipDockPoint().opposite,
 						tooltipDockPoint: self.tooltipDockPoint(),
+						delay: self.tooltipDelay(),
 						onRemove() {
 							self[TOOLTIP] = null;
 						}
@@ -89,6 +91,10 @@ export default (Base) => {
 
 		tooltipDockPoint: methodDockPoint({
 			init: new DockPoint(DockPoint.POINTS.LEFT_CENTER)
+		}),
+
+		tooltipDelay: methodNumber({
+			init: 0.5
 		})
 	});
 

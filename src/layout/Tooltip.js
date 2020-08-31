@@ -2,8 +2,8 @@ import { applySettings, DockPoint } from 'type-enforcer-ui';
 import Popup from '../layout/Popup.js';
 import DelayedRenderMixin from '../mixins/DelayedRenderMixin.js';
 import Removable from '../mixins/Removable.js';
-import assign from '../utility/assign.js';
 import { EMPTY_STRING, MOUSE_WHEEL_EVENT, SPACE, WINDOW } from '../utility/domConstants.js';
+import setDefaults from '../utility/setDefaults.js';
 import './Tooltip.less';
 
 const TOOLTIP_CLASS = 'tooltip';
@@ -25,21 +25,23 @@ const POPUP = Symbol();
  * @param {string}    [settings.title]
  * @param {string}    [settings.classes]
  * @param {string}    [settings.maxWidth]
- * @param {number}    [settings.delay=0.2] - Number of seconds before showing the tooltip. If remove is called before
+ * @param {number}    [settings.delay=0.5] - Number of seconds before showing the tooltip. If remove is called before
  *    the delay is done then the popup will never be built.
  */
 export default class Tooltip extends DelayedRenderMixin(Removable) {
 	constructor(settings = {}) {
 		const windowScrollEvent = () => self.remove();
 
-		super(assign(settings, {
+		super(setDefaults({
+			delay: 0.5
+		}, settings, {
 			onRender() {
 				WINDOW.addEventListener(MOUSE_WHEEL_EVENT, windowScrollEvent);
 
 				self[POPUP] = new Popup({
 					anchor: Popup.MOUSE,
 					anchorDockPoint: DockPoint.POINTS.TOP_CENTER,
-					popupDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
+					popupDockPoint: settings.tooltipDockPoint || DockPoint.POINTS.BOTTOM_CENTER,
 					fade: true,
 					showArrow: true,
 					...settings,

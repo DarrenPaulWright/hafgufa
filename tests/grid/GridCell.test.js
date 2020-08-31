@@ -1,7 +1,6 @@
-import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { isString } from 'type-enforcer-ui';
-import { MOUSE_ENTER_EVENT, MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../index.js';
+import { MOUSE_OUT_EVENT, MOUSE_OVER_EVENT } from '../../index.js';
 import GridCell from '../../src/grid/GridCell.js';
 import { CELL_ALIGNMENT, COLUMN_TYPES, DISPLAY_TYPES } from '../../src/grid/gridConstants.js';
 import getAttributes from '../../src/utility/dom/getAttributes.js';
@@ -837,60 +836,6 @@ describe('GridCell', () => {
 			},
 			defaultValue: true,
 			testValue: false
-		});
-	});
-
-	describe('.tooltip', () => {
-		testUtil.testMethod({
-			methodName: 'tooltip',
-			defaultSettings: {
-				container: testUtil.container
-			},
-			defaultValue: '',
-			testValue: 'Test tooltip',
-			secondTestValue: 'Test tooltip 2'
-		});
-
-		it('should show a tooltip when the tooltip method is set and the mouse is over the cell', () => {
-			testUtil.control = new GridCell({
-				container: testUtil.container,
-				tooltip: 'test'
-			});
-
-			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
-
-			return wait(510)
-				.then(() => {
-					assert.is(testUtil.count('.tooltip', true), 1);
-				});
-		});
-
-		it('should NOT show a tooltip when the tooltip method is not set and the mouse is over the cell', () => {
-			testUtil.control = new GridCell({
-				container: testUtil.container
-			});
-
-			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
-
-			return wait(510)
-				.then(() => {
-					assert.is(testUtil.count('.tooltip'), 0);
-				});
-		});
-
-		it('should NOT show a tooltip when the tooltip method is set and then set to an empty string and the mouse is over the cell', () => {
-			testUtil.control = new GridCell({
-				container: testUtil.container,
-				tooltip: 'test'
-			});
-
-			testUtil.control.tooltip('');
-			testUtil.trigger(testUtil.control.element, MOUSE_ENTER_EVENT);
-
-			return wait(510)
-				.then(() => {
-					assert.is(testUtil.count('.tooltip'), 0);
-				});
 		});
 	});
 
