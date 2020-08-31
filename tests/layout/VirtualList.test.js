@@ -20,8 +20,7 @@ describe('VirtualList', () => {
 
 	testUtil.run({
 		skipTests: ['stopPropagation'],
-		extraTests: { focus: true },
-		extraSettings: {
+		settings: {
 			itemControl: Button,
 			itemData: [{
 				id: '1',
@@ -41,7 +40,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('Rows', () => {
+	describe('.rows', () => {
 		testUtil.testMethod({
 			methodName: 'itemData',
 			defaultValue: [],
@@ -107,7 +106,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('GetRenderedControls', () => {
+	describe('.getRenderedControls', () => {
 		it('should return three items when getRenderedControls is called', () => {
 			testUtil.control = new VirtualList({
 				container: testUtil.container,
@@ -120,7 +119,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('FitHeightToContents', () => {
+	describe('.fitHeightToContents', () => {
 		it('should set the height of the control to the combined height of the items when fitHeightToContents is called', () => {
 			testUtil.control = new VirtualList({
 				container: testUtil.container,
@@ -147,7 +146,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('itemControl', () => {
+	describe('.itemControl', () => {
 		testUtil.testMethod({
 			methodName: 'itemControl',
 			defaultValue: undefined,
@@ -156,7 +155,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('ExtraRenderedItemsRatio', () => {
+	describe('.extraRenderedItemsRatio', () => {
 		testUtil.testMethod({
 			methodName: 'extraRenderedItemsRatio',
 			defaultValue: 0.1,
@@ -173,7 +172,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('itemDefaultSettings', () => {
+	describe('.itemDefaultSettings', () => {
 		testUtil.testMethod({
 			methodName: 'itemDefaultSettings',
 			defaultValue: undefined,
@@ -196,7 +195,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('onItemRender', () => {
+	describe('.onItemRender', () => {
 		it('should execute the onItemRender callback when items are rendered', () => {
 			let testValue = 0;
 
@@ -249,7 +248,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('IsVirtualized', () => {
+	describe('.isVirtualized', () => {
 		testUtil.testMethod({
 			methodName: 'isVirtualized',
 			defaultValue: true,
@@ -319,7 +318,7 @@ describe('VirtualList', () => {
 		});
 	});
 
-	describe('Scroll', () => {
+	describe('.scroll', () => {
 		const longList = [];
 
 		for (let index = 1; index < 30; index++) {

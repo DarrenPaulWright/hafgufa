@@ -17,6 +17,7 @@ import Grid from '../grid/Grid.js';
 import { COLUMN_TYPES, FILTER_TYPES, SORT_TYPES } from '../grid/gridConstants.js';
 import { ADD_ICON, DELETE_ICON } from '../icons.js';
 import Dialog from '../layout/Dialog.js';
+import assign from '../utility/assign.js';
 import { MARGIN_TOP } from '../utility/domConstants.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
@@ -63,7 +64,17 @@ export default class EditableGrid extends FormControl {
 			width: HUNDRED_PERCENT,
 			height: AUTO,
 			showAddButton: true
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new Grid({
+					columns: settings.columns,
+					height: settings.height === AUTO ? AUTO : '14rem',
+					onSelect(id) {
+						self[showDialog](id);
+					}
+				})
+			})
+		}));
 
 		const self = this;
 		self[CURRENT_VALUE] = [];
@@ -71,16 +82,10 @@ export default class EditableGrid extends FormControl {
 
 		self.addClass('editable-grid');
 
-		self[GRID] = new Grid({
-			container: self,
-			columns: settings.columns,
-			height: settings.height === AUTO ? AUTO : '14rem',
-			onSelect(id) {
-				self[showDialog](id);
-			}
-		});
+		self[GRID] = settings.FocusMixin.mainControl;
+		self[GRID].container(self);
 
-		applySettings(self, settings, [], ['value']);
+		applySettings(self, settings, ['columns'], ['value']);
 
 		self.onResize(() => {
 				if (!self.height().isAuto) {

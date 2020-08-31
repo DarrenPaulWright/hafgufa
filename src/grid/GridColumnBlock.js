@@ -11,6 +11,8 @@ import {
 import Control from '../Control.js';
 import controlTypes from '../controlTypes.js';
 import VirtualList from '../layout/VirtualList.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import assign from '../utility/assign.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
 import './GridColumnBlock.less';
@@ -27,14 +29,39 @@ const updateRow = Symbol();
  * Handles the view of the {@link Grid}.
  *
  * @class GridColumnBlock
+ * @mixes FocusMixin
+ * @extends Control
  *
  * @param {object} settings - Same settings as {@link Grid}
  */
-export default class GridColumnBlock extends Control {
+export default class GridColumnBlock extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.GRID_COLUMN_BLOCK
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new VirtualList({
+					height: settings.isAutoHeight ? AUTO : HUNDRED_PERCENT,
+					isFocusable: true,
+					isVirtualized: settings.isVirtualized,
+					emptyContentMessage: locale.get('noItemsToDisplay'),
+					itemControl: GridRow,
+					extraRenderedItemsRatio: 1,
+					itemDefaultSettings: {
+						wordWrap: settings.wordWrap,
+						onSelect: settings.onSelect,
+						onSelectGroup: settings.onSelectGroup,
+						onExpandCollapseGroup: settings.onExpandCollapseGroup
+					},
+					onItemRender(rowControl, rowData) {
+						self[updateRow](rowControl, rowData);
+					},
+					onNearEnd() {
+						self.onNearBottom().trigger();
+					}
+				})
+			})
+		}));
 
 		const self = this;
 		self[RENDERED_WIDTH] = 0;
@@ -49,28 +76,10 @@ export default class GridColumnBlock extends Control {
 			onColumnChange: settings.onColumnChange
 		});
 
-		self[VIRTUAL_LIST] = new VirtualList({
-			container: self.element,
-			height: settings.isAutoHeight ? AUTO : HUNDRED_PERCENT,
-			isVirtualized: settings.isVirtualized,
-			emptyContentMessage: locale.get('noItemsToDisplay'),
-			itemControl: GridRow,
-			extraRenderedItemsRatio: 1,
-			itemDefaultSettings: {
-				wordWrap: settings.wordWrap,
-				onSelect: settings.onSelect,
-				onSelectGroup: settings.onSelectGroup,
-				onExpandCollapseGroup: settings.onExpandCollapseGroup
-			},
-			onItemRender(rowControl, rowData) {
-				self[updateRow](rowControl, rowData);
-			},
-			onNearEnd() {
-				self.onNearBottom().trigger();
-			}
-		});
+		self[VIRTUAL_LIST] = settings.FocusMixin.mainControl;
+		self[VIRTUAL_LIST].container(self.element);
 
-		applySettings(self, settings);
+		applySettings(self, settings, [], ['rows']);
 
 		self.onResize((width, height) => {
 				if (self[GRID_HEADER]) {

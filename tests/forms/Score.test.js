@@ -4,7 +4,10 @@ import TestUtil from '../TestUtil.js';
 
 describe('Score', () => {
 	const testUtil = new TestUtil(Score);
-	testUtil.run();
+	testUtil.run({
+		skipTests: ['FocusMixin'],
+		mainClass: 'score'
+	});
 
 	describe('Init', () => {
 		it('should have a div with class "score-text"', () => {

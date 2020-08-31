@@ -40,8 +40,8 @@ const setFocusIndex = Symbol();
  * Visually groups buttons together
  *
  * @class GroupedButtons
- * @extends FormControl
  * @mixes FocusMixin
+ * @extends FormControl
  *
  * @param {object} settings - Accepts all control and FormControl options plus:
  */

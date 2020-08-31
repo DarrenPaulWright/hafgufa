@@ -3,6 +3,7 @@ import { applySettings, AUTO, HUNDRED_PERCENT, methodArray, methodString } from 
 import controlTypes from '../controlTypes.js';
 import Radio from '../elements/Radio.js';
 import { ORIENTATION } from '../uiConstants.js';
+import assign from '../utility/assign.js';
 import setDefaults from '../utility/setDefaults.js';
 import FormControl from './FormControl.js';
 import './Radios.less';
@@ -23,7 +24,13 @@ export default class Radios extends FormControl {
 		super(setDefaults({
 			type: controlTypes.RADIO,
 			width: AUTO
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					self[RADIOS][0].isFocused(true);
+				}
+			})
+		}));
 
 		const self = this;
 		self[RADIOS] = [];

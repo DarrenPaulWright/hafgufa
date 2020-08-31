@@ -7,10 +7,13 @@ describe('Menu', () => {
 	testUtil.run({
 		skipTests: ['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation'],
 		mainCssClass: 'menu',
-		extraSettings: {
+		settings: {
 			menuItems: [{
 				id: '1',
 				title: 'test'
+			}, {
+				id: '2',
+				title: 'test 2'
 			}],
 			delay: 0,
 			fade: false
@@ -18,7 +21,7 @@ describe('Menu', () => {
 		autoFocus: true
 	});
 
-	describe('MenuItems', () => {
+	describe('.menuItems', () => {
 		testUtil.testMethod({
 			methodName: 'menuItems',
 			defaultValue: [],

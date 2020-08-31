@@ -26,7 +26,7 @@ describe('GridFooter', () => {
 		});
 	});
 
-	describe('CountSuffix', () => {
+	describe('.countSuffix', () => {
 		testUtil.testMethod({
 			methodName: 'countSuffix',
 			defaultValue: 'items',
@@ -46,7 +46,7 @@ describe('GridFooter', () => {
 		});
 	});
 
-	describe('Count', () => {
+	describe('.count', () => {
 		testUtil.testMethod({
 			methodName: 'count',
 			defaultValue: 0,
@@ -73,7 +73,7 @@ describe('GridFooter', () => {
 		});
 	});
 
-	describe('GroupSuffixes', () => {
+	describe('.groupSuffixes', () => {
 		testUtil.testMethod({
 			methodName: 'groupSuffixes',
 			defaultValue: [],
@@ -91,7 +91,7 @@ describe('GridFooter', () => {
 		});
 	});
 
-	describe('GroupCounts', () => {
+	describe('.groupCounts', () => {
 		testUtil.testMethod({
 			methodName: 'groupCounts',
 			defaultValue: [],
@@ -110,7 +110,7 @@ describe('GridFooter', () => {
 		});
 	});
 
-	describe('OnCollapseAllGroups', () => {
+	describe('.onCollapseAllGroups', () => {
 		it('should have two buttons when showExpandCollapseButtons is called', () => {
 			testUtil.control = new GridFooter({
 				container: testUtil.container

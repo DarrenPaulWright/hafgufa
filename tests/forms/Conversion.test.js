@@ -30,7 +30,6 @@ describe('Conversion', () => {
 		focusableElement: 'input[type="text"]',
 		focusableSubElement: 'input[type="text"]',
 		extraTests: {
-			focus: true,
 			onChange: {
 				buildControl() {
 					testUtil.control = new Conversion({
@@ -49,7 +48,7 @@ describe('Conversion', () => {
 		}
 	});
 
-	describe('Labels', () => {
+	describe('.labels', () => {
 		it('should show a label after the \'from\' text box', () => {
 			testUtil.control = new Conversion({
 				container: testUtil.container,
@@ -308,7 +307,7 @@ describe('Conversion', () => {
 		});
 	});
 
-	describe('ChangeDelay', () => {
+	describe('.changeDelay', () => {
 		testUtil.testMethod({
 			methodName: 'changeDelay',
 			defaultValue: 200,

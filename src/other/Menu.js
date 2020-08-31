@@ -109,7 +109,15 @@ export default class Menu extends Popup {
 				mainControl: new Tree({
 					id: TREE_ID,
 					width: AUTO
-				})
+				}),
+				setFocus() {
+					if (self.canFilter()) {
+						self.get(FILTER_ID).isFocused(true);
+					}
+					else {
+						self.get(TREE_ID).isFocused(true);
+					}
+				}
 			}
 		}));
 
@@ -158,18 +166,11 @@ export default class Menu extends Popup {
 
 		applySettings(self, settings, ['anchorDockPoint', 'popupDockPoint']);
 
-		if (self.canFilter()) {
-			self.get(FILTER_ID).isFocused(true);
-		}
-		else {
-			self.get(TREE_ID).isFocused(true);
-		}
-
 		self.onRemove(() => {
-			currentMenu = null;
-		});
-
-		self.resize(true);
+				currentMenu = null;
+			})
+			.resize(true)
+			.isFocused(true);
 	}
 
 	[buildHeader]() {

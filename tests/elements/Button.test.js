@@ -5,7 +5,6 @@ import TestUtil from '../TestUtil.js';
 describe('Button', () => {
 	const testUtil = new TestUtil(Button);
 	testUtil.run({
-		extraTests: { focus: true },
 		focusableElement: 'button'
 	});
 

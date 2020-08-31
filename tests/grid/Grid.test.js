@@ -5,9 +5,22 @@ import TestUtil from '../TestUtil.js';
 
 describe('Grid', () => {
 	const testUtil = new TestUtil(Grid);
-	testUtil.run();
+	testUtil.run({
+		settings: {
+			columns: [{
+				type: Grid.COLUMN_TYPES.TEXT,
+				title: 'test',
+				path: 'value'
+			}],
+			rows: [{
+				id: '1',
+				value: 'test'
+			}],
+			height: '30rem'
+		}
+	});
 
-	describe('AddRow', () => {
+	describe('.addRow', () => {
 		it('should be able to add a simple row without column definitions', () => {
 			const options = {
 				container: testUtil.container
@@ -100,7 +113,7 @@ describe('Grid', () => {
 		});
 	});
 
-	describe('AddRows', () => {
+	describe('.addRows', () => {
 		it('runAddRows', () => {
 			const options = {
 				container: testUtil.container

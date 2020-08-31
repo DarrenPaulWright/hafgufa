@@ -21,6 +21,7 @@ const setCountString = Symbol();
  * Builds a footer for the grid control.
  *
  * @class GridFooter
+ * @extends Control
  *
  * @param {object} settings
  */

@@ -13,6 +13,7 @@ const CHECK_BOXES = Symbol();
  * Display a list of check boxes.
  *
  * @class CheckBox
+ * @extends FormControl
  *
  * @param {object} settings
  */

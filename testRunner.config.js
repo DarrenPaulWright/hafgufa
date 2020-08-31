@@ -11,6 +11,8 @@ module.exports = [{
 	type: 'helper',
 	files: [
 		'tests/TestUtil.js',
+		'tests/ExtendsTestRunner.js',
+		'tests/extendsTestRegister.js',
 		'tests/**/*Tests.js',
 		'src/**/*.less'
 	]

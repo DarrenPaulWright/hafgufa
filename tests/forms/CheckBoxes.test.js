@@ -6,6 +6,13 @@ describe('CheckBoxes', () => {
 	const testUtil = new TestUtil(CheckBoxes);
 	testUtil.run({
 		mainCssClass: 'checkboxes',
+		settings: {
+			values: [{
+				content: 'option1',
+				value: '1',
+				isChecked: false
+			}]
+		},
 		extraTests: {
 			onChange: {
 				buildControl() {
@@ -26,7 +33,7 @@ describe('CheckBoxes', () => {
 		}
 	});
 
-	describe('Values', () => {
+	describe('.values', () => {
 		it('should have a default value of an empty array', () => {
 			testUtil.control = new CheckBoxes({
 				container: testUtil.container

@@ -9,7 +9,7 @@ describe('Calendar', () => {
 		mainCssClass: 'calendar'
 	});
 
-	describe('Month', () => {
+	describe('.month', () => {
 		testUtil.testMethod({
 			methodName: 'month',
 			defaultValue: new Date().getMonth(),
@@ -137,7 +137,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('Year', () => {
+	describe('.year', () => {
 		testUtil.testMethod({
 			methodName: 'year',
 			defaultValue: new Date().getFullYear(),
@@ -168,7 +168,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('OnDateSelected', () => {
+	describe('.onDateSelected', () => {
 		it('should execute the onDateSelected callback when a day is clicked', () => {
 			let testValue = '';
 
@@ -197,7 +197,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('SelectedDate', () => {
+	describe('.selectedDate', () => {
 		testUtil.testMethod({
 			methodName: 'selectedDate',
 			defaultValue: undefined,
@@ -240,7 +240,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('WeekdayFormat', () => {
+	describe('.weekdayFormat', () => {
 		testUtil.testMethod({
 			methodName: 'weekdayFormat',
 			defaultValue: 'EEE',
@@ -274,7 +274,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('MonthFormat', () => {
+	describe('.monthFormat', () => {
 		testUtil.testMethod({
 			methodName: 'monthFormat',
 			defaultValue: 'MMM',
@@ -293,7 +293,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('YearRangePast', () => {
+	describe('.yearRangePast', () => {
 		testUtil.testMethod({
 			methodName: 'yearRangePast',
 			defaultValue: 100,
@@ -348,7 +348,7 @@ describe('Calendar', () => {
 		});
 	});
 
-	describe('YearRangeFuture', () => {
+	describe('.yearRangeFuture', () => {
 		testUtil.testMethod({
 			methodName: 'yearRangeFuture',
 			defaultValue: 10,

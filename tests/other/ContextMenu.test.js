@@ -6,10 +6,22 @@ describe('ContextMenu', () => {
 	const testUtil = new TestUtil(ContextMenu);
 	testUtil.run({
 		skipTests: ['container', 'element', 'id', 'height', 'width', 'onResize', 'stopPropagation'],
-		mainCssClass: 'context-menu'
+		mainCssClass: 'context-menu',
+		settings: {
+			menuItems: [{
+				id: '1',
+				title: 'test'
+			}, {
+				id: '2',
+				title: 'test 2'
+			}],
+			delay: 0,
+			fade: false
+		},
+		autoFocus: true
 	});
 
-	describe('MenuItems', () => {
+	describe('.menuItems', () => {
 		it('should remove itself if a context menu is envoked elsewhere in the DOM', () => {
 			testUtil.control = new ContextMenu({
 				menuItems: [{

@@ -7,7 +7,7 @@ describe('FilePicker', () => {
 		mainCssClass: 'file-picker'
 	});
 
-	describe('PreviewSize', () => {
+	describe('.previewSize', () => {
 		testUtil.testMethod({
 			methodName: 'previewSize',
 			defaultValue: 'small',

@@ -130,7 +130,7 @@ describe('TextInput', () => {
 		);
 	});
 
-	describe('GetValue', () => {
+	describe('.getValue', () => {
 		it('should return a value that has been set in the input element', () => {
 			testUtil.control = new TextInput({
 				container: testUtil.container,
@@ -176,7 +176,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('SetValue', () => {
+	describe('.setValue', () => {
 		it('should set the value of an input element', () => {
 			testUtil.control = new TextInput({
 				container: testUtil.container,
@@ -222,7 +222,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('GetInput', () => {
+	describe('.getInput', () => {
 		it('should return an input element when getInput is called and rows equals 1', () => {
 			testUtil.control = new TextInput({
 				container: testUtil.container,
@@ -242,7 +242,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('IsSoftValidation', () => {
+	describe('.isSoftValidation', () => {
 		testUtil.testMethod({
 			methodName: 'isSoftValidation',
 			defaultSettings: {
@@ -253,7 +253,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('MinLength', () => {
+	describe('.minLength', () => {
 		testUtil.testMethod({
 			methodName: 'minLength',
 			defaultSettings: {
@@ -290,7 +290,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('MaxLength', () => {
+	describe('.maxLength', () => {
 		testUtil.testMethod({
 			methodName: 'maxLength',
 			defaultSettings: {
@@ -353,7 +353,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('MinValue', () => {
+	describe('.minValue', () => {
 		testUtil.testMethod({
 			methodName: 'minValue',
 			defaultSettings: {
@@ -413,7 +413,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('MaxValue', () => {
+	describe('.maxValue', () => {
 		testUtil.testMethod({
 			methodName: 'maxValue',
 			defaultSettings: {
@@ -473,7 +473,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('IsInt', () => {
+	describe('.isInt', () => {
 		testUtil.testMethod({
 			methodName: 'isInt',
 			defaultSettings: {
@@ -549,7 +549,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('IsNumber', () => {
+	describe('.isNumber', () => {
 		testUtil.testMethod({
 			methodName: 'isNumber',
 			defaultSettings: {
@@ -596,7 +596,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('Placeholder', () => {
+	describe('.placeholder', () => {
 		testUtil.testMethod({
 			methodName: 'placeholder',
 			defaultSettings: {
@@ -617,7 +617,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('Prefix', () => {
+	describe('.prefix', () => {
 		testUtil.testMethod({
 			methodName: 'prefix',
 			defaultSettings: {
@@ -662,7 +662,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('IsPassowrd', () => {
+	describe('.isPassowrd', () => {
 		testUtil.testMethod({
 			methodName: 'isPassword',
 			defaultSettings: {
@@ -693,7 +693,7 @@ describe('TextInput', () => {
 		});
 	});
 
-	describe('ChangeDelay', () => {
+	describe('.changeDelay', () => {
 		testUtil.testMethod({
 			methodName: 'changeDelay',
 			defaultSettings: {

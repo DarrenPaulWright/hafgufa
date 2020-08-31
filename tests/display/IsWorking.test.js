@@ -8,7 +8,7 @@ describe('IsWorking', () => {
 	testUtil.run({
 		skipTests: ['width', 'classes', 'onResize'],
 		mainCssClass: 'is-working',
-		extraSettings: {
+		settings: {
 			delay: 0
 		}
 	});
@@ -91,7 +91,7 @@ describe('IsWorking', () => {
 		});
 	});
 
-	describe('Label', () => {
+	describe('.label', () => {
 		const testLabel = 'loading';
 		const testLabel2 = 'done';
 

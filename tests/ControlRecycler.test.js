@@ -15,7 +15,7 @@ describe('ControlRecycler', () => {
 		});
 	});
 
-	describe('Control', () => {
+	describe('.control', () => {
 		testUtil.testMethod({
 			methodName: 'control',
 			defaultValue: undefined,
@@ -24,7 +24,7 @@ describe('ControlRecycler', () => {
 		});
 	});
 
-	describe('defaultSettings', () => {
+	describe('.defaultSettings', () => {
 		testUtil.testMethod({
 			methodName: 'defaultSettings',
 			defaultValue: undefined,

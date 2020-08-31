@@ -7,9 +7,8 @@ describe('Tree', () => {
 	const testUtil = new TestUtil(Tree);
 	testUtil.run({
 		skipTests: ['stopPropagation'],
-		extraTests: { focus: true },
 		mainCssClass: 'tree',
-		extraSettings: {
+		settings: {
 			branches: [{
 				id: '1',
 				title: 'test',
@@ -18,7 +17,7 @@ describe('Tree', () => {
 		}
 	});
 
-	describe('Branches', () => {
+	describe('.branches', () => {
 		const flatBranches = [{
 			id: '1',
 			title: 'Item 1',
@@ -131,7 +130,7 @@ describe('Tree', () => {
 		});
 	});
 
-	describe('Selection', () => {
+	describe('.selection', () => {
 		const flatBranches = [{
 			id: '1',
 			title: 'Item 1',
@@ -256,7 +255,7 @@ describe('Tree', () => {
 		});
 	});
 
-	describe('Height', () => {
+	describe('.height', () => {
 		const branches = [{
 			id: '1',
 			title: 'Item 1'

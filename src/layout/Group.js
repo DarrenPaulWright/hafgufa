@@ -15,7 +15,7 @@ import './Group.less';
  * @class Group
  * @mixes MergeContentContainerMixin
  * @mixes ControlHeadingMixin
- * @extends Container
+ * @extends Control
  *
  * @param {object} settings
  */

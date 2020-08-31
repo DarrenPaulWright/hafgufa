@@ -4,9 +4,7 @@ import TestUtil from '../TestUtil.js';
 
 describe('DragContainer', () => {
 	const testUtil = new TestUtil(DragContainer);
-	testUtil.run({
-		extraTests: { focus: true }
-	});
+	testUtil.run();
 
 	describe('.stretch', () => {
 		it('should not blow up', () => {

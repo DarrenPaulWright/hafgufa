@@ -1,13 +1,27 @@
 import { wait } from 'async-agent';
 import { assert } from 'type-enforcer';
 import { HUNDRED_PERCENT } from 'type-enforcer-ui';
-import { EditableGrid } from '../../index.js';
+import { EditableGrid, Grid } from '../../index.js';
 import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import TestUtil from '../TestUtil.js';
 
 describe('EditableGrid', () => {
 	const testUtil = new TestUtil(EditableGrid);
-	testUtil.run({ skipTests: ['width'] });
+	testUtil.run({
+		skipTests: ['width'],
+		settings: {
+			columns: [{
+				type: Grid.COLUMN_TYPES.TEXT,
+				title: 'test',
+				path: 'value'
+			}],
+			value: [{
+				id: '1',
+				value: 'test'
+			}],
+			height: '30rem'
+		}
+	});
 
 	describe('Dialogs', () => {
 		it('should display a dialog when the "Add New" button is clicked', () => {

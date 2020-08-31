@@ -14,7 +14,8 @@ import Control from '../Control.js';
 import ControlRecycler from '../ControlRecycler.js';
 import controlTypes from '../controlTypes.js';
 import Heading from '../elements/Heading.js';
-import { CLICK_EVENT, MOUSE_DOWN_EVENT } from '../utility/domConstants.js';
+import FocusMixin from '../mixins/FocusMixin.js';
+import { CLICK_EVENT, MOUSE_DOWN_EVENT, TAB_INDEX, TAB_INDEX_ENABLED } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import GridCell from './GridCell.js';
 import { COLUMN_TYPES } from './gridConstants.js';
@@ -43,17 +44,19 @@ const refresh = Symbol();
  * Controls the display of one row in the grid control
  *
  * @class GridRow
+ * @mixes FocusMixin
  * @extends Control
  *
  * @param {object} settings - Accepts all control settings plus:
  */
-export default class GridRow extends Control {
+export default class GridRow extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.GRID_ROW
 		}, settings));
 
 		const self = this;
+		self.attr(TAB_INDEX, TAB_INDEX_ENABLED);
 		self[CURRENT_AVAILABLE_WIDTH] = 0;
 		self[INDENT_WIDTH] = 0;
 		self[IS_GROUP_HEADER] = false;

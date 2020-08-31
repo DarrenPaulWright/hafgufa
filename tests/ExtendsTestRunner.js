@@ -3,7 +3,7 @@ import { isFunction } from 'type-enforcer';
 import { castArray } from 'type-enforcer-ui';
 
 const TEST_ID = 'testId';
-const forceSkipTests = ['run', 'buildSettings', 'focus', 'onChange'];
+const forceSkipTests = ['run', 'buildSettings', 'onChange'];
 
 export const CONTROL = Symbol();
 export const TEST_UTIL = Symbol();
@@ -46,7 +46,7 @@ export default class ExtendsTestRunner {
 			container: self[TEST_UTIL].container,
 			delay: 0,
 			fade: false,
-			...self[SETTINGS].extraSettings,
+			...self[SETTINGS].settings,
 			...localSettings
 		};
 	}

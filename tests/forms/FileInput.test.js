@@ -8,7 +8,7 @@ describe('FileInput', () => {
 		mainCssClass: 'file-input'
 	});
 
-	describe('IsMulti', () => {
+	describe('.isMulti', () => {
 		testUtil.testMethod({
 			methodName: 'isMulti',
 			defaultValue: false,
@@ -17,7 +17,7 @@ describe('FileInput', () => {
 		});
 	});
 
-	describe('PreviewSize', () => {
+	describe('.previewSize', () => {
 		testUtil.testMethod({
 			methodName: 'previewSize',
 			defaultValue: 'small',

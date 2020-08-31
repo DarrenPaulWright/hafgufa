@@ -5,8 +5,7 @@ describe('Popup', () => {
 	const testUtil = new TestUtil(Popup);
 	testUtil.run({
 		skipTests: ['container', 'id', 'stopPropagation'],
-		extraTests: { focus: true },
-		extraSettings: {
+		settings: {
 			isFocusable: true
 		},
 		focusableElement: '.popup'

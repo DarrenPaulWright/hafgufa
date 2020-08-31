@@ -39,7 +39,6 @@ describe('Tags', () => {
 		mainCssClass: 'tags',
 		focusableElement: 'input[type=text]',
 		extraTests: {
-			focus: true,
 			onChange: {
 				buildControl() {
 					testUtil.control = new Tags({
@@ -83,7 +82,7 @@ describe('Tags', () => {
 		});
 	});
 
-	describe('Tags', () => {
+	describe('.tags', () => {
 		it('should add a tag when text is entered and Enter is pressed', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container
@@ -310,7 +309,7 @@ describe('Tags', () => {
 		});
 	});
 
-	describe('Value', () => {
+	describe('.value', () => {
 		it('should accept a comma separated string as a value', () => {
 			testUtil.control = new Tags({
 				container: testUtil.container
@@ -455,7 +454,7 @@ describe('Tags', () => {
 		});
 	});
 
-	describe('Suggestions', () => {
+	describe('.suggestions', () => {
 		const keywordSuggestions = [
 			'test 1',
 			'test 2',
@@ -849,7 +848,7 @@ describe('Tags', () => {
 		});
 	});
 
-	describe('BreakOnSpaces', () => {
+	describe('.breakOnSpaces', () => {
 		testUtil.testMethod({
 			methodName: 'breakOnSpaces',
 			defaultSettings: {

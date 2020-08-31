@@ -9,6 +9,7 @@ import extendsTestRegister from './extendsTestRegister.js';
 import './forms/FormControlTests.js';
 import './graphs/GraphBaseTests.js';
 import './mixins/ControlHeadingMixinTests.js';
+import './mixins/FocusMixinTests.js';
 
 const last = (array) => array[array.length - 1];
 
@@ -128,10 +129,12 @@ export default class TestUtil {
 		const control = new self[CONSTRUCTOR]();
 
 		walkPrototype(control, (name) => {
-			const tests = extendsTestRegister.get(name);
+			if (!settings.skipTests || !settings.skipTests.includes(name)) {
+				const tests = extendsTestRegister.get(name);
 
-			if (tests) {
-				testPackages.push(tests);
+				if (tests) {
+					testPackages.push(tests);
+				}
 			}
 		});
 

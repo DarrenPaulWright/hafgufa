@@ -7,7 +7,6 @@ describe('Heading', () => {
 	const testUtil = new TestUtil(Heading);
 	testUtil.run({
 		skipTests: ['stopPropagation'],
-		extraTests: { focus: true },
 		mainCssClass: 'heading',
 		focusableElement: '.heading'
 	});

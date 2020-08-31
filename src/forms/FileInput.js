@@ -5,6 +5,7 @@ import Icon from '../elements/Icon.js';
 import Input from '../elements/Input.js';
 import Label from '../elements/Label.js';
 import { AUDIO_FILE_ICON, FILE_ICON, IMAGE_FILE_ICON, VIDEO_FILE_ICON } from '../icons.js';
+import FocusMixin from '../mixins/FocusMixin.js';
 import { IS_DESKTOP } from '../utility/browser.js';
 import {
 	ACCEPT,
@@ -15,7 +16,9 @@ import {
 	DRAG_LEAVE_EVENT,
 	EMPTY_STRING,
 	INPUT_TYPE_FILE,
-	MULTIPLE
+	MULTIPLE,
+	TAB_INDEX,
+	TAB_INDEX_ENABLED
 } from '../utility/domConstants.js';
 import locale from '../utility/locale.js';
 import setDefaults from '../utility/setDefaults.js';
@@ -53,11 +56,12 @@ const isValidMimeType = Symbol();
  * Display a styled file input element with file drop support.
  *
  * @class FileInput
+ * @mixes FocusMixin
  * @extends Control
  *
  * @param {object} settings
  */
-export default class FileInput extends Control {
+export default class FileInput extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.FILE_INPUT
@@ -66,6 +70,7 @@ export default class FileInput extends Control {
 		const self = this;
 
 		self.addClass(FILE_INPUT_CLASS + PREVIEW_SIZES.SMALL);
+		self.attr(TAB_INDEX, TAB_INDEX_ENABLED);
 
 		self[INPUT_CONTROL] = new Input({
 			inputType: INPUT_TYPE_FILE,

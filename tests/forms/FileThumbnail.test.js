@@ -8,7 +8,7 @@ describe('FileThumbnail', () => {
 		mainCssClass: 'file-thumbnail'
 	});
 
-	describe('ImageSource', () => {
+	describe('.imageSource', () => {
 		testUtil.testMethod({
 			methodName: 'imageSource',
 			defaultValue: undefined,
@@ -26,7 +26,7 @@ describe('FileThumbnail', () => {
 		});
 	});
 
-	describe('PreviewSize', () => {
+	describe('.previewSize', () => {
 		testUtil.testMethod({
 			methodName: 'previewSize',
 			defaultValue: 'small',

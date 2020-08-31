@@ -33,7 +33,7 @@ const onTabClick = Symbol();
  *
  * @class Tabs
  * @mixes MergeContentContainerMixin
- * @extends Container
+ * @extends Control
  *
  * @args {object} [settings]
  */

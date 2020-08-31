@@ -1,9 +1,12 @@
+import { set } from 'object-agent';
 import { applySettings, methodBoolean } from 'type-enforcer-ui';
 import controlTypes from '../controlTypes.js';
 import DragMixin from '../mixins/DragMixin.js';
 import FocusMixin from '../mixins/FocusMixin.js';
 import G from '../svg/G.js';
 import Rect from '../svg/Rect.js';
+import assign from '../utility/assign.js';
+import { TAB_INDEX, TAB_INDEX_ENABLED } from '../utility/domConstants.js';
 import setDefaults from '../utility/setDefaults.js';
 import './DragPoint.less';
 
@@ -24,7 +27,14 @@ export default class DragPoint extends FocusMixin(DragMixin(G)) {
 			restrictHorizontalDrag: true,
 			restrictDragToOrigin: true,
 			fade: true
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new Rect({
+					classes: 'hit-area',
+					attr: set({}, TAB_INDEX, TAB_INDEX_ENABLED)
+				})
+			})
+		}));
 
 		const self = this;
 		self.addClass('drag-point');
@@ -34,10 +44,7 @@ export default class DragPoint extends FocusMixin(DragMixin(G)) {
 			classes: 'point'
 		});
 
-		new Rect({
-			container: self,
-			classes: 'hit-area'
-		});
+		settings.FocusMixin.mainControl.container(self);
 
 		applySettings(self, settings, ['restrictDragToOrigin']);
 	}

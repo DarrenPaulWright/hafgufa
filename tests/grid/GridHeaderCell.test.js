@@ -17,7 +17,7 @@ describe('GridHeaderCell', () => {
 		mainCssClass: 'grid-header-cell'
 	});
 
-	describe('Label', () => {
+	describe('.label', () => {
 		testUtil.testMethod({
 			methodName: 'title',
 			defaultValue: '',
@@ -43,7 +43,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('DataType', () => {
+	describe('.dataType', () => {
 		testUtil.testMethod({
 			methodName: 'dataType',
 			defaultValue: COLUMN_TYPES.NONE,
@@ -105,7 +105,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('CanSort', () => {
+	describe('.canSort', () => {
 		testUtil.testMethod({
 			methodName: 'canSort',
 			defaultValue: false,
@@ -169,7 +169,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('SortDirection', () => {
+	describe('.sortDirection', () => {
 		testUtil.testMethod({
 			methodName: 'sortDirection',
 			defaultValue: SORT_TYPES.NONE,
@@ -225,7 +225,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('FilterType', () => {
+	describe('.filterType', () => {
 		testUtil.testMethod({
 			methodName: 'filterType',
 			defaultValue: FILTER_TYPES.NONE,
@@ -352,7 +352,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('Filter', () => {
+	describe('.filter', () => {
 		testUtil.testMethod({
 			methodName: 'filter',
 			defaultSettings: {
@@ -572,7 +572,7 @@ describe('GridHeaderCell', () => {
 		);
 	});
 
-	describe('SelectableColumns', () => {
+	describe('.selectableColumns', () => {
 		testUtil.testMethod({
 			methodName: 'selectableColumns',
 			defaultValue: [],
@@ -748,7 +748,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('IsAllRowsSelected', () => {
+	describe('.isAllRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isAllRowsSelected',
 			defaultValue: false,
@@ -801,7 +801,7 @@ describe('GridHeaderCell', () => {
 		});
 	});
 
-	describe('IsSomeRowsSelected', () => {
+	describe('.isSomeRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSomeRowsSelected',
 			defaultValue: false,

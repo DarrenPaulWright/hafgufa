@@ -45,7 +45,21 @@ export default class FilePicker extends IsWorkingMixin(FormControl) {
 		super(setDefaults({
 			type: controlTypes.FILE_PICKER,
 			width: AUTO
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				setFocus() {
+					if (self[FILE_THUMBNAILS].length === 0) {
+						self[FILE_INPUT].isFocused(true);
+					}
+					else {
+						self[FILE_THUMBNAILS].each((thumb) => {
+							thumb.isFocused(true);
+							return true;
+						});
+					}
+				}
+			})
+		}));
 
 		const self = this;
 		self[FILES] = [];
@@ -353,19 +367,7 @@ Object.assign(FilePicker.prototype, {
 				self[FILE_INPUT].isMulti(isMulti);
 			}
 		}
-	}),
-
-	/**
-	 * Determines if this control has focus
-	 *
-	 * @method isFocused
-	 * @memberOf FilePicker
-	 * @instance
-	 * @returns {boolean}
-	 */
-	isFocused() {
-		return false;
-	}
+	})
 });
 
 FilePicker.PREVIEW_SIZES = PREVIEW_SIZES;

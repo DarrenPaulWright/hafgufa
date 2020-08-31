@@ -4,9 +4,18 @@ import TestUtil from '../TestUtil.js';
 
 describe('Radios', () => {
 	const testUtil = new TestUtil(Radios);
-	testUtil.run();
+	testUtil.run({
+		mainCssClass: 'radios',
+		settings: {
+			values: [{
+				content: 'option1',
+				value: '1',
+				isChecked: false
+			}]
+		}
+	});
 
-	describe('Values', () => {
+	describe('.values', () => {
 		testUtil.testMethod({
 			methodName: 'value',
 			defaultSettings: {

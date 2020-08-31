@@ -32,7 +32,7 @@ describe('GridCell', () => {
 	describe('.onSelect', () => {
 	});
 
-	describe('DataType', () => {
+	describe('.dataType', () => {
 		testUtil.testMethod({
 			methodName: 'dataType',
 			defaultSettings: {
@@ -72,7 +72,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('Content', () => {
+	describe('.content', () => {
 		const testTypes = [{
 			type: 'TEXT',
 			content: {
@@ -523,7 +523,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('DisplayType', () => {
+	describe('.displayType', () => {
 		it('should return a displayType of gridConstants.DISPLAY_TYPES.TEXT if dataType is set to gridConstants.COLUMN_TYPES.TEXT', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,
@@ -637,7 +637,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('IsSelected', () => {
+	describe('.isSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSelected',
 			defaultSettings: {
@@ -765,7 +765,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('CanWordWrap', () => {
+	describe('.canWordWrap', () => {
 		testUtil.testMethod({
 			methodName: 'wordWrap',
 			defaultSettings: {
@@ -807,7 +807,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('TextAlign', () => {
+	describe('.textAlign', () => {
 		testUtil.testMethod({
 			methodName: 'textAlign',
 			defaultSettings: {
@@ -829,7 +829,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('IsEnabled', () => {
+	describe('.isEnabled', () => {
 		testUtil.testMethod({
 			methodName: 'isEnabled',
 			defaultSettings: {
@@ -840,7 +840,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('Tooltip', () => {
+	describe('.tooltip', () => {
 		testUtil.testMethod({
 			methodName: 'tooltip',
 			defaultSettings: {
@@ -894,7 +894,7 @@ describe('GridCell', () => {
 		});
 	});
 
-	describe('ResetClasses', () => {
+	describe('.resetClasses', () => {
 		it('should have the class "grid-cell" after resetClasses is called', () => {
 			testUtil.control = new GridCell({
 				container: testUtil.container,

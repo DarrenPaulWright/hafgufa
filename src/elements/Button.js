@@ -30,6 +30,7 @@ const ICON_POSITIONS = new Enum({
  * Display a button.
  *
  * @class Button
+ * @mixes TooltipMixin
  * @mixes MouseMixin
  * @mixes FocusMixin
  * @mixes OnClickMixin

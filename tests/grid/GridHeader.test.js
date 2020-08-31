@@ -16,7 +16,7 @@ describe('GridHeader', () => {
 		mainCssClass: 'grid-header'
 	});
 
-	describe('Columns', () => {
+	describe('.columns', () => {
 		testUtil.testMethod({
 			methodName: 'columns',
 			defaultValue: [],
@@ -213,7 +213,7 @@ describe('GridHeader', () => {
 		});
 	});
 
-	describe('FilterTypes', () => {
+	describe('.filterTypes', () => {
 		it('should render a tags control if filterType is AUTO_COMPLETE', () => {
 			testUtil.control = new GridHeader({
 				container: testUtil.container,
@@ -407,7 +407,7 @@ describe('GridHeader', () => {
 		});
 	});
 
-	describe('SelectableColumns', () => {
+	describe('.selectableColumns', () => {
 		testUtil.testMethod({
 			methodName: 'selectableColumns',
 			defaultValue: [],
@@ -447,7 +447,7 @@ describe('GridHeader', () => {
 		});
 	});
 
-	describe('IsAllRowsSelected', () => {
+	describe('.isAllRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isAllRowsSelected',
 			defaultValue: false,
@@ -472,7 +472,7 @@ describe('GridHeader', () => {
 		});
 	});
 
-	describe('IsSomeRowsSelected', () => {
+	describe('.isSomeRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSomeRowsSelected',
 			defaultValue: false,
@@ -497,7 +497,7 @@ describe('GridHeader', () => {
 		});
 	});
 
-	describe('ScrollbarWidth', () => {
+	describe('.scrollbarWidth', () => {
 		testUtil.testMethod({
 			methodName: 'scrollbarWidth',
 			defaultValue: 0,

@@ -44,6 +44,7 @@ const IS_AUTO = Symbol();
  * Display a dialog with a title, content, and a footer.
  *
  * @class Dialog
+ * @extends Removable
  *
  * @param {object} settings
  */

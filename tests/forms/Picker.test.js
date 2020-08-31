@@ -25,7 +25,7 @@ describe('Picker', () => {
 	}];
 
 	testUtil.run({
-		extraSettings: {
+		settings: {
 			width: HUNDRED_PERCENT,
 			showAll: true,
 			defaultButtonText: 'asdf',
@@ -33,7 +33,6 @@ describe('Picker', () => {
 		},
 		focusableElement: '.form-button',
 		extraTests: {
-			focus: true,
 			onChange: {
 				buildControl() {
 					testUtil.control = new Picker({

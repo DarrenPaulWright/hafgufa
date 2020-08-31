@@ -13,64 +13,6 @@ describe('DateInput', () => {
 	const testUtil = new TestUtil(DateInput);
 	testUtil.run();
 
-	describe('.isFocused', () => {
-		it('should focus the text input when isFocused(true) is called', () => {
-			testUtil.control = new DateInput({
-				container: testUtil.container
-			});
-
-			testUtil.control.isFocused(true);
-
-			assert.is(testUtil.first('input'), document.activeElement);
-		});
-
-		it('should call the onFocus callback when isFocused(true) is called', () => {
-			let testValue = 0;
-
-			testUtil.control = new DateInput({
-				container: testUtil.container,
-				onFocus() {
-					testValue++;
-				}
-			});
-
-			testUtil.control.isFocused(true);
-
-			assert.is(testValue, 1);
-		});
-
-		it('should blur the text input when isFocused(false) is called', () => {
-			testUtil.control = new DateInput({
-				container: testUtil.container
-			});
-
-			testUtil.control.isFocused(true);
-			testUtil.control.isFocused(false);
-
-			assert.notIs(testUtil.first('input'), document.activeElement);
-		});
-
-		it('should call the onBlur callback when isFocused(false) is called', () => {
-			let testValue = 0;
-
-			testUtil.control = new DateInput({
-				container: testUtil.container,
-				onBlur() {
-					testValue++;
-				}
-			});
-
-			testUtil.control.isFocused(true);
-			testUtil.control.isFocused(false);
-
-			return wait(1)
-				.then(() => {
-					assert.is(testValue, 1);
-					assert.is(testUtil.control.isFocused(), false);
-				});
-		});
-	});
-
 	describe('.minDate', () => {
 		it('should show an error if the date is before the minDate', () => {
 			testUtil.control = new DateInput({

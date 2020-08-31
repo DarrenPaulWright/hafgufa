@@ -5,9 +5,8 @@ import TestUtil from '../TestUtil.js';
 describe('GroupedButtons', () => {
 	const testUtil = new TestUtil(GroupedButtons);
 	testUtil.run({
-		extraTests: { focus: true },
 		mainCssClass: 'grouped-buttons',
-		extraSettings: {
+		settings: {
 			buttons: [{
 				id: '1',
 				label: 'test'

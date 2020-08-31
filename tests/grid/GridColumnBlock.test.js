@@ -1,14 +1,27 @@
 import { assert } from 'type-enforcer';
 import { CONTEXT_MENU_EVENT } from '../../index.js';
+import Grid from '../../src/grid/Grid.js';
 import GridColumnBlock from '../../src/grid/GridColumnBlock.js';
 import { COLUMN_TYPES } from '../../src/grid/gridConstants.js';
 import TestUtil from '../TestUtil.js';
 
 describe('GridColumnBlock', () => {
 	const testUtil = new TestUtil(GridColumnBlock);
-	testUtil.run();
+	testUtil.run({
+		settings: {
+			columns: [{
+				type: Grid.COLUMN_TYPES.TEXT,
+				title: 'test'
+			}],
+			rows: [{
+				id: '1',
+				cells: [{ text: 'test' }]
+			}],
+			height: '30rem'
+		}
+	});
 
-	describe('Columns', () => {
+	describe('.columns', () => {
 		testUtil.testMethod({
 			methodName: 'columns',
 			defaultValue: [],
@@ -23,7 +36,7 @@ describe('GridColumnBlock', () => {
 		});
 	});
 
-	describe('SelectableColumns', () => {
+	describe('.selectableColumns', () => {
 		testUtil.testMethod({
 			methodName: 'selectableColumns',
 			defaultValue: [],
@@ -63,7 +76,7 @@ describe('GridColumnBlock', () => {
 		});
 	});
 
-	describe('IsAllRowsSelected', () => {
+	describe('.isAllRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isAllRowsSelected',
 			defaultValue: false,
@@ -91,7 +104,7 @@ describe('GridColumnBlock', () => {
 		);
 	});
 
-	describe('IsSomeRowsSelected', () => {
+	describe('.isSomeRowsSelected', () => {
 		testUtil.testMethod({
 			methodName: 'isSomeRowsSelected',
 			defaultValue: false,
@@ -119,7 +132,7 @@ describe('GridColumnBlock', () => {
 		);
 	});
 
-	describe('rows', () => {
+	describe('.rows', () => {
 		it('should return the row data when a button is clicked after setting rows', () => {
 			let testValue = '';
 			const onRowClick = (rowData) => {
@@ -206,7 +219,7 @@ describe('GridColumnBlock', () => {
 		});
 	});
 
-	describe('IsFiltered', () => {
+	describe('.isFiltered', () => {
 		testUtil.testMethod({
 			methodName: 'isFiltered',
 			defaultValue: false,

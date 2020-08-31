@@ -6,10 +6,11 @@ import TestUtil from '../TestUtil.js';
 describe('Description', () => {
 	const testUtil = new TestUtil(Description);
 	testUtil.run({
-		mainCssClass: 'description'
+		mainCssClass: 'description',
+		skipTests: ['FocusMixin']
 	});
 
-	describe('Value', () => {
+	describe('.value', () => {
 		testUtil.testMethod({
 			methodName: 'value',
 			defaultValue: '',
@@ -18,7 +19,7 @@ describe('Description', () => {
 		});
 	});
 
-	describe('TextWidth', () => {
+	describe('.textWidth', () => {
 		testUtil.testMethod({
 			methodName: 'textWidth',
 			defaultValue: AUTO,
@@ -38,7 +39,7 @@ describe('Description', () => {
 		});
 	});
 
-	describe('Align', () => {
+	describe('.align', () => {
 		testUtil.testMethod({
 			methodName: 'align',
 			defaultValue: 'left',
@@ -56,7 +57,7 @@ describe('Description', () => {
 		});
 	});
 
-	describe('Focused', () => {
+	describe('.focused', () => {
 		it('should return false when the isFocused method is called', () => {
 			testUtil.control = new Description();
 

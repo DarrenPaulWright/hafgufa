@@ -22,6 +22,7 @@ import {
 } from 'type-enforcer-ui';
 import Control from '../Control.js';
 import controlTypes from '../controlTypes.js';
+import FocusMixin from '../mixins/FocusMixin.js';
 import assign from '../utility/assign.js';
 import locale from '../utility/locale.js';
 import search from '../utility/search.js';
@@ -80,6 +81,7 @@ const updateSelectState = Symbol();
  * A data grid control.
  *
  * @class Grid
+ * @mixes FocusMixin
  * @extends Control
  *
  * @param {object} [settings] - A settings object
@@ -88,12 +90,31 @@ const updateSelectState = Symbol();
  * @param {object} [settings.footer]
  * @param {string} [settings.footer.countSuffix=items] - What do the rows represent?
  */
-export default class Grid extends Control {
+export default class Grid extends FocusMixin(Control) {
 	constructor(settings = {}) {
 		super(setDefaults({
 			type: controlTypes.GRID,
 			height: HUNDRED_PERCENT
-		}, settings));
+		}, settings, {
+			FocusMixin: assign(settings.FocusMixin, {
+				mainControl: new GridColumnBlock({
+					isAutoHeight: settings.height === AUTO,
+					isVirtualized: settings.isVirtualized,
+					wordWrap: settings.wordWrap,
+					onSort: (sortDirection, columnIndex) => self[sort](sortDirection, columnIndex),
+					onFilter: (value, columnId) => self[filter](value, columnId),
+					onGetFilterData: (filterType, columnIndex, callback) => self[getFilterData](
+						filterType,
+						columnIndex,
+						callback
+					),
+					onSelectGroup: (control) => self[selectGroup](control),
+					onSelectAllGroups: (isSelected) => self[selectAllGroups](isSelected),
+					onExpandCollapseGroup: (group) => self[expandCollapseGroup](group),
+					onColumnChange: (columnId) => self[toggleColumnHidden](columnId)
+				})
+			})
+		}));
 
 		const self = this;
 		self[ROWS] = new Collection();
@@ -113,23 +134,8 @@ export default class Grid extends Control {
 
 		self[RENDERED_QUEUE] = new Queue();
 
-		self[GRID_COLUMN_BLOCK] = new GridColumnBlock({
-			container: self.element,
-			isAutoHeight: settings.height === AUTO,
-			isVirtualized: settings.isVirtualized,
-			wordWrap: settings.wordWrap,
-			onSort: (sortDirection, columnIndex) => self[sort](sortDirection, columnIndex),
-			onFilter: (value, columnId) => self[filter](value, columnId),
-			onGetFilterData: (filterType, columnIndex, callback) => self[getFilterData](
-				filterType,
-				columnIndex,
-				callback
-			),
-			onSelectGroup: (control) => self[selectGroup](control),
-			onSelectAllGroups: (isSelected) => self[selectAllGroups](isSelected),
-			onExpandCollapseGroup: (group) => self[expandCollapseGroup](group),
-			onColumnChange: (columnId) => self[toggleColumnHidden](columnId)
-		});
+		self[GRID_COLUMN_BLOCK] = settings.FocusMixin.mainControl;
+		self[GRID_COLUMN_BLOCK].container(self.element);
 
 		self[updateFooter]();
 
@@ -1059,6 +1065,7 @@ export default class Grid extends Control {
 			self[ROWS] = self[ROWS].concat(newRows);
 
 			self[group]();
+			self[debouncedGroup].flush();
 
 			return self;
 		}
@@ -1272,6 +1279,7 @@ export default class Grid extends Control {
 	 * @method focus
 	 * @memberOf Grid
 	 * @instance
+	 *
 	 * @param {object} focusObject - must be an object that matches the row data in some way
 	 */
 	focus(focusObject) {
