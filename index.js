@@ -116,6 +116,8 @@ export { default as softDelete } from './src/utility/softDelete.js';
 
 export { default as TestUtil } from './tests/TestUtil.js';
 export { default as ControlTests } from './tests/ControlTests.js';
-export { default as ControlHeadingMixinTests } from './tests/mixins/ControlHeadingMixinTests.js';
 export { default as FormControlTests } from './tests/forms/FormControlTests.js';
 export { default as GraphBaseTests } from './tests/graphs/GraphBaseTests.js';
+export { default as ControlHeadingMixinTests } from './tests/mixins/ControlHeadingMixinTests.js';
+export { default as FocusMixinTests } from './tests/mixins/FocusMixinTests.js';
+export { default as TooltipMixinTests } from './tests/mixins/TooltipMixinTests.js';
