@@ -81,7 +81,7 @@ export default class DateInput extends FormControl {
 		self[DATE_INPUT] = settings.FocusMixin.mainControl;
 		self[DATE_INPUT].container(self);
 
-		applySettings(self, settings, [], ['isRequired']);
+		applySettings(self, settings, ['dateFormat'], ['isRequired']);
 
 		self.onRemove(() => {
 			if (self[POPUP]) {
