@@ -325,6 +325,8 @@ export default class Picker extends FormControl {
 		button
 			.image(settings.image || '')
 			.icon(settings.icon || '')
+			.tooltip(settings.tooltip || '')
+			.tooltipDockPoint(DockPoint.POINTS.BOTTOM_CENTER)
 			.label(label)
 			.isSelected(isSelected)
 			.classes('multi-select', self[HAS_VISIBLE_MULTI_SELECT] && settings.isMultiSelect)
