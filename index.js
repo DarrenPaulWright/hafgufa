@@ -109,7 +109,6 @@ export { default as round } from './src/utility/math/round.js';
 export * from './src/utility/browser.js';
 export * from './src/utility/domConstants.js';
 export { default as locale } from './src/utility/locale.js';
-export { default as LocalHistory } from './src/utility/LocalHistory.js';
 export { default as search } from './src/utility/search.js';
 export { default as shortcuts } from './src/utility/shortcuts.js';
 export { default as softDelete } from './src/utility/softDelete.js';
