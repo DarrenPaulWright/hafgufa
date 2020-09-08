@@ -250,6 +250,9 @@ Object.assign(SplitView.prototype, {
 						maxOffset: self.maxOffset(),
 						onOffsetChange(splitOffset) {
 							self.splitOffset(new CssSize(splitOffset));
+							if (self.onOffsetSlide()) {
+								self.onOffsetSlide()(splitOffset.toString());
+							}
 						},
 						onOffsetChangeDone(splitOffset) {
 							if (self.onOffsetChange()) {
@@ -305,6 +308,8 @@ Object.assign(SplitView.prototype, {
 			}
 		}
 	}),
+
+	onOffsetSlide: methodFunction(),
 
 	onOffsetChange: methodFunction()
 });
