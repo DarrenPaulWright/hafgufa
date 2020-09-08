@@ -52,7 +52,7 @@ export default class TooltipMixinTests extends ExtendsTestRunner {
 		const self = this;
 
 		it('should have an arrow with class "top" if tooltipDockPoint is on top', () => {
-			self[TEST_UTIL].container.style.margin = '10rem';
+			self[TEST_UTIL].container.element.style.margin = '10rem';
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 				tooltip: 'test',
 				tooltipDockPoint: DockPoint.POINTS.TOP_CENTER,
@@ -65,7 +65,7 @@ export default class TooltipMixinTests extends ExtendsTestRunner {
 		});
 
 		it('should have an arrow with class "right" if tooltipDockPoint is on right', () => {
-			self[TEST_UTIL].container.style.margin = '10rem';
+			self[TEST_UTIL].container.element.style.margin = '10rem';
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 				tooltip: 'test',
 				tooltipDockPoint: DockPoint.POINTS.RIGHT_CENTER,
@@ -78,7 +78,7 @@ export default class TooltipMixinTests extends ExtendsTestRunner {
 		});
 
 		it('should have an arrow with class "bottom" if tooltipDockPoint is on bottom', () => {
-			self[TEST_UTIL].container.style.margin = '10rem';
+			self[TEST_UTIL].container.element.style.margin = '10rem';
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 				tooltip: 'test',
 				tooltipDockPoint: DockPoint.POINTS.BOTTOM_CENTER,
@@ -91,7 +91,7 @@ export default class TooltipMixinTests extends ExtendsTestRunner {
 		});
 
 		it('should have an arrow with class "left" if tooltipDockPoint is on left', () => {
-			self[TEST_UTIL].container.style.margin = '10rem';
+			self[TEST_UTIL].container.element.style.margin = '10rem';
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
 				tooltip: 'test',
 				tooltipDockPoint: DockPoint.POINTS.LEFT_CENTER,

@@ -1,6 +1,6 @@
 import { assert } from 'type-enforcer';
 import { CssSize, windowResize } from 'type-enforcer-ui';
-import { CLICK_EVENT, Container } from '../index.js';
+import { CLICK_EVENT, Container, SvgControl } from '../index.js';
 import extendsTestRegister from './extendsTestRegister.js';
 import ExtendsTestRunner, { CONTROL, SETTINGS, TEST_UTIL } from './ExtendsTestRunner.js';
 
@@ -28,6 +28,13 @@ export default class ControlTests extends ExtendsTestRunner {
 
 	container() {
 		const self = this;
+		const getContainer = () => {
+			if (self[TEST_UTIL].control instanceof SvgControl) {
+				return document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+			}
+
+			return document.createElement('div');
+		};
 
 		it('should not have a container value if no container was set', () => {
 			const initialLength = windowResize.length;
@@ -36,7 +43,7 @@ export default class ControlTests extends ExtendsTestRunner {
 				container: null
 			}));
 
-			assert.is(self[TEST_UTIL].container.children.length, 0);
+			assert.is(self[TEST_UTIL].container.element.children.length, 0);
 			assert.is(self[TEST_UTIL].control.container(), null);
 			assert.is(windowResize.length, initialLength);
 		});
@@ -44,7 +51,7 @@ export default class ControlTests extends ExtendsTestRunner {
 		it('should have a container element if the container setting was set', () => {
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
 
-			assert.is(self[TEST_UTIL].container.children.length >= 1, true);
+			assert.is(self[TEST_UTIL].container.element.children.length >= 1, true);
 			assert.is(self[TEST_UTIL].control.container() instanceof Element, true);
 		});
 
@@ -53,7 +60,7 @@ export default class ControlTests extends ExtendsTestRunner {
 				container: null
 			})).container(self[TEST_UTIL].container);
 
-			assert.is(self[TEST_UTIL].container.children.length, 1);
+			assert.is(self[TEST_UTIL].container.element.children.length, 1);
 			assert.is(self[TEST_UTIL].control.container() instanceof Element, true);
 		});
 
@@ -61,7 +68,7 @@ export default class ControlTests extends ExtendsTestRunner {
 			const initialLength = windowResize.length;
 
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings({
-				container: self[TEST_UTIL].container
+				container: getContainer()
 			}));
 
 			assert.is(windowResize.length, initialLength + 1);
@@ -71,7 +78,7 @@ export default class ControlTests extends ExtendsTestRunner {
 			const initialLength = windowResize.length;
 
 			self[TEST_UTIL].control = new Container({
-				container: self[TEST_UTIL].container,
+				container: getContainer(),
 				content: self.buildSettings({
 					control: self[CONTROL]
 				})
@@ -84,7 +91,7 @@ export default class ControlTests extends ExtendsTestRunner {
 			const initialLength = windowResize.length;
 
 			self[TEST_UTIL].control = new Container({
-				container: self[TEST_UTIL].container
+				container: getContainer()
 			});
 
 			self[TEST_UTIL].control.content(self.buildSettings({
@@ -103,14 +110,14 @@ export default class ControlTests extends ExtendsTestRunner {
 				container: null
 			}));
 
-			assert.is(self[TEST_UTIL].container.children.length, 0);
+			assert.is(self[TEST_UTIL].container.element.children.length, 0);
 			assert.is(self[TEST_UTIL].control.element instanceof Element, true);
 		});
 
 		it('should have a main element if the container was set', () => {
 			self[TEST_UTIL].control = new self[CONTROL](self.buildSettings());
 
-			assert.atLeast(self[TEST_UTIL].container.children.length, 1);
+			assert.atLeast(self[TEST_UTIL].container.element.children.length, 1);
 			assert.is(self[TEST_UTIL].control.element instanceof Element, true);
 		});
 	}

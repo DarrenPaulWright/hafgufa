@@ -130,7 +130,7 @@ describe('VirtualList', () => {
 				.itemData(testRows)
 				.fitHeightToContents();
 
-			assert.is(testUtil.container.offsetHeight, 60);
+			assert.is(testUtil.container.element.offsetHeight, 60);
 		});
 
 		it('should set the height of the control to the combined height of the items when the height is set to auto', () => {
@@ -142,7 +142,7 @@ describe('VirtualList', () => {
 			})
 				.itemData(testRows);
 
-			assert.is(testUtil.container.offsetHeight, 90);
+			assert.is(testUtil.container.element.offsetHeight, 90);
 		});
 	});
 

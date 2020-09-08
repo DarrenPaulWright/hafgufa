@@ -3,12 +3,13 @@ import keyCodes from 'keycodes';
 import simulant from 'simulant';
 import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
-import { CLICK_EVENT, KEY_UP_EVENT } from '../index.js';
+import { BODY, CLICK_EVENT, Control, KEY_UP_EVENT } from '../index.js';
 import './ControlTests.js';
 import extendsTestRegister from './extendsTestRegister.js';
 import './forms/FormControlTests.js';
 import './graphs/GraphBaseTests.js';
 import './mixins/ControlHeadingMixinTests.js';
+import './mixins/DragMixinTests.js';
 import './mixins/FocusMixinTests.js';
 import './mixins/TooltipMixinTests.js';
 
@@ -21,19 +22,18 @@ const addEventListenerOverRides = Symbol();
 const getElement = Symbol();
 
 export default class TestUtil {
-	constructor(Control, isSvg) {
+	constructor(Constructor, isSvg) {
 		const self = this;
 
 		self._allEvents = [];
-		self[CONSTRUCTOR] = Control;
+		self[CONSTRUCTOR] = Constructor;
 		self[addEventListenerOverRides]();
 
 		beforeEach(function() {
 			self._allEvents.length = 0;
 			self[CONTAINER] = isSvg ?
-				document.createElementNS('http://www.w3.org/2000/svg', 'svg') :
-				document.createElement('div');
-			document.body.append(self[CONTAINER]);
+				new Control({ container: BODY, element: 'svg:svg' }) :
+				new Control({ container: BODY });
 		});
 
 		afterEach(function() {
@@ -51,9 +51,7 @@ export default class TestUtil {
 			if (self.control && self.control.remove) {
 				self.control.remove();
 			}
-			if (self.container) {
-				self.container.remove();
-			}
+			self[CONTAINER].remove();
 
 			if (windowResize.length > 1) {
 				throw new Error(`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType()}`);
@@ -122,8 +120,8 @@ export default class TestUtil {
 			const proto = Object.getPrototypeOf(constructor);
 
 			if (proto) {
-				callback(proto.constructor.name);
 				walkPrototype(proto, callback);
+				callback(proto.constructor.name);
 			}
 		};
 
@@ -131,26 +129,25 @@ export default class TestUtil {
 
 		walkPrototype(control, (name) => {
 			if (!settings.skipTests || !settings.skipTests.includes(name)) {
-				const tests = extendsTestRegister.get(name);
+				const testPackage = extendsTestRegister.get(name);
 
-				if (tests) {
-					testPackages.push(tests);
+				if (testPackage) {
+					testPackages.push(testPackage);
 				}
 			}
 		});
 
 		control.remove();
 
-		testPackages.reverse()
-			.forEach((testPackage) => {
-				new testPackage.TestRunner(self[CONSTRUCTOR], self)
-					.run(testPackage.name, settings);
-			});
+		testPackages.forEach((testPackage) => {
+			new testPackage.TestRunner(self[CONSTRUCTOR], self)
+				.run(testPackage.name, settings);
+		});
 	}
 
 	testMethod(settings) {
 		const self = this;
-		const Control = self[CONSTRUCTOR];
+		const Constructor = self[CONSTRUCTOR];
 		const buildOptions = () => ({
 			...settings.defaultSettings,
 			container: this.container
@@ -160,7 +157,7 @@ export default class TestUtil {
 			it(
 				'should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' setting is not set',
 				() => {
-					self.control = new Control(buildOptions());
+					self.control = new Constructor(buildOptions());
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
 						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
@@ -177,7 +174,7 @@ export default class TestUtil {
 					const options = buildOptions();
 					options[settings.methodName] = settings.defaultValue;
 
-					self.control = new Control(options);
+					self.control = new Constructor(options);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
 						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
@@ -194,7 +191,7 @@ export default class TestUtil {
 					const options = buildOptions();
 					options[settings.methodName] = settings.testValue;
 
-					self.control = new Control(options);
+					self.control = new Constructor(options);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
 						assert.is(self.control[settings.methodName]().isSame(settings.testValue), true);
@@ -208,7 +205,7 @@ export default class TestUtil {
 			if (settings.defaultValue !== undefined) {
 				it('should return ' + displayValue(settings.defaultValue) + ' when the ' + settings.methodName + ' method is set to ' +
 					displayValue(settings.defaultValue), () => {
-					self.control = new Control(buildOptions())[settings.methodName](settings.defaultValue);
+					self.control = new Constructor(buildOptions())[settings.methodName](settings.defaultValue);
 
 					if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
 						assert.is(self.control[settings.methodName]().isSame(settings.defaultValue), true);
@@ -221,7 +218,7 @@ export default class TestUtil {
 
 			it('should return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' +
 				displayValue(settings.testValue), () => {
-				self.control = new Control(buildOptions())[settings.methodName](settings.testValue);
+				self.control = new Constructor(buildOptions())[settings.methodName](settings.testValue);
 
 				if (self.control[settings.methodName]() && self.control[settings.methodName]().isSame) {
 					assert.is(self.control[settings.methodName]().isSame(settings.testValue), true);
@@ -233,7 +230,7 @@ export default class TestUtil {
 
 			it('should return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' +
 				displayValue(settings.testValue) + ' twice', () => {
-				self.control = new Control(buildOptions());
+				self.control = new Constructor(buildOptions());
 				self.control[settings.methodName](settings.testValue);
 				self.control[settings.methodName](settings.testValue);
 
@@ -248,7 +245,7 @@ export default class TestUtil {
 			if (settings.secondTestValue !== undefined) {
 				it('should return ' + displayValue(settings.secondTestValue) + ' when the ' + settings.methodName + ' method is set to ' +
 					displayValue(settings.testValue) + ' and then ' + displayValue(settings.secondTestValue), () => {
-					self.control = new Control(buildOptions());
+					self.control = new Constructor(buildOptions());
 					self.control[settings.methodName](settings.testValue);
 					self.control[settings.methodName](settings.secondTestValue);
 
@@ -262,7 +259,7 @@ export default class TestUtil {
 
 				it('should NOT return ' + displayValue(settings.testValue) + ' when the ' + settings.methodName + ' method is set to ' +
 					displayValue(settings.testValue) + ' and then ' + displayValue(settings.secondTestValue), () => {
-					self.control = new Control(buildOptions());
+					self.control = new Constructor(buildOptions());
 					self.control[settings.methodName](settings.testValue);
 					self.control[settings.methodName](settings.secondTestValue);
 
@@ -279,14 +276,14 @@ export default class TestUtil {
 				if (!isArray(settings.testValueClass)) {
 					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
 						' method is NOT set', () => {
-						self.control = new Control(buildOptions());
+						self.control = new Constructor(buildOptions());
 
 						assert.is(self.count('body > div > .' + settings.testValueClass), 0);
 					});
 
 					it('should have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
 						' method is set to ' + displayValue(settings.testValue), () => {
-						self.control = new Control(buildOptions());
+						self.control = new Constructor(buildOptions());
 						self.control[settings.methodName](settings.testValue);
 
 						assert.is(self.count('body > div > .' + settings.testValueClass), 1);
@@ -295,7 +292,7 @@ export default class TestUtil {
 					it('should NOT have class ' + displayValue(settings.testValueClass) + ' when the ' + settings.methodName +
 						' method is set to ' + displayValue(settings.testValue) + ' and then to ' +
 						displayValue(settings.defaultValue), () => {
-						self.control = new Control(buildOptions());
+						self.control = new Constructor(buildOptions());
 						self.control[settings.methodName](settings.testValue);
 						self.control[settings.methodName](settings.defaultValue);
 
@@ -307,7 +304,7 @@ export default class TestUtil {
 						if (settings.defaultValue !== mainClassOptions.testValue) {
 							it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName +
 								' method is NOT set', () => {
-								self.control = new Control(buildOptions());
+								self.control = new Constructor(buildOptions());
 
 								assert.is(self.count('body > div > .' + mainClassOptions.class), 0);
 							});
@@ -317,7 +314,7 @@ export default class TestUtil {
 							if (mainClassOptions.class === otherClassOptions.class) {
 								it('should have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName +
 									' method is set to ' + displayValue(mainClassOptions.testValue), () => {
-									self.control = new Control(buildOptions());
+									self.control = new Constructor(buildOptions());
 									self.control[settings.methodName](mainClassOptions.testValue);
 
 									assert.is(self.count('body > div > .' + mainClassOptions.class), 1);
@@ -327,7 +324,7 @@ export default class TestUtil {
 									it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' +
 										settings.methodName + ' method is set to ' + displayValue(mainClassOptions.testValue) +
 										' and then to ' + displayValue(settings.defaultValue), () => {
-										self.control = new Control(buildOptions());
+										self.control = new Constructor(buildOptions());
 										self.control[settings.methodName](mainClassOptions.testValue);
 										self.control[settings.methodName](settings.defaultValue);
 
@@ -338,7 +335,7 @@ export default class TestUtil {
 							else {
 								it('should NOT have class ' + displayValue(mainClassOptions.class) + ' when the ' + settings.methodName +
 									' method is set to ' + displayValue(otherClassOptions.testValue), () => {
-									self.control = new Control(buildOptions());
+									self.control = new Constructor(buildOptions());
 									self.control[settings.methodName](otherClassOptions.testValue);
 
 									assert.is(self.count('body > div > .' + mainClassOptions.class), 0);
@@ -414,11 +411,11 @@ export default class TestUtil {
 	}
 
 	first(selector, isGlobal) {
-		return isGlobal ? document.querySelector(selector) : this[CONTAINER].querySelector(selector);
+		return isGlobal ? document.querySelector(selector) : this[CONTAINER].element.querySelector(selector);
 	}
 
 	all(selector, isGlobal) {
-		return isGlobal ? document.querySelectorAll(selector) : this[CONTAINER].querySelectorAll(selector);
+		return isGlobal ? document.querySelectorAll(selector) : this[CONTAINER].element.querySelectorAll(selector);
 	}
 
 	last(selector, isGlobal) {

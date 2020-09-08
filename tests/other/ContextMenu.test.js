@@ -36,8 +36,8 @@ describe('ContextMenu', () => {
 				}]
 			});
 
-			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
-			testUtil.trigger(testUtil.container, CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.container.element, CONTEXT_MENU_EVENT);
+			testUtil.trigger(testUtil.container.element, CONTEXT_MENU_EVENT);
 
 			assert.is(testUtil.count('.context-menu'), 0);
 		});

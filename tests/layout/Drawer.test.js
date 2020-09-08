@@ -9,8 +9,8 @@ describe('Drawer', () => {
 	});
 
 	beforeEach(() => {
-		testUtil.container.style.width = '1000px';
-		testUtil.container.style.height = '1000px';
+		testUtil.container.element.style.width = '1000px';
+		testUtil.container.element.style.height = '1000px';
 	});
 
 	describe('.dock', () => {

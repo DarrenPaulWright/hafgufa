@@ -10,7 +10,7 @@ describe('GridCell', () => {
 	const testUtil = new TestUtil(GridCell);
 
 	beforeEach(() => {
-		testUtil.container.classList.add('grid');
+		testUtil.container.addClass('grid');
 	});
 
 	testUtil.run({ skipTests: ['isEnabled'] });
