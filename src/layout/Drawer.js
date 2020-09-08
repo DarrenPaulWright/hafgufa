@@ -82,6 +82,9 @@ export default class Drawer extends Container {
 				if (self[RESIZER] && !self[RESIZER].isDragging) {
 					self[RESIZER].resize();
 				}
+				else {
+					self[layout]();
+				}
 			})
 			.onPreRemove(() => {
 				self.canResize(false);
@@ -213,7 +216,9 @@ export default class Drawer extends Container {
 			}
 		}
 		else {
-			newMargin = -((self[IS_HORIZONTAL] ? self.borderWidth() : self.borderHeight()) - closedSize);
+			newMargin = -((self[IS_HORIZONTAL] ?
+				self.borderWidth() :
+				self.borderHeight()) - closedSize);
 			newOpacity = closedSize ? 1 : 0;
 		}
 
