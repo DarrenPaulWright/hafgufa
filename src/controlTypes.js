@@ -16,6 +16,7 @@ const controlTypes = {
 	DESCRIPTION: 'description',
 	DIV: 'div',
 	DONUT: 'donut',
+	DRAG_CONTAINER: 'dragContainer',
 	DRAG_POINT: 'dragPoint',
 	DRAWER: 'drawer',
 	DRAWER_MENU: 'drawerMenu',

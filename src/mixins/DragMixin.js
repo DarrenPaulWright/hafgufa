@@ -19,6 +19,7 @@ import clamp from '../utility/math/clamp.js';
 
 const FRICTION = 0.85;
 const ELASTICITY = 0.75;
+const CENTERABLE_STRETCH_FORMATS = ['none', 'auto', 'fit', 'fill'];
 
 const IS_REGISTERED_RESIZE = Symbol();
 const AVAILABLE_WIDTH = Symbol();
@@ -66,7 +67,7 @@ export default (Base) => {
 			super(settings);
 
 			const self = this;
-			self[IGNORE_PADDING] = settings.ignorePadding;
+			self[IGNORE_PADDING] = settings.ignorePadding === true;
 			self[AVAILABLE_WIDTH] = 0;
 			self[AVAILABLE_HEIGHT] = 0;
 
@@ -83,14 +84,13 @@ export default (Base) => {
 							if (self.container()[CONTROL_PROP]) {
 								self.container()[CONTROL_PROP]
 									.onResize(function() {
-										self[AVAILABLE_WIDTH] = this.innerWidth();
-										self[AVAILABLE_HEIGHT] = this.innerHeight();
-
-										if (!self[IGNORE_PADDING]) {
-											const padding = new Thickness(this.css('padding') || 0);
-
-											self[AVAILABLE_WIDTH] -= padding.horizontal;
-											self[AVAILABLE_HEIGHT] -= padding.vertical;
+										if (self[IGNORE_PADDING]) {
+											self[AVAILABLE_WIDTH] = this.borderWidth();
+											self[AVAILABLE_HEIGHT] = this.borderHeight();
+										}
+										else {
+											self[AVAILABLE_WIDTH] = this.innerWidth();
+											self[AVAILABLE_HEIGHT] = this.innerHeight();
 										}
 
 										self.resize(true);
@@ -99,14 +99,28 @@ export default (Base) => {
 							}
 							else {
 								const bounds = self.container().getBoundingClientRect();
+
 								self[AVAILABLE_WIDTH] = bounds.width;
 								self[AVAILABLE_HEIGHT] = bounds.height;
+
+								if (!self[IGNORE_PADDING]) {
+									const style = self.container().style;
+
+									self[AVAILABLE_WIDTH] -= (style.paddingLeft + style.paddingRight);
+									self[AVAILABLE_HEIGHT] -= (style.paddingTop + style.paddingBottom);
+								}
 							}
 						}
 
 						if (self.restrictDragToOrigin()) {
 							width = 0;
 							height = 0;
+						}
+						else {
+							const scale = self.scale();
+
+							width *= scale;
+							height *= scale;
 						}
 
 						if (width < self[AVAILABLE_WIDTH]) {
@@ -297,7 +311,6 @@ export default (Base) => {
 					self[POSITION].x + (offsetX * scaleChange),
 					self[POSITION].y + (offsetY * scaleChange)
 				)
-				.resize(true)
 				.trigger(SCALE_CHANGE_EVENT);
 
 			if (needsCheck && self.canDrag()) {
@@ -364,10 +377,11 @@ export default (Base) => {
 		stretch(format) {
 			const self = this;
 			let newScale = null;
+			const scale = self.scale();
 			const width = self.borderWidth();
 			const height = self.borderHeight();
-			const horizontalScale = self[AVAILABLE_WIDTH] / (width / self.scale());
-			const verticalScale = self[AVAILABLE_HEIGHT] / (height / self.scale());
+			const horizontalScale = self[AVAILABLE_WIDTH] / width;
+			const verticalScale = self[AVAILABLE_HEIGHT] / height;
 
 			if (format === 'none') {
 				newScale = 1;
@@ -382,15 +396,15 @@ export default (Base) => {
 				newScale = Math.max(horizontalScale, verticalScale);
 			}
 			else if (format === 'in') {
-				newScale = self.scale() * 1.5;
+				newScale = scale * 1.5;
 			}
 			else if (format === 'out') {
-				newScale = self.scale() * (2 / 3);
+				newScale = scale * (2 / 3);
 			}
 
 			if (newScale !== null) {
-				const doCenter = ['none', 'auto', 'fit', 'fill'].includes(format);
-				self[setZoom](newScale, width / 2, height / 2, !doCenter);
+				const doCenter = CENTERABLE_STRETCH_FORMATS.includes(format);
+				self[setZoom](newScale, (width * scale) / 2, (height * scale) / 2, !doCenter);
 
 				if (doCenter) {
 					self.center();
@@ -403,7 +417,10 @@ export default (Base) => {
 		center() {
 			const self = this;
 
-			self.position(self[DRAG_BOUNDS].horizontal / 2, self[DRAG_BOUNDS].vertical / 2);
+			self.position(
+				self[DRAG_BOUNDS].horizontal / 2,
+				self[DRAG_BOUNDS].vertical / 2
+			);
 
 			return self;
 		}
@@ -498,14 +515,19 @@ export default (Base) => {
 					}
 
 					if (self[TRANSFORM_OFFSET].x !== 0 || self[TRANSFORM_OFFSET].y !== 0) {
-						transform = 'translate(' + self[TRANSFORM_OFFSET].toString(PIXELS) + ') ';
+						transform = 'translate(';
+						transform += self[TRANSFORM_OFFSET].x + PIXELS;
+						if (self[TRANSFORM_OFFSET].y !== 0) {
+							transform += ', ' + self[TRANSFORM_OFFSET].y + PIXELS;
+						}
+						transform += ') ';
 					}
 
 					if (self.scale() !== 1) {
 						transform += 'scale(' + self.scale() + ')';
 					}
 
-					self.css(TRANSFORM, transform);
+					self.css(TRANSFORM, transform.trim());
 
 					if (self.isDragging) {
 						self.onDrag().trigger(null, [{ ...self[POSITION] }]);
@@ -603,7 +625,10 @@ export default (Base) => {
 
 		scale: methodNumber({
 			init: 1,
-			min: 0
+			min: 0,
+			set() {
+				this.resize(true);
+			}
 		}),
 
 		restrictVerticalDrag: methodBoolean(),

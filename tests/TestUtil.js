@@ -3,7 +3,7 @@ import keyCodes from 'keycodes';
 import simulant from 'simulant';
 import { assert } from 'type-enforcer';
 import { isArray, isString, windowResize } from 'type-enforcer-ui';
-import { BODY, CLICK_EVENT, Control, KEY_UP_EVENT } from '../index.js';
+import { BODY, CLICK_EVENT, Control, KEY_UP_EVENT, Svg } from '../index.js';
 import './ControlTests.js';
 import extendsTestRegister from './extendsTestRegister.js';
 import './forms/FormControlTests.js';
@@ -32,7 +32,7 @@ export default class TestUtil {
 		beforeEach(function() {
 			self._allEvents.length = 0;
 			self[CONTAINER] = isSvg ?
-				new Control({ container: BODY, element: 'svg:svg' }) :
+				new Svg({ container: BODY }) :
 				new Control({ container: BODY });
 		});
 

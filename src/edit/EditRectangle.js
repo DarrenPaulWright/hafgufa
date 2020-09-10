@@ -75,5 +75,7 @@ export default class EditRectangle extends Shape {
 			});
 
 		applySettings(self, settings);
+
+		self.resize(true);
 	}
 }

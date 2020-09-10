@@ -134,7 +134,6 @@ export default class LightBox extends Control {
 						defer(() => {
 							self[MAIN_IMAGE]
 								.stretch('fit')
-								.center()
 								.css('opacity', '1');
 							self[IMAGE_LAYER].isWorking(false);
 						});

@@ -51,7 +51,7 @@ describe('pixelsToOffset', () => {
 describe('Resizer', () => {
 	const testUtil = new TestUtil(Resizer);
 	testUtil.run({
-		skipTests: ['height', 'width'],
+		skipTests: ['height', 'width', 'center', 'stretch'],
 		mainCssClass: 'resizer'
 	});
 

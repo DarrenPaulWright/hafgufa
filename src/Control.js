@@ -560,7 +560,7 @@ Object.assign(Control.prototype, {
 	},
 
 	innerWidth() {
-		return this.element.offsetWidth - this.paddingWidth;
+		return this.borderWidth() - this.paddingWidth;
 	},
 
 	outerWidth() {
@@ -626,7 +626,7 @@ Object.assign(Control.prototype, {
 	},
 
 	innerHeight() {
-		return this.element.offsetHeight - this.paddingHeight;
+		return this.borderHeight() - this.paddingHeight;
 	},
 
 	outerHeight() {
