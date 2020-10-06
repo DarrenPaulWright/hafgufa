@@ -161,10 +161,9 @@ export default (Base) => {
 		[roundToSnapGrid](value) {
 			const snapGridSize = this.snapGridSize();
 
-			if (snapGridSize) {
-				return Math.round(value / snapGridSize) * snapGridSize;
-			}
-			return value;
+			return snapGridSize === 0 ?
+				value :
+				Math.round(value / snapGridSize) * snapGridSize;
 		}
 
 		[animateThrow]() {
@@ -184,9 +183,7 @@ export default (Base) => {
 					self[THROW_VELOCITY].length(self[THROW_VELOCITY].length() * ELASTICITY);
 				}
 
-				self[THROW_FRAME] = requestAnimationFrame(() => {
-					self[animateThrow]();
-				});
+				self[THROW_FRAME] = requestAnimationFrame(() => self[animateThrow]());
 			}
 			else {
 				self[stopThrow]();
@@ -274,9 +271,7 @@ export default (Base) => {
 			self[BOUNCE_VECTOR].invert();
 
 			self[IS_BOUNCING] = true;
-			self[BOUNCE_FRAME] = requestAnimationFrame(() => {
-				self[animateBounce]();
-			});
+			self[BOUNCE_FRAME] = requestAnimationFrame(() => self[animateBounce]());
 		}
 
 		[animateBounce]() {
@@ -293,7 +288,9 @@ export default (Base) => {
 				self[IS_BOUNCING] = false;
 				self.position(Math.round(self[POSITION].x), Math.round(self[POSITION].y));
 
-				self.onDragEnd().trigger(null, [{ ...self[POSITION] }]);
+				if (self.onDragEnd() !== undefined) {
+					self.onDragEnd().trigger(null, [{ ...self[POSITION] }]);
+				}
 			}
 		}
 

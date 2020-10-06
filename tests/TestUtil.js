@@ -37,7 +37,11 @@ export default class TestUtil {
 		});
 
 		afterEach(function() {
-			const controlType = () => `Test: ${this.currentTest.fullTitle()}\nControl: ${self.control ? self.control.type : 'undefined'}\n`;
+			const testTitle = () => `Test: ${this.currentTest.fullTitle()}`;
+			const controlType = () => self.control ?
+				(self.control.type || self.control.constructor.name) :
+				'undefined';
+			const testInfo = () => `${testTitle()}\nControl: ${controlType()}\n`;
 
 			const eventList = () => self._allEvents
 				.map((listener) => {
@@ -54,12 +58,12 @@ export default class TestUtil {
 			self[CONTAINER].remove();
 
 			if (windowResize.length > 1) {
-				throw new Error(`windowResize shouldn't have any callbacks after a test is complete. Be sure you properly remove all controls.\n${controlType()}`);
+				throw new Error(`windowResize shouldn't have any callbacks after a test is complete, found ${windowResize.length - 1}. Be sure you properly remove all controls.\n${testInfo()}`);
 			}
 			windowResize.discardAll();
 
 			if (self._allEvents.length !== 0) {
-				throw new Error(`All events should be removed when a control is removed.\n${controlType()}Still has these events:\n${eventList()}\n`);
+				throw new Error(`All events should be removed when a control is removed.\n${testInfo()}Still has these events:\n${eventList()}\n`);
 			}
 			self._allEvents.length = 0;
 
