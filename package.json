@@ -58,7 +58,7 @@
 	"dependencies": {
 		"async-agent": "^0.5.5",
 		"bowser": "^2.10.0",
-		"d3": "^5.16.0",
+		"d3": "^7.6.1",
 		"date-fns": "^2.16.1",
 		"display-value": "^1.7.4",
 		"get-browser-language": "^1.0.0",
