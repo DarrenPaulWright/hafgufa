@@ -68,7 +68,7 @@
 		"less": "^3.12.2",
 		"object-agent": "^1.4.15",
 		"pathinator": "^0.3.3",
-		"shortid": "^2.2.15",
+		"shortid": "^2.2.17",
 		"simulant": "^0.2.2",
 		"type-enforcer": "^1.2.1",
 		"type-enforcer-ui": "^1.1.1"
